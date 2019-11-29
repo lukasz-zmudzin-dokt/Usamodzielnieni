@@ -3,69 +3,72 @@ import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 
 import 'Views/CVEditorPage/style.css';
+import Form from "react-bootstrap/Form";
 
 class CVEditorPage extends React.Component { //nie działa, jest do baza do zmian
-    state = {
-        fullName: "", //czy w rejestracji będzie imię i nazwisko?
-        birthDate: "", //defaultowo formularz, potem może jakiś MonthPicker albo DatePicker
-        phoneNumber: "",
-        email: "", //import z db?
-        education: "",
-        workExperience: "",
-        skills: "",
-        languages: ""
-    };
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            fullName: "a", //czy w rejestracji będzie imię i nazwisko?
+            birthDate: "", //defaultowo formularz, potem może jakiś MonthPicker albo DatePicker
+            phoneNumber: "",
+            email: "", //import z db?
+            education: "",
+            workExperience: "",
+            skills: "",
+            languages: "",
+        };
+        this.handleBlur = this.handleBlur.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
     // listenery do poprawy
-    onChange = e => {
-        const type = e.target.type;
-        const value = e.target.value;
+    handleBlur = e => {
+        const { type, value } = e.target;
         this.setState({
             [type]: value
         });
     };
 
-    handleChange = event => {
-        event.preventDefault();
-        console.log(event.type + event.value);  //zmiana któregokolwiek z pól formularza wypisze tą zmianę, później zrobić nadpisywanie zmiennych
-    };
-
-    exportChanges = e => {
+    handleSubmit = e => {
+        alert('Podano imię: ' + this.state.fullName);
         e.preventDefault();
-        console.log("data saved");
-        // export...
     };
 
 
     render() {
         const { fullName, birthDate, phoneNumber, email, education, workExperience, skills, languages } = this.state;
-        const { onChange, handleChange } = this;
+        const { handleBlur, handleSubmit } = this;
         return (
             <Container className = "CVEditorPage">
-                <h1 className="display-4">Kreator CV</h1>
-                <p>Dane osobowe</p>
-                <form onChange={handleChange} id="personalData">
-                    Imię i nazwisko: <input id="name" type="text" value={fullName} onChange={this.onChange}/>
-                    Data urodzenia: <input id="birthdate" type="text" value={birthDate} onChange={this.onChange}/>
-                    Numer telefonu: <input id="phone" type="text" value={phoneNumber} onChange={this.onChange}/>
-                    Email: <input id="email" type="text" value={email} onChange={this.onChange}/>
-                </form>
-                <p>Edukacja</p>
-                <form onChange={handleChange} id="education">
-                    <input id="education" type="text" value={education} onChange={onChange}/>
-                </form>
-                <p>Doświadczenie zawodowe</p>
-                <form onChange={handleChange} id="workExperience">
-                    <input id="workexp" type="text" value={workExperience} onChange={onChange}/>
-                </form>
-                <p>Umiejętności</p>
-                <form onChange={handleChange} id="skills">
-                    <input id="skills" type="text" value={skills} onChange={onChange}/>
-                </form>
-                <p>Języki obce</p>
-                <form onChange={handleChange} id="languages">
-                    <input id="langs" type="text" value={languages} onChange={onChange}/>
-                </form>
-                <Button onClick ={this.exportChanges} id="Save">Zapisz</Button>
+                <h1 className="display-4">Kreator CV</h1><br/>
+                <p><h3>Dane osobowe</h3></p>
+                <Form id="data" onSubmit={handleSubmit}>
+                    <Form id="personalData">
+                        Imię i nazwisko: <input id="name" type="text" ref={fullName} placeholder="Imię i nazwisko" onBlur={e => handleBlur(e)}/><br/><br/>
+                        Data urodzenia: <input id="birthDate" type="text" ref={birthDate} onBlur={handleBlur}/><br/><br/>
+                        Numer telefonu: <input id="phone" type="text" ref={phoneNumber} onBlur={handleBlur}/><br/><br/>
+                        Email: <input id="email" type="text" ref={email} onBlur={handleBlur}/>
+                    </Form><br/>
+                    <p><h3>Edukacja</h3></p>
+                    <Form id="education">
+                        <input id="education" type="text" ref={education} onBlur={handleBlur}/>
+                    </Form><br/>
+                    <p><h3>Doświadczenie zawodowe</h3></p>
+                    <Form id="workExperience">
+                        <input id="workexp" type="text" ref={workExperience} onBlur={handleBlur}/>
+                    </Form><br/>
+                    <p><h3>Umiejętności</h3></p>
+                    <form id="skills">
+                        <input id="skills" type="text" ref={skills} onBlur={handleBlur}/>
+                    </form><br/>
+                    <p><h3>Języki obce</h3></p>
+                    <Form id="languages">
+                        <input id="languages" type="text" ref={languages} onBlur={handleBlur}/>
+                    </Form>
+                    <br/>
+                    <Button type="submit" id="saveButton">Zapisz</Button>
+                </Form>
             </Container>
         );
     }
