@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
 import CVEditorPage from "Views/CVEditorPage";
-import {BrowseRouter as Router, Route, Switch } from "react=router-dom";
+import {BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 class App extends React.Component {
   render() {
@@ -9,7 +9,7 @@ class App extends React.Component {
         <div>
             <Router>
                 <Switch>
-                    <Route path="/" exact component={CVEditorPage} /> <!-- nadpisywać tylko tę linijkę do routera po merge'u + importy-->
+                    <Route path="/" exact component={CVEditorPage} />
                 </Switch>
             </Router>
         </div>

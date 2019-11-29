@@ -42,32 +42,29 @@ class CVEditorPage extends React.Component { //nie działa, jest do baza do zmia
         return (
             <Container className = "CVEditorPage">
                 <h1 className="display-4">Kreator CV</h1>
-                <!-- Większość z tego będzie podawane przy rejestracji, ale warto zostawić pole do zmiany -->
                 <p>Dane osobowe</p>
                 <form onChange={handleChange} id="personalData">
-                    Imię i nazwisko: <input type="text" value={fullName} onChange={onChange}/>
-                    Data urodzenia: <input type="text" value={birthDate} onChange={onChange}/>
-                    Numer telefonu: <input type="text" value={phoneNumber} onChange={onChange}/>
-                    Email: <input type="text" value={email} onChange={onChange}/>
+                    Imię i nazwisko: <input id="name" type="text" value={fullName} onChange={this.onChange}/>
+                    Data urodzenia: <input id="birthdate" type="text" value={birthDate} onChange={this.onChange}/>
+                    Numer telefonu: <input id="phone" type="text" value={phoneNumber} onChange={this.onChange}/>
+                    Email: <input id="email" type="text" value={email} onChange={this.onChange}/>
                 </form>
-                <!-- DALEJ moja wizja: dalsze pola na początku nic nie wyświetlają, mają tylko przycisk "dodaj", który dodaje po kolei rekord edukacji, doświadczenia itd -->
                 <p>Edukacja</p>
                 <form onChange={handleChange} id="education">
-                    <input type="text" value={education} onChange={onChange}/>
+                    <input id="education" type="text" value={education} onChange={onChange}/>
                 </form>
                 <p>Doświadczenie zawodowe</p>
                 <form onChange={handleChange} id="workExperience">
-                    <input type="text" value={workExperience} onChange={onChange}/>
+                    <input id="workexp" type="text" value={workExperience} onChange={onChange}/>
                 </form>
                 <p>Umiejętności</p>
                 <form onChange={handleChange} id="skills">
-                    <input type="text" value={skills} onChange={onChange}/>
+                    <input id="skills" type="text" value={skills} onChange={onChange}/>
                 </form>
                 <p>Języki obce</p>
                 <form onChange={handleChange} id="languages">
-                    <input type="text" value={languages} onChange={onChange}/>
+                    <input id="langs" type="text" value={languages} onChange={onChange}/>
                 </form>
-                <!-- Przyciski zapisz i odrzuć (?), wrzuca dane wyżek do jakiejś kolekcji -->
                 <Button onClick ={this.exportChanges} id="Save">Zapisz</Button>
             </Container>
         );
