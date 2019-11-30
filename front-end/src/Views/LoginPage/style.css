@@ -1,5 +1,8 @@
 .loginPage {
-  height: 100vh;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .loginPage__form {
@@ -9,6 +12,11 @@
 .loginPage__link {
   color: black;
   text-align: left;
+  transition: 0.5s;
+}
+.loginPage__link:hover {
+  color: black;
+  text-decoration: none;
 }
 
 .loginPage__links {
@@ -54,7 +62,7 @@
 .contentContainer__formContainer {
   clip-path: polygon(63% 0, 98% 6%, 100% 95%, 0 100%, 0 5%);
   background-color: lightgray;
-  min-height: 80%;
+  min-height: 80vh;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -94,6 +102,11 @@
 .loginButton {
   color: white;
   text-transform: uppercase;
+  transition: 0.5s;
+}
+
+.loginButton:hover {
+  opacity: 0.5;
 }
 
 .loginButton--type1 {
@@ -112,6 +125,14 @@
   position: absolute;
   right: 0;
   transform: translateX(15px);
+}
+
+.loginButton--type3 {
+  clip-path: polygon(32% 0, 100% 25%, 96% 100%, 7% 100%, 0 26%);
+  background-color: green;
+  width: 100%;
+  position: absolute;
+  transform: translateY(30px);
 }
 
 /* .contentContainer__formContainer--register {

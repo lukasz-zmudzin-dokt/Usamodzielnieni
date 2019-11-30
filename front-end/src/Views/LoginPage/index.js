@@ -78,7 +78,6 @@ class LoginPage extends React.Component {
               <Form.Control.Feedback type="invalid">
                 Podaj właściwy email
               </Form.Control.Feedback>
-              <Form.Control.Feedback>Ok!</Form.Control.Feedback>
             </Form.Group>
             <Form.Group controlId="formGroupPassword">
               {/* <Form.Label>Hasło</Form.Label> */}
@@ -104,16 +103,13 @@ class LoginPage extends React.Component {
               <button type="submit" className="loginButton loginButton--type2">
                 Zaloguj
               </button>
+              <button className="loginButton loginButton--type3">
+                <Link to="/newPassword" className="loginPage__link">
+                  Zapomniałeś hasła?
+                </Link>
+              </button>
             </section>
           </Form>
-          {/* <section className="loginPage__links">
-            <Link to="/newPassword" className="loginPage__link">
-              Zapomniałeś hasła?
-            </Link>
-            <Link to="/newAccount" className="loginPage__link">
-              Utwórz konto!
-            </Link>
-          </section>*/}
         </section>
       </Container>
     );
