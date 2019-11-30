@@ -1,11 +1,12 @@
 import React from "react";
 import Container from "react-bootstrap/Container";
-import Button from "react-bootstrap/Button";
+
 import Form from "react-bootstrap/Form";
 import { Link } from "react-router-dom";
 
 class RegisterPage extends React.Component {
   state = {
+    newUser: {},
     email: "", // przechowywanie maila
     first_name: "", // imie
     last_name: "", //nazwisko
@@ -13,7 +14,7 @@ class RegisterPage extends React.Component {
     phone_number: "", // numer telefonu
     password: "", // przechowywanie hasła
     passwordR: "", // przechowywanie powtórzenia hasła
-    areEqual: false,
+    areEqual: true,
     validated: false // przechowywanie stanu czy ktoś juz kliknął przycisk walidacji czy nie
   };
 
@@ -27,17 +28,51 @@ class RegisterPage extends React.Component {
 
   // Funkcja podsumowująca formularz
   handleSubmit = event => {
+    const {
+      email,
+      first_name,
+      last_name,
+      username,
+      phone_number,
+      password,
+      passwordR
+    } = this.state; // destrukturyzacja stanu,maila
     const form = event.currentTarget; // formularz
-    const { password, email, passwordR } = this.state; // destrukturyzacja stanu,maila
+
     event.preventDefault(); // zapobiega odświeżaniu strony
 
     //Sprawdzenie czy formularz został poprawnie uzupełniony
     console.log(form.checkValidity());
+
     if (form.checkValidity() === false || password !== passwordR) {
       event.preventDefault();
       event.stopPropagation(); // zatrzymuje event
+    } else if (form.checkValidity() === true && password !== passwordR) {
+      this.setState({
+        areEqual: false
+      });
     } else {
-      console.log(password, email); // jezeli wszystko okej wyswietla stan(w przyszlosci bedzie przekazywany do backendu)
+      this.setState({
+        areEqual: true
+      });
+      this.setState({
+        newUser: {
+          email,
+          first_name,
+          last_name,
+          username,
+          phone_number,
+          password
+        }
+      });
+      console.log({
+        email,
+        first_name,
+        last_name,
+        username,
+        phone_number,
+        password
+      });
     }
 
     // przycisk został kliknięty więc zmieniamy stan
@@ -173,6 +208,13 @@ class RegisterPage extends React.Component {
               <Form.Control.Feedback type="invalid">
                 Minimalna ilośc znaków: 6
               </Form.Control.Feedback>
+              {!areEqual ? (
+                <small className="invalidMessage">
+                  Hasła są odpowiedniej długości, ale nie są takie same
+                </small>
+              ) : (
+                ""
+              )}
             </Form.Group>
             <section className="loginButton__section">
               <button className="loginButton loginButton--type1">

@@ -104,7 +104,10 @@ class LoginPage extends React.Component {
                 Zaloguj
               </button>
               <button className="loginButton loginButton--type3">
-                <Link to="/newPassword" className="loginPage__link">
+                <Link
+                  to="/newPassword"
+                  className="loginPage__link loginPage__link--white"
+                >
                   Zapomniałeś hasła?
                 </Link>
               </button>
