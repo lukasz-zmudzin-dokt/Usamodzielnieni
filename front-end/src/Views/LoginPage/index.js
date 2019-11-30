@@ -1,6 +1,5 @@
 import React from "react";
 import Container from "react-bootstrap/Container";
-import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { Link } from "react-router-dom";
 
@@ -47,60 +46,74 @@ class LoginPage extends React.Component {
     const { onChange, handleSubmit } = this; // destrukturyzacja funkcji
     return (
       <Container className="loginPage">
-        <h1 className="display-4">Logowanie</h1>
-        <section className="loginPage__media">
+        {/* <section className="loginPage__media">
           <button className="media__button media__button--facebook">
             Facebook
           </button>
           <button className="media__button media__button--google">
             Google
           </button>
-        </section>
-        <Form
-          noValidate
-          validated={validated}
-          onSubmit={handleSubmit}
-          className="loginPage__form primary"
-        >
-          <Form.Group controlId="formGroupEmail">
-            <Form.Label>Email:</Form.Label>
-            <Form.Control
-              type="email"
-              placeholder="Enter email"
-              required
-              value={email}
-              onChange={onChange}
-              className="loginPage__input"
-            />
-            <Form.Control.Feedback type="invalid">
-              Podaj właściwy email
-            </Form.Control.Feedback>
-            <Form.Control.Feedback>Ok!</Form.Control.Feedback>
-          </Form.Group>
-          <Form.Group controlId="formGroupPassword">
-            <Form.Label>Hasło</Form.Label>
-            <Form.Control
-              type="password"
-              autoComplete="on"
-              placeholder="Password"
-              value={password}
-              onChange={onChange}
-              required
-              minLength="6"
-            />
-            <Form.Control.Feedback type="invalid">
-              Podaj właściwe hasło
-            </Form.Control.Feedback>
-          </Form.Group>
-          <Button type="submit">Zaloguj</Button>
-        </Form>
-        <section className="loginPage__links">
-          <Link to="/newPassword" className="loginPage__link">
-            Zapomniałeś hasła?
-          </Link>
-          <Link to="/newAccount" className="loginPage__link">
-            Utwórz konto!
-          </Link>
+        </section> */}
+
+        <div className="contentContainer__title">
+          <h2 className="title__text">Logowanie</h2>
+        </div>
+        <section className="contentContainer__formContainer">
+          <Form
+            noValidate
+            validated={validated}
+            onSubmit={handleSubmit}
+            className="loginPage__form primary"
+          >
+            <Form.Group controlId="formGroupEmail">
+              {/* <Form.Label>Email:</Form.Label> */}
+              <Form.Control
+                type="email"
+                placeholder="Email"
+                required
+                value={email}
+                onChange={onChange}
+                className="loginPage__input"
+              />
+              <Form.Control.Feedback type="invalid">
+                Podaj właściwy email
+              </Form.Control.Feedback>
+              <Form.Control.Feedback>Ok!</Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group controlId="formGroupPassword">
+              {/* <Form.Label>Hasło</Form.Label> */}
+              <Form.Control
+                type="password"
+                autoComplete="on"
+                placeholder="Hasło"
+                value={password}
+                onChange={onChange}
+                required
+                minLength="6"
+              />
+              <Form.Control.Feedback type="invalid">
+                Podaj właściwe hasło
+              </Form.Control.Feedback>
+            </Form.Group>
+            <section className="loginButton__section">
+              <button className="loginButton loginButton--type1">
+                <Link to="/newAccount" className="loginPage__link">
+                  Rejestracja
+                </Link>
+              </button>
+              <button type="submit" className="loginButton loginButton--type2">
+                Zaloguj
+              </button>
+            </section>
+          </Form>
+          {/* <section className="loginPage__links">
+            <Link to="/newPassword" className="loginPage__link">
+              Zapomniałeś hasła?
+            </Link>
+            <Link to="/newAccount" className="loginPage__link">
+              Utwórz konto!
+            </Link>
+          </section>*/}
         </section>
       </Container>
     );

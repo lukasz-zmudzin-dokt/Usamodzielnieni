@@ -1,10 +1,10 @@
 .loginPage {
-  background-color: #fced96;
   height: 100vh;
 }
 
 .loginPage__link {
-  color: gray;
+  color: black;
+  text-align: left;
 }
 
 .loginPage__links {
@@ -45,4 +45,66 @@
 
 .media__button--google:hover {
   background-color: #f3f3f3;
+}
+
+.contentContainer__formContainer {
+  clip-path: polygon(63% 0, 98% 6%, 100% 95%, 0 100%, 0 5%);
+  background-color: lightgray;
+  min-height: 80%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.contentContainer__title {
+  clip-path: polygon(4% 0, 95% 28%, 100% 71%, 0% 100%);
+  width: 60%;
+  max-width: 350px;
+  height: 50px;
+  transform: translate(10px, 70%);
+  z-index: 1;
+  position: relative;
+  background-color: purple;
+}
+
+.title__text {
+  font-size: 1.5rem;
+  color: white;
+  text-transform: uppercase;
+  line-height: 50px;
+  transform: translateX(10px);
+}
+
+.loginButton__section {
+  position: relative;
+  width: 100%;
+  min-height: 50px;
+  padding: 0 5px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.loginButton {
+  color: white;
+  text-transform: uppercase;
+}
+
+.loginButton--type1 {
+  position: absolute;
+  left: 0;
+  width: 65%;
+  clip-path: polygon(2% 15%, 94% 3%, 99% 100%, 5% 100%);
+  background-color: yellow;
+  transform: translateX(-15px);
+}
+
+.loginButton--type2 {
+  clip-path: polygon(23% 0, 100% 0, 100% 70%, 18% 100%, 0% 38%);
+  background-color: purple;
+  width: 55%;
+  position: absolute;
+  right: 0;
+  transform: translateX(15px);
 }
