@@ -2,6 +2,10 @@
   height: 100vh;
 }
 
+.loginPage__form {
+  max-width: 80%;
+}
+
 .loginPage__link {
   color: black;
   text-align: left;
@@ -56,6 +60,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding: 40px 0 20px 0;
 }
 
 .contentContainer__title {
@@ -107,4 +112,12 @@
   position: absolute;
   right: 0;
   transform: translateX(15px);
+}
+
+/* .contentContainer__formContainer--register {
+  min-height: 90vh;
+} */
+
+.contentContainer__title--register {
+  width: 65%;
 }
