@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import CVEditorPage from "Views/CVEditorPage";
+import CVEditorPage from "./Views/CVEditorPage";
 import {BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 class App extends React.Component {
