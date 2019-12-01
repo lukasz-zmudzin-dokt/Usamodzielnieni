@@ -218,7 +218,7 @@ class RegisterPage extends React.Component {
             </Form.Group>
             <section className="loginButton__section">
               <button className="loginButton loginButton--type1">
-                <Link to="/" className="loginPage__link">
+                <Link to="/login" className="loginPage__link">
                   Logowanie
                 </Link>
               </button>
