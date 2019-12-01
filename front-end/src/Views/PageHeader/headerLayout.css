@@ -1,0 +1,13 @@
+.navbar_logo {
+    max-width: 200px;
+    max-height: 100px;
+}
+
+.charity_logo {
+    max-height: 100px;
+    max-width: 200px;
+}
+
+.charity_logo:hover {
+    box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.5);
+}
