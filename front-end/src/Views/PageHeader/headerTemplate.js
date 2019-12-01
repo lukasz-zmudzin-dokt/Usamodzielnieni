@@ -1,6 +1,7 @@
 import React from 'react';
 import {Navbar, Nav, Container, Button, Form} from "react-bootstrap";
 
+import { Link } from "react-router-dom";
 import 'Views/PageHeader/headerLayout.css';
 import logo from '../graphics/logo.png';
 
@@ -30,8 +31,8 @@ class HeaderTemplate extends React.Component {
                             <Nav.Link id="moneyMgmt">Zarządzanie budżetem</Nav.Link>
                         </Nav>
                         <Form inline>
-                            <Nav.Link id="phones" variant="light">Telefony</Nav.Link>
-                            <Button id="loginButton" variant="outline-light">Logowanie</Button>
+                            <Nav.Link id="phones" variant="light"><Link to="/user">Telefony</Link></Nav.Link>
+                            <Button id="loginButton" variant="outline-light"><Link to="/login">Logowanie</Link></Button>
                         </Form>
                     </Navbar.Collapse>
                 </Navbar>

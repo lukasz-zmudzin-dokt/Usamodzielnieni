@@ -3,6 +3,7 @@ import "./App.css";
 import UserProfilePage from "Views/UserProfilePage";
 import LoginPage from "Views/LoginPage";
 import RegisterPage from "Views/RegisterPage";
+import HeaderTemplate from "Views/PageHeader/headerTemplate";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 class App extends React.Component {
@@ -10,6 +11,7 @@ class App extends React.Component {
     return (
       <div>
         <Router>
+          <HeaderTemplate />
           <Switch>
             <Route path="/user" exact component={UserProfilePage} />
             <Route path="/login" exact component={LoginPage} />
