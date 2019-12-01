@@ -23,19 +23,19 @@
   text-decoration: none;
 }
 
-.loginPage__links {
+/* .loginPage__links {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-}
+} */
 
-.loginPage__media {
+/* .loginPage__media {
   width: 100%;
   display: flex;
   justify-content: space-between;
   margin: 30px 0;
-}
-.media__button {
+} */
+/* .media__button {
   width: 45%;
   border: 1px solid lightgray;
   transition: 0.5s;
@@ -52,7 +52,7 @@
 
 .media__button--facebook:hover {
   background-color: #5179c9;
-}
+} 
 
 .media__button--google {
   background-color: #fff;
@@ -62,6 +62,7 @@
 .media__button--google:hover {
   background-color: #f3f3f3;
 }
+*/
 
 .contentContainer__formContainer {
   clip-path: polygon(63% 0, 98% 6%, 100% 95%, 0 100%, 0 5%);
@@ -84,6 +85,7 @@
   z-index: 1;
   position: relative;
   background-color: purple;
+  padding-left: 10px;
 }
 
 .title__text {
@@ -91,7 +93,6 @@
   color: white;
   text-transform: uppercase;
   line-height: 50px;
-  transform: translateX(10px);
 }
 
 .loginButton__section {
@@ -107,6 +108,7 @@
   color: white;
   text-transform: uppercase;
   transition: 0.5s;
+  border: none;
 }
 
 .loginButton:hover {

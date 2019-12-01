@@ -7,14 +7,14 @@ import "Views/LoginPage/style.css";
 
 class LoginPage extends React.Component {
   state = {
-    email: "", // przechowywanie maila
+    username: "", // przechowywanie nazwy uzytkownika
     password: "", // przechowywanie hasła
     validated: false // przechowywanie stanu czy ktoś juz kliknął przycisk walidacji czy nie
   };
 
   // Funkcja przechowująca aktualne wartości wpisanego maila,hasła
   onChange = e => {
-    const type = e.target.type;
+    const type = e.target.type === "email" ? e.target.type : "username";
     const value = e.target.value;
     this.setState({
       [type]: value
@@ -24,7 +24,7 @@ class LoginPage extends React.Component {
   // Funkcja podsumowująca formularz
   handleSubmit = event => {
     const form = event.currentTarget; // formularz
-    const { password, email } = this.state; // destrukturyzacja stanu,maila
+    const { password, username } = this.state; // destrukturyzacja stanu,maila
     event.preventDefault(); // zapobiega odświeżaniu strony
 
     //Sprawdzenie czy formularz został poprawnie uzupełniony
@@ -32,7 +32,7 @@ class LoginPage extends React.Component {
       event.preventDefault();
       event.stopPropagation(); // zatrzymuje event
     } else {
-      console.log(password, email); // jezeli wszystko okej wyswietla stan(w przyszlosci bedzie przekazywany do backendu)
+      console.log(password, username); // jezeli wszystko okej wyswietla stan(w przyszlosci bedzie przekazywany do backendu)
     }
 
     // przycisk został kliknięty więc zmieniamy stan
@@ -42,7 +42,7 @@ class LoginPage extends React.Component {
   };
 
   render() {
-    const { email, password, validated } = this.state; // destrukturyzacja stanu,emaila
+    const { username, password, validated } = this.state; // destrukturyzacja stanu,emaila
     const { onChange, handleSubmit } = this; // destrukturyzacja funkcji
     return (
       <Container className="loginPage">
@@ -65,15 +65,16 @@ class LoginPage extends React.Component {
             onSubmit={handleSubmit}
             className="loginPage__form primary"
           >
-            <Form.Group controlId="formGroupEmail">
+            <Form.Group controlId="formGroupUsername">
               {/* <Form.Label>Email:</Form.Label> */}
               <Form.Control
-                type="email"
-                placeholder="Email"
+                type="text"
+                placeholder="Login"
                 required
-                value={email}
+                value={username}
                 onChange={onChange}
                 className="loginPage__input"
+                minLength="6"
               />
               <Form.Control.Feedback type="invalid">
                 Podaj właściwy email
