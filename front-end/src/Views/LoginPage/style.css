@@ -1,0 +1,155 @@
+.loginPage {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.loginPage__form {
+  max-width: 80%;
+}
+
+.loginPage__link {
+  color: black;
+  text-align: left;
+  transition: 0.5s;
+}
+
+.loginPage__link--white {
+  color: white;
+}
+.loginPage__link:hover {
+  color: black;
+  text-decoration: none;
+}
+
+/* .loginPage__links {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+} */
+
+/* .loginPage__media {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin: 30px 0;
+} */
+/* .media__button {
+  width: 45%;
+  border: 1px solid lightgray;
+  transition: 0.5s;
+  border-radius: 5px;
+}
+.media__button:focus {
+  outline: none;
+}
+
+.media__button--facebook {
+  color: white;
+  background-color: #4267b2;
+}
+
+.media__button--facebook:hover {
+  background-color: #5179c9;
+} 
+
+.media__button--google {
+  background-color: #fff;
+  color: black;
+}
+
+.media__button--google:hover {
+  background-color: #f3f3f3;
+}
+*/
+
+.contentContainer__formContainer {
+  clip-path: polygon(63% 0, 98% 6%, 100% 95%, 0 100%, 0 5%);
+  background-color: lightgray;
+  min-height: 80vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 0 20px 0;
+}
+
+.contentContainer__title {
+  clip-path: polygon(4% 0, 95% 28%, 100% 71%, 0% 100%);
+  width: 60%;
+  max-width: 350px;
+  height: 50px;
+  transform: translate(10px, 70%);
+  z-index: 1;
+  position: relative;
+  background-color: purple;
+  padding-left: 10px;
+}
+
+.title__text {
+  font-size: 1.5rem;
+  color: white;
+  text-transform: uppercase;
+  line-height: 50px;
+}
+
+.loginButton__section {
+  position: relative;
+  width: 100%;
+  min-height: 50px;
+  padding: 0 5px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.loginButton {
+  color: white;
+  text-transform: uppercase;
+  transition: 0.5s;
+  border: none;
+}
+
+.loginButton:hover {
+  opacity: 0.7;
+}
+
+.loginButton--type1 {
+  position: absolute;
+  left: 0;
+  width: 65%;
+  clip-path: polygon(2% 15%, 94% 3%, 99% 100%, 5% 100%);
+  background-color: yellow;
+  transform: translateX(-15px);
+}
+
+.loginButton--type2 {
+  clip-path: polygon(23% 0, 100% 0, 100% 70%, 18% 100%, 0% 38%);
+  background-color: purple;
+  width: 55%;
+  position: absolute;
+  right: 0;
+  transform: translateX(15px);
+}
+
+.loginButton--type3 {
+  clip-path: polygon(32% 0, 100% 25%, 96% 100%, 7% 100%, 0 26%);
+  background-color: green;
+
+  width: 100%;
+  position: absolute;
+  transform: translateY(30px);
+}
+
+/* .contentContainer__formContainer--register {
+  min-height: 90vh;
+} */
+
+.contentContainer__title--register {
+  width: 65%;
+}
+
+.invalidMessage {
+  color: red;
+}
