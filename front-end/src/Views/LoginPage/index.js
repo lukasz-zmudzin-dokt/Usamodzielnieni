@@ -1,16 +1,19 @@
 import React from "react";
-import { Container, Button, Card, ButtonGroup, Col } from "react-bootstrap";
+import { Container, Button, Card } from "react-bootstrap";
 import Cookies from "universal-cookie";
 import Form from "react-bootstrap/Form";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
 import "Views/LoginPage/style.css";
 import bgImage from "assets/fot..png";
+
+const cookies = new Cookies();
 
 class LoginPage extends React.Component {
   state = {
     username: "",
     password: "",
+    redirect: false,
     cookieVal: false,
     validated: false
   };
@@ -24,10 +27,16 @@ class LoginPage extends React.Component {
     });
   };
 
+  setRedirect = () => {
+    this.setState({
+      redirect: true
+    });
+  };
+
   setCookie = () => {
     const { username } = this.state;
-    const cookies = new Cookies();
-    cookies.set(`${username}`, "loggedIn", { path: "/" });
+
+    cookies.set(`username`, username, { path: "/", maxAge: "" });
   };
 
   handleCheck = e => {
@@ -49,6 +58,7 @@ class LoginPage extends React.Component {
       if (cookieVal) {
         setCookie();
       }
+      this.setRedirect();
       console.log(password, username); // login i hasło użytkownika
     }
 
@@ -57,6 +67,18 @@ class LoginPage extends React.Component {
     });
   };
 
+  renderRedirect = () => {
+    if (this.state.redirect) {
+      return <Redirect to="/user" />;
+    }
+  };
+
+  componentDidMount() {
+    if (cookies.get("username")) {
+      this.setRedirect();
+    }
+  }
+
   render() {
     const { username, password, validated, cookieVal } = this.state;
     const { onChange, handleSubmit, handleCheck } = this;
@@ -64,11 +86,13 @@ class LoginPage extends React.Component {
     return (
       <Container className="loginPage">
         {window.innerWidth >= 768 ? (
-          <img className="loginPage__bgImage" src={bgImage} />
+          <img className="loginPage__bgImage" src={bgImage} alt="tło" />
         ) : null}
         <Card className="loginPage__card">
-          <Card.Header as="h2">Logowanie</Card.Header>
-          <Card.Body>
+          <Card.Header as="h2" className="loginPage__header">
+            Logowanie
+          </Card.Header>
+          <Card.Body className="loginPage__body">
             <Form
               noValidate
               validated={validated}
@@ -86,7 +110,7 @@ class LoginPage extends React.Component {
                   minLength="6"
                 />
                 <Form.Control.Feedback type="invalid">
-                  Podaj właściwy email
+                  Podaj właściwy login
                 </Form.Control.Feedback>
               </Form.Group>
               <Form.Group controlId="formGroupPassword">
@@ -111,11 +135,14 @@ class LoginPage extends React.Component {
                   label="Zapamiętaj mnie"
                 />
               </Form.Group>
-              <Button variant="secondary">Zaloguj</Button>
+              <Button variant="secondary" type="submit">
+                Zaloguj
+              </Button>
             </Form>
             <div className="loginPage__links">
-              <Link to="/newAccount">Rejestracja</Link>
-              <Link to="/newPassword">Zapomniałeś hasła?</Link>
+              <Link to="/newAccount">Załóż konto!</Link>
+              {this.renderRedirect()}
+              {/* <Link to="/newPassword">Zapomniałeś hasła?</Link> */}
             </div>
           </Card.Body>
         </Card>

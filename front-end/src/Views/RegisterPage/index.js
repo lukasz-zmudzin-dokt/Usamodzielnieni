@@ -7,15 +7,15 @@ import bgImage from "assets/fot..png";
 class RegisterPage extends React.Component {
   state = {
     newUser: {},
-    email: "", // przechowywanie maila
-    first_name: "", // imie
-    last_name: "", //nazwisko
-    username: "", //nazwa uzytkownika
-    phone_number: "", // numer telefonu
-    password: "", // przechowywanie hasła
-    passwordR: "", // przechowywanie powtórzenia hasła
+    email: "",
+    first_name: "",
+    last_name: "",
+    username: "",
+    phone_number: "",
+    password: "",
+    passwordR: "",
     areEqual: true,
-    validated: false // przechowywanie stanu czy ktoś juz kliknął przycisk walidacji czy nie
+    validated: false
   };
 
   onChange = (e, val) => {
@@ -26,7 +26,6 @@ class RegisterPage extends React.Component {
     });
   };
 
-  // Funkcja podsumowująca formularz
   handleSubmit = event => {
     const {
       email,
@@ -36,17 +35,16 @@ class RegisterPage extends React.Component {
       phone_number,
       password,
       passwordR
-    } = this.state; // destrukturyzacja stanu,maila
-    const form = event.currentTarget; // formularz
+    } = this.state;
+    const form = event.currentTarget;
 
-    event.preventDefault(); // zapobiega odświeżaniu strony
+    event.preventDefault();
 
-    //Sprawdzenie czy formularz został poprawnie uzupełniony
     console.log(form.checkValidity());
 
     if (form.checkValidity() === false || password !== passwordR) {
       event.preventDefault();
-      event.stopPropagation(); // zatrzymuje event
+      event.stopPropagation();
     } else if (form.checkValidity() === true && password !== passwordR) {
       this.setState({
         areEqual: false
@@ -75,7 +73,6 @@ class RegisterPage extends React.Component {
       });
     }
 
-    // przycisk został kliknięty więc zmieniamy stan
     this.setState({
       validated: true
     });
@@ -97,11 +94,13 @@ class RegisterPage extends React.Component {
     return (
       <Container className="loginPage">
         {window.innerWidth >= 768 ? (
-          <img className="loginPage__bgImage" src={bgImage} />
+          <img className="loginPage__bgImage" src={bgImage} alt="Tło" />
         ) : null}
         <Card className="loginPage__card">
-          <Card.Header as="h2">Rejestracja</Card.Header>
-          <Card.Body>
+          <Card.Header as="h2" className="loginPage__header">
+            Rejestracja
+          </Card.Header>
+          <Card.Body className="loginPage__body">
             <Form
               noValidate
               validated={validated}
@@ -224,7 +223,9 @@ class RegisterPage extends React.Component {
                   ""
                 )}
               </Form.Group>
-              <Button variant="secondary">Utwórz konto</Button>
+              <Button variant="secondary" type="submit">
+                Utwórz konto
+              </Button>
             </Form>
 
             <div className="loginPage__links">
