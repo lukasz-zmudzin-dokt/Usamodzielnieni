@@ -1,9 +1,14 @@
 import React from "react";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
+import DatePicker, { registerLocale } from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import polish from "date-fns/locale/pl";
+
 
 //import 'Views/CVEditorPage/style.css';
 import Form from "react-bootstrap/Form";
+registerLocale("pl", polish);
 
 class CVEditorPage extends React.Component {
   //nie działa, jest do baza do zmian
@@ -12,7 +17,7 @@ class CVEditorPage extends React.Component {
     super(props);
     this.state = {
       fullName: "", //czy w rejestracji będzie imię i nazwisko?
-      birthDate: "", //defaultowo formularz, potem może jakiś MonthPicker albo DatePicker
+      birthDate: new Date(), //defaultowo formularz, potem może jakiś MonthPicker albo DatePicker
       phoneNumber: "",
       email: "", //import z db?
       education: "",
@@ -38,7 +43,14 @@ class CVEditorPage extends React.Component {
     e.preventDefault();
   };
 
+  handleDateChange = date => {
+    this.setState({
+      birthDate: date
+    });
+  };
+
   render() {
+    //const months = ['Sty', 'Lut', 'Mar', 'Kwi', 'Maj', 'Cze', 'Lip', 'Sie', 'Wrz', 'Paź', 'Lis', 'Gru'];
     return (
       <Container className="CVEditorPage">
         <h1 className="display-4">Kreator CV</h1>
@@ -59,15 +71,16 @@ class CVEditorPage extends React.Component {
             <br />
             <br />
             Data urodzenia:{" "}
-            <input
-              id="birthDate"
-              type="text"
-              name="birthDate"
-              placeholder="data urodzenia"
-              onBlur={e => this.handleBlur(e)}
+            <DatePicker
+              locale="pl"
+              dateFormat="dd/MM/yyyy"
+              selected={this.state.birthDate}
+              onChange={this.handleDateChange}
+              peekNextMonth
+              showMonthDropdown
+              showYearDropdown
+              dropdownMode="select"
             />
-            <input />
-            <input />
             <br />
             <br />
             Numer telefonu:{" "}
@@ -123,10 +136,10 @@ class CVEditorPage extends React.Component {
           </p>
           <Form id="skills">
             <input
-            id="skills"
-            type="text"
-            name="skills"
-            onBlur={e => this.handleBlur(e)}
+              id="skills"
+              type="text"
+              name="skills"
+              onBlur={e => this.handleBlur(e)}
             />
           </Form>
           <br />
