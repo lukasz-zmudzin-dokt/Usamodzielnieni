@@ -35,8 +35,15 @@ class LoginPage extends React.Component {
 
   setCookie = () => {
     const { username } = this.state;
+    const current = new Date();
+    const nextYear = new Date();
 
-    cookies.set(`username`, username, { path: "/", maxAge: "" });
+    nextYear.setFullYear(current.getFullYear() + 1); // ciasteczko na rok
+
+    cookies.set(`username`, username, {
+      path: "/",
+      expires: nextYear
+    });
   };
 
   handleCheck = e => {

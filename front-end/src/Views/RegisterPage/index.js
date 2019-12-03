@@ -228,7 +228,7 @@ class RegisterPage extends React.Component {
               </Button>
             </Form>
             <div className="loginPage__links">
-              <Link to="/" className="loginPage__link">
+              <Link to="/login" className="loginPage__link">
                 Masz już konto? Zaloguj się!
               </Link>
             </div>
