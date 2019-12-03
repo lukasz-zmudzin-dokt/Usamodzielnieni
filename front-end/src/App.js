@@ -4,7 +4,7 @@ import UserProfilePage from "Views/UserProfilePage";
 import LoginPage from "Views/LoginPage";
 import RegisterPage from "Views/RegisterPage";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import MenuPage from "Views/MenuPage";
+import MenuPage from "Views/Footer";
 
 class App extends React.Component {
   render() {
