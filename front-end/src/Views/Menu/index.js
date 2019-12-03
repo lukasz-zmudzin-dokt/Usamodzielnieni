@@ -11,9 +11,12 @@ class Footer extends React.Component {
 
         return (
 
-            <div class="bg">
-                <img src={Footer} alt=""></img>
-                AAA
+            <div class="bg-div">
+
+                <img src={Backdrop} alt="" class="bg align-self-center"></img>
+                <div class="menu-tile menu-tile-1">Pierwsza rzecz</div>
+                <div className="menu-tile menu-tile-2">Druga rzecz</div>
+                <div className="menu-tile menu-tile-3">Trzecia rzecz</div>
             </div>
 
         )
