@@ -6,8 +6,8 @@ import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import polish from "date-fns/locale/pl";
 
-import bgImage from "C:/Users/Jakub/Desktop/CVEditorPage AKTUALNE/Usamodzielnieni/front-end/src/assets/fot..png";
-import 'C:/Users/Jakub/Desktop/CVEditorPage AKTUALNE/Usamodzielnieni/front-end/src/Views/CVEditorPage/style.css';
+import bgImage from "assets/fot..png";
+import 'Views/CVEditorPage/style.css';
 import Form from "react-bootstrap/Form";
 registerLocale("pl", polish);
 
