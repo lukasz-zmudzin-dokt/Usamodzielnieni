@@ -6,7 +6,7 @@ import RegisterPage from "Views/RegisterPage";
 import HeaderTemplate from "./Views/PageHeader/headerTemplate";
 import CVEditorPage from "./Views/CVEditorPage";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import MenuPage from "Views/MenuPage";
+import MenuPage from "Views/Footer";
 
 class App extends React.Component {
   render() {
