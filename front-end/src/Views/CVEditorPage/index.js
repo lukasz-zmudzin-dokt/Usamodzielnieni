@@ -1,17 +1,18 @@
 import React from "react";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card"
 import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import polish from "date-fns/locale/pl";
 
-
-//import 'Views/CVEditorPage/style.css';
+import bgImage from "C:/Users/Jakub/Desktop/CVEditorPage AKTUALNE/Usamodzielnieni/front-end/src/assets/fot..png";
+import 'C:/Users/Jakub/Desktop/CVEditorPage AKTUALNE/Usamodzielnieni/front-end/src/Views/CVEditorPage/style.css';
 import Form from "react-bootstrap/Form";
 registerLocale("pl", polish);
 
 class CVEditorPage extends React.Component {
-    //nie działa, jest do baza do zmian
+  //nie działa, jest do baza do zmian
 
   constructor(props) {
     super(props);
@@ -26,28 +27,28 @@ class CVEditorPage extends React.Component {
       languages: ""
     };
 
-        //this.handleChange = this.handleBlur.bind(this);
-        //this.handleSubmit = this.handleSubmit.bind(this);
-    }
+    //this.handleChange = this.handleBlur.bind(this);
+    //this.handleSubmit = this.handleSubmit.bind(this);
+  }
 
-    // listenery do poprawy
-    handleBlur = e => {
-        //const { property, value } = e.target;
-        this.setState({
-            [e.target.name]: e.target.value
-        });
-    };
+  // listenery do poprawy
+  handleBlur = e => {
+    //const { property, value } = e.target;
+    this.setState({
+      [e.target.name]: e.target.value
+    });
+  };
 
-    handleSubmit = e => {
-        console.log(this.state);
-        e.preventDefault();
-    };
+  handleSubmit = e => {
+    console.log(this.state);
+    e.preventDefault();
+  };
 
-    handleDateChange = date => {
-        this.setState({
-            birthDate: date
-        });
-    };
+  handleDateChange = date => {
+    this.setState({
+      birthDate: date
+    });
+  };
 
   handleDateChange = date => {
     this.setState({
@@ -59,115 +60,122 @@ class CVEditorPage extends React.Component {
     //const months = ['Sty', 'Lut', 'Mar', 'Kwi', 'Maj', 'Cze', 'Lip', 'Sie', 'Wrz', 'Paź', 'Lis', 'Gru'];
     return (
       <Container className="CVEditorPage">
-        <h1 className="display-4">Kreator CV</h1>
-        <br />
-        <p>
-          <h3>Dane osobowe</h3>
-        </p>
-        <Form id="data" onSubmit={e => this.handleSubmit(e)}>
-          <Form id="personalData">
-            Imię i nazwisko:{" "}
-            <input
-              id="name"
-              type="text"
-              name="fullName"
-              placeholder="Imię i nazwisko"
-              onBlur={e => this.handleBlur(e)}
-            />
-            <br />
-            <br />
-            Data urodzenia:{" "}
-            <DatePicker
-              locale="pl"
-              dateFormat="dd/MM/yyyy"
-              selected={this.state.birthDate}
-              onChange={this.handleDateChange}
-              peekNextMonth
-              showMonthDropdown
-              showYearDropdown
-              dropdownMode="select"
-            />
-            <br />
-            <br />
-            Numer telefonu:{" "}
-            <input
-              id="phone"
-              type="text"
-              name="phoneNumber"
-              placeholder="nr telefonu"
-              onBlur={e => this.handleBlur(e)}
-            />
-            <br />
-            <br />
-            Email:{" "}
-            <input
-              id="email"
-              type="text"
-              name="email"
-              placeholder="adres e-mail"
-              onBlur={e => this.handleBlur(e)}
-            />
-            <br />
-            <br />
-          </Form>
-          <br />
+        {window.innerWidth >= 768 ? (
+          <img className="loginPage__bgImage" src={bgImage} />
+        ) : null}
+        <Card className="CVEditorPage_card">
+          <Card.Header as="h1">Kreator CV</Card.Header>
+          <Card.Body>
 
-          <p>
-            <h3>Edukacja</h3>
-          </p>
-          <Form id="education">
-            <input
-              id="education"
-              type="text"
-              name="education"
-              placeholder="edukacja"
-              onBlur={e => this.handleBlur(e)}
-            />
-          </Form>
-          <br />
-          <p>
-            <h3>Doświadczenie zawodowe</h3>
-          </p>
-          <Form id="workExperience">
-            <input
-              id="workexp"
-              type="text"
-              name="workExperience"
-              onBlur={e => this.handleBlur(e)}
-            />
-          </Form>
-          <br />
-          <p>
-            <h3>Umiejętności</h3>
-          </p>
-          <Form id="skills">
-            <input
-              id="skills"
-              type="text"
-              name="skills"
-              onBlur={e => this.handleBlur(e)}
-            />
-          </Form>
-          <br />
-          <p>
-            <h3>Języki obce</h3>
-          </p>
-          <Form id="languages">
-            <input
-              id="languages"
-              type="text"
-              name="languages"
-              onBlur={e => this.handleBlur(e)}
-            />
-          </Form>
+            <p>
+              <h3>Dane osobowe</h3>
+            </p>
+            <Form id="data" onSubmit={e => this.handleSubmit(e)}>
+              <Form id="personalData">
+                Imię i nazwisko:{" "}
+                <input
+                  id="name"
+                  type="text"
+                  name="fullName"
+                  placeholder="Imię i nazwisko"
+                  onBlur={e => this.handleBlur(e)}
+                />
+                <br />
+                <br />
+                Data urodzenia:{" "}
+                <DatePicker
+                  locale="pl"
+                  dateFormat="dd/MM/yyyy"
+                  selected={this.state.birthDate}
+                  onChange={this.handleDateChange}
+                  peekNextMonth
+                  showMonthDropdown
+                  showYearDropdown
+                  dropdownMode="select"
+                />
+                <br />
+                <br />
+                Numer telefonu:{" "}
+                <input
+                  id="phone"
+                  type="text"
+                  name="phoneNumber"
+                  placeholder="nr telefonu"
+                  onBlur={e => this.handleBlur(e)}
+                />
+                <br />
+                <br />
+                Email:{" "}
+                <input
+                  id="email"
+                  type="text"
+                  name="email"
+                  placeholder="adres e-mail"
+                  onBlur={e => this.handleBlur(e)}
+                />
+                <br />
+                <br />
+              </Form>
+              <br />
 
-                    <Button type="submit" id="saveButton">
-                        Zapisz
-                    </Button>
-                </Form>
-            </Container>
-        );
-    }
+              <p>
+                <h3>Edukacja</h3>
+              </p>
+              <Form id="education">
+                <input
+                  id="education"
+                  type="text"
+                  name="education"
+                  placeholder="edukacja"
+                  onBlur={e => this.handleBlur(e)}
+                />
+              </Form>
+              <br />
+              <p>
+                <h3>Doświadczenie zawodowe</h3>
+              </p>
+              <Form id="workExperience">
+                <input
+                  id="workexp"
+                  type="text"
+                  name="workExperience"
+                  onBlur={e => this.handleBlur(e)}
+                />
+              </Form>
+              <br />
+              <p>
+                <h3>Umiejętności</h3>
+              </p>
+              <Form id="skills">
+                <input
+                  id="skills"
+                  type="text"
+                  name="skills"
+                  onBlur={e => this.handleBlur(e)}
+                />
+              </Form>
+              <br />
+              <p>
+                <h3>Języki obce</h3>
+              </p>
+              <Form id="languages">
+                <input
+                  id="languages"
+                  type="text"
+                  name="languages"
+                  onBlur={e => this.handleBlur(e)}
+                />
+              </Form>
+
+              <Button variant="secondary" type="submit" id="saveButton">
+                Zapisz
+              </Button>
+            </Form>
+          </Card.Body>
+        </Card>
+      </Container >
+    );
+  }
 }
 
 export default CVEditorPage;
