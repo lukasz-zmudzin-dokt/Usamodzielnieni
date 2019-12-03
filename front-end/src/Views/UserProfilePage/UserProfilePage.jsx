@@ -36,9 +36,9 @@ class UserProperty extends React.Component {
         const { user, property } = this.props;
 
         return (
-            <ListGroupItem>
+            <ListGroupItem className="property">
                 <Row>
-                    <Col xs="auto"><b>{names.property[property]}:</b></Col>
+                    <Col xs="12" sm="auto"><div className="property__title">{names.property[property]}:</div></Col>
                     <Col>{user[property]}</Col>
                 </Row>
             </ListGroupItem>
@@ -50,11 +50,12 @@ class UserBasicInfo extends React.Component {
     render() {
         const { firstName, lastName, role } = this.props.user;
         return (
-            <Row>
-                <Col xs="auto"><UserIcon /></Col>
+
+            <Row className="text-center text-sm-left">
+                <Col xs="12" sm="auto"><UserIcon /></Col>
                 <Col>
-                    <Row><h5>{firstName + " " + lastName}</h5></Row>
-                    <Row>{names.role[role]}</Row>
+                    <div><h5>{firstName + " " + lastName}</h5></div>
+                    <div>{names.role[role]}</div>
                 </Col>
             </Row>
         );
