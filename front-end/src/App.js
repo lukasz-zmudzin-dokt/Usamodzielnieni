@@ -7,6 +7,7 @@ import HeaderTemplate from "./Views/PageHeader/headerTemplate";
 import CVEditorPage from "./Views/CVEditorPage";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Footer from "Views/Footer";
+import Menu from "Views/Menu";
 
 class App extends React.Component {
   render() {
@@ -20,6 +21,7 @@ class App extends React.Component {
             <Route path="/login" exact component={LoginPage} />
             <Route path="/newAccount" exact component={RegisterPage} />
             <Route path="/footer" exact component={Footer} />
+            <Route path="/menu" exact component={Menu} />
           </Switch>
         </Router>
       </div>
