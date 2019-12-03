@@ -1,120 +1,151 @@
 import React from "react";
-import Container from "react-bootstrap/Container";
+import { Container, Button, Card } from "react-bootstrap";
+import Cookies from "universal-cookie";
 import Form from "react-bootstrap/Form";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
 import "Views/LoginPage/style.css";
+import bgImage from "assets/fot..png";
+
+const cookies = new Cookies();
 
 class LoginPage extends React.Component {
   state = {
-    username: "", // przechowywanie nazwy uzytkownika
-    password: "", // przechowywanie hasła
-    validated: false // przechowywanie stanu czy ktoś juz kliknął przycisk walidacji czy nie
+    username: "",
+    password: "",
+    redirect: false,
+    cookieVal: false,
+    validated: false
   };
 
-  // Funkcja przechowująca aktualne wartości wpisanego maila,hasła
   onChange = e => {
-    const type = e.target.type === "email" ? e.target.type : "username";
+    const type = e.target.type === "text" ? "username" : e.target.type;
+
     const value = e.target.value;
     this.setState({
       [type]: value
     });
   };
 
-  // Funkcja podsumowująca formularz
-  handleSubmit = event => {
-    const form = event.currentTarget; // formularz
-    const { password, username } = this.state; // destrukturyzacja stanu,maila
-    event.preventDefault(); // zapobiega odświeżaniu strony
+  setRedirect = () => {
+    this.setState({
+      redirect: true
+    });
+  };
 
-    //Sprawdzenie czy formularz został poprawnie uzupełniony
+  setCookie = () => {
+    const { username } = this.state;
+
+    cookies.set(`username`, username, { path: "/", maxAge: "" });
+  };
+
+  handleCheck = e => {
+    this.setState({
+      cookieVal: e.target.checked
+    });
+  };
+
+  handleSubmit = event => {
+    const form = event.currentTarget;
+    const { password, username, cookieVal } = this.state;
+    const { setCookie } = this;
+    event.preventDefault();
+
     if (form.checkValidity() === false) {
       event.preventDefault();
-      event.stopPropagation(); // zatrzymuje event
+      event.stopPropagation();
     } else {
-      console.log(password, username); // jezeli wszystko okej wyswietla stan(w przyszlosci bedzie przekazywany do backendu)
+      if (cookieVal) {
+        setCookie();
+      }
+      this.setRedirect();
+      console.log(password, username); // login i hasło użytkownika
     }
 
-    // przycisk został kliknięty więc zmieniamy stan
     this.setState({
       validated: true
     });
   };
 
+  renderRedirect = () => {
+    if (this.state.redirect) {
+      return <Redirect to="/user" />;
+    }
+  };
+
+  componentDidMount() {
+    if (cookies.get("username")) {
+      this.setRedirect();
+    }
+  }
+
   render() {
-    const { username, password, validated } = this.state; // destrukturyzacja stanu,emaila
-    const { onChange, handleSubmit } = this; // destrukturyzacja funkcji
+    const { username, password, validated, cookieVal } = this.state;
+    const { onChange, handleSubmit, handleCheck } = this;
+    console.log(window.innerWidth);
     return (
       <Container className="loginPage">
-        {/* <section className="loginPage__media">
-          <button className="media__button media__button--facebook">
-            Facebook
-          </button>
-          <button className="media__button media__button--google">
-            Google
-          </button>
-        </section> */}
-
-        <div className="contentContainer__title">
-          <h2 className="title__text">Logowanie</h2>
-        </div>
-        <section className="contentContainer__formContainer">
-          <Form
-            noValidate
-            validated={validated}
-            onSubmit={handleSubmit}
-            className="loginPage__form primary"
-          >
-            <Form.Group controlId="formGroupUsername">
-              {/* <Form.Label>Email:</Form.Label> */}
-              <Form.Control
-                type="text"
-                placeholder="Login"
-                required
-                value={username}
-                onChange={onChange}
-                className="loginPage__input"
-                minLength="6"
-              />
-              <Form.Control.Feedback type="invalid">
-                Podaj właściwy email
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group controlId="formGroupPassword">
-              {/* <Form.Label>Hasło</Form.Label> */}
-              <Form.Control
-                type="password"
-                autoComplete="on"
-                placeholder="Hasło"
-                value={password}
-                onChange={onChange}
-                required
-                minLength="6"
-              />
-              <Form.Control.Feedback type="invalid">
-                Podaj właściwe hasło
-              </Form.Control.Feedback>
-            </Form.Group>
-            <section className="loginButton__section">
-              <button className="loginButton loginButton--type1">
-                <Link to="/newAccount" className="loginPage__link">
-                  Rejestracja
-                </Link>
-              </button>
-              <button type="submit" className="loginButton loginButton--type2">
+        {window.innerWidth >= 768 ? (
+          <img className="loginPage__bgImage" src={bgImage} alt="tło" />
+        ) : null}
+        <Card className="loginPage__card">
+          <Card.Header as="h2" className="loginPage__header">
+            Logowanie
+          </Card.Header>
+          <Card.Body className="loginPage__body">
+            <Form
+              noValidate
+              validated={validated}
+              onSubmit={handleSubmit}
+              className="primary"
+            >
+              <Form.Group controlId="formGroupUsername">
+                <Form.Control
+                  type="text"
+                  placeholder="Login"
+                  required
+                  value={username}
+                  onChange={onChange}
+                  className="loginPage__input"
+                  minLength="6"
+                />
+                <Form.Control.Feedback type="invalid">
+                  Podaj właściwy login
+                </Form.Control.Feedback>
+              </Form.Group>
+              <Form.Group controlId="formGroupPassword">
+                <Form.Control
+                  type="password"
+                  autoComplete="on"
+                  placeholder="Hasło"
+                  value={password}
+                  onChange={onChange}
+                  required
+                  minLength="6"
+                />
+                <Form.Control.Feedback type="invalid">
+                  Podaj właściwe hasło
+                </Form.Control.Feedback>
+              </Form.Group>
+              <Form.Group controlId="formBasicCheckbox">
+                <Form.Check
+                  type="checkbox"
+                  checked={cookieVal}
+                  onChange={handleCheck}
+                  label="Zapamiętaj mnie"
+                />
+              </Form.Group>
+              <Button variant="secondary" type="submit">
                 Zaloguj
-              </button>
-              <button className="loginButton loginButton--type3">
-                <Link
-                  to="/newPassword"
-                  className="loginPage__link loginPage__link--white"
-                >
-                  Zapomniałeś hasła?
-                </Link>
-              </button>
-            </section>
-          </Form>
-        </section>
+              </Button>
+            </Form>
+            <div className="loginPage__links">
+              <Link to="/newAccount">Załóż konto!</Link>
+              {this.renderRedirect()}
+              {/* <Link to="/newPassword">Zapomniałeś hasła?</Link> */}
+            </div>
+          </Card.Body>
+        </Card>
       </Container>
     );
   }
