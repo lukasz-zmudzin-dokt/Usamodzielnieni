@@ -6,8 +6,10 @@ import "react-datepicker/dist/react-datepicker.css";
 import polish from "date-fns/locale/pl";
 
 
+
 //import 'Views/CVEditorPage/style.css';
-import Form from "react-bootstrap/Form";
+import Form from "react-bootstrap/Form"
+import {Language} from 'Views/CVEditorPage';
 registerLocale("pl", polish);
 
 class CVEditorPage extends React.Component {
@@ -23,7 +25,7 @@ class CVEditorPage extends React.Component {
       education: "",
       workExperience: "",
       skills: "",
-      languages: ""
+      languages: []
     };
 
         //this.handleChange = this.handleBlur.bind(this);
@@ -57,6 +59,7 @@ class CVEditorPage extends React.Component {
 
   render() {
     //const months = ['Sty', 'Lut', 'Mar', 'Kwi', 'Maj', 'Cze', 'Lip', 'Sie', 'Wrz', 'Paź', 'Lis', 'Gru'];
+    let lan = new Language();
     return (
       <Container className="CVEditorPage">
         <h1 className="display-4">Kreator CV</h1>
