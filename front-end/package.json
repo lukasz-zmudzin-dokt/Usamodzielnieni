@@ -9,8 +9,11 @@
     "react-date-picker": "^7.8.2",
     "react-datepicker": "^2.10.1",
     "react-dom": "^16.12.0",
+    "react-native-picker-select": "^6.3.3",
+    "react-picker": "^1.2.15",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "^3.2.0"
+    "react-scripts": "^3.2.0",
+    "react-select": "^3.0.8"
   },
   "scripts": {
     "start": "react-scripts start",

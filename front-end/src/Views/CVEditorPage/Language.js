@@ -7,11 +7,17 @@ class Language extends React.Component {
             name: "",
             level: ""
         };
+    }
 
-        
+    setName(name) {
+        this.setState({
+            name: name
+        });
     }
 
     render() {
         return(this);
     }
 }
+
+export default Language;

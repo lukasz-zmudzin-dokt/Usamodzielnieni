@@ -1,0 +1,23 @@
+img {
+    position: absolute;
+    max-width: 100%;
+    opacity: 0.3;
+}
+
+.CVEditorPage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+
+  .CVEditorPage_card{
+      width: 500px;
+  }
+
+  Button.btn.btn-secondary {
+      position: relative;
+      top: 10px;
+  }
+
+  
