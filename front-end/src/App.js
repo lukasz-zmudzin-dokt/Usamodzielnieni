@@ -4,6 +4,7 @@ import UserProfilePage from "Views/UserProfilePage";
 import LoginPage from "Views/LoginPage";
 import RegisterPage from "Views/RegisterPage";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import MenuPage from "Views/MenuPage";
 
 class App extends React.Component {
   render() {
@@ -14,6 +15,7 @@ class App extends React.Component {
             <Route path="/user" exact component={UserProfilePage} />
             <Route path="/login" exact component={LoginPage} />
             <Route path="/newAccount" exact component={RegisterPage} />
+            <Route path="/menu" exact component={MenuPage} />
           </Switch>
         </Router>
       </div>
