@@ -1,4 +1,4 @@
-img {
+.cvPage__bgImage {
     position: absolute;
     max-width: 100%;
     opacity: 0.3;
@@ -9,13 +9,13 @@ img {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-  }
+}
 
-  .CVEditorPage_card{
-      width: 500px;
-  }
+.CVEditorPage_card{
+    width: 50vw;
+}
 
-  Button.btn.btn-secondary {
-      position: relative;
-      top: 10px;
-  }
+Button.btn.btn-secondary {
+    position: relative;
+    top: 10px;
+}
