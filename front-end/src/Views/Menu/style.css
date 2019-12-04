@@ -1,59 +1,22 @@
-.bg {
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
-}
-.bg-div {
-    position:absolute;
-    width:100%;
-    height:100%;
-}
-.menu-tile {
-    position: absolute;
-    height: 325px;
-    width: 325px;
-    text-align: center;
+.menu {
+    background-image: url("./menu-backdrop.png");
+    background-size: cover;
+
+    width: -webkit-fill-available;
+    height: -webkit-fill-available;
+
+    position: fixed;
+
     font-size: 30px;
     font-weight: bold;
+    color: #7345A9!important;
 }
-.bg-div-inner {
-    position: relative;
+.spacing {
+    height: 200px;
 }
-.menu-tile-1 {
-    left: 7.2%;
-    top: 0%;
+.menu-row {
+    height: 33%;
 }
-.menu-tile-2 {
-    left: 28.5%;
-    top: 0%;
-}
-.menu-tile-3 {
-    left: 49.8%;
-    top: 0%;
-
-}
-.menu-tile-4 {
-    left: 71.3%;
-    top: 0%;
-
-}
-.menu-tile-5 {
-    left: 7.2%;
-    top: 43%;
-
-}
-.menu-tile-6 {
-    left: 28.5%;
-    top: 43%;
-
-}
-.menu-tile-7 {
-    left: 49.8%;
-    top: 43%;
-
-}
-.menu-tile-8 {
-    left: 71.3%;
-    top: 43%;
-    
+.disabled {
+    color: lightslategray;
 }

@@ -2,32 +2,32 @@ import React from "react";
 import Container from "react-bootstrap/Container";
 
 import "Views/Menu/style.css";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Nav from 'react-bootstrap/Nav'
 
-import Backdrop from "../../assets/menu-backdrop.png";
-
-class Footer extends React.Component {
+class Menu extends React.Component {
 
     render() {
 
         return (
 
-            <div class="bg-div">
-
-                <img src={Backdrop} alt="" class="bg align-self-center"></img>
-                <a href="/login">
-                    <div class="menu-tile menu-tile-1">Kreator CV</div>
-                </a>
-                <div class="menu-tile menu-tile-2">Od czego zacząć</div>
-                <div class="menu-tile menu-tile-3">Kursy, staże, praca</div>
-                <div class="menu-tile menu-tile-4">Opis stanowisk</div>
-                <div class="menu-tile menu-tile-5">Testy zawodowe</div>
-                <div class="menu-tile menu-tile-6">Historie usamodzielnonych</div>
-                <div class="menu-tile menu-tile-7">Znani z dorosłości</div>
-                <div class="menu-tile menu-tile-8">Jak zarządzać budżetem</div>
+            <div className="menu text-center">
+                <Row className="menu-row">
+                    <a href="/login"><Col>Od czego zacząć usamodzielnienie</Col></a>
+                    <Col className="disabled">Kursy, staże, praca</Col>
+                    <Col className="disabled">Opis stanowisk</Col>
+                </Row>
+                <Row className="menu-row">
+                    <Col className="disabled">Testy zawodowe i osobowości</Col>
+                    <Col className="disabled">Historie usamodzielnionych</Col>
+                    <Col className="disabled">Znani z dorosłości</Col>
+                    <Col className="disabled">Jak zarządzać budżetem</Col>
+                </Row>
             </div>
 
         )
     }
 }
 
-export default Footer;
+export default Menu;
