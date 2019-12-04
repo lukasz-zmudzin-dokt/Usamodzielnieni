@@ -18,12 +18,15 @@ class CVEditorPage extends React.Component {
       phoneNumber: "",
       email: "",
 
-      education: [],
-      workExperience: [],
-      itemObj: {},
-      itemDescription: "",
-      itemStartTime: new Date(),
-      itemEndTime: "",
+      education: {},
+      eduDescription: "",
+      eduStartTime: new Date(),
+      eduEndTime: null,
+
+      workExperience: {},
+      workDescription: "",
+      workStartTime: new Date(),
+      workEndTime: null,
 
       skills: [],
       skillToAdd: "",
@@ -33,6 +36,56 @@ class CVEditorPage extends React.Component {
       languageLevel: "podstawowy"
     };
   }
+
+  addComplexItem = (e, arrayName) => {
+    e.preventDefault();
+    let array =
+      arrayName === "education"
+        ? this.state.education
+        : this.state.workExperience;
+    let itemDescription =
+      arrayName === "education"
+        ? this.state.eduDescription
+        : this.state.workDescription;
+    let itemStartTime =
+      arrayName === "education"
+        ? this.state.eduStartTime
+        : this.state.workStartTime;
+    let itemEndTime =
+      arrayName === "education"
+        ? this.state.eduEndTime
+        : this.state.workEndTime;
+
+    let descrStr =
+      arrayName === "education" ? "eduDescription" : "workDescription";
+    let startStr = arrayName === "education" ? "eduStartTime" : "workStartTime";
+    let endStr = arrayName === "education" ? "eduEndTime" : "workEndTime";
+
+    let newItemList = array;
+    let newItemDates = [itemStartTime, itemEndTime];
+
+    if (itemDescription !== "") {
+      newItemList[itemDescription] = newItemDates;
+    }
+    this.setState({
+      [arrayName]: newItemList,
+      [descrStr]: "",
+      [startStr]: new Date(),
+      [endStr]: null
+    });
+
+    for (var prop in this.state.education) {
+      console.log(this.complexItemToStr(prop, this.state.education[prop]));
+    }
+
+    console.log(this.state.workExperience);
+  };
+
+  handleDateChange = (dateFieldName, date) => {
+    this.setState({
+      [dateFieldName]: date
+    });
+  };
 
   handleBlur = (e, val) => {
     this.setState({
@@ -56,8 +109,8 @@ class CVEditorPage extends React.Component {
     let name = this.state.languageName;
     let level = this.state.languageLevel;
 
-    let correctName = /^([a-zA-ZąćęłńóśźżĄĆĘŁŃÓŚŹŻ]{1,})$/.test(name);
-    
+    let correctName = name !== "";
+
     if (correctName) {
       newLanguages[name] = level;
       this.setState({
@@ -68,7 +121,7 @@ class CVEditorPage extends React.Component {
         languageName: ""
       });
     }
-    
+
     console.log(this.state.languages);
   };
 
@@ -87,9 +140,12 @@ class CVEditorPage extends React.Component {
   handleSkillAdd = e => {
     let newSkills = this.state.skills;
     let name = this.state.skillToAdd;
-    let correctName = /^([a-zA-ZąćęłńóśźżĄĆĘŁŃÓŚŹŻ ]{1,} )$/.test(name);
+    let correctName = name !== "";
 
-    if (correctName && this.state.skills.indexOf(this.state.skillToAdd) === -1) {
+    if (
+      correctName &&
+      this.state.skills.indexOf(this.state.skillToAdd) === -1
+    ) {
       newSkills.push(name);
 
       this.setState({
@@ -123,11 +179,55 @@ class CVEditorPage extends React.Component {
     this.setState({
       languages: newLanguages
     });
+  };
+
+  handleCutEdu = e => {
+    let newEducation = this.state.education;
+    let toDelete = e.target.id;
+
+    delete newEducation[toDelete];
+
+    this.setState({
+      education: newEducation
+    });
+  }
+
+  handleCutWork = e => {
+    let newEducation = this.state.workExperience;
+    let toDelete = e.target.id;
+
+    delete newEducation[toDelete];
+
+    this.setState({
+      workExperience: newEducation
+    });
+  }
+
+  complexItemToStr(key, dates) {
+    //console.log(key);
+    //console.log(dates);
+    let toReturn = "" + key;
+    let start = dates[0];
+    let end = dates[1];
+    let month = start.getMonth() + 1;
+    let year = start.getYear() + 1900;
+
+    toReturn += "\nod: " + month + "/" + year;
+    
+    if (end === null) {
+      toReturn += "\ndo: teraz";
+    } else {
+      month = end.getMonth() + 1;
+      year = end.getYear() + 1900;
+      toReturn += "\ndo: " + month + "/" + year;
+    }
+
+    return toReturn;
   }
 
   renderLanguages() {
     let languagesArr = [];
-    for(var prop in this.state.languages) {
+    for (var prop in this.state.languages) {
       let lanId = prop;
       let lanStr = "" + prop + " - " + this.state.languages[prop];
       languagesArr.push([lanId, lanStr]);
@@ -150,6 +250,152 @@ class CVEditorPage extends React.Component {
         {this.state.skills.map(skill => (
           <Button id={skill} onClick={e => this.handleCutSkill(e)}>
             {skill} x
+          </Button>
+        ))}
+      </ul>
+    );
+  }
+
+  renderEdForm(formName) {
+    //let itemStartTime = formName === "education" ?
+    //let itemEndTime = formName === "education" ?
+    let descriptionStr =
+      formName === "education" ? "eduDescription" : "workDescription";
+    let startTimeStr =
+      formName === "education" ? "eduStartTime" : "workStartTime";
+    let endTimeStr = formName === "education" ? "eduEndTime" : "workEndTime";
+    return (
+      <div id="complex_form_input_set">
+        <Form.Group id="temp_data">
+          {this.renderEdu()}
+          <Form.Label column={""}>Od:</Form.Label>
+          <DatePicker
+            className="complex_form_input_item"
+            locale="pl"
+            dateFormat="MM.yyyy"
+            selected={this.state.eduStartTime} //ogl
+            onChange={date => this.handleDateChange(startTimeStr, date)}
+            withPortal
+            showYearDropdown
+            dropdownMode="select"
+          />
+          <Form.Label column={""}>Do:</Form.Label>
+          <DatePicker
+            className="complex_form_input_item"
+            locale="pl"
+            dateFormat="MM.yyyy"
+            selected={this.state.eduEndTime} //ogl
+            onChange={date => this.handleDateChange(endTimeStr, date)}
+            withPortal
+            showYearDropdown
+            dropdownMode="select"
+          />
+          <Form.Label column={""}>Nazwa:</Form.Label>
+          <Form.Control
+            className="complex_form_input_item"
+            inline
+            type="text"
+            //defaultValue={this.state.fullName}
+            placeholder="Nazwa, miejscowość, ..."
+            onBlur={e => this.handleBlur(e, descriptionStr)}
+          />
+          <Button
+            variant="secondary"
+            type="submit"
+            onClick={e => this.addComplexItem(e, formName)}
+          >
+            + Dodaj
+          </Button>
+        </Form.Group>
+      </div>
+    );
+  }
+
+  renderWorkForm(formName) {
+    //let itemStartTime = formName === "education" ?
+    //let itemEndTime = formName === "education" ?
+    let descriptionStr =
+      formName === "education" ? "eduDescription" : "workDescription";
+    let startTimeStr =
+      formName === "education" ? "eduStartTime" : "workStartTime";
+    let endTimeStr = formName === "education" ? "eduEndTime" : "workEndTime";
+    return (
+      <div id="complex_form_input_set">
+        <Form.Group id="temp_data">
+          {this.renderWork()}
+          <Form.Label column={""}>Od:</Form.Label>
+          <DatePicker
+            className="complex_form_input_item"
+            locale="pl"
+            dateFormat="MM.yyyy"
+            selected={this.state.workStartTime} //ogl
+            onChange={date => this.handleDateChange(startTimeStr, date)}
+            withPortal
+            showYearDropdown
+            dropdownMode="select"
+          />
+          <Form.Label column={""}>Do:</Form.Label>
+          <DatePicker
+            className="complex_form_input_item"
+            locale="pl"
+            dateFormat="MM.yyyy"
+            selected={this.state.workEndTime} //ogl
+            onChange={date => this.handleDateChange(endTimeStr, date)}
+            withPortal
+            showYearDropdown
+            dropdownMode="select"
+          />
+          <Form.Label column={""}>Nazwa:</Form.Label>
+          <Form.Control
+            className="complex_form_input_item"
+            inline
+            type="text"
+            //defaultValue={this.state.fullName}
+            placeholder="Nazwa, miejscowość, ..."
+            onBlur={e => this.handleBlur(e, descriptionStr)}
+          />
+          <Button
+            variant="secondary"
+            type="submit"
+            onClick={e => this.addComplexItem(e, formName)}
+          >
+            + Dodaj
+          </Button>
+        </Form.Group>
+      </div>
+    );
+  }
+
+  renderEdu() {
+    let eduArr = [];
+    for (var prop in this.state.education) {
+      let eduId = prop;
+      let eduStr = this.complexItemToStr(prop, this.state.education[prop]);
+      eduArr.push([eduId, eduStr]);
+    }
+    return (
+      <ul>
+        {eduArr.map(edu => (
+          <Button id={edu[0]} onClick={e => this.handleCutEdu(e)}>
+            {edu[1]} x
+          </Button>
+        ))}
+      </ul>
+    );
+  }
+
+  renderWork() {
+    let eduArr = [];
+    for (var prop in this.state.workExperience) {
+      let eduId = prop;
+      let eduStr = this.complexItemToStr(prop, this.state.workExperience[prop]);
+      eduArr.push([eduId, eduStr]);
+    }
+    return (
+      <ul>
+        {eduArr.map(edu => (
+          <Button id={edu[0]} onClick={e => this.handleCutWork(e)}>
+            {edu[1]} x
           </Button>
         ))}
       </ul>
@@ -223,35 +469,23 @@ class CVEditorPage extends React.Component {
                   />
                 </Col>
               </Form.Group>
+
               <Form.Group id="complex-cv-fields">
                 <Form.Label>
                   <h3>Edukacja</h3>
                 </Form.Label>
                 <br />
-                <Col>
-                  <Form.Control
-                    type="textarea"
-                    defaultValue={this.state.education}
-                    placeholder="edukacja"
-                    onBlur={e => this.handleBlur(e, "education")}
-                    className="cv_page_input"
-                  />
-                </Col>
+                <Col>{this.renderEdForm("education")}</Col>
               </Form.Group>
+
               <Form.Group id="complex-cv-fields">
                 <Form.Label>
                   <h3>Doświadczenie zawodowe</h3>
                 </Form.Label>
-                <Col>
-                  <Form.Control
-                    type="textarea"
-                    defaultValue={this.state.workExperience}
-                    placeholder="Doświadczenie"
-                    onBlur={e => this.handleBlur(e, "workExperience")}
-                    className="cv_page_input"
-                  />
-                </Col>
+                <br />
+                <Col>{this.renderWorkForm("workExperience")}</Col>
               </Form.Group>
+
               <Form.Group id="complex-cv-fields">
                 <Form.Label>
                   <h3>Umiejętności</h3>
@@ -277,12 +511,13 @@ class CVEditorPage extends React.Component {
                   </Button>
                 </Col>
               </Form.Group>
+
               <Form.Group id="complex-cv-fields">
                 <Form.Label>
                   <h3>Języki obce</h3>
                 </Form.Label>
                 <Col>
-                {this.renderLanguages()}
+                  {this.renderLanguages()}
                   <Form.Control
                     id="languages"
                     type="text"
