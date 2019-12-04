@@ -11,7 +11,6 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        {(document.title = "Usamodzielnieni")}
         <HeaderTemplate />
         <Router>
           <Switch>

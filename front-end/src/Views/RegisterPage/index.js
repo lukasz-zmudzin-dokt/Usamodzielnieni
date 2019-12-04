@@ -15,7 +15,8 @@ class RegisterPage extends React.Component {
     password: "",
     passwordR: "",
     areEqual: true,
-    validated: false
+    validated: false,
+    incorrect: false
   };
 
   onChange = (e, val) => {
@@ -36,8 +37,17 @@ class RegisterPage extends React.Component {
       headers: {
         "Content-Type": "application/json"
       }
+    }).then(res => {
+      if (res.status === 200) {
+        this.setRedirect();
+      } else {
+        this.setState({
+          validated: false,
+          incorrect: true,
+          username: ""
+        });
+      }
     });
-    console.log(response);
   };
 
   handleSubmit = event => {
@@ -102,7 +112,8 @@ class RegisterPage extends React.Component {
       password,
       passwordR,
       areEqual,
-      validated
+      validated,
+      incorrect
     } = this.state;
     const { onChange, handleSubmit } = this;
     return (
@@ -245,6 +256,13 @@ class RegisterPage extends React.Component {
                 Utwórz konto
               </Button>
             </Form>
+            {incorrect ? (
+              <div className="loginPage__messageFail">
+                <small className="loginPage__failure">
+                  Istnieje już taki użytkownik
+                </small>
+              </div>
+            ) : null}
             <div className="loginPage__links">
               <Link to="/login" className="loginPage__link">
                 Masz już konto? Zaloguj się!
