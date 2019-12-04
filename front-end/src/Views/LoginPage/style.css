@@ -1,0 +1,41 @@
+.loginPage {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.loginPage__links {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.loginPage__bgImage {
+  position: absolute;
+  max-width: 100%;
+  /* max-height: 100vh; */
+  opacity: 0.3;
+  /* top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); */
+}
+
+.loginPage__header {
+  text-align: center;
+}
+
+.loginPage__button {
+  margin-bottom: 0.5rem !important;
+}
+
+@media (min-width: 768px) {
+  .loginPage__card {
+    width: 400px !important;
+  }
+  .loginPage__body {
+    padding: 1.25rem 2.5rem !important;
+  }
+}
