@@ -14,9 +14,16 @@ class Footer extends React.Component {
             <div class="bg-div">
 
                 <img src={Backdrop} alt="" class="bg align-self-center"></img>
-                <div class="menu-tile menu-tile-1">Pierwsza rzecz</div>
-                <div className="menu-tile menu-tile-2">Druga rzecz</div>
-                <div className="menu-tile menu-tile-3">Trzecia rzecz</div>
+                <a href="/login">
+                    <div class="menu-tile menu-tile-1">Kreator CV</div>
+                </a>
+                <div class="menu-tile menu-tile-2">Od czego zacząć</div>
+                <div class="menu-tile menu-tile-3">Kursy, staże, praca</div>
+                <div class="menu-tile menu-tile-4">Opis stanowisk</div>
+                <div class="menu-tile menu-tile-5">Testy zawodowe</div>
+                <div class="menu-tile menu-tile-6">Historie usamodzielnonych</div>
+                <div class="menu-tile menu-tile-7">Znani z dorosłości</div>
+                <div class="menu-tile menu-tile-8">Jak zarządzać budżetem</div>
             </div>
 
         )
