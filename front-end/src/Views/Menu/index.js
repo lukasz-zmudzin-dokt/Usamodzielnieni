@@ -3,7 +3,7 @@ import Container from "react-bootstrap/Container";
 
 import "Views/Menu/style.css";
 
-import Backdrop from "../../img/menu-backdrop.png";
+import Backdrop from "../../assets/menu-backdrop.png";
 
 class Footer extends React.Component {
 
