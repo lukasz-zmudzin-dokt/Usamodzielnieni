@@ -304,15 +304,15 @@ class CVEditorPage extends React.Component {
                         placeholder="Nazwa, miejscowość, ..."
                         onBlur={e => this.handleBlur(e, descriptionStr)}
                     />
-                    <Button
-                        id="item_add_button"
-                        variant="secondary"
-                        type="submit"
-                        onClick={e => this.addComplexItem(e, formName)}
-                    >
-                        + Dodaj
-                    </Button>
                 </Form.Group>
+                <Button
+                    id="item_add_button"
+                    variant="secondary"
+                    type="submit"
+                    onClick={e => this.addComplexItem(e, formName)}
+                >
+                    + Dodaj
+                </Button>
             </div>
         );
     }
@@ -360,15 +360,15 @@ class CVEditorPage extends React.Component {
                         placeholder="Nazwa, miejscowość, ..."
                         onBlur={e => this.handleBlur(e, descriptionStr)}
                     />
-                    <Button
-                        id="item_add_button"
-                        variant="secondary"
-                        type="submit"
-                        onClick={e => this.addComplexItem(e, formName)}
-                    >
-                        + Dodaj
-                    </Button>
                 </Form.Group>
+                <Button
+                    id="item_add_button"
+                    variant="secondary"
+                    type="submit"
+                    onClick={e => this.addComplexItem(e, formName)}
+                >
+                    + Dodaj
+                </Button>
             </div>
         );
     }
@@ -416,16 +416,16 @@ class CVEditorPage extends React.Component {
                     <img className="cvPage__bgImage" src={bgImage} alt="tło" />
                 ) : null}
                 <Card className="CVEditorPage_card">
-                    <Card.Header id="cv_page__title" as="h1">
+                    <Card.Header id="cv_page__title" as="h2">
                         Kreator CV
                     </Card.Header>
                     <Card.Body>
                         <Form id="cv_data" onSubmit={e => this.handleCVSubmit(e)}>
-                            <Form.Label>
-                                <h3>Dane osobowe</h3>
-                            </Form.Label>
-                            <Form.Group controlId="personalData">
-                                <Col>
+                            <Col>
+                                <Form.Label>
+                                    <h3>Dane osobowe</h3>
+                                </Form.Label>
+                                <Form.Group controlId="personalData">
                                     <Form.Label column={""} sm="2">
                                         Imię i nazwisko:
                                     </Form.Label>
@@ -474,99 +474,87 @@ class CVEditorPage extends React.Component {
                                         onBlur={e => this.handleBlur(e, "email")}
                                         className="cv_page_input"
                                     />
-                                </Col>
-                            </Form.Group>
+                                </Form.Group>
 
-                            <Form.Group id="complex-cv-fields">
-                                <Form.Label>
-                                    <h3>Edukacja</h3>
-                                </Form.Label>
-                                <br />
-                                <Col>{this.renderEdForm("education")}</Col>
-                            </Form.Group>
+                                <Form.Group id="complex-cv-fields">
+                                    <Form.Label>
+                                        <h3>Edukacja</h3>
+                                    </Form.Label>
+                                    {this.renderEdForm("education")}
+                                </Form.Group>
 
-                            <Form.Group id="complex-cv-fields">
-                                <Form.Label>
-                                    <h3>Doświadczenie zawodowe</h3>
-                                </Form.Label>
-                                <br />
-                                <Col>{this.renderWorkForm("workExperience")}</Col>
-                            </Form.Group>
+                                <Form.Group id="complex-cv-fields">
+                                    <Form.Label>
+                                        <h3>Doświadczenie zawodowe</h3>
+                                    </Form.Label>
+                                    {this.renderWorkForm("workExperience")}
+                                </Form.Group>
 
-                            <Form.Group id="complex-cv-fields">
-                                <Form.Label>
-                                    <h3>Umiejętności</h3>
-                                </Form.Label>
-                                <Col>
-                                    {this.renderSkills()}
-                                    <Form.Control
-                                        className="cv_page_input"
-                                        type="text"
-                                        placeholder="Wpisz umiejętność"
-                                        value={this.state.skillToAdd}
-                                        onChange={e => {
-                                            this.setState({ skillToAdd: e.target.value });
-                                        }}
-                                    />
-                                    <Button
-                                        variant="secondary"
-                                        onClick={e => {
-                                            this.handleSkillAdd(e);
-                                            console.log(this.state.skills);
-                                        }}
-                                    >
-                                        + Dodaj
-                                    </Button>
-                                </Col>
-                            </Form.Group>
-
-                            <Form.Group id="complex-cv-fields">
-                                <Form.Label>
-                                    <h3>Języki obce</h3>
-                                </Form.Label>
-                                <Col>
-                                    {this.renderLanguages()}
-                                    <Form.Control
-                                        id="languages"
-                                        type="text"
-                                        placeholder="Język"
-                                        value={this.state.languageName}
-                                        onChange={e => this.handleLanChange(e)}
-                                    />
-                                    <Form.Group controlId="exampleForm.ControlSelect1">
-                                        <Form.Label>Poziom</Form.Label>
+                                <Form.Group id="complex-cv-fields">
+                                    <Form.Label>
+                                        <h3>Umiejętności</h3>
+                                    </Form.Label>
+                                        {this.renderSkills()}
                                         <Form.Control
-                                            as="select"
-                                            onChange={e => this.handleLanLvlChange(e)}
-                                            //    value={this.state.languageLevel}
+                                            className="cv_page_input"
+                                            type="text"
+                                            placeholder="Wpisz umiejętność"
+                                            value={this.state.skillToAdd}
+                                            onChange={e => {
+                                                this.setState({ skillToAdd: e.target.value });
+                                            }}
+                                        />
+                                        <Button
+                                            variant="secondary"
+                                            onClick={e => {
+                                                this.handleSkillAdd(e);
+                                                console.log(this.state.skills);
+                                            }}
                                         >
-                                            <option value="podstawowy">podstawowy</option>
-                                            <option value="komunikatywny">komunikatywny</option>
-                                            <option value="biegły">biegły</option>
-                                        </Form.Control>
-                                    </Form.Group>
-                                    <Button
-                                        variant="secondary"
-                                        onClick={language => this.handleAddLanguage(language)}
-                                    >
-                                        + Dodaj
+                                            + Dodaj
+                                        </Button>
+                                </Form.Group>
+
+                                <Form.Group id="complex-cv-fields">
+                                    <Form.Label>
+                                        <h3>Języki obce</h3>
+                                    </Form.Label>
+                                        {this.renderLanguages()}
+                                        <Form.Control
+                                            id="languages"
+                                            type="text"
+                                            placeholder="Język"
+                                            value={this.state.languageName}
+                                            onChange={e => this.handleLanChange(e)}
+                                        />
+                                        <Form.Group controlId="exampleForm.ControlSelect1">
+                                            <Form.Label>Poziom</Form.Label>
+                                            <Form.Control
+                                                as="select"
+                                                onChange={e => this.handleLanLvlChange(e)}
+                                                //    value={this.state.languageLevel}
+                                            >
+                                                <option value="podstawowy">podstawowy</option>
+                                                <option value="komunikatywny">komunikatywny</option>
+                                                <option value="biegły">biegły</option>
+                                            </Form.Control>
+                                        </Form.Group>
+                                        <Button
+                                            variant="secondary"
+                                            onClick={language => this.handleAddLanguage(language)}
+                                        >
+                                            + Dodaj
+                                        </Button>
+                                </Form.Group>
+                                <ButtonToolbar id="cv_mgmt_button_toolbar">
+                                    <Button className="btn_discard" size="lg" variant="danger" type="reset" id="discardButton" href="/user">
+                                        Odrzuć
                                     </Button>
-                                </Col>
-                            </Form.Group>
-                            <ButtonToolbar id="cv_mgmt_button_toolbar">
-                                <Button size="lg" variant="success" type="submit" id="saveButton">
-                                    Generuj CV
-                                </Button>
-                                <Button
-                                    size="lg"
-                                    variant="danger"
-                                    type="reset"
-                                    id="discardButton"
-                                    href="/user"
-                                >
-                                    Odrzuć
-                                </Button>
-                            </ButtonToolbar>
+                                    <Button className="btn_generate" size="lg" variant="success" type="submit" id="saveButton">
+                                        Generuj CV
+                                    </Button>
+                                </ButtonToolbar>
+                            </Col>
                         </Form>
                     </Card.Body>
                 </Card>

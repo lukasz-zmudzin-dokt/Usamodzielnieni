@@ -1,5 +1,5 @@
 .cv_page__title {
-    justify-content: center;
+    text-align: center;
 }
 
 .cvPage__bgImage {
@@ -53,13 +53,24 @@
     margin-top: 10px;
 }
 
-Button.saveButton, Button.discardButton{
-    width: 20vw;
-    margin-top: 20px;
-}
-
 .complex_cv_fields {
     margin-top: 5vh;
     margin-bottom: 5vh;
+}
+
+.btn_discard {
+    width: 45%;
+    margin-right: 5%;
+}
+
+.btn_generate{
+    width: 45%;
+    margin-left: 5%;
+}
+
+@media (min-width: 768px) {
+    .CVEditorPage_card {
+        width: 100% !important;
+    }
 }
 
