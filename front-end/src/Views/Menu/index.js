@@ -14,7 +14,9 @@ class Menu extends React.Component {
 
             <div className="menu text-center">
                 <Row className="menu-row">
-                    <a href="/login"><Col>Od czego zacząć usamodzielnienie</Col></a>
+
+                    <a href="/login"><Col>Kreator tworzenia CV</Col></a>
+                    <Col className="disabled">Od czego zacząć usamodzielnienie</Col>
                     <Col className="disabled">Kursy, staże, praca</Col>
                     <Col className="disabled">Opis stanowisk</Col>
                 </Row>
