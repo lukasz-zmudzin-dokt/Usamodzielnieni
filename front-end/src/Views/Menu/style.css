@@ -17,6 +17,10 @@
 .menu-row {
     height: 33%;
 }
+.menu-tile {
+    border: thick solid white;
+    width: 25%;
+}
 .disabled {
     color: lightslategray;
 }
