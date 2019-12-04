@@ -1,4 +1,8 @@
-img {
+.cv_page__title {
+    justify-content: center;
+}
+
+.cvPage__bgImage {
     position: absolute;
     max-width: 100%;
     opacity: 0.3;
@@ -9,15 +13,37 @@ img {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-  }
+}
 
-  .CVEditorPage_card{
-      width: 500px;
-  }
+.CVEditorPage_card{
+    width: 50vw;
+}
 
-  Button.btn.btn-secondary {
-      position: relative;
-      top: 10px;
-  }
+.cv_page_input {
+    margin-bottom: 2vh;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    height: 4vh;
+}
 
-  
+.personalData {
+    margin-bottom: 5vh;
+}
+
+.cv_mgmt_button_toolbar {
+    position: relative;
+    display: inline-block;
+    width: 100vw;
+    margin-top: 10px;
+}
+
+Button.saveButton, Button.discardButton{
+    width: 20vw;
+    margin-top: 20px;
+}
+
+.complex_cv_fields {
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+}
