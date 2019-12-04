@@ -14,8 +14,36 @@ class LoginPage extends React.Component {
     username: "",
     password: "",
     redirect: false,
+    incorrect: false,
     cookieVal: false,
     validated: false
+  };
+
+  sendData = object => {
+    const { username, password } = this.state;
+    const proxyurl = "https://cors-anywhere.herokuapp.com/";
+    const url = "http://34973d4d.ngrok.io/account/login/";
+    const response = fetch(proxyurl + url, {
+      method: "POST",
+      body: JSON.stringify({
+        username,
+        password
+      }),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }).then(res => {
+      if (res.status === 200) {
+        this.setRedirect();
+      } else {
+        this.setState({
+          validated: false,
+          incorrect: true,
+          username: "",
+          password: ""
+        });
+      }
+    });
   };
 
   onChange = e => {
@@ -65,7 +93,7 @@ class LoginPage extends React.Component {
       if (cookieVal) {
         setCookie();
       }
-      this.setRedirect();
+      this.sendData();
       console.log(password, username); // login i hasło użytkownika
     }
 
@@ -87,7 +115,7 @@ class LoginPage extends React.Component {
   }
 
   render() {
-    const { username, password, validated, cookieVal } = this.state;
+    const { username, password, validated, cookieVal, incorrect } = this.state;
     const { onChange, handleSubmit, handleCheck } = this;
     console.log(window.innerWidth);
     return (
@@ -142,6 +170,7 @@ class LoginPage extends React.Component {
                   label="Zapamiętaj mnie"
                 />
               </Form.Group>
+
               <Button
                 variant="secondary"
                 className="loginPage__button"
@@ -150,6 +179,13 @@ class LoginPage extends React.Component {
                 Zaloguj
               </Button>
             </Form>
+            {incorrect ? (
+              <div className="loginPage__messageFail">
+                <small className="loginPage__failure">
+                  Nieprawidłowe hasło lub login.
+                </small>
+              </div>
+            ) : null}
             <div className="loginPage__links">
               <Link to="/newAccount">Załóż konto!</Link>
               {this.renderRedirect()}

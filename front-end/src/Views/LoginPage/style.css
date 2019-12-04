@@ -31,6 +31,14 @@
   margin-bottom: 0.5rem !important;
 }
 
+.loginPage__failure {
+  color: red;
+}
+
+.loginPage__messageFail {
+  margin-bottom: 0.5rem;
+}
+
 @media (min-width: 768px) {
   .loginPage__card {
     width: 400px !important;

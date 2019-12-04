@@ -26,6 +26,20 @@ class RegisterPage extends React.Component {
     });
   };
 
+  sendData = object => {
+    console.log(object);
+    const proxyurl = "https://cors-anywhere.herokuapp.com/";
+    const url = "http://34973d4d.ngrok.io/account/register/";
+    const response = fetch(proxyurl + url, {
+      method: "POST",
+      body: JSON.stringify(object),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
+    console.log(response);
+  };
+
   handleSubmit = event => {
     const {
       email,
@@ -63,7 +77,7 @@ class RegisterPage extends React.Component {
           password
         }
       });
-      console.log({
+      this.sendData({
         email,
         first_name,
         last_name,
