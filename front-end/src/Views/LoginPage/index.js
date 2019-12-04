@@ -142,7 +142,11 @@ class LoginPage extends React.Component {
                   label="Zapamiętaj mnie"
                 />
               </Form.Group>
-              <Button variant="secondary" type="submit">
+              <Button
+                variant="secondary"
+                className="loginPage__button"
+                type="submit"
+              >
                 Zaloguj
               </Button>
             </Form>

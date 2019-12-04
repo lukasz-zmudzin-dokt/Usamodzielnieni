@@ -223,7 +223,11 @@ class RegisterPage extends React.Component {
                   ""
                 )}
               </Form.Group>
-              <Button variant="secondary" type="submit">
+              <Button
+                variant="secondary"
+                className="loginPage__button"
+                type="submit"
+              >
                 Utwórz konto
               </Button>
             </Form>
