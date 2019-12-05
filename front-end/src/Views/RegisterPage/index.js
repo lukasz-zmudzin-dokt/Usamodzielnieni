@@ -16,7 +16,9 @@ class RegisterPage extends React.Component {
     passwordR: "",
     areEqual: true,
     validated: false,
-    incorrect: false
+    incorrect: false,
+    correct: false,
+    message: ""
   };
 
   onChange = (e, val) => {
@@ -29,21 +31,35 @@ class RegisterPage extends React.Component {
 
   sendData = object => {
     console.log(object);
-    const proxyurl = "https://cors-anywhere.herokuapp.com/";
-    const url = "http://34973d4d.ngrok.io/account/register/";
-    const response = fetch(proxyurl + url, {
+    // const proxyurl = "https://cors-anywhere.herokuapp.com/";
+    const url = "https://usamo-back.herokuapp.com/account/register/";
+    const response = fetch(url, {
       method: "POST",
       body: JSON.stringify(object),
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        Origin: null
       }
     }).then(res => {
-      if (res.status === 200) {
-        this.setRedirect();
+      console.log(res.status);
+      if (res.status === 201) {
+        this.setState({
+          validated: false,
+          message: "Udało się zarejestrować! Teraz możesz się zalogować",
+          email: "",
+          first_name: "",
+          last_name: "",
+          username: "",
+          phone_number: "",
+          password: "",
+          passwordR: "",
+          correct: true
+        });
       } else {
         this.setState({
           validated: false,
           incorrect: true,
+          message: "Taki użytkownik juz istnieje",
           username: ""
         });
       }
@@ -113,7 +129,9 @@ class RegisterPage extends React.Component {
       passwordR,
       areEqual,
       validated,
-      incorrect
+      incorrect,
+      message,
+      correct
     } = this.state;
     const { onChange, handleSubmit } = this;
     return (
@@ -258,9 +276,12 @@ class RegisterPage extends React.Component {
             </Form>
             {incorrect ? (
               <div className="loginPage__messageFail">
-                <small className="loginPage__failure">
-                  Istnieje już taki użytkownik
-                </small>
+                <small className="loginPage__failure">{message}</small>
+              </div>
+            ) : null}
+            {correct ? (
+              <div className="loginPage__messageFail">
+                <small className="loginPage__correct">{message}</small>
               </div>
             ) : null}
             <div className="loginPage__links">
