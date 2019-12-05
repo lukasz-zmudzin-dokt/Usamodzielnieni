@@ -31,8 +31,7 @@ class RegisterPage extends React.Component {
 
   sendData = object => {
     console.log(object);
-    // const proxyurl = "https://cors-anywhere.herokuapp.com/";
-    const url = "https://usamo-back.herokuapp.com/account/register/";
+    const url = process.env.REACT_APP_API_URL + "account/register/";
     const response = fetch(url, {
       method: "POST",
       body: JSON.stringify(object),

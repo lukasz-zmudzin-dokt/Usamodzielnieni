@@ -35,8 +35,7 @@ class LoginPage extends React.Component {
   sendData = object => {
     const { username, password } = this.state;
     const { createMessage } = this;
-    // const proxyurl = "https://cors-anywhere.herokuapp.com/";
-    const url = "https://usamo-back.herokuapp.com/account/login/";
+    const url = process.env.REACT_APP_API_URL + "account/login/";
     const response = fetch(url, {
       method: "POST",
       body: JSON.stringify({
