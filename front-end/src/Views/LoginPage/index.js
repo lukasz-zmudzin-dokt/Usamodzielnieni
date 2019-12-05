@@ -17,7 +17,8 @@ class LoginPage extends React.Component {
     redirect: false,
     incorrect: false,
     cookieVal: false,
-    validated: false
+    validated: false,
+    token: ""
   };
 
   createMessage = status => {
@@ -48,6 +49,9 @@ class LoginPage extends React.Component {
       }
     }).then(res => {
       if (res.status === 200) {
+        this.setState({
+          token: res.token
+        });
         this.setRedirect();
       } else if (res.status === 400) {
         this.setState({
