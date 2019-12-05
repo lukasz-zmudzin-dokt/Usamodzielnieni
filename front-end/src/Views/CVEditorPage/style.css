@@ -1,0 +1,75 @@
+.cv_page__title {
+  text-align: center;
+}
+
+.cvPage__bgImage {
+  position: absolute;
+  max-width: 100%;
+  opacity: 0.3;
+}
+
+.CVEditorPage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.CVEditorPage_card {
+  width: 50vw;
+}
+
+.cv_page_input {
+  margin-bottom: 2vh;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  height: 4vh;
+}
+
+.item_add_button {
+  margin-top: 2vh;
+}
+
+.temp_data {
+  margin-bottom: 10vh;
+}
+
+.complex_form_input_item {
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  height: 4vh;
+}
+
+.personalData {
+  margin-bottom: 5vh;
+}
+
+.cv_mgmt_button_toolbar {
+  position: relative;
+  display: inline-block;
+  width: 100vw;
+  margin-top: 10px;
+}
+
+.complex_cv_fields {
+  margin-top: 5vh;
+  margin-bottom: 5vh;
+}
+
+.btn_discard {
+  width: 45%;
+  margin-right: 5%;
+}
+
+.btn_generate {
+  width: 45%;
+  margin-left: 5%;
+}
+
+@media (max-width: 768px) {
+  .CVEditorPage_card {
+    width: 100% !important;
+  }
+}
