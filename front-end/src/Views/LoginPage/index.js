@@ -48,11 +48,17 @@ class LoginPage extends React.Component {
         Origin: null
       }
     }).then(res => {
+      console.log(res);
       if (res.status === 200) {
-        this.setState({
-          token: res.token
-        });
-        this.setRedirect();
+        res.blob()
+          .then(data => (new Response(data)).text())
+          .then(text => {
+            const responseValue = JSON.parse(text);
+            this.setState({
+              token: responseValue.token
+            });
+            this.setRedirect();
+          });
       } else if (res.status === 400) {
         this.setState({
           validated: false,
@@ -71,6 +77,7 @@ class LoginPage extends React.Component {
         createMessage(res.status);
       }
     });
+    console.log(response);
   };
 
   onChange = e => {
