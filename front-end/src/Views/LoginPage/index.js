@@ -50,14 +50,12 @@ class LoginPage extends React.Component {
     }).then(res => {
       console.log(res);
       if (res.status === 200) {
-        res.blob()
-          .then(data => (new Response(data)).text())
-          .then(text => {
-            const responseValue = JSON.parse(text);
-            this.setState({
-              token: responseValue.token
-            });
-            this.setRedirect();
+        res.json()
+          .then(responseValue => {
+              this.setState({
+                token: responseValue.token
+              });
+              this.setRedirect();
           });
       } else if (res.status === 400) {
         this.setState({
@@ -77,7 +75,6 @@ class LoginPage extends React.Component {
         createMessage(res.status);
       }
     });
-    console.log(response);
   };
 
   onChange = e => {
