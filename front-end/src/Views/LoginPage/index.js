@@ -18,7 +18,7 @@ class LoginPage extends React.Component {
     incorrect: false,
     cookieVal: false,
     validated: false,
-    token: ""
+    token: this.props.token || ""
   };
 
   createMessage = status => {
@@ -35,7 +35,7 @@ class LoginPage extends React.Component {
 
   sendData = object => {
     const { username, password } = this.state;
-
+    const { setToken } = this.props;
     const url = "https://usamo-back.herokuapp.com/account/login/";
     fetch(url, {
       method: "POST",
@@ -64,9 +64,7 @@ class LoginPage extends React.Component {
           this.setState({
             token
           });
-          cookies.set(`token`, token, {
-            path: "/"
-          });
+          setToken(token);
           this.setRedirect();
         } else {
           this.setState({

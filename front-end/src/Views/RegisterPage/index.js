@@ -1,26 +1,29 @@
 import React from "react";
 import { Container, Card, Form, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
 import bgImage from "assets/fot..png";
 
 class RegisterPage extends React.Component {
   state = {
     newUser: {},
-    email: "",
-    first_name: "",
-    last_name: "",
-    username: "",
-    phone_number: "",
-    password: "",
-    passwordR: "",
+    email: "test@o2.pl",
+    first_name: "asdsadsa",
+    last_name: "asdada",
+    username: "testowe",
+    phone_number: "+48123123123",
+    password: "testowe",
+    passwordR: "testowe",
     areEqual: true,
     validated: false,
-    incorrect: false,
-    correct: false,
-    message: ""
+    redirect: false
   };
 
+  renderRedirect = () => {
+    if (this.state.redirect) {
+      return <Redirect to="/user" />;
+    }
+  };
   onChange = (e, val) => {
     const value = e.target.value;
 
@@ -30,6 +33,7 @@ class RegisterPage extends React.Component {
   };
 
   sendData = object => {
+    const { setToken } = this.props;
     console.log(object);
     const url = "https://usamo-back.herokuapp.com/account/register/";
     fetch(url, {
@@ -39,30 +43,51 @@ class RegisterPage extends React.Component {
         "Content-Type": "application/json",
         Origin: null
       }
-    }).then(res => {
-      console.log(res.status);
-      if (res.status === 201) {
-        this.setState({
-          validated: false,
-          message: "Udało się zarejestrować! Teraz możesz się zalogować",
-          email: "",
-          first_name: "",
-          last_name: "",
-          username: "",
-          phone_number: "",
-          password: "",
-          passwordR: "",
-          correct: true
-        });
-      } else {
-        this.setState({
-          validated: false,
-          incorrect: true,
-          message: "Taki użytkownik juz istnieje",
-          username: ""
-        });
-      }
-    });
+    })
+      .then(res => res.blob())
+      .then(res => new Response(res).text())
+      .then(res => {
+        const token = JSON.parse(res).token;
+        console.log(JSON.parse(res).token);
+        if (token) {
+          this.setState({
+            validated: false,
+            message: "Udało się zarejestrować! Teraz możesz się zalogować",
+            email: "",
+            first_name: "",
+            last_name: "",
+            username: "",
+            phone_number: "",
+            password: "",
+            passwordR: "",
+            correct: true,
+            redirect: true
+          });
+          setToken(token);
+        }
+        //   if (res.status === 201) {
+        //     this.setState({
+        //       validated: false,
+        //       message: "Udało się zarejestrować! Teraz możesz się zalogować",
+        //       email: "",
+        //       first_name: "",
+        //       last_name: "",
+        //       username: "",
+        //       phone_number: "",
+        //       password: "",
+        //       passwordR: "",
+        //       correct: true
+        //     });
+        //   } else {
+        //     this.setState({
+        //       validated: false,
+        //       incorrect: true,
+        //       message: "Taki użytkownik juz istnieje",
+        //       username: ""
+        //     });
+        //   }
+        // });
+      });
   };
 
   handleSubmit = event => {
@@ -290,6 +315,7 @@ class RegisterPage extends React.Component {
             </div>
           </Card.Body>
         </Card>
+        {this.renderRedirect()}
       </Container>
     );
   }
