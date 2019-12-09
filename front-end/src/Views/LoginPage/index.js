@@ -13,9 +13,68 @@ class LoginPage extends React.Component {
   state = {
     username: "",
     password: "",
+    message: "",
     redirect: false,
+    incorrect: false,
     cookieVal: false,
-    validated: false
+    validated: false,
+    token: ""
+  };
+
+  createMessage = status => {
+    if (status === 400) {
+      this.setState({
+        message: "Niepoprawny login lub hasło"
+      });
+    } else {
+      this.setState({
+        message: "Nieznany błąd proszę spróbować później"
+      });
+    }
+  };
+
+  sendData = object => {
+    const { username, password } = this.state;
+    const { createMessage } = this;
+    const url = process.env.REACT_APP_API_URL + "account/login/";
+    const response = fetch(url, {
+      method: "POST",
+      body: JSON.stringify({
+        username,
+        password
+      }),
+      headers: {
+        "Content-Type": "application/json",
+        Origin: null
+      }
+    }).then(res => {
+      console.log(res);
+      if (res.status === 200) {
+        res.json()
+          .then(responseValue => {
+              this.setState({
+                token: responseValue.token
+              });
+              this.setRedirect();
+          });
+      } else if (res.status === 400) {
+        this.setState({
+          validated: false,
+          incorrect: true,
+          username: "",
+          password: ""
+        });
+        createMessage(res.status);
+      } else {
+        this.setState({
+          validated: false,
+          incorrect: true,
+          username: "",
+          password: ""
+        });
+        createMessage(res.status);
+      }
+    });
   };
 
   onChange = e => {
@@ -35,8 +94,15 @@ class LoginPage extends React.Component {
 
   setCookie = () => {
     const { username } = this.state;
+    const current = new Date();
+    const nextYear = new Date();
 
-    cookies.set(`username`, username, { path: "/", maxAge: "" });
+    nextYear.setFullYear(current.getFullYear() + 1); // ciasteczko na rok
+
+    cookies.set(`username`, username, {
+      path: "/",
+      expires: nextYear
+    });
   };
 
   handleCheck = e => {
@@ -58,7 +124,7 @@ class LoginPage extends React.Component {
       if (cookieVal) {
         setCookie();
       }
-      this.setRedirect();
+      this.sendData();
       console.log(password, username); // login i hasło użytkownika
     }
 
@@ -80,9 +146,16 @@ class LoginPage extends React.Component {
   }
 
   render() {
-    const { username, password, validated, cookieVal } = this.state;
+    const {
+      username,
+      password,
+      validated,
+      cookieVal,
+      incorrect,
+      message
+    } = this.state;
     const { onChange, handleSubmit, handleCheck } = this;
-    console.log(window.innerWidth);
+
     return (
       <Container className="loginPage">
         {window.innerWidth >= 768 ? (
@@ -135,10 +208,20 @@ class LoginPage extends React.Component {
                   label="Zapamiętaj mnie"
                 />
               </Form.Group>
-              <Button variant="secondary" type="submit">
+
+              <Button
+                variant="secondary"
+                className="loginPage__button"
+                type="submit"
+              >
                 Zaloguj
               </Button>
             </Form>
+            {incorrect ? (
+              <div className="loginPage__messageFail">
+                <small className="loginPage__failure">{message}</small>
+              </div>
+            ) : null}
             <div className="loginPage__links">
               <Link to="/newAccount">Załóż konto!</Link>
               {this.renderRedirect()}

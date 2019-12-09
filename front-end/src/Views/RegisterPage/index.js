@@ -15,7 +15,10 @@ class RegisterPage extends React.Component {
     password: "",
     passwordR: "",
     areEqual: true,
-    validated: false
+    validated: false,
+    incorrect: false,
+    correct: false,
+    message: ""
   };
 
   onChange = (e, val) => {
@@ -23,6 +26,42 @@ class RegisterPage extends React.Component {
 
     this.setState({
       [val]: value
+    });
+  };
+
+  sendData = object => {
+    console.log(object);
+    const url = process.env.REACT_APP_API_URL + "account/register/";
+    const response = fetch(url, {
+      method: "POST",
+      body: JSON.stringify(object),
+      headers: {
+        "Content-Type": "application/json",
+        Origin: null
+      }
+    }).then(res => {
+      console.log(res.status);
+      if (res.status === 201) {
+        this.setState({
+          validated: false,
+          message: "Udało się zarejestrować! Teraz możesz się zalogować",
+          email: "",
+          first_name: "",
+          last_name: "",
+          username: "",
+          phone_number: "",
+          password: "",
+          passwordR: "",
+          correct: true
+        });
+      } else {
+        this.setState({
+          validated: false,
+          incorrect: true,
+          message: "Taki użytkownik juz istnieje",
+          username: ""
+        });
+      }
     });
   };
 
@@ -63,7 +102,7 @@ class RegisterPage extends React.Component {
           password
         }
       });
-      console.log({
+      this.sendData({
         email,
         first_name,
         last_name,
@@ -88,7 +127,10 @@ class RegisterPage extends React.Component {
       password,
       passwordR,
       areEqual,
-      validated
+      validated,
+      incorrect,
+      message,
+      correct
     } = this.state;
     const { onChange, handleSubmit } = this;
     return (
@@ -223,12 +265,26 @@ class RegisterPage extends React.Component {
                   ""
                 )}
               </Form.Group>
-              <Button variant="secondary" type="submit">
+              <Button
+                variant="secondary"
+                className="loginPage__button"
+                type="submit"
+              >
                 Utwórz konto
               </Button>
             </Form>
+            {incorrect ? (
+              <div className="loginPage__messageFail">
+                <small className="loginPage__failure">{message}</small>
+              </div>
+            ) : null}
+            {correct ? (
+              <div className="loginPage__messageFail">
+                <small className="loginPage__correct">{message}</small>
+              </div>
+            ) : null}
             <div className="loginPage__links">
-              <Link to="/" className="loginPage__link">
+              <Link to="/login" className="loginPage__link">
                 Masz już konto? Zaloguj się!
               </Link>
             </div>
