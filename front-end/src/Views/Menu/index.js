@@ -3,6 +3,11 @@ import React from "react";
 import "Views/Menu/style.css";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Container from "react-bootstrap/Container";
+import Button from "react-bootstrap/Button";
+import ButtonToolbar from "react-bootstrap/ButtonToolbar";
+
+import logo from "assets/logo.png";
 
 class Menu extends React.Component {
 
@@ -10,7 +15,41 @@ class Menu extends React.Component {
 
         return (
 
-            <div className="menu text-center">
+            <Container className="Menu" fluid={true}>
+                <div className="menu-background d-flex justify-content-center align-items-center">
+                    <Row>
+                        <Col/>
+                        <Col>
+                            <img src={logo} className="menu-logo"/>
+                        </Col>
+                        <Col />
+                    </Row>
+                    <Row className="menu-button-row">
+                        <Col />
+                        <Col>
+                            <ButtonToolbar>
+                                <Button className="menu-button-big" href="/newAccount" variant="outline-info">Utwórz konto</Button>
+                                <Button className="menu-button-big" href="/login" variant="outline-info">Zaloguj się</Button>
+                            </ButtonToolbar>
+                        </Col>
+                        <Col />
+                    </Row>
+                    <Row className="menu-button-row">
+                        <Col />
+                        <Col >
+                            <ButtonToolbar>
+                                <Button className="menu-button-small" href="/cveditor" variant="outline-info">Kreator CV</Button>
+                                <Button className="menu-button-small" variant="outline-info">Kreator CV</Button>
+                                <Button className="menu-button-small" variant="outline-info">Kreator CV</Button>
+                                <Button className="menu-button-small" variant="outline-info">Kreator CV</Button>
+                            </ButtonToolbar>
+                        </Col>
+                        <Col />
+                    </Row>
+                </div>
+            </Container>
+
+           /* <div className="menu text-center">
                 <Row className="menu-row">
 
                     <a href="/cvEditor" className="menu-tile"><Col>Kreator tworzenia CV</Col></a>
@@ -24,7 +63,7 @@ class Menu extends React.Component {
                     <Col className="disabled menu-tile">Znani z dorosłości</Col>
                     <Col className="disabled menu-tile">Jak zarządzać budżetem</Col>
                 </Row>
-            </div>
+            </div>*/
 
         )
     }
