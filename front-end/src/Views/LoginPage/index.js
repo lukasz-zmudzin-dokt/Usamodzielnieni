@@ -13,28 +13,58 @@ class LoginPage extends React.Component {
   state = {
     username: "",
     password: "",
+    message: "",
     redirect: false,
     incorrect: false,
     cookieVal: false,
-    validated: false
+    validated: false,
+    token: ""
+  };
+
+  createMessage = status => {
+    if (status === 400) {
+      this.setState({
+        message: "Niepoprawny login lub hasło"
+      });
+    } else {
+      this.setState({
+        message: "Nieznany błąd proszę spróbować później"
+      });
+    }
   };
 
   sendData = object => {
     const { username, password } = this.state;
-    const proxyurl = "https://cors-anywhere.herokuapp.com/";
-    const url = "http://34973d4d.ngrok.io/account/login/";
-    const response = fetch(proxyurl + url, {
+    const { createMessage } = this;
+    const url = process.env.REACT_APP_API_URL + "account/login/";
+    const response = fetch(url, {
       method: "POST",
       body: JSON.stringify({
         username,
         password
       }),
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        Origin: null
       }
     }).then(res => {
+      console.log(res);
       if (res.status === 200) {
-        this.setRedirect();
+        res.json()
+          .then(responseValue => {
+              this.setState({
+                token: responseValue.token
+              });
+              this.setRedirect();
+          });
+      } else if (res.status === 400) {
+        this.setState({
+          validated: false,
+          incorrect: true,
+          username: "",
+          password: ""
+        });
+        createMessage(res.status);
       } else {
         this.setState({
           validated: false,
@@ -42,6 +72,7 @@ class LoginPage extends React.Component {
           username: "",
           password: ""
         });
+        createMessage(res.status);
       }
     });
   };
@@ -115,9 +146,16 @@ class LoginPage extends React.Component {
   }
 
   render() {
-    const { username, password, validated, cookieVal, incorrect } = this.state;
+    const {
+      username,
+      password,
+      validated,
+      cookieVal,
+      incorrect,
+      message
+    } = this.state;
     const { onChange, handleSubmit, handleCheck } = this;
-    console.log(window.innerWidth);
+
     return (
       <Container className="loginPage">
         {window.innerWidth >= 768 ? (
@@ -181,9 +219,7 @@ class LoginPage extends React.Component {
             </Form>
             {incorrect ? (
               <div className="loginPage__messageFail">
-                <small className="loginPage__failure">
-                  Nieprawidłowe hasło lub login.
-                </small>
+                <small className="loginPage__failure">{message}</small>
               </div>
             ) : null}
             <div className="loginPage__links">

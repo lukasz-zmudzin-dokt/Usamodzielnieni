@@ -24,3 +24,32 @@
 .disabled {
     color: lightslategray;
 }
+
+
+.menu-background {
+    background-image: url("./background.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    height: 100vh;
+    flex-direction: column;
+}
+.menu-button-small {
+    margin-right: 40px;
+    margin-left: 40px;
+}
+.menu-button-big {
+    height: 80px;
+    width: 300px;
+    margin-right: 40px;
+    margin-left: 40px;
+    font-size: xx-large!important;
+}
+.menu-button-row {
+    margin-top: 50px;
+    flex-direction: column;
+}
+.menu-logo {
+    width: inherit;
+}
