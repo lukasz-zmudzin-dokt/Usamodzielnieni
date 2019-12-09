@@ -31,8 +31,8 @@ class RegisterPage extends React.Component {
 
   sendData = object => {
     console.log(object);
-    const url = process.env.REACT_APP_API_URL + "account/register/";
-    const response = fetch(url, {
+    const url = "https://usamo-back.herokuapp.com/account/register/";
+    fetch(url, {
       method: "POST",
       body: JSON.stringify(object),
       headers: {
@@ -134,7 +134,7 @@ class RegisterPage extends React.Component {
     } = this.state;
     const { onChange, handleSubmit } = this;
     return (
-      <Container className="loginPage">
+      <Container className="loginPage loginPage__register">
         {window.innerWidth >= 768 ? (
           <img className="loginPage__bgImage" src={bgImage} alt="Tło" />
         ) : null}

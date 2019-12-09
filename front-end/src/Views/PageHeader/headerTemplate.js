@@ -1,5 +1,5 @@
 import React from "react";
-import { Navbar, Nav, Container, Button, Form } from "react-bootstrap";
+import { Navbar, Nav, Button, Form } from "react-bootstrap";
 
 import "Views/PageHeader/headerLayout.css";
 import logo from "assets/logo.png";
@@ -70,25 +70,23 @@ class HeaderTemplate extends React.Component {
 
   render() {
     return (
-      <Container className="headerTemplate">
-        <Navbar id="navbar_menu" variant="dark" fixed="top" expand="lg">
-          <Navbar.Brand id="navbar_logo">
-            <a href="/">
-              <img
-                id="charity_logo"
-                width="200vh"
-                src={logo}
-                alt="Usamodzielnieni"
-              />
-            </a>
-          </Navbar.Brand>
-          <Navbar.Toggle aria-controls="topMenu" />
-          <Navbar.Collapse id="topMenu">
-            <div id="menuOptions">{this.displayMenu()}</div>
-          </Navbar.Collapse>
-          <div id="nav_buttons">{this.displayButtonSet()}</div>
-        </Navbar>
-      </Container>
+      <Navbar id="navbar_menu" variant="dark" fixed="top" expand="lg">
+        <Navbar.Brand id="navbar_logo">
+          <a href="/">
+            <img
+              id="charity_logo"
+              width="200vh"
+              src={logo}
+              alt="Usamodzielnieni"
+            />
+          </a>
+        </Navbar.Brand>
+        <Navbar.Toggle aria-controls="topMenu" />
+        <Navbar.Collapse id="topMenu">
+          <div id="menuOptions">{this.displayMenu()}</div>
+        </Navbar.Collapse>
+        <div id="nav_buttons">{this.displayButtonSet()}</div>
+      </Navbar>
     );
   }
 }

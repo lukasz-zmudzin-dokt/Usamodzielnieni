@@ -35,9 +35,9 @@ class LoginPage extends React.Component {
 
   sendData = object => {
     const { username, password } = this.state;
-    const { createMessage } = this;
-    const url = process.env.REACT_APP_API_URL + "account/login/";
-    const response = fetch(url, {
+
+    const url = "https://usamo-back.herokuapp.com/account/login/";
+    fetch(url, {
       method: "POST",
       body: JSON.stringify({
         username,
@@ -47,34 +47,63 @@ class LoginPage extends React.Component {
         "Content-Type": "application/json",
         Origin: null
       }
-    }).then(res => {
-      console.log(res);
-      if (res.status === 200) {
-        res.json()
-          .then(responseValue => {
-              this.setState({
-                token: responseValue.token
-              });
-              this.setRedirect();
+    })
+      .then(res => res.blob())
+      .then(data => new Response(data).text())
+      .then(res => {
+        const token = JSON.parse(res).token;
+        console.log(token && this.state.cookieVal);
+        if (token && this.state.cookieVal) {
+          this.setState({
+            token
           });
-      } else if (res.status === 400) {
-        this.setState({
-          validated: false,
-          incorrect: true,
-          username: "",
-          password: ""
-        });
-        createMessage(res.status);
-      } else {
-        this.setState({
-          validated: false,
-          incorrect: true,
-          username: "",
-          password: ""
-        });
-        createMessage(res.status);
-      }
-    });
+          console.log(token);
+          this.setCookie(token);
+          this.setRedirect();
+        } else if (token) {
+          this.setState({
+            token
+          });
+          cookies.set(`token`, token, {
+            path: "/"
+          });
+          this.setRedirect();
+        } else {
+          this.setState({
+            validated: false,
+            incorrect: true,
+            username: "",
+            password: "",
+            message: "Coś poszło nie tak"
+          });
+        }
+
+        // if (resp.status === 200) {
+        //   this.setState({
+        //     token: resB
+        //   });
+        //   cookies.set(`token`, resB, {
+        //     path: "/"
+        //   });
+        //   this.setRedirect();
+        // } else if (resp.status === 400) {
+        //   this.setState({
+        //     validated: false,
+        //     incorrect: true,
+        //     username: "",
+        //     password: ""
+        //   });
+        //   createMessage(res.status);
+        // } else {
+        //   this.setState({
+        //     validated: false,
+        //     incorrect: true,
+        //     username: "",
+        //     password: ""
+        //   });
+        //   createMessage(res.status);
+        // }
+      });
   };
 
   onChange = e => {
@@ -92,14 +121,13 @@ class LoginPage extends React.Component {
     });
   };
 
-  setCookie = () => {
-    const { username } = this.state;
+  setCookie = token => {
     const current = new Date();
     const nextYear = new Date();
 
     nextYear.setFullYear(current.getFullYear() + 1); // ciasteczko na rok
-
-    cookies.set(`username`, username, {
+    console.log(token);
+    cookies.set(`token`, token, {
       path: "/",
       expires: nextYear
     });
@@ -113,17 +141,18 @@ class LoginPage extends React.Component {
 
   handleSubmit = event => {
     const form = event.currentTarget;
-    const { password, username, cookieVal } = this.state;
-    const { setCookie } = this;
+    const { password, username } = this.state;
+
     event.preventDefault();
 
     if (form.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();
     } else {
-      if (cookieVal) {
-        setCookie();
-      }
+      // if (cookieVal) {
+      //   console.log("dodaje!");
+      //   setCookie();
+      // }
       this.sendData();
       console.log(password, username); // login i hasło użytkownika
     }
@@ -140,7 +169,7 @@ class LoginPage extends React.Component {
   };
 
   componentDidMount() {
-    if (cookies.get("username")) {
+    if (cookies.get("token")) {
       this.setRedirect();
     }
   }
