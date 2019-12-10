@@ -354,14 +354,14 @@ class CVEditorPage extends React.Component {
     let month = start.getMonth() + 1;
     let year = start.getYear() + 1900;
 
-    toReturn += "\nod: " + month + "/" + year;
+    toReturn += ((month < 10)? "\nod: 0" : "\nod: ") + month + "/" + year;
 
     if (end === undefined) {
       toReturn += "\ndo: teraz";
     } else {
       month = end.getMonth() + 1;
       year = end.getYear() + 1900;
-      toReturn += "\ndo: " + month + "/" + year;
+      toReturn += ((month < 10)? "\ndo: 0" : "\ndo: ") + month + "/" + year;
     }
     toReturn += " (" + dates[2] + ")";
     return toReturn;
@@ -418,6 +418,7 @@ class CVEditorPage extends React.Component {
       formName === "education" ? "eduStartTime" : "workStartTime";
     let endTimeStr = formName === "education" ? "eduEndTime" : "workEndTime";
     let placeStr = formName === "education" ? "eduPlace" : "workPlace";
+
     return (
       <div id="complex_form_input_set">
         <Form.Group id="temp_data">
@@ -427,7 +428,7 @@ class CVEditorPage extends React.Component {
             className="complex_form_input_item"
             locale="pl"
             dateFormat=" MM.yyyy"
-            selected={this.state.eduStartTime} //ogl
+            selected={formName === "education"? this.state.eduStartTime : this.state.workStartTime}
             onChange={date => this.handleDateChange(startTimeStr, date)}
             showMonthYearPicker
           />
@@ -436,7 +437,7 @@ class CVEditorPage extends React.Component {
             className="complex_form_input_item"
             locale="pl"
             dateFormat=" MM.yyyy"
-            selected={this.state.eduEndTime} //ogl
+            selected={formName === "education"? this.state.eduEndTime : this.state.workEndTime}
             onChange={date => this.handleDateChange(endTimeStr, date)}
             showMonthYearPicker
           />
