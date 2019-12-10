@@ -1,0 +1,37 @@
+.headerTemplate {
+  margin-bottom: 10vh;
+}
+
+.navbar,
+.navbar_menu {
+  background-color: #7345a9 !important;
+}
+
+.navbar_logo {
+  max-width: 200px;
+  max-height: 100px;
+}
+
+.menuOptions {
+  width: 1000px;
+}
+
+.charity_logo {
+  max-height: 200px;
+  max-width: 250px;
+  background-color: white;
+  display: inline-block;
+}
+
+.charity_logo:hover {
+  box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.5);
+  opacity: 0.5;
+}
+
+.contactPhones {
+  color: white;
+}
+
+.nav_buttons {
+  text-align: right;
+}
