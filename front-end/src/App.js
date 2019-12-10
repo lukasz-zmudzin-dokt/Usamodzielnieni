@@ -7,11 +7,16 @@ import HeaderTemplate from "./Views/PageHeader/headerTemplate";
 import CVEditorPage from "./Views/CVEditorPage";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Footer from "Views/Footer";
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import reducer from "reducer";
+
+const store = createStore(reducer);
 
 class App extends React.Component {
   render() {
     return (
-      <div>
+      <Provider store={store}>
         <HeaderTemplate />
         <Router>
           <Switch>
@@ -22,7 +27,7 @@ class App extends React.Component {
             <Route path="/footer" exact component={Footer} />
           </Switch>
         </Router>
-      </div>
+      </Provider>
     );
   }
 }
