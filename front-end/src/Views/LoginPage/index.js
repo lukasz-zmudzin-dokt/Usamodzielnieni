@@ -3,6 +3,8 @@ import { Container, Button, Card } from "react-bootstrap";
 import Cookies from "universal-cookie";
 import Form from "react-bootstrap/Form";
 import { Link, Redirect } from "react-router-dom";
+import { connect } from "react-redux";
+import { setUserToken } from "redux/actions";
 
 import "Views/LoginPage/style.css";
 import bgImage from "assets/fot..png";
@@ -52,10 +54,10 @@ class LoginPage extends React.Component {
       if (res.status === 200) {
         res.json()
           .then(responseValue => {
-              this.setState({
-                token: responseValue.token
-              });
-              this.setRedirect();
+            const { token } = responseValue;
+            this.props.setUserToken(token);
+            this.setState({ token });
+            this.setRedirect();
           });
       } else if (res.status === 400) {
         this.setState({
@@ -234,4 +236,4 @@ class LoginPage extends React.Component {
   }
 }
 
-export default LoginPage;
+export default connect(null, { setUserToken })(LoginPage);

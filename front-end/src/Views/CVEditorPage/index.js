@@ -6,7 +6,7 @@ import polish from "date-fns/locale/pl";
 import bgImage from "../../assets/fot..png";
 import "./style.css";
 import Col from "react-bootstrap/Col";
-import LoginPage from "../LoginPage";
+import { connect } from "react-redux";
 
 registerLocale("pl", polish);
 
@@ -43,11 +43,12 @@ class CVEditorPage extends React.Component {
     sendData = object => {
         const proxyurl = "https://cors-anywhere.herokuapp.com/";
         const url = "https://usamo-back.herokuapp.com/cv/generate/";
+        console.log(this.props.token);
         const response = fetch(proxyurl + url, {
             method: "POST",
             body: JSON.stringify(object),
             headers: {
-                "Authorization": "Token " + LoginPage.state.token,
+                "Authorization": "Token " + this.props.token,
                 "Content-Type": "application/json"
             }
         });
@@ -620,4 +621,10 @@ class CVEditorPage extends React.Component {
     }
 }
 
-export default CVEditorPage;
+const mapStateToProps = (state) => {
+    console.log("mapStateToProps:", state);
+    const { token } = state.user;
+    return { token };
+};
+
+export default connect(mapStateToProps)(CVEditorPage);
