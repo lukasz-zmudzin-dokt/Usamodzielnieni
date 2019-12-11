@@ -18,8 +18,8 @@ class App extends React.Component {
   render() {
     return (
       <Provider store={store}>
-        <HeaderTemplate />
         <Router>
+          <HeaderTemplate />
           <Switch>
             <Route path="/cvEditor" exact component={CVEditorPage} />
             <Route path="/user" exact component={UserProfilePage} />
