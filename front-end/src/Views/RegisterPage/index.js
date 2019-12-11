@@ -6,14 +6,17 @@ import bgImage from "assets/fot..png";
 
 class RegisterPage extends React.Component {
   state = {
-    newUser: {},
-    email: "test@o2.pl",
-    first_name: "asdsadsa",
-    last_name: "asdada",
-    username: "testowe",
-    phone_number: "+48123123123",
-    password: "testowe",
-    passwordR: "testowe",
+    email: "",
+    first_name: "",
+    last_name: "",
+    username: "",
+    phone_number: "",
+    name_of_place: "",
+    street: "",
+    city: "",
+    city_code: "",
+    password: "",
+    passwordR: "",
     areEqual: true,
     validated: false,
     redirect: false
@@ -60,6 +63,10 @@ class RegisterPage extends React.Component {
             phone_number: "",
             password: "",
             passwordR: "",
+            city: "",
+            city_code: "",
+            street: "",
+            name_of_place: "",
             correct: true,
             redirect: true
           });
@@ -97,14 +104,16 @@ class RegisterPage extends React.Component {
       last_name,
       username,
       phone_number,
+      city,
+      city_code,
+      street,
+      name_of_place,
       password,
       passwordR
     } = this.state;
     const form = event.currentTarget;
 
     event.preventDefault();
-
-    console.log(form.checkValidity());
 
     if (form.checkValidity() === false || password !== passwordR) {
       event.preventDefault();
@@ -117,23 +126,17 @@ class RegisterPage extends React.Component {
       this.setState({
         areEqual: true
       });
-      this.setState({
-        newUser: {
-          email,
-          first_name,
-          last_name,
-          username,
-          phone_number,
-          password
-        }
-      });
       this.sendData({
         email,
         first_name,
         last_name,
         username,
         phone_number,
-        password
+        password,
+        city,
+        city_code,
+        street,
+        name_of_place
       });
     }
 
@@ -155,7 +158,11 @@ class RegisterPage extends React.Component {
       validated,
       incorrect,
       message,
-      correct
+      correct,
+      name_of_place,
+      street,
+      city,
+      city_code
     } = this.state;
     const { onChange, handleSubmit } = this;
     return (
@@ -224,19 +231,56 @@ class RegisterPage extends React.Component {
                   Podaj nazwisko
                 </Form.Control.Feedback>
               </Form.Group>
-              <Form.Group controlId="formGroupUsername">
+              <Form.Group controlId="formGroupNameOfPlace">
                 <Form.Control
-                  type="text"
+                  type="tel"
                   autoComplete="on"
-                  placeholder="Nazwa użytkownika"
-                  value={username}
-                  onChange={e => onChange(e, "username")}
+                  placeholder="Nazwa placówki"
+                  value={name_of_place}
+                  onChange={e => onChange(e, "name_of_place")}
                   required
-                  minLength="6"
-                  maxLength="20"
                 />
                 <Form.Control.Feedback type="invalid">
-                  Minimalna ilośc znaków: 6
+                  Podaj nazwę placówki
+                </Form.Control.Feedback>
+              </Form.Group>
+              <Form.Group controlId="formGroupCity">
+                <Form.Control
+                  type="tel"
+                  autoComplete="on"
+                  placeholder="Nazwa miasta"
+                  value={city}
+                  onChange={e => onChange(e, "city")}
+                  required
+                />
+                <Form.Control.Feedback type="invalid">
+                  Podaj nazwę miasta
+                </Form.Control.Feedback>
+              </Form.Group>
+              <Form.Group controlId="formGroupStreet">
+                <Form.Control
+                  type="tel"
+                  autoComplete="on"
+                  placeholder="Ulica"
+                  value={street}
+                  onChange={e => onChange(e, "street")}
+                  required
+                />
+                <Form.Control.Feedback type="invalid">
+                  Podaj ulicę na której znajduje się placówka
+                </Form.Control.Feedback>
+              </Form.Group>
+              <Form.Group controlId="formGroupCityCode">
+                <Form.Control
+                  type="tel"
+                  autoComplete="on"
+                  placeholder="Kod pocztowy"
+                  value={city_code}
+                  onChange={e => onChange(e, "city_code")}
+                  required
+                />
+                <Form.Control.Feedback type="invalid">
+                  Podaj kod pocztowy
                 </Form.Control.Feedback>
               </Form.Group>
               <Form.Group controlId="formGroupPhoneNumber">
@@ -253,6 +297,22 @@ class RegisterPage extends React.Component {
                   Podaj numer telefonu w formacie: +48123123123
                 </Form.Control.Feedback>
               </Form.Group>
+              <Form.Group controlId="formGroupUsername">
+                <Form.Control
+                  type="text"
+                  autoComplete="on"
+                  placeholder="Nazwa użytkownika"
+                  value={username}
+                  onChange={e => onChange(e, "username")}
+                  required
+                  minLength="6"
+                  maxLength="20"
+                />
+                <Form.Control.Feedback type="invalid">
+                  Minimalna ilośc znaków: 6
+                </Form.Control.Feedback>
+              </Form.Group>
+
               <Form.Group controlId="formGroupPassword">
                 <Form.Control
                   type="password"
