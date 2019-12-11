@@ -4,6 +4,9 @@ import { Navbar, Nav, Button, Form } from "react-bootstrap";
 import "Views/PageHeader/headerLayout.css";
 import logo from "assets/logo.png";
 
+// https://github.com/ReactTraining/react-router/issues/83#issuecomment-214794477
+import { LinkContainer } from 'react-router-bootstrap';
+
 class HeaderTemplate extends React.Component {
   constructor(props) {
     super(props);
@@ -17,9 +20,11 @@ class HeaderTemplate extends React.Component {
     if (this.state.currentLocation !== "/")
       return (
         <Nav pullCenter className="mr-auto ">
-          <Nav.Link id="cvEditor" href="/cvEditor">
-            Kreator CV
-          </Nav.Link>
+          <LinkContainer to="/cvEditor">
+            <Nav.Link id="cvEditor">
+              Kreator CV
+            </Nav.Link>
+          </LinkContainer>
           <Nav.Link id="learningTheRopes">Od czego zacząć?</Nav.Link>
           <Nav.Link id="jobOffers">Oferty pracy</Nav.Link>
           <Nav.Link id="jobDescriptions">Opis stanowisk</Nav.Link>

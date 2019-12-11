@@ -8,6 +8,12 @@ import HeaderTemplate from "./Views/PageHeader/headerTemplate";
 import CVEditorPage from "./Views/CVEditorPage";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Footer from "Views/Footer";
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import reducer from "redux/reducer";
+
+console.log("NEW STORE");
+const store = createStore(reducer);
 
 const cookies = new Cookies();
 
@@ -27,9 +33,9 @@ class App extends React.Component {
     const { token } = this.state;
     const { setToken } = this;
     return (
-      <div>
-        <HeaderTemplate />
+      <Provider store={store}>
         <Router>
+          <HeaderTemplate />
           <Switch>
             <Route path="/cvEditor" exact component={CVEditorPage} />
             <Route path="/user" exact component={UserProfilePage} />
@@ -48,7 +54,7 @@ class App extends React.Component {
             <Route path="/footer" exact component={Footer} />
           </Switch>
         </Router>
-      </div>
+      </Provider>
     );
   }
 }
