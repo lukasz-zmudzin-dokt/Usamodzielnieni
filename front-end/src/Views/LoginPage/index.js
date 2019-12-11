@@ -37,7 +37,7 @@ class LoginPage extends React.Component {
 
   sendData = object => {
     const { username, password } = this.state;
-    const { setToken } = this.props;
+
     const url = "https://usamo-back.herokuapp.com/account/login/";
     fetch(url, {
       method: "POST",
@@ -49,62 +49,28 @@ class LoginPage extends React.Component {
         "Content-Type": "application/json",
         Origin: null
       }
-
     }).then(res => {
       console.log(res);
       if (res.status === 200) {
-        res.json()
-          .then(responseValue => {
-            const { token } = responseValue;
-            this.props.setUserToken(token);
-            this.setState({ token });
-            this.setRedirect();
-          });
-          console.log(token);
-          this.setCookie(token);
-     
-        } else if (token) {
-          this.setState({
-            token
-          });
-          setToken(token);
+        res.json().then(responseValue => {
+          const { token } = responseValue;
+          this.props.setUserToken(token);
+          this.setState({ token });
           this.setRedirect();
-        } else {
-          this.setState({
-            validated: false,
-            incorrect: true,
-            username: "",
-            password: "",
-            message: "Coś poszło nie tak"
+          cookies.set(`token`, token, {
+            path: "/"
           });
-        }
-
-        // if (resp.status === 200) {
-        //   this.setState({
-        //     token: resB
-        //   });
-        //   cookies.set(`token`, resB, {
-        //     path: "/"
-        //   });
-        //   this.setRedirect();
-        // } else if (resp.status === 400) {
-        //   this.setState({
-        //     validated: false,
-        //     incorrect: true,
-        //     username: "",
-        //     password: ""
-        //   });
-        //   createMessage(res.status);
-        // } else {
-        //   this.setState({
-        //     validated: false,
-        //     incorrect: true,
-        //     username: "",
-        //     password: ""
-        //   });
-        //   createMessage(res.status);
-        // }
-      });
+        });
+      } else {
+        this.setState({
+          validated: false,
+          incorrect: true,
+          username: "",
+          password: "",
+          message: "Coś poszło nie tak"
+        });
+      }
+    });
   };
 
   onChange = e => {
