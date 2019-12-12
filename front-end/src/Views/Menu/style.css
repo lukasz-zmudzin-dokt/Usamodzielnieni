@@ -1,31 +1,3 @@
-.menu {
-    background-image: url("./menu-backdrop.png");
-    background-size: cover;
-
-    width: -webkit-fill-available;
-    height: -webkit-fill-available;
-
-    position: fixed;
-
-    font-size: 30px;
-    font-weight: bold;
-    color: #7345A9!important;
-}
-.spacing {
-    height: 200px;
-}
-.menu-row {
-    height: 33%;
-}
-.menu-tile {
-    border: thick solid white;
-    width: 25%;
-}
-.disabled {
-    color: lightslategray;
-}
-
-
 .menu-background {
     background-image: url("./background.png");
     background-size: contain;
