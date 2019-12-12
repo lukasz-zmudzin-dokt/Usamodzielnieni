@@ -1,26 +1,34 @@
 import React from "react";
 import { Container, Card, Form, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
-
+import { Link, Redirect } from "react-router-dom";
+import Cookies from "universal-cookie";
 import bgImage from "assets/fot..png";
+
+const cookies = new Cookies();
 
 class RegisterPage extends React.Component {
   state = {
-    newUser: {},
     email: "",
     first_name: "",
     last_name: "",
     username: "",
     phone_number: "",
+    name_of_place: "",
+    street: "",
+    city: "",
+    city_code: "",
     password: "",
     passwordR: "",
     areEqual: true,
     validated: false,
-    incorrect: false,
-    correct: false,
-    message: ""
+    redirect: false
   };
 
+  renderRedirect = () => {
+    if (this.state.redirect) {
+      return <Redirect to="/user" />;
+    }
+  };
   onChange = (e, val) => {
     const value = e.target.value;
 
@@ -31,8 +39,8 @@ class RegisterPage extends React.Component {
 
   sendData = object => {
     console.log(object);
-    const url = process.env.REACT_APP_API_URL + "account/register/";
-    const response = fetch(url, {
+    const url = "https://usamo-back.herokuapp.com/account/register/";
+    fetch(url, {
       method: "POST",
       body: JSON.stringify(object),
       headers: {
@@ -40,19 +48,31 @@ class RegisterPage extends React.Component {
         Origin: null
       }
     }).then(res => {
-      console.log(res.status);
+      console.log(res);
       if (res.status === 201) {
-        this.setState({
-          validated: false,
-          message: "Udało się zarejestrować! Teraz możesz się zalogować",
-          email: "",
-          first_name: "",
-          last_name: "",
-          username: "",
-          phone_number: "",
-          password: "",
-          passwordR: "",
-          correct: true
+        res.json().then(responseValue => {
+          const { token } = responseValue;
+          this.setRedirect();
+          cookies.set(`token`, token, {
+            path: "/"
+          });
+          this.setState({
+            validated: false,
+            message: "Udało się zarejestrować! Teraz możesz się zalogować",
+            email: "",
+            first_name: "",
+            last_name: "",
+            username: "",
+            phone_number: "",
+            password: "",
+            passwordR: "",
+            city: "",
+            city_code: "",
+            street: "",
+            name_of_place: "",
+            correct: true,
+            redirect: true
+          });
         });
       } else {
         this.setState({
@@ -72,14 +92,16 @@ class RegisterPage extends React.Component {
       last_name,
       username,
       phone_number,
+      city,
+      city_code,
+      street,
+      name_of_place,
       password,
       passwordR
     } = this.state;
     const form = event.currentTarget;
 
     event.preventDefault();
-
-    console.log(form.checkValidity());
 
     if (form.checkValidity() === false || password !== passwordR) {
       event.preventDefault();
@@ -92,15 +114,17 @@ class RegisterPage extends React.Component {
       this.setState({
         areEqual: true
       });
-      this.setState({
-        newUser: {
-          email,
-          first_name,
-          last_name,
-          username,
-          phone_number,
-          password
-        }
+      const facility_name = name_of_place;
+      const facility_address = `${city} ${street} ${city_code}`;
+      console.log({
+        email,
+        first_name,
+        last_name,
+        username,
+        phone_number,
+        password,
+        facility_name,
+        facility_address
       });
       this.sendData({
         email,
@@ -108,12 +132,20 @@ class RegisterPage extends React.Component {
         last_name,
         username,
         phone_number,
-        password
+        password,
+        facility_name,
+        facility_address
       });
     }
 
     this.setState({
       validated: true
+    });
+  };
+
+  setRedirect = () => {
+    this.setState({
+      redirect: true
     });
   };
 
@@ -130,11 +162,15 @@ class RegisterPage extends React.Component {
       validated,
       incorrect,
       message,
-      correct
+      correct,
+      name_of_place,
+      street,
+      city,
+      city_code
     } = this.state;
     const { onChange, handleSubmit } = this;
     return (
-      <Container className="loginPage">
+      <Container className="loginPage loginPage__register">
         {window.innerWidth >= 768 ? (
           <img className="loginPage__bgImage" src={bgImage} alt="Tło" />
         ) : null}
@@ -199,19 +235,56 @@ class RegisterPage extends React.Component {
                   Podaj nazwisko
                 </Form.Control.Feedback>
               </Form.Group>
-              <Form.Group controlId="formGroupUsername">
+              <Form.Group controlId="formGroupNameOfPlace">
                 <Form.Control
-                  type="text"
+                  type="tel"
                   autoComplete="on"
-                  placeholder="Nazwa użytkownika"
-                  value={username}
-                  onChange={e => onChange(e, "username")}
+                  placeholder="Nazwa placówki"
+                  value={name_of_place}
+                  onChange={e => onChange(e, "name_of_place")}
                   required
-                  minLength="6"
-                  maxLength="20"
                 />
                 <Form.Control.Feedback type="invalid">
-                  Minimalna ilośc znaków: 6
+                  Podaj nazwę placówki
+                </Form.Control.Feedback>
+              </Form.Group>
+              <Form.Group controlId="formGroupCity">
+                <Form.Control
+                  type="tel"
+                  autoComplete="on"
+                  placeholder="Nazwa miasta"
+                  value={city}
+                  onChange={e => onChange(e, "city")}
+                  required
+                />
+                <Form.Control.Feedback type="invalid">
+                  Podaj nazwę miasta
+                </Form.Control.Feedback>
+              </Form.Group>
+              <Form.Group controlId="formGroupStreet">
+                <Form.Control
+                  type="tel"
+                  autoComplete="on"
+                  placeholder="Ulica"
+                  value={street}
+                  onChange={e => onChange(e, "street")}
+                  required
+                />
+                <Form.Control.Feedback type="invalid">
+                  Podaj ulicę na której znajduje się placówka
+                </Form.Control.Feedback>
+              </Form.Group>
+              <Form.Group controlId="formGroupCityCode">
+                <Form.Control
+                  type="tel"
+                  autoComplete="on"
+                  placeholder="Kod pocztowy"
+                  value={city_code}
+                  onChange={e => onChange(e, "city_code")}
+                  required
+                />
+                <Form.Control.Feedback type="invalid">
+                  Podaj kod pocztowy
                 </Form.Control.Feedback>
               </Form.Group>
               <Form.Group controlId="formGroupPhoneNumber">
@@ -228,6 +301,22 @@ class RegisterPage extends React.Component {
                   Podaj numer telefonu w formacie: +48123123123
                 </Form.Control.Feedback>
               </Form.Group>
+              <Form.Group controlId="formGroupUsername">
+                <Form.Control
+                  type="text"
+                  autoComplete="on"
+                  placeholder="Nazwa użytkownika"
+                  value={username}
+                  onChange={e => onChange(e, "username")}
+                  required
+                  minLength="6"
+                  maxLength="20"
+                />
+                <Form.Control.Feedback type="invalid">
+                  Minimalna ilośc znaków: 6
+                </Form.Control.Feedback>
+              </Form.Group>
+
               <Form.Group controlId="formGroupPassword">
                 <Form.Control
                   type="password"
@@ -290,6 +379,7 @@ class RegisterPage extends React.Component {
             </div>
           </Card.Body>
         </Card>
+        {this.renderRedirect()}
       </Container>
     );
   }

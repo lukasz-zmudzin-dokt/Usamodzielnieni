@@ -6,41 +6,52 @@ import polish from "date-fns/locale/pl";
 import bgImage from "../../assets/fot..png";
 import "./style.css";
 import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
-import LoginPage from "../LoginPage";
-import Film from "../graphics/filmik.PNG";
+import { connect } from "react-redux";
 
 registerLocale("pl", polish);
 
 class CVEditorPage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      fullName: "",
-      birthDate: new Date(),
-      phoneNumber: "",
-      email: "",
+    constructor(props) {
+        super(props);
+        this.state = {
+            fullName: "",
+            birthDate: new Date(),
+            phoneNumber: "",
+            email: "",
 
-      education: {},
-      eduPlace: "",
-      eduDescription: "",
-      eduStartTime: new Date(),
-      eduEndTime: undefined,
+            education: {},
+            eduPlace: "",
+            eduDescription: "",
+            eduStartTime: new Date(),
+            eduEndTime: undefined,
 
-      workExperience: {},
-      workPlace: "",
-      workDescription: "",
-      workStartTime: new Date(),
-      workEndTime: undefined,
+            workExperience: {},
+            workPlace: "",
+            workDescription: "",
+            workStartTime: new Date(),
+            workEndTime: undefined,
 
-      skills: [],
-      skillToAdd: "",
+            skills: [],
+            skillToAdd: "",
 
-      languages: {},
-      languageName: "",
-      languageLevel: "podstawowy",
+            languages: {},
+            languageName: "",
+            languageLevel: "podstawowy"
+        };
+    }
 
-      cvStyle: 0
+    sendData = object => {
+        const proxyurl = "https://cors-anywhere.herokuapp.com/";
+        const url = "https://usamo-back.herokuapp.com/cv/generate/";
+        console.log(this.props.token);
+        const response = fetch(proxyurl + url, {
+            method: "POST",
+            body: JSON.stringify(object),
+            headers: {
+                "Authorization": "Token " + this.props.token,
+                "Content-Type": "application/json"
+            }
+        });
     };
   }
 
@@ -716,4 +727,10 @@ class CVEditorPage extends React.Component {
   }
 }
 
-export default CVEditorPage;
+const mapStateToProps = (state) => {
+    console.log("mapStateToProps:", state);
+    const { token } = state.user;
+    return { token };
+};
+
+export default connect(mapStateToProps)(CVEditorPage);
