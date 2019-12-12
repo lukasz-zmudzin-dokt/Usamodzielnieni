@@ -19,7 +19,7 @@ class Menu extends React.Component {
                 <div className="menu-background d-flex justify-content-center align-items-center">
                     <Row>
                         <Col/>
-                        <Col>
+                        <Col xs={7}>
                             <img src={logo} className="menu-logo"/>
                         </Col>
                         <Col />
@@ -28,8 +28,8 @@ class Menu extends React.Component {
                         <Col />
                         <Col>
                             <ButtonToolbar>
-                                <Button className="menu-button-big" href="/newAccount" variant="outline-info">Utwórz konto</Button>
-                                <Button className="menu-button-big" href="/login" variant="outline-info">Zaloguj się</Button>
+                                <Button className="menu-button-big menu-button-purple" href="/newAccount" variant="outline-info">Utwórz konto</Button>
+                                <Button className="menu-button-big menu-button-purple" href="/login" variant="outline-info">Zaloguj się</Button>
                             </ButtonToolbar>
                         </Col>
                         <Col />
@@ -38,10 +38,9 @@ class Menu extends React.Component {
                         <Col />
                         <Col >
                             <ButtonToolbar>
-                                <Button className="menu-button-small" href="/cveditor" variant="outline-info">Kreator CV</Button>
-                                <Button className="menu-button-small" variant="outline-info">Kreator CV</Button>
-                                <Button className="menu-button-small" variant="outline-info">Kreator CV</Button>
-                                <Button className="menu-button-small" variant="outline-info">Kreator CV</Button>
+                                <Button className="menu-button-small menu-button-purple" href="/cveditor" variant="outline-info">Kreator CV</Button>
+                                <Button className="menu-button-small menu-button-purple" variant="outline-info">Od czego zacząć?</Button>
+                                <Button className="menu-button-small menu-button-purple" variant="outline-info">Oferty pracy</Button>
                             </ButtonToolbar>
                         </Col>
                         <Col />

@@ -53,3 +53,8 @@
 .menu-logo {
     width: inherit;
 }
+.menu-button-purple {
+    color: white!important;
+    background-color: #7345A9!important;
+    border-color: #7345A9!important;
+}
