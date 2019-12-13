@@ -513,6 +513,7 @@ class CVEditorPage extends React.Component {
         {eduArr.map(edu => (
           <Button
             id={edu[0]}
+          //  className="cv_page_verticalSpace"
             variant="dark"
             onClick={e => this.handleCutEdu(e)}
           >
