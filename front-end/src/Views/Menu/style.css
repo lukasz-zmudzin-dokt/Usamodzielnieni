@@ -25,8 +25,9 @@
 .menu-logo {
     width: inherit;
 }
-.menu-button-purple {
+.menu-button-white {
     color: white!important;
-    background-color: #7345A9!important;
-    border-color: #7345A9!important;
+    border-color: white!important;
+    border-width: thin!important;
+    background-color: transparent!important;
 }

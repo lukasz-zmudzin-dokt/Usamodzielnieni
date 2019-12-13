@@ -28,8 +28,8 @@ class Menu extends React.Component {
                         <Col />
                         <Col>
                             <ButtonToolbar>
-                                <Button className="menu-button-big menu-button-purple" href="/newAccount" variant="outline-info">Utwórz konto</Button>
-                                <Button className="menu-button-big menu-button-purple" href="/login" variant="outline-info">Zaloguj się</Button>
+                                <Button className="menu-button-big menu-button-white" href="/newAccount">Utwórz konto</Button>
+                                <Button className="menu-button-big menu-button-white" href="/login">Zaloguj się</Button>
                             </ButtonToolbar>
                         </Col>
                         <Col />
@@ -38,9 +38,9 @@ class Menu extends React.Component {
                         <Col />
                         <Col >
                             <ButtonToolbar>
-                                <Button className="menu-button-small menu-button-purple" href="/cveditor" variant="outline-info">Kreator CV</Button>
-                                <Button className="menu-button-small menu-button-purple disabled" variant="outline-info">Od czego zacząć?</Button>
-                                <Button className="menu-button-small menu-button-purple disabled" variant="outline-info">Oferty pracy</Button>
+                                <Button className="menu-button-small menu-button-white" href="/cveditor" >Kreator CV</Button>
+                                <Button className="menu-button-small menu-button-white disabled">Od czego zacząć?</Button>
+                                <Button className="menu-button-small menu-button-white disabled">Oferty pracy</Button>
                             </ButtonToolbar>
                         </Col>
                         <Col />
