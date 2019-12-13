@@ -31,11 +31,34 @@
   margin-bottom: 0.5rem !important;
 }
 
+.loginPage__failure {
+  color: red;
+}
+
+.loginPage__messageFail {
+  margin-bottom: 0.5rem;
+}
+
+.loginPage__correct {
+  color: green;
+}
+
 @media (min-width: 768px) {
   .loginPage__card {
     width: 400px !important;
   }
   .loginPage__body {
     padding: 1.25rem 2.5rem !important;
+  }
+}
+@media (orientation: landscape) {
+  .loginPage {
+    top: 56px;
+  }
+}
+
+@media (orientation: portrait) {
+  .loginPage__register {
+    top: 94px;
   }
 }
