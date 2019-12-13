@@ -383,6 +383,9 @@ class CVEditorPage extends React.Component {
       let lanStr = "" + prop + " - " + this.state.languages[prop];
       languagesArr.push([lanId, lanStr]);
     }
+
+    if (languagesArr.length === 0) return(<div className="cv_page_verticalSpace" />);
+
     return (
       <ul>
         {languagesArr.map(language => (
@@ -399,7 +402,7 @@ class CVEditorPage extends React.Component {
   }
 
   renderSkills() {
-    if (this.state.skills.length === 0) return;
+    if (this.state.skills.length === 0) return(<div className="cv_page_verticalSpace" />);
     return (
       <ul>
         {this.state.skills.map(skill => (
@@ -485,7 +488,7 @@ class CVEditorPage extends React.Component {
         </Form.Group>
         <Button
           id="item_add_button"
-          variant="secondary"
+          variant="success"
           type="submit"
           onClick={e => this.addComplexItem(e, formName)}
         >
@@ -502,6 +505,9 @@ class CVEditorPage extends React.Component {
       let eduStr = this.complexItemToStr(prop, this.state.education[prop]);
       eduArr.push([eduId, eduStr]);
     }
+
+    if(eduArr.length === 0) return (<div className="cv_page_verticalSpace" />);
+
     return (
       <ul>
         {eduArr.map(edu => (
@@ -524,6 +530,9 @@ class CVEditorPage extends React.Component {
       let eduStr = this.complexItemToStr(prop, this.state.workExperience[prop]);
       eduArr.push([eduId, eduStr]);
     }
+
+    if(eduArr.length === 0) return (<div className="cv_page_verticalSpace" />);
+
     return (
       <ul>
         {eduArr.map(edu => (
@@ -648,7 +657,7 @@ class CVEditorPage extends React.Component {
                         }}
                       />
                       <Button
-                        variant="secondary"
+                        variant="success"
                         onClick={e => {
                           this.handleSkillAdd(e);
                           console.log(this.state.skills);
@@ -686,7 +695,7 @@ class CVEditorPage extends React.Component {
                         </Form.Control>
                       </Form.Group>
                       <Button
-                        variant="secondary"
+                        variant="success"
                         onClick={language => this.handleAddLanguage(language)}
                       >
                         + Dodaj
