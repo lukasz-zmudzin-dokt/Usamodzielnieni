@@ -44,7 +44,9 @@ class CVEditorPage extends React.Component {
 
       languages: {},
       languageName: "",
-      languageLevel: "podstawowy"
+      languageLevel: "podstawowy",
+
+      formTab: "personalData"
     };
   }
 
@@ -384,7 +386,8 @@ class CVEditorPage extends React.Component {
       languagesArr.push([lanId, lanStr]);
     }
 
-    if (languagesArr.length === 0) return(<div className="cv_page_verticalSpace" />);
+    if (languagesArr.length === 0)
+      return <div className="cv_page_verticalSpace" />;
 
     return (
       <ul>
@@ -402,7 +405,8 @@ class CVEditorPage extends React.Component {
   }
 
   renderSkills() {
-    if (this.state.skills.length === 0) return(<div className="cv_page_verticalSpace" />);
+    if (this.state.skills.length === 0)
+      return <div className="cv_page_verticalSpace" />;
     return (
       <ul>
         {this.state.skills.map(skill => (
@@ -506,14 +510,13 @@ class CVEditorPage extends React.Component {
       eduArr.push([eduId, eduStr]);
     }
 
-    if(eduArr.length === 0) return (<div className="cv_page_verticalSpace" />);
+    if (eduArr.length === 0) return <div className="cv_page_verticalSpace" />;
 
     return (
       <ul>
         {eduArr.map(edu => (
           <Button
             id={edu[0]}
-          //  className="cv_page_verticalSpace"
             variant="dark"
             onClick={e => this.handleCutEdu(e)}
           >
@@ -532,7 +535,7 @@ class CVEditorPage extends React.Component {
       eduArr.push([eduId, eduStr]);
     }
 
-    if(eduArr.length === 0) return (<div className="cv_page_verticalSpace" />);
+    if (eduArr.length === 0) return <div className="cv_page_verticalSpace" />;
 
     return (
       <ul>
@@ -562,7 +565,11 @@ class CVEditorPage extends React.Component {
           <Card.Body>
             <Form id="cv_data" onSubmit={e => this.handleCVSubmit(e)}>
               <Col>
-                <Tabs defaultActiveKey="personalData" id="tabs">
+                <Tabs
+                  activeKey={this.state.formTab}
+                  onSelect={e => this.setState({ formTab: e })}
+                  id="tabs"
+                >
                   <Tab eventKey="personalData" title="Dane osobowe">
                     <Form.Label>
                       <h3>Dane osobowe</h3>
@@ -619,6 +626,14 @@ class CVEditorPage extends React.Component {
                         className="cv_page_input"
                       />
                     </Form.Group>
+                    <ButtonToolbar>
+                      <Button disabled>Wstecz</Button>
+                      <Button
+                        onClick={e => this.setState({ formTab: "education" })}
+                      >
+                        Dalej
+                      </Button>
+                    </ButtonToolbar>
                   </Tab>
                   <Tab eventKey="education" title="Edukacja">
                     <Form.Group id="complex-cv-fields">
@@ -629,6 +644,22 @@ class CVEditorPage extends React.Component {
                       </Form.Label>
                       {this.renderForm("education")}
                     </Form.Group>
+                    <ButtonToolbar>
+                      <Button
+                        onClick={e =>
+                          this.setState({ formTab: "personalData" })
+                        }
+                      >
+                        Wstecz
+                      </Button>
+                      <Button
+                        onClick={e =>
+                          this.setState({ formTab: "workExperience" })
+                        }
+                      >
+                        Dalej
+                      </Button>
+                    </ButtonToolbar>
                   </Tab>
                   <Tab eventKey="workExperience" title="Doświadczenie zawodowe">
                     <Form.Group id="complex-cv-fields">
@@ -639,6 +670,18 @@ class CVEditorPage extends React.Component {
                       </Form.Label>
                       {this.renderForm("workExperience")}
                     </Form.Group>
+                    <ButtonToolbar>
+                      <Button
+                        onClick={e => this.setState({ formTab: "education" })}
+                      >
+                        Wstecz
+                      </Button>
+                      <Button
+                        onClick={e => this.setState({ formTab: "skills" })}
+                      >
+                        Dalej
+                      </Button>
+                    </ButtonToolbar>
                   </Tab>
                   <Tab eventKey="skills" title="Umiejętności">
                     <Form.Group id="complex-cv-fields">
@@ -667,6 +710,20 @@ class CVEditorPage extends React.Component {
                         + Dodaj
                       </Button>
                     </Form.Group>
+                    <ButtonToolbar>
+                      <Button
+                        onClick={e =>
+                          this.setState({ formTab: "workExperience" })
+                        }
+                      >
+                        Wstecz
+                      </Button>
+                      <Button
+                        onClick={e => this.setState({ formTab: "languages" })}
+                      >
+                        Dalej
+                      </Button>
+                    </ButtonToolbar>
                   </Tab>
                   <Tab eventKey="languages" title="Języki obce">
                     <Form.Group id="complex-cv-fields">
@@ -701,30 +758,40 @@ class CVEditorPage extends React.Component {
                       >
                         + Dodaj
                       </Button>
+
+                      <ButtonToolbar>
+                        <Button
+                          onClick={e => this.setState({ formTab: "skills" })}
+                        >
+                          Wstecz
+                        </Button>
+                        <Button disabled>Dalej</Button>
+                      </ButtonToolbar>
+
+                      <ButtonToolbar id="cv_mgmt_button_toolbar">
+                        <Button
+                          className="btn_discard"
+                          size="lg"
+                          variant="danger"
+                          type="reset"
+                          id="discardButton"
+                          href="/user"
+                        >
+                          Odrzuć
+                        </Button>
+                        <Button
+                          className="btn_generate"
+                          size="lg"
+                          variant="success"
+                          type="submit"
+                          id="saveButton"
+                        >
+                          Generuj CV
+                        </Button>
+                      </ButtonToolbar>
                     </Form.Group>
                   </Tab>
                 </Tabs>
-                <ButtonToolbar id="cv_mgmt_button_toolbar">
-                  <Button
-                    className="btn_discard"
-                    size="lg"
-                    variant="danger"
-                    type="reset"
-                    id="discardButton"
-                    href="/user"
-                  >
-                    Odrzuć
-                  </Button>
-                  <Button
-                    className="btn_generate"
-                    size="lg"
-                    variant="success"
-                    type="submit"
-                    id="saveButton"
-                  >
-                    Generuj CV
-                  </Button>
-                </ButtonToolbar>
               </Col>
             </Form>
           </Card.Body>
