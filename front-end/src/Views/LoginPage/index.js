@@ -3,6 +3,8 @@ import { Container, Button, Card } from "react-bootstrap";
 import Cookies from "universal-cookie";
 import Form from "react-bootstrap/Form";
 import { Link, Redirect } from "react-router-dom";
+import { connect } from "react-redux";
+import { setUserToken } from "redux/actions";
 
 import "Views/LoginPage/style.css";
 import bgImage from "assets/fot..png";
@@ -18,7 +20,7 @@ class LoginPage extends React.Component {
     incorrect: false,
     cookieVal: false,
     validated: false,
-    token: ""
+    token: this.props.token || ""
   };
 
   createMessage = status => {
@@ -35,9 +37,9 @@ class LoginPage extends React.Component {
 
   sendData = object => {
     const { username, password } = this.state;
-    const { createMessage } = this;
-    const url = process.env.REACT_APP_API_URL + "account/login/";
-    const response = fetch(url, {
+
+    const url = "https://usamo-back.herokuapp.com/account/login/";
+    fetch(url, {
       method: "POST",
       body: JSON.stringify({
         username,
@@ -50,29 +52,23 @@ class LoginPage extends React.Component {
     }).then(res => {
       console.log(res);
       if (res.status === 200) {
-        res.json()
-          .then(responseValue => {
-              this.setState({
-                token: responseValue.token
-              });
-              this.setRedirect();
+        res.json().then(responseValue => {
+          const { token } = responseValue;
+          this.props.setUserToken(token);
+          this.setState({ token });
+          this.setRedirect();
+          cookies.set(`token`, token, {
+            path: "/"
           });
-      } else if (res.status === 400) {
-        this.setState({
-          validated: false,
-          incorrect: true,
-          username: "",
-          password: ""
         });
-        createMessage(res.status);
       } else {
         this.setState({
           validated: false,
           incorrect: true,
           username: "",
-          password: ""
+          password: "",
+          message: "Coś poszło nie tak"
         });
-        createMessage(res.status);
       }
     });
   };
@@ -92,14 +88,13 @@ class LoginPage extends React.Component {
     });
   };
 
-  setCookie = () => {
-    const { username } = this.state;
+  setCookie = token => {
     const current = new Date();
     const nextYear = new Date();
 
     nextYear.setFullYear(current.getFullYear() + 1); // ciasteczko na rok
-
-    cookies.set(`username`, username, {
+    console.log(token);
+    cookies.set(`token`, token, {
       path: "/",
       expires: nextYear
     });
@@ -113,17 +108,18 @@ class LoginPage extends React.Component {
 
   handleSubmit = event => {
     const form = event.currentTarget;
-    const { password, username, cookieVal } = this.state;
-    const { setCookie } = this;
+    const { password, username } = this.state;
+
     event.preventDefault();
 
     if (form.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();
     } else {
-      if (cookieVal) {
-        setCookie();
-      }
+      // if (cookieVal) {
+      //   console.log("dodaje!");
+      //   setCookie();
+      // }
       this.sendData();
       console.log(password, username); // login i hasło użytkownika
     }
@@ -140,7 +136,7 @@ class LoginPage extends React.Component {
   };
 
   componentDidMount() {
-    if (cookies.get("username")) {
+    if (cookies.get("token")) {
       this.setRedirect();
     }
   }
@@ -234,4 +230,4 @@ class LoginPage extends React.Component {
   }
 }
 
-export default LoginPage;
+export default connect(null, { setUserToken })(LoginPage);

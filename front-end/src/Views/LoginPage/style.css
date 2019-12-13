@@ -51,3 +51,14 @@
     padding: 1.25rem 2.5rem !important;
   }
 }
+@media (orientation: landscape) {
+  .loginPage {
+    top: 56px;
+  }
+}
+
+@media (orientation: portrait) {
+  .loginPage__register {
+    top: 94px;
+  }
+}
