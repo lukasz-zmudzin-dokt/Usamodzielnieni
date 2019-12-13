@@ -6,6 +6,7 @@ import polish from "date-fns/locale/pl";
 import bgImage from "../../assets/fot..png";
 import "./style.css";
 import Col from "react-bootstrap/Col";
+import Film from "../graphics/filmik.png";
 
 registerLocale("pl", polish);
 
@@ -414,7 +415,7 @@ class CVEditorPage extends React.Component {
       <div id="complex_form_input_set">
         <Form.Group id="temp_data">
           {this.renderItems(formName)}
-          <Form.Label column={""}>Od:</Form.Label>
+          <Form.Label column={""}>Od:<span>&nbsp;</span></Form.Label>
           <DatePicker
             className="complex_form_input_item"
             locale="pl"
@@ -423,7 +424,8 @@ class CVEditorPage extends React.Component {
             onChange={date => this.handleDateChange(startTimeStr, date)}
             showMonthYearPicker
           />
-          <Form.Label column={""}>Do:</Form.Label>
+          <span>&nbsp;&nbsp;&nbsp;</span>
+          <Form.Label column={""}>Do:<span>&nbsp;</span></Form.Label>
           <DatePicker
             className="complex_form_input_item"
             locale="pl"
@@ -432,6 +434,7 @@ class CVEditorPage extends React.Component {
             onChange={date => this.handleDateChange(endTimeStr, date)}
             showMonthYearPicker
           />
+          <br></br>
           <Form.Label column={""}>Miejsce:</Form.Label>
           <Form.Control
             className="complex_form_input_item"
@@ -524,6 +527,8 @@ class CVEditorPage extends React.Component {
                                     <Tab eventKey="personalData" title="Dane osobowe">
                                         <Form.Label>
                                             <h3>Dane osobowe</h3>
+                                            <br></br>
+                                            <img src={Film} width="100px" alt="" />
                                         </Form.Label>
                                         <Form.Group controlId="personalData">
                                             <Form.Label column={""} sm="2">
@@ -580,6 +585,8 @@ class CVEditorPage extends React.Component {
                                         <Form.Group id="complex-cv-fields">
                                             <Form.Label>
                                                 <h3>Edukacja</h3>
+                                                <br></br>
+                                                <img src={Film} width="100px" alt="" />
                                             </Form.Label>
                                             {this.renderForm("education")}
                                         </Form.Group>
@@ -588,6 +595,8 @@ class CVEditorPage extends React.Component {
                                         <Form.Group id="complex-cv-fields">
                                             <Form.Label>
                                                 <h3>Doświadczenie zawodowe</h3>
+                                                <br></br>
+                                                <img src={Film} width="100px" alt="" />
                                             </Form.Label>
                                             {this.renderForm("workExperience")}
                                         </Form.Group>
@@ -596,6 +605,8 @@ class CVEditorPage extends React.Component {
                                         <Form.Group id="complex-cv-fields">
                                             <Form.Label>
                                                 <h3>Umiejętności</h3>
+                                                <br></br>
+                                                <img src={Film} width="100px" alt="" />
                                             </Form.Label>
                                             {this.renderSkills()}
                                             <Form.Control
@@ -622,6 +633,8 @@ class CVEditorPage extends React.Component {
                                         <Form.Group id="complex-cv-fields">
                                             <Form.Label>
                                                 <h3>Języki obce</h3>
+                                                <br></br>
+                                                <img src={Film} width="100px" alt="" />
                                             </Form.Label>
                                             {this.renderLanguages()}
                                             <Form.Control
