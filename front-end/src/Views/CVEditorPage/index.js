@@ -1,12 +1,14 @@
 import React from "react";
-import { Container, Button, Card, Form, ButtonToolbar } from "react-bootstrap";
+import {Button, ButtonToolbar, Card, Container, Form, Tab, Tabs} from "react-bootstrap";
 import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import polish from "date-fns/locale/pl";
 import bgImage from "../../assets/fot..png";
 import "./style.css";
 import Col from "react-bootstrap/Col";
-import { connect } from "react-redux";
+import Film from "../graphics/movie.png";
+import Cookies from "universal-cookie";
+const cookies = new Cookies();
 
 registerLocale("pl", polish);
 
@@ -36,108 +38,163 @@ class CVEditorPage extends React.Component {
 
             languages: {},
             languageName: "",
-            languageLevel: "podstawowy"
+            languageLevel: "podstawowy",
+
+            formTab: "personalData"
         };
     }
 
-    sendData = object => {
-        const proxyurl = "https://cors-anywhere.herokuapp.com/";
+    sendData = (e, object) => {
+        const token = cookies.get("token");
         const url = "https://usamo-back.herokuapp.com/cv/generate/";
         console.log(this.props.token);
-        const response = fetch(proxyurl + url, {
-            method: "POST",
-            body: JSON.stringify(object),
+        console.log(JSON.stringify(object));
+        fetch(url, {
+            method: "DELETE",
             headers: {
-                "Authorization": "Token " + this.props.token,
-                "Content-Type": "application/json"
+                "Authorization": "Token " + token,
+                "Content-Type": "application/json",
+            }
+        }).then(initialDel => {
+            if (initialDel.status === 200 || initialDel.status === 404) {
+                fetch(url, {
+                    method: "POST",
+                    body: JSON.stringify(object),
+                    headers: {
+                        "Authorization": "Token " + token,
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    },
+                }).then(res => {
+                    console.log(res);
+                    if (res.status === 201) {
+                        fetch(url, {
+                            method: "GET",
+                            headers: {
+                                "Authorization": "Token " + token,
+                                "Content-Type": "application/json",
+                            }
+                        }).then(response => {
+                            if (response.status === 200) {
+                                response.json().then(file => {
+                                    let cvUrl = "https://usamo-back.herokuapp.com/" + file;
+                                    window.open(cvUrl, "_blank");
+                                    setTimeout(function() {
+                                        fetch(url, {
+                                            method: "DELETE",
+                                            headers: {
+                                                "Authorization": "Token " + token,
+                                                "Content-Type": "application/json",
+                                            }
+                                        }).then(ans => {
+                                            console.log(ans);
+                                            if (ans.status === 200)
+                                                console.log("deleted");
+                                        })
+                                    }, 300000);
+                                });
+                            }
+                        });
+                    }
+                });
             }
         });
     };
 
-    createCVObject() {
+    createCVObject(e) {
+        e.preventDefault();
         const {fullName, birthDate, phoneNumber, email, education, workExperience, skills, languages} = this.state;
         let name = fullName.split(" ");
         let edItemList = [];
         let workItemList = [];
         let langList = [];
-        for (let prop in education) {
-            if (education.hasOwnProperty(prop)) {
-                if (prop[2] === undefined)
-                    edItemList.push(new Object({
-                        name: prop[0],
-                        year_start: prop[1].getFullYear,
-                        year_end: prop[2],
-                        additional_info: prop[3]
-                    }));
-                else
-                    edItemList.push(new Object({
-                        name: prop[0],
-                        year_start: prop[1].getFullYear,
-                        year_end: prop[2].getFullYear,
-                        additional_info: prop[3]
-                    }));
-            }
+        let eduNames  = Object.keys(education);
+        let workNames = Object.keys(workExperience);
+        let langNames = Object.keys(languages);
+
+        for (let index in eduNames) {
+            let prop = eduNames[index];
+            console.log(prop);
+            console.log(education[prop]);
+            if (education[prop][1] === undefined)
+                edItemList.push({
+                    name: prop,
+                    year_start: education[prop][0].getFullYear(),
+                    year_end: education[prop][1],
+                    additional_info: education[prop][2]
+                });
+            else
+                edItemList.push({
+                    name: prop,
+                    year_start: education[prop][0].getFullYear(),
+                    year_end: education[prop][1].getFullYear(),
+                    additional_info: education[prop][2]
+                });
         }
 
-        for (let prop in workExperience) {
-            if (workExperience.hasOwnProperty(prop)) {
-                if (prop[2] === undefined)
-                    workItemList.push(new Object({
-                        name: prop[0],
-                        year_start: prop[1].getFullYear,
-                        year_end: prop[2],
-                        additional_info: prop[3]
-                    }));
-                 else
-                    workItemList.push(new Object({
-                        name: prop[0],
-                        year_start: prop[1].getFullYear,
-                        year_end: prop[2].getFullYear,
-                        additional_info: prop[3]
-                    }));
-            }
+        for (let index in workNames) {
+            let prop = workNames[index];
+            if (workExperience[prop][1] === undefined)
+                workItemList.push({
+                    name: prop,
+                    year_start: workExperience[prop][0].getFullYear(),
+                    year_end: workExperience[prop][1],
+                    additional_info: workExperience[prop][2]
+                });
+            else
+                workItemList.push({
+                    name: prop,
+                    year_start: workExperience[prop][0].getFullYear(),
+                    year_end: workExperience[prop][1].getFullYear(),
+                    additional_info: workExperience[prop][2]
+                });
         }
 
-        for (let prop in languages) if (languages.hasOwnProperty(prop)) {
-            langList.push(lang => {
-                return {
-                    name: prop[0],
-                    level: prop[1]
-                }
+        for (let index in langNames) {
+            let prop = langNames[index];
+            langList.push({
+                name: prop,
+                level: languages[prop]
             });
         }
 
-        let obj = new Object({
+
+        return {
             basic_info: {
                 first_name: name[0],
                 last_name: name[1],
-                date_of_birth: birthDate.getDay + "-" + birthDate.getMonth + "-" + birthDate.getFullYear,
+                date_of_birth: birthDate.getDate() + "-" + (birthDate.getMonth()+1) + "-" + birthDate.getFullYear(),
                 phone_number: phoneNumber,
-                email: email,
-                schools: edItemList.map(school => {
-                    return {
-                        name: school.name,
-                        year_start: school.year_start,
-                        year_end: school.year_end,
-                        additional_info: school.additional_info
-                    }
-                })
+                email: email
             },
-            experiences: workItemList.map(workPlace => {return {
-                title: workPlace.name,
-                year_start: workPlace.year_start,
-                year_end: workPlace.year_end,
-                description: workPlace.additional_info
-            }}),
-            skills: skills.map(skill => {return {
-                description: skill
-            }}),
-            languages: langList.map(lang => {return {
-                name: lang.name,
-                level: lang.level
-            }})
-        });
-        return obj;
+            schools: edItemList.map(school => {
+                return {
+                    name: school.name,
+                    year_start: school.year_start,
+                    year_end: school.year_end,
+                    additional_info: school.additional_info
+                }
+            }),
+            experiences: workItemList.map(workPlace => {
+                return {
+                    title: workPlace.name,
+                    year_start: workPlace.year_start,
+                    year_end: workPlace.year_end,
+                    description: workPlace.additional_info
+                }
+            }),
+            skills: skills.map(skill => {
+                return {
+                    description: skill
+                }
+            }),
+            languages: langList.map(lang => {
+                return {
+                    name: lang.name,
+                    level: lang.level
+                }
+            })
+        };
     }
 
     addComplexItem = (e, arrayName) => {
@@ -157,11 +214,11 @@ class CVEditorPage extends React.Component {
             itemPlace = this.state.workPlace;
         }
 
-        let descrStr = arrayName === "education" ? "eduDescription" : "workDescription";
+        let descrStr =
+            arrayName === "education" ? "eduDescription" : "workDescription";
         let startStr = arrayName === "education" ? "eduStartTime" : "workStartTime";
         let endStr = arrayName === "education" ? "eduEndTime" : "workEndTime";
         let placeStr = arrayName === "education" ? "eduPlace" : "workPlace";
-
 
         let newItemList = array;
         let newItemProps = [itemStartTime, itemEndTime, itemPlace];
@@ -199,12 +256,7 @@ class CVEditorPage extends React.Component {
 
     handleCVSubmit = e => {
         console.log(this.state);
-        this.sendData(this.createCVObject());
-        e.preventDefault();
-    };
-
-    handleSubmit = (e, language) => {
-        console.log(language.state);
+        this.sendData(e, this.createCVObject(e));
         e.preventDefault();
     };
 
@@ -300,7 +352,7 @@ class CVEditorPage extends React.Component {
         this.setState({
             education: newEducation
         });
-    }
+    };
 
     handleCutWork = e => {
         let newEducation = this.state.workExperience;
@@ -311,7 +363,7 @@ class CVEditorPage extends React.Component {
         this.setState({
             workExperience: newEducation
         });
-    }
+    };
 
     complexItemToStr(key, dates) {
         //console.log(key);
@@ -322,16 +374,16 @@ class CVEditorPage extends React.Component {
         let month = start.getMonth() + 1;
         let year = start.getYear() + 1900;
 
-        toReturn += "\nod: " + month + "/" + year;
+        toReturn += (month < 10 ? "\nod: 0" : "\nod: ") + month + "/" + year;
 
         if (end === undefined) {
             toReturn += "\ndo: teraz";
         } else {
             month = end.getMonth() + 1;
             year = end.getYear() + 1900;
-            toReturn += "\ndo: " + month + "/" + year;
+            toReturn += (month < 10 ? "\ndo: 0" : "\ndo: ") + month + "/" + year;
         }
-            toReturn += " (" + dates[2] + ")";
+        toReturn += " (" + dates[2] + ")";
         return toReturn;
     }
 
@@ -342,10 +394,18 @@ class CVEditorPage extends React.Component {
             let lanStr = "" + prop + " - " + this.state.languages[prop];
             languagesArr.push([lanId, lanStr]);
         }
+
+        if (languagesArr.length === 0)
+            return <div className="cv_page_verticalSpace" />;
+
         return (
             <ul>
                 {languagesArr.map(language => (
-                    <Button variant="dark" id={language[0]} onClick={e => this.handleCutLanguage(e)}>
+                    <Button
+                        variant="dark"
+                        id={language[0]}
+                        onClick={e => this.handleCutLanguage(e)}
+                    >
                         {language[1]} x
                     </Button>
                 ))}
@@ -354,11 +414,16 @@ class CVEditorPage extends React.Component {
     }
 
     renderSkills() {
-        if (this.state.skills.length === 0) return;
+        if (this.state.skills.length === 0)
+            return <div className="cv_page_verticalSpace" />;
         return (
             <ul>
                 {this.state.skills.map(skill => (
-                    <Button variant="dark" id={skill} onClick={e => this.handleCutSkill(e)}>
+                    <Button
+                        variant="dark"
+                        id={skill}
+                        onClick={e => this.handleCutSkill(e)}
+                    >
                         {skill} x
                     </Button>
                 ))}
@@ -367,39 +432,54 @@ class CVEditorPage extends React.Component {
     }
 
     renderItems(formName) {
-        if (formName === "education")
-            return this.renderEdu();
-        else
-            return this.renderWork();
+        if (formName === "education") return this.renderEdu();
+        else return this.renderWork();
     }
 
     renderForm(formName) {
-        let descriptionStr = formName === "education" ? "eduDescription" : "workDescription";
-        let startTimeStr = formName === "education" ? "eduStartTime" : "workStartTime";
+        let descriptionStr =
+            formName === "education" ? "eduDescription" : "workDescription";
+        let startTimeStr =
+            formName === "education" ? "eduStartTime" : "workStartTime";
         let endTimeStr = formName === "education" ? "eduEndTime" : "workEndTime";
         let placeStr = formName === "education" ? "eduPlace" : "workPlace";
+
         return (
             <div id="complex_form_input_set">
                 <Form.Group id="temp_data">
-                    {this.renderItems(formName)}
-                    <Form.Label column={""}>Od:</Form.Label>
+                    <div className="rendered_cv_area">{this.renderItems(formName)}</div>
+                    <Form.Label column={""}>
+                        Od:<span>&nbsp;</span>
+                    </Form.Label>
                     <DatePicker
                         className="complex_form_input_item"
                         locale="pl"
                         dateFormat=" MM.yyyy"
-                        selected={this.state.eduStartTime} //ogl
+                        selected={
+                            formName === "education"
+                                ? this.state.eduStartTime
+                                : this.state.workStartTime
+                        }
                         onChange={date => this.handleDateChange(startTimeStr, date)}
                         showMonthYearPicker
                     />
-                    <Form.Label column={""}>Do:</Form.Label>
+                    <span>&nbsp;&nbsp;&nbsp;</span>
+                    <Form.Label column={""}>
+                        Do:<span>&nbsp;</span>
+                    </Form.Label>
                     <DatePicker
                         className="complex_form_input_item"
                         locale="pl"
                         dateFormat=" MM.yyyy"
-                        selected={this.state.eduEndTime} //ogl
+                        selected={
+                            formName === "education"
+                                ? this.state.eduEndTime
+                                : this.state.workEndTime
+                        }
                         onChange={date => this.handleDateChange(endTimeStr, date)}
                         showMonthYearPicker
                     />
+                    <br></br>
                     <Form.Label column={""}>Miejsce:</Form.Label>
                     <Form.Control
                         className="complex_form_input_item"
@@ -421,7 +501,7 @@ class CVEditorPage extends React.Component {
                 </Form.Group>
                 <Button
                     id="item_add_button"
-                    variant="secondary"
+                    variant="success"
                     type="submit"
                     onClick={e => this.addComplexItem(e, formName)}
                 >
@@ -438,10 +518,17 @@ class CVEditorPage extends React.Component {
             let eduStr = this.complexItemToStr(prop, this.state.education[prop]);
             eduArr.push([eduId, eduStr]);
         }
+
+        if (eduArr.length === 0) return <div className="cv_page_verticalSpace" />;
+
         return (
             <ul>
                 {eduArr.map(edu => (
-                    <Button id={edu[0]} variant="dark" onClick={e => this.handleCutEdu(e)}>
+                    <Button
+                        id={edu[0]}
+                        variant="dark"
+                        onClick={e => this.handleCutEdu(e)}
+                    >
                         {edu[1]} x
                     </Button>
                 ))}
@@ -456,10 +543,17 @@ class CVEditorPage extends React.Component {
             let eduStr = this.complexItemToStr(prop, this.state.workExperience[prop]);
             eduArr.push([eduId, eduStr]);
         }
+
+        if (eduArr.length === 0) return <div className="cv_page_verticalSpace" />;
+
         return (
             <ul>
                 {eduArr.map(edu => (
-                    <Button id={edu[0]} variant="dark" onClick={e => this.handleCutWork(e)}>
+                    <Button
+                        id={edu[0]}
+                        variant="dark"
+                        onClick={e => this.handleCutWork(e)}
+                    >
                         {edu[1]} x
                     </Button>
                 ))}
@@ -474,144 +568,248 @@ class CVEditorPage extends React.Component {
                     <img className="cvPage__bgImage" src={bgImage} alt="tło" />
                 ) : null}
                 <Card className="CVEditorPage_card">
-                    <Card.Header id="cv_page__title" as="h2">
+                    <Card.Header className="cv_page_title" as="h2">
                         Kreator CV
                     </Card.Header>
                     <Card.Body>
                         <Form id="cv_data" onSubmit={e => this.handleCVSubmit(e)}>
                             <Col>
-                                <Form.Label>
-                                    <h3>Dane osobowe</h3>
-                                </Form.Label>
-                                <Form.Group controlId="personalData">
-                                    <Form.Label column={""} sm="2">
-                                        Imię i nazwisko:
-                                    </Form.Label>
-                                    <Form.Control
-                                        inline
-                                        type="text"
-                                        required
-                                        defaultValue={this.state.fullName}
-                                        placeholder="Jan Przykładowy"
-                                        onBlur={e => this.handleBlur(e, "fullName")}
-                                        className="cv_page_input"
-                                    />
-                                    <Form.Label column={""} sm="2">
-                                        Data urodzenia:{" "}
-                                    </Form.Label>
-                                    <DatePicker
-                                        className="cv_page_input"
-                                        locale="pl"
-                                        dateFormat=" dd.MM.yyyy"
-                                        selected={this.state.birthDate}
-                                        onChange={this.handleBirthDateChange}
-                                        withPortal
-                                        peekNextMonth
-                                        showMonthDropdown
-                                        showYearDropdown
-                                        dropdownMode="select"
-                                    />
-                                    <Form.Label column={""} sm="2">
-                                        Numer telefonu:
-                                    </Form.Label>
-                                    <Form.Control
-                                        type="text"
-                                        defaultValue={this.state.phoneNumber}
-                                        placeholder="+48123456789"
-                                        onBlur={e => this.handleBlur(e, "phoneNumber")}
-                                        className="cv_page_input"
-                                    />
-                                    <Form.Label column={""} sm="2">
-                                        Adres email:
-                                    </Form.Label>
-                                    <Form.Control
-                                        type="email"
-                                        required
-                                        defaultValue={this.state.email}
-                                        placeholder="example@domain.com"
-                                        onBlur={e => this.handleBlur(e, "email")}
-                                        className="cv_page_input"
-                                    />
-                                </Form.Group>
-
-                                <Form.Group id="complex-cv-fields">
-                                    <Form.Label>
-                                        <h3>Edukacja</h3>
-                                    </Form.Label>
-                                    {this.renderForm("education")}
-                                </Form.Group>
-
-                                <Form.Group id="complex-cv-fields">
-                                    <Form.Label>
-                                        <h3>Doświadczenie zawodowe</h3>
-                                    </Form.Label>
-                                    {this.renderForm("workExperience")}
-                                </Form.Group>
-
-                                <Form.Group id="complex-cv-fields">
-                                    <Form.Label>
-                                        <h3>Umiejętności</h3>
-                                    </Form.Label>
-                                        {this.renderSkills()}
-                                        <Form.Control
-                                            className="cv_page_input"
-                                            type="text"
-                                            placeholder="Wpisz umiejętność"
-                                            value={this.state.skillToAdd}
-                                            onChange={e => {
-                                                this.setState({ skillToAdd: e.target.value });
-                                            }}
-                                        />
-                                        <Button
-                                            variant="secondary"
-                                            onClick={e => {
-                                                this.handleSkillAdd(e);
-                                                console.log(this.state.skills);
-                                            }}
-                                        >
-                                            + Dodaj
-                                        </Button>
-                                </Form.Group>
-
-                                <Form.Group id="complex-cv-fields">
-                                    <Form.Label>
-                                        <h3>Języki obce</h3>
-                                    </Form.Label>
-                                        {this.renderLanguages()}
-                                        <Form.Control
-                                            id="languages"
-                                            type="text"
-                                            placeholder="Język"
-                                            value={this.state.languageName}
-                                            onChange={e => this.handleLanChange(e)}
-                                        />
-                                        <Form.Group controlId="exampleForm.ControlSelect1">
-                                            <Form.Label>Poziom</Form.Label>
+                                <Tabs
+                                    activeKey={this.state.formTab}
+                                    onSelect={e => this.setState({ formTab: e })}
+                                    id="tabs"
+                                >
+                                    <Tab eventKey="personalData" title="Dane osobowe">
+                                        <Form.Label>
+                                            <h3>Dane osobowe</h3>
+                                            <br></br>
+                                            <img src={Film} width="100px" alt="" />
+                                        </Form.Label>
+                                        <Form.Group controlId="personalData">
+                                            <Form.Label column={""} sm="2">
+                                                Imię i nazwisko:
+                                            </Form.Label>
                                             <Form.Control
-                                                as="select"
-                                                onChange={e => this.handleLanLvlChange(e)}
-                                                //    value={this.state.languageLevel}
-                                            >
-                                                <option value="podstawowy">podstawowy</option>
-                                                <option value="komunikatywny">komunikatywny</option>
-                                                <option value="biegły">biegły</option>
-                                            </Form.Control>
+                                                inline
+                                                type="text"
+                                                required
+                                                defaultValue={this.state.fullName}
+                                                placeholder="Jan Przykładowy"
+                                                onBlur={e => this.handleBlur(e, "fullName")}
+                                                className="cv_page_input"
+                                            />
+                                            <Form.Label column={""} sm="2">
+                                                Data urodzenia:{" "}
+                                            </Form.Label>
+                                            <DatePicker
+                                                className="cv_page_input"
+                                                locale="pl"
+                                                dateFormat=" dd.MM.yyyy"
+                                                selected={this.state.birthDate}
+                                                onChange={this.handleBirthDateChange}
+                                                withPortal
+                                                peekNextMonth
+                                                showMonthDropdown
+                                                showYearDropdown
+                                                dropdownMode="select"
+                                            />
+                                            <Form.Label column={""} sm="2">
+                                                Numer telefonu:
+                                            </Form.Label>
+                                            <Form.Control
+                                                type="text"
+                                                defaultValue={this.state.phoneNumber}
+                                                placeholder="+48123456789"
+                                                onBlur={e => this.handleBlur(e, "phoneNumber")}
+                                                className="cv_page_input"
+                                            />
+                                            <Form.Label column={""} sm="2">
+                                                Adres email:
+                                            </Form.Label>
+                                            <Form.Control
+                                                type="email"
+                                                required
+                                                defaultValue={this.state.email}
+                                                placeholder="example@domain.com"
+                                                onBlur={e => this.handleBlur(e, "email")}
+                                                className="cv_page_input"
+                                            />
                                         </Form.Group>
-                                        <Button
-                                            variant="secondary"
-                                            onClick={language => this.handleAddLanguage(language)}
-                                        >
-                                            + Dodaj
-                                        </Button>
-                                </Form.Group>
-                                <ButtonToolbar id="cv_mgmt_button_toolbar">
-                                    <Button className="btn_discard" size="lg" variant="danger" type="reset" id="discardButton" href="/user">
-                                        Odrzuć
-                                    </Button>
-                                    <Button className="btn_generate" size="lg" variant="success" type="submit" id="saveButton">
-                                        Generuj CV
-                                    </Button>
-                                </ButtonToolbar>
+                                        <ButtonToolbar>
+                                            <Button className="form_navigation_prev" disabled>← Wstecz</Button>
+                                            <Button
+                                                className="form_navigation_next"
+                                                onClick={e => this.setState({ formTab: "education" })}
+                                            >
+                                                Dalej →
+                                            </Button>
+                                        </ButtonToolbar>
+                                    </Tab>
+                                    <Tab eventKey="education" title="Edukacja">
+                                        <Form.Group id="complex-cv-fields">
+                                            <Form.Label>
+                                                <h3>Edukacja</h3>
+                                                <br></br>
+                                                <img src={Film} width="100px" alt="" />
+                                            </Form.Label>
+                                            {this.renderForm("education")}
+                                        </Form.Group>
+                                        <ButtonToolbar>
+                                            <Button
+                                                className="form_navigation_prev"
+                                                onClick={e =>
+                                                    this.setState({ formTab: "personalData" })
+                                                }
+                                            >
+                                                ← Wstecz
+                                            </Button>
+                                            <Button
+                                                className="form_navigation_next"
+                                                onClick={e =>
+                                                    this.setState({ formTab: "workExperience" })
+                                                }
+                                            >
+                                                Dalej →
+                                            </Button>
+                                        </ButtonToolbar>
+                                    </Tab>
+                                    <Tab eventKey="workExperience" title="Doświadczenie zawodowe">
+                                        <Form.Group id="complex-cv-fields">
+                                            <Form.Label>
+                                                <h3>Doświadczenie zawodowe</h3>
+                                                <br></br>
+                                                <img src={Film} width="100px" alt="" />
+                                            </Form.Label>
+                                            {this.renderForm("workExperience")}
+                                        </Form.Group>
+                                        <ButtonToolbar>
+                                            <Button
+                                                className="form_navigation_prev"
+                                                onClick={e => this.setState({ formTab: "education" })}
+                                            >
+                                                ← Wstecz
+                                            </Button>
+                                            <Button
+                                                className="form_navigation_next"
+                                                onClick={e => this.setState({ formTab: "skills" })}
+                                            >
+                                                Dalej →
+                                            </Button>
+                                        </ButtonToolbar>
+                                    </Tab>
+                                    <Tab eventKey="skills" title="Umiejętności">
+                                        <Form.Group id="complex-cv-fields">
+                                            <Form.Label>
+                                                <h3>Umiejętności</h3>
+                                                <br></br>
+                                                <img src={Film} width="100px" alt="" />
+                                            </Form.Label>
+                                            <div className="rendered_cv_area">{this.renderSkills()}</div>
+                                            <Form.Control
+                                                className="cv_page_input"
+                                                type="text"
+                                                placeholder="Wpisz umiejętność"
+                                                value={this.state.skillToAdd}
+                                                onChange={e => {
+                                                    this.setState({ skillToAdd: e.target.value });
+                                                }}
+                                            />
+                                            <Button
+                                                variant="success"
+                                                onClick={e => {
+                                                    this.handleSkillAdd(e);
+                                                    console.log(this.state.skills);
+                                                }}
+                                            >
+                                                + Dodaj
+                                            </Button>
+                                        </Form.Group>
+                                        <ButtonToolbar>
+                                            <Button
+                                                className="form_navigation_prev"
+                                                onClick={e =>
+                                                    this.setState({ formTab: "workExperience" })
+                                                }
+                                            >
+                                                ← Wstecz
+                                            </Button>
+                                            <Button
+                                                className="form_navigation_next"
+                                                onClick={e => this.setState({ formTab: "languages" })}
+                                            >
+                                                Dalej →
+                                            </Button>
+                                        </ButtonToolbar>
+                                    </Tab>
+                                    <Tab eventKey="languages" title="Języki obce">
+                                        <Form.Group id="complex-cv-fields">
+                                            <Form.Label>
+                                                <h3>Języki obce</h3>
+                                                <br></br>
+                                                <img src={Film} width="100px" alt="" />
+                                            </Form.Label>
+                                            <div className="rendered_cv_area">{this.renderLanguages()}</div>
+                                            <Form.Control
+                                                className="cv_page_input"
+                                                id="languages"
+                                                type="text"
+                                                placeholder="Język"
+                                                value={this.state.languageName}
+                                                onChange={e => this.handleLanChange(e)}
+                                            />
+                                            <Form.Group controlId="exampleForm.ControlSelect1">
+                                                <Form.Label>Poziom</Form.Label>
+                                                <Form.Control
+                                                    className="cv_lang_lvl_selector"
+                                                    as="Select"
+                                                    onChange={e => this.handleLanLvlChange(e)}
+                                                    //    value={this.state.languageLevel}
+                                                >
+                                                    <option value="podstawowy">podstawowy</option>
+                                                    <option value="komunikatywny">komunikatywny</option>
+                                                    <option value="biegły">biegły</option>
+                                                </Form.Control>
+                                                <Button
+                                                    variant="success"
+                                                    onClick={language => this.handleAddLanguage(language)}
+                                                >
+                                                    + Dodaj
+                                                </Button>
+                                            </Form.Group>
+                                            <ButtonToolbar>
+                                                <Button
+                                                    className="form_navigation_prev"
+                                                    onClick={e => this.setState({ formTab: "skills" })}
+                                                >
+                                                    ← Wstecz
+                                                </Button>
+                                                <Button className="form_navigation_next" disabled>Dalej →</Button>
+                                            </ButtonToolbar>
+
+                                            <ButtonToolbar id="cv_mgmt_button_toolbar">
+                                                <Button
+                                                    className="btn_discard"
+                                                    size="lg"
+                                                    variant="danger"
+                                                    type="reset"
+                                                    id="discardButton"
+                                                    href="/user"
+                                                >
+                                                    Odrzuć
+                                                </Button>
+                                                <Button
+                                                    className="btn_generate"
+                                                    size="lg"
+                                                    variant="success"
+                                                    type="submit"
+                                                    id="saveButton"
+                                                >
+                                                    Generuj CV
+                                                </Button>
+                                            </ButtonToolbar>
+                                        </Form.Group>
+                                    </Tab>
+                                </Tabs>
                             </Col>
                         </Form>
                     </Card.Body>
@@ -621,10 +819,4 @@ class CVEditorPage extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    console.log("mapStateToProps:", state);
-    const { token } = state.user;
-    return { token };
-};
-
-export default connect(mapStateToProps)(CVEditorPage);
+export default CVEditorPage;

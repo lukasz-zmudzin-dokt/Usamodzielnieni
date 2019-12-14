@@ -5,26 +5,31 @@ import "Views/PageHeader/headerLayout.css";
 import logo from "assets/logo.png";
 
 // https://github.com/ReactTraining/react-router/issues/83#issuecomment-214794477
-import { LinkContainer } from 'react-router-bootstrap';
+import {IndexLinkContainer} from 'react-router-bootstrap';
+import {Redirect, withRouter} from "react-router-dom";
+import {setUserToken} from "../../redux/actions";
+import Cookies from "universal-cookie";
+import {connect} from "react-redux";
+const cookies = new Cookies();
 
 class HeaderTemplate extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      currentLocation: window.location.pathname,
-      isLoggedIn: this.props.isLoggedIn //status pobierany jakimś getem do api?
-    };
-  }
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            token: this.props.token || undefined
+        }
+    }
 
   displayMenu() {
-    if (this.state.currentLocation !== "/")
+    if (this.props.location.pathname !== "/")
       return (
-        <Nav pullCenter className="mr-auto ">
-          <LinkContainer to="/cvEditor">
+        <Nav className="mr-auto ">
+          <IndexLinkContainer to={this.props.token === undefined ? "/login" : "/cvEditor"}>
             <Nav.Link id="cvEditor">
               Kreator CV
             </Nav.Link>
-          </LinkContainer>
+          </IndexLinkContainer>
           <Nav.Link id="learningTheRopes">Od czego zacząć?</Nav.Link>
           <Nav.Link id="jobOffers">Oferty pracy</Nav.Link>
           <Nav.Link id="jobDescriptions">Opis stanowisk</Nav.Link>
@@ -37,54 +42,74 @@ class HeaderTemplate extends React.Component {
   }
 
   displayButtonSet() {
-    if (this.state.isLoggedIn)
+      console.log(this.props.token);
+    if (this.props.token !== undefined)
       return (
-        <Form inline pull-right>
-          <Button id="userProfile" variant="light" href="/user">
-            Profil
-          </Button>
-          <Button
-            id="loginButton"
-            variant="outline-light"
-            onClick={e => this.userLogout(e)}
-          >
-            Wyloguj
-          </Button>
+        <Form inline pull-right className="action_buttons">
+            <IndexLinkContainer to="/user">
+              <Button className="menu_action_button" variant="light">
+                Profil
+              </Button>
+            </IndexLinkContainer>
+            <IndexLinkContainer to="/">
+              <Button className="menu_action_button" variant="outline-light" onClick={e => this.userLogout(e)}>
+                Wyloguj
+              </Button>
+            </IndexLinkContainer>
         </Form>
       );
     else
       return (
-        <Form inline pull-right>
-          <Button id="userProfile" variant="light" href="/newAccount">
-            Rejestracja
-          </Button>
-          <Button id="loginButton" variant="outline-light" href="/login">
-            Logowanie
-          </Button>
+        <Form inline pull-right className="action_buttons">
+            <IndexLinkContainer to="/login">
+              <Button className="menu_action_button" variant="outline-light">
+                Logowanie
+              </Button>
+            </IndexLinkContainer>
         </Form>
       );
   }
 
-  userLogout = e => {
-    this.setState({
-      isLoggedIn: false
-    });
-    e.preventDefault();
-    window.location.replace("/");
+    userLogout = e => {
+      const token = cookies.get("token");
+      console.log(token);
+      const url = "https://usamo-back.herokuapp.com/account/logout/";
+      fetch(url, {
+          method: "POST",
+          headers: {
+              "Authorization": "token " + token
+          },
+          body: {}
+      }).then(res => {
+          console.log(res);
+          if (res.status === 200) {
+              res.json().then(responseValue => {
+                  console.log(responseValue);
+                  console.log("Wylogowano");
+                  this.props.setUserToken(undefined);
+                  cookies.remove("token", {path: "/"});
+                  return (
+                      <Redirect to="/"/>
+                  );
+              });
+          }
+      });
   };
 
   render() {
+      const { match, location, history } = this.props;
+      console.log(match, location, history, this.props);
     return (
       <Navbar id="navbar_menu" variant="dark" fixed="top" expand="lg">
         <Navbar.Brand id="navbar_logo">
-          <a href="/">
+          <IndexLinkContainer to="/">
             <img
-              id="charity_logo"
+              className="charity_logo"
               width="200vh"
               src={logo}
               alt="Usamodzielnieni"
             />
-          </a>
+          </IndexLinkContainer>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="topMenu" />
         <Navbar.Collapse id="topMenu">
@@ -96,4 +121,10 @@ class HeaderTemplate extends React.Component {
   }
 }
 
-export default HeaderTemplate;
+const mapStateToProps = (state) => {
+    console.log("mapStateToProps:", state);
+    const { token } = state.user;
+    return { token };
+};
+
+export default connect(mapStateToProps, {setUserToken})(withRouter(HeaderTemplate));

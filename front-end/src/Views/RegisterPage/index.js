@@ -380,7 +380,6 @@ class RegisterPage extends React.Component {
                   </Card.Body>
                 </Card>
               </section>
-
               <Button
                 variant="secondary"
                 className="loginPage__button"
