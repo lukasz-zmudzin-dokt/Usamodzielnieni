@@ -16,15 +16,20 @@
   width: 1000px;
 }
 
+.menu_action_button {
+  min-width: 6vw;
+}
+
 .charity_logo {
   max-height: 200px;
   max-width: 250px;
-  background-color: white;
   display: inline-block;
 }
 
 .charity_logo:hover {
-  box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.5);
+  background-color: rgba(255, 255, 255, 0.5);
+  filter: brightness(150%);
+  box-shadow: 0 0 10px 10px rgba(255, 255, 255, 0.5);
   opacity: 0.5;
 }
 
