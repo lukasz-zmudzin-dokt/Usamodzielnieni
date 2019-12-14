@@ -16,7 +16,17 @@
   width: 1000px;
 }
 
-.menu_action_button {
+.menu_action_button_1 {
+  min-width: 6vw;
+  margin-right: 1vw;
+}
+
+.menu_action_button_2 {
+  min-width: 6vw;
+  margin-left: 1vw;
+}
+
+.menu_action_button_3 {
   min-width: 6vw;
 }
 

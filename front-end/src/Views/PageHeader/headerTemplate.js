@@ -47,12 +47,12 @@ class HeaderTemplate extends React.Component {
       return (
         <Form inline pull-right className="action_buttons">
             <IndexLinkContainer to="/user">
-              <Button className="menu_action_button" variant="light">
+              <Button className="menu_action_button_1" variant="light">
                 Profil
               </Button>
             </IndexLinkContainer>
             <IndexLinkContainer to="/">
-              <Button className="menu_action_button" variant="outline-light" onClick={e => this.userLogout(e)}>
+              <Button className="menu_action_button_2" variant="outline-light" onClick={e => this.userLogout(e)}>
                 Wyloguj
               </Button>
             </IndexLinkContainer>
@@ -62,7 +62,7 @@ class HeaderTemplate extends React.Component {
       return (
         <Form inline pull-right className="action_buttons">
             <IndexLinkContainer to="/login">
-              <Button className="menu_action_button" variant="outline-light">
+              <Button className="menu_action_button_3" variant="outline-light">
                 Logowanie
               </Button>
             </IndexLinkContainer>
