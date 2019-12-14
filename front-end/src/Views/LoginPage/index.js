@@ -56,7 +56,7 @@ class LoginPage extends React.Component {
           const { token } = responseValue;
           this.props.setUserToken(token);
           this.setState({ token });
-          this.props.handleClick();
+
           cookies.set(`token`, token, {
             path: "/"
           });
