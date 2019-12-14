@@ -16,8 +16,7 @@ class HeaderTemplate extends React.Component {
     super(props);
   }
 
-
-    displayMenu() {
+  displayMenu() {
     if (this.props.location.pathname !== "/")
       return (
         <Nav className="mr-auto ">
@@ -37,8 +36,8 @@ class HeaderTemplate extends React.Component {
       );
   }
 
-    displayButtonSet() {
-      console.log(cookies.get("token"))
+  displayButtonSet() {
+      console.log(cookies.get("token"));
     if (cookies.get("token") !== undefined)
       return (
         <Form inline>
@@ -65,7 +64,7 @@ class HeaderTemplate extends React.Component {
         </Form>
       );
   }
-
+  
   userLogout = e => {
       const token = cookies.get("token");
       console.log(token);
