@@ -5,8 +5,12 @@ import "react-datepicker/dist/react-datepicker.css";
 import polish from "date-fns/locale/pl";
 import bgImage from "../../assets/fot..png";
 import "./style.css";
+import movie_1 from "../graphics/movie_1.png";
+import movie_2 from "../graphics/movie_2.png";
+import movie_3 from "../graphics/movie_3.png";
+import movie_4 from "../graphics/movie_4.png";
+import movie_5 from "../graphics/movie_5.png";
 import Col from "react-bootstrap/Col";
-import Film from "../graphics/movie.png";
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
 
@@ -583,7 +587,7 @@ class CVEditorPage extends React.Component {
                                         <Form.Label>
                                             <h3>Dane osobowe</h3>
                                             <br></br>
-                                            <img src={Film} width="100px" alt="" />
+                                            <img className="cv_section_img" src={movie_1} width="400vw" alt="" />
                                         </Form.Label>
                                         <Form.Group controlId="personalData">
                                             <Form.Label column={""} sm="2">
@@ -650,7 +654,7 @@ class CVEditorPage extends React.Component {
                                             <Form.Label>
                                                 <h3>Edukacja</h3>
                                                 <br></br>
-                                                <img src={Film} width="100px" alt="" />
+                                                <img className="cv_section_img" src={movie_2} width="400vw" alt="" />
                                             </Form.Label>
                                             {this.renderForm("education")}
                                         </Form.Group>
@@ -678,7 +682,7 @@ class CVEditorPage extends React.Component {
                                             <Form.Label>
                                                 <h3>Doświadczenie zawodowe</h3>
                                                 <br></br>
-                                                <img src={Film} width="100px" alt="" />
+                                                <img className="cv_section_img" src={movie_3} width="400vw" alt="" />
                                             </Form.Label>
                                             {this.renderForm("workExperience")}
                                         </Form.Group>
@@ -702,7 +706,7 @@ class CVEditorPage extends React.Component {
                                             <Form.Label>
                                                 <h3>Umiejętności</h3>
                                                 <br></br>
-                                                <img src={Film} width="100px" alt="" />
+                                                <img className="cv_section_img" src={movie_4} width="400vw" alt="" />
                                             </Form.Label>
                                             <div className="rendered_cv_area">{this.renderSkills()}</div>
                                             <Form.Control
@@ -746,7 +750,7 @@ class CVEditorPage extends React.Component {
                                             <Form.Label>
                                                 <h3>Języki obce</h3>
                                                 <br></br>
-                                                <img src={Film} width="100px" alt="" />
+                                                <img className="cv_section_img" src={movie_5} width="400vw" alt="" />
                                             </Form.Label>
                                             <div className="rendered_cv_area">{this.renderLanguages()}</div>
                                             <Form.Control

@@ -97,6 +97,13 @@
   .CVEditorPage_card {
     width: 100% !important;
   }
+
+  .cv_section_img {
+    width: 50vw !important;
+    margin-left: 0;
+    margin-right: 0;
+    text-align: left;
+  }
 }
 
 h3 {
@@ -133,6 +140,14 @@ h3 {
 .dateTo {
   position: relative;
   left: 17.8vh
+}
+
+.cv_section_img {
+  width: 20vw;
+  margin-left: 13vw;
+  margin-right: 10vw;
+  display: block;
+  text-align: center;
 }
 
 @media (max-height: 1000px) {
