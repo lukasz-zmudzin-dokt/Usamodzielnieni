@@ -750,6 +750,7 @@ class CVEditorPage extends React.Component {
                                             </Form.Label>
                                             <div className="rendered_cv_area">{this.renderLanguages()}</div>
                                             <Form.Control
+                                                className="cv_page_input"
                                                 id="languages"
                                                 type="text"
                                                 placeholder="Język"
@@ -759,6 +760,7 @@ class CVEditorPage extends React.Component {
                                             <Form.Group controlId="exampleForm.ControlSelect1">
                                                 <Form.Label>Poziom</Form.Label>
                                                 <Form.Control
+                                                    className="cv_lang_lvl_selector"
                                                     as="Select"
                                                     onChange={e => this.handleLanLvlChange(e)}
                                                     //    value={this.state.languageLevel}

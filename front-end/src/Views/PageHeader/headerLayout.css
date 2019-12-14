@@ -40,3 +40,13 @@
 .nav_buttons {
   text-align: right;
 }
+
+.action_buttons {
+  text-align: center;
+}
+
+@media (max-width: 1385px) {
+  .menu_action_button {
+    min-width: 6vw;
+  }
+}
