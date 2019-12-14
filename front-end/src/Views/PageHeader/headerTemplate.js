@@ -30,12 +30,12 @@ class HeaderTemplate extends React.Component {
               Kreator CV
             </Nav.Link>
           </IndexLinkContainer>
-          <Nav.Link id="learningTheRopes">Od czego zacząć?</Nav.Link>
+          <Nav.Link id="learningTheRopes">Jak zacząć?</Nav.Link>
           <Nav.Link id="jobOffers">Oferty pracy</Nav.Link>
-          <Nav.Link id="jobDescriptions">Opis stanowisk</Nav.Link>
-          <Nav.Link id="personalityTests">Testy</Nav.Link>
-          <Nav.Link id="stories">Historie usamodzielnionych</Nav.Link>
-          <Nav.Link id="moneyMgmt">Zarządzanie budżetem</Nav.Link>
+          {/* <Nav.Link id="jobDescriptions">Opis stanowisk</Nav.Link> */}
+          {/* <Nav.Link id="personalityTests">Testy</Nav.Link> */}
+          <Nav.Link id="stories">Historia</Nav.Link>
+          {/* <Nav.Link id="moneyMgmt">Zarządzanie budżetem</Nav.Link> */}
           <Nav.Link id="contactPhones">Telefony</Nav.Link>
         </Nav>
       );
