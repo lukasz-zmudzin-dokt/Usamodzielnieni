@@ -1,3 +1,7 @@
+.cv_page__title {
+  text-align: center;
+}
+
 .cvPage__bgImage {
   position: absolute;
   max-height: 100%;
@@ -15,14 +19,6 @@
   width: 50vw;
 }
 
-.cv_page_title {
-  text-align: center;
-}
-
-.cv_page_verticalSpace {
-  height: 55px;
-}
-
 .cv_page_input {
   position: relative;
   top: 5px;
@@ -31,6 +27,10 @@
   border: 1px solid #ccc;
   border-radius: 3px;
   height: 4vh;
+}
+
+.cv_page_title {
+  text-align: center;
 }
 
 .item_add_button {
@@ -65,13 +65,27 @@
 }
 
 .btn_discard {
+  margin-top: 3vh;
   width: 45%;
   margin-right: 5%;
 }
 
 .btn_generate {
+  margin-top: 3vh;
   width: 45%;
   margin-left: 5%;
+}
+
+.form_navigation_prev {
+  width: 45%;
+  margin-right: 5%;
+  background-color: #7345A9 !important;
+}
+
+.form_navigation_next {
+  width: 45%;
+  margin-left: 5%;
+  background-color: #7345a9 !important;
 }
 
 @media (max-width: 768px) {
@@ -83,6 +97,10 @@
 h3 {
   position: relative;
   top: 1vh;
+}
+
+.rendered_cv_area {
+  min-height: 5vh;
 }
 
 .complex_form_input_item_dateFrom {
