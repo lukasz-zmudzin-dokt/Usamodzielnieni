@@ -1,6 +1,5 @@
 import React from "react";
 import "./App.css";
-import Cookies from "universal-cookie";
 import UserProfilePage from "Views/UserProfilePage";
 import LoginPage from "Views/LoginPage";
 import RegisterPage from "Views/RegisterPage";
