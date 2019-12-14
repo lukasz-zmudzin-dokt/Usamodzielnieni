@@ -37,7 +37,7 @@ class LoginPage extends React.Component {
 
   sendData = object => {
     const { username, password } = this.state;
-    const { setToken } = this.props;
+
     const url = "https://usamo-back.herokuapp.com/account/login/";
     fetch(url, {
       method: "POST",
@@ -49,62 +49,28 @@ class LoginPage extends React.Component {
         "Content-Type": "application/json",
         Origin: null
       }
-
     }).then(res => {
       console.log(res);
       if (res.status === 200) {
-        res.json()
-          .then(responseValue => {
-            const { token } = responseValue;
-            this.props.setUserToken(token);
-            this.setState({ token });
-            this.setRedirect();
+        res.json().then(responseValue => {
+          const { token } = responseValue;
+          this.props.setUserToken(token);
+          this.setState({ token });
+          this.props.handleClick();
+          cookies.set(`token`, token, {
+            path: "/"
           });
-          console.log(token);
-          this.setCookie(token);
-     
-        } else if (token) {
-          this.setState({
-            token
-          });
-          setToken(token);
-          this.setRedirect();
-        } else {
-          this.setState({
-            validated: false,
-            incorrect: true,
-            username: "",
-            password: "",
-            message: "Coś poszło nie tak"
-          });
-        }
-
-        // if (resp.status === 200) {
-        //   this.setState({
-        //     token: resB
-        //   });
-        //   cookies.set(`token`, resB, {
-        //     path: "/"
-        //   });
-        //   this.setRedirect();
-        // } else if (resp.status === 400) {
-        //   this.setState({
-        //     validated: false,
-        //     incorrect: true,
-        //     username: "",
-        //     password: ""
-        //   });
-        //   createMessage(res.status);
-        // } else {
-        //   this.setState({
-        //     validated: false,
-        //     incorrect: true,
-        //     username: "",
-        //     password: ""
-        //   });
-        //   createMessage(res.status);
-        // }
-      });
+        });
+      } else {
+        this.setState({
+          validated: false,
+          incorrect: true,
+          username: "",
+          password: "",
+          message: "Coś poszło nie tak"
+        });
+      }
+    });
   };
 
   onChange = e => {
@@ -191,7 +157,7 @@ class LoginPage extends React.Component {
         {window.innerWidth >= 768 ? (
           <img className="loginPage__bgImage" src={bgImage} alt="tło" />
         ) : null}
-        <Card className="loginPage__card">
+        <Card className="loginPage__card loginPage__card--login">
           <Card.Header as="h2" className="loginPage__header">
             Logowanie
           </Card.Header>
