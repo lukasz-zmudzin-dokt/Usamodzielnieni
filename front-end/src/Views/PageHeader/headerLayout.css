@@ -16,6 +16,10 @@
   width: 1000px;
 }
 
+.menu_action_button {
+  min-width: 6vw;
+}
+
 .charity_logo {
   max-height: 200px;
   max-width: 250px;

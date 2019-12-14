@@ -6,7 +6,7 @@ import logo from "assets/logo.png";
 
 // https://github.com/ReactTraining/react-router/issues/83#issuecomment-214794477
 import {IndexLinkContainer} from 'react-router-bootstrap';
-import {Redirect} from "react-router-dom";
+import {Redirect, withRouter} from "react-router-dom";
 import {setUserToken} from "../../redux/actions";
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
@@ -14,17 +14,10 @@ const cookies = new Cookies();
 class HeaderTemplate extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      currentLocation: window.location.pathname,
-      token: cookies.get("token") || ""
-    };
   }
 
-    displayMenu() {
-      console.log(this.state.token);
-      console.log(this.state.currentLocation);
-      console.log(this.props);
-    if (this.state.currentLocation !== "/")
+  displayMenu() {
+    if (this.props.location.pathname !== "/")
       return (
         <Nav className="mr-auto ">
           <IndexLinkContainer to="/cvEditor">
@@ -43,23 +36,18 @@ class HeaderTemplate extends React.Component {
       );
   }
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
-      if (this.state !== prevState) {
-          this.forceUpdate();
-      }
-  }
-
-    displayButtonSet() {
-    if (this.state.token !== "")
+  displayButtonSet() {
+      console.log(cookies.get("token"));
+    if (cookies.get("token") !== undefined)
       return (
         <Form inline>
             <IndexLinkContainer to="/user">
-              <Button id="userProfile" variant="light">
+              <Button className="menu_action_button" variant="light">
                 Profil
               </Button>
             </IndexLinkContainer>
             <IndexLinkContainer to="/">
-              <Button id="loginButton" variant="outline-light" onClick={e => this.userLogout(e)}>
+              <Button className="menu_action_button" variant="outline-light" onClick={e => this.userLogout(e)}>
                 Wyloguj
               </Button>
             </IndexLinkContainer>
@@ -68,52 +56,45 @@ class HeaderTemplate extends React.Component {
     else
       return (
         <Form inline pull-right>
-            <IndexLinkContainer to="/newAccount">
-          <Button id="userProfile" variant="light">
-            Rejestracja
-          </Button>
-            </IndexLinkContainer>
             <IndexLinkContainer to="/login">
-              <Button id="loginButton" variant="outline-light">
+              <Button className="menu_action_button" variant="outline-light">
                 Logowanie
               </Button>
             </IndexLinkContainer>
         </Form>
       );
   }
-
-  sendLogoutRequest() {
-      const token = this.state.token;
+  
+  userLogout = e => {
+      const token = cookies.get("token");
       console.log(token);
       const url = "https://usamo-back.herokuapp.com/account/logout/";
       fetch(url, {
           method: "POST",
           headers: {
-              "Authorization": token
+              "Authorization": "token " + token
           },
           body: {}
       }).then(res => {
           console.log(res);
           if (res.status === 200) {
-              console.log("Wylogowano");
+              res.json().then(responseValue => {
+                  console.log(responseValue);
+                  console.log("Wylogowano");
+                  setUserToken("");
+                  cookies.remove("token");
+                    window.location.reload();
+                  return (
+                      <Redirect to="/"/>
+                  );
+              });
           }
       });
-  }
-
-  userLogout = e => {
-      this.sendLogoutRequest();
-    this.setState({
-        token: ""
-    });
-    setUserToken("");
-    e.preventDefault();
-    cookies.remove("token", {path: "/"});
-    return (
-        <Redirect to="/"/>
-        );
   };
 
   render() {
+      const { match, location, history } = this.props;
+      console.log(match, location, history);
     return (
       <Navbar id="navbar_menu" variant="dark" fixed="top" expand="lg">
         <Navbar.Brand id="navbar_logo">
@@ -136,4 +117,4 @@ class HeaderTemplate extends React.Component {
   }
 }
 
-export default HeaderTemplate;
+export default withRouter(HeaderTemplate);
