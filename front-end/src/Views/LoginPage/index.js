@@ -157,7 +157,7 @@ class LoginPage extends React.Component {
         {window.innerWidth >= 768 ? (
           <img className="loginPage__bgImage" src={bgImage} alt="tło" />
         ) : null}
-        <Card className="loginPage__card">
+        <Card className="loginPage__card loginPage__card--login">
           <Card.Header as="h2" className="loginPage__header">
             Logowanie
           </Card.Header>
