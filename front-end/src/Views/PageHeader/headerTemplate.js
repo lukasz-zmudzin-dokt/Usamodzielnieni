@@ -25,7 +25,7 @@ class HeaderTemplate extends React.Component {
     if (this.props.location.pathname !== "/")
       return (
         <Nav className="mr-auto ">
-          <IndexLinkContainer to="/cvEditor">
+          <IndexLinkContainer to={this.props.token === undefined ? "/login" : "/cvEditor"}>
             <Nav.Link id="cvEditor">
               Kreator CV
             </Nav.Link>
