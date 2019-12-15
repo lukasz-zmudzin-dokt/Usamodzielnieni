@@ -1,15 +1,69 @@
 import React from "react";
-
 import "Views/Menu/style.css";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Container from "react-bootstrap/Container";
-import Button from "react-bootstrap/Button";
-import ButtonToolbar from "react-bootstrap/ButtonToolbar";
-
+import {Row, Col, Container, Button, ButtonToolbar} from "react-bootstrap";
+import {LinkContainer} from 'react-router-bootstrap';
 import logo from "assets/logo.png";
+import {connect} from "react-redux";
+import {setUserToken} from "../../redux/actions";
+import Cookies from "universal-cookie";
+import {Redirect} from 'react-router-dom';
+
+const cookies = new Cookies();
 
 class Menu extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            token: this.props.token || undefined
+        }
+    }
+
+    userLogout = e => {
+        const token = this.props.token;
+        const url = "https://usamo-back.herokuapp.com/account/logout/";
+        fetch(url, {
+            method: "POST",
+            headers: {
+                "Authorization": "token " + token
+            },
+            body: {}
+        }).then(res => {
+            console.log(res);
+            if (res.status === 200) {
+                res.json().then(responseValue => {
+                    console.log(responseValue);
+                    console.log("Wylogowano");
+                    this.props.setUserToken(undefined);
+                    cookies.remove("token", {path: "/"});
+                    return (
+                        <Redirect to="/"/>
+                    );
+                });
+            }
+        });
+    };
+
+    displayButtonToolbar() {
+        if (this.props.token === undefined)
+            return (
+                <ButtonToolbar>
+                    <LinkContainer to="/newAccount">
+                        <Button className="menu-button-big menu-button-white">Utwórz konto</Button>
+                    </LinkContainer>
+                    <LinkContainer to="/login">
+                        <Button className="menu-button-big menu-button-white" >Zaloguj się</Button>
+                    </LinkContainer>
+                </ButtonToolbar>
+            );
+        else return (
+            <ButtonToolbar>
+                <LinkContainer to="/user">
+                    <Button className="menu-button-big menu-button-white" >Profil</Button>
+                </LinkContainer>
+                <Button className="menu-button-big menu-button-white" onClick={e => this.userLogout(e)}>Wyloguj się</Button>
+            </ButtonToolbar>
+        );
+    }
 
     render() {
 
@@ -27,10 +81,7 @@ class Menu extends React.Component {
                     <Row className="menu-button-row">
                         <Col />
                         <Col>
-                            <ButtonToolbar>
-                                <Button className="menu-button-big menu-button-white" href="/newAccount">Utwórz konto</Button>
-                                <Button className="menu-button-big menu-button-white" href="/login">Zaloguj się</Button>
-                            </ButtonToolbar>
+                            {this.displayButtonToolbar()}
                         </Col>
                         <Col />
                     </Row>
@@ -38,8 +89,10 @@ class Menu extends React.Component {
                         <Col />
                         <Col >
                             <ButtonToolbar>
-                                <Button className="menu-button-small menu-button-white" href="/cveditor" >Kreator CV</Button>
-                                <Button className="menu-button-small menu-button-white disabled">Od czego zacząć?</Button>
+                                <LinkContainer to={this.props.token === undefined ? "/login" : "/cvEditor"}>
+                                    <Button className="menu-button-small menu-button-white" >Kreator CV</Button>
+                                </LinkContainer>
+                                <Button className="menu-button-small menu-button-white disabled">Jak zacząć?</Button>
                                 <Button className="menu-button-small menu-button-white disabled">Oferty pracy</Button>
                             </ButtonToolbar>
                         </Col>
@@ -51,4 +104,10 @@ class Menu extends React.Component {
     }
 }
 
-export default Menu;
+const mapStateToProps = (state) => {
+    console.log("mapStateToProps:", state);
+    const { token } = state.user;
+    return { token };
+};
+
+export default connect(mapStateToProps, {setUserToken})(Menu);
