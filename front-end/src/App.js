@@ -12,6 +12,7 @@ import { Provider } from "react-redux";
 import reducer from "redux/reducer";
 import Cookies from "universal-cookie";
 import { setUserToken } from "redux/actions";
+import Menu from "./Views/Menu";
 
 const cookies = new Cookies();
 
@@ -27,6 +28,7 @@ class App extends React.Component {
         <Router>
           <HeaderTemplate />
           <Switch>
+            <Route path="/" exact component={Menu} />
             <Route path="/cvEditor" exact component={CVEditorPage} />
             <Route path="/user" exact component={UserProfilePage} />
             <Route path="/login" exact component={LoginPage} />
