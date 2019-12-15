@@ -1,6 +1,5 @@
 import React from "react";
 import Container from "react-bootstrap/Container";
-
 import FbIcon from "../../assets/facebook-128.ico";
 import LinkedInIcon from "../../assets/linkedin-128.ico";
 import YouTubeIcon from "../../assets/youtube-128.ico";
@@ -13,9 +12,7 @@ class Footer extends React.Component {
     render() {
         console.log(Background);
         return (
-
             <Container className="Footer">
-
                 <div className="footer">
                     <div className="row justify-content-end mt-4">
                         <div className="col-8 mr-5">
@@ -36,9 +33,7 @@ class Footer extends React.Component {
                         </div>
                     </div>
                 </div>
-
             </Container>
-
         );
     }
 }
