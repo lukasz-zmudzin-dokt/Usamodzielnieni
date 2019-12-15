@@ -1,0 +1,58 @@
+.menu-background {
+    background-image: url("./background.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    height: 100vh;
+    flex-direction: column;
+}
+.menu-button-small {
+    margin-right: 40px;
+    margin-left: 40px;
+}
+.menu-button-big {
+    height: 80px;
+    width: 300px;
+    margin-right: 40px;
+    margin-left: 40px;
+    font-size: xx-large!important;
+}
+.menu-button-row {
+    margin-top: 50px;
+    flex-direction: column;
+}
+.menu-logo {
+    width: inherit;
+}
+.menu-button-white {
+    color: white!important;
+    border-color: white!important;
+    border-width: thin!important;
+    background-color: transparent!important;
+}
+
+@media (max-width: 600px) {
+    .menu-button-big {
+        height: 80px;
+        width: 300px;
+        margin-right: 40px;
+        margin-left: 40px;
+        margin-bottom: 20px;
+        font-size: xx-large!important;
+    }
+    .menu-button-small {
+        margin-right: 40px;
+        margin-left: 40px;
+        margin-bottom: 20px;
+    }
+    .menu-background {
+        background-image: url("./background.png");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+
+        height: 100vh;
+        flex-direction: column;
+    }
+}
