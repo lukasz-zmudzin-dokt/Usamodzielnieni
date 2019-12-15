@@ -11,8 +11,7 @@ import movie_3 from "../graphics/movie_3.png";
 import movie_4 from "../graphics/movie_4.png";
 import movie_5 from "../graphics/movie_5.png";
 import Col from "react-bootstrap/Col";
-import Cookies from "universal-cookie";
-const cookies = new Cookies();
+import {connect} from "react-redux";
 
 registerLocale("pl", polish);
 
@@ -44,12 +43,13 @@ class CVEditorPage extends React.Component {
             languageName: "",
             languageLevel: "podstawowy",
 
-            formTab: "personalData"
+            formTab: "personalData",
+            token: this.props.token || undefined
         };
     }
 
     sendData = (e, object) => {
-        const token = cookies.get("token");
+        const token = this.props.token;
         const url = "https://usamo-back.herokuapp.com/cv/generate/";
         console.log(this.props.token);
         console.log(JSON.stringify(object));
@@ -823,4 +823,10 @@ class CVEditorPage extends React.Component {
     }
 }
 
-export default CVEditorPage;
+const mapStateToProps = (state) => {
+    console.log("mapStateToProps:", state);
+    const { token } = state.user;
+    return { token };
+};
+
+export default connect(mapStateToProps)(CVEditorPage);
