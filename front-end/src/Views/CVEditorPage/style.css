@@ -37,6 +37,10 @@
   margin-top: 2vh;
 }
 
+.cv_lang_lvl_selector {
+  margin-bottom: 2vh;
+}
+
 .temp_data {
   margin-bottom: 10vh;
 }
@@ -44,6 +48,7 @@
 .complex_form_input_item {
   width: 100%;
   border: 1px solid #ccc;
+  margin-bottom: 2vh;
   border-radius: 3px;
   height: 4vh;
 }
@@ -92,6 +97,13 @@
   .CVEditorPage_card {
     width: 100% !important;
   }
+
+  .cv_section_img {
+    width: 50vw !important;
+    margin-left: 0;
+    margin-right: 0;
+    text-align: left;
+  }
 }
 
 h3 {
@@ -128,4 +140,18 @@ h3 {
 .dateTo {
   position: relative;
   left: 17.8vh
+}
+
+.cv_section_img {
+  width: 20vw;
+  margin-left: 13vw;
+  margin-right: 10vw;
+  display: block;
+  text-align: center;
+}
+
+@media (max-height: 1000px) {
+  .CVEditorPage_card {
+    margin-top: 10vh;
+  }
 }

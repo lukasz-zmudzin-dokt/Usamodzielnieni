@@ -43,12 +43,22 @@
   color: green;
 }
 
+.loginPage__cardSection {
+  margin-bottom: 15px;
+}
+
 @media (min-width: 768px) {
-  .loginPage__card {
+  .loginPage__card--login {
     width: 400px !important;
   }
   .loginPage__body {
     padding: 1.25rem 2.5rem !important;
+  }
+  .loginPage__nameGroup {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
   }
 }
 @media (orientation: landscape) {
