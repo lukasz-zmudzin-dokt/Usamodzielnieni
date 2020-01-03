@@ -9,45 +9,50 @@ import {IndexLinkContainer} from 'react-router-bootstrap';
 import {Redirect, withRouter} from "react-router-dom";
 import {setUserToken} from "../../redux/actions";
 import Cookies from "universal-cookie";
+import {connect} from "react-redux";
 const cookies = new Cookies();
 
 class HeaderTemplate extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            token: this.props.token || undefined
+        }
+    }
 
   displayMenu() {
     if (this.props.location.pathname !== "/")
       return (
         <Nav className="mr-auto ">
-          <IndexLinkContainer to="/cvEditor">
+          <IndexLinkContainer to={this.props.token === undefined ? "/login" : "/cvEditor"}>
             <Nav.Link id="cvEditor">
               Kreator CV
             </Nav.Link>
           </IndexLinkContainer>
-          <Nav.Link id="learningTheRopes">Od czego zacząć?</Nav.Link>
+          <Nav.Link id="learningTheRopes">Jak zacząć?</Nav.Link>
           <Nav.Link id="jobOffers">Oferty pracy</Nav.Link>
-          <Nav.Link id="jobDescriptions">Opis stanowisk</Nav.Link>
-          <Nav.Link id="personalityTests">Testy</Nav.Link>
-          <Nav.Link id="stories">Historie usamodzielnionych</Nav.Link>
-          <Nav.Link id="moneyMgmt">Zarządzanie budżetem</Nav.Link>
+          {/* <Nav.Link id="jobDescriptions">Opis stanowisk</Nav.Link> */}
+          {/* <Nav.Link id="personalityTests">Testy</Nav.Link> */}
+          <Nav.Link id="stories">Historia</Nav.Link>
+          {/* <Nav.Link id="moneyMgmt">Zarządzanie budżetem</Nav.Link> */}
           <Nav.Link id="contactPhones">Telefony</Nav.Link>
         </Nav>
       );
   }
 
   displayButtonSet() {
-      console.log(cookies.get("token"));
-    if (cookies.get("token") !== undefined)
+      console.log(this.props.token);
+    if (this.props.token !== undefined)
       return (
-        <Form inline>
+        <Form inline pull-right className="action_buttons">
             <IndexLinkContainer to="/user">
-              <Button className="menu_action_button" variant="light">
+              <Button className="menu_action_button_1" variant="light">
                 Profil
               </Button>
             </IndexLinkContainer>
             <IndexLinkContainer to="/">
-              <Button className="menu_action_button" variant="outline-light" onClick={e => this.userLogout(e)}>
+              <Button className="menu_action_button_2" variant="outline-light" onClick={e => this.userLogout(e)}>
                 Wyloguj
               </Button>
             </IndexLinkContainer>
@@ -55,17 +60,17 @@ class HeaderTemplate extends React.Component {
       );
     else
       return (
-        <Form inline pull-right>
+        <Form inline pull-right className="action_buttons">
             <IndexLinkContainer to="/login">
-              <Button className="menu_action_button" variant="outline-light">
+              <Button className="menu_action_button_3" variant="outline-light">
                 Logowanie
               </Button>
             </IndexLinkContainer>
         </Form>
       );
   }
-  
-  userLogout = e => {
+
+    userLogout = e => {
       const token = cookies.get("token");
       console.log(token);
       const url = "https://usamo-back.herokuapp.com/account/logout/";
@@ -81,9 +86,8 @@ class HeaderTemplate extends React.Component {
               res.json().then(responseValue => {
                   console.log(responseValue);
                   console.log("Wylogowano");
-                  setUserToken("");
-                  cookies.remove("token");
-                    window.location.reload();
+                  this.props.setUserToken(undefined);
+                  cookies.remove("token", {path: "/"});
                   return (
                       <Redirect to="/"/>
                   );
@@ -94,7 +98,7 @@ class HeaderTemplate extends React.Component {
 
   render() {
       const { match, location, history } = this.props;
-      console.log(match, location, history);
+      console.log(match, location, history, this.props);
     return (
       <Navbar id="navbar_menu" variant="dark" fixed="top" expand="lg">
         <Navbar.Brand id="navbar_logo">
@@ -117,4 +121,10 @@ class HeaderTemplate extends React.Component {
   }
 }
 
-export default withRouter(HeaderTemplate);
+const mapStateToProps = (state) => {
+    console.log("mapStateToProps:", state);
+    const { token } = state.user;
+    return { token };
+};
+
+export default connect(mapStateToProps, {setUserToken})(withRouter(HeaderTemplate));
