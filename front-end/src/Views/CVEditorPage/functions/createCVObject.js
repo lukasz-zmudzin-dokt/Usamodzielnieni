@@ -1,0 +1,108 @@
+export const createCVObject = (component, e) => {
+  e.preventDefault();
+  const {
+    fullName,
+    birthDate,
+    phoneNumber,
+    email,
+    education,
+    workExperience,
+    skills,
+    languages
+  } = component.state;
+  let name = fullName.split(" ");
+  let edItemList = [];
+  let workItemList = [];
+  let langList = [];
+  let eduNames = Object.keys(education);
+  let workNames = Object.keys(workExperience);
+  let langNames = Object.keys(languages);
+
+  for (let index in eduNames) {
+    let prop = eduNames[index];
+    console.log(prop);
+    console.log(education[prop]);
+    if (education[prop][1] === undefined)
+      edItemList.push({
+        name: prop,
+        year_start: education[prop][0].getFullYear(),
+        year_end: education[prop][1],
+        additional_info: education[prop][2]
+      });
+    else
+      edItemList.push({
+        name: prop,
+        year_start: education[prop][0].getFullYear(),
+        year_end: education[prop][1].getFullYear(),
+        additional_info: education[prop][2]
+      });
+  }
+
+  for (let index in workNames) {
+    let prop = workNames[index];
+    if (workExperience[prop][1] === undefined)
+      workItemList.push({
+        name: prop,
+        year_start: workExperience[prop][0].getFullYear(),
+        year_end: workExperience[prop][1],
+        additional_info: workExperience[prop][2]
+      });
+    else
+      workItemList.push({
+        name: prop,
+        year_start: workExperience[prop][0].getFullYear(),
+        year_end: workExperience[prop][1].getFullYear(),
+        additional_info: workExperience[prop][2]
+      });
+  }
+
+  for (let index in langNames) {
+    let prop = langNames[index];
+    langList.push({
+      name: prop,
+      level: languages[prop]
+    });
+  }
+
+  return {
+    basic_info: {
+      first_name: name[0],
+      last_name: name[1],
+      date_of_birth:
+        birthDate.getDate() +
+        "-" +
+        (birthDate.getMonth() + 1) +
+        "-" +
+        birthDate.getFullYear(),
+      phone_number: phoneNumber,
+      email: email
+    },
+    schools: edItemList.map(school => {
+      return {
+        name: school.name,
+        year_start: school.year_start,
+        year_end: school.year_end,
+        additional_info: school.additional_info
+      };
+    }),
+    experiences: workItemList.map(workPlace => {
+      return {
+        title: workPlace.name,
+        year_start: workPlace.year_start,
+        year_end: workPlace.year_end,
+        description: workPlace.additional_info
+      };
+    }),
+    skills: skills.map(skill => {
+      return {
+        description: skill
+      };
+    }),
+    languages: langList.map(lang => {
+      return {
+        name: lang.name,
+        level: lang.level
+      };
+    })
+  };
+};
