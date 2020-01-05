@@ -18,7 +18,7 @@ const Languages = component => {
       {languagesArr.map(language => (
         <Button
           variant="dark"
-          id={language[0]}
+          id={language[0] + "&" + language[1]}
           onClick={e => handleCutLanguage(component, e)}
         >
           {language[1]} x

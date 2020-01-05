@@ -17,7 +17,7 @@ const Edu = component => {
     <ul>
       {eduArr.map(edu => (
         <Button
-          id={edu[0]}
+          id={edu[0] + "&" + edu[1]}
           variant="dark"
           onClick={e => handleCutEdu(component, e)}
         >

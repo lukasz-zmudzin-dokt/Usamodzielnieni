@@ -92,8 +92,8 @@ export const handleCutSkill = (component, e) => {
 
 export const handleCutLanguage = (component, e) => {
   let newLanguages = component.state.languages;
-  let toDelete = e.target.id;
-
+  let toDeleteString = e.target.id;
+  let toDelete = toDeleteString.split("&")[0];
   delete newLanguages[toDelete];
 
   component.setState({
@@ -103,8 +103,8 @@ export const handleCutLanguage = (component, e) => {
 
 export const handleCutEdu = (component, e) => {
   let newEducation = component.state.education;
-  let toDelete = e.target.id;
-
+  let toDeleteString = e.target.id;
+  let toDelete = toDeleteString.split("&")[0];
   delete newEducation[toDelete];
 
   component.setState({
@@ -114,8 +114,8 @@ export const handleCutEdu = (component, e) => {
 
 export const handleCutWork = (component, e) => {
   let newEducation = component.state.workExperience;
-  let toDelete = e.target.id;
-
+  let toDeleteString = e.target.id;
+  let toDelete = toDeleteString.split("&")[0];
   delete newEducation[toDelete];
 
   component.setState({

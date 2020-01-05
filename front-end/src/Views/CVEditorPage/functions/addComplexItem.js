@@ -17,30 +17,25 @@ export const addComplexItem = (component, e, arrayName) => {
     itemPlace = component.state.workPlace;
   }
 
-  let descrStr =
-    arrayName === "education" ? "eduDescription" : "workDescription";
-  let startStr = arrayName === "education" ? "eduStartTime" : "workStartTime";
-  let endStr = arrayName === "education" ? "eduEndTime" : "workEndTime";
-  let placeStr = arrayName === "education" ? "eduPlace" : "workPlace";
-
   let newItemList = array;
   let newItemProps = [itemStartTime, itemEndTime, itemPlace];
 
-  if (itemDescription !== "") {
+  if (itemDescription !== "" && itemPlace !== "") {
     newItemList[itemDescription] = newItemProps;
   }
 
-  component.setState({
-    [arrayName]: newItemList,
-    [descrStr]: "",
-    [startStr]: new Date(),
-    [endStr]: undefined,
-    [placeStr]: undefined
-  });
+  if (arrayName === "education")
+    component.setState({
+      education: newItemList,
+    });
+  else
+    component.setState({
+      workExperience: newItemList,
+    });
 
   for (let prop in component.state.education) {
     console.log(complexItemToStr(prop, component.state.education[prop]));
   }
 
-  console.log(component.state.workExperience);
+  console.log(component.state);
 };

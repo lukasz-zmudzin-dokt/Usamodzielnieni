@@ -15,10 +15,8 @@ const renderItems = (component, formName) => {
 };
 
 const RenderForm = (component, formName) => {
-  let descriptionStr =
-    formName === "education" ? "eduDescription" : "workDescription";
-  let startTimeStr =
-    formName === "education" ? "eduStartTime" : "workStartTime";
+  let descriptionStr = formName === "education" ? "eduDescription" : "workDescription";
+  let startTimeStr = formName === "education" ? "eduStartTime" : "workStartTime";
   let endTimeStr = formName === "education" ? "eduEndTime" : "workEndTime";
   let placeStr = formName === "education" ? "eduPlace" : "workPlace";
 

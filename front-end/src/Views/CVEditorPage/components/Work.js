@@ -15,13 +15,13 @@ const Work = component => {
 
   return (
     <ul>
-      {eduArr.map(edu => (
+      {eduArr.map(work => (
         <Button
-          id={edu[0]}
+          id={work[0] + "&" + work[1]}
           variant="dark"
           onClick={e => handleCutWork(component, e)}
         >
-          {edu[1]} x
+          {work[1]} x
         </Button>
       ))}
     </ul>
