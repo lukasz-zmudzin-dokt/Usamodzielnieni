@@ -95,3 +95,5 @@ PRZYKŁAD:
   });
 ```
 Utworzony snapshot zostanie zapisany w automatycznie wygenerowanym folderze **\_\_snapshots__** obok pliku wywołującego test.
+
+Pomocne linki: [lista zdarzeń](https://github.com/testing-library/dom-testing-library/blob/master/src/events.js), [react-testing-library cheatsheet](https://testing-library.com/docs/react-testing-library/cheatsheet)<br />
