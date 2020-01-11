@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "react-bootstrap";
-import { handleCutWork } from "Views/CVEditorPage/functions/handlers";
 import { complexItemToStr } from "Views/CVEditorPage/functions/complexItemToStr";
+import {handleCutComplexItem} from "../functions/handlers";
 
 const Work = component => {
   let eduArr = [];
@@ -19,7 +19,7 @@ const Work = component => {
         <Button
           id={work[0] + "&" + work[1]}
           variant="dark"
-          onClick={e => handleCutWork(component, e)}
+          onClick={e => handleCutComplexItem(component, "workExperience", e)}
         >
           {work[1]} x
         </Button>

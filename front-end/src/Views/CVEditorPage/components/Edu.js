@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "react-bootstrap";
-import { handleCutEdu } from "Views/CVEditorPage/functions/handlers";
 import { complexItemToStr } from "Views/CVEditorPage/functions/complexItemToStr";
+import {handleCutComplexItem} from "../functions/handlers";
 
 const Edu = component => {
   let eduArr = [];
@@ -19,7 +19,7 @@ const Edu = component => {
         <Button
           id={edu[0] + "&" + edu[1]}
           variant="dark"
-          onClick={e => handleCutEdu(component, e)}
+          onClick={e => handleCutComplexItem(component, "education", e)}
         >
           {edu[1]} x
         </Button>

@@ -62,10 +62,7 @@ export const handleSkillAdd = (component, e) => {
   let name = component.state.skillToAdd;
   let correctName = name !== "";
 
-  if (
-    correctName &&
-    component.state.skills.indexOf(component.state.skillToAdd) === -1
-  ) {
+  if (correctName && component.state.skills.indexOf(component.state.skillToAdd) === -1) {
     newSkills.push(name);
 
     component.setState({
@@ -90,35 +87,18 @@ export const handleCutSkill = (component, e) => {
   }
 };
 
-export const handleCutLanguage = (component, e) => {
-  let newLanguages = component.state.languages;
+export const handleCutComplexItem = (component, itemType, e) => {
+  let newItemList = {};
+  switch (itemType) {
+    case "education":  newItemList = component.state.education; break;
+    case "workExperience": newItemList = component.state.workExperience; break;
+    case "languages": newItemList = component.state.languages; break;
+  }
   let toDeleteString = e.target.id;
   let toDelete = toDeleteString.split("&")[0];
-  delete newLanguages[toDelete];
+  delete newItemList[toDelete];
 
   component.setState({
-    languages: newLanguages
-  });
-};
-
-export const handleCutEdu = (component, e) => {
-  let newEducation = component.state.education;
-  let toDeleteString = e.target.id;
-  let toDelete = toDeleteString.split("&")[0];
-  delete newEducation[toDelete];
-
-  component.setState({
-    education: newEducation
-  });
-};
-
-export const handleCutWork = (component, e) => {
-  let newEducation = component.state.workExperience;
-  let toDeleteString = e.target.id;
-  let toDelete = toDeleteString.split("&")[0];
-  delete newEducation[toDelete];
-
-  component.setState({
-    workExperience: newEducation
+    [itemType]: newItemList
   });
 };

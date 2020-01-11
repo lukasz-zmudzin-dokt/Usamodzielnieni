@@ -11,7 +11,6 @@ import movie_3 from "../graphics/movie_3.png";
 import movie_4 from "../graphics/movie_4.png";
 import movie_5 from "../graphics/movie_5.png";
 import Col from "react-bootstrap/Col";
-import Film from "../graphics/movie.png";
 import Languages from 'Views/CVEditorPage/components/Languages';
 import Skills from 'Views/CVEditorPage/components/Skills';
 import RenderForm from 'Views/CVEditorPage/components/RenderForm';
@@ -54,12 +53,11 @@ class CVEditorPage extends React.Component {
             token: this.props.token || undefined
         };
     }
+
     render() {
         return (
             <Container className="CVEditorPage">
-                {window.innerWidth >= 768 ? (
-                    <img className="cvPage__bgImage" src={bgImage} alt="tło" />
-                ) : null}
+                {window.innerWidth >= 768 ? (<img className="cvPage__bgImage" src={bgImage} alt="tło" />) : null}
                 <Card className="CVEditorPage_card">
                     <Card.Header className="cv_page_title" as="h2">
                         Kreator CV
@@ -67,11 +65,7 @@ class CVEditorPage extends React.Component {
                     <Card.Body>
                         <Form id="cv_data" onSubmit={e => handleCVSubmit(this,e)}>
                             <Col>
-                                <Tabs
-                                    activeKey={this.state.formTab}
-                                    onSelect={e => this.setState({ formTab: e })}
-                                    id="tabs"
-                                >
+                                <Tabs activeKey={this.state.formTab} onSelect={e => this.setState({ formTab: e })} id="tabs">
                                     <Tab eventKey="personalData" title="Dane osobowe">
                                         <Form.Label>
                                             <h3>Dane osobowe</h3>
