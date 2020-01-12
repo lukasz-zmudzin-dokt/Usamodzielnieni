@@ -2,7 +2,7 @@
     background-color: #7345A9;
     color: white;
     height: 180px;
-    position: relative;
+    position: absolute;
     right: 0;
     bottom: 0;
     left: 0;
@@ -21,7 +21,7 @@
         background-color: #7345A9;
         color: white;
         height: 140px;
-        position: relative;
+        position: absolute;
         right: 0;
         bottom: 0;
         left: 0;
