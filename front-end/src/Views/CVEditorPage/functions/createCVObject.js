@@ -56,13 +56,19 @@ export const createCVObject = (component, e) => {
       });
   }
 
-  for (let index in langNames) {
-    let prop = langNames[index];
+  // for (let index in langNames) {
+  //   langList.push({
+  //     name: langNames[index],
+  //     level: languages[langNames[index]]
+  //   });
+  // }
+
+  langNames.forEach(lang =>
     langList.push({
-      name: prop,
-      level: languages[prop]
-    });
-  }
+      name: lang,
+      level: languages[lang]
+    })
+  );
 
   return {
     basic_info: {

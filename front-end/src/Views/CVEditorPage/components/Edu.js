@@ -3,7 +3,7 @@ import { Button } from "react-bootstrap";
 import { handleCutEdu } from "Views/CVEditorPage/functions/handlers";
 import { complexItemToStr } from "Views/CVEditorPage/functions/complexItemToStr";
 
-const Edu = component => {
+const Edu = ({ component }) => {
   let eduArr = [];
   for (let prop in component.state.education) {
     let eduId = prop;
@@ -11,18 +11,20 @@ const Edu = component => {
     eduArr.push([eduId, eduStr]);
   }
 
-  if (eduArr.length === 0) return <div className="cv_page_verticalSpace" />;
+  // if (eduArr.length === 0) return <div className="cv_page_verticalSpace" />;
 
   return (
     <ul>
       {eduArr.map(edu => (
-        <Button
-          id={edu[0]}
-          variant="dark"
-          onClick={e => handleCutEdu(component, e)}
-        >
-          {edu[1]} x
-        </Button>
+        <li className="list-inline-item">
+          <Button
+            id={edu[0]}
+            variant="dark"
+            onClick={e => handleCutEdu(component, e)}
+          >
+            {edu[1]} x
+          </Button>
+        </li>
       ))}
     </ul>
   );

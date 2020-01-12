@@ -23,15 +23,14 @@ export const addComplexItem = (component, e, arrayName) => {
   let endStr = arrayName === "education" ? "eduEndTime" : "workEndTime";
   let placeStr = arrayName === "education" ? "eduPlace" : "workPlace";
 
-  let newItemList = array;
   let newItemProps = [itemStartTime, itemEndTime, itemPlace];
 
   if (itemDescription !== "") {
-    newItemList[itemDescription] = newItemProps;
+    array[itemDescription] = newItemProps;
   }
 
   component.setState({
-    [arrayName]: newItemList,
+    [arrayName]: array,
     [descrStr]: "",
     [startStr]: new Date(),
     [endStr]: undefined,
