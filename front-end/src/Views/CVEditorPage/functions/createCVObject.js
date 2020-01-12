@@ -20,40 +20,24 @@ export const createCVObject = (component, e) => {
 
   for (let index in eduNames) {
     let prop = eduNames[index];
-    console.log(prop);
-    console.log(education[prop]);
-    if (education[prop][1] === undefined)
-      edItemList.push({
-        name: prop,
-        year_start: education[prop][0].getFullYear(),
-        year_end: education[prop][1],
-        additional_info: education[prop][2]
-      });
-    else
-      edItemList.push({
-        name: prop,
-        year_start: education[prop][0].getFullYear(),
-        year_end: education[prop][1].getFullYear(),
-        additional_info: education[prop][2]
-      });
+    let endYear = education[prop][1] === undefined ? undefined : education[prop][1].getFullYear();
+    edItemList.push({
+      name: prop,
+      year_start: education[prop][0].getFullYear(),
+      year_end: endYear,
+      additional_info: education[prop][2]
+    });
   }
 
   for (let index in workNames) {
     let prop = workNames[index];
-    if (workExperience[prop][1] === undefined)
-      workItemList.push({
-        name: prop,
-        year_start: workExperience[prop][0].getFullYear(),
-        year_end: workExperience[prop][1],
-        additional_info: workExperience[prop][2]
-      });
-    else
-      workItemList.push({
-        name: prop,
-        year_start: workExperience[prop][0].getFullYear(),
-        year_end: workExperience[prop][1].getFullYear(),
-        additional_info: workExperience[prop][2]
-      });
+    let endYear = workExperience[prop][1] === undefined ? undefined : workExperience[prop][1].getFullYear();
+    workItemList.push({
+      name: prop,
+      year_start: workExperience[prop][0].getFullYear(),
+      year_end: endYear,
+      additional_info: workExperience[prop][2]
+    });
   }
 
   // for (let index in langNames) {

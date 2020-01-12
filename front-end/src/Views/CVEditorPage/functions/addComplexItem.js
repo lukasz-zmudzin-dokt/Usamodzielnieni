@@ -41,5 +41,5 @@ export const addComplexItem = (component, e, arrayName) => {
     console.log(complexItemToStr(prop, component.state.education[prop]));
   }
 
-  console.log(component.state.workExperience);
+  console.log(component.state);
 };

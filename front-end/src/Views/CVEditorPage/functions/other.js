@@ -23,7 +23,7 @@ export const sendData = (e, object) => {
           Accept: "application/json"
         }
       }).then(res => {
-        console.log(res);
+
         if (res.status === 201) {
           fetch(url, {
             method: "GET",

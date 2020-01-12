@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "react-bootstrap";
-import { handleCutLanguage } from "Views/CVEditorPage/functions/handlers";
+import { handleCutComplexItem } from "../functions/handlers";
 
 const Languages = ({ component }) => {
   let languagesArr = [];
@@ -20,7 +20,7 @@ const Languages = ({ component }) => {
           <Button
             variant="dark"
             id={language[0]}
-            onClick={e => handleCutLanguage(component, e)}
+            onClick={e => handleCutComplexItem(component, e)}
           >
             {language[1]} x
           </Button>

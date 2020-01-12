@@ -40,7 +40,7 @@ const RenderForm = ({ component, formName }) => {
               ? component.state.eduStartTime
               : component.state.workStartTime
           }
-          onChange={date => handleDateChange(component.startTimeStr, date)}
+          onChange={date => handleDateChange(component, startTimeStr, date)}
           showMonthYearPicker
         />
         <span>&nbsp;&nbsp;&nbsp;</span>
