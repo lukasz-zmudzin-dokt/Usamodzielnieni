@@ -18,13 +18,14 @@ Nie ma potrzeby stosowania **jest-axe** przynajmniej na tym etapie, ponieważ **
 
 Instalacja i konfiguracja:
 
-Należy zainstalować **react-testing-library** i **jest-dom**:
-npm install --save-dev react-testing-library jest-dom
+Należy zainstalować **@testing-library/react** i **@testing-library/jest-dom**:
+npm install --save-dev @testing-library/react @testing-library/jest-dom
 
 Zostanie utworzony plik *./src/setupTests.js* złożony z dwóch importów:
-  import 'jest-dom/extend-expect';
-  import 'react-testing-library/cleanup-after-each';
-
+  ```javascript
+  import '@testing-library/jest-dom/extend-expect';
+  import '@testing-library/react/cleanup-after-each';
+  ```
 Utworzenie tego pliku spowoduje, że *extend-expect* i *cleanup-after-each* zostanie zaimportowane do każdego pliku testującego automatycznie, co ograniczy duplikowanie kodu.
 
 Tworzenie pliku testującego:
@@ -39,7 +40,7 @@ Zalecane jest, żeby wszystkie pliki testujące były umieszczone obok kodu, kt�
 Przykładowy plik testujący **MyComponent.test.js** może wyglądać następująco:
 ```javascript
   import React from 'react';
-  import { render } from 'react-testing-library';
+  import { render } from '@testing-library/react';
   import MyComponent from './MyComponent';
   
   describe('MyComponent', () => {
