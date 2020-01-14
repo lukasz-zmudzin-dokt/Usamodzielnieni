@@ -2,7 +2,7 @@ import React from "react";
 import "Views/Menu/style.css";
 import {Row, Col, Container, Button, ButtonToolbar} from "react-bootstrap";
 import {LinkContainer} from 'react-router-bootstrap';
-import logo from "assets/logo.png";
+import logo from "../../assets/logo.png";
 import {connect} from "react-redux";
 import {setUserToken} from "../../redux/actions";
 import Cookies from "universal-cookie";

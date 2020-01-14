@@ -2,7 +2,7 @@ import React from "react";
 import { Navbar, Nav, Button, Form } from "react-bootstrap";
 
 import "Views/PageHeader/headerLayout.css";
-import logo from "assets/logo.png";
+import logo from "../../assets/logo.png";
 
 // https://github.com/ReactTraining/react-router/issues/83#issuecomment-214794477
 import {IndexLinkContainer} from 'react-router-bootstrap';
