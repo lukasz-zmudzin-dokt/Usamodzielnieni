@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import { setUserToken } from "redux/actions";
 
 import "Views/LoginPage/style.css";
-import bgImage from "assets/fot..png";
+import bgImage from "../../assets/fot..png";
 
 const cookies = new Cookies();
 

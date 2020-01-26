@@ -10,13 +10,15 @@ import Edu from "Views/CVEditorPage/components/Edu";
 import { addComplexItem } from "Views/CVEditorPage/functions/addComplexItem";
 
 const renderItems = (component, formName) => {
-  if (formName === "education") return Edu(component);
-  else return Work(component);
+  if (formName === "education") return <Edu component={component} />;
+  else return <Work component={component} />;
 };
 
-const RenderForm = (component, formName) => {
-  let descriptionStr = formName === "education" ? "eduDescription" : "workDescription";
-  let startTimeStr = formName === "education" ? "eduStartTime" : "workStartTime";
+const RenderForm = ({ component, formName }) => {
+  let descriptionStr =
+    formName === "education" ? "eduDescription" : "workDescription";
+  let startTimeStr =
+    formName === "education" ? "eduStartTime" : "workStartTime";
   let endTimeStr = formName === "education" ? "eduEndTime" : "workEndTime";
   let placeStr = formName === "education" ? "eduPlace" : "workPlace";
 

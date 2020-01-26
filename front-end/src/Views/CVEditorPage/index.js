@@ -5,11 +5,11 @@ import "react-datepicker/dist/react-datepicker.css";
 import polish from "date-fns/locale/pl";
 import bgImage from "../../assets/fot..png";
 import "./style.css";
-import movie_1 from "../graphics/movie_1.png";
-import movie_2 from "../graphics/movie_2.png";
-import movie_3 from "../graphics/movie_3.png";
-import movie_4 from "../graphics/movie_4.png";
-import movie_5 from "../graphics/movie_5.png";
+import movie_1 from "../../assets/movie_1.png";
+import movie_2 from "../../assets/movie_2.png";
+import movie_3 from "../../assets/movie_3.png";
+import movie_4 from "../../assets/movie_4.png";
+import movie_5 from "../../assets/movie_5.png";
 import Col from "react-bootstrap/Col";
 import Languages from 'Views/CVEditorPage/components/Languages';
 import Skills from 'Views/CVEditorPage/components/Skills';
@@ -139,7 +139,7 @@ class CVEditorPage extends React.Component {
                                                 <br></br>
                                                 <img className="cv_section_img" src={movie_2} width="400vw" alt="" />
                                             </Form.Label>
-                                            {RenderForm(this,"education")}
+                                            <RenderForm component={this} formName="education"/>
                                         </Form.Group>
                                         <ButtonToolbar>
                                             <Button
@@ -167,7 +167,7 @@ class CVEditorPage extends React.Component {
                                                 <br></br>
                                                 <img className="cv_section_img" src={movie_3} width="400vw" alt="" />
                                             </Form.Label>
-                                            {RenderForm(this,"workExperience")}
+                                            <RenderForm component={this} formName="workExperience" />
                                         </Form.Group>
                                         <ButtonToolbar>
                                             <Button
@@ -191,7 +191,7 @@ class CVEditorPage extends React.Component {
                                                 <br></br>
                                                 <img className="cv_section_img" src={movie_4} width="400vw" alt="" />
                                             </Form.Label>
-                                            <div className="rendered_cv_area">{Skills(this)}</div>
+                                            <Skills component={this} />
                                             <Form.Control
                                                 className="cv_page_input"
                                                 type="text"
@@ -235,7 +235,7 @@ class CVEditorPage extends React.Component {
                                                 <br></br>
                                                 <img className="cv_section_img" src={movie_5} width="400vw" alt="" />
                                             </Form.Label>
-                                            <div className="rendered_cv_area">{Languages(this)}</div>
+                                            <Languages component={this}/>
                                             <Form.Control
                                                 className="cv_page_input"
                                                 id="languages"
