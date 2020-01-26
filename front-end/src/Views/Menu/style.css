@@ -1,5 +1,5 @@
 .menu-background {
-    background-image: url("./background.png");
+    background-image: url("../../assets/menu-backdrop.png");
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -46,7 +46,7 @@
         margin-bottom: 20px;
     }
     .menu-background {
-        background-image: url("./background.png");
+        background-image: url("../../assets/menu-backdrop.png");
         background-size: cover;
         background-repeat: no-repeat;
         background-position: center;

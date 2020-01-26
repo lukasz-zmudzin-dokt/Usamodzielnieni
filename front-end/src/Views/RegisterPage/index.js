@@ -2,7 +2,7 @@ import React from "react";
 import { Container, Card, Form, Button } from "react-bootstrap";
 import { Link, Redirect } from "react-router-dom";
 import Cookies from "universal-cookie";
-import bgImage from "assets/fot..png";
+import bgImage from "../../assets/fot..png";
 import { connect } from "react-redux";
 import { setUserToken } from "redux/actions";
 
