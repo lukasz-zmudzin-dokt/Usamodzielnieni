@@ -3,9 +3,11 @@ import { Container, Button, Card } from "react-bootstrap";
 import Cookies from "universal-cookie";
 import Form from "react-bootstrap/Form";
 import { Link, Redirect } from "react-router-dom";
+import { connect } from "react-redux";
+import { setUserToken } from "redux/actions";
 
 import "Views/LoginPage/style.css";
-import bgImage from "assets/fot..png";
+import bgImage from "../../assets/fot..png";
 
 const cookies = new Cookies();
 
@@ -13,9 +15,62 @@ class LoginPage extends React.Component {
   state = {
     username: "",
     password: "",
+    message: "",
     redirect: false,
+    incorrect: false,
     cookieVal: false,
-    validated: false
+    validated: false,
+    token: this.props.token || ""
+  };
+
+  createMessage = status => {
+    if (status === 400) {
+      this.setState({
+        message: "Niepoprawny login lub hasło"
+      });
+    } else {
+      this.setState({
+        message: "Nieznany błąd proszę spróbować później"
+      });
+    }
+  };
+
+  sendData = object => {
+    const { username, password } = this.state;
+
+    const url = "https://usamo-back.herokuapp.com/account/login/";
+    fetch(url, {
+      method: "POST",
+      body: JSON.stringify({
+        username,
+        password
+      }),
+      headers: {
+        "Content-Type": "application/json",
+        Origin: null
+      }
+    }).then(res => {
+      console.log(res);
+      if (res.status === 200) {
+        res.json().then(responseValue => {
+          const { token } = responseValue;
+          this.props.setUserToken(token);
+          this.setState({ token });
+          this.setRedirect();
+          cookies.set(`token`, token, {
+            path: "/"
+          });
+        });
+      } else {
+        this.setState({
+          validated: false,
+          incorrect: true,
+          username: "",
+          password: "",
+          message: "Coś poszło nie tak"
+        });
+      }
+    });
   };
 
   onChange = e => {
@@ -33,14 +88,13 @@ class LoginPage extends React.Component {
     });
   };
 
-  setCookie = () => {
-    const { username } = this.state;
+  setCookie = token => {
     const current = new Date();
     const nextYear = new Date();
 
     nextYear.setFullYear(current.getFullYear() + 1); // ciasteczko na rok
-
-    cookies.set(`username`, username, {
+    console.log(token);
+    cookies.set(`token`, token, {
       path: "/",
       expires: nextYear
     });
@@ -54,18 +108,19 @@ class LoginPage extends React.Component {
 
   handleSubmit = event => {
     const form = event.currentTarget;
-    const { password, username, cookieVal } = this.state;
-    const { setCookie } = this;
+    const { password, username } = this.state;
+
     event.preventDefault();
 
     if (form.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();
     } else {
-      if (cookieVal) {
-        setCookie();
-      }
-      this.setRedirect();
+      // if (cookieVal) {
+      //   console.log("dodaje!");
+      //   setCookie();
+      // }
+      this.sendData();
       console.log(password, username); // login i hasło użytkownika
     }
 
@@ -81,21 +136,28 @@ class LoginPage extends React.Component {
   };
 
   componentDidMount() {
-    if (cookies.get("username")) {
+    if (cookies.get("token")) {
       this.setRedirect();
     }
   }
 
   render() {
-    const { username, password, validated, cookieVal } = this.state;
+    const {
+      username,
+      password,
+      validated,
+      cookieVal,
+      incorrect,
+      message
+    } = this.state;
     const { onChange, handleSubmit, handleCheck } = this;
-    console.log(window.innerWidth);
+
     return (
       <Container className="loginPage">
         {window.innerWidth >= 768 ? (
           <img className="loginPage__bgImage" src={bgImage} alt="tło" />
         ) : null}
-        <Card className="loginPage__card">
+        <Card className="loginPage__card loginPage__card--login">
           <Card.Header as="h2" className="loginPage__header">
             Logowanie
           </Card.Header>
@@ -142,10 +204,20 @@ class LoginPage extends React.Component {
                   label="Zapamiętaj mnie"
                 />
               </Form.Group>
-              <Button variant="secondary" type="submit">
+
+              <Button
+                variant="secondary"
+                className="loginPage__button"
+                type="submit"
+              >
                 Zaloguj
               </Button>
             </Form>
+            {incorrect ? (
+              <div className="loginPage__messageFail">
+                <small className="loginPage__failure">{message}</small>
+              </div>
+            ) : null}
             <div className="loginPage__links">
               <Link to="/newAccount">Załóż konto!</Link>
               {this.renderRedirect()}
@@ -158,4 +230,4 @@ class LoginPage extends React.Component {
   }
 }
 
-export default LoginPage;
+export default connect(null, { setUserToken })(LoginPage);

@@ -96,8 +96,8 @@ class UserProfilePage extends React.Component {
     render() {
         return (
             <Container>
-                <Card>
-                    <Card.Header>Mój profil</Card.Header>
+                <Card className="user_profile_card">
+                    <Card.Header className="user_card_title"><h3>Mój profil</h3></Card.Header>
                     <Card.Body>
                         <UserBasicInfo user={this.state.user} />
                     </Card.Body>
