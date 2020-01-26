@@ -14,7 +14,7 @@ export const handleBlur = (component, e, val) => {
 };
 
 export const handleCVSubmit = (component, e) => {
-  sendData(e, createCVObject(component, e));
+  sendData(createCVObject(component, e));
   e.preventDefault();
 };
 
