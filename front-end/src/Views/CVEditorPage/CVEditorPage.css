@@ -1,0 +1,163 @@
+.cv_page__title {
+  text-align: center;
+}
+
+.cvPage__bgImage {
+  position: absolute;
+  max-height: 100%;
+  opacity: 0.3;
+}
+
+@media (max-width: 767px) {
+  .cvPage__bgImage {
+    display: none;
+  }
+}
+
+.CVEditorPage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.CVEditorPage_card {
+  width: 50vw;
+}
+
+.cv_page_input {
+  position: relative;
+  top: 5px;
+  margin-bottom: 2vh;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  height: 4vh;
+}
+
+.cv_page_title {
+  text-align: center;
+}
+
+.item_add_button {
+  margin-top: 2vh;
+}
+
+.cv_lang_lvl_selector {
+  margin-bottom: 2vh;
+}
+
+.temp_data {
+  margin-bottom: 10vh;
+}
+
+.complex_form_input_item {
+  width: 100%;
+  border: 1px solid #ccc;
+  margin-bottom: 2vh;
+  border-radius: 3px;
+  height: 4vh;
+}
+
+.personalData {
+  margin-bottom: 5vh;
+}
+
+.cv_mgmt_button_toolbar {
+  position: relative;
+  display: inline-block;
+  width: 100vw;
+  margin-top: 10px;
+}
+
+.complex_cv_fields {
+  margin-top: 5vh;
+  margin-bottom: 5vh;
+}
+
+.btn_discard {
+  margin-top: 3vh;
+  width: 45%;
+  margin-right: 5%;
+}
+
+.btn_generate {
+  margin-top: 3vh;
+  width: 45%;
+  margin-left: 5%;
+}
+
+.form_navigation_prev {
+  width: 45%;
+  margin-right: 5%;
+  background-color: #7345A9 !important;
+}
+
+.form_navigation_next {
+  width: 45%;
+  margin-left: 5%;
+  background-color: #7345a9 !important;
+}
+
+@media (max-width: 768px) {
+  .CVEditorPage_card {
+    width: 100% !important;
+  }
+
+  .cv_section_img {
+    width: 50vw !important;
+    margin-left: 0;
+    margin-right: 0;
+    text-align: left;
+  }
+}
+
+h3 {
+  position: relative;
+  top: 1vh;
+}
+
+.rendered_cv_area {
+  min-height: 5vh;
+}
+
+.complex_form_input_item_dateFrom {
+  position: relative;
+  left: 1vh;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  height: 4vh;
+}
+
+.complex_form_input_item_dateTo{
+  position: relative;
+  left: 18.8vh;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  height: 4vh;
+}
+
+.dateFrom {
+  position: relative;
+}
+
+.dateTo {
+  position: relative;
+  left: 17.8vh
+}
+
+.cv_section_img {
+  width: 20vw;
+  margin-left: 13vw;
+  margin-right: 10vw;
+  display: block;
+  text-align: center;
+}
+
+@media (max-height: 1000px) {
+  .CVEditorPage_card {
+    margin-top: 10vh;
+  }
+}
