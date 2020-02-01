@@ -80,7 +80,7 @@ class PersonalDataTab extends React.Component {
                     <Button className="form_navigation_prev" disabled>← Wstecz</Button>
                     <Button
                         className="form_navigation_next"
-                        onClick={e => this.props.onNextButtonClick()}
+                        onClick={e => this.props.onNextClick(e)}
                     >
                         Dalej →
                     </Button>
