@@ -25,36 +25,37 @@ export const handleBirthDateChange = (component, date) => {
 };
 
 export const handleAddLanguage = (component, e) => {
-  let newLanguages = component.state.languages;
+  const { newLanguage } = component.state;
 
-  const { languageName, languageLevel } = component.state;
-
-  let correctName = languageName !== "";
-
-  if (correctName) {
-    newLanguages[languageName] = languageLevel;
-    component.setState({
-      languages: newLanguages
-    });
-
-    component.setState({
-      languageName: ""
-    });
+  if (newLanguage.name !== "") {
+    
+    component.setState(prevState => ({
+      languages: [...prevState.languages, newLanguage],
+      newLanguage: { name: '', level: 'podstawowy' }
+    }));
+    console.log(component.state)
+  } else {
+    // TODO
   }
 };
 
-//
-
 export const handleLanChange = (component, e) => {
-  component.setState({
-    languageName: e.target.value
-  });
+  const name = e.target.value;
+
+  component.setState(prevState => ({
+    newLanguage: { ...prevState.newLanguage, name }
+  }));
 };
 
 export const handleLanLvlChange = async (component, e) => {
   var value = await e.target.value;
 
-  component.setState({ languageLevel: value });
+  component.setState(prevState => ({
+    newLanguage: {
+      ...prevState.newLanguage,
+      level: value
+    }
+  }));
 };
 
 export const handleSkillAdd = (component, e) => {
@@ -88,17 +89,14 @@ export const handleCutSkill = (component, e) => {
 };
 
 export const handleCutComplexItem = (component, itemType, e) => {
-  let newItemList = {};
-  switch (itemType) {
-    case "education":  newItemList = component.state.education; break;
-    case "workExperience": newItemList = component.state.workExperience; break;
-    case "languages": newItemList = component.state.languages; break;
-  }
-  let toDeleteString = e.target.id;
-  let toDelete = toDeleteString.split("&")[0];
-  delete newItemList[toDelete];
+  let newItemList = component.state[itemType];
+  if (newItemList) {
+    let toDeleteString = e.target.id;
+    let toDelete = toDeleteString.split("&")[0];
+    delete newItemList[toDelete];
 
-  component.setState({
-    [itemType]: newItemList
-  });
+    component.setState({
+      [itemType]: newItemList
+    });
+  }
 };
