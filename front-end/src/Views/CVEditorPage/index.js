@@ -69,7 +69,7 @@ class CVEditorPage extends React.Component {
     render() {
         return (
             <Container className="CVEditorPage">
-                {window.innerWidth >= 768 ? (<img className="cvPage__bgImage" src={bgImage} alt="tło" />) : null}
+                <img className="cvPage__bgImage" src={bgImage} alt="tło" />
                 <Card className="CVEditorPage_card">
                     <Card.Header className="cv_page_title" as="h2">
                         Kreator CV

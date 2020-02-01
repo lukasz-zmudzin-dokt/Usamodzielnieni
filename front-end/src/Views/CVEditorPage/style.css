@@ -8,6 +8,12 @@
   opacity: 0.3;
 }
 
+@media (max-width: 767px) {
+  .cvPage__bgImage {
+    display: none;
+  }
+}
+
 .CVEditorPage {
   display: flex;
   justify-content: center;
