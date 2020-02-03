@@ -38,10 +38,9 @@ class SkillsTab extends React.Component {
                 onNextClick={this.props.onNextClick}
             >
                 <ItemsList getItemId={this.getSkillId} getItemName={this.getSkillName} getItem={this.getSkill}>
-                    <Form.Group controlId="exampleForm.ControlSelect1">
+                    <Form.Group controlId="">
                         <Form.Label>Umiejętność</Form.Label>
                         <Form.Control
-                            className="cv_page_input"
                             type="text"
                             placeholder="Wpisz umiejętność"
                             value={this.state.newSkill.name}

@@ -52,10 +52,10 @@ class ActionWithDate extends React.Component {
     render() {
         return (
             <ItemsList getItemId={this.getActionId} getItemName={this.getActionName} getItem={this.getAction}>
-                <Form.Group>
+                <Form.Group controlId="">
                     <Form.Label column={""}>Od:</Form.Label>
                     <DatePicker
-                        className="complex_form_input_item"
+                        className="form-control"
                         locale="pl"
                         dateFormat=" MM.yyyy"
                         selected={this.state.newAction.startTime}
@@ -63,10 +63,10 @@ class ActionWithDate extends React.Component {
                         showMonthYearPicker
                     />
                 </Form.Group>
-                <Form.Group>
+                <Form.Group controlId="">
                     <Form.Label column={""}>Do:</Form.Label>
                     <DatePicker
-                        className="complex_form_input_item"
+                        className="form-control"
                         locale="pl"
                         dateFormat=" MM.yyyy"
                         selected={this.state.newAction.endTime}
@@ -74,10 +74,9 @@ class ActionWithDate extends React.Component {
                         showMonthYearPicker
                     />
                 </Form.Group>
-                <Form.Group>
+                <Form.Group controlId="">
                     <Form.Label column={""}>Miejsce:</Form.Label>
                     <Form.Control
-                        className="complex_form_input_item"
                         inline
                         type="text"
                         //defaultValue={this.state.fullName}
@@ -85,10 +84,9 @@ class ActionWithDate extends React.Component {
                         onBlur={e => this.onBlur(e, 'place')}
                     />
                 </Form.Group>
-                <Form.Group>
+                <Form.Group controlId="">
                     <Form.Label column={""}>Opis:</Form.Label>
                     <Form.Control
-                        className="complex_form_input_item"
                         inline
                         type="text"
                         //defaultValue={this.state.fullName}

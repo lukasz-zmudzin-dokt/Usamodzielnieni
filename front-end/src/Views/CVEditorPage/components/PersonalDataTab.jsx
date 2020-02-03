@@ -26,54 +26,59 @@ class PersonalDataTab extends React.Component {
                 movie={movie_1}
                 onNextClick={this.props.onNextClick}
             >
-                <Form.Label column={""} sm="2">
-                    Imię i nazwisko:
-                </Form.Label>
-                <Form.Control
-                    inline
-                    type="text"
-                    required
-                    defaultValue={this.state.fullName}
-                    placeholder="Jan Przykładowy"
-                    onBlur={e => handleBlur(this, e, "fullName")}
-                    className="cv_page_input"
-                />
-                <Form.Label column={""} sm="2">
-                    Data urodzenia:{" "}
-                </Form.Label>
-                <DatePicker
-                    className="cv_page_input"
-                    locale="pl"
-                    dateFormat=" dd.MM.yyyy"
-                    selected={this.state.birthDate}
-                    onChange={() => handleBirthDateChange(this)}
-                    withPortal
-                    peekNextMonth
-                    showMonthDropdown
-                    showYearDropdown
-                    dropdownMode="select"
-                />
-                <Form.Label column={""} sm="2">
-                    Numer telefonu:
-                </Form.Label>
-                <Form.Control
-                    type="text"
-                    defaultValue={this.state.phoneNumber}
-                    placeholder="+48123456789"
-                    onBlur={e => handleBlur(this, e, "phoneNumber")}
-                    className="cv_page_input"
-                />
-                <Form.Label column={""} sm="2">
-                    Adres email:
-                </Form.Label>
-                <Form.Control
-                    type="email"
-                    required
-                    defaultValue={this.state.email}
-                    placeholder="example@domain.com"
-                    onBlur={e => handleBlur(this, e, "email")}
-                    className="cv_page_input"
-                />
+                <Form.Group controlId="">
+                    <Form.Label column={""} sm="2">
+                        Imię i nazwisko:
+                    </Form.Label>
+                    <Form.Control
+                        inline
+                        type="text"
+                        required
+                        defaultValue={this.state.fullName}
+                        placeholder="Jan Przykładowy"
+                        onBlur={e => handleBlur(this, e, "fullName")}
+                    />
+                </Form.Group>
+                <Form.Group controlId="">
+                    <Form.Label column={""} sm="2">
+                        Data urodzenia:{" "}
+                    </Form.Label>
+                    <DatePicker
+                        className="form-control"
+                        locale="pl"
+                        dateFormat=" dd.MM.yyyy"
+                        selected={this.state.birthDate}
+                        onChange={() => handleBirthDateChange(this)}
+                        withPortal
+                        peekNextMonth
+                        showMonthDropdown
+                        showYearDropdown
+                        dropdownMode="select"
+                    />
+                </Form.Group>
+                <Form.Group controlId="">
+                    <Form.Label column={""} sm="2">
+                        Numer telefonu:
+                    </Form.Label>
+                    <Form.Control
+                        type="text"
+                        defaultValue={this.state.phoneNumber}
+                        placeholder="+48123456789"
+                        onBlur={e => handleBlur(this, e, "phoneNumber")}
+                    />
+                </Form.Group>
+                <Form.Group controlId="">
+                    <Form.Label column={""} sm="2">
+                        Adres email:
+                    </Form.Label>
+                    <Form.Control
+                        type="email"
+                        required
+                        defaultValue={this.state.email}
+                        placeholder="example@domain.com"
+                        onBlur={e => handleBlur(this, e, "email")}
+                    />
+                </Form.Group>
             </CVEditorTab>
         )
     }

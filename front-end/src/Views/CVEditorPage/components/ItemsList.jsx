@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "react-bootstrap";
+import { Form, Button } from "react-bootstrap";
 import Items from 'Views/CVEditorPage/components/Items';
 
 class ItemsList extends React.Component {
@@ -26,14 +26,20 @@ class ItemsList extends React.Component {
     render() {
         return (
             <div>
-                <Items 
-                    items={this.state.items}
-                    onCutClick={(e, i) => this.cutItem(e, i)}
-                    getItemId={this.props.getItemId}
-                    getItemName={this.props.getItemName}
-                />
+                {this.state.items.length > 0 &&
+                <Form.Group controlId="">
+                    <Items 
+                        items={this.state.items}
+                        onCutClick={(e, i) => this.cutItem(e, i)}
+                        getItemId={this.props.getItemId}
+                        getItemName={this.props.getItemName}
+                    />
+                </Form.Group>
+                }
                 {this.props.children}
-                <Button variant="success" onClick={e => this.addItem(e)}>+ Dodaj</Button>
+                <Form.Group controlId="">
+                    <Button variant="success" onClick={e => this.addItem(e)}>+ Dodaj</Button>
+                </Form.Group>
             </div>
         )
     }

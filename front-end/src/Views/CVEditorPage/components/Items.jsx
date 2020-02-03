@@ -2,7 +2,7 @@ import React from "react";
 import { Button } from "react-bootstrap";
 
 const Items = ({ items, onCutClick, getItemId, getItemName }) => (
-    <ul>
+    <ul className="list-inline">
       {items.map((item, i) => (
         <li className="list-inline-item">
           <Button

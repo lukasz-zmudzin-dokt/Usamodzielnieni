@@ -1,32 +1,44 @@
 import React from "react";
-import { Button, ButtonToolbar, Form } from "react-bootstrap";
+import "./CvEditorTab.css";
+import { Button, Row, Col } from "react-bootstrap";
 
 const CVEditorTab = ({ title, movie, children, onPrevClick, onNextClick }) => (
     <div>
-        <Form.Group id="complex-cv-fields">
-            <Form.Label>
-                <h3>{title}</h3>
-                <br></br>
-                <img className="cv_section_img" src={movie} width="400vw" alt="" />
-            </Form.Label>
-            {children}
-        </Form.Group>
-        <ButtonToolbar>
+        <h3>{title}</h3>
+        <img className="CVEditorTab__img" src={movie} alt="" />
+        {children}
+        <Row>
+            <Col>
                 <Button
                     className="form_navigation_prev"
                     onClick={e => onPrevClick(e)}
                     disabled={!onPrevClick}
+                    block
                 >
                     ← Wstecz
                 </Button>
+            </Col>
+            <Col>
+                { onNextClick ? (
                 <Button
                     className="form_navigation_next"
                     onClick={e => onNextClick(e)}
-                    disabled={!onNextClick}
+                    block
                 >
                     Dalej →
                 </Button>
-        </ButtonToolbar>
+                ) : (
+                <Button
+                    variant="success"
+                    type="submit"
+                    id="saveButton"
+                    block
+                >
+                    Generuj CV
+                </Button>
+                ) }
+            </Col>
+        </Row>
     </div>
 )
 

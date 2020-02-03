@@ -1,7 +1,6 @@
 import React from "react";
-import { Col, Card, Container, Form, Tab, Tabs } from "react-bootstrap";
+import { Card, Container, Form, Tab, Tabs } from "react-bootstrap";
 import "react-datepicker/dist/react-datepicker.css";
-import bgImage from "../../assets/fot..png";
 import "./CVEditorPage.css";
 import PersonalDataTab from 'Views/CVEditorPage/components/PersonalDataTab';
 import EducationTab from 'Views/CVEditorPage/components/EducationTab';
@@ -68,19 +67,19 @@ class CVEditorPage extends React.Component {
 
     render() {
         return (
-            <Container className="CVEditorPage">
-                <img className="cvPage__bgImage" src={bgImage} alt="tło" />
-                <Card className="CVEditorPage_card">
-                    <Card.Header className="cv_page_title" as="h2">
-                        Kreator CV
-                    </Card.Header>
+            <Container>
+                <Card>
+                    <Card.Header as="h2">Kreator CV</Card.Header>
                     <Card.Body>
                         <Form id="cv_data" onSubmit={e => handleCVSubmit(this, e)}>
-                            <Col>
-                                <Tabs activeKey={this.state.formTab} onSelect={e => this.setState({ formTab: e })} id="tabs">
-                                    {this.tabs.map(tab => (<Tab eventKey={tab.id} title={tab.name}>{tab.component}</Tab>))}
-                                </Tabs>
-                            </Col>
+                            <Tabs 
+                                transition={false}
+                                activeKey={this.state.formTab}
+                                onSelect={e => this.setState({ formTab: e })}
+                                className="CVEditorPage_tabs" // https://github.com/react-bootstrap/react-bootstrap/issues/4771
+                            >
+                                {this.tabs.map(tab => (<Tab eventKey={tab.id} title={tab.name}>{tab.component}</Tab>))}
+                            </Tabs>
                         </Form>
                     </Card.Body>
                 </Card>
