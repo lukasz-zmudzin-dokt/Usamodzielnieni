@@ -17,8 +17,10 @@ class ItemsList extends React.Component {
         }))
     }
 
-    cutItem = (e) => {
-
+    cutItem = (e, i) => {
+        this.setState(prevState => ({
+            items: prevState.items.filter((_, index) => index !== i)
+        }));
     }
     
     render() {
@@ -26,7 +28,7 @@ class ItemsList extends React.Component {
             <div>
                 <Items 
                     items={this.state.items}
-                    onCutClick={e => this.cutItem(e)}
+                    onCutClick={(e, i) => this.cutItem(e, i)}
                     getItemId={this.props.getItemId}
                     getItemName={this.props.getItemName}
                 />
