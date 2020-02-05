@@ -10,6 +10,6 @@ describe("UserProfile", () => {
 });
 
 it("renders correctly", () => {
-  const mainComponent = renderer.create(<UserProfile />).toJSON();
-  expect(mainComponent).toMatchSnapshot();
+  const profile = renderer.create(<UserProfile />).toJSON();
+  expect(profile).toMatchSnapshot();
 });

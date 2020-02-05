@@ -55,9 +55,7 @@ exports[`renders correctly 1`] = `
               Jan Kowalski
             </h5>
           </div>
-          <div>
-            Podopieczny
-          </div>
+          <div />
         </div>
       </div>
     </div>
