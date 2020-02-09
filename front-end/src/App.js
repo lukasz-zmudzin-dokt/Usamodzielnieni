@@ -35,7 +35,7 @@ class App extends React.Component {
             <Route path="/login" exact component={LoginPage} />
             <Route path="/newAccount" exact component={RegisterPage} />
             <Route path="/footer" exact component={Footer} />
-            <Route path="/jobOffers" exact conpomemnt={JobOffersPage} />
+            <Route path="/jobOffers" exact component={JobOffersPage} />
           </Switch>
         </Router>
       </Provider>
