@@ -13,6 +13,7 @@ import reducer from "redux/reducer";
 import Cookies from "universal-cookie";
 import { setUserToken } from "redux/actions";
 import Menu from "./Views/Menu";
+import JobOffersPage from "Views/JobOffersPage";
 
 const cookies = new Cookies();
 
@@ -34,6 +35,7 @@ class App extends React.Component {
             <Route path="/login" exact component={LoginPage} />
             <Route path="/newAccount" exact component={RegisterPage} />
             <Route path="/footer" exact component={Footer} />
+            <Route path="/jobOffers" exact conpomemnt={JobOffersPage} />
           </Switch>
         </Router>
       </Provider>
