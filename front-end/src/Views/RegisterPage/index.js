@@ -413,4 +413,5 @@ class RegisterPage extends React.Component {
     );
   }
 }
+                
 export default connect(null, { setUserToken })(RegisterPage);
