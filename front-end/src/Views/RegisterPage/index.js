@@ -2,7 +2,7 @@ import React from "react";
 import { Container, Card, Form, Button } from "react-bootstrap";
 import { Link, Redirect } from "react-router-dom";
 import Cookies from "universal-cookie";
-import bgImage from "assets/fot..png";
+import bgImage from "../../assets/fot..png";
 import { connect } from "react-redux";
 import { setUserToken } from "redux/actions";
 
@@ -58,6 +58,7 @@ class RegisterPage extends React.Component {
           cookies.set(`token`, token, {
             path: "/"
           });
+          this.props.setUserToken(token);
           this.setState({
             validated: false,
             message: "Udało się zarejestrować! Teraz możesz się zalogować",
@@ -80,7 +81,7 @@ class RegisterPage extends React.Component {
         this.setState({
           validated: false,
           incorrect: true,
-          message: "Taki użytkownik juz istnieje",
+          message: "Taki użytkownik już istnieje",
           username: ""
         });
       }
@@ -412,5 +413,5 @@ class RegisterPage extends React.Component {
     );
   }
 }
-
+                
 export default connect(null, { setUserToken })(RegisterPage);

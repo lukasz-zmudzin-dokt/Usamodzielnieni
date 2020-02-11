@@ -2,7 +2,7 @@ import React from "react";
 import { Navbar, Nav, Button, Form } from "react-bootstrap";
 
 import "Views/PageHeader/headerLayout.css";
-import logo from "assets/logo.png";
+import logo from "../../assets/logo.png";
 
 // https://github.com/ReactTraining/react-router/issues/83#issuecomment-214794477
 import {IndexLinkContainer} from 'react-router-bootstrap';
@@ -30,12 +30,12 @@ class HeaderTemplate extends React.Component {
               Kreator CV
             </Nav.Link>
           </IndexLinkContainer>
-          <Nav.Link id="learningTheRopes">Od czego zacząć?</Nav.Link>
+          <Nav.Link id="learningTheRopes">Jak zacząć?</Nav.Link>
           <Nav.Link id="jobOffers">Oferty pracy</Nav.Link>
-          <Nav.Link id="jobDescriptions">Opis stanowisk</Nav.Link>
-          <Nav.Link id="personalityTests">Testy</Nav.Link>
-          <Nav.Link id="stories">Historie usamodzielnionych</Nav.Link>
-          <Nav.Link id="moneyMgmt">Zarządzanie budżetem</Nav.Link>
+          {/* <Nav.Link id="jobDescriptions">Opis stanowisk</Nav.Link> */}
+          {/* <Nav.Link id="personalityTests">Testy</Nav.Link> */}
+          <Nav.Link id="stories">Historia</Nav.Link>
+          {/* <Nav.Link id="moneyMgmt">Zarządzanie budżetem</Nav.Link> */}
           <Nav.Link id="contactPhones">Telefony</Nav.Link>
         </Nav>
       );
@@ -47,12 +47,12 @@ class HeaderTemplate extends React.Component {
       return (
         <Form inline pull-right className="action_buttons">
             <IndexLinkContainer to="/user">
-              <Button className="menu_action_button" variant="light">
+              <Button className="menu_action_button_1" variant="light">
                 Profil
               </Button>
             </IndexLinkContainer>
             <IndexLinkContainer to="/">
-              <Button className="menu_action_button" variant="outline-light" onClick={e => this.userLogout(e)}>
+              <Button className="menu_action_button_2" variant="outline-light" onClick={e => this.userLogout(e)}>
                 Wyloguj
               </Button>
             </IndexLinkContainer>
@@ -62,7 +62,7 @@ class HeaderTemplate extends React.Component {
       return (
         <Form inline pull-right className="action_buttons">
             <IndexLinkContainer to="/login">
-              <Button className="menu_action_button" variant="outline-light">
+              <Button className="menu_action_button_3" variant="outline-light">
                 Logowanie
               </Button>
             </IndexLinkContainer>

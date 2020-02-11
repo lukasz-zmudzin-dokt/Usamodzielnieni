@@ -1,16 +1,16 @@
 import React from "react";
 import Container from "react-bootstrap/Container";
-
-import FbIcon from "../../img/facebook-128.ico"
-import LinkedInIcon from "../../img/linkedin-128.ico"
-import YouTubeIcon from "../../img/youtube-128.ico"
+import FbIcon from "../../assets/facebook-128.ico";
+import LinkedInIcon from "../../assets/linkedin-128.ico";
+import YouTubeIcon from "../../assets/youtube-128.ico";
 
 import "Views/Footer/style.css";
 
-class FooterHelper extends React.Component {
+class Footer extends React.Component {
+
     render() {
         return (
-            <Container className="Footer p-0" fluid={true}>
+            <Container className="Footer">
                 <div className="footer">
                     <div className="row justify-content-end mt-4">
                         <div className="col-8 mr-5">
@@ -32,15 +32,6 @@ class FooterHelper extends React.Component {
                     </div>
                 </div>
             </Container>
-        );
-    }
-}
-
-class Footer extends React.Component {
-
-    render() {
-        return (
-            <FooterHelper/>
         );
     }
 }

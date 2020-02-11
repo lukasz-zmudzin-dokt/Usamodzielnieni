@@ -10,9 +10,16 @@ import Footer from "Views/Footer";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
 import reducer from "redux/reducer";
+import Cookies from "universal-cookie";
+import { setUserToken } from "redux/actions";
+import Menu from "./Views/Menu";
+
+const cookies = new Cookies();
 
 console.log("NEW STORE");
 const store = createStore(reducer);
+
+store.dispatch(setUserToken(cookies.get("token")));
 
 class App extends React.Component {
   render() {
@@ -21,6 +28,7 @@ class App extends React.Component {
         <Router>
           <HeaderTemplate />
           <Switch>
+            <Route path="/" exact component={Menu} />
             <Route path="/cvEditor" exact component={CVEditorPage} />
             <Route path="/user" exact component={UserProfilePage} />
             <Route path="/login" exact component={LoginPage} />
