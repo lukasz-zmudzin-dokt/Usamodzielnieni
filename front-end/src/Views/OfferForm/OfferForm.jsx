@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Container, Card } from "react-bootstrap";
+import { Form, Container, Card, Button } from "react-bootstrap";
 import FormGroup from "Views/OfferForm/components/FormGroup";
 import "./style.css";
 
@@ -28,13 +28,27 @@ const OfferForm = () => {
   const [location, setLocation] = useState("");
   const [VS, setVS] = useState("");
   const [description, setDescription] = useState("");
+  const [date, setDate] = useState("");
+
+  const submit = event => {
+    event.preventDefault();
+    const offerObject = {
+      positionName,
+      firmName,
+      location,
+      VS,
+      description,
+      date
+    };
+    console.log(offerObject);
+  };
 
   return (
     <Container className="offerForm">
       <Card>
         <Card.Header as="h2">Dodaj ofertę</Card.Header>
         <Card.Body>
-          <Form>
+          <Form onSubmit={submit}>
             <FormGroup header="Nazwa stanowiska" setVal={setPositionName} />
             <FormGroup header="Nazwa firmy" setVal={setFirmName} />
             <FormGroup header="Lokalizacja" setVal={setLocation} />
@@ -49,6 +63,8 @@ const OfferForm = () => {
               type="textarea"
               setVal={setDescription}
             />
+            <FormGroup header="Data ważności" type="date" setVal={setDate} />
+            <Button type="submit">Wyślij</Button>
           </Form>
         </Card.Body>
       </Card>

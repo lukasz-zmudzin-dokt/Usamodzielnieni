@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Form } from "react-bootstrap";
+import DatePicker from "react-datepicker";
 
 const FormGroup = ({ header, setVal, array, type }) => {
   const [val, setValue] = useState("");
@@ -8,6 +9,11 @@ const FormGroup = ({ header, setVal, array, type }) => {
     const value = e.target.value;
     setValue(value);
     setVal(value);
+  };
+
+  const setDate = date => {
+    setValue(date);
+    setVal(date);
   };
 
   const setFormType = () => {
@@ -20,8 +26,22 @@ const FormGroup = ({ header, setVal, array, type }) => {
           </Form.Control>
         );
       case "textarea":
-        return <Form.Control as={type} />;
-
+        return (
+          <Form.Control as={type} onChange={setInput} controlId={header} />
+        );
+      case "date":
+        return (
+          <Form.Row>
+            <p className="mr-1">Do:</p>
+            <DatePicker
+              className="complex_form_input_item"
+              locale="pl"
+              dateFormat="dd.MM.yyyy"
+              selected={val}
+              onChange={setDate}
+            />
+          </Form.Row>
+        );
       default:
         return (
           <Form.Control
@@ -35,7 +55,7 @@ const FormGroup = ({ header, setVal, array, type }) => {
   };
 
   return (
-    <Form.Group controlId="formBasicEmail">
+    <Form.Group controlId={header}>
       <Form.Label>{header}</Form.Label>
       {setFormType()}
     </Form.Group>
