@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { Form, Container, Card, Button } from "react-bootstrap";
+import { Form, Container, Card, Button, Row } from "react-bootstrap";
 import FormGroup from "Views/OfferForm/components/FormGroup";
 import "./style.css";
 
-const voivodeship = [
+const data = [
   "Zachodnio-pomorskie",
   "Pomorskie",
   "Warmińsko-Mazurskie",
@@ -45,26 +45,40 @@ const OfferForm = () => {
 
   return (
     <Container className="offerForm">
-      <Card>
-        <Card.Header as="h2">Dodaj ofertę</Card.Header>
+      <Card className="offerForm__card">
+        <Card.Header as="h2" className="offerForm__header">
+          Dodaj ofertę
+        </Card.Header>
         <Card.Body>
-          <Form onSubmit={submit}>
-            <FormGroup header="Nazwa stanowiska" setVal={setPositionName} />
-            <FormGroup header="Nazwa firmy" setVal={setFirmName} />
-            <FormGroup header="Lokalizacja" setVal={setLocation} />
-            <FormGroup
-              header="Województwo"
-              array={voivodeship}
-              type="select"
-              setVal={setVS}
-            />
-            <FormGroup
-              header="Opis stanowiska"
-              type="textarea"
-              setVal={setDescription}
-            />
-            <FormGroup header="Data ważności" type="date" setVal={setDate} />
-            <Button type="submit">Wyślij</Button>
+          <Form onSubmit={submit} className="offerForm__form">
+            <div className="offerForm__wrapper">
+              <FormGroup header="Nazwa stanowiska" setVal={setPositionName} />
+              <FormGroup header="Nazwa firmy" setVal={setFirmName} />
+              <FormGroup header="Lokalizacja" setVal={setLocation} />
+              <FormGroup
+                header="Województwo"
+                array={data}
+                type="select"
+                setVal={setVS}
+              />
+            </div>
+            <div className="offerForm__wrapper">
+              <FormGroup
+                header="Opis stanowiska"
+                type="textarea"
+                setVal={setDescription}
+              />
+              <FormGroup header="Data ważności" type="date" setVal={setDate} />
+            </div>
+            <Row className="w-100 justify-content-center align-items-center m-0">
+              <Button
+                variant="secondary"
+                type="submit"
+                className="pl-5 pr-5 pt-2 pb-2"
+              >
+                Dodaj
+              </Button>
+            </Row>
           </Form>
         </Card.Body>
       </Card>

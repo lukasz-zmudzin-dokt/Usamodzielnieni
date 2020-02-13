@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Form } from "react-bootstrap";
 import DatePicker from "react-datepicker";
+import "Views/OfferForm/style.css";
 
 const FormGroup = ({ header, setVal, array, type }) => {
   const [val, setValue] = useState("");
@@ -27,14 +28,19 @@ const FormGroup = ({ header, setVal, array, type }) => {
         );
       case "textarea":
         return (
-          <Form.Control as={type} onChange={setInput} controlId={header} />
+          <Form.Control
+            as={type}
+            onChange={setInput}
+            controlId={header}
+            className="offerForm__textarea"
+          />
         );
       case "date":
         return (
-          <Form.Row>
-            <p className="mr-1">Do:</p>
+          <Form.Row className="align-items-center">
+            <p className="mr-2 mb-0">Do:</p>
             <DatePicker
-              className="complex_form_input_item"
+              className="form-control"
               locale="pl"
               dateFormat="dd.MM.yyyy"
               selected={val}
@@ -55,7 +61,10 @@ const FormGroup = ({ header, setVal, array, type }) => {
   };
 
   return (
-    <Form.Group controlId={header}>
+    <Form.Group
+      controlId={header}
+      className={type === "textarea" ? "offerForm__textContainer" : ""}
+    >
       <Form.Label>{header}</Form.Label>
       {setFormType()}
     </Form.Group>
