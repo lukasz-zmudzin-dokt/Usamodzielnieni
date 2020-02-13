@@ -6,6 +6,7 @@ import "./style.css";
 import { Button } from "react-bootstrap";
 import OfferHeader from "./OfferHeader";
 import Modal from "react-bootstrap/Modal";
+import InputGroup from "react-bootstrap/InputGroup";
 /*const offers = [
     {
         title: "Stolarz poszukiwany!",
@@ -78,12 +79,21 @@ class JobOffersPage extends React.Component {
     );
   };
 
+  makeBody = (index) => {
+    let body = "";
+    body += this.state.offers[this.state.selectedID].description;
+    body += "\nFIRMA: " + this.state.offers[this.state.selectedID].companyName;
+    body += "\ne-mail: " + this.state.offers[this.state.selectedID].email;
+    body += "\ntel: " + this.state.offers[this.state.selectedID].phone;
+
+    return body;
+  }
+
   render() {
     console.log("JobOffersPage");
     return (
       <Container className="jobOffersPage">
         <ul>{this.state.offers.map((offer, index) => this.mapJobOffers(offer, index))}</ul>
-      
         <Modal
         size="lg"
         show={this.state.showModal}
@@ -95,7 +105,9 @@ class JobOffersPage extends React.Component {
             {this.state.selectedID === undefined ? 0 : this.state.offers[this.state.selectedID].title}
           </Modal.Title>
           </Modal.Header>
-          <Modal.Body>{this.state.selectedID === undefined ? 0 : this.state.offers[0].description}</Modal.Body>
+          <Modal.Body>
+            {this.state.selectedID === undefined ? 0 : this.makeBody(this.state.selectedID)}
+          </Modal.Body>
         </Modal>
       </Container>
 
