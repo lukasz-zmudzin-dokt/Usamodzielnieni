@@ -52,9 +52,21 @@ const OfferForm = () => {
         <Card.Body>
           <Form onSubmit={submit} className="offerForm__form">
             <div className="offerForm__wrapper">
-              <FormGroup header="Nazwa stanowiska" setVal={setPositionName} />
-              <FormGroup header="Nazwa firmy" setVal={setFirmName} />
-              <FormGroup header="Lokalizacja" setVal={setLocation} />
+              <FormGroup
+                header="Nazwa stanowiska"
+                setVal={setPositionName}
+                incorrect="Podaj nazwę stanowiska"
+              />
+              <FormGroup
+                header="Nazwa firmy"
+                setVal={setFirmName}
+                incorrect="Podaj nazwę firmy"
+              />
+              <FormGroup
+                header="Lokalizacja"
+                setVal={setLocation}
+                incorrect="Podaj lokalizację"
+              />
               <FormGroup
                 header="Województwo"
                 array={data}
@@ -67,8 +79,14 @@ const OfferForm = () => {
                 header="Opis stanowiska"
                 type="textarea"
                 setVal={setDescription}
+                incorrect="Podaj opis"
               />
-              <FormGroup header="Data ważności" type="date" setVal={setDate} />
+              <FormGroup
+                header="Data ważności"
+                type="date"
+                setVal={setDate}
+                incorrect="Podaj datę ważności"
+              />
             </div>
             <Row className="w-100 justify-content-center align-items-center m-0">
               <Button

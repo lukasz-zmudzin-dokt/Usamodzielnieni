@@ -3,7 +3,7 @@ import { Form } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import "Views/OfferForm/style.css";
 
-const FormGroup = ({ header, setVal, array, type }) => {
+const FormGroup = ({ header, setVal, array, type, incorrect }) => {
   const [val, setValue] = useState("");
 
   const setInput = e => {
@@ -32,6 +32,7 @@ const FormGroup = ({ header, setVal, array, type }) => {
             as={type}
             onChange={setInput}
             controlId={header}
+            required
             className="offerForm__textarea"
           />
         );
@@ -45,6 +46,7 @@ const FormGroup = ({ header, setVal, array, type }) => {
               dateFormat="dd.MM.yyyy"
               selected={val}
               onChange={setDate}
+              required
             />
           </Form.Row>
         );
@@ -55,6 +57,7 @@ const FormGroup = ({ header, setVal, array, type }) => {
             placeholder={header}
             onChange={setInput}
             value={val}
+            required
           />
         );
     }
@@ -67,6 +70,11 @@ const FormGroup = ({ header, setVal, array, type }) => {
     >
       <Form.Label>{header}</Form.Label>
       {setFormType()}
+      {incorrect ? (
+        <Form.Control.Feedback type="invalid">
+          {incorrect}
+        </Form.Control.Feedback>
+      ) : null}
     </Form.Group>
   );
 };
