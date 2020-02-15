@@ -1,0 +1,40 @@
+.correction_area {
+    display: flex;
+    overflow: hidden;
+    height: 50%;
+}
+
+.pdf_viewer {
+    margin-top: 3%;
+    text-align: center;
+    overflow-y: scroll;
+}
+
+.pdf_doc_container {
+    border-width: 1px;
+    border-color: black;
+    background-color: gray;
+    display: flex;
+    justify-content: center;
+}
+
+.cv_comment_area {
+    margin-top: 3%;
+    overflow-y: scroll;
+}
+
+.pdf_viewer_nav {
+    justify-content: center;
+}
+
+.next {
+    margin-left: 3vw;
+}
+
+.prev {
+    margin-right: 3vw;
+}
+
+.comment_card_title {
+    text-align: center;
+}

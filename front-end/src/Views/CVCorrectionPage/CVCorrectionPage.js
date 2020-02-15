@@ -1,7 +1,9 @@
 import React from 'react';
-import {Button, Col, Form, Nav} from "react-bootstrap";
+import {Button, Card, Col, Form, Nav, Row} from "react-bootstrap";
 import file from './response1.pdf'
 import { Document, Page, pdfjs } from 'react-pdf';
+import './style.css'
+
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 class CVCorrectionPage extends React.Component {
@@ -16,7 +18,7 @@ class CVCorrectionPage extends React.Component {
             additionalComments: undefined,
 
             documentCurrentPage: 1,
-            documentPageNumber: 1
+            numPages: 1
         }
     };
 
@@ -26,9 +28,9 @@ class CVCorrectionPage extends React.Component {
         });
     };
 
-    handleDocumentLoad = ({ documentPageNumber }) => {
+    handleDocumentLoad = ({ numPages }) => {
         this.setState({
-            documentPageNumber
+            numPages
         });
     };
 
@@ -48,100 +50,106 @@ class CVCorrectionPage extends React.Component {
         let { personalDataComments, educationComments, experienceComments, skillComments, langComments, additionalComments, documentCurrentPage, documentPageNumber } = this.state;
         let { handleBlur, handleDocumentLoad, showNextPage, showPrevPage } = this;
         return(
-            <div className="correction_area">
+            <Row className="correction_area">
                 {/* zamknąć wszystko w kartę? dwie? */}
-                <br/><br/><br/>
-               <Col>
-                   <Nav>
-                       <Button onClick={showPrevPage}>Poprzednia</Button>
-                       <Button onClick={showNextPage}>Następna</Button>
+               <Col className="pdf_viewer">
+                   <Nav className="pdf_viewer_nav">
+                       <Button className="button_nav prev" onClick={showPrevPage}>{"\< "}Poprzednia</Button>
+                       <Button className="button_nav next" onClick={showNextPage}>Następna{" \>"}</Button>
                    </Nav>
                    {/* tu będzie pdf https://stackoverflow.com/questions/2740297/display-adobe-pdf-inside-a-div */}
                    <div>
                        <Document file={file} onLoadSuccess={handleDocumentLoad}>
-                           <Page pageNumber={documentCurrentPage}/>
+                           <Page className="pdf_doc_container" pageNumber={documentCurrentPage}/>
                        </Document>
                        <p> Strona {documentCurrentPage} z {documentPageNumber}</p>
                    </div>
                </Col>
-                <Col>
-                    <Form.Group controlId="correctionData">
-                        <Form.Label>
-                            <h3 className="correction_title">Dane osobowe</h3>
-                        </Form.Label>
-                        <Form.Control
-                            inline
-                            as="textarea"
-                            rows="3"
-                            placeholder="Wpisz uwagi..."
-                            defaultValue={personalDataComments}
-                            onBlur={e => handleBlur(this, e, "personalDataComments")}
-                            className="cv_correction_textarea personal"
-                        />
-                        <Form.Label>
-                            <h3 className="correction_title">Edukacja</h3>
-                        </Form.Label>
-                        <Form.Control
-                            inline
-                            as="textarea"
-                            rows="3"
-                            placeholder="Wpisz uwagi..."
-                            defaultValue={educationComments}
-                            onBlur={e => handleBlur(this, e, "educationComments")}
-                            className="cv_correction_textarea education"
-                        />
-                        <Form.Label>
-                            <h3 className="correction_title">Doświadczenie zawodowe</h3>
-                        </Form.Label>
-                        <Form.Control
-                            inline
-                            as="textarea"
-                            rows="3"
-                            placeholder="Wpisz uwagi..."
-                            defaultValue={experienceComments}
-                            onBlur={e => handleBlur(this, e, "experienceComments")}
-                            className="cv_correction_textarea experience"
-                        />
-                        <Form.Label>
-                            <h3 className="correction_title">Umiejętności</h3>
-                        </Form.Label>
-                        <Form.Control
-                            inline
-                            as="textarea"
-                            rows="3"
-                            placeholder="Wpisz uwagi..."
-                            defaultValue={skillComments}
-                            onBlur={e => handleBlur(this, e, "skillComments")}
-                            className="cv_correction_textarea personal"
-                        />
-                        <Form.Label>
-                            <h3 className="correction_title">Języki obce</h3>
-                        </Form.Label>
-                        <Form.Control
-                            inline
-                            as="textarea"
-                            rows="3"
-                            placeholder="Wpisz uwagi..."
-                            defaultValue={langComments}
-                            onBlur={e => handleBlur(this, e, "langComments")}
-                            className="cv_correction_textarea languages"
-                        />
-                        <Form.Label>
-                            <h3 className="correction_title">Dodatkowe uwagi</h3>
-                        </Form.Label>
-                        <Form.Control
-                            inline
-                            as="textarea"
-                            rows="3"
-                            placeholder="Wpisz uwagi..."
-                            defaultValue={additionalComments}
-                            onBlur={e => handleBlur(this, e, "additionalComments")}
-                            className="cv_correction_textarea additional"
-                        />
-                    </Form.Group>
+                <Col className="cv_comment_area">
+                    <Card>
+                        <Card.Header className="comment_card_title" as="h2">
+                            Uwagi do CV
+                        </Card.Header>
+                        <Card.Body>
+                            <Form.Group controlId="correctionData">
+                                <Form.Label>
+                                    <h3 className="correction_title">Dane osobowe</h3>
+                                </Form.Label>
+                                <Form.Control
+                                    inline
+                                    as="textarea"
+                                    rows="3"
+                                    placeholder="Wpisz uwagi..."
+                                    defaultValue={personalDataComments}
+                                    onBlur={e => handleBlur(this, e, "personalDataComments")}
+                                    className="cv_correction_textarea personal"
+                                />
+                                <Form.Label>
+                                    <h3 className="correction_title">Edukacja</h3>
+                                </Form.Label>
+                                <Form.Control
+                                    inline
+                                    as="textarea"
+                                    rows="3"
+                                    placeholder="Wpisz uwagi..."
+                                    defaultValue={educationComments}
+                                    onBlur={e => handleBlur(this, e, "educationComments")}
+                                    className="cv_correction_textarea education"
+                                />
+                                <Form.Label>
+                                    <h3 className="correction_title">Doświadczenie zawodowe</h3>
+                                </Form.Label>
+                                <Form.Control
+                                    inline
+                                    as="textarea"
+                                    rows="3"
+                                    placeholder="Wpisz uwagi..."
+                                    defaultValue={experienceComments}
+                                    onBlur={e => handleBlur(this, e, "experienceComments")}
+                                    className="cv_correction_textarea experience"
+                                />
+                                <Form.Label>
+                                    <h3 className="correction_title">Umiejętności</h3>
+                                </Form.Label>
+                                <Form.Control
+                                    inline
+                                    as="textarea"
+                                    rows="3"
+                                    placeholder="Wpisz uwagi..."
+                                    defaultValue={skillComments}
+                                    onBlur={e => handleBlur(this, e, "skillComments")}
+                                    className="cv_correction_textarea personal"
+                                />
+                                <Form.Label>
+                                    <h3 className="correction_title">Języki obce</h3>
+                                </Form.Label>
+                                <Form.Control
+                                    inline
+                                    as="textarea"
+                                    rows="3"
+                                    placeholder="Wpisz uwagi..."
+                                    defaultValue={langComments}
+                                    onBlur={e => handleBlur(this, e, "langComments")}
+                                    className="cv_correction_textarea languages"
+                                />
+                                <Form.Label>
+                                    <h3 className="correction_title">Dodatkowe uwagi</h3>
+                                </Form.Label>
+                                <Form.Control
+                                    inline
+                                    as="textarea"
+                                    rows="3"
+                                    placeholder="Wpisz uwagi..."
+                                    defaultValue={additionalComments}
+                                    onBlur={e => handleBlur(this, e, "additionalComments")}
+                                    className="cv_correction_textarea additional"
+                                />
+                            </Form.Group>
+                        </Card.Body>
+                    </Card>
                     {console.log(this.state)}
                 </Col>
-            </div>
+            </Row>
         )
     }
 }
