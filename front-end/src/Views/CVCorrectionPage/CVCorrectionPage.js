@@ -1,5 +1,8 @@
 import React from 'react';
-import {Col, Form} from "react-bootstrap";
+import {Button, Col, Form, Nav} from "react-bootstrap";
+import file from './response1.pdf'
+import { Document, Page, pdfjs } from 'react-pdf';
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 class CVCorrectionPage extends React.Component {
     constructor(props) {
@@ -10,7 +13,10 @@ class CVCorrectionPage extends React.Component {
             experienceComments: undefined,
             skillComments: undefined,
             langComments: undefined,
-            additionalComments: undefined
+            additionalComments: undefined,
+
+            documentCurrentPage: 1,
+            documentPageNumber: 1
         }
     };
 
@@ -20,14 +26,43 @@ class CVCorrectionPage extends React.Component {
         });
     };
 
+    handleDocumentLoad = ({ documentPageNumber }) => {
+        this.setState({
+            documentPageNumber
+        });
+    };
+
+    showNextPage = () => {
+      this.setState(state =>({
+          documentCurrentPage: state.documentCurrentPage + 1
+      }));
+    };
+
+    showPrevPage = () => {
+        this.setState(state =>({
+            documentCurrentPage: state.documentCurrentPage - 1
+        }));
+    };
+
     render() {
-        let { personalDataComments, educationComments, experienceComments, skillComments, langComments, additionalComments } = this.state;
-        let { handleBlur } = this;
+        let { personalDataComments, educationComments, experienceComments, skillComments, langComments, additionalComments, documentCurrentPage, documentPageNumber } = this.state;
+        let { handleBlur, handleDocumentLoad, showNextPage, showPrevPage } = this;
         return(
             <div className="correction_area">
                 {/* zamknąć wszystko w kartę? dwie? */}
+                <br/><br/><br/>
                <Col>
+                   <Nav>
+                       <Button onClick={showPrevPage}>Poprzednia</Button>
+                       <Button onClick={showNextPage}>Następna</Button>
+                   </Nav>
                    {/* tu będzie pdf https://stackoverflow.com/questions/2740297/display-adobe-pdf-inside-a-div */}
+                   <div>
+                       <Document file={file} onLoadSuccess={handleDocumentLoad}>
+                           <Page pageNumber={documentCurrentPage}/>
+                       </Document>
+                       <p> Strona {documentCurrentPage} z {documentPageNumber}</p>
+                   </div>
                </Col>
                 <Col>
                     <Form.Group controlId="correctionData">
