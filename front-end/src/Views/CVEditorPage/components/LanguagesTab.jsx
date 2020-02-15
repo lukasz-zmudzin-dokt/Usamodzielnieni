@@ -1,5 +1,5 @@
 import React from "react";
-import { Form } from "react-bootstrap";
+import { Form, Row, Col } from "react-bootstrap";
 import movie_5 from "../../../assets/movie_5.png";
 import { handleLanChange, handleLanLvlChange } from 'Views/CVEditorPage/functions/handlers.js';
 import CVEditorTab from 'Views/CVEditorPage/components/CvEditorTab';
@@ -35,27 +35,29 @@ class LanguagesTab extends React.Component {
                 onPrevClick={this.props.onPrevClick}
             >
                 <ItemsList getItemId={this.getLanguageId} getItemName={this.getLanguageName} getItem={this.getLanguage}>
-                    <Form.Group controlId="">
-                        <Form.Label>Język</Form.Label>
-                        <Form.Control
-                            id="languageName"
-                            type="text"
-                            placeholder="Język"
-                            value={this.state.newLanguage.name}
-                            onChange={e => handleLanChange(this, e)}
-                        />
-                    </Form.Group>
-                    <Form.Group controlId="">
-                        <Form.Label>Poziom</Form.Label>
-                        <Form.Control
-                            id="languageLevel"
-                            as="Select"
-                            onChange={e => handleLanLvlChange(this, e)}
-                            value={this.state.newLanguage.level}
-                        >
-                            {levels.map(lev => (<option value={lev}>{lev}</option>))}
-                        </Form.Control>
-                    </Form.Group>
+                    <Row>
+                        <Form.Group as={Col} controlId="">
+                            <Form.Label>Język</Form.Label>
+                            <Form.Control
+                                id="languageName"
+                                type="text"
+                                placeholder="Język"
+                                value={this.state.newLanguage.name}
+                                onChange={e => handleLanChange(this, e)}
+                            />
+                        </Form.Group>
+                        <Form.Group as={Col} controlId="">
+                            <Form.Label>Poziom</Form.Label>
+                            <Form.Control
+                                id="languageLevel"
+                                as="Select"
+                                onChange={e => handleLanLvlChange(this, e)}
+                                value={this.state.newLanguage.level}
+                            >
+                                {levels.map(lev => (<option value={lev}>{lev}</option>))}
+                            </Form.Control>
+                        </Form.Group>
+                    </Row>
                 </ItemsList>
             </CVEditorTab>
         )
