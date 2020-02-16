@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Card, Col, Form, Nav, Row} from "react-bootstrap";
+import {Button, Card, Col, Form, Nav} from "react-bootstrap";
 import file from './response1.pdf'
 import { Document, Page, pdfjs } from 'react-pdf';
 import './style.css'
@@ -28,41 +28,43 @@ class CVCorrectionPage extends React.Component {
         });
     };
 
-    handleDocumentLoad = ({ numPages }) => {
+    onDocumentLoadSuccess = ({ numPages }) => {
         this.setState({
             numPages
         });
     };
 
     showNextPage = () => {
-      this.setState(state =>({
-          documentCurrentPage: state.documentCurrentPage + 1
-      }));
+        if (this.state.documentCurrentPage < this.state.numPages)
+          this.setState(state =>({
+              documentCurrentPage: state.documentCurrentPage + 1
+          }));
     };
 
     showPrevPage = () => {
-        this.setState(state =>({
-            documentCurrentPage: state.documentCurrentPage - 1
-        }));
+        if (this.state.documentCurrentPage > 1)
+            this.setState(state =>({
+                documentCurrentPage: state.documentCurrentPage - 1
+            }));
     };
 
     render() {
-        let { personalDataComments, educationComments, experienceComments, skillComments, langComments, additionalComments, documentCurrentPage, documentPageNumber } = this.state;
-        let { handleBlur, handleDocumentLoad, showNextPage, showPrevPage } = this;
+        let { personalDataComments, educationComments, experienceComments, skillComments, langComments, additionalComments, documentCurrentPage, numPages } = this.state;
+        let { handleBlur, onDocumentLoadSuccess, showNextPage, showPrevPage } = this;
         return(
-            <Row className="correction_area">
+            <div className="correction_area">
                 {/* zamknąć wszystko w kartę? dwie? */}
                <Col className="pdf_viewer">
                    <Nav className="pdf_viewer_nav">
                        <Button className="button_nav prev" onClick={showPrevPage}>{"\< "}Poprzednia</Button>
+                       <p className="nav_pagination"> Strona {documentCurrentPage} z {numPages}</p>
                        <Button className="button_nav next" onClick={showNextPage}>Następna{" \>"}</Button>
                    </Nav>
                    {/* tu będzie pdf https://stackoverflow.com/questions/2740297/display-adobe-pdf-inside-a-div */}
                    <div>
-                       <Document file={file} onLoadSuccess={handleDocumentLoad}>
+                       <Document file={file} onLoadSuccess={onDocumentLoadSuccess}>
                            <Page className="pdf_doc_container" pageNumber={documentCurrentPage}/>
                        </Document>
-                       <p> Strona {documentCurrentPage} z {documentPageNumber}</p>
                    </div>
                </Col>
                 <Col className="cv_comment_area">
@@ -149,7 +151,7 @@ class CVCorrectionPage extends React.Component {
                     </Card>
                     {console.log(this.state)}
                 </Col>
-            </Row>
+            </div>
         )
     }
 }
