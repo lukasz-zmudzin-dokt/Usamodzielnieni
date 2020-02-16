@@ -26,7 +26,7 @@ const OfferForm = () => {
   const [positionName, setPositionName] = useState("");
   const [firmName, setFirmName] = useState("");
   const [location, setLocation] = useState("");
-  const [VS, setVS] = useState("");
+  const [VS, setVS] = useState("Dolnośląskie");
   const [description, setDescription] = useState("");
   const [date, setDate] = useState("");
 

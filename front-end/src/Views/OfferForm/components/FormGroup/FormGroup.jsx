@@ -25,7 +25,7 @@ const FormGroup = ({ header, setVal, array, type, incorrect }) => {
           .sort()
           .map(val => <option key={val}>{val}</option>);
         return (
-          <Form.Control as={type} val={val} onChange={setInput}>
+          <Form.Control as={type} val={val} onChange={setInput} required>
             {options}
           </Form.Control>
         );
