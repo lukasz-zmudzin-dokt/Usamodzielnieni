@@ -1,6 +1,7 @@
 import React from 'react';
-import {Button, Card, Col, Form, Nav} from "react-bootstrap";
+import {Button, ButtonToolbar, Card, Col, Form, Nav} from "react-bootstrap";
 import file from './response1.pdf'
+import { LinkContainer } from 'react-router-bootstrap'
 import { Document, Page, pdfjs } from 'react-pdf';
 import './style.css'
 
@@ -48,21 +49,25 @@ class CVCorrectionPage extends React.Component {
             }));
     };
 
+    sendReview = () => {
+        console.log("czekamy na endpointa");
+        console.log(this.state);
+    };
+
     render() {
         let { personalDataComments, educationComments, experienceComments, skillComments, langComments, additionalComments, documentCurrentPage, numPages } = this.state;
-        let { handleBlur, onDocumentLoadSuccess, showNextPage, showPrevPage } = this;
+        let { handleBlur, onDocumentLoadSuccess, showNextPage, showPrevPage, sendReview } = this;
         return(
             <div className="correction_area">
-                {/* zamknąć wszystko w kartę? dwie? */}
                <Col className="pdf_viewer">
                    <Nav className="pdf_viewer_nav">
                        <Button className="button_nav prev" onClick={showPrevPage}>{"\< "}Poprzednia</Button>
-                       <p className="nav_pagination"> Strona {documentCurrentPage} z {numPages}</p>
+                       {window.innerWidth >= 768 ? (<p className="nav_pagination"> Strona {documentCurrentPage} z {numPages}</p>) : ""}
+
                        <Button className="button_nav next" onClick={showNextPage}>Następna{" \>"}</Button>
                    </Nav>
-                   {/* tu będzie pdf https://stackoverflow.com/questions/2740297/display-adobe-pdf-inside-a-div */}
                    <div>
-                       <Document file={file} onLoadSuccess={onDocumentLoadSuccess}>
+                       <Document className="pdf_doc" file={file} onLoadSuccess={onDocumentLoadSuccess}>
                            <Page className="pdf_doc_container" pageNumber={documentCurrentPage}/>
                        </Document>
                    </div>
@@ -147,6 +152,12 @@ class CVCorrectionPage extends React.Component {
                                     className="cv_correction_textarea additional"
                                 />
                             </Form.Group>
+                            <ButtonToolbar className="comment_mgmt_toolbar">
+                                <Button className="comment_button send" variant="success" onClick={sendReview}>Wyślij uwagi</Button>
+                                <LinkContainer to="/user">
+                                    <Button className="comment_button cancel" variant="danger">Odrzuć</Button>
+                                </LinkContainer>
+                            </ButtonToolbar>
                         </Card.Body>
                     </Card>
                     {console.log(this.state)}
