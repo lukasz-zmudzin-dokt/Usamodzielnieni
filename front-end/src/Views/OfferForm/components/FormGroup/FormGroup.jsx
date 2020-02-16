@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Form } from "react-bootstrap";
 import DatePicker from "react-datepicker";
+import PropTypes from "prop-types";
 import "Views/OfferForm/style.css";
 
 const FormGroup = ({ header, setVal, array, type, incorrect }) => {
@@ -20,7 +21,9 @@ const FormGroup = ({ header, setVal, array, type, incorrect }) => {
   const setFormType = () => {
     switch (type) {
       case "select":
-        const options = array.sort().map(val => <option>{val}</option>);
+        const options = array
+          .sort()
+          .map(val => <option key={val}>{val}</option>);
         return (
           <Form.Control as={type} val={val} onChange={setInput}>
             {options}
@@ -31,7 +34,6 @@ const FormGroup = ({ header, setVal, array, type, incorrect }) => {
           <Form.Control
             as={type}
             onChange={setInput}
-            controlId={header}
             required
             className="offerForm__textarea"
           />
@@ -77,6 +79,14 @@ const FormGroup = ({ header, setVal, array, type, incorrect }) => {
       ) : null}
     </Form.Group>
   );
+};
+
+FormGroup.propTypes = {
+  header: PropTypes.string.isRequired,
+  setVal: PropTypes.func.isRequired,
+  array: PropTypes.array,
+  type: PropTypes.string,
+  incorrect: PropTypes.string
 };
 
 export default FormGroup;

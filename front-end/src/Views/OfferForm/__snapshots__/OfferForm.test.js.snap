@@ -1,0 +1,248 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  className="offerForm container"
+>
+  <div
+    className="offerForm__card card"
+  >
+    <h2
+      className="offerForm__header card-header"
+    >
+      Dodaj ofertę
+    </h2>
+    <div
+      className="card-body"
+    >
+      <form
+        className="offerForm__form"
+        onSubmit={[Function]}
+      >
+        <div
+          className="offerForm__wrapper"
+        >
+          <div
+            className="form-group"
+          >
+            <label
+              className="form-label"
+              htmlFor="Nazwa stanowiska"
+            >
+              Nazwa stanowiska
+            </label>
+            <input
+              className="form-control"
+              id="Nazwa stanowiska"
+              onChange={[Function]}
+              placeholder="Nazwa stanowiska"
+              required={true}
+              type="text"
+              value=""
+            />
+            <div
+              className="invalid-feedback"
+            >
+              Podaj nazwę stanowiska
+            </div>
+          </div>
+          <div
+            className="form-group"
+          >
+            <label
+              className="form-label"
+              htmlFor="Nazwa firmy"
+            >
+              Nazwa firmy
+            </label>
+            <input
+              className="form-control"
+              id="Nazwa firmy"
+              onChange={[Function]}
+              placeholder="Nazwa firmy"
+              required={true}
+              type="text"
+              value=""
+            />
+            <div
+              className="invalid-feedback"
+            >
+              Podaj nazwę firmy
+            </div>
+          </div>
+          <div
+            className="form-group"
+          >
+            <label
+              className="form-label"
+              htmlFor="Lokalizacja"
+            >
+              Lokalizacja
+            </label>
+            <input
+              className="form-control"
+              id="Lokalizacja"
+              onChange={[Function]}
+              placeholder="Lokalizacja"
+              required={true}
+              type="text"
+              value=""
+            />
+            <div
+              className="invalid-feedback"
+            >
+              Podaj lokalizację
+            </div>
+          </div>
+          <div
+            className="form-group"
+          >
+            <label
+              className="form-label"
+              htmlFor="Województwo"
+            >
+              Województwo
+            </label>
+            <select
+              className="form-control"
+              id="Województwo"
+              onChange={[Function]}
+              val=""
+            >
+              <option>
+                Dolnośląskie
+              </option>
+              <option>
+                Kujawsko-pomorskie
+              </option>
+              <option>
+                Lubelskie
+              </option>
+              <option>
+                Lubuskie
+              </option>
+              <option>
+                Mazowieckie
+              </option>
+              <option>
+                Małopolskie
+              </option>
+              <option>
+                Opolskie
+              </option>
+              <option>
+                Podkarpackie
+              </option>
+              <option>
+                Podlaskie
+              </option>
+              <option>
+                Pomorskie
+              </option>
+              <option>
+                Warmińsko-Mazurskie
+              </option>
+              <option>
+                Wielkopolskie
+              </option>
+              <option>
+                Zachodnio-pomorskie
+              </option>
+              <option>
+                Łódzkie
+              </option>
+              <option>
+                Śląskie
+              </option>
+              <option>
+                Świętokrzystkie
+              </option>
+            </select>
+          </div>
+        </div>
+        <div
+          className="offerForm__wrapper"
+        >
+          <div
+            className="offerForm__textContainer form-group"
+          >
+            <label
+              className="form-label"
+              htmlFor="Opis stanowiska"
+            >
+              Opis stanowiska
+            </label>
+            <textarea
+              className="offerForm__textarea form-control"
+              id="Opis stanowiska"
+              onChange={[Function]}
+              required={true}
+            />
+            <div
+              className="invalid-feedback"
+            >
+              Podaj opis
+            </div>
+          </div>
+          <div
+            className="form-group"
+          >
+            <label
+              className="form-label"
+              htmlFor="Data ważności"
+            >
+              Data ważności
+            </label>
+            <div
+              className="align-items-center form-row"
+            >
+              <p
+                className="mr-2 mb-0"
+              >
+                Do:
+              </p>
+              <div
+                className="react-datepicker-wrapper"
+              >
+                <div
+                  className="react-datepicker__input-container"
+                >
+                  <input
+                    className="form-control"
+                    disabled={false}
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    onClick={[Function]}
+                    onFocus={[Function]}
+                    onKeyDown={[Function]}
+                    readOnly={false}
+                    required={true}
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              className="invalid-feedback"
+            >
+              Podaj datę ważności
+            </div>
+          </div>
+        </div>
+        <div
+          className="w-100 justify-content-center align-items-center m-0 row"
+        >
+          <button
+            className="pl-5 pr-5 pt-2 pb-2 btn btn-secondary"
+            disabled={false}
+            type="submit"
+          >
+            Dodaj
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+`;

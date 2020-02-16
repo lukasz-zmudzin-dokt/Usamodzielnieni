@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  className="form-group"
+>
+  <label
+    className="form-label"
+    htmlFor="Example"
+  >
+    Example
+  </label>
+  <input
+    className="form-control"
+    id="Example"
+    onChange={[Function]}
+    placeholder="Example"
+    required={true}
+    type="text"
+    value=""
+  />
+</div>
+`;
