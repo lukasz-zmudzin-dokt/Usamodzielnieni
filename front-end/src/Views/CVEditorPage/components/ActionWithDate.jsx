@@ -39,15 +39,9 @@ class ActionWithDate extends React.Component {
       
         return `${action.description} od: ${dateToString(action.startTime)} do: ${dateToString(action.endTime)} (${action.place})`
     };
-    onBlur = (e, key) => {
-        const {value} = e.target;
-        this.setState(prevState => ({
-            newAction: {
-                ...prevState.newAction,
-                [key]: value
-            }
-        }))
-    }
+    onChange = (e, key) => this.setState(prevState => ({
+        newAction: { ...prevState.newAction, [key]: e.target.value }
+    }))
 
     render() {
         return (
@@ -83,7 +77,7 @@ class ActionWithDate extends React.Component {
                         type="text"
                         //defaultValue={this.state.fullName}
                         placeholder="Nazwa szkoły/miejsca pracy"
-                        onBlur={e => this.onBlur(e, 'place')}
+                        onChange={e => this.onChange(e, 'place')}
                     />
                 </Form.Group>
                 <Form.Group controlId="">
@@ -93,7 +87,7 @@ class ActionWithDate extends React.Component {
                         type="text"
                         //defaultValue={this.state.fullName}
                         placeholder="Profil/stanowisko ..."
-                        onBlur={e => this.onBlur(e, 'description')}
+                        onChange={e => this.onChange(e, 'description')}
                     />
                 </Form.Group>
             </ItemsList>

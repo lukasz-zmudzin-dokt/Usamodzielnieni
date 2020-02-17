@@ -24,10 +24,9 @@ class SkillsTab extends React.Component {
     getSkillId = (skill) => skill.name;
     getSkillName = (skill) => skill.name;
 
-    onNameChange = (e) => {
-        const name = e.target.value;
-        this.setState(prevState => ({ newSkill: { ...prevState, name } }))
-    }
+    onNameChange = (e) => this.setState(prevState => ({
+        newSkill: { ...prevState, name: e.target.value }
+    }))
 
     render() {
         return (

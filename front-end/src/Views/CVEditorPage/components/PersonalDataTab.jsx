@@ -3,7 +3,6 @@ import { Form, Col, Row } from "react-bootstrap";
 import movie_1 from "../../../assets/movie_1.png";
 import DatePicker, { registerLocale } from "react-datepicker";
 import polish from "date-fns/locale/pl";
-import { handleBlur, handleBirthDateChange } from 'Views/CVEditorPage/functions/handlers.js';
 import CVEditorTab from 'Views/CVEditorPage/components/CvEditorTab';
 
 registerLocale("pl", polish);
@@ -19,6 +18,8 @@ class PersonalDataTab extends React.Component {
         }
     }
 
+    onChange = (e) => this.setState({ [e.target.name]: e.target.value })
+
     render() {
         return (
             <CVEditorTab
@@ -32,12 +33,13 @@ class PersonalDataTab extends React.Component {
                             Imię i nazwisko:
                         </Form.Label>
                         <Form.Control
+                            name="fullName"
                             inline
                             type="text"
                             required
                             defaultValue={this.state.fullName}
                             placeholder="Jan Przykładowy"
-                            onBlur={e => handleBlur(this, e, "fullName")}
+                            onChange={this.onChange}
                         />
                     </Form.Group>
                     <Form.Group as={Col} controlId="">
@@ -47,9 +49,9 @@ class PersonalDataTab extends React.Component {
                         <DatePicker
                             className="form-control"
                             locale="pl"
-                            dateFormat=" dd.MM.yyyy"
+                            dateFormat="dd.MM.yyyy"
                             selected={this.state.birthDate}
-                            onChange={() => handleBirthDateChange(this)}
+                            onChange={birthDate => this.setState({ birthDate })}
                             withPortal
                             peekNextMonth
                             showMonthDropdown
@@ -64,10 +66,11 @@ class PersonalDataTab extends React.Component {
                             Numer telefonu:
                         </Form.Label>
                         <Form.Control
+                            name="phoneNumber"
                             type="text"
                             defaultValue={this.state.phoneNumber}
                             placeholder="+48123456789"
-                            onBlur={e => handleBlur(this, e, "phoneNumber")}
+                            onChange={this.onChange}
                         />
                     </Form.Group>
                     <Form.Group as={Col} controlId="">
@@ -75,11 +78,12 @@ class PersonalDataTab extends React.Component {
                             Adres email:
                         </Form.Label>
                         <Form.Control
+                            name="email"
                             type="email"
                             required
                             defaultValue={this.state.email}
                             placeholder="example@domain.com"
-                            onBlur={e => handleBlur(this, e, "email")}
+                            onChange={this.onChange}
                         />
                     </Form.Group>
                 </Row>

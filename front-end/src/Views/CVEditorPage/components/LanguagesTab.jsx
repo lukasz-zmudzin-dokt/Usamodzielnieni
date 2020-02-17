@@ -1,7 +1,6 @@
 import React from "react";
 import { Form, Row, Col } from "react-bootstrap";
 import movie_5 from "../../../assets/movie_5.png";
-import { handleLanChange, handleLanLvlChange } from 'Views/CVEditorPage/functions/handlers.js';
 import CVEditorTab from 'Views/CVEditorPage/components/CvEditorTab';
 import ItemsList from 'Views/CVEditorPage/components/ItemsList';
 
@@ -26,6 +25,19 @@ class LanguagesTab extends React.Component {
     getLanguageId = (lang) => `${lang.name}_${lang.level}`;
     getLanguageName = (lang) => `${lang.name} - ${lang.level}`;
 
+
+    handleNameChange = (e) => this.setState(prevState => ({
+        newLanguage: { ...prevState.newLanguage, name: e.target.value }
+    }));
+
+    handleLevelChange = async (e) => {
+        const level = await e.target.value;
+
+        this.setState(prevState => ({
+            newLanguage: { ...prevState.newLanguage, level }
+        }));
+    };
+
     render() {
         const levels = ['podstawowy', 'komunikatywny', 'biegły'];
         return (
@@ -43,7 +55,7 @@ class LanguagesTab extends React.Component {
                                 type="text"
                                 placeholder="Język"
                                 value={this.state.newLanguage.name}
-                                onChange={e => handleLanChange(this, e)}
+                                onChange={this.handleNameChange}
                             />
                         </Form.Group>
                         <Form.Group as={Col} controlId="">
@@ -51,7 +63,7 @@ class LanguagesTab extends React.Component {
                             <Form.Control
                                 id="languageLevel"
                                 as="Select"
-                                onChange={e => handleLanLvlChange(this, e)}
+                                onChange={this.handleLevelChange}
                                 value={this.state.newLanguage.level}
                             >
                                 {levels.map(lev => (<option value={lev}>{lev}</option>))}

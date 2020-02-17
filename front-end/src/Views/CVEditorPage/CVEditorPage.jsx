@@ -9,7 +9,8 @@ import LanguagesTab from 'Views/CVEditorPage/components/LanguagesTab';
 import SkillsTab from 'Views/CVEditorPage/components/SkillsTab';
 import { connect } from 'react-redux'
 
-import { handleCVSubmit } from 'Views/CVEditorPage/functions/handlers.js';
+import { sendData } from "Views/CVEditorPage/functions/other.js";
+import { createCVObject } from "Views/CVEditorPage/functions/createCVObject.js";
 
 
 class CVEditorPage extends React.Component {
@@ -65,13 +66,18 @@ class CVEditorPage extends React.Component {
         }
     }
 
+    handleCVSubmit = (e) => {
+      sendData(createCVObject(this, e));
+      e.preventDefault();
+    };
+
     render() {
         return (
             <Container>
                 <Card>
                     <Card.Header as="h2">Kreator CV</Card.Header>
                     <Card.Body>
-                        <Form id="cv_data" onSubmit={e => handleCVSubmit(this, e)}>
+                        <Form id="cv_data" onSubmit={this.handleCVSubmit}>
                             <Tabs 
                                 transition={false}
                                 activeKey={this.state.formTab}
