@@ -5,6 +5,14 @@ import Form from "react-bootstrap/Form";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { setUserToken } from "redux/actions";
+import { createMessage } from "./functions/createMessage";
+import { sendData } from "./functions/sendData";
+import { onChange } from "./functions/handlers";
+import { setRedirect } from "./functions/handlers";
+import { setCookie } from "./functions/handlers";
+import { handleCheck } from "./functions/handlers";
+import { handleSubmit } from "./functions/handlers";
+import { renderRedirect } from "./functions/handlers";
 
 import "Views/LoginPage/style.css";
 import bgImage from "../../assets/fot..png";
@@ -23,123 +31,11 @@ class LoginPage extends React.Component {
     token: this.props.token || ""
   };
 
-  createMessage = status => {
-    if (status === 400) {
-      this.setState({
-        message: "Niepoprawny login lub hasło"
-      });
-    } else {
-      this.setState({
-        message: "Nieznany błąd proszę spróbować później"
-      });
-    }
-  };
-
-  sendData = object => {
-    const { username, password } = this.state;
-
-    const url = "https://usamo-back.herokuapp.com/account/login/";
-    fetch(url, {
-      method: "POST",
-      body: JSON.stringify({
-        username,
-        password
-      }),
-      headers: {
-        "Content-Type": "application/json",
-        Origin: null
-      }
-    }).then(res => {
-      console.log(res);
-      if (res.status === 200) {
-        res.json().then(responseValue => {
-          const { token } = responseValue;
-          this.props.setUserToken(token);
-          this.setState({ token });
-          this.setRedirect();
-          cookies.set(`token`, token, {
-            path: "/"
-          });
-        });
-      } else {
-        this.setState({
-          validated: false,
-          incorrect: true,
-          username: "",
-          password: "",
-          message: "Coś poszło nie tak"
-        });
-      }
-    });
-  };
-
-  onChange = e => {
-    const type = e.target.type === "text" ? "username" : e.target.type;
-
-    const value = e.target.value;
-    this.setState({
-      [type]: value
-    });
-  };
-
-  setRedirect = () => {
-    this.setState({
-      redirect: true
-    });
-  };
-
-  setCookie = token => {
-    const current = new Date();
-    const nextYear = new Date();
-
-    nextYear.setFullYear(current.getFullYear() + 1); // ciasteczko na rok
-    console.log(token);
-    cookies.set(`token`, token, {
-      path: "/",
-      expires: nextYear
-    });
-  };
-
-  handleCheck = e => {
-    this.setState({
-      cookieVal: e.target.checked
-    });
-  };
-
-  handleSubmit = event => {
-    const form = event.currentTarget;
-    const { password, username } = this.state;
-
-    event.preventDefault();
-
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-    } else {
-      // if (cookieVal) {
-      //   console.log("dodaje!");
-      //   setCookie();
-      // }
-      this.sendData();
-      console.log(password, username); // login i hasło użytkownika
-    }
-
-    this.setState({
-      validated: true
-    });
-  };
-
-  renderRedirect = () => {
-    if (this.state.redirect) {
-      return <Redirect to="/user" />;
-    }
-  };
-
   componentDidMount() {
     if (cookies.get("token")) {
       this.setRedirect();
     }
-  }
+  };
 
   render() {
     const {
@@ -150,7 +46,6 @@ class LoginPage extends React.Component {
       incorrect,
       message
     } = this.state;
-    const { onChange, handleSubmit, handleCheck } = this;
 
     return (
       <Container className="loginPage">
@@ -165,7 +60,7 @@ class LoginPage extends React.Component {
             <Form
               noValidate
               validated={validated}
-              onSubmit={handleSubmit}
+              onSubmit={e => handleSubmit(this, e)}
               className="primary"
             >
               <Form.Group controlId="formGroupUsername">
@@ -174,13 +69,13 @@ class LoginPage extends React.Component {
                   placeholder="Login"
                   required
                   value={username}
-                  onChange={onChange}
+                  onChange={e => onChange(this, e)}
                   className="loginPage__input"
                   minLength="6"
                 />
                 <Form.Control.Feedback type="invalid">
                   Podaj właściwy login
-                </Form.Control.Feedback>
+    </Form.Control.Feedback>
               </Form.Group>
               <Form.Group controlId="formGroupPassword">
                 <Form.Control
@@ -188,19 +83,19 @@ class LoginPage extends React.Component {
                   autoComplete="on"
                   placeholder="Hasło"
                   value={password}
-                  onChange={onChange}
+                  onChange={e => onChange(this, e)}
                   required
                   minLength="6"
                 />
                 <Form.Control.Feedback type="invalid">
                   Podaj właściwe hasło
-                </Form.Control.Feedback>
+    </Form.Control.Feedback>
               </Form.Group>
               <Form.Group controlId="formBasicCheckbox">
                 <Form.Check
                   type="checkbox"
                   checked={cookieVal}
-                  onChange={handleCheck}
+                  onChange={e => handleCheck(this, e)}
                   label="Zapamiętaj mnie"
                 />
               </Form.Group>
@@ -211,7 +106,7 @@ class LoginPage extends React.Component {
                 type="submit"
               >
                 Zaloguj
-              </Button>
+  </Button>
             </Form>
             {incorrect ? (
               <div className="loginPage__messageFail">
@@ -220,7 +115,7 @@ class LoginPage extends React.Component {
             ) : null}
             <div className="loginPage__links">
               <Link to="/newAccount">Załóż konto!</Link>
-              {this.renderRedirect()}
+              {renderRedirect(this)}
               {/* <Link to="/newPassword">Zapomniałeś hasła?</Link> */}
             </div>
           </Card.Body>
