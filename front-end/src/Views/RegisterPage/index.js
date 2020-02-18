@@ -20,17 +20,6 @@ class RegisterPage extends React.Component {
     super(props);
     this.state = {
       account_type: "Podopiecznym",
-      email: "",
-      first_name: "",
-      last_name: "",
-      username: "",
-      phone_number: "",
-      name_of_place: "",
-      street: "",
-      city: "",
-      city_code: "",
-      password: "",
-      passwordR: "",
       areEqual: true,
       validated: false,
       redirect: false
@@ -44,12 +33,7 @@ class RegisterPage extends React.Component {
   };
 
   render() {
-    const {
-      validated,
-      incorrect,
-      message,
-      correct,
-    } = this.state;
+    const { validated, incorrect, message, correct } = this.state;
     const { handleSubmit, selectType } = this;
     const types = ['Podopiecznym', 'Pracodawcą'];
     return (
@@ -62,15 +46,17 @@ class RegisterPage extends React.Component {
             Rejestracja
           </Card.Header>
           <Card.Body className="loginPage__body">
-            <p>Jestem:</p>
-            <Form.Control
+            <div className="register_account_type">
+              <p>Jestem:</p>
+              <Form.Control
                 className="register_radio_type"
                 as="Select"
                 onChange={e => selectType(e)}
                 defaultValue={this.state.account_type}
-            >
-              {types.map(type => (<option value={type}>{type}</option>))}
-            </Form.Control>
+              >
+                {types.map(type => (<option value={type}>{type}</option>))}
+              </Form.Control>
+            </div>
             <Form
               noValidate
               validated={validated}
