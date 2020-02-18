@@ -26,9 +26,13 @@ class LanguagesTab extends React.Component {
     getLanguageName = (lang) => `${lang.name} - ${lang.level}`;
 
 
-    handleNameChange = (e) => this.setState(prevState => ({
-        newLanguage: { ...prevState.newLanguage, name: e.target.value }
-    }));
+    handleNameChange = (e) => {
+        const name = e.target.value;
+
+        this.setState(prevState => ({
+            newLanguage: { ...prevState.newLanguage, name }
+        }));
+    }
 
     handleLevelChange = async (e) => {
         const level = await e.target.value;
@@ -46,7 +50,10 @@ class LanguagesTab extends React.Component {
                 movie={movie_5}
                 onPrevClick={this.props.onPrevClick}
             >
-                <ItemsList getItemId={this.getLanguageId} getItemName={this.getLanguageName} getItem={this.getLanguage}>
+                <ItemsList
+                    getItemId={this.getLanguageId} getItemName={this.getLanguageName} getItem={this.getLanguage}
+                    data={this.props.data} onChange={this.props.onChange}
+                >
                     <Row>
                         <Form.Group as={Col} controlId="">
                             <Form.Label>Język</Form.Label>

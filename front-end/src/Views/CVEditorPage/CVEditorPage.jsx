@@ -18,36 +18,15 @@ class CVEditorPage extends React.Component {
         super(props);
         this.state = {
             formTab: "personalData",
-            token: this.props.token || undefined
+            token: this.props.token || undefined,
+
+            personalData: null,
+            education: null,
+            workExperience: null,
+            skills: null,
+            languages: null
         };
-        this.tabs = [
-            {
-                id: 'personalData',
-                name: 'Dane osobowe',
-                component: ( <PersonalDataTab onNextClick={this.onNextClick} /> )
-            },
-            {
-                id: 'education',
-                name: 'Edukacja',
-                component: ( <EducationTab onPrevClick={this.onPrevClick} onNextClick={this.onNextClick} /> )
-            },
-            {
-                id: 'workExperience',
-                name: 'Doświadczenie zawodowe',
-                component: ( <WorkExperienceTab onPrevClick={this.onPrevClick} onNextClick={this.onNextClick} /> )
-            },
-            {
-                id: 'skills',
-                name: 'Umiejętności',
-                component: ( <SkillsTab onPrevClick={this.onPrevClick} onNextClick={this.onNextClick} /> )
-            },
-            {
-                id: 'languages',
-                name: 'Języki obce',
-                component: ( <LanguagesTab onPrevClick={this.onPrevClick} /> )
-            }
-        ];
-        
+        this.tabs = [];
     }
 
     onPrevClick = () => {
@@ -67,11 +46,64 @@ class CVEditorPage extends React.Component {
     }
 
     handleCVSubmit = (e) => {
-      sendData(createCVObject(this, e));
+        console.log(this.tabs);
+    //   sendData(createCVObject(this, e));
       e.preventDefault();
     };
 
+    getTabs() {
+        return [
+            {
+                id: 'personalData',
+                name: 'Dane osobowe',
+                component: (
+                    <PersonalDataTab
+                        data={this.state.personalData} onChange={personalData => this.setState({ personalData })}
+                        onNextClick={this.onNextClick} />
+                )
+            },
+            {
+                id: 'education',
+                name: 'Edukacja',
+                component: (
+                    <EducationTab
+                        data={this.state.education} onChange={education => this.setState({ education })}
+                        onPrevClick={this.onPrevClick} onNextClick={this.onNextClick} />
+                )
+            },
+            {
+                id: 'workExperience',
+                name: 'Doświadczenie zawodowe',
+                component: (
+                    <WorkExperienceTab
+                        data={this.state.workExperience} onChange={workExperience => this.setState({ workExperience })}
+                        onPrevClick={this.onPrevClick} onNextClick={this.onNextClick} />
+                )
+            },
+            {
+                id: 'skills',
+                name: 'Umiejętności',
+                component: (
+                    <SkillsTab
+                        data={this.state.skills} onChange={skills => this.setState({ skills })}
+                        onPrevClick={this.onPrevClick} onNextClick={this.onNextClick} />
+                )
+            },
+            {
+                id: 'languages',
+                name: 'Języki obce',
+                component: (
+                    <LanguagesTab
+                        data={this.state.languages} onChange={languages => this.setState({ languages })}
+                        onPrevClick={this.onPrevClick} />
+                )
+            }
+        ]
+    }
+
     render() {
+        this.tabs = this.getTabs();
+
         return (
             <Container>
                 <Card>

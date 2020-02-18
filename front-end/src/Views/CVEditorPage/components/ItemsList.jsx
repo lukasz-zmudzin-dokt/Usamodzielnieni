@@ -5,38 +5,40 @@ import Items from 'Views/CVEditorPage/components/Items';
 class ItemsList extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            items: []
-        }
+
+        this.props.onChange([]);
     }
 
     addItem = (e) => {
         const item = this.props.getItem();
-        this.setState(prevState => ({
-            items: [...prevState.items, item]
-        }))
+
+        this.props.onChange([...this.props.data, item])
     }
 
     cutItem = (e, i) => {
-        this.setState(prevState => ({
-            items: prevState.items.filter((_, index) => index !== i)
-        }));
+        this.props.onChange([
+            this.props.data.filter((_, index) => index !== i)
+        ]);
     }
     
     render() {
+        const { data, getItemId, getItemName, children } = this.props;
+
+        if (data === null) return null;
+
         return (
             <div>
-                {this.state.items.length > 0 &&
+                {data.length > 0 &&
                 <Form.Group controlId="">
                     <Items 
-                        items={this.state.items}
+                        items={data}
                         onCutClick={(e, i) => this.cutItem(e, i)}
-                        getItemId={this.props.getItemId}
-                        getItemName={this.props.getItemName}
+                        getItemId={getItemId}
+                        getItemName={getItemName}
                     />
                 </Form.Group>
                 }
-                {this.props.children}
+                {children}
                 <Form.Group controlId="">
                     <Button variant="success" onClick={e => this.addItem(e)}>+ Dodaj</Button>
                 </Form.Group>

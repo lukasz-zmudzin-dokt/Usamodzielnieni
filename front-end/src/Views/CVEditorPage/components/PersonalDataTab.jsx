@@ -10,17 +10,26 @@ registerLocale("pl", polish);
 class PersonalDataTab extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
+        
+        this.props.onChange({
             fullName: "",
             birthDate: new Date(),
             phoneNumber: "",
             email: ""
-        }
+        })
     }
 
-    onChange = (e) => this.setState({ [e.target.name]: e.target.value })
+    onChange = (e) => {
+        const { name, value } = e.target;
+
+        this.props.onChange({ ...this.props.data, [name]: value })
+    } 
 
     render() {
+        const { data } = this.props;
+
+        if (data === null) return null;
+
         return (
             <CVEditorTab
                 title="Dane osobowe"
@@ -37,7 +46,7 @@ class PersonalDataTab extends React.Component {
                             inline
                             type="text"
                             required
-                            defaultValue={this.state.fullName}
+                            defaultValue={data.fullName}
                             placeholder="Jan Przykładowy"
                             onChange={this.onChange}
                         />
@@ -50,8 +59,8 @@ class PersonalDataTab extends React.Component {
                             className="form-control"
                             locale="pl"
                             dateFormat="dd.MM.yyyy"
-                            selected={this.state.birthDate}
-                            onChange={birthDate => this.setState({ birthDate })}
+                            selected={data.birthDate}
+                            onChange={birthDate => this.props.onChange({ ...this.props.data, birthDate })}
                             withPortal
                             peekNextMonth
                             showMonthDropdown
@@ -68,7 +77,7 @@ class PersonalDataTab extends React.Component {
                         <Form.Control
                             name="phoneNumber"
                             type="text"
-                            defaultValue={this.state.phoneNumber}
+                            defaultValue={data.phoneNumber}
                             placeholder="+48123456789"
                             onChange={this.onChange}
                         />
@@ -81,7 +90,7 @@ class PersonalDataTab extends React.Component {
                             name="email"
                             type="email"
                             required
-                            defaultValue={this.state.email}
+                            defaultValue={data.email}
                             placeholder="example@domain.com"
                             onChange={this.onChange}
                         />

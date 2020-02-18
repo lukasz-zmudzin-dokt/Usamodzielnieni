@@ -24,9 +24,13 @@ class SkillsTab extends React.Component {
     getSkillId = (skill) => skill.name;
     getSkillName = (skill) => skill.name;
 
-    onNameChange = (e) => this.setState(prevState => ({
-        newSkill: { ...prevState, name: e.target.value }
-    }))
+    onNameChange = (e) => {
+        const name = e.target.value;
+
+        this.setState(prevState => ({
+            newSkill: { ...prevState, name }
+        }))
+    }
 
     render() {
         return (
@@ -36,7 +40,10 @@ class SkillsTab extends React.Component {
                 onPrevClick={this.props.onPrevClick}
                 onNextClick={this.props.onNextClick}
             >
-                <ItemsList getItemId={this.getSkillId} getItemName={this.getSkillName} getItem={this.getSkill}>
+                <ItemsList
+                    getItemId={this.getSkillId} getItemName={this.getSkillName} getItem={this.getSkill}
+                    data={this.props.data} onChange={this.props.onChange}
+                >
                     <Form.Group controlId="">
                         <Form.Label>Umiejętność</Form.Label>
                         <Form.Control

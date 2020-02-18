@@ -39,13 +39,19 @@ class ActionWithDate extends React.Component {
       
         return `${action.description} od: ${dateToString(action.startTime)} do: ${dateToString(action.endTime)} (${action.place})`
     };
-    onChange = (e, key) => this.setState(prevState => ({
-        newAction: { ...prevState.newAction, [key]: e.target.value }
-    }))
+    onChange = (e, key) => {
+        const { value } = e.target;
+        this.setState(prevState => ({
+            newAction: { ...prevState.newAction, [key]: value }
+        }))
+    }
 
     render() {
         return (
-            <ItemsList getItemId={this.getActionId} getItemName={this.getActionName} getItem={this.getAction}>
+            <ItemsList
+                getItemId={this.getActionId} getItemName={this.getActionName} getItem={this.getAction}
+                data={this.props.data} onChange={this.props.onChange}
+            >
                 <Row>
                     <Form.Group as={Col} controlId="">
                         <Form.Label>Od:</Form.Label>
