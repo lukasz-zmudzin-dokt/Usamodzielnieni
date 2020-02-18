@@ -10,9 +10,10 @@ registerLocale("pl", polish);
 class PersonalDataTab extends React.Component {
     constructor(props) {
         super(props);
-        
+
         this.props.onChange({
-            fullName: "",
+            firstName: "",
+            lastName: "",
             birthDate: new Date(),
             phoneNumber: "",
             email: ""
@@ -39,18 +40,34 @@ class PersonalDataTab extends React.Component {
                 <Row>
                     <Form.Group as={Col} controlId="">
                         <Form.Label>
-                            Imię i nazwisko:
+                            Imię:
                         </Form.Label>
                         <Form.Control
-                            name="fullName"
+                            name="firstName"
                             inline
                             type="text"
                             required
-                            defaultValue={data.fullName}
-                            placeholder="Jan Przykładowy"
+                            defaultValue={data.firstName}
+                            placeholder="Jan"
                             onChange={this.onChange}
                         />
                     </Form.Group>
+                    <Form.Group as={Col} controlId="">
+                        <Form.Label>
+                            Nazwisko:
+                        </Form.Label>
+                        <Form.Control
+                            name="lastName"
+                            inline
+                            type="text"
+                            required
+                            defaultValue={data.lastName}
+                            placeholder="Przykładowy"
+                            onChange={this.onChange}
+                        />
+                    </Form.Group>
+                </Row>
+                <Row>
                     <Form.Group as={Col} controlId="">
                         <Form.Label>
                             Data urodzenia:
@@ -68,8 +85,6 @@ class PersonalDataTab extends React.Component {
                             dropdownMode="select"
                         />
                     </Form.Group>
-                </Row>
-                <Row>
                     <Form.Group as={Col} controlId="">
                         <Form.Label>
                             Numer telefonu:
@@ -82,7 +97,9 @@ class PersonalDataTab extends React.Component {
                             onChange={this.onChange}
                         />
                     </Form.Group>
-                    <Form.Group as={Col} controlId="">
+                </Row>
+                <Row>
+                    <Form.Group as={Col} sm="6" controlId="">
                         <Form.Label>
                             Adres email:
                         </Form.Label>

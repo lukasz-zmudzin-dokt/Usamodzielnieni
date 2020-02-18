@@ -45,10 +45,17 @@ class CVEditorPage extends React.Component {
         }
     }
 
-    handleCVSubmit = (e) => {
-        console.log(this.tabs);
-    //   sendData(createCVObject(this, e));
-      e.preventDefault();
+    handleCVSubmit = async (e) => {
+        e.preventDefault();
+        const cv = createCVObject(
+            this.state.personalData,
+            this.state.education,
+            this.state.workExperience,
+            this.state.skills,
+            this.state.languages
+        )
+        console.log(JSON.stringify(cv));
+        await sendData(cv);
     };
 
     getTabs() {
