@@ -7,6 +7,10 @@
   overflow: hidden;
 }
 
+.register_account_type {
+  margin-bottom: 2vh !important;
+}
+
 .loginPage__links {
   display: flex;
   flex-direction: column;
