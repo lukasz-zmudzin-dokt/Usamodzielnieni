@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Card, Form, Button } from "react-bootstrap";
+import {Container, Card, Form, Button, Row, Col, InputGroup} from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Cookies from "universal-cookie";
 import bgImage from "../../assets/fot..png";
@@ -10,6 +10,8 @@ import HomeDataForm from "./components/homeDataForm";
 import AccountForm from "./components/accountForm";
 import {handleSubmit} from "./functions/submitForm";
 import {renderRedirect} from "./functions/handlers";
+import { onChange } from "./functions/handlers";
+import CompanyDataForm from "./components/companyDataForm";
 
 const cookies = new Cookies();
 
@@ -17,6 +19,7 @@ class RegisterPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      account_type: "Podopiecznym",
       email: "",
       first_name: "",
       last_name: "",
@@ -34,6 +37,12 @@ class RegisterPage extends React.Component {
     };
   }
 
+  selectType = (e) => {
+    this.setState({
+      account_type: e.target.value
+    });
+  };
+
   render() {
     const {
       validated,
@@ -41,7 +50,8 @@ class RegisterPage extends React.Component {
       message,
       correct,
     } = this.state;
-    const { handleSubmit } = this;
+    const { handleSubmit, selectType } = this;
+    const types = ['Podopiecznym', 'Pracodawcą'];
     return (
       <Container className="loginPage loginPage__register">
         {window.innerWidth >= 768 ? (
@@ -52,6 +62,15 @@ class RegisterPage extends React.Component {
             Rejestracja
           </Card.Header>
           <Card.Body className="loginPage__body">
+            <p>Jestem:</p>
+            <Form.Control
+                className="register_radio_type"
+                as="Select"
+                onChange={e => selectType(e)}
+                defaultValue={this.state.account_type}
+            >
+              {types.map(type => (<option value={type}>{type}</option>))}
+            </Form.Control>
             <Form
               noValidate
               validated={validated}
@@ -60,9 +79,10 @@ class RegisterPage extends React.Component {
             >
               <section className="row">
                 <PersonalDataForm/>
-                <HomeDataForm/>
+                {this.state.account_type === "Podopiecznym" ? <HomeDataForm/> : <CompanyDataForm />}
                 <AccountForm/>
               </section>
+              {console.log(this.state)}
               <Button
                 variant="secondary"
                 className="loginPage__button"
