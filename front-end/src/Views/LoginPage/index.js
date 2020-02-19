@@ -29,8 +29,16 @@ class LoginPage extends React.Component {
     incorrect: false,
     cookieVal: false,
     validated: false,
-    token: this.props.token || ""
+    token: this.props.token || "",
+    message: "parent message"
   };
+
+  callbackFunction = (username, password) => {
+    this.setState({
+      username: username,
+      password: password
+    });
+  }
 
   componentDidMount() {
     if (cookies.get("token")) {
@@ -64,7 +72,7 @@ class LoginPage extends React.Component {
               onSubmit={e => handleSubmit(this, e)}
               className="primary"
             >
-              <LoginForm />
+              <LoginForm parentCallback = {this.callbackFunction} />
               <Form.Group controlId="formBasicCheckbox">
                 <Form.Check
                   type="checkbox"

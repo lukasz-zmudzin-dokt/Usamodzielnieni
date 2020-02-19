@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, Form } from 'react-bootstrap';
 import { onChange } from "../functions/handlers";
+import { sendBackData } from "../functions/handlers";
 
 class LoginForm extends React.Component {
     constructor(props) {
@@ -10,6 +11,10 @@ class LoginForm extends React.Component {
             password: ""
         };
         onChange.bind(this);
+    }
+
+    sendBackData = () => {
+        this.props.parentCallback(this.state.username, this.state.password);
     }
 
     render() {
@@ -27,7 +32,7 @@ class LoginForm extends React.Component {
                             placeholder="Login"
                             required
                             value={username}
-                            onChange={e => onChange(this, e)}
+                            onChange={e => {onChange(this, e); sendBackData(this)}}
                             className="loginPage__input"
                             minLength="6"
                         />
@@ -41,7 +46,7 @@ class LoginForm extends React.Component {
                             autoComplete="on"
                             placeholder="Hasło"
                             value={password}
-                            onChange={e => onChange(this, e)}
+                            onChange={e => {onChange(this, e); sendBackData(this)}}
                             required
                             minLength="6"
                         />

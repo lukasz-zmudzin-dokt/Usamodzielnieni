@@ -1,6 +1,10 @@
 import { Redirect } from "react-router-dom";
 import React from "react";
 
+export const sendBackData = (component) => {
+    component.props.parentCallback(component.state.username, component.state.password);
+};
+
 export const onChange = (component, e) => {
     const type = e.target.type === "text" ? "username" : e.target.type;
 
@@ -8,6 +12,7 @@ export const onChange = (component, e) => {
     component.setState({
         [type]: value
     });
+    console.log("onChange", component, e, type, value);
 };
 
 export const setRedirect = component => {
@@ -30,10 +35,13 @@ export const handleCheck = (component, e) => {
     });
 };
 
-export const handleSubmit = (component, event) => {
+export const handleSubmit = (Component, event) => {
     const form = event.currentTarget;
-    const { password, username } = component.state;
+    const { password, username } = Component.state;
+   
 
+    console.log("handleSubmit -> password, username", password, username);
+    
     event.preventDefault();
 
     if (form.checkValidity() === false) {
@@ -44,11 +52,11 @@ export const handleSubmit = (component, event) => {
         //   console.log("dodaje!");
         //   setCookie();
         // }
-        component.sendData(component);
+        Component.sendData(Component);
         console.log(password, username); // login i hasło użytkownika
     }
 
-    component.setState({
+    Component.setState({
         validated: true
     });
 };
@@ -65,3 +73,4 @@ export const setCookie = (token, component) => {
         expires: nextYear
     });
 };
+
