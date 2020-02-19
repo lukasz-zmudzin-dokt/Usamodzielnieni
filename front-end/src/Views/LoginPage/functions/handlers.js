@@ -1,6 +1,10 @@
 import { Redirect } from "react-router-dom";
 import React from "react";
+import { sendData } from "./sendData";
 
+//
+//przesyła dane z child do parent component
+//
 export const sendBackData = (component) => {
     component.props.parentCallback(component.state.username, component.state.password);
 };
@@ -12,7 +16,6 @@ export const onChange = (component, e) => {
     component.setState({
         [type]: value
     });
-    console.log("onChange", component, e, type, value);
 };
 
 export const setRedirect = component => {
@@ -35,13 +38,10 @@ export const handleCheck = (component, e) => {
     });
 };
 
-export const handleSubmit = (Component, event) => {
+export const handleSubmit = (component, event) => {
     const form = event.currentTarget;
-    const { password, username } = Component.state;
-   
+    const { password, username } = component.state;
 
-    console.log("handleSubmit -> password, username", password, username);
-    
     event.preventDefault();
 
     if (form.checkValidity() === false) {
@@ -52,11 +52,11 @@ export const handleSubmit = (Component, event) => {
         //   console.log("dodaje!");
         //   setCookie();
         // }
-        Component.sendData(Component);
+        sendData(component);
         console.log(password, username); // login i hasło użytkownika
     }
 
-    Component.setState({
+    component.setState({
         validated: true
     });
 };
