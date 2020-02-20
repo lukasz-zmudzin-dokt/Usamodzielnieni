@@ -23,22 +23,22 @@ const data = [
 ];
 
 const OfferForm = () => {
-  const [positionName, setPositionName] = useState("");
-  const [firmName, setFirmName] = useState("");
-  const [location, setLocation] = useState("");
-  const [VS, setVS] = useState("Dolnośląskie");
+  const [offer_name, setOfferName] = useState("");
+  const [company_name, setCompanyName] = useState("");
+  const [company_adress, setCompanAdress] = useState("");
+  const [voivodeship, setVoivodeship] = useState("Dolnośląskie");
   const [description, setDescription] = useState("");
-  const [date, setDate] = useState("");
+  const [expiration_date, setExpirationDate] = useState("");
 
   const submit = event => {
     event.preventDefault();
     const offerObject = {
-      positionName,
-      firmName,
-      location,
-      VS,
-      description,
-      date
+      offer_name,
+      company_name,
+      company_adress,
+      voivodeship,
+      expiration_date,
+      description
     };
     console.log(offerObject);
   };
@@ -54,24 +54,24 @@ const OfferForm = () => {
             <div className="offerForm__wrapper">
               <FormGroup
                 header="Nazwa stanowiska"
-                setVal={setPositionName}
+                setVal={setOfferName}
                 incorrect="Podaj nazwę stanowiska"
               />
               <FormGroup
                 header="Nazwa firmy"
-                setVal={setFirmName}
+                setVal={setCompanyName}
                 incorrect="Podaj nazwę firmy"
               />
               <FormGroup
-                header="Lokalizacja"
-                setVal={setLocation}
+                header="Adres firmy"
+                setVal={setCompanAdress}
                 incorrect="Podaj lokalizację"
               />
               <FormGroup
                 header="Województwo"
                 array={data}
                 type="select"
-                setVal={setVS}
+                setVal={setVoivodeship}
               />
             </div>
             <div className="offerForm__wrapper">
@@ -82,9 +82,9 @@ const OfferForm = () => {
                 incorrect="Podaj opis"
               />
               <FormGroup
-                header="Data ważności"
+                header="Ważne do:"
                 type="date"
-                setVal={setDate}
+                setVal={setExpirationDate}
                 incorrect="Podaj datę ważności"
               />
             </div>

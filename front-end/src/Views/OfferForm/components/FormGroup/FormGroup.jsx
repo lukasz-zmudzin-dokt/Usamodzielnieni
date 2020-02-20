@@ -40,8 +40,7 @@ const FormGroup = ({ header, setVal, array, type, incorrect }) => {
         );
       case "date":
         return (
-          <Form.Row className="align-items-center">
-            <p className="mr-2 mb-0">Do:</p>
+          <Form.Row className="align-items-center m-0">
             <DatePicker
               className="form-control"
               locale="pl"
