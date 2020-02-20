@@ -5,7 +5,6 @@ import UserDetails from "Views/UserProfilePage/components/UserDetails";
 import UserBasicInfo from "Views/UserProfilePage/components/UserBasicInfo";
 import Cookies from "universal-cookie";
 
-const cookies = new Cookies();
 
 const names = {
   role: {
@@ -34,11 +33,14 @@ class UserProfilePage extends React.Component {
       phoneNumber: "+48123456789"
     }
   };
-
-  async componentDidMount() {
+  
+  
+  
+   async componentDidMount() {
     
+    const cookies = await new Cookies();
     const url = "http://usamo-back.herokuapp.com/account/data";
-    const token = cookies.get("token");
+    const token = await cookies.get("token");
     console.log(token);
     const response = await fetch(url, {
       method: 'GET',
@@ -48,7 +50,7 @@ class UserProfilePage extends React.Component {
     }).then(response => {
       if (!response.ok) throw new Error(response.status);
       return response;
-    })
+    });
     const data = await response.json();
     console.log(data);
     console.log(data.first_name);
