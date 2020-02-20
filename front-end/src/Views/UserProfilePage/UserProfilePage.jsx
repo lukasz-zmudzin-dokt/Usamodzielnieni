@@ -3,6 +3,9 @@ import { Card, Container } from "react-bootstrap";
 import "./style.css";
 import UserDetails from "Views/UserProfilePage/components/UserDetails";
 import UserBasicInfo from "Views/UserProfilePage/components/UserBasicInfo";
+import Cookies from "universal-cookie";
+
+const cookies = new Cookies();
 
 const names = {
   role: {
@@ -31,6 +34,34 @@ class UserProfilePage extends React.Component {
       phoneNumber: "+48123456789"
     }
   };
+
+  async componentDidMount() {
+    
+    const url = "http://usamo-back.herokuapp.com/account/data";
+    const token = cookies.get("token");
+    console.log(token);
+    const response = await fetch(url, {
+      method: 'GET',
+      headers:{
+        "Authorization": "token " + token
+      }
+    }).then(response => {
+      if (!response.ok) throw new Error(response.status);
+      return response;
+    })
+    const data = await response.json();
+    console.log(data);
+    console.log(data.first_name);
+    this.setState({
+      user: {
+        username: data.username,
+        firstName: data.first_name,
+        lastName: data.last_name,
+        email: data.email,
+        phoneNumber: data.phone_number
+      }
+    });
+  }
 
   render() {
     return (
