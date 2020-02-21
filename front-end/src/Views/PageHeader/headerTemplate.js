@@ -8,6 +8,7 @@ import logo from "../../assets/logo.png";
 import {IndexLinkContainer} from 'react-router-bootstrap';
 import {Redirect, withRouter} from "react-router-dom";
 import { UserContext } from "context";
+import Notifications from "./components/Notifications";
 
 class HeaderTemplate extends React.Component {
   displayMenu() {
@@ -34,6 +35,7 @@ class HeaderTemplate extends React.Component {
     if (this.context.token)
       return (
         <Form inline pull-right className="action_buttons">
+            <Notifications />
             <IndexLinkContainer to="/user">
               <Button className="menu_action_button_1" variant="light">
                 Profil
