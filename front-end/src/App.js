@@ -1,14 +1,11 @@
 import React from "react";
 import "./App.css";
-import UserProfilePage from "Views/UserProfilePage";
-import LoginPage from "Views/LoginPage";
-import RegisterPage from "Views/RegisterPage";
-import HeaderTemplate from "./Views/PageHeader/headerTemplate";
-import CVEditorPage from "./Views/CVEditorPage";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Footer from "Views/Footer";
-import UserProvider from "./context/UserContext";
-import Menu from "./Views/Menu";
+import { UserProvider } from "context";
+import { 
+  UserProfilePage, LoginPage, RegisterPage,
+  HeaderTemplate, CVEditorPage, Menu, Footer
+} from "Views"
 
 class App extends React.Component {
   render() {

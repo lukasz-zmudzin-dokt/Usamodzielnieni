@@ -2,7 +2,7 @@ import React from "react";
 import { Container, Button, Card } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import { Link, Redirect } from "react-router-dom";
-import { UserContext } from "context/UserContext";
+import { UserContext } from "context";
 
 import "Views/LoginPage/style.css";
 import bgImage from "../../assets/fot..png";
