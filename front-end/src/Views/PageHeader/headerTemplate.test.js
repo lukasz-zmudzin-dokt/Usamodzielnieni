@@ -2,7 +2,7 @@ import HeaderTemplate from './headerTemplate';
 import React from 'react';
 import { render } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import UserProvider from "context/UserContext";
+import { UserProvider } from "context";
 
 
 it('should render without crashing', () => {

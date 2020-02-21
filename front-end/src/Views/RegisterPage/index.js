@@ -2,7 +2,7 @@ import React from "react";
 import { Container, Card, Form, Button } from "react-bootstrap";
 import { Link, Redirect } from "react-router-dom";
 import bgImage from "../../assets/fot..png";
-import { UserContext } from "context/UserContext"
+import { UserContext } from "context";
 
 class RegisterPage extends React.Component {
   state = {

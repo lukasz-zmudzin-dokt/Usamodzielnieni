@@ -1,11 +1,11 @@
 import React from "react";
 import "./App.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { UserProvider } from "context";
 import { 
   UserProfilePage, LoginPage, RegisterPage,
   HeaderTemplate, CVEditorPage, Menu, Footer
-} from "./Views"
-import UserProvider from "./context/UserContext";
+} from "Views"
 
 class App extends React.Component {
   render() {

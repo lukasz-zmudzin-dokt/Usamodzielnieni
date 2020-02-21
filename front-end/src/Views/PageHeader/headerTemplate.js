@@ -7,7 +7,7 @@ import logo from "../../assets/logo.png";
 // https://github.com/ReactTraining/react-router/issues/83#issuecomment-214794477
 import {IndexLinkContainer} from 'react-router-bootstrap';
 import {Redirect, withRouter} from "react-router-dom";
-import { UserContext } from "context/UserContext"
+import { UserContext } from "context";
 
 class HeaderTemplate extends React.Component {
   displayMenu() {

@@ -1,10 +1,10 @@
-import UserProfilePage from "./UserProfilePage";
-import LoginPage from "./LoginPage";
-import RegisterPage from "./RegisterPage";
-import HeaderTemplate from "./PageHeader";
-import CVEditorPage from "./CVEditorPage";
-import Footer from "./Footer";
-import Menu from "./Menu";
+import UserProfilePage from "Views/UserProfilePage";
+import LoginPage from "Views/LoginPage";
+import RegisterPage from "Views/RegisterPage";
+import HeaderTemplate from "Views/PageHeader";
+import CVEditorPage from "Views/CVEditorPage";
+import Footer from "Views/Footer";
+import Menu from "Views/Menu";
 
 export {
     UserProfilePage,

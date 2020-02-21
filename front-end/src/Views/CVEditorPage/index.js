@@ -14,7 +14,7 @@ import Col from "react-bootstrap/Col";
 import Languages from 'Views/CVEditorPage/components/Languages';
 import Skills from 'Views/CVEditorPage/components/Skills';
 import RenderForm from 'Views/CVEditorPage/components/RenderForm';
-import { UserContext } from "context/UserContext";
+import { UserContext } from "context";
 
 import {handleBlur,handleCVSubmit,handleBirthDateChange,handleAddLanguage,handleLanChange,handleLanLvlChange,handleSkillAdd} from 'Views/CVEditorPage/functions/handlers.js';
 
