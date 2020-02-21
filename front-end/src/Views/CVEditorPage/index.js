@@ -14,7 +14,7 @@ import Col from "react-bootstrap/Col";
 import Languages from 'Views/CVEditorPage/components/Languages';
 import Skills from 'Views/CVEditorPage/components/Skills';
 import RenderForm from 'Views/CVEditorPage/components/RenderForm';
-import {connect} from 'react-redux'
+import { UserContext } from "context/UserContext";
 
 import {handleBlur,handleCVSubmit,handleBirthDateChange,handleAddLanguage,handleLanChange,handleLanLvlChange,handleSkillAdd} from 'Views/CVEditorPage/functions/handlers.js';
 
@@ -49,8 +49,7 @@ class CVEditorPage extends React.Component {
             languageName: "",
             languageLevel: "podstawowy",
 
-            formTab: "personalData",
-            token: this.props.token || undefined
+            formTab: "personalData"
         };
     }
 
@@ -306,10 +305,6 @@ class CVEditorPage extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    console.log("mapStateToProps:", state);
-    const { token } = state.user;
-    return { token };
-};
+CVEditorPage.contextType = UserContext;
 
-export default connect(mapStateToProps)(CVEditorPage);
+export default CVEditorPage;

@@ -3,28 +3,15 @@ import "Views/Menu/style.css";
 import {Row, Col, Container, Button, ButtonToolbar} from "react-bootstrap";
 import {LinkContainer} from 'react-router-bootstrap';
 import logo from "../../assets/logo.png";
-import {connect} from "react-redux";
-import {setUserToken} from "../../redux/actions";
-import Cookies from "universal-cookie";
 import {Redirect} from 'react-router-dom';
 
-const cookies = new Cookies();
-
 class Menu extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            token: this.props.token || undefined
-        }
-    }
-
     userLogout = e => {
-        const token = this.props.token;
         const url = "https://usamo-back.herokuapp.com/account/logout/";
         fetch(url, {
             method: "POST",
             headers: {
-                "Authorization": "token " + token
+                "Authorization": "token " + this.context.token
             },
             body: {}
         }).then(res => {
@@ -33,8 +20,7 @@ class Menu extends React.Component {
                 res.json().then(responseValue => {
                     console.log(responseValue);
                     console.log("Wylogowano");
-                    this.props.setUserToken(undefined);
-                    cookies.remove("token", {path: "/"});
+                    this.context.logout();
                     return (
                         <Redirect to="/"/>
                     );
@@ -44,7 +30,7 @@ class Menu extends React.Component {
     };
 
     displayButtonToolbar() {
-        if (this.props.token === undefined)
+        if (!this.context.token)
             return (
                 <ButtonToolbar>
                     <LinkContainer to="/newAccount">
@@ -89,7 +75,7 @@ class Menu extends React.Component {
                         <Col />
                         <Col >
                             <ButtonToolbar>
-                                <LinkContainer to={this.props.token === undefined ? "/login" : "/cvEditor"}>
+                                <LinkContainer to={!this.context.token ? "/login" : "/cvEditor"}>
                                     <Button className="menu-button-small menu-button-white" >Kreator CV</Button>
                                 </LinkContainer>
                                 <Button className="menu-button-small menu-button-white disabled">Jak zacząć?</Button>
@@ -104,10 +90,4 @@ class Menu extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    console.log("mapStateToProps:", state);
-    const { token } = state.user;
-    return { token };
-};
-
-export default connect(mapStateToProps, {setUserToken})(Menu);
+export default Menu;
