@@ -20,7 +20,9 @@ class HeaderTemplate extends React.Component {
             </Nav.Link>
           </IndexLinkContainer>
           <Nav.Link id="learningTheRopes">Jak zacząć?</Nav.Link>
-          <Nav.Link id="jobOffers">Oferty pracy</Nav.Link>
+          <IndexLinkContainer to="/jobOffers">
+            <Nav.Link id="jobOffers">Oferty pracy</Nav.Link>
+          </IndexLinkContainer>
           {/* <Nav.Link id="jobDescriptions">Opis stanowisk</Nav.Link> */}
           {/* <Nav.Link id="personalityTests">Testy</Nav.Link> */}
           <Nav.Link id="stories">Historia</Nav.Link>

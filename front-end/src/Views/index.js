@@ -6,6 +6,7 @@ import CVEditorPage from "Views/CVEditorPage";
 import Footer from "Views/Footer";
 import Menu from "Views/Menu";
 import JobOffersPage from "Views/JobOffersPage";
+import JobOfferDetails from "Views/JobOfferDetails";
 
 export {
     UserProfilePage,
@@ -15,5 +16,6 @@ export {
     CVEditorPage,
     Footer,
     Menu,
-    JobOffersPage
+    JobOffersPage,
+    JobOfferDetails
 }

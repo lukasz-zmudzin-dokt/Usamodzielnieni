@@ -3,8 +3,9 @@ import "./App.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { UserProvider } from "context";
 import { 
-  UserProfilePage, LoginPage, RegisterPage, JobOffersPage,
-  HeaderTemplate, CVEditorPage, Menu, Footer
+  UserProfilePage, LoginPage, RegisterPage, 
+  HeaderTemplate, CVEditorPage, Menu, Footer,
+  JobOffersPage, JobOfferDetails
 } from "Views"
 
 class App extends React.Component {
@@ -21,6 +22,7 @@ class App extends React.Component {
             <Route path="/newAccount" exact component={RegisterPage} />
             <Route path="/footer" exact component={Footer} />
             <Route path="/jobOffers" exact component={JobOffersPage} />
+            <Route path="/jobOffers/:id" exact component={JobOfferDetails} />
           </Switch>
         </Router>
       </UserProvider>
