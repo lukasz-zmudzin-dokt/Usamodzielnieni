@@ -14,3 +14,9 @@
     height: 100vh;
     flex-direction: column;
 }
+
+.cv_legend {
+    font-size: 30px;
+}
+
+.cv_details_row {}
