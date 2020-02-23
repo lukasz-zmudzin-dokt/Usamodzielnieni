@@ -5,10 +5,8 @@ import { UserProvider } from "context";
 import { 
   UserProfilePage, LoginPage, RegisterPage,
   HeaderTemplate, CVEditorPage, Menu, Footer,
+  CVApprovalPage, MyOffersPage
 } from "Views"
-
-import CVApprovalPage from "./Views/CVApprovalPage";
-import MyOffersPage from "./Views/MyOffersPage";
 
 class App extends React.Component {
   render() {

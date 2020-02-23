@@ -6,7 +6,6 @@ const offers = [
     {
         id: 0,
         name: "Siepacz Poszukiwany!",
-        description: "Poszukujemy zdolnej osoby do rozparcelowywania sczapek drewna które potem trafi na polskie stoły.",
         answers: [
             {
                 id: 0,
@@ -25,9 +24,6 @@ const offers = [
     {
         id: 1,
         name: "Zaklinacz jeży",
-        description: "Mamy problem z jeżami i poszukujemy kogoś kto by je zwyzywał od mrówek żeby poszły sobie w cholerę. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse tincidunt, enim vel egestas aliquam, leo leo lobortis massa, id feugiat odio lectus ac urna. Nam dictum urna velit, ut dictum erat eleifend vitae. Integer dapibus sit amet est at tempor. Aenean fermentum ultrices sem, a feugiat augue ultricies aliquet. Cras quis nulla sed nisl egestas lacinia vel a lectus. Sed eu tempus turpis, et finibus ex. Maecenas mollis, ante quis porttitor tristique, felis mauris viverra nibh, id porttitor purus tellus at nunc. Praesent egestas enim justo, non consectetur odio feugiat ut. Aliquam erat volutpat. Nam volutpat justo sed commodo dictum. Vivamus purus risus, suscipit in nisl id, sodales laoreet velit.\n" +
-            "\n" +
-            "Pellentesque dignissim, odio quis feugiat placerat, lectus nisl molestie nibh, sed posuere ligula lorem eget orci. Nunc at pellentesque lectus. Cras egestas non mauris vel elementum. Donec fermentum nibh id tincidunt pretium. Integer condimentum sapien quam, et pellentesque enim auctor a. Maecenas eu hendrerit turpis. Ut mattis purus nec pulvinar dapibus. Sed vel fermentum massa.",
         answers: [
             {
                 id: 1,
@@ -36,6 +32,41 @@ const offers = [
                 email: "kwiatola@olakwiat.nl"
             }
         ]
+    },
+    {
+        id: 2,
+        name: "Poszukiwany asystent do podjęcia działań prowadzących do ujęcia sprawcy porysowania pewnego samochodu marki Opel o numerach rejestracyjnych tak długich że nawet tego nie doczytasz",
+        answers: [
+            {
+                id: 0,
+                firstName: "Maciej",
+                lastName: "Kozłowski",
+                email: "maciej.kozlowski@gmail.dom"
+            },
+            {
+                id: 1,
+                firstName: "Ola",
+                lastName: "Kwiatek",
+                email: "kwiatola@olakwiat.nl"
+            },
+            {
+                id: 2,
+                firstName: "Aleksander",
+                lastName: "Jewaroksymoronowski",
+                email: "jewaroksymoronski4life@domena.dede"
+            },
+            {
+                id: 3,
+                firstName: "Kuba",
+                lastName: "Pec",
+                email: "pec@pac.pic"
+            }
+        ]
+    },
+    {
+        id: 3,
+        name: "Do tego ogłoszenia i tak nikt się nie zgłosi",
+        answers: []
     }
 ];
 
@@ -72,6 +103,8 @@ class MyOffer extends React.Component {
                 </Accordion.Toggle>
                 <Accordion.Collapse eventKey={offer.id}>
                     <Card.Body>
+                        <NoInterest answers={offer.answers} />
+                        <MyOffersLegend answers={offer.answers} />
                         {offer.answers.map((value, key) => {
                             return (
                                 <InterestedPerson person={value} key={value.id}/>
@@ -98,17 +131,52 @@ class MyOffers extends React.Component {
     }
 }
 
+class MyOffersLegend extends React.Component {
+    render() {
+        const { answers } = this.props;
+        if(answers.length > 0) {
+            return (
+                <Row className="mt-3 person-row">
+                    <Col xs={6} md={3}><b>Imię</b></Col>
+                    <Col xs={6} md={3}><b>Nazwisko</b></Col>
+                    <Col xs={12} md={4}><b>Email</b></Col>
+                    <Col xs={12} md={2}><b>CV</b></Col>
+                </Row>
+            );
+        } else {
+            return null;
+        }
+    }
+}
+
+class NoInterest extends React.Component {
+    render() {
+        const { answers } = this.props;
+        if(answers === undefined) {
+            return (
+                <Row className="ml-1">Do tego ogłoszenia nie zgłosił się jeszcze nikt chętny.</Row>
+            );
+        } else {
+            if(answers.length === 0) {
+                return (
+                    <Row className="ml-1">Do tego ogłoszenia nie zgłosił się jeszcze nikt chętny.</Row>
+                );
+            } else {
+                return null;
+            }
+        }
+    }
+}
+
 class MyOffersPage extends React.Component {
     render() {
         return(
             <Container>
                 <div className="background">
                     <Card className="my-offers-card no-border">
-                        <Card.Header className="border pb-4"><h3>Moje oferty</h3></Card.Header>
+                        <Card.Header className="border"><h3>Moje oferty</h3><p className="pt-3">Kliknij zakładkę, by wyświetlić osoby zainteresowane daną ofertą.</p></Card.Header>
                         <Card.Body className="border">
-                            <MyOffers>
-
-                            </MyOffers>
+                            <MyOffers />
                         </Card.Body>
                     </Card>
                 </div>

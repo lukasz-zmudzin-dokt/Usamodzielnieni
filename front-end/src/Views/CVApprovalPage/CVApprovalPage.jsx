@@ -14,6 +14,18 @@ const cvs = [
         firstName: "Ola",
         lastName: "Kwiatek",
         email: "kwiatola@olakwiat.nl"
+    },
+    {
+        id: 2,
+        firstName: "Aleksander",
+        lastName: "Jewaroksymoronowski",
+        email: "jewaroksymoronski4life@domena.dede"
+    },
+    {
+        id: 3,
+        firstName: "Kuba",
+        lastName: "Pec",
+        email: "pec@pac.pic"
     }
 ];
 
@@ -21,11 +33,10 @@ class CVLegend extends React.Component {
     render() {
         return (
             <Row className="cv_legend mb-4">
-                <Col md={1} xs={3}><b>ID</b></Col>
-                <Col md={2} xs={4}><b>Imię</b></Col>
-                <Col md={2} xs={5}><b>Nazwisko</b></Col>
-                <Col md={3} xs={12}><b>Email</b></Col>
-                <Col md={4} xs={8}><b>Akcje</b></Col>
+                <Col md={2} xs={6}><b>Imię</b></Col>
+                <Col md={2} xs={6}><b>Nazwisko</b></Col>
+                <Col md={4} xs={12}><b>Email</b></Col>
+                <Col md={4} xs={8}/>
             </Row>
         );
     }
@@ -49,13 +60,12 @@ class CVDetails extends React.Component {
 
         return (
             <Row className="mt-3">
-                <Col xs={2} md={1}>{cv.id}</Col>
-                <Col xs={5} md={2}>{cv.firstName}</Col>
-                <Col xs={5} md={2}>{cv.lastName}</Col>
-                <Col xs={12} md={3}>
+                <Col xs={6} md={2}>{cv.firstName}</Col>
+                <Col xs={6} md={2}>{cv.lastName}</Col>
+                <Col xs={12} md={4}>
                     <a href={"mailto:" + cv.email}> {cv.email} </a>
                 </Col>
-                <Col xs={12} md={4}>
+                <Col xs={12} md={4} className="d-flex justify-content-end">
                     <Button variant="primary m-1 p-1" onClick={downloadCV(cv.id)}>Pobierz</Button>
                     <Button variant="success m-1 p-1" onClick={acceptCV(cv.id)}>Akceptuj</Button>
                     <Button variant="warning m-1 p-1" onClick={improveCV(cv.id)}>Popraw</Button>
