@@ -21,12 +21,27 @@ const data = [
   "Podkarpackie"
 ];
 
-const Search = ({ offers }) => {
-  const [voivodeship, setVoivodeship] = useState("Lubelskie");
-  const [company, setCompany] = useState("");
+const Search = ({ offers, setFilter }) => {
+  const [voivodeship, setVoivodeship] = useState(offers[0]["voivodeship"]);
+  const [companyName, setCompanyName] = useState(offers[0]["companyName"]);
+
   const filter = event => {
     event.preventDefault();
-    console.log(voivodeship, company);
+    const filters = { voivodeship, companyName };
+    let newTab = offers;
+
+    for (let key in filters) {
+      if (filters[key] !== "") {
+        newTab = newTab.filter(val => {
+          return val[key] === filters[key];
+        });
+      }
+    }
+    setFilter({ tab: newTab, changed: true });
+  };
+
+  const deleteFilter = e => {
+    setFilter(offers);
   };
   let companies = [...new Set(offers.map(({ companyName }) => companyName))];
   return (
@@ -68,8 +83,8 @@ const Search = ({ offers }) => {
           <Form.Label>Firma</Form.Label>
           <Form.Control
             as="select"
-            onChange={e => setCompany(e.target.value)}
-            value={company}
+            onChange={e => setCompanyName(e.target.value)}
+            value={companyName}
           >
             {companies.map(val => (
               <option>{val}</option>
@@ -84,6 +99,13 @@ const Search = ({ offers }) => {
           className="pl-5 pr-5 pt-2 pb-2"
         >
           Filtruj
+        </Button>
+        <Button
+          variant="secondary"
+          onClick={deleteFilter}
+          className="pl-5 pr-5 pt-2 pb-2"
+        >
+          Usuń filtr
         </Button>
       </Row>
     </Form>
