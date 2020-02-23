@@ -7,11 +7,11 @@ import Footer from "Views/Footer";
 import Menu from "Views/Menu";
 
 export {
-    UserProfilePage,
-    LoginPage,
-    RegisterPage,
-    HeaderTemplate,
-    CVEditorPage,
-    Footer,
-    Menu
-}
+  UserProfilePage,
+  LoginPage,
+  RegisterPage,
+  HeaderTemplate,
+  CVEditorPage,
+  Footer,
+  Menu
+};
