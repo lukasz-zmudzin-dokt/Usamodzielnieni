@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Container, Card } from "react-bootstrap";
 import "./style.css";
 import { UserContext } from "context";
+import { AddCvForm } from "./_components";
 
 const getOfferDetails = async (id, token) => {
   let url = "https://usamo-back.herokuapp.com/offers/.../";
@@ -29,18 +30,16 @@ const mapOffer = (offer) => ({
 
 const JobOfferDetails = props => {
   const [offer, setOffer] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
-  const user = useContext(UserContext)
+  const [isOfferLoading, setIsOfferLoading] = useState(false);
+  const user = useContext(UserContext);
 
   useEffect(
-    () => { 
-      loadOffer(props.match.params.id, user.token)  // https://github.com/facebook/react/issues/14326#issuecomment-441680293
-    },
+    () => { loadOffer(props.match.params.id, user.token) },
     [props.match.params.id, user.token]
   );
 
   const loadOffer = async (id, token) => {
-    setIsLoading(true);
+    setIsOfferLoading(true);
     let loadedOffer;
     try {
       loadedOffer = await getOfferDetails(id, token);
@@ -58,7 +57,7 @@ const JobOfferDetails = props => {
     }
     console.log(loadedOffer);
     setOffer(loadedOffer);
-    setIsLoading(false);
+    setIsOfferLoading(false);
   }
 
   return (
@@ -66,12 +65,13 @@ const JobOfferDetails = props => {
       <Card>
       <Card.Header as="h2">Szczegóły oferty pracy</Card.Header>
       <Card.Body>
-        {isLoading ? <div>Ładowanie...</div> : (
+        {isOfferLoading ? <div>Ładowanie...</div> : (
           <div>
             <h3>{offer.title}</h3>
             <div>{offer.description}</div>
           </div>
         )}
+        <AddCvForm user={user}/>
       </Card.Body>
       </Card>
     </Container>
