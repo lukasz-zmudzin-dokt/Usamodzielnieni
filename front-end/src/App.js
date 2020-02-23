@@ -8,6 +8,7 @@ import {
 } from "Views"
 
 import CVApprovalPage from "./Views/CVApprovalPage";
+import MyOffersPage from "./Views/MyOffersPage";
 
 class App extends React.Component {
   render() {
@@ -23,6 +24,7 @@ class App extends React.Component {
             <Route path="/newAccount" exact component={RegisterPage} />
             <Route path="/footer" exact component={Footer} />
             <Route path="/cvApproval" exact component={CVApprovalPage} />
+            <Route path="/myOffers" exact component={MyOffersPage} />
           </Switch>
         </Router>
       </UserProvider>
