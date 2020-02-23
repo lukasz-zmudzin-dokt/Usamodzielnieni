@@ -1,0 +1,16 @@
+.cv_approval_card {
+    margin-top: 10vh;
+}
+
+.cv_approval_card_title {
+    text-align: center;
+}
+.cv_approval_background {
+    background-image: url("../../assets/menu-backdrop.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    height: 100vh;
+    flex-direction: column;
+}
