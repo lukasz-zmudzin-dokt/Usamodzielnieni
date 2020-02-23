@@ -47,15 +47,15 @@ class CVDetails extends React.Component {
     render() {
         const { cv } = this.props;
 
-        function downloadCV(id) {
-            console.log("pobieram CV o id " + id);
+        function downloadCV() {
+            console.log("pobieram CV o id " + cv.id);
         }
 
-        function acceptCV(id) {
-            console.log("akceptuję CV o id " + id);
+        function acceptCV() {
+            console.log("akceptuję CV o id " + cv.id);
         }
-        function improveCV(id) {
-            console.log("poprawiam CV o id " + id);
+        function improveCV() {
+            console.log("poprawiam CV o id " + cv.id);
         }
 
         return (
@@ -66,9 +66,9 @@ class CVDetails extends React.Component {
                     <a href={"mailto:" + cv.email}> {cv.email} </a>
                 </Col>
                 <Col xs={12} md={4} className="d-flex justify-content-end">
-                    <Button variant="primary m-1 p-1" onClick={downloadCV(cv.id)}>Pobierz</Button>
-                    <Button variant="success m-1 p-1" onClick={acceptCV(cv.id)}>Akceptuj</Button>
-                    <Button variant="warning m-1 p-1" onClick={improveCV(cv.id)}>Popraw</Button>
+                    <Button variant="primary m-1 p-1" onClick={downloadCV}>Pobierz</Button>
+                    <Button variant="success m-1 p-1" onClick={acceptCV}>Akceptuj</Button>
+                    <Button variant="warning m-1 p-1" onClick={improveCV}>Popraw</Button>
                 </Col>
             </Row>
         );

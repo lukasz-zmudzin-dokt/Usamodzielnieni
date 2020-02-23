@@ -71,10 +71,11 @@ const offers = [
 ];
 
 class InterestedPerson extends React.Component {
+
     render() {
         const { person } = this.props;
-        function downloadCV(id) {
-            console.log("ściągnij cv o takim id:" + id);
+        function downloadCV() {
+                console.log("ściągnij cv osoby z id " + person.id);
         }
 
         return (
@@ -85,7 +86,7 @@ class InterestedPerson extends React.Component {
                     <a href={"mailto:" + person.email}> {person.email} </a>
                 </Col>
                 <Col xs={12} md={2}>
-                    <Button variant="primary m-1 p-1" onClick={downloadCV(person.id)}>Zobacz CV</Button>
+                    <Button variant="primary m-1 p-1" onClick={downloadCV}>Zobacz CV</Button>
                 </Col>
             </Row>
         );
