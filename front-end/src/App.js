@@ -4,8 +4,10 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { UserProvider } from "context";
 import { 
   UserProfilePage, LoginPage, RegisterPage,
-  HeaderTemplate, CVEditorPage, Menu, Footer
+  HeaderTemplate, CVEditorPage, Menu, Footer,
 } from "Views"
+
+import CVApprovalPage from "./Views/CVApprovalPage";
 
 class App extends React.Component {
   render() {
@@ -20,6 +22,7 @@ class App extends React.Component {
             <Route path="/login" exact component={LoginPage} />
             <Route path="/newAccount" exact component={RegisterPage} />
             <Route path="/footer" exact component={Footer} />
+            <Route path="/cvApproval" exact component={CVApprovalPage} />
           </Switch>
         </Router>
       </UserProvider>
