@@ -1,5 +1,5 @@
 import React from 'react';
-import { onChange } from 'Views/RegisterPage/functions/handlers';
+import { onChange } from '../functions/handlers';
 import {Card, Form} from "react-bootstrap";
 
 class CompanyDataForm extends React.Component {
@@ -7,19 +7,17 @@ class CompanyDataForm extends React.Component {
         super(props);
 
         this.state = {
-            company_name: undefined,
-            company_city: undefined,
-            company_postal_code: undefined,
-            company_street: undefined,
-            company_nip: undefined
+            company_name: "",
+            company_city: "",
+            company_postal_code: "",
+            company_street: "",
+            company_nip: ""
         };
-
         onChange.bind(this);
     }
 
     render() {
         let { company_name, company_street, company_city, company_postal_code, company_nip } = this.state;
-        let { onChange } = this;
         return (
             <Card
                 bg="light"
@@ -29,6 +27,7 @@ class CompanyDataForm extends React.Component {
                     Dane firmy
                 </Card.Header>
                 <Card.Body className="">
+                    {console.log(this.state)}
                     <Form.Group controlId="formGroupNameOfPlace">
                         <Form.Control
                             type="text"

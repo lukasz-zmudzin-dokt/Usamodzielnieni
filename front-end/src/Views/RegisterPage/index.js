@@ -1,5 +1,5 @@
 import React from "react";
-import {Container, Card, Form, Button, Row, Col, InputGroup} from "react-bootstrap";
+import {Container, Card, Form, Button} from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Cookies from "universal-cookie";
 import bgImage from "../../assets/fot..png";
@@ -8,9 +8,7 @@ import { setUserToken } from "redux/actions";
 import PersonalDataForm from "./components/personalDataForm";
 import HomeDataForm from "./components/homeDataForm";
 import AccountForm from "./components/accountForm";
-import {handleSubmit} from "./functions/submitForm";
 import {renderRedirect} from "./functions/handlers";
-import { onChange } from "./functions/handlers";
 import CompanyDataForm from "./components/companyDataForm";
 
 const cookies = new Cookies();
@@ -19,6 +17,11 @@ class RegisterPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      account: null,
+      home: null,
+      company: null,
+      admin: null,
+      personal: null,
       account_type: "Podopiecznym",
       areEqual: true,
       validated: false,
@@ -35,7 +38,7 @@ class RegisterPage extends React.Component {
   render() {
     const { validated, incorrect, message, correct } = this.state;
     const { handleSubmit, selectType } = this;
-    const types = ['Podopiecznym', 'Pracodawcą'];
+    const types = this.props.accountTypes || ['Podopiecznym', 'Pracodawcą'];
     return (
       <Container className="loginPage loginPage__register">
         {window.innerWidth >= 768 ? (
@@ -68,7 +71,6 @@ class RegisterPage extends React.Component {
                 {this.state.account_type === "Podopiecznym" ? <HomeDataForm/> : <CompanyDataForm />}
                 <AccountForm/>
               </section>
-              {console.log(this.state)}
               <Button
                 variant="secondary"
                 className="loginPage__button"

@@ -26,6 +26,7 @@ class HomeDataForm extends React.Component {
                     Dane placówki
                 </Card.Header>
                 <Card.Body className="">
+                    {console.log(this.state)}
                     <Form.Group controlId="formGroupNameOfPlace">
                         <Form.Control
                             type="tel"
