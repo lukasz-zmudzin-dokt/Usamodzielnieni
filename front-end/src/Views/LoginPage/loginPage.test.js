@@ -3,7 +3,7 @@ import { render } from "@testing-library/react";
 import LoginPage from "Views/LoginPage/index.js"
 
 import { BrowserRouter as Router } from 'react-router-dom';
-import UserProvider from "context/UserContext";
+import { UserProvider } from "context";
 
 
 describe( "LoginPageTest", () => {

@@ -9,7 +9,7 @@ export const UserContext = React.createContext({
 });
 const cookies = new Cookies();
 
-const UserProvider = props => {
+export const UserProvider = props => {
   const [token, setToken] = useState(cookies.get("token"));
   const user = {
     token,
@@ -24,5 +24,3 @@ const UserProvider = props => {
   };
   return <UserContext.Provider value={user} {...props} />;
 };
-
-export default UserProvider;
