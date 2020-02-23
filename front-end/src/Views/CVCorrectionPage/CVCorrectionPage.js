@@ -68,7 +68,7 @@ class CVCorrectionPage extends React.Component {
                    </Nav>
                    <div>
                        <Document className="pdf_doc" file={file} onLoadSuccess={onDocumentLoadSuccess}>
-                           <Page className="pdf_doc_container" pageNumber={documentCurrentPage}/>
+                           <Page className="pdf_doc_container" pageNumber={documentCurrentPage} style={"width:100%;"}/>
                        </Document>
                    </div>
                </Col>
