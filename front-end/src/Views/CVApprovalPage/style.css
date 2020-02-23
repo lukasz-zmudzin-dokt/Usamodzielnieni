@@ -1,5 +1,5 @@
 .cv_approval_card {
-    margin-top: 10vh;
+    padding-top: 10vh;
 }
 
 .cv_approval_card_title {
@@ -10,13 +10,14 @@
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
+    position: relative;
 
     height: 100vh;
     flex-direction: column;
 }
-
-.cv_legend {
-    font-size: 30px;
+.no-border {
+    border: none !important;
 }
-
-.cv_details_row {}
+.border {
+    border: gray;
+}
