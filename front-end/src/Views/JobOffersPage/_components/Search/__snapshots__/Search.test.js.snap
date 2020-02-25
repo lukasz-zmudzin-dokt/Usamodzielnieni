@@ -1,0 +1,195 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Form works(search) 1`] = `null`;
+
+exports[`renders correctly 1`] = `
+<form
+  className="mb-2"
+  onSubmit={[Function]}
+>
+  <div
+    className="search__wrapper"
+  >
+    <div
+      className="form-group"
+    >
+      <label
+        className="form-label"
+        htmlFor="exampleForm.ControlSelect2"
+      >
+        Województwo
+      </label>
+      <select
+        className="form-control"
+        id="exampleForm.ControlSelect2"
+        onChange={[Function]}
+        value="-- Wybierz --"
+      >
+        <option
+          data-hidden="true"
+          disabled={true}
+        >
+          -- Wybierz --
+        </option>
+        <option>
+          Zachodnio-pomorskie
+        </option>
+        <option>
+          Pomorskie
+        </option>
+        <option>
+          Warmińsko-Mazurskie
+        </option>
+        <option>
+          Podlaskie
+        </option>
+        <option>
+          Lubuskie
+        </option>
+        <option>
+          Wielkopolskie
+        </option>
+        <option>
+          Kujawsko-pomorskie
+        </option>
+        <option>
+          Mazowieckie
+        </option>
+        <option>
+          Lubelskie
+        </option>
+        <option>
+          Dolnośląskie
+        </option>
+        <option>
+          Łódzkie
+        </option>
+        <option>
+          Opolskie
+        </option>
+        <option>
+          Świętokrzystkie
+        </option>
+        <option>
+          Śląskie
+        </option>
+        <option>
+          Małopolskie
+        </option>
+        <option>
+          Podkarpackie
+        </option>
+      </select>
+    </div>
+    <div
+      className="form-group"
+    >
+      <label
+        className="form-label"
+        htmlFor="exampleForm.ControlSelect2"
+      >
+        Firma
+      </label>
+      <select
+        className="form-control"
+        id="exampleForm.ControlSelect2"
+        onChange={[Function]}
+        value="-- Wybierz --"
+      >
+        <option
+          data-hidden="true"
+          disabled={true}
+        >
+          -- Wybierz --
+        </option>
+        <option>
+          Rębacze z Cintry sp. z o.o.
+        </option>
+        <option>
+          Miody sp. z o.o.
+        </option>
+      </select>
+    </div>
+    <div
+      className="form-group"
+    >
+      <label
+        className="form-label"
+        htmlFor="exampleForm.ControlSelect2"
+      >
+        Szkolenie/Praca
+      </label>
+      <select
+        className="form-control"
+        id="exampleForm.ControlSelect2"
+        onChange={[Function]}
+        value="-- Wybierz --"
+      >
+        <option
+          data-hidden="true"
+          disabled={true}
+        >
+          -- Wybierz --
+        </option>
+        <option>
+          Szkolenie
+        </option>
+        <option>
+          Praca
+        </option>
+        <option>
+          Staż
+        </option>
+      </select>
+    </div>
+    <div
+      className="form-group"
+    >
+      <label
+        className="form-label"
+        htmlFor="exampleForm.ControlSelect2"
+      >
+        Płatne/Bezpłatne
+      </label>
+      <select
+        className="form-control"
+        id="exampleForm.ControlSelect2"
+        onChange={[Function]}
+        value="-- Wybierz --"
+      >
+        <option
+          data-hidden="true"
+          disabled={true}
+        >
+          -- Wybierz --
+        </option>
+        <option>
+          Płatne
+        </option>
+        <option>
+          Bezpłatne
+        </option>
+      </select>
+    </div>
+  </div>
+  <div
+    className="justify-content-center align-items-center m-0 row"
+  >
+    <button
+      className="pl-4 pr-4 pt-2 pb-2 mr-5 btn btn-secondary"
+      disabled={false}
+      type="submit"
+    >
+      Filtruj
+    </button>
+    <button
+      className="pl-4 pr-4 pt-2 pb-2 btn btn-secondary"
+      disabled={false}
+      onClick={[Function]}
+      type="button"
+    >
+      Usuń filtr
+    </button>
+  </div>
+</form>
+`;
