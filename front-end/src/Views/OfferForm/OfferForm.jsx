@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Form, Container, Card, Button, Row } from "react-bootstrap";
-import FormGroup from "Views/OfferForm/components/FormGroup";
+import FormGroup from "components/FormGroup";
 import "./style.css";
 
 const data = [

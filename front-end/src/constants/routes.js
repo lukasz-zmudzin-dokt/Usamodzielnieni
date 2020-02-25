@@ -4,7 +4,9 @@ import {
   RegisterPage,
   Footer,
   CVEditorPage,
-  Menu
+  Menu,
+  OfferForm,
+  JobOffersPage
 } from "Views";
 
 const paths = {
@@ -13,7 +15,10 @@ const paths = {
   REGISTER: "/newAccount",
   FOOTER: "/footer",
   LOGIN: "/login",
-  USER: "/user"
+  USER: "/user",
+  OFFERFORM: "/offerForm",
+  JOBOFFERS: "/jobOffers",
+  JOBOFFER: "/jobOffers/:id"
 };
 
 export default [
@@ -45,6 +50,16 @@ export default [
   {
     path: paths.USER,
     component: UserProfilePage,
+    isPrivate: true
+  },
+  {
+    path: paths.OFFERFORM,
+    component: OfferForm,
+    isPrivate: true
+  },
+  {
+    path: paths.JOBOFFERS,
+    component: JobOffersPage,
     isPrivate: true
   }
 ];

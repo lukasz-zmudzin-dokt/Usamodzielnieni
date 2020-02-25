@@ -4,29 +4,28 @@ import DatePicker from "react-datepicker";
 import PropTypes from "prop-types";
 import "Views/OfferForm/style.css";
 
-const FormGroup = ({ header, setVal, array, type, incorrect }) => {
-  const [val, setValue] = useState("");
-
+const FormGroup = ({ header, setVal, array, type, incorrect, val }) => {
   const setInput = e => {
     const value = e.target.value;
-    setValue(value);
     setVal(value);
   };
 
   const setDate = date => {
-    setValue(date);
     setVal(date);
   };
 
   const setFormType = () => {
     switch (type) {
       case "select":
-        const options = array
-          .sort()
-          .map(val => <option key={val}>{val}</option>);
+        console.log(val);
         return (
-          <Form.Control as={type} val={val} onChange={setInput} required>
-            {options}
+          <Form.Control as={type} val={val} onChange={setInput}>
+            <option value="" disabled selected={val === "-- Wybierz --"}>
+              -- Wybierz --
+            </option>
+            {array.map(val => (
+              <option key={val}>{val}</option>
+            ))}
           </Form.Control>
         );
       case "textarea":

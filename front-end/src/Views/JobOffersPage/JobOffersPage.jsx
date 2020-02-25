@@ -1,39 +1,54 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import DOMElement from "react-dom";
-import { Container, Row, Col } from "react-bootstrap";
+import React, { useState, useEffect, useContext } from "react";
+import { Container, Card } from "react-bootstrap";
 import "./style.css";
-import { Button } from "react-bootstrap";
-import OfferHeader from "./OfferHeader";
-import Modal from "react-bootstrap/Modal";
-import InputGroup from "react-bootstrap/InputGroup";
-/*const offers = [
-    {
-        title: "Stolarz poszukiwany!",
-        description: "Do naszego zakładu potrzebujemy osoby, która ma chęć rąbać drewno! To możesz być ty!!!",
-        company_name: "Rębacze z Cintry sp. z o.o.",
-        first_name: "Jarosław",
-        last_name: "Psikuta",
-        email: "paniewidzisztamsnakońcu@gmail.com",
-        phone: "133792137"
-    }
-];*/
+import { UserContext } from "context";
+import { JobOfferInfo } from "./_components/JobOfferInfo";
+import Search from "Views/JobOffersPage/_components/Search";
 
+const getOffers = async token => {
+  let url = "https://usamo-back.herokuapp.com/offers/.../";
+  const headers = {
+    Authorization: "Token " + token,
+    "Content-Type": "application/json"
+  };
 
-class JobOffersPage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      user: {
-        username: "user1",
-        role: "common",
-        firstName: "Jan",
-        lastName: "Kowalski",
-        email: "jan.kowalski@pw.edu.pl",
-        phoneNumber: "+48123456789"
-      },
-      offers: [
+  const response = await fetch(url, { method: "GET", headers });
+
+  if (response.status === 200) {
+    return response.json().then(offers => mapOffers(offers));
+  } else {
+    throw response.status;
+  }
+  // TODO
+};
+
+const mapOffers = offers =>
+  offers.map(offer => ({
+    id: offer.id,
+    title: offer.title,
+    description: offer.description
+    // TODO
+  }));
+
+const JobOffersPage = props => {
+  const [offers, setOffers] = useState([]);
+  const [isOffersLoading, setIsOffersLoading] = useState(false);
+  const [filter, setFilter] = useState([]);
+  const user = useContext(UserContext);
+
+  useEffect(() => {
+    loadOffers(user.token);
+  }, [user.token]);
+
+  const loadOffers = async token => {
+    setIsOffersLoading(true);
+    let loadedOffers;
+    try {
+      loadedOffers = await getOffers(token);
+    } catch {
+      loadedOffers = [
         {
+          id: "1",
           title: "Stolarz poszukiwany!",
           description:
             "Do naszego zakładu potrzebujemy osoby, która ma chęć rąbać drewno! To możesz być ty!!!",
@@ -41,9 +56,13 @@ class JobOffersPage extends React.Component {
           firstName: "Jarosław",
           lastName: "Psikuta",
           email: "paniewidzisztamsnakońcu@gmail.com",
-          phone: "133792137"
+          phone: "133792137",
+          voivodeship: "Lubelskie",
+          type: "Szkolenie",
+          earnings: "Bezpłatne"
         },
         {
+          id: "2",
           title: "Pszczelarz poszukiwany!",
           description:
             "Do naszego zakładu potrzebujemy osoby, która ma chęć wyciagac miody pszczolom! To możesz być ty!!!",
@@ -51,69 +70,46 @@ class JobOffersPage extends React.Component {
           firstName: "Jarosław",
           lastName: "Psikuta",
           email: "paniewidzisztamsnakońcu@gmail.com",
-          phone: "133792137"
+          phone: "133792137",
+          voivodeship: "Pomorskie",
+          type: "Staż",
+          earnings: "Płatne"
+        },
+        {
+          id: "3",
+          title: "Pszczelarz poszukiwany!",
+          description:
+            "Do naszego zakładu potrzebujemy osoby, która ma chęć wyciagac miody pszczolom! To możesz być ty!!!",
+          companyName: "Google",
+          firstName: "Jarosław",
+          lastName: "Psikuta",
+          email: "paniewidzisztamsnakońcu@gmail.com",
+          phone: "133792137",
+          voivodeship: "Lubelskie",
+          type: "Praca",
+          earnings: "Płatne"
         }
-      ],
-      showModal: false,
-      selectedID: undefined
-    };
-  }
-
-  handleClick = e => {
-      console.log(this.state.offers[e.target.id].description);
-      this.setState({
-        showModal: true,
-        selectedID: e.target.id
-      });
-      
-  }
-
-  mapJobOffers = (offer, index) => {
-    return (
-      <li>
-      <OfferHeader
-        post={this.state.offers[index].title}
-        company={this.state.offers[index].companyName} />
-      <Button id={index} onClick={e => this.handleClick(e)}>Pokaż szczegóły</Button>
-      </li>
-    );
+      ]; // TODO: dodanie informacji o błędzie
+    }
+    setFilter(loadedOffers);
+    setOffers(loadedOffers);
+    setIsOffersLoading(false);
   };
 
-  makeBody = (index) => {
-    let body = "";
-    body += this.state.offers[this.state.selectedID].description;
-    body += "\nFIRMA: " + this.state.offers[this.state.selectedID].companyName;
-    body += "\ne-mail: " + this.state.offers[this.state.selectedID].email;
-    body += "\ntel: " + this.state.offers[this.state.selectedID].phone;
-
-    return body;
-  }
-
-  render() {
-    console.log("JobOffersPage");
-    return (
-      <Container className="jobOffersPage">
-        <ul>{this.state.offers.map((offer, index) => this.mapJobOffers(offer, index))}</ul>
-        <Modal
-        size="lg"
-        show={this.state.showModal}
-        onHide={() => this.setState({showModal: false})}
-        aria-labelledby="example-modal-sizes-title-lg"
-        >
-          <Modal.Header closeButton>
-          <Modal.Title id="example-modal-sizes-title-lg">
-            {this.state.selectedID === undefined ? 0 : this.state.offers[this.state.selectedID].title}
-          </Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            {this.state.selectedID === undefined ? 0 : this.makeBody(this.state.selectedID)}
-          </Modal.Body>
-        </Modal>
-      </Container>
-
-      
-    );
-  }
-}
-
+  return (
+    <Container className="mt-5">
+      <Search setFilter={setFilter} offers={offers} />
+      <Card>
+        <Card.Header as="h2">Oferty pracy</Card.Header>
+        <Card.Body>
+          {isOffersLoading ? (
+            <div>Ładowanie...</div>
+          ) : (
+            filter.map(offer => <JobOfferInfo offer={offer} />)
+          )}
+        </Card.Body>
+      </Card>
+    </Container>
+  );
+};
 export default JobOffersPage;

@@ -1,25 +1,8 @@
 import React, { useState } from "react";
 import { Form, Button, Row } from "react-bootstrap";
 import "./style.css";
-
-const voivodeships = [
-  "Zachodnio-pomorskie",
-  "Pomorskie",
-  "Warmińsko-Mazurskie",
-  "Podlaskie",
-  "Lubuskie",
-  "Wielkopolskie",
-  "Kujawsko-pomorskie",
-  "Mazowieckie",
-  "Lubelskie",
-  "Dolnośląskie",
-  "Łódzkie",
-  "Opolskie",
-  "Świętokrzystkie",
-  "Śląskie",
-  "Małopolskie",
-  "Podkarpackie"
-];
+import FormGroup from "components/FormGroup";
+import { voivodeships } from "constants/voivodeships";
 
 const typeOfWork = ["Szkolenie", "Praca", "Staż"];
 const earningsTab = ["Płatne", "Bezpłatne"];
@@ -34,15 +17,14 @@ const Search = ({ offers, setFilter }) => {
     event.preventDefault();
     const filters = { voivodeship, companyName, type, earnings };
     let newTab = offers;
-    let check = 0;
     for (let key in filters) {
       if (filters[key] !== "-- Wybierz --") {
         newTab = newTab.filter(val => {
           return val[key] === filters[key];
         });
-      } else check++;
+      }
     }
-    if (check != 4) setFilter({ tab: newTab, changed: true });
+    setFilter(newTab);
   };
 
   const deleteFilter = e => {
@@ -56,66 +38,34 @@ const Search = ({ offers, setFilter }) => {
   return (
     <Form className="mb-2" onSubmit={filter}>
       <div className="search__wrapper">
-        <Form.Group controlId="exampleForm.ControlSelect2">
-          <Form.Label>Województwo</Form.Label>
-          <Form.Control
-            as="select"
-            onChange={e => setVoivodeship(e.target.value)}
-            value={voivodeship}
-          >
-            <option data-hidden="true" disabled>
-              -- Wybierz --
-            </option>
-            {voivodeships.map(val => (
-              <option key={val}>{val}</option>
-            ))}
-          </Form.Control>
-        </Form.Group>
-        <Form.Group controlId="exampleForm.ControlSelect2">
-          <Form.Label>Firma</Form.Label>
-          <Form.Control
-            as="select"
-            onChange={e => setCompanyName(e.target.value)}
-            value={companyName}
-          >
-            <option data-hidden="true" disabled>
-              -- Wybierz --
-            </option>
-            {companies.map(val => (
-              <option key={val}>{val}</option>
-            ))}
-          </Form.Control>
-        </Form.Group>
-        <Form.Group controlId="exampleForm.ControlSelect2">
-          <Form.Label>Szkolenie/Praca</Form.Label>
-          <Form.Control
-            as="select"
-            onChange={e => setType(e.target.value)}
-            value={type}
-          >
-            <option data-hidden="true" disabled>
-              -- Wybierz --
-            </option>
-            {typeOfWork.map(val => (
-              <option key={val}>{val}</option>
-            ))}
-          </Form.Control>
-        </Form.Group>
-        <Form.Group controlId="exampleForm.ControlSelect2">
-          <Form.Label>Płatne/Bezpłatne</Form.Label>
-          <Form.Control
-            as="select"
-            onChange={e => setEarnings(e.target.value)}
-            value={earnings}
-          >
-            <option data-hidden="true" disabled>
-              -- Wybierz --
-            </option>
-            {earningsTab.map(val => (
-              <option key={val}>{val}</option>
-            ))}
-          </Form.Control>
-        </Form.Group>
+        <FormGroup
+          header="Województwo"
+          array={voivodeships}
+          val={voivodeship}
+          setVal={setVoivodeship}
+          type="select"
+        />
+        <FormGroup
+          header="Firma"
+          array={companies}
+          val={companyName}
+          setVal={setCompanyName}
+          type="select"
+        />
+        <FormGroup
+          header="Szkolenie/Praca"
+          array={typeOfWork}
+          val={type}
+          setVal={setType}
+          type="select"
+        />
+        <FormGroup
+          header="Płatne/Bezpłatne"
+          array={earningsTab}
+          val={earnings}
+          setVal={setEarnings}
+          type="select"
+        />
       </div>
       <Row className="justify-content-center align-items-center m-0">
         <Button
