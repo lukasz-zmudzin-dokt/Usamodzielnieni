@@ -16,7 +16,7 @@ const AccountForm = ({component}) => {
                         placeholder="Email"
                         required
                         defaultValue={email}
-                        onChange={e => onChange(component, e, "email")}
+                        onBlur={e => onChange(component, e, "email")}
                         className="loginPage__input"
                         maxLength="50"
                     />
@@ -30,7 +30,7 @@ const AccountForm = ({component}) => {
                         autoComplete="on"
                         placeholder="Nazwa użytkownika"
                         defaultValue={username}
-                        onChange={e => onChange(component, e, "username")}
+                        onBlur={e => onChange(component, e, "username")}
                         required
                         minLength="6"
                         maxLength="20"
@@ -45,7 +45,7 @@ const AccountForm = ({component}) => {
                         autoComplete="on"
                         placeholder="Hasło"
                         defaultValue={password}
-                        onChange={e => onChange(component, e, "password")}
+                        onBlur={e => onChange(component, e, "password")}
                         required
                         minLength="6"
                         maxLength="30"
@@ -61,7 +61,7 @@ const AccountForm = ({component}) => {
                         autoComplete="on"
                         placeholder="Powtórz hasło"
                         defaultValue={passwordR}
-                        onChange={e => onChange(component, e, "passwordR")}
+                        onBlur={e => onChange(component, e, "passwordR")}
                         required
                         minLength="6"
                     />

@@ -6,12 +6,11 @@ import bgImage from "../../assets/fot..png";
 import { connect } from "react-redux";
 import { setUserToken } from "redux/actions";
 import PersonalDataForm from "./components/personalDataForm";
-import HomeDataForm from "./components/homeDataForm";
 import AccountForm from "./components/accountForm";
 import {renderRedirect, renderSection} from "./functions/handlers";
-import CompanyDataForm from "./components/companyDataForm";
+import {handleSubmit} from "./functions/submitForm";
 
-const cookies = new Cookies();
+
 
 class RegisterPage extends React.Component {
     constructor(props) {
@@ -21,10 +20,6 @@ class RegisterPage extends React.Component {
             username: "",
             password: "",
             passwordR: "",
-            company_name: "",
-            company_city: "",
-            company_postal_code: "",
-            company_street: "",
             company_nip: "",
             name_of_place: "",
             street: "",
@@ -48,7 +43,7 @@ class RegisterPage extends React.Component {
 
     render() {
         const { validated, incorrect, message, correct } = this.state;
-        const { handleSubmit, selectType } = this;
+        const { selectType } = this;
         const types = this.props.accountTypes || ['Podopiecznym', 'Pracodawcą'];
         return (
             <Container className="loginPage loginPage__register">
@@ -81,6 +76,7 @@ class RegisterPage extends React.Component {
                                 <PersonalDataForm component={this}/>
                                 {renderSection(this)}
                                 <AccountForm component={this}/>
+                                {console.log(this.state)}
                             </section>
                             <Button
                                 variant="secondary"

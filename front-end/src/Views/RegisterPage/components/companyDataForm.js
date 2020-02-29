@@ -3,7 +3,7 @@ import { onChange } from '../functions/handlers';
 import {Card, Form} from "react-bootstrap";
 
 const CompanyDataForm = ({component}) => {
-    let { company_name, company_street, company_city, company_postal_code, company_nip } = component.state;
+    let { name_of_place, street, city, city_code, company_nip } = component.state;
     return (
         <Card
             bg="light"
@@ -13,14 +13,13 @@ const CompanyDataForm = ({component}) => {
                 Dane firmy
             </Card.Header>
             <Card.Body className="">
-                {console.log(component.state)}
                 <Form.Group controlId="formGroupNameOfPlace">
                     <Form.Control
                         type="text"
                         autoComplete="on"
                         placeholder="Nazwa firmy"
-                        defaultValue={company_name}
-                        onBlur={e => onChange(component, e, "company_name")}
+                        defaultValue={name_of_place}
+                        onBlur={e => onChange(component, e, "name_of_place")}
                         required
                     />
                     <Form.Control.Feedback type="invalid">
@@ -32,7 +31,7 @@ const CompanyDataForm = ({component}) => {
                         type="text"
                         autoComplete="on"
                         placeholder="Ulica"
-                        defaultValue={company_street}
+                        defaultValue={street}
                         onBlur={e => onChange(component, e, "street")}
                         required
                     />
@@ -45,8 +44,8 @@ const CompanyDataForm = ({component}) => {
                         type="text"
                         autoComplete="on"
                         placeholder="Nazwa miasta"
-                        defaultValue={company_city}
-                        onBlur={e => onChange(component, e, "company_city")}
+                        defaultValue={city}
+                        onBlur={e => onChange(component, e, "city")}
                         required
                     />
                     <Form.Control.Feedback type="invalid">
@@ -59,8 +58,8 @@ const CompanyDataForm = ({component}) => {
                         type="text"
                         autoComplete="on"
                         placeholder="Kod pocztowy"
-                        defaultValue={company_postal_code}
-                        onChange={e => onChange(component, e, "company_postal_code")}
+                        defaultValue={city_code}
+                        onBlur={e => onChange(component, e, "city_code")}
                         required
                     />
                     <Form.Control.Feedback type="invalid">
@@ -73,7 +72,7 @@ const CompanyDataForm = ({component}) => {
                         autoComplete="on"
                         placeholder="NIP"
                         defaultValue={company_nip}
-                        onChange={e => onChange(component, e, "company_nip")}
+                        onBlur={e => onChange(component, e, "company_nip")}
                         required
                     />
                     <Form.Control.Feedback type="invalid">

@@ -61,7 +61,7 @@ const HomeDataForm = ({component}) => {
                         autoComplete="on"
                         placeholder="Kod pocztowy"
                         defaultValue={city_code}
-                        onChange={e => onChange(component, e, "city_code")}
+                        onBlur={e => onChange(component, e, "city_code")}
                         required
                     />
                     <Form.Control.Feedback type="invalid">

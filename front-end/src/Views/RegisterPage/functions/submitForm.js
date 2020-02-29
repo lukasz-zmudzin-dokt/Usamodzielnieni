@@ -1,14 +1,30 @@
+import {sendData} from "./sendData";
+
+const chooseObject = component => {
+    switch(component.state.account_type) {
+        case "Podopiecznym": {return({
+            facility_name: component.state.name_of_place,
+            facility_address: `${component.state.city} ${component.state.street} ${component.state.city_code}`
+        })}
+        case "Pracodawcą": {return({
+            company_name: component.state.name_of_place,
+            company_address: `${component.state.city} ${component.state.street} ${component.state.city_code}`,
+            company_nip: component.state.company_nip
+        })}
+        case "Administratorem": {return({
+
+        })}
+    }
+};
+
 export const handleSubmit = (component, event) => {
     const {
+        account_type,
         email,
         first_name,
         last_name,
         username,
         phone_number,
-        city,
-        city_code,
-        street,
-        name_of_place,
         password,
         passwordR
     } = component.state;
@@ -27,18 +43,15 @@ export const handleSubmit = (component, event) => {
         component.setState({
             areEqual: true
         });
-        const facility_name = name_of_place;
-        const facility_address = `${city} ${street} ${city_code}`;
-        component.sendData({
+        if (account_type === "Podopiecznym")
+        sendData(component, {
             email,
             first_name,
             last_name,
             username,
             phone_number,
             password,
-            facility_name,
-            facility_address
-        });
+        }, chooseObject(component));
     }
 
     component.setState({
