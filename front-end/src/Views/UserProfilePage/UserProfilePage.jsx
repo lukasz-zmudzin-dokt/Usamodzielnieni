@@ -33,19 +33,22 @@ class UserProfilePage extends React.Component {
       phoneNumber: "+48123456789"
     }
   };
-  
-  
-  
-   async componentDidMount() {
-    
-    const cookies = await new Cookies();
+
+
+
+
+  async componentDidMount() {
+
+
+    const cookies = new Cookies();
     const url = "http://usamo-back.herokuapp.com/account/data";
     const token = await cookies.get("token");
     console.log(token);
     const response = await fetch(url, {
       method: 'GET',
-      headers:{
-        "Authorization": "token " + token
+      headers: {
+        "Authorization": "token " + token,
+        "Content-Type": "application/json"
       }
     }).then(response => {
       if (!response.ok) throw new Error(response.status);
