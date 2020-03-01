@@ -7,7 +7,8 @@ import EducationTab from 'Views/CVEditorPage/components/EducationTab';
 import WorkExperienceTab from 'Views/CVEditorPage/components/WorkExperienceTab';
 import LanguagesTab from 'Views/CVEditorPage/components/LanguagesTab';
 import SkillsTab from 'Views/CVEditorPage/components/SkillsTab';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
+import PhotoTab from './components/PhotoTab';
 
 import { sendData } from "Views/CVEditorPage/functions/other.js";
 import { createCVObject } from "Views/CVEditorPage/functions/createCVObject.js";
@@ -24,7 +25,8 @@ class CVEditorPage extends React.Component {
             education: null,
             workExperience: null,
             skills: null,
-            languages: null
+            languages: null,
+            photo: null
         };
         this.tabs = [];
     }
@@ -102,6 +104,15 @@ class CVEditorPage extends React.Component {
                 component: (
                     <LanguagesTab
                         data={this.state.languages} onChange={languages => this.setState({ languages })}
+                        onPrevClick={this.onPrevClick} onNextClick={this.onNextClick} />
+                )
+            },
+            {
+                id: 'photo',
+                name: 'Zdjęcie',
+                component: (
+                    <PhotoTab
+                        data={this.state.photo} onChange={photo => this.setState({ photo })}
                         onPrevClick={this.onPrevClick} />
                 )
             }
