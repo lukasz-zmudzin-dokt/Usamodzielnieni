@@ -13,7 +13,16 @@ const paths = {
   REGISTER: "/newAccount",
   FOOTER: "/footer",
   LOGIN: "/login",
-  USER: "/user"
+  USER: "/user",
+  OFFERFORM: "/offerForm",
+  JOBOFFERS: "/jobOffers",
+  CVAPPROVAL: "/cvApproval"
+};
+
+const userTypes = {
+  CHARGE: "charge",
+  STAFF: "staff",
+  EMPLOYER: "employer"
 };
 
 export default [
@@ -25,7 +34,8 @@ export default [
   {
     path: paths.CVEDITOR,
     component: CVEditorPage,
-    isPrivate: true
+    isPrivate: true,
+    type: userTypes.CHARGE
   },
   {
     path: paths.REGISTER,
@@ -45,7 +55,26 @@ export default [
   {
     path: paths.USER,
     component: UserProfilePage,
-    isPrivate: true
+    isPrivate: true,
+    type: undefined // jeżeli jest undefined to znaczy że jest dostępne dla wszystkich typów konta
+  },
+  {
+    path: paths.JOBOFFERS,
+    component: null,
+    isPrivate: true,
+    type: userTypes.EMPLOYER
+  },
+  {
+    path: paths.OFFERFORM,
+    component: null,
+    isPrivate: true,
+    type: userTypes.EMPLOYER
+  },
+  {
+    path: paths.CVAPPROVAL,
+    component: null,
+    isPrivate: true,
+    type: userTypes.STAFF
   }
 ];
 

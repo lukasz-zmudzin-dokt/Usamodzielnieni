@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Cookies from "universal-cookie";
 
 export const UserContext = React.createContext({
-  type: undefined, // Employer,Staff,Basic,Admin
+  type: undefined, // employer,staff,charge
   token: undefined,
   login: () => {},
   logout: () => {}
@@ -10,6 +10,7 @@ export const UserContext = React.createContext({
 const cookies = new Cookies();
 
 export const UserProvider = props => {
+  const type = "charge";
   const [token, setToken] = useState(cookies.get("token"));
   const user = {
     token,
@@ -20,7 +21,8 @@ export const UserProvider = props => {
     logout: () => {
       cookies.remove("token", { path: "/" });
       setToken(undefined);
-    }
+    },
+    type
   };
   return <UserContext.Provider value={user} {...props} />;
 };
