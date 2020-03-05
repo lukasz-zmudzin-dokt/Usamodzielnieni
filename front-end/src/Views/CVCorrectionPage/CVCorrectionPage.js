@@ -25,6 +25,12 @@ class CVCorrectionPage extends React.Component {
         }
     };
 
+    onDocumentLoadSuccess = ({ numPages }) => {
+        this.setState({
+            numPages: numPages+1
+        });
+    };
+
     render() {
         return(
             <div className="correction_area">
@@ -35,7 +41,7 @@ class CVCorrectionPage extends React.Component {
                             Uwagi do CV
                         </Card.Header>
                         <Card.Body>
-                            <RenderForms component={this}/>
+                            <RenderForms component={this} loadSuccess={this.onDocumentLoadSuccess}/>
                             <ButtonToolbar className="comment_mgmt_toolbar">
                                 <Button className="comment_button send" variant="success" onClick={sendReview(this)}>Wyślij uwagi</Button>
                                 <LinkContainer to="/user">
