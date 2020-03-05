@@ -36,7 +36,6 @@ class RegisterPage extends React.Component {
   };
 
   sendData = object => {
-    console.log(object);
     const url = "https://usamo-back.herokuapp.com/account/register/";
     fetch(url, {
       method: "POST",
@@ -47,7 +46,6 @@ class RegisterPage extends React.Component {
         Origin: null
       }
     }).then(res => {
-      console.log(res);
       if (res.status === 201) {
         res.json().then(responseValue => {
           const { token, type } = responseValue;
@@ -114,16 +112,6 @@ class RegisterPage extends React.Component {
       });
       const facility_name = name_of_place;
       const facility_address = `${city} ${street} ${city_code}`;
-      console.log({
-        email,
-        first_name,
-        last_name,
-        username,
-        phone_number,
-        password,
-        facility_name,
-        facility_address
-      });
       this.sendData({
         email,
         first_name,

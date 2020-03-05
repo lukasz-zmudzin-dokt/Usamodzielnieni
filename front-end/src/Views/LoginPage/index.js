@@ -45,10 +45,8 @@ class LoginPage extends React.Component {
         Origin: null
       }
     }).then(res => {
-      console.log(res);
       if (res.status === 200) {
         res.json().then(responseValue => {
-          console.log(responseValue);
           const { token, type } = responseValue;
           this.context.login(token);
           this.context.setType(type);
@@ -97,12 +95,7 @@ class LoginPage extends React.Component {
       event.preventDefault();
       event.stopPropagation();
     } else {
-      // if (cookieVal) {
-      //   console.log("dodaje!");
-      //   setCookie();
-      // }
       this.sendData();
-      console.log(password, username); // login i hasło użytkownika
     }
 
     this.setState({

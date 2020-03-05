@@ -56,7 +56,7 @@ export default [
     path: paths.USER,
     component: UserProfilePage,
     isPrivate: true,
-    type: userTypes.EMPLOYER // jeżeli jest undefined to znaczy że jest dostępne dla wszystkich typów konta
+    type: undefined // jeżeli jest undefined to znaczy że jest dostępne dla wszystkich typów konta
   },
   {
     path: paths.JOBOFFERS,

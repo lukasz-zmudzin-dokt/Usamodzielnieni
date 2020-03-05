@@ -7,7 +7,6 @@ const PrivateRoute = ({ redirect, type, ...rest }) => {
   return (
     <UserContext.Consumer>
       {value => {
-        console.log(value.type, type);
         if (value.token) {
           if (!type) return <Route {...rest} />;
           else if (type === value.type) return <Route {...rest} />;
