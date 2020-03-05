@@ -7,7 +7,6 @@ import { UserContext } from "context";
 import "Views/LoginPage/style.css";
 import bgImage from "../../assets/fot..png";
 
-
 class LoginPage extends React.Component {
   state = {
     username: "",
@@ -49,8 +48,10 @@ class LoginPage extends React.Component {
       console.log(res);
       if (res.status === 200) {
         res.json().then(responseValue => {
-          const { token } = responseValue;
+          console.log(responseValue);
+          const { token, type } = responseValue;
           this.context.login(token);
+          this.context.setType(type);
           this.setRedirect();
         });
       } else {

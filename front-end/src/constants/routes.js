@@ -20,9 +20,9 @@ const paths = {
 };
 
 const userTypes = {
-  CHARGE: "charge",
-  STAFF: "staff",
-  EMPLOYER: "employer"
+  STANDARD: "Standard",
+  STAFF: "Staff",
+  EMPLOYER: "Employer"
 };
 
 export default [
@@ -35,7 +35,7 @@ export default [
     path: paths.CVEDITOR,
     component: CVEditorPage,
     isPrivate: true,
-    type: userTypes.CHARGE
+    type: userTypes.STANDARD
   },
   {
     path: paths.REGISTER,
@@ -56,7 +56,7 @@ export default [
     path: paths.USER,
     component: UserProfilePage,
     isPrivate: true,
-    type: undefined // jeżeli jest undefined to znaczy że jest dostępne dla wszystkich typów konta
+    type: userTypes.EMPLOYER // jeżeli jest undefined to znaczy że jest dostępne dla wszystkich typów konta
   },
   {
     path: paths.JOBOFFERS,

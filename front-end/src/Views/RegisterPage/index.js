@@ -41,6 +41,7 @@ class RegisterPage extends React.Component {
     fetch(url, {
       method: "POST",
       body: JSON.stringify(object),
+      name: "register",
       headers: {
         "Content-Type": "application/json",
         Origin: null
@@ -49,9 +50,10 @@ class RegisterPage extends React.Component {
       console.log(res);
       if (res.status === 201) {
         res.json().then(responseValue => {
-          const { token } = responseValue;
+          const { token, type } = responseValue;
           this.setRedirect();
           this.context.login(token);
+          this.context.setType(type);
           this.setState({
             validated: false,
             message: "Udało się zarejestrować! Teraz możesz się zalogować",
@@ -408,5 +410,5 @@ class RegisterPage extends React.Component {
 }
 
 RegisterPage.contextType = UserContext;
-                
+
 export default RegisterPage;
