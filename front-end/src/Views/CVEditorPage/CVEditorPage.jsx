@@ -12,6 +12,7 @@ import PhotoTab from './components/PhotoTab';
 
 import { sendData } from "Views/CVEditorPage/functions/other.js";
 import { createCVObject } from "Views/CVEditorPage/functions/createCVObject.js";
+import { Button } from "react-bootstrap";
 
 
 class CVEditorPage extends React.Component {
@@ -119,6 +120,10 @@ class CVEditorPage extends React.Component {
         ]
     }
 
+    handle = () => {
+        console.log(this.state.photo);
+    }
+
     render() {
         this.tabs = this.getTabs();
 
@@ -137,6 +142,8 @@ class CVEditorPage extends React.Component {
                                 {this.tabs.map(tab => (<Tab eventKey={tab.id} title={tab.name}>{tab.component}</Tab>))}
                             </Tabs>
                         </Form>
+                        <Button onClick={e => this.handle(e)}>KLIK</Button>
+                        
                     </Card.Body>
                 </Card>
             </Container>
