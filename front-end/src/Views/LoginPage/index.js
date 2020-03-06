@@ -87,7 +87,6 @@ class LoginPage extends React.Component {
 
   handleSubmit = event => {
     const form = event.currentTarget;
-    const { password, username } = this.state;
 
     event.preventDefault();
 

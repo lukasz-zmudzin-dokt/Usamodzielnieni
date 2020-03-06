@@ -60,19 +60,19 @@ export default [
   },
   {
     path: paths.JOBOFFERS,
-    component: null,
+    component: UserProfilePage, // tu trzeba zmienić komponent
     isPrivate: true,
     type: userTypes.EMPLOYER
   },
   {
     path: paths.OFFERFORM,
-    component: null,
+    component: UserProfilePage, // tu trzeba zmienić komponent
     isPrivate: true,
     type: userTypes.EMPLOYER
   },
   {
     path: paths.CVAPPROVAL,
-    component: null,
+    component: UserProfilePage, // tu trzeba zmienić komponent
     isPrivate: true,
     type: userTypes.STAFF
   }
