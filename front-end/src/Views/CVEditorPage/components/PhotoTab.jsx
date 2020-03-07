@@ -12,9 +12,8 @@ class PhotoTab extends React.Component {
     }
     
     onChange = (e) => {
-        const { name } = e.target;
-
-        this.props.onChange({[this.props.data]: this.fileInput.current.files[0]});  //this.fileInput.current.files[0].name 
+        this.props.onChange({photo: this.fileInput.files[0]});
+        console.log(typeof this.fileInput.files[0]);
     }
     
     render() {
@@ -32,7 +31,7 @@ class PhotoTab extends React.Component {
                         name="photo"
                         inline
                         type="file"
-                        ref={this.fileInput}
+                        ref={(ref) => this.fileInput = ref}
                         onChange={this.onChange}
                     />
         </Form.Group>

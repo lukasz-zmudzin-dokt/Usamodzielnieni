@@ -58,7 +58,7 @@ class CVEditorPage extends React.Component {
             this.state.languages
         )
         console.log(JSON.stringify(cv));
-        await sendData(cv);
+        await sendData(cv, this.state.photo);
     };
 
     getTabs() {
