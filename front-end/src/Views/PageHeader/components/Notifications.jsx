@@ -1,14 +1,6 @@
 import React, { useState } from 'react';
-import { Nav, Dropdown, Button, Badge } from "react-bootstrap";
-import { IndexLinkContainer } from 'react-router-bootstrap';
-
-const NotificationItem = props => (
-    <IndexLinkContainer to="/cvEditor">
-        <Nav.Link {...props}>
-            { props.notification.title }
-        </Nav.Link>
-    </IndexLinkContainer>
-)
+import { Nav, Dropdown, Button, Badge, Col } from "react-bootstrap";
+import NotificationItem from './NotificationItem';
 
 const NotificationToggle = props => (
     <Button variant="light" {...props}>
@@ -18,13 +10,17 @@ const NotificationToggle = props => (
 
 const Notifications = props => {
     const [notifications, setNotifications] = useState([
-        { title: 'Rozpatrzono CV' },
-        { title: 'Dostępne nowe oferty pracy' }
+        { id: 1, title: 'Rozpatrzono CV', time: new Date() },
+        { id: 2, title: 'Dostępne nowe oferty pracy', time: new Date() }
     ]);
 
     const clearNotifications = e => {
         setNotifications([]);
     }
+
+    const removeNotification = id => setNotifications(
+        notifications.filter(not => not.id !== id)
+    )
 
     return (
         <Dropdown as={Nav.Item} {...props}>
@@ -32,12 +28,12 @@ const Notifications = props => {
             <Dropdown.Menu>
                 { 
                     notifications.length ? notifications.map(notification => (
-                        <Dropdown.Item as={NotificationItem} notification={notification} />
+                        <Dropdown.Item as={NotificationItem} notification={notification} onClick={removeNotification}/>
                     )) 
-                    : (<Nav.Link disabled>Brak powiadomień</Nav.Link>) 
+                    : (<Col>Brak powiadomień</Col>) 
                 }
                 <Dropdown.Divider />
-                <Dropdown.Item onClick={clearNotifications}>Wyczyść</Dropdown.Item>
+                <Dropdown.Item onClick={clearNotifications} disabled={!notifications.length}>Wyczyść</Dropdown.Item>
             </Dropdown.Menu>
         </Dropdown>
     )

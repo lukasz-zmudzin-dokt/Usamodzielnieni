@@ -35,7 +35,7 @@ class HeaderTemplate extends React.Component {
     if (this.context.token)
       return (
         <Form inline pull-right className="action_buttons">
-            <Notifications />
+            <Notifications className="menu_action_button_0"/>
             <IndexLinkContainer to="/user">
               <Button className="menu_action_button_1" variant="light">
                 Profil
