@@ -12,7 +12,7 @@ class PhotoTab extends React.Component {
     }
     
     onChange = (e) => {
-        this.props.onChange({photo: this.fileInput.files[0]});
+        this.props.onChange(this.fileInput.files[0]);
         console.log(typeof this.fileInput.files[0]);
     }
     
