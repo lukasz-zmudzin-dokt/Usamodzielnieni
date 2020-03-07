@@ -1,9 +1,9 @@
 import React from 'react';
-import { Nav, Button, ButtonGroup } from "react-bootstrap";
-import { LinkContainer   } from 'react-router-bootstrap';
+import { Button, ButtonGroup } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import "./NotificationItem.css"
 
-const NotificationItem = ({ notification, onClick, ...props }) => {
+const NotificationItem = ({ notification, onClick, ...rest }) => {
     const formatDate = (date) => date.toLocaleDateString(undefined, {})
     const onButtonClick = e => {
         onClick(notification.id)
@@ -11,12 +11,10 @@ const NotificationItem = ({ notification, onClick, ...props }) => {
 
     return (
         <ButtonGroup className="notificationItem">
-            <LinkContainer   to="/cvEditor">
-                <Nav.Link onClick={onButtonClick} {...props}>
-                    <div>{ notification.title }</div>
-                    <small>{ formatDate(notification.time) }</small>
-                </Nav.Link>
-            </LinkContainer  >
+            <Link to={notification.path} {...rest}>
+                <div>{ notification.title }</div>
+                <small>{ formatDate(notification.time) }</small>
+            </Link>
             <Button onClick={onButtonClick} variant="light">X</Button>
         </ButtonGroup>
     )
