@@ -14,6 +14,7 @@ import Cookies from "universal-cookie";
 import { setUserToken } from "redux/actions";
 import Menu from "./Views/Menu";
 import CVCorrectionPage from "./Views/CVCorrectionPage";
+import PasswordResetPrompt from "./Views/PasswordReset";
 
 const cookies = new Cookies();
 
@@ -36,6 +37,7 @@ class App extends React.Component {
             <Route path="/newAccount" exact component={RegisterPage} />
             <Route path="/footer" exact component={Footer} />
             <Route path="/cvCorrector" exact component={CVCorrectionPage} />
+            <Route path="/forgottenPassword" exact component={PasswordResetPrompt} />
           </Switch>
         </Router>
       </Provider>
