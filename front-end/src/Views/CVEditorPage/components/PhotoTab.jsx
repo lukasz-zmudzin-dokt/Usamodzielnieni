@@ -12,8 +12,15 @@ class PhotoTab extends React.Component {
     }
     
     onChange = (e) => {
-        this.props.onChange(this.fileInput.files[0]);
-        console.log(typeof this.fileInput.files[0]);
+        if(this.fileInput.files[0] && this.fileInput.files[0].type.substring(0, 5) === 'image') {
+            this.props.onChange(this.fileInput.files[0]);
+        }
+        else {
+            e.target.value = null;
+            alert('BŁĄD: Niewłaściwy typ pliku - plik musi być obrazem.');
+        }
+
+        console.log(this.fileInput.files[0]);
     }
     
     render() {
@@ -34,7 +41,7 @@ class PhotoTab extends React.Component {
                         ref={(ref) => this.fileInput = ref}
                         onChange={this.onChange}
                     />
-        </Form.Group>
+                </Form.Group>
             </CVEditorTab>
         );
     }
