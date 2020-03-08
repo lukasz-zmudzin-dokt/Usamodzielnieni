@@ -6,6 +6,7 @@ const cookies = new Cookies();
 export const sendData = (component, constObject, varObject) => {
     console.log(constObject + varObject);
     let url;
+    console.log("im choosing url");
     switch (component.state.account_type) {
         case "Podopiecznym": url = "https://usamo-back.herokuapp.com/account/register/"; break;
         case "Pracodawcą": url = "https://usamo-back.herokuapp.com/account/register/employer/"; break;

@@ -9,7 +9,7 @@ const chooseObject = component => {
         case "Pracodawcą": {return({
             company_name: component.state.name_of_place,
             company_address: `${component.state.city} ${component.state.street} ${component.state.city_code}`,
-            company_nip: component.state.company_nip
+            nip: component.state.company_nip
         })}
         case "Administratorem": {return({
 

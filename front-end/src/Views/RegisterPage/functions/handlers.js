@@ -25,8 +25,8 @@ export const setRedirect = component => {
 
 export const renderSection = (component) => {
     switch(component.state.account_type) {
-        case "Podopiecznym": {return <HomeDataForm component={component} />}; break;
-        case "Pracodawcą": {return <CompanyDataForm component={component} /> }; break;
-        case "Administratorem": {return null;}; break;
+        case "Podopiecznym": {return <HomeDataForm component={component} />}
+        case "Pracodawcą": {return <CompanyDataForm component={component} /> }
+        case "Administratorem": {return null;}
     }
 }
