@@ -51,21 +51,23 @@ class UserProfilePage extends React.Component {
         "Content-Type": "application/json"
       }
     }).then(response => {
-      if (!response.ok) throw new Error(response.status);
+     // if (!response.ok) throw new Error(response.status);
       return response;
     });
     const data = await response.json();
     console.log(data);
-    console.log(data.first_name);
+    console.log(data.data);
+    console.log(data.data.first_name);
     this.setState({
       user: {
-        username: data.username,
-        firstName: data.first_name,
-        lastName: data.last_name,
-        email: data.email,
-        phoneNumber: data.phone_number
+        username: data.data.username,
+        firstName: data.data.first_name,
+        lastName: data.data.last_name,
+        email: data.data.email,
+        phoneNumber: data.data.phone_number
       }
     });
+
   }
 
   render() {
