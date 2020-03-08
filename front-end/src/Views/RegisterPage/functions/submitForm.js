@@ -43,7 +43,6 @@ export const handleSubmit = (component, event) => {
         component.setState({
             areEqual: true
         });
-        if (account_type === "Podopiecznym")
         sendData(component, {
             email,
             first_name,
