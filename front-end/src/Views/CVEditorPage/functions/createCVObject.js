@@ -32,5 +32,6 @@ export const createCVObject = (personalData, education, workExperience, skills, 
     schools: mapEducation(education),
     experiences: mapWorkExperience(workExperience),
     skills: mapSkills(skills),
-    languages: mapLanguages(languages)
+    languages: mapLanguages(languages),
+    "wants_verification": true
 })
