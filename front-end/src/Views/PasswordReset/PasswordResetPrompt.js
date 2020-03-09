@@ -2,7 +2,6 @@ import React from "react";
 import bgImage from "../../assets/fot..png";
 import {Button, Card, Container} from "react-bootstrap";
 import Form from "react-bootstrap/Form";
-import {Link} from "react-router-dom";
 import {handleBlur, handleSubmit} from "./functions/handlers";
 
 class PasswordResetPrompt extends React.Component {
@@ -29,7 +28,7 @@ class PasswordResetPrompt extends React.Component {
                         <Form
                             noValidate
                             validated={validated}
-                            onSubmit={handleSubmit(this)}
+                            onSubmit={e => handleSubmit(this, e)}
                             className="primary"
                         >
                             <Form.Group controlId="formGroupUsername">
@@ -46,7 +45,7 @@ class PasswordResetPrompt extends React.Component {
                                     Podaj właściwy login
                                 </Form.Control.Feedback>
                             </Form.Group>
-                            <Button type="submit">Wyślij</Button>
+                            <Button variant="secondary" className="loginPage__button" type="submit">Wyślij</Button>
                         </Form>
                     </Card.Body>
                 </Card>
