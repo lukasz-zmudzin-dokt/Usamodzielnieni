@@ -17,6 +17,8 @@ export const UserProvider = props => {
     type,
     login: token => {
       cookies.set("token", token, { path: "/" });
+      cookies.remove("type", type, { path: "/" });
+      setType(type);
       setToken(token);
     },
     logout: () => {
