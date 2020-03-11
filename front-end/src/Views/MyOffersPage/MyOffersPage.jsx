@@ -1,6 +1,7 @@
 import React from "react";
 import "./style.css";
-import {Accordion, Button, Card, Col, Container, Row} from "react-bootstrap";
+import {Card, Container} from "react-bootstrap";
+import MyOffers from "./components/MyOffers";
 
 const offers = [
     {
@@ -70,105 +71,6 @@ const offers = [
     }
 ];
 
-class InterestedPerson extends React.Component {
-
-    render() {
-        const { person } = this.props;
-        function downloadCV() {
-                console.log("ściągnij cv osoby z id " + person.id);
-        }
-
-        return (
-            <Row className="mt-3">
-                <Col xs={6} md={3}>{person.firstName}</Col>
-                <Col xs={6} md={3}>{person.lastName}</Col>
-                <Col xs={12} md={4}>
-                    <a href={"mailto:" + person.email}> {person.email} </a>
-                </Col>
-                <Col xs={12} md={2}>
-                    <Button variant="primary m-1 p-1" onClick={downloadCV}>Zobacz CV</Button>
-                </Col>
-            </Row>
-        );
-    }
-}
-
-class MyOffer extends React.Component {
-    render() {
-        const { offer } = this.props;
-
-        return(
-            <Card>
-                <Accordion.Toggle as={Card.Header} eventKey={offer.id}>
-                    {offer.name}
-                </Accordion.Toggle>
-                <Accordion.Collapse eventKey={offer.id}>
-                    <Card.Body>
-                        <NoInterest answers={offer.answers} />
-                        <MyOffersLegend answers={offer.answers} />
-                        {offer.answers.map((value, key) => {
-                            return (
-                                <InterestedPerson person={value} key={value.id}/>
-                            )
-                        })}
-                    </Card.Body>
-                </Accordion.Collapse>
-            </Card>
-        );
-    }
-}
-
-class MyOffers extends React.Component {
-    render() {
-        return(
-            <Accordion defaultActiveKey="0">
-                {offers.map((value, index) => {
-                    return (
-                        <MyOffer offer={value} key={value.id}/>
-                    )
-                })}
-            </Accordion>
-        );
-    }
-}
-
-class MyOffersLegend extends React.Component {
-    render() {
-        const { answers } = this.props;
-        if(answers.length > 0) {
-            return (
-                <Row className="mt-3 person-row">
-                    <Col xs={6} md={3}><b>Imię</b></Col>
-                    <Col xs={6} md={3}><b>Nazwisko</b></Col>
-                    <Col xs={12} md={4}><b>Email</b></Col>
-                    <Col xs={12} md={2}><b>CV</b></Col>
-                </Row>
-            );
-        } else {
-            return null;
-        }
-    }
-}
-
-class NoInterest extends React.Component {
-    render() {
-        const { answers } = this.props;
-        if(answers === undefined) {
-            return (
-                <Row className="ml-1">Do tego ogłoszenia nie zgłosił się jeszcze nikt chętny.</Row>
-            );
-        } else {
-            if(answers.length === 0) {
-                return (
-                    <Row className="ml-1">Do tego ogłoszenia nie zgłosił się jeszcze nikt chętny.</Row>
-                );
-            } else {
-                return null;
-            }
-        }
-    }
-}
-
 class MyOffersPage extends React.Component {
     render() {
         return(
@@ -177,7 +79,7 @@ class MyOffersPage extends React.Component {
                     <Card className="my-offers-card no-border">
                         <Card.Header className="border"><h3>Moje oferty</h3><p className="pt-3">Kliknij zakładkę, by wyświetlić osoby zainteresowane daną ofertą.</p></Card.Header>
                         <Card.Body className="border">
-                            <MyOffers />
+                            <MyOffers offers={offers}/>
                         </Card.Body>
                     </Card>
                 </div>
