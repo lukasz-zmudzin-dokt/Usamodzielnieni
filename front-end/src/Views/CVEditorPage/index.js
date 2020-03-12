@@ -93,6 +93,7 @@ class CVEditorPage extends React.Component {
                                                 dateFormat=" dd.MM.yyyy"
                                                 selected={this.state.birthDate}
                                                 onChange={() => handleBirthDateChange(this)}
+                                                onBlur={e => handleBlur(this,e, "birthDate")}
                                                 withPortal
                                                 peekNextMonth
                                                 showMonthDropdown
