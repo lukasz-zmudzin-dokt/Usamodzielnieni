@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Nav, Dropdown, Col } from "react-bootstrap";
 import NotificationItem from './NotificationItem';
 import NotificationToggle from './NotificationToggle';
+import "./Notifications.css";
 
 const getNotifications = async (token) => {
     let url = "https://usamo-back.herokuapp.com/notifications/.../"; // TODO
@@ -108,12 +109,14 @@ const Notifications = ({ location, token, ...rest }) => {
         <Dropdown as={Nav.Item} {...rest}>
             <Dropdown.Toggle as={NotificationToggle} count={isLoading ? 0 : notifications.length} />
             <Dropdown.Menu>
+                <div class="notifications-container">
                 { 
                     !isLoading && notifications.length ? notifications.map(notification => (
                         <Dropdown.Item as={NotificationItem} notification={notification} onClick={removeNotification}/>
                     )) 
                     : (<Dropdown.Item as={Col} disabled>Brak powiadomień</Dropdown.Item>) 
                 }
+                </div>
                 <Dropdown.Divider />
                 <Dropdown.Item onClick={clearNotifications} disabled={!notifications.length}>Wyczyść</Dropdown.Item>
             </Dropdown.Menu>
