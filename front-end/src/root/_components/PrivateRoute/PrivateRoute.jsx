@@ -3,12 +3,13 @@ import { Route, Redirect } from "react-router-dom";
 import { UserContext } from "context/UserContext";
 import { paths } from "constants/routes";
 
-const PrivateRoute = ({ redirect, ...rest }) => {
+const PrivateRoute = ({ redirect, type, ...rest }) => {
   return (
     <UserContext.Consumer>
       {value => {
         if (value.token) {
-          return <Route {...rest} />;
+          if (!type) return <Route {...rest} />;
+          else if (type === value.type) return <Route {...rest} />;
         }
         return <Redirect to={redirect} />;
       }}
@@ -17,7 +18,7 @@ const PrivateRoute = ({ redirect, ...rest }) => {
 };
 
 PrivateRoute.defaultProps = {
-  redirect: paths.LOGIN
+  redirect: paths.HOME
 };
 
 export default PrivateRoute;

@@ -36,11 +36,11 @@ class RegisterPage extends React.Component {
   };
 
   sendData = object => {
-    console.log(object);
     const url = "https://usamo-back.herokuapp.com/account/register/";
     fetch(url, {
       method: "POST",
       body: JSON.stringify(object),
+      name: "register",
       headers: {
         "Content-Type": "application/json",
         Origin: null
@@ -49,9 +49,9 @@ class RegisterPage extends React.Component {
       console.log(res);
       if (res.status === 201) {
         res.json().then(responseValue => {
-          const { token } = responseValue;
+          const { token, type } = responseValue;
           this.setRedirect();
-          this.context.login(token);
+          this.context.login(token, type);
           this.setState({
             validated: false,
             message: "Udało się zarejestrować! Teraz możesz się zalogować",
@@ -112,16 +112,6 @@ class RegisterPage extends React.Component {
       });
       const facility_name = name_of_place;
       const facility_address = `${city} ${street} ${city_code}`;
-      console.log({
-        email,
-        first_name,
-        last_name,
-        username,
-        phone_number,
-        password,
-        facility_name,
-        facility_address
-      });
       this.sendData({
         email,
         first_name,
@@ -408,5 +398,5 @@ class RegisterPage extends React.Component {
 }
 
 RegisterPage.contextType = UserContext;
-                
+
 export default RegisterPage;
