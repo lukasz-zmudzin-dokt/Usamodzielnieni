@@ -11,7 +11,7 @@ const InterestedPerson = ({ person })  => {
                 <a href={"mailto:" + person.email}> {person.email} </a>
             </Col>
             <Col xs={12} md={2}>
-                <Button variant="primary m-1 p-1" onClick={downloadCV}>Zobacz CV</Button>
+                <Button variant="primary m-1 p-1" onClick={e => downloadCV(e, person.id)}>Zobacz CV</Button>
             </Col>
         </Row>
     );
