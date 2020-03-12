@@ -9,17 +9,17 @@ import {
 
 const paths = {
   DASHBOARD: "/",
-  CVEDITOR: "/cvEditor",
+  CV_EDITOR: "/cvEditor",
   REGISTER: "/newAccount",
   FOOTER: "/footer",
   LOGIN: "/login",
   USER: "/user",
-  OFFERFORM: "/offerForm",
-  JOBOFFERS: "/jobOffers",
-  CVAPPROVAL: "/cvApproval"
+  OFFER_FORM: "/offerForm",
+  JOB_OFFERS: "/jobOffers",
+  CV_APPROVAL: "/cvApproval"
 };
 
-const userTypes = {
+export const userTypes = {
   STANDARD: "Standard",
   STAFF: "Staff",
   EMPLOYER: "Employer"
@@ -32,7 +32,7 @@ export default [
     exact: true
   },
   {
-    path: paths.CVEDITOR,
+    path: paths.CV_EDITOR,
     component: CVEditorPage,
     isPrivate: true,
     type: userTypes.STANDARD
@@ -59,19 +59,19 @@ export default [
     type: undefined // jeżeli jest undefined to znaczy że jest dostępne dla wszystkich typów konta
   },
   {
-    path: paths.JOBOFFERS,
+    path: paths.JOB_OFFERS,
     component: UserProfilePage, // tu trzeba zmienić komponent
     isPrivate: true,
     type: userTypes.EMPLOYER
   },
   {
-    path: paths.OFFERFORM,
+    path: paths.OFFER_FORM,
     component: UserProfilePage, // tu trzeba zmienić komponent
     isPrivate: true,
     type: userTypes.EMPLOYER
   },
   {
-    path: paths.CVAPPROVAL,
+    path: paths.CV_APPROVAL,
     component: UserProfilePage, // tu trzeba zmienić komponent
     isPrivate: true,
     type: userTypes.STAFF

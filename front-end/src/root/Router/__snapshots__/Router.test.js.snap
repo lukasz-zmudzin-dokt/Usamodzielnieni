@@ -1,7 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`PrivateRoute test should match snapshot 1`] = `<div />`;
-
 exports[`Router test should match snapshot 1`] = `
 <div>
   <div

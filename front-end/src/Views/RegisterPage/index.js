@@ -46,12 +46,12 @@ class RegisterPage extends React.Component {
         Origin: null
       }
     }).then(res => {
+      console.log(res);
       if (res.status === 201) {
         res.json().then(responseValue => {
           const { token, type } = responseValue;
           this.setRedirect();
-          this.context.login(token);
-          this.context.setType(type);
+          this.context.login(token, type);
           this.setState({
             validated: false,
             message: "Udało się zarejestrować! Teraz możesz się zalogować",

@@ -6,16 +6,6 @@ import { BrowserRouter } from "react-router-dom";
 import { UserProvider } from "context";
 
 describe("Router test", () => {
-  it("should render without crashing", () => {
-    render(
-      <UserProvider>
-        <BrowserRouter>
-          <Router></Router>
-        </BrowserRouter>
-      </UserProvider>
-    );
-  });
-
   it("should match snapshot", () => {
     const { container } = render(
       <UserProvider>

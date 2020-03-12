@@ -45,11 +45,11 @@ class LoginPage extends React.Component {
         Origin: null
       }
     }).then(res => {
+      console.log(res);
       if (res.status === 200) {
         res.json().then(responseValue => {
           const { token, type } = responseValue;
-          this.context.login(token);
-          this.context.setType(type);
+          this.context.login(token, type);
           this.setRedirect();
         });
       } else {
