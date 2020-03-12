@@ -7,25 +7,14 @@ import logo from "../../assets/logo.png";
 // https://github.com/ReactTraining/react-router/issues/83#issuecomment-214794477
 import {IndexLinkContainer} from 'react-router-bootstrap';
 import {Redirect, withRouter} from "react-router-dom";
-import {setUserToken} from "../../redux/actions";
-import Cookies from "universal-cookie";
-import {connect} from "react-redux";
-const cookies = new Cookies();
+import { UserContext } from "context";
 
 class HeaderTemplate extends React.Component {
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            token: this.props.token || undefined
-        }
-    }
-
   displayMenu() {
     if (this.props.location.pathname !== "/")
       return (
         <Nav className="mr-auto ">
-          <IndexLinkContainer to={this.props.token === undefined ? "/login" : "/cvEditor"}>
+          <IndexLinkContainer to={!this.context.token ? "/login" : "/cvEditor"}>
             <Nav.Link id="cvEditor">
               Kreator CV
             </Nav.Link>
@@ -42,8 +31,7 @@ class HeaderTemplate extends React.Component {
   }
 
   displayButtonSet() {
-      console.log(this.props.token);
-    if (this.props.token !== undefined)
+    if (this.context.token)
       return (
         <Form inline pull-right className="action_buttons">
             <IndexLinkContainer to="/user">
@@ -71,13 +59,11 @@ class HeaderTemplate extends React.Component {
   }
 
     userLogout = e => {
-      const token = cookies.get("token");
-      console.log(token);
       const url = "https://usamo-back.herokuapp.com/account/logout/";
       fetch(url, {
           method: "POST",
           headers: {
-              "Authorization": "token " + token
+              "Authorization": "token " + this.context.token
           },
           body: {}
       }).then(res => {
@@ -86,8 +72,7 @@ class HeaderTemplate extends React.Component {
               res.json().then(responseValue => {
                   console.log(responseValue);
                   console.log("Wylogowano");
-                  this.props.setUserToken(undefined);
-                  cookies.remove("token", {path: "/"});
+                  this.context.logout();
                   return (
                       <Redirect to="/"/>
                   );
@@ -121,10 +106,6 @@ class HeaderTemplate extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
-    console.log("mapStateToProps:", state);
-    const { token } = state.user;
-    return { token };
-};
+HeaderTemplate.contextType = UserContext;
 
-export default connect(mapStateToProps, {setUserToken})(withRouter(HeaderTemplate));
+export default withRouter(HeaderTemplate);
