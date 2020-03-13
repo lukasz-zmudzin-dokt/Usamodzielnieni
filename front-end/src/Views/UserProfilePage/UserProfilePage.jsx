@@ -4,8 +4,6 @@ import "./style.css";
 import UserDetails from "Views/UserProfilePage/components/UserDetails";
 import UserBasicInfo from "Views/UserProfilePage/components/UserBasicInfo";
 import Cookies from "universal-cookie";
-import { getCvUrl } from "Views/UserProfilePage/functions/getCvUrl";
-import { getCvData } from "Views/UserProfilePage/functions/getCvData";
 
 
 const names = {
@@ -53,7 +51,7 @@ class UserProfilePage extends React.Component {
         "Content-Type": "application/json"
       }
     }).then(response => {
-     // if (!response.ok) throw new Error(response.status);
+      // if (!response.ok) throw new Error(response.status);
       return response;
     });
     const data = await response.json();
@@ -69,10 +67,6 @@ class UserProfilePage extends React.Component {
         phoneNumber: data.data.phone_number
       }
     });
-    const cvurl = await getCvUrl();
-    const cvdata = await getCvData();
-    console.log(cvurl);
-    console.log(cvdata);
   }
 
   render() {
