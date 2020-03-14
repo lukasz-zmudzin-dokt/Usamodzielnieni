@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NotificationItem should render without crashing 1`] = `
+<div>
+  <div
+    class="notificationItem btn-group"
+    role="group"
+  >
+    <a
+      href="/"
+    >
+      <div>
+        Tytuł powiadomienia
+      </div>
+      <small>
+        3/14/2020
+      </small>
+    </a>
+    <button
+      class="btn btn-light"
+      type="button"
+    >
+      X
+    </button>
+  </div>
+</div>
+`;

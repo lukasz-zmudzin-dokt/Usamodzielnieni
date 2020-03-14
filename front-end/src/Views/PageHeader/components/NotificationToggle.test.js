@@ -1,6 +1,6 @@
 import React from "react";
 import { render } from "@testing-library/react";
-import NotificationToggle from "./NotificationToggle"
+import NotificationToggle from "./NotificationToggle";
 
 describe('NotificationToggle', () => {
     it('should render without crashing', () => {

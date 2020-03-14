@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Notifications should open notifications list when toggle is clicked 1`] = `
+<div>
+  <div
+    class="show dropdown nav-item"
+  >
+    <button
+      aria-expanded="true"
+      aria-haspopup="true"
+      class="dropdown-toggle btn btn-light"
+      type="button"
+    >
+      Powiadomienia 
+    </button>
+    <div
+      class="dropdown-menu show"
+      style="position: absolute; top: 0px; left: 0px; opacity: 0; pointer-events: none;"
+      x-placement="bottom-start"
+    >
+      <div />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Notifications should render without crashing 1`] = `
+<div>
+  <div
+    class="dropdown nav-item"
+  >
+    <button
+      aria-expanded="false"
+      aria-haspopup="true"
+      class="dropdown-toggle btn btn-light"
+      type="button"
+    >
+      Powiadomienia 
+    </button>
+  </div>
+</div>
+`;

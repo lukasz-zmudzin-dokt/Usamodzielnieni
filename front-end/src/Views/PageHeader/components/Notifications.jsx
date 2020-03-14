@@ -7,19 +7,19 @@ import "./Notifications.css";
 const getNotifications = async (token) => {
     let url = "https://usamo-back.herokuapp.com/notifications/.../"; // TODO
     const headers = {
-      Authorization: "Token " + token,
-      "Content-Type": "application/json"
+        Authorization: "Token " + token,
+        "Content-Type": "application/json"
     };
-  
+
     const response = await fetch(url, { method: "GET", headers });
-  
+
     if (response.status === 200) {
-      return response.json().then(notifications => mapNotifications(notifications));
+        return response.json().then(notifications => mapNotifications(notifications));
     } else {
-      throw response.status;
+        throw response.status;
     }
 }
-  
+
 const mapNotifications = (notifications) => notifications.map(not => ({
     id: not.id,
     path: getPath(not.type),
@@ -39,28 +39,28 @@ const getPath = (type) => {
 const deleteNotification = async (id, token) => {
     let url = "https://usamo-back.herokuapp.com/notifications/.../"; // TODO
     const headers = {
-      Authorization: "Token " + token,
-      "Content-Type": "application/json"
+        Authorization: "Token " + token,
+        "Content-Type": "application/json"
     };
-  
+
     const response = await fetch(url, {
         method: "DELETE",
         body: {
             notifications: { id }
         },
-        headers 
+        headers
     });
-    
+
     if (response.status === 200) {
-      return response.status;
+        return response.status;
     } else {
-      throw response.status;
+        throw response.status;
     }
 }
 const deleteNotifications = async (notifications, token) => {
     try {
         await Promise.all(notifications.map(async (not) => await deleteNotification(not, token)));
-    } catch(e) {
+    } catch (e) {
         console.log(e);
     }
 }
@@ -73,7 +73,7 @@ const Notifications = ({ location, token, ...rest }) => {
         () => { loadNotifications(token) },
         [token]
     );
-    
+
     const loadNotifications = async (token) => {
         setIsLoading(true);
         let loadedNotifications;
@@ -109,18 +109,23 @@ const Notifications = ({ location, token, ...rest }) => {
         <Dropdown as={Nav.Item} {...rest}>
             <Dropdown.Toggle as={NotificationToggle} count={isLoading ? 0 : notifications.length} />
             <Dropdown.Menu>
-                { 
-                    !isLoading && notifications.length ? (
-                        <div class="notifications-container">
-                        {notifications.map(notification => (
-                            <Dropdown.Item as={NotificationItem} notification={notification} onClick={removeNotification}/>
-                        ))}
-                        </div>
+                {
+                    isLoading ? (<div></div>) : (
+                        <>
+                            {
+                                !notifications.length ? (<Dropdown.Item as={Col} disabled>Brak powiadomień</Dropdown.Item>) : (
+                                    <div class="notifications-container">
+                                        {notifications.map(notification => (
+                                            <Dropdown.Item as={NotificationItem} notification={notification} onClick={removeNotification} />
+                                        ))}
+                                    </div>
+                                )
+                            }
+                            <Dropdown.Divider />
+                            <Dropdown.Item onClick={clearNotifications} disabled={!notifications.length}>Wyczyść</Dropdown.Item>
+                        </>
                     )
-                    : (<Dropdown.Item as={Col} disabled>Brak powiadomień</Dropdown.Item>) 
                 }
-                <Dropdown.Divider />
-                <Dropdown.Item onClick={clearNotifications} disabled={!notifications.length}>Wyczyść</Dropdown.Item>
             </Dropdown.Menu>
         </Dropdown>
     )
