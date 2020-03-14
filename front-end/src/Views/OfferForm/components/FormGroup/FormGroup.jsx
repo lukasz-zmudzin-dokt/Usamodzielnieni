@@ -4,17 +4,13 @@ import DatePicker from "react-datepicker";
 import PropTypes from "prop-types";
 import "Views/OfferForm/style.css";
 
-const FormGroup = ({ header, setVal, array, type, incorrect }) => {
-  const [val, setValue] = useState("");
-
+const FormGroup = ({ header, setVal, array, type, incorrect, val }) => {
   const setInput = e => {
     const value = e.target.value;
-    setValue(value);
     setVal(value);
   };
 
   const setDate = date => {
-    setValue(date);
     setVal(date);
   };
 
@@ -25,18 +21,30 @@ const FormGroup = ({ header, setVal, array, type, incorrect }) => {
           .sort()
           .map(val => <option key={val}>{val}</option>);
         return (
-          <Form.Control as={type} val={val} onChange={setInput} required>
-            {options}
-          </Form.Control>
+          <>
+            <Form.Control as={type} val={val} onChange={setInput} required>
+              {options}
+            </Form.Control>
+            <Form.Control.Feedback type="invalid">
+              Podaj właściwy login
+            </Form.Control.Feedback>
+          </>
         );
       case "textarea":
         return (
-          <Form.Control
-            as={type}
-            onChange={setInput}
-            required
-            className="offerForm__textarea"
-          />
+          <>
+            <Form.Control
+              as={type}
+              onChange={setInput}
+              required
+              className="offerForm__textarea"
+              minLength="1"
+              maxLength="1000"
+            />
+            <Form.Control.Feedback type="invalid">
+              Podaj właściwy login
+            </Form.Control.Feedback>
+          </>
         );
       case "date":
         return (
@@ -59,6 +67,8 @@ const FormGroup = ({ header, setVal, array, type, incorrect }) => {
             onChange={setInput}
             value={val}
             required
+            minLength="1"
+            maxLength="10"
           />
         );
     }

@@ -5,6 +5,7 @@ import HeaderTemplate from "Views/PageHeader";
 import CVEditorPage from "Views/CVEditorPage";
 import Footer from "Views/Footer";
 import Menu from "Views/Menu";
+import OfferForm from "Views/OfferForm";
 
 export {
   UserProfilePage,
@@ -13,5 +14,6 @@ export {
   HeaderTemplate,
   CVEditorPage,
   Footer,
-  Menu
+  Menu,
+  OfferForm
 };

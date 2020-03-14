@@ -4,7 +4,8 @@ import {
   RegisterPage,
   Footer,
   CVEditorPage,
-  Menu
+  Menu,
+  OfferForm
 } from "Views";
 
 const paths = {
@@ -66,7 +67,7 @@ export default [
   },
   {
     path: paths.OFFER_FORM,
-    component: UserProfilePage, // tu trzeba zmienić komponent
+    component: OfferForm, // tu trzeba zmienić komponent
     isPrivate: true,
     type: userTypes.EMPLOYER
   },
