@@ -1,12 +1,8 @@
 import React from "react";
 import { Container, Card, Form, Button } from "react-bootstrap";
 import { Link, Redirect } from "react-router-dom";
-import Cookies from "universal-cookie";
 import bgImage from "../../assets/fot..png";
-import { connect } from "react-redux";
-import { setUserToken } from "redux/actions";
-
-const cookies = new Cookies();
+import { UserContext } from "context";
 
 class RegisterPage extends React.Component {
   state = {
@@ -55,10 +51,7 @@ class RegisterPage extends React.Component {
         res.json().then(responseValue => {
           const { token } = responseValue;
           this.setRedirect();
-          cookies.set(`token`, token, {
-            path: "/"
-          });
-          this.props.setUserToken(token);
+          this.context.login(token);
           this.setState({
             validated: false,
             message: "Udało się zarejestrować! Teraz możesz się zalogować",
@@ -413,5 +406,7 @@ class RegisterPage extends React.Component {
     );
   }
 }
+
+RegisterPage.contextType = UserContext;
                 
-export default connect(null, { setUserToken })(RegisterPage);
+export default RegisterPage;

@@ -1,0 +1,105 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LoginPageTest should match snapshot 1`] = `
+<div>
+  <div
+    class="loginPage container"
+  >
+    <img
+      alt="tło"
+      class="loginPage__bgImage"
+      src="fot..png"
+    />
+    <div
+      class="loginPage__card loginPage__card--login card"
+    >
+      <h2
+        class="loginPage__header card-header"
+      >
+        Logowanie
+      </h2>
+      <div
+        class="loginPage__body card-body"
+      >
+        <form
+          class="primary"
+          novalidate=""
+        >
+          <div
+            class="form-group"
+          >
+            <input
+              class="loginPage__input form-control"
+              id="formGroupUsername"
+              minlength="6"
+              placeholder="Login"
+              required=""
+              type="text"
+              value=""
+            />
+            <div
+              class="invalid-feedback"
+            >
+              Podaj właściwy login
+            </div>
+          </div>
+          <div
+            class="form-group"
+          >
+            <input
+              autocomplete="on"
+              class="form-control"
+              id="formGroupPassword"
+              minlength="6"
+              placeholder="Hasło"
+              required=""
+              type="password"
+              value=""
+            />
+            <div
+              class="invalid-feedback"
+            >
+              Podaj właściwe hasło
+            </div>
+          </div>
+          <div
+            class="form-group"
+          >
+            <div
+              class="form-check"
+            >
+              <input
+                class="form-check-input"
+                id="formBasicCheckbox"
+                type="checkbox"
+              />
+              <label
+                class="form-check-label"
+                for="formBasicCheckbox"
+                title=""
+              >
+                Zapamiętaj mnie
+              </label>
+            </div>
+          </div>
+          <button
+            class="loginPage__button btn btn-secondary"
+            type="submit"
+          >
+            Zaloguj
+          </button>
+        </form>
+        <div
+          class="loginPage__links"
+        >
+          <a
+            href="/newAccount"
+          >
+            Załóż konto!
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
