@@ -1,7 +1,7 @@
 export const voivodeships = [
-  "zachodnio-pomorskie",
+  "zachodniopomorskie",
   "pomorskie",
-  "warmińsko-Mazurskie",
+  "warmińsko-mazurskie",
   "podlaskie",
   "lubuskie",
   "wielkopolskie",
@@ -11,7 +11,7 @@ export const voivodeships = [
   "dolnośląskie",
   "łódzkie",
   "opolskie",
-  "świętokrzystkie",
+  "świętokrzyskie",
   "śląskie",
   "małopolskie",
   "podkarpackie"

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Form } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import PropTypes from "prop-types";
@@ -21,30 +21,21 @@ const FormGroup = ({ header, setVal, array, type, incorrect, val }) => {
           .sort()
           .map(val => <option key={val}>{val}</option>);
         return (
-          <>
-            <Form.Control as={type} val={val} onChange={setInput} required>
-              {options}
-            </Form.Control>
-            <Form.Control.Feedback type="invalid">
-              Podaj właściwy login
-            </Form.Control.Feedback>
-          </>
+          <Form.Control as={type} value={val} onChange={setInput} required>
+            {options}
+          </Form.Control>
         );
       case "textarea":
         return (
-          <>
-            <Form.Control
-              as={type}
-              onChange={setInput}
-              required
-              className="offerForm__textarea"
-              minLength="1"
-              maxLength="1000"
-            />
-            <Form.Control.Feedback type="invalid">
-              Podaj właściwy login
-            </Form.Control.Feedback>
-          </>
+          <Form.Control
+            as={type}
+            onChange={setInput}
+            value={val}
+            required
+            className="offerForm__textarea"
+            minLength="1"
+            maxLength="1000"
+          />
         );
       case "date":
         return (
@@ -56,6 +47,7 @@ const FormGroup = ({ header, setVal, array, type, incorrect, val }) => {
               selected={val}
               onChange={setDate}
               required
+              minDate={new Date()}
             />
           </Form.Row>
         );

@@ -4,15 +4,15 @@ import { voivodeships } from "constants/voivodeships";
 import FormGroup from "Views/OfferForm/components/FormGroup";
 import { UserContext } from "context";
 import "./style.css";
-import { sendData } from "Views/CVEditorPage/functions/other";
 
 const OfferForm = () => {
   const [validated, setValidated] = useState(false);
+  const [send, setSend] = useState(false);
 
   const [offer_name, setOfferName] = useState("");
   const [company_name, setCompanyName] = useState("");
   const [company_address, setCompanAdress] = useState("");
-  const [voivodeship, setVoivodeship] = useState("dolnośląskie");
+  const [voivodeship, setVoivodeship] = useState(voivodeships[0]);
   const [description, setDescription] = useState("");
   const [expiration_date, setExpirationDate] = useState("");
 
@@ -30,6 +30,16 @@ const OfferForm = () => {
         ? `0${expiration_date.getDate()}`
         : expiration_date.getDate();
     const newDate = `${year}-${month}-${day}`;
+
+    console.log({
+      offer_name,
+      company_name,
+      company_address,
+      voivodeship,
+      expiration_date: newDate,
+      description
+    });
+
     fetch(url, {
       method: "POST",
       body: JSON.stringify({
@@ -47,6 +57,16 @@ const OfferForm = () => {
       }
     }).then(res => {
       console.log(res);
+      if (res.status === 200) {
+        setOfferName("");
+        setCompanAdress("");
+        setCompanyName("");
+        setVoivodeship(voivodeships[0]);
+        setDescription("");
+        setExpirationDate("");
+        setValidated(false);
+        setSend(true);
+      }
     });
   };
 
@@ -56,10 +76,11 @@ const OfferForm = () => {
     if (form.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();
+      setSend(false);
     } else {
       sendData();
-      setValidated(true);
     }
+    setValidated(true);
   };
 
   return (
@@ -115,9 +136,11 @@ const OfferForm = () => {
                 type="date"
                 setVal={setExpirationDate}
                 val={expiration_date}
-                incorrect="Podaj datę ważności"
               />
             </div>
+            {send === true ? (
+              <p className="offerForm__message">Dodano ofertę pracy</p>
+            ) : null}
             <Row className="w-100 justify-content-center align-items-center m-0">
               <Button
                 variant="secondary"
