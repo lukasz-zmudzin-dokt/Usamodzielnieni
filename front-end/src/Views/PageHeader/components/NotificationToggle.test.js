@@ -10,10 +10,10 @@ describe('NotificationToggle', () => {
     });
 
     it('should render badge when count is greater than 0', () => {
-        const count = 2;
+        const count = 4;
 
         const { getByText } = render(<NotificationToggle count={count} />);
-        const badge = getByText(`${count}`)
+        const badge = getByText(`${count}`);
 
         expect(badge).toMatchSnapshot();
     });
@@ -24,5 +24,14 @@ describe('NotificationToggle', () => {
         const { queryByText } = render(<NotificationToggle count={count} />);
 
         expect(queryByText(`${count}`)).not.toBeInTheDocument();
+    });
+
+    it('should render limited badge when count is large', () => {
+        const count = 21370000;
+
+        const { getByText } = render(<NotificationToggle count={count} />);
+        const badge = getByText('9+');
+
+        expect(badge).toMatchSnapshot();
     });
 });

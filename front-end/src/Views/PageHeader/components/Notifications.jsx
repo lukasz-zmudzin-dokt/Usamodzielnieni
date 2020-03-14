@@ -109,14 +109,16 @@ const Notifications = ({ location, token, ...rest }) => {
         <Dropdown as={Nav.Item} {...rest}>
             <Dropdown.Toggle as={NotificationToggle} count={isLoading ? 0 : notifications.length} />
             <Dropdown.Menu>
-                <div class="notifications-container">
                 { 
-                    !isLoading && notifications.length ? notifications.map(notification => (
-                        <Dropdown.Item as={NotificationItem} notification={notification} onClick={removeNotification}/>
-                    )) 
+                    !isLoading && notifications.length ? (
+                        <div class="notifications-container">
+                        {notifications.map(notification => (
+                            <Dropdown.Item as={NotificationItem} notification={notification} onClick={removeNotification}/>
+                        ))}
+                        </div>
+                    )
                     : (<Dropdown.Item as={Col} disabled>Brak powiadomień</Dropdown.Item>) 
                 }
-                </div>
                 <Dropdown.Divider />
                 <Dropdown.Item onClick={clearNotifications} disabled={!notifications.length}>Wyczyść</Dropdown.Item>
             </Dropdown.Menu>
