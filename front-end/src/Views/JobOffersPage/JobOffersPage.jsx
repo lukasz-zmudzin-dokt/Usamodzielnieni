@@ -5,7 +5,7 @@ import { UserContext } from "context";
 import { JobOfferInfo } from "./_components";
 
 const getOffers = async (token) => {
-  let url = "https://usamo-back.herokuapp.com/offers/.../";
+  let url = "https://usamo-back.herokuapp.com/job/job-offers/";
   const headers = {
     Authorization: "Token " + token,
     "Content-Type": "application/json"
@@ -21,7 +21,7 @@ const getOffers = async (token) => {
   // TODO
 }
 
-const mapOffers = (offers) => offers.map(offer => ({
+const mapOffers = (offers) => offers.results.map(offer => ({
   id: offer.id,
   title: offer.title,
   description: offer.description
@@ -43,7 +43,8 @@ const JobOffersPage = props => {
     let loadedOffers;
     try {
       loadedOffers = await getOffers(token);
-    } catch {
+    } catch(e) {
+      console.log(e)
       loadedOffers = [
         {
           id: "1",
@@ -77,7 +78,9 @@ const JobOffersPage = props => {
         <Card.Header as="h2">Oferty pracy</Card.Header>
         <Card.Body>
         {isOffersLoading ? <div>Ładowanie...</div> : 
-          offers.map((offer) => <JobOfferInfo offer={offer} />)
+          offers.length > 0 ?
+          offers.map((offer) => <JobOfferInfo offer={offer} />) :
+          <div>Brak ofert spełniających podane wymagania.</div>
         }
         </Card.Body>
       </Card>
