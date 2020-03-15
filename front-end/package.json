@@ -39,5 +39,8 @@
     ]
   },
   "proxy": "https://usamo-back.herokuapp.com/",
-  "devDependencies": {}
+  "devDependencies": {
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2"
+  }
 }
