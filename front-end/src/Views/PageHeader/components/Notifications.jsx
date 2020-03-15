@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Nav, Dropdown, Col } from "react-bootstrap";
+import NotificationItemContainer from './NotificationItemContainer';
 import NotificationItem from './NotificationItem';
 import NotificationToggle from './NotificationToggle';
 import "./Notifications.css";
@@ -24,7 +25,7 @@ const mapNotifications = (notifications) => notifications.map(not => ({
     id: not.id,
     path: getPath(not.type),
     title: not.title,
-    time: not.time
+    time: new Date(not.time)
     // TODO
 }))
 
@@ -58,11 +59,13 @@ const deleteNotification = async (id, token) => {
     }
 }
 const deleteNotifications = async (notifications, token) => {
-    try {
-        await Promise.all(notifications.map(async (not) => await deleteNotification(not, token)));
-    } catch (e) {
-        console.log(e);
-    }
+    await Promise.all(notifications.map(async (not) => {
+        try {
+            await deleteNotification(not, token)
+        } catch (e) {
+            console.log(e);
+        }
+    }));
 }
 
 const Notifications = ({ location, token, ...rest }) => {
@@ -70,7 +73,9 @@ const Notifications = ({ location, token, ...rest }) => {
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(
-        () => { loadNotifications(token) },
+        () => { 
+            loadNotifications(token);
+        },
         [token]
     );
 
@@ -80,10 +85,7 @@ const Notifications = ({ location, token, ...rest }) => {
         try {
             loadedNotifications = await getNotifications(token);
         } catch {
-            loadedNotifications = [
-                { id: 1, path: getPath('cv'), title: 'Rozpatrzono CV', time: new Date() },
-                { id: 2, path: getPath('jobs'), title: 'Dostępne nowe oferty pracy', time: new Date() }
-            ]
+            loadedNotifications = [];
         }
         setNotifications(loadedNotifications);
         setIsLoading(false);
@@ -91,38 +93,45 @@ const Notifications = ({ location, token, ...rest }) => {
 
     const toRemove = notifications.filter(not => not.path === location.pathname);
     if (toRemove.length) {
-        deleteNotifications(toRemove, token);
         setNotifications(notifications.filter(not => not.path !== location.pathname));
+        deleteNotifications(toRemove, token);
     }
 
     const clearNotifications = e => {
-        deleteNotifications(notifications, token);
         setNotifications([]);
+        deleteNotifications(notifications, token);
     }
 
     const removeNotification = id => {
-        deleteNotifications(notifications.filter(not => not.id === id), token);
         setNotifications(notifications.filter(not => not.id !== id));
+        deleteNotifications(notifications.filter(not => not.id === id), token);
     }
 
     return (
         <Dropdown as={Nav.Item} {...rest}>
             <Dropdown.Toggle as={NotificationToggle} count={isLoading ? 0 : notifications.length} />
-            <Dropdown.Menu>
+            <Dropdown.Menu data-testid="dropdownMenu">
                 {
-                    isLoading ? (<div></div>) : (
+                    isLoading ? (<Dropdown.Item disabled="true">Ładowanie...</Dropdown.Item>) : (
                         <>
                             {
                                 !notifications.length ? (<Dropdown.Item as={Col} disabled>Brak powiadomień</Dropdown.Item>) : (
-                                    <div class="notifications-container">
+                                    <div className="notifications-container">
                                         {notifications.map(notification => (
-                                            <Dropdown.Item as={NotificationItem} notification={notification} onClick={removeNotification} />
+                                            <NotificationItemContainer 
+                                                key={notification.id}
+                                                data-testid={`dropdownItem${notification.id}`}
+                                                onClick={removeNotification}
+                                                notification={notification}
+                                            >
+                                                <Dropdown.Item as={NotificationItem} notification={notification} />
+                                            </NotificationItemContainer>
                                         ))}
                                     </div>
                                 )
                             }
                             <Dropdown.Divider />
-                            <Dropdown.Item onClick={clearNotifications} disabled={!notifications.length}>Wyczyść</Dropdown.Item>
+                            <Dropdown.Item key="clearButton" onClick={clearNotifications} disabled={!notifications.length}>Wyczyść</Dropdown.Item>
                         </>
                     )
                 }
