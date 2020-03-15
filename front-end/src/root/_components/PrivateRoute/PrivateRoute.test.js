@@ -4,7 +4,6 @@ import Enzyme, { mount } from "enzyme";
 import { render } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import Adapter from "enzyme-adapter-react-16";
-import { UserProvider } from "context";
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -22,17 +21,15 @@ describe("PrivateRoute test", () => {
     };
 
     const { container } = render(
-      <UserProvider>
-        <MemoryRouter initialEntries={["/userProfile"]}>
-          <PrivateRoute
-            redirect="/home"
-            authenticated={exampleContext}
-            path={exampleProps.path}
-            type={exampleProps.type}
-            component={exampleProps.component}
-          />
-        </MemoryRouter>
-      </UserProvider>
+      <MemoryRouter initialEntries={["/userProfile"]}>
+        <PrivateRoute
+          redirect="/home"
+          authenticated={exampleContext}
+          path={exampleProps.path}
+          type={exampleProps.type}
+          component={exampleProps.component}
+        />
+      </MemoryRouter>
     );
     expect(container).toMatchSnapshot();
   });

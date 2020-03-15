@@ -1,18 +1,14 @@
 import React from "react";
 import { render } from "@testing-library/react";
 import Router from "root/Router";
-
-import { BrowserRouter } from "react-router-dom";
-import { UserProvider } from "context";
+import { MemoryRouter } from "react-router-dom";
 
 describe("Router test", () => {
   it("should match snapshot", () => {
     const { container } = render(
-      <UserProvider>
-        <BrowserRouter>
-          <Router></Router>
-        </BrowserRouter>
-      </UserProvider>
+      <MemoryRouter>
+        <Router></Router>
+      </MemoryRouter>
     );
     expect(container).toMatchSnapshot();
   });
