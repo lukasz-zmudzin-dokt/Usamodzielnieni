@@ -1,8 +1,9 @@
 import React from "react";
 import { Card, Container } from "react-bootstrap";
-import "./style.css";
+import "Views/MyOffersPage/style.css";
 import CVLegend from "./components/CVLegend";
 import CVDetails from "./components/CVDetails";
+import { getCVs } from "./functions/getCVs";
 
 const cvs = [
     {
@@ -31,16 +32,28 @@ const cvs = [
     }
 ];
 
+
 class CVApprovalPage extends React.Component {
+
+
+    state = {
+        cvs: cvs    // will change with backend in the future
+    };
+    /*  will change with backend in the future
+    componentDidMount() {
+        getCVs().then(response => this.setState({ cvs: response.results}));
+    }
+    */
+
     render() {
         return (
             <Container>
-                <div className="cv_approval_background">
-                    <Card className="cv_approval_card no-border">
-                        <Card.Header className="cv_approval_card_title border pb-4"><h3>CV do przejrzenia</h3></Card.Header>
+                <div className="background">
+                    <Card className="main-card no-border">
+                        <Card.Header className="border pb-4"><h3>CV do przejrzenia</h3></Card.Header>
                         <Card.Body className="border">
                             <CVLegend />
-                            {cvs.map((value) => {
+                            {this.state.cvs.map((value) => {
                                 return (
                                     <CVDetails cv={value} key={value.id}/>
                                 )

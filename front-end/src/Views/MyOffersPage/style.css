@@ -8,8 +8,7 @@
     height: 100vh;
     flex-direction: column;
 }
-
-.my-offers-card {
+.main-card {
     padding-top: 10vh;
 }
 .no-border {
