@@ -10,7 +10,7 @@ const UserToApprove = ({ user })  => {
                 <Card.Title>{user.first_name} {user.last_name}</Card.Title>
                     <Card.Subtitle className="mb-2 text-muted">{user.username}</Card.Subtitle>
                     <ListGroup variant="flush">
-                        <ListGroup.Item className="pl-0 pr-0"><a href={"mailto: " + user.email}>{user.email}</a></ListGroup.Item>
+                        <ListGroup.Item className="pl-0 pr-0">{user.email}</ListGroup.Item>
                         <ListGroup.Item className="pl-0 pr-0">
                             <p className="mb-1">{user.facility_name}</p>
                             <p className="mb-1">{user.facility_address}</p>

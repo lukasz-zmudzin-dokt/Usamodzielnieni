@@ -1,6 +1,7 @@
 import React from "react";
 import {Button, Col, Row} from "react-bootstrap";
 import {acceptCV, downloadCV, improveCV} from "../functions/cvOperations";
+import "../../UserApprovalPage/style.css"
 
 const CVDetails = ({ cv })  => {
     return (

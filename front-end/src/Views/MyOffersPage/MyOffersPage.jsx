@@ -20,7 +20,7 @@ class MyOffersPage extends React.Component {
             <Container>
                 <div className="background">
                     <Card className="main-card no-border">
-                        <Card.Header className="border"><h3>Moje oferty</h3><p className="pt-3">Kliknij zakładkę, by wyświetlić osoby zainteresowane daną ofertą.</p></Card.Header>
+                        <Card.Header className="border"><h3>Moje oferty</h3></Card.Header>
                         <Card.Body className="border">
                             <MyOffers offers={this.state.offers}/>
                         </Card.Body>

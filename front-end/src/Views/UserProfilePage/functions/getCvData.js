@@ -1,6 +1,5 @@
 import Cookies from "universal-cookie";
 
-
 export const getCvData = async () => {
 
     const cookies = new Cookies();
@@ -18,4 +17,4 @@ export const getCvData = async () => {
         return result.json();
     });
     console.log(response);
-}
+};
