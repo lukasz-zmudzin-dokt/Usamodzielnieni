@@ -7,6 +7,7 @@ import Footer from "Views/Footer";
 import Menu from "Views/Menu";
 import CVApprovalPage from "Views/CVApprovalPage";
 import MyOffersPage from "Views/MyOffersPage";
+import UserApprovalPage from "Views/UserApprovalPage";
 
 export {
     UserProfilePage,
@@ -17,5 +18,6 @@ export {
     Footer,
     Menu,
     CVApprovalPage,
-    MyOffersPage
+    MyOffersPage,
+    UserApprovalPage
 };

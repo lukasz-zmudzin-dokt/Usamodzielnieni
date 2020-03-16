@@ -6,7 +6,8 @@ import {
   CVEditorPage,
   Menu,
   CVApprovalPage,
-  MyOffersPage
+  MyOffersPage,
+  UserApprovalPage
 } from "Views";
 
 const paths = {
@@ -17,7 +18,8 @@ const paths = {
   LOGIN: "/login",
   USER: "/user",
   CVAPPROVAL: "/cvApproval",
-  MYOFFERS: "/myOffers"
+  MYOFFERS: "/myOffers",
+  USERAPPROVAL: "/userApproval"
 };
 
 export default [
@@ -61,6 +63,11 @@ export default [
     component: MyOffersPage,
     isPrivate: true
   },
+  {
+    path: paths.USERAPPROVAL,
+    component: UserApprovalPage,
+    isPrivate: true
+  }
 ];
 
 export { paths };
