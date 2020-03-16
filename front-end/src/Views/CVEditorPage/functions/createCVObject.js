@@ -55,7 +55,6 @@ export const createCVObject = (component, e) => {
   );
 
   return {
-    cv_id: 0,
     basic_info: {
       first_name: name[0],
       last_name: name[1],
@@ -94,8 +93,6 @@ export const createCVObject = (component, e) => {
         name: lang.name,
         level: lang.level
       };
-    }),
-    wants_verification: true,
-    is_verified: false
+    })
   };
 };
