@@ -5,10 +5,10 @@ import NoInterest from "./NoInterest";
 import MyOffersLegend from "./MyOffersLegend";
 import { getInterestedPeople } from "../functions/getInterestedPeople";
 
-const MyOffer = ({ offer })  => {
+const MyOffer = ({ offer, token })  => {
     return (
         <Card>
-            <Accordion.Toggle as={Card.Header} eventKey={offer.id} onClick={e => (getInterestedPeople(e, offer.id))}>
+            <Accordion.Toggle as={Card.Header} eventKey={offer.id} onClick={e => (getInterestedPeople(e, offer.id, token))}>
                 {offer.offer_name}
             </Accordion.Toggle>
             <Accordion.Collapse eventKey={offer.id}>

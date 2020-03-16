@@ -5,16 +5,18 @@ import CVLegend from "./components/CVLegend";
 import CVDetails from "./components/CVDetails";
 import NoCVs from "./components/NoCVs";
 import { getCVs } from "./functions/getCVs";
+import {UserContext} from "../../context/UserContext";
 
 class CVApprovalPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = { cvs: [] };
     }
+    static ContextType = UserContext;
 
     /*  will change with backend in the future
     componentDidMount() {
-        getCVs().then(response => this.setState({ cvs: response.results}));
+        getCVs(this.context.token).then(response => this.setState({ cvs: response.results}));
     }
     */
 

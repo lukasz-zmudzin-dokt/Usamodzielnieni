@@ -3,15 +3,18 @@ import "./style.css";
 import {Card, Container} from "react-bootstrap";
 import MyOffers from "./components/MyOffers";
 import { getOffers } from "./functions/getOffers";
+import {UserContext} from "../../context/UserContext";
 
 class MyOffersPage extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = { offers: [] };
+    }
 
-    state = {
-        offers: [],
-    };
+    static contextType = UserContext;
 
     componentDidMount() {
-        getOffers().then(response => this.setState({ offers: response.results}));
+        getOffers(this.context.token).then(response => this.setState({ offers: response.results}));
     }
 
     render() {
@@ -22,7 +25,7 @@ class MyOffersPage extends React.Component {
                     <Card className="main-card no-border">
                         <Card.Header className="border"><h3>Moje oferty</h3></Card.Header>
                         <Card.Body className="border">
-                            <MyOffers offers={this.state.offers}/>
+                            <MyOffers offers={this.state.offers} token={this.context.token}/>
                         </Card.Body>
                     </Card>
                 </div>

@@ -1,4 +1,4 @@
-export const getInterestedPeople = async (e, offer_id) => {
+export const getInterestedPeople = async (e, offer_id, token) => {
 
     e.preventDefault();
 
@@ -6,7 +6,7 @@ export const getInterestedPeople = async (e, offer_id) => {
     const response = await fetch(url, {
         method: "GET",
         headers: {
-            "Authorization": "token " + this.context.token,
+            "Authorization": "token " + token,
             "Content-Type": "application/json"
         }
     }).then(result => {
