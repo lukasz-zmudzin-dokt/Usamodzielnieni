@@ -29,6 +29,7 @@ class CVEditorPage extends React.Component {
             photo: null
         };
         this.tabs = [];
+        this.comments={};
     }
 
     onPrevClick = () => {
@@ -68,7 +69,7 @@ class CVEditorPage extends React.Component {
                 component: (
                     <PersonalDataTab
                         data={this.state.personalData} onChange={personalData => this.setState({ personalData })}
-                        onNextClick={this.onNextClick} />
+                        onNextClick={this.onNextClick} comments={this.comments.personalData} />
                 )
             },
             {
@@ -77,7 +78,7 @@ class CVEditorPage extends React.Component {
                 component: (
                     <EducationTab
                         data={this.state.education} onChange={education => this.setState({ education })}
-                        onPrevClick={this.onPrevClick} onNextClick={this.onNextClick} />
+                        onPrevClick={this.onPrevClick} onNextClick={this.onNextClick} comments={this.comments.education} />
                 )
             },
             {
@@ -86,7 +87,7 @@ class CVEditorPage extends React.Component {
                 component: (
                     <WorkExperienceTab
                         data={this.state.workExperience} onChange={workExperience => this.setState({ workExperience })}
-                        onPrevClick={this.onPrevClick} onNextClick={this.onNextClick} />
+                        onPrevClick={this.onPrevClick} onNextClick={this.onNextClick} comments={this.comments.workExperience} />
                 )
             },
             {
@@ -95,7 +96,7 @@ class CVEditorPage extends React.Component {
                 component: (
                     <SkillsTab
                         data={this.state.skills} onChange={skills => this.setState({ skills })}
-                        onPrevClick={this.onPrevClick} onNextClick={this.onNextClick} />
+                        onPrevClick={this.onPrevClick} onNextClick={this.onNextClick} comments={this.comments.skills} />
                 )
             },
             {
@@ -104,7 +105,7 @@ class CVEditorPage extends React.Component {
                 component: (
                     <LanguagesTab
                         data={this.state.languages} onChange={languages => this.setState({ languages })}
-                        onPrevClick={this.onPrevClick} onNextClick={this.onNextClick} />
+                        onPrevClick={this.onPrevClick} onNextClick={this.onNextClick} comments={this.comments.languages} />
                 )
             },
             {
@@ -113,14 +114,26 @@ class CVEditorPage extends React.Component {
                 component: (
                     <PhotoTab
                         data={this.state.photo} onChange={photo => this.setState({ photo })}
-                        onPrevClick={this.onPrevClick} />
+                        onPrevClick={this.onPrevClick} comments={this.comments.photo} />
                 )
             }
         ]
     }
+
+    getComments() {
+        return {
+            personalData: "Jakub a nie Kuba",
+            education: "tutorial minecrafta sie nie liczy",
+            workExperience: "dilerką się nie chwal",
+            skills: "chodzi o coś co może się przydać w pracy",
+            languages: "nie wpisuj języka elfów",
+            photo: "załóż spodnie do zdjęcia"
+        }
+    }
     
     render() {
         this.tabs = this.getTabs();
+        this.comments = this.getComments();
 
         return (
             <Container>

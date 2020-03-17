@@ -22,6 +22,7 @@ class PhotoTab extends React.Component {
                 title="Zdjęcie"
                 movie={movie_1}
                 onPrevClick={this.props.onPrevClick}
+                comments={this.props.comments}
                 >
                 <Form.Group as={Col} controlId="">
                     <Form.Label>

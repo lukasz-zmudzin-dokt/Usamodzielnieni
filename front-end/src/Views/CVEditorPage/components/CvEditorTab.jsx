@@ -2,12 +2,14 @@ import React from "react";
 import "./CvEditorTab.css";
 import { Form, Button, Row, Col } from "react-bootstrap";
 
-const CVEditorTab = ({ title, movie, children, onPrevClick, onNextClick }) => (
+const CVEditorTab = ({ title, movie, children, onPrevClick, onNextClick, comments }) => (
     <div>
         <h3>{title}</h3>
         <Form.Group controlId="">
             <img className="CVEditorTab__img" src={movie} alt="" />
         </Form.Group>
+        <h5>UWAGI:</h5>
+        <h6>{comments}</h6>
         {children}
         <Row>
             <Col>

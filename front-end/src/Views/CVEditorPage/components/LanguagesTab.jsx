@@ -50,6 +50,7 @@ class LanguagesTab extends React.Component {
                 movie={movie_5}
                 onPrevClick={this.props.onPrevClick}
                 onNextClick={this.props.onNextClick}
+                comments={this.props.comments}
             >
                 <ItemsList
                     getItemId={this.getLanguageId} getItemName={this.getLanguageName} getItem={this.getLanguage}

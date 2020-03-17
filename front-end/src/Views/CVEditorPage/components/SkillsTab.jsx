@@ -39,6 +39,7 @@ class SkillsTab extends React.Component {
                 movie={movie_4}
                 onPrevClick={this.props.onPrevClick}
                 onNextClick={this.props.onNextClick}
+                comments={this.props.comments}
             >
                 <ItemsList
                     getItemId={this.getSkillId} getItemName={this.getSkillName} getItem={this.getSkill}

@@ -36,6 +36,7 @@ class PersonalDataTab extends React.Component {
                 title="Dane osobowe"
                 movie={movie_1}
                 onNextClick={this.props.onNextClick}
+                comments={this.props.comments}
             >
                 <Row>
                     <Form.Group as={Col} controlId="">
