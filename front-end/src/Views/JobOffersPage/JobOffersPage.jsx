@@ -18,19 +18,22 @@ const getOffers = async (token) => {
   } else {
     throw response.status;
   }
-  // TODO
 }
 
 const mapOffers = (offers) => offers.results.map(offer => ({
   id: offer.id,
-  title: offer.title,
+  title: offer.offer_name,
+  companyName: offer.company_name,
+  companyAddress: offer.company_address,
+  voivodeship: offer.voivodeship,
+  expirationDate: offer.expiration_date,
   description: offer.description
-  // TODO
 }))
 
 const JobOffersPage = props => {
   const [offers, setOffers] = useState([]);
   const [isOffersLoading, setIsOffersLoading] = useState(false);
+  const [error, setError] = useState(false);
   const user = useContext(UserContext);
 
   useEffect(
@@ -45,28 +48,8 @@ const JobOffersPage = props => {
       loadedOffers = await getOffers(token);
     } catch(e) {
       console.log(e)
-      loadedOffers = [
-        {
-          id: "1",
-          title: "Stolarz poszukiwany!",
-          description: "Do naszego zakładu potrzebujemy osoby, która ma chęć rąbać drewno! To możesz być ty!!!",
-          companyName: "Rębacze z Cintry sp. z o.o.",
-          firstName: "Jarosław",
-          lastName: "Psikuta",
-          email: "paniewidzisztamsnakońcu@gmail.com",
-          phone: "133792137"
-        },
-        {
-          id: "2",
-          title: "Pszczelarz poszukiwany!",
-          description: "Do naszego zakładu potrzebujemy osoby, która ma chęć wyciagac miody pszczolom! To możesz być ty!!!",
-          companyName: "Miody sp. z o.o.",
-          firstName: "Jarosław",
-          lastName: "Psikuta",
-          email: "paniewidzisztamsnakońcu@gmail.com",
-          phone: "133792137"
-        }
-      ] // TODO: dodanie informacji o błędzie
+      loadedOffers = [];
+      setError(true);
     }
     setOffers(loadedOffers);
     setIsOffersLoading(false);
@@ -77,7 +60,8 @@ const JobOffersPage = props => {
       <Card>
         <Card.Header as="h2">Oferty pracy</Card.Header>
         <Card.Body>
-        {isOffersLoading ? <div>Ładowanie...</div> : 
+        {isOffersLoading ? <div>Ładowanie...</div> :
+          error ? <div>Wystąpił błąd podczas ładowania.</div> :
           offers.length > 0 ?
           offers.map((offer) => <JobOfferInfo offer={offer} />) :
           <div>Brak ofert spełniających podane wymagania.</div>

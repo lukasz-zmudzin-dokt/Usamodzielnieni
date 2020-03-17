@@ -7,13 +7,21 @@ const JobOfferInfo = ({ offer, ...rest }) => {
   
     return (
       <Row {...rest}>
-        <Col>{offer.title}</Col>
-        <Col>{offer.companyName}</Col>
-        <Col>{getAddressString(offer)}</Col>
         <Col>
-          <IndexLinkContainer to={`/jobOffers/${offer.id}`}>
-            <Button>Pokaż szczegóły</Button>
-          </IndexLinkContainer>
+          <Row>
+            <Col><h3>{offer.title}</h3></Col>
+          </Row>
+          <Row>
+            <Col>{offer.companyName}</Col>
+            <Col>{getAddressString(offer)}</Col>
+          </Row>
+          <Row>
+            <Col>
+              <IndexLinkContainer to={`/jobOffers/${offer.id}`}>
+                <Button>Pokaż szczegóły</Button>
+              </IndexLinkContainer>
+            </Col>
+          </Row>
         </Col>
       </Row>
     )
