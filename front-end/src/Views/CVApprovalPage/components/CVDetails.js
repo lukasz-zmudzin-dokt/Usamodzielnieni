@@ -12,9 +12,9 @@ const CVDetails = ({ cv })  => {
                 <a href={"mailto:" + cv.email}> {cv.email} </a>
             </Col>
             <Col xs={12} md={4} className="d-flex justify-content-end">
-                <Button variant="primary m-1 p-1" onClick={e => (downloadCV(e, cv.id))}>Pobierz</Button>
-                <Button variant="success m-1 p-1" onClick={e => (acceptCV(e, cv.id))}>Akceptuj</Button>
-                <Button variant="warning m-1 p-1" onClick={e => (improveCV(e, cv.id))}>Popraw</Button>
+                <Button variant="primary m-1 p-1" className="btnDownload" onClick={e => (downloadCV(e, cv.id))}>Pobierz</Button>
+                <Button variant="success m-1 p-1" className="btnAccept" onClick={e => (acceptCV(e, cv.id))}>Akceptuj</Button>
+                <Button variant="warning m-1 p-1" className="btnImprove" onClick={e => (improveCV(e, cv.id))}>Popraw</Button>
             </Col>
         </Row>
     );
