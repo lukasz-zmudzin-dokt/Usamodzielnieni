@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MyOffers should look like snapshot 1`] = `
+<div
+  className="container"
+>
+  <div
+    className="background"
+  >
+    <div
+      className="main-card no-border card"
+    >
+      <div
+        className="border card-header"
+      >
+        <h3>
+          Moje oferty
+        </h3>
+        <p
+          className="pt-3"
+        >
+          Kliknij zakładkę, by wyświetlić osoby zainteresowane daną ofertą.
+        </p>
+      </div>
+      <div
+        className="border card-body"
+      >
+        <div
+          className="accordion"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;

@@ -1,0 +1,22 @@
+.background {
+    background-image: url("../../assets/menu-backdrop.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: relative;
+
+    height: 100vh;
+    flex-direction: column;
+}
+.main-card {
+    padding-top: 10vh;
+}
+.no-border {
+    border: none !important;
+}
+.border {
+    border: gray;
+}
+.person-row {
+    align-items: center;
+}

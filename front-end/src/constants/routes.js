@@ -4,7 +4,10 @@ import {
   RegisterPage,
   Footer,
   CVEditorPage,
-  Menu
+  Menu,
+  CVApprovalPage,
+  MyOffersPage,
+  UserApprovalPage
 } from "Views";
 
 const paths = {
@@ -13,7 +16,10 @@ const paths = {
   REGISTER: "/newAccount",
   FOOTER: "/footer",
   LOGIN: "/login",
-  USER: "/user"
+  USER: "/user",
+  CVAPPROVAL: "/cvApproval",
+  MYOFFERS: "/myOffers",
+  USERAPPROVAL: "/userApproval"
 };
 
 export default [
@@ -45,6 +51,21 @@ export default [
   {
     path: paths.USER,
     component: UserProfilePage,
+    isPrivate: true
+  },
+  {
+    path: paths.CVAPPROVAL,
+    component: CVApprovalPage,
+    isPrivate: true
+  },
+  {
+    path: paths.MYOFFERS,
+    component: MyOffersPage,
+    isPrivate: true
+  },
+  {
+    path: paths.USERAPPROVAL,
+    component: UserApprovalPage,
     isPrivate: true
   }
 ];
