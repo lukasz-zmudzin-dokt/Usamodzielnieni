@@ -1,21 +1,19 @@
 import React from "react";
-import {fireEvent, render, waitForElement} from "@testing-library/react";
+import {render} from "@testing-library/react";
 import RegisterPage from "./index.js"
 
-import { MemoryRouter } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import { createStore } from 'redux';
-import reducer from 'redux/reducer';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { UserProvider } from "context";
+import {waitForElement, fireEvent} from "@testing-library/dom";
 
 describe( "RegisterPageTest", () => {
     it("should render without crashing", () => {
-        const store = createStore(reducer);
         render(
-            <Provider store={store}>
-                <MemoryRouter>
+            <UserProvider store={store}>
+                <Router>
                     <RegisterPage />
-                </MemoryRouter>
-            </Provider>);
+                </Router>
+            </UserProvider>);
     });
 
     it("onClick should be called", async () => {
@@ -30,13 +28,12 @@ describe( "RegisterPageTest", () => {
     });
 
     it("should match snapshot", () => {
-        const store = createStore(reducer);
         const { container } = render(
-            <Provider store={store}>
+            <UserProvider>
                 <Router>
                     <RegisterPage />
                 </Router>
-            </Provider>
+            </UserProvider>
         );
         expect(container).toMatchSnapshot();
     });
@@ -46,6 +43,7 @@ describe("api connection test", () => {
    let apiFailure;
    let token;
    let apiRegistration;
+
    beforeAll(() => {
        token = "123";
        global.fetch = jest.fn().mockImplementation((input, init) => {
@@ -67,9 +65,9 @@ describe("api connection test", () => {
    it('should get response from api', async () => {
       apiFailure = false;
       const { getByText } = render(
-          <MemoryRouter>
+          <Router>
               <RegisterPage token={token} />
-          </MemoryRouter>
+          </Router>
       );
 
       fireEvent.click(getByText('Rejestracja', {exact: false}));

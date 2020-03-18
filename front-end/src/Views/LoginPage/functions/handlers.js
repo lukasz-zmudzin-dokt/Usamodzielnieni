@@ -52,25 +52,12 @@ export const handleSubmit = (component, event) => {
         //   console.log("dodaje!");
         //   setCookie();
         // }
-        sendData(component);
+        component.sendData();
         console.log(password, username); // login i hasło użytkownika
     }
 
     component.setState({
         validated: true
-    });
-};
-
-
-export const setCookie = (token, component) => {
-    const current = new Date();
-    const nextYear = new Date();
-
-    nextYear.setFullYear(current.getFullYear() + 1); // ciasteczko na rok
-    console.log(token);
-    component.cookies.set(`token`, token, {
-        path: "/",
-        expires: nextYear
     });
 };
 

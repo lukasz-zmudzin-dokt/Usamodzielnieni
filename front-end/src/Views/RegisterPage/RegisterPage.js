@@ -1,15 +1,12 @@
 import React from "react";
 import {Container, Card, Form, Button} from "react-bootstrap";
 import { Link } from "react-router-dom";
-import Cookies from "universal-cookie";
 import bgImage from "../../assets/fot..png";
-import { connect } from "react-redux";
-import { setUserToken } from "redux/actions";
 import PersonalDataForm from "./components/personalDataForm";
 import AccountForm from "./components/accountForm";
 import {renderRedirect, renderSection} from "./functions/handlers";
 import {handleSubmit} from "./functions/submitForm";
-
+import { UserContext } from "context";
 
 
 class RegisterPage extends React.Component {
@@ -109,4 +106,6 @@ class RegisterPage extends React.Component {
     }
 }
 
-export default connect(null, { setUserToken })(RegisterPage);
+RegisterPage.contextType = UserContext;
+
+export default RegisterPage;

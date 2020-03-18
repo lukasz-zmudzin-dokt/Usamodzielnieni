@@ -1,10 +1,10 @@
-export const createMessage = status => {
+export const createMessage = (component, status) => {
     if (status === 400) {
-      this.setState({
+      component.setState({
         message: "Niepoprawny login lub hasło"
       });
     } else {
-      this.setState({
+      component.setState({
         message: "Nieznany błąd proszę spróbować później"
       });
     }

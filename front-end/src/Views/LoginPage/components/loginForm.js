@@ -10,11 +10,6 @@ class LoginForm extends React.Component {
             username: "",
             password: ""
         };
-        onChange.bind(this);
-    }
-
-    sendBackData = () => {
-        this.props.parentCallback(this.state.username, this.state.password);
     }
 
     render() {
@@ -32,13 +27,13 @@ class LoginForm extends React.Component {
                             placeholder="Login"
                             required
                             value={username}
-                            onChange={e => {onChange(this, e); sendBackData(this)}}
+                            onChange={e => onChange(this, e)}
                             className="loginPage__input"
                             minLength="6"
                         />
                         <Form.Control.Feedback type="invalid">
                             Podaj właściwy login
-                </Form.Control.Feedback>
+                        </Form.Control.Feedback>
                     </Form.Group>
                     <Form.Group controlId="formGroupPassword">
                         <Form.Control
@@ -46,13 +41,13 @@ class LoginForm extends React.Component {
                             autoComplete="on"
                             placeholder="Hasło"
                             value={password}
-                            onChange={e => {onChange(this, e); sendBackData(this)}}
+                            onChange={e => onChange(this, e)}
                             required
                             minLength="6"
                         />
                         <Form.Control.Feedback type="invalid">
                             Podaj właściwe hasło
-                </Form.Control.Feedback>
+                        </Form.Control.Feedback>
                     </Form.Group>
                 </Card.Body>
             </Card>

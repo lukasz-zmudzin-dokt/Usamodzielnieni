@@ -1,10 +1,7 @@
 import React from "react";
 import { Container, Button, Card } from "react-bootstrap";
-import Cookies from "universal-cookie";
 import Form from "react-bootstrap/Form";
-import { Link, Redirect } from "react-router-dom";
-import { connect } from "react-redux";
-import { setUserToken } from "redux/actions";
+import { Link } from "react-router-dom";
 import { handleCheck } from "./functions/handlers";
 import { handleSubmit } from "./functions/handlers";
 import { renderRedirect } from "./functions/handlers";
@@ -14,11 +11,11 @@ import { sendData } from "./functions/sendData";
 import { onChange } from "./functions/handlers";
 import { setRedirect } from "./functions/handlers";
 import { setCookie } from "./functions/handlers";
+import { UserContext } from "context";
 
 import "Views/LoginPage/style.css";
 import bgImage from "../../assets/fot..png";
 
-const cookies = new Cookies();
 
 class LoginPage extends React.Component {
   state = {
@@ -28,23 +25,14 @@ class LoginPage extends React.Component {
     redirect: false,
     incorrect: false,
     cookieVal: false,
-    validated: false,
-    token: this.props.token || "",
-    message: "parent message"
+    validated: false
   };
-
-  callbackFunction = (username, password) => {
-    this.setState({
-      username: username,
-      password: password
-    });
-  }
 
   componentDidMount() {
-    if (cookies.get("token")) {
+    if (this.context.token) {
       this.setRedirect();
     }
-  };
+  }
 
   render() {
     const {
@@ -72,7 +60,7 @@ class LoginPage extends React.Component {
               onSubmit={e => handleSubmit(this, e)}
               className="primary"
             >
-              <LoginForm parentCallback = {this.callbackFunction} />
+              <LoginForm />
               <Form.Group controlId="formBasicCheckbox">
                 <Form.Check
                   type="checkbox"
@@ -106,4 +94,6 @@ class LoginPage extends React.Component {
   }
 }
 
-export default connect(null, { setUserToken })(LoginPage);
+LoginPage.contextType = UserContext;
+
+export default LoginPage;
