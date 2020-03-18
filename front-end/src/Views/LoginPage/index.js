@@ -30,7 +30,7 @@ class LoginPage extends React.Component {
 
   componentDidMount() {
     if (this.context.token) {
-      this.setRedirect();
+      setRedirect(this);
     }
   }
 
@@ -60,7 +60,7 @@ class LoginPage extends React.Component {
               onSubmit={e => handleSubmit(this, e)}
               className="primary"
             >
-              <LoginForm />
+              <LoginForm component={this}/>
               <Form.Group controlId="formBasicCheckbox">
                 <Form.Check
                   type="checkbox"

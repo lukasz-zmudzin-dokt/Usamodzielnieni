@@ -1,5 +1,8 @@
+import {setRedirect} from "./handlers";
+
 export const sendData = component => {
-  const { username, password } = this.state;
+  const { username, password } = component.state;
+  console.log(component.state);
 
   const url = "https://usamo-back.herokuapp.com/account/login/";
   fetch(url, {
@@ -18,7 +21,7 @@ export const sendData = component => {
       res.json().then(responseValue => {
         const { token } = responseValue;
         component.context.login(token);
-        component.setRedirect();
+        setRedirect(component);
       });
     } else {
       component.setState({

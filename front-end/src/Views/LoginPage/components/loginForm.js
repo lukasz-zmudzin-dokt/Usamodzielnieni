@@ -6,14 +6,11 @@ import { sendBackData } from "../functions/handlers";
 class LoginForm extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            username: "",
-            password: ""
-        };
     }
 
     render() {
-        const { username, password } = this.state;
+        const component = this.props.component;
+        const { username, password } = component;
 
         return (
             <Card
@@ -27,7 +24,7 @@ class LoginForm extends React.Component {
                             placeholder="Login"
                             required
                             value={username}
-                            onChange={e => onChange(this, e)}
+                            onChange={e => onChange(component, e)}
                             className="loginPage__input"
                             minLength="6"
                         />
@@ -41,7 +38,7 @@ class LoginForm extends React.Component {
                             autoComplete="on"
                             placeholder="Hasło"
                             value={password}
-                            onChange={e => onChange(this, e)}
+                            onChange={e => onChange(component, e)}
                             required
                             minLength="6"
                         />

@@ -52,7 +52,7 @@ export const handleSubmit = (component, event) => {
         //   console.log("dodaje!");
         //   setCookie();
         // }
-        component.sendData();
+        sendData(component);
         console.log(password, username); // login i hasło użytkownika
     }
 

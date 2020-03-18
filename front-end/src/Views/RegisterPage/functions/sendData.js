@@ -4,7 +4,6 @@ const cookies = new Cookies();
 
 
 export const sendData = (component, constObject, varObject) => {
-    console.log(constObject + varObject);
     let url;
     switch (component.state.account_type) {
         case "Podopiecznym": url = "https://usamo-back.herokuapp.com/account/register/"; break;
@@ -13,6 +12,7 @@ export const sendData = (component, constObject, varObject) => {
     }
 
     const object = {...constObject, ...varObject};
+    console.log(object);
     fetch(url, {
         method: "POST",
         body: JSON.stringify(object),
