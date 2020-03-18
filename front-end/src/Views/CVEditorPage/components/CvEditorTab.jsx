@@ -8,7 +8,8 @@ const CVEditorTab = ({ title, movie, children, onPrevClick, onNextClick, comment
         <Form.Group controlId="">
             <img className="CVEditorTab__img" src={movie} alt="" />
         </Form.Group>
-        <h5>UWAGI:</h5>
+        
+        {(comments !== null) && <h5>UWAGI:</h5>}
         <h6>{comments}</h6>
         {children}
         <Row>

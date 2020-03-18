@@ -124,7 +124,7 @@ class CVEditorPage extends React.Component {
         return {
             personalData: "Jakub a nie Kuba",
             education: "tutorial minecrafta sie nie liczy",
-            workExperience: "dilerką się nie chwal",
+            workExperience: null,
             skills: "chodzi o coś co może się przydać w pracy",
             languages: "nie wpisuj języka elfów",
             photo: "załóż spodnie do zdjęcia"
