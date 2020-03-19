@@ -1,11 +1,7 @@
 import React from "react";
 import PrivateRoute from "root/_components/PrivateRoute";
-import Enzyme, { mount } from "enzyme";
 import { render } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
-import Adapter from "enzyme-adapter-react-16";
-
-Enzyme.configure({ adapter: new Adapter() });
 
 describe("PrivateRoute test", () => {
   it("should match snapshot", () => {
@@ -21,7 +17,7 @@ describe("PrivateRoute test", () => {
     };
 
     const { container } = render(
-      <MemoryRouter initialEntries={["/userProfile"]}>
+      <MemoryRouter initialEntries={[exampleProps.path]}>
         <PrivateRoute
           redirect="/home"
           authenticated={exampleContext}
@@ -46,7 +42,7 @@ describe("PrivateRoute test", () => {
       component: ExampleComponent
     };
 
-    const enzymeWrapper = mount(
+    const { getByText } = render(
       <MemoryRouter initialEntries={[exampleProps.path]}>
         <PrivateRoute
           path={exampleProps.path}
@@ -58,7 +54,7 @@ describe("PrivateRoute test", () => {
       </MemoryRouter>
     );
 
-    expect(enzymeWrapper.exists(ExampleComponent)).toBe(true);
+    expect(getByText("AComponent")).toBeInTheDocument();
   });
 
   it("should render component if user have token and type is not required", () => {
@@ -73,7 +69,7 @@ describe("PrivateRoute test", () => {
       component: ExampleComponent
     };
 
-    const enzymeWrapper = mount(
+    const { getByText } = render(
       <MemoryRouter initialEntries={[exampleProps.path]}>
         <PrivateRoute
           path={exampleProps.path}
@@ -85,7 +81,7 @@ describe("PrivateRoute test", () => {
       </MemoryRouter>
     );
 
-    expect(enzymeWrapper.exists(ExampleComponent)).toBe(true);
+    expect(getByText("AComponent")).toBeInTheDocument();
   });
 
   it("should not render component if user isn't logged in ", () => {
@@ -100,7 +96,7 @@ describe("PrivateRoute test", () => {
       component: ExampleComponent
     };
 
-    const enzymeWrapper = mount(
+    const { queryByText } = render(
       <MemoryRouter initialEntries={[exampleProps.path]}>
         <PrivateRoute
           path={exampleProps.path}
@@ -112,7 +108,7 @@ describe("PrivateRoute test", () => {
       </MemoryRouter>
     );
 
-    expect(enzymeWrapper.exists(ExampleComponent)).toBe(false);
+    expect(queryByText("AComponent")).not.toBeInTheDocument();
   });
 
   it("should not render component if user is logged in but have invalid type ", () => {
@@ -127,7 +123,7 @@ describe("PrivateRoute test", () => {
       component: ExampleComponent
     };
 
-    const enzymeWrapper = mount(
+    const { queryByText } = render(
       <MemoryRouter initialEntries={[exampleProps.path]}>
         <PrivateRoute
           path={exampleProps.path}
@@ -139,6 +135,6 @@ describe("PrivateRoute test", () => {
       </MemoryRouter>
     );
 
-    expect(enzymeWrapper.exists(ExampleComponent)).toBe(false);
+    expect(queryByText("AComponent")).not.toBeInTheDocument();
   });
 });
