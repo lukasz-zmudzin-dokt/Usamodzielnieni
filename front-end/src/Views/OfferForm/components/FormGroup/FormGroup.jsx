@@ -56,13 +56,13 @@ const FormGroup = ({
         return (
           <Form.Row className="align-items-center m-0">
             <DatePicker
+              id="Ważne do:"
               className="form-control"
               locale="pl"
               dateFormat="dd.MM.yyyy"
               onChange={setDate}
               selected={val}
               required
-              data-testid="expiration_date"
               minDate={new Date()}
             />
           </Form.Row>
