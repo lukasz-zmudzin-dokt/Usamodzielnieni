@@ -9,63 +9,30 @@ const OfferForm = () => {
   const [validated, setValidated] = useState(false);
   const [send, setSend] = useState(false);
 
-  const [offer_name, setOfferName] = useState("");
-  const [company_name, setCompanyName] = useState("");
-  const [company_address, setCompanAdress] = useState("");
-  const [voivodeship, setVoivodeship] = useState(voivodeships[0]);
-  const [description, setDescription] = useState("");
-  const [expiration_date, setExpirationDate] = useState("");
+  const [offer, setOffer] = useState({
+    offer_name: "",
+    company_name: "",
+    company_address: "",
+    voivodeship: voivodeships[0],
+    description: "",
+    expiration_date: ""
+  });
 
   const context = useContext(UserContext);
 
-  const sendData = () => {
+  const sendData = (offer, clearState) => {
     const url = "https://usamo-back.herokuapp.com/job/job-offer/";
-    const year = expiration_date.getFullYear();
-    const month =
-      expiration_date.getMonth() + 1 < 10
-        ? `0${expiration_date.getMonth() + 1}`
-        : expiration_date.getMonth() + 1;
-    const day =
-      expiration_date.getDate() < 10
-        ? `0${expiration_date.getDate()}`
-        : expiration_date.getDate();
-    const newDate = `${year}-${month}-${day}`;
-
-    console.log({
-      offer_name,
-      company_name,
-      company_address,
-      voivodeship,
-      expiration_date: newDate,
-      description
-    });
-
     fetch(url, {
       method: "POST",
-      body: JSON.stringify({
-        offer_name,
-        company_name,
-        company_address,
-        voivodeship,
-        expiration_date: newDate,
-        description
-      }),
+      body: JSON.stringify(offer),
       headers: {
         "Content-Type": "application/json",
         Origin: null,
         Authorization: `Token ${context.token}`
       }
     }).then(res => {
-      console.log(res);
       if (res.status === 200) {
-        setOfferName("");
-        setCompanAdress("");
-        setCompanyName("");
-        setVoivodeship(voivodeships[0]);
-        setDescription("");
-        setExpirationDate("");
-        setValidated(false);
-        setSend(true);
+        clearState();
       }
     });
   };
@@ -74,14 +41,45 @@ const OfferForm = () => {
     const form = event.currentTarget;
     event.preventDefault();
     if (form.checkValidity() === false) {
-      event.preventDefault();
       event.stopPropagation();
       setSend(false);
     } else {
-      sendData();
+      const year = expiration_date.getFullYear();
+      const month =
+        expiration_date.getMonth() + 1 < 10
+          ? `0${expiration_date.getMonth() + 1}`
+          : expiration_date.getMonth() + 1;
+      const day =
+        expiration_date.getDate() < 10
+          ? `0${expiration_date.getDate()}`
+          : expiration_date.getDate();
+      const newDate = `${year}-${month}-${day}`;
+      sendData({ ...offer, expiration_date: newDate }, clearState);
     }
     setValidated(true);
   };
+
+  const clearState = () => {
+    setOffer({
+      offer_name: "",
+      company_name: "",
+      company_address: "",
+      voivodeship: voivodeships[0],
+      description: "",
+      expiration_date: ""
+    });
+    setValidated(false);
+    setSend(true);
+  };
+
+  const {
+    offer_name,
+    company_address,
+    company_name,
+    description,
+    expiration_date,
+    voivodeship
+  } = offer;
 
   return (
     <Container className="offerForm">
@@ -99,27 +97,30 @@ const OfferForm = () => {
             <div className="offerForm__wrapper">
               <FormGroup
                 header="Nazwa stanowiska"
-                setVal={setOfferName}
+                setVal={val => setOffer({ ...offer, offer_name: val })}
                 val={offer_name}
                 incorrect="Podaj nazwę stanowiska"
+                maxLength={50}
               />
               <FormGroup
                 header="Nazwa firmy"
-                setVal={setCompanyName}
+                setVal={val => setOffer({ ...offer, company_name: val })}
                 val={company_name}
                 incorrect="Podaj nazwę firmy"
+                maxLength={70}
               />
               <FormGroup
                 header="Adres firmy"
-                setVal={setCompanAdress}
+                setVal={val => setOffer({ ...offer, company_address: val })}
                 val={company_address}
                 incorrect="Podaj lokalizację"
+                maxLength={200}
               />
               <FormGroup
                 header="Województwo"
                 array={voivodeships}
                 type="select"
-                setVal={setVoivodeship}
+                setVal={val => setOffer({ ...offer, voivodeship: val })}
                 val={voivodeship}
               />
             </div>
@@ -127,14 +128,14 @@ const OfferForm = () => {
               <FormGroup
                 header="Opis stanowiska"
                 type="textarea"
-                setVal={setDescription}
+                setVal={val => setOffer({ ...offer, description: val })}
                 val={description}
                 incorrect="Podaj opis"
               />
               <FormGroup
                 header="Ważne do:"
                 type="date"
-                setVal={setExpirationDate}
+                setVal={val => setOffer({ ...offer, expiration_date: val })}
                 val={expiration_date}
               />
             </div>

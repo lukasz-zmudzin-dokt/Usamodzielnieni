@@ -67,7 +67,7 @@ export default [
   },
   {
     path: paths.OFFER_FORM,
-    component: OfferForm, // tu trzeba zmienić komponent
+    component: OfferForm,
     isPrivate: true,
     type: userTypes.EMPLOYER
   },

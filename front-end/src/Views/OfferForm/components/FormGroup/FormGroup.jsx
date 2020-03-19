@@ -4,7 +4,15 @@ import DatePicker from "react-datepicker";
 import PropTypes from "prop-types";
 import "Views/OfferForm/style.css";
 
-const FormGroup = ({ header, setVal, array, type, incorrect, val }) => {
+const FormGroup = ({
+  header,
+  setVal,
+  array,
+  type,
+  incorrect,
+  val,
+  maxLength
+}) => {
   const setInput = e => {
     const value = e.target.value;
     setVal(value);
@@ -44,8 +52,8 @@ const FormGroup = ({ header, setVal, array, type, incorrect, val }) => {
               className="form-control"
               locale="pl"
               dateFormat="dd.MM.yyyy"
-              selected={val}
               onChange={setDate}
+              selected={val}
               required
               minDate={new Date()}
             />
@@ -60,7 +68,7 @@ const FormGroup = ({ header, setVal, array, type, incorrect, val }) => {
             value={val}
             required
             minLength="1"
-            maxLength="10"
+            maxLength={maxLength}
           />
         );
     }
@@ -87,7 +95,8 @@ FormGroup.propTypes = {
   setVal: PropTypes.func.isRequired,
   array: PropTypes.array,
   type: PropTypes.string,
-  incorrect: PropTypes.string
+  incorrect: PropTypes.string,
+  maxLength: PropTypes.number
 };
 
 export default FormGroup;
