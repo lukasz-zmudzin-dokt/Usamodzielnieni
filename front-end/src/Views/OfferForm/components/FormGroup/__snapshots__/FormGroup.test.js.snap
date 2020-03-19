@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders correctly 1`] = `
+exports[`FormGroup renders correctly 1`] = `
 <div
   className="form-group"
 >
@@ -12,6 +12,7 @@ exports[`renders correctly 1`] = `
   </label>
   <input
     className="form-control"
+    data-testid="default"
     id="Example"
     minLength="1"
     onChange={[Function]}

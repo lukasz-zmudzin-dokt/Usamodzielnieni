@@ -77,6 +77,7 @@ const FormGroup = ({
             required
             minLength="1"
             maxLength={maxLength}
+            data-testid="default"
           />
         );
     }
@@ -105,6 +106,10 @@ FormGroup.propTypes = {
   type: PropTypes.string,
   incorrect: PropTypes.string,
   maxLength: PropTypes.number
+};
+
+FormGroup.defaultProps = {
+  array: []
 };
 
 export default FormGroup;

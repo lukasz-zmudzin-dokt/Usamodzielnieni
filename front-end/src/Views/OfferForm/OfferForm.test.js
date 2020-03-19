@@ -28,6 +28,7 @@ describe("OfferForm", () => {
 
   beforeEach(() => {
     failFetch = false;
+    jest.clearAllMocks();
   });
 
   it("renders correctly", () => {
@@ -68,6 +69,46 @@ describe("OfferForm", () => {
     await waitForElement(() => getByTestId("sendMsg"));
     expect(getByTestId("sendMsg")).toBeInTheDocument();
   });
+  it("should not return appropriate message when api return failure", async () => {
+    failFetch = true;
+    const location = { pathname: "/" };
+    const {
+      getByPlaceholderText,
+      getByTestId,
+      getByLabelText,
+      queryByTestId
+    } = render(
+      <MemoryRouter>
+        <OfferForm location={location} token={token} />
+      </MemoryRouter>
+    );
+
+    fireEvent.change(getByPlaceholderText("Nazwa stanowiska"), {
+      target: { value: "abcd" }
+    });
+    fireEvent.change(getByPlaceholderText("Nazwa firmy"), {
+      target: { value: "abcd" }
+    });
+    fireEvent.change(getByPlaceholderText("Adres firmy"), {
+      target: { value: "abcd" }
+    });
+    fireEvent.change(getByTestId("voivodeship"), {
+      target: { value: "lubelskie" }
+    });
+    fireEvent.change(getByTestId("description"), {
+      target: { value: "abcd" }
+    });
+    fireEvent.change(getByLabelText("Ważne do:"), {
+      target: {
+        value:
+          "Wed Mar 25 2020 00:00:00 GMT+0100 (czas środkowoeuropejski standardowy)"
+      }
+    });
+
+    fireEvent.click(getByTestId("submitBtn"));
+
+    expect(queryByTestId("sendMsg")).not.toBeInTheDocument();
+  });
 
   it("should not return appropriate message when one of input is invalid", async () => {
     const location = { pathname: "/" };
@@ -107,5 +148,39 @@ describe("OfferForm", () => {
     fireEvent.click(getByTestId("submitBtn"));
 
     expect(queryByTestId("sendMsg")).not.toBeInTheDocument();
+  });
+
+  it("should not use fetch when form isn't validated", async () => {
+    const location = { pathname: "/" };
+    const { getByPlaceholderText, getByTestId, getByLabelText } = render(
+      <MemoryRouter>
+        <OfferForm location={location} token={token} />
+      </MemoryRouter>
+    );
+
+    fireEvent.change(getByPlaceholderText("Nazwa stanowiska"), {
+      target: { value: "" }
+    });
+    fireEvent.change(getByPlaceholderText("Nazwa firmy"), {
+      target: { value: "abcd" }
+    });
+    fireEvent.change(getByPlaceholderText("Adres firmy"), {
+      target: { value: "abcd" }
+    });
+    fireEvent.change(getByTestId("voivodeship"), {
+      target: { value: "lubelskie" }
+    });
+    fireEvent.change(getByTestId("description"), {
+      target: { value: "abcd" }
+    });
+    fireEvent.change(getByLabelText("Ważne do:"), {
+      target: {
+        value: ""
+      }
+    });
+
+    fireEvent.click(getByTestId("submitBtn"));
+
+    expect(fetch).toHaveBeenCalledTimes(0);
   });
 });
