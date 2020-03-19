@@ -29,7 +29,13 @@ const FormGroup = ({
           .sort()
           .map(val => <option key={val}>{val}</option>);
         return (
-          <Form.Control as={type} value={val} onChange={setInput} required>
+          <Form.Control
+            data-testid="voivodeship"
+            as={type}
+            value={val}
+            onChange={setInput}
+            required
+          >
             {options}
           </Form.Control>
         );
@@ -43,6 +49,7 @@ const FormGroup = ({
             className="offerForm__textarea"
             minLength="1"
             maxLength="1000"
+            data-testid="description"
           />
         );
       case "date":
@@ -55,6 +62,7 @@ const FormGroup = ({
               onChange={setDate}
               selected={val}
               required
+              data-testid="expiration_date"
               minDate={new Date()}
             />
           </Form.Row>

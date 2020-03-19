@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import { Form, Container, Card, Button, Row } from "react-bootstrap";
 import { voivodeships } from "constants/voivodeships";
 import FormGroup from "Views/OfferForm/components/FormGroup";
+import { sendData } from "Views/OfferForm/functions/sendData";
 import { UserContext } from "context";
 import "./style.css";
 
@@ -20,23 +21,6 @@ const OfferForm = () => {
 
   const context = useContext(UserContext);
 
-  const sendData = (offer, clearState) => {
-    const url = "https://usamo-back.herokuapp.com/job/job-offer/";
-    fetch(url, {
-      method: "POST",
-      body: JSON.stringify(offer),
-      headers: {
-        "Content-Type": "application/json",
-        Origin: null,
-        Authorization: `Token ${context.token}`
-      }
-    }).then(res => {
-      if (res.status === 200) {
-        clearState();
-      }
-    });
-  };
-
   const submit = event => {
     const form = event.currentTarget;
     event.preventDefault();
@@ -44,6 +28,7 @@ const OfferForm = () => {
       event.stopPropagation();
       setSend(false);
     } else {
+      console.log(expiration_date);
       const year = expiration_date.getFullYear();
       const month =
         expiration_date.getMonth() + 1 < 10
@@ -54,7 +39,12 @@ const OfferForm = () => {
           ? `0${expiration_date.getDate()}`
           : expiration_date.getDate();
       const newDate = `${year}-${month}-${day}`;
-      sendData({ ...offer, expiration_date: newDate }, clearState);
+
+      sendData(
+        { ...offer, expiration_date: newDate },
+        clearState,
+        context.token
+      );
     }
     setValidated(true);
   };
@@ -89,6 +79,7 @@ const OfferForm = () => {
         </Card.Header>
         <Card.Body>
           <Form
+            data-testid="form"
             onSubmit={submit}
             noValidate
             validated={validated}
@@ -140,13 +131,16 @@ const OfferForm = () => {
               />
             </div>
             {send === true ? (
-              <p className="offerForm__message">Dodano ofertę pracy</p>
+              <p data-testid="sendMsg" className="offerForm__message">
+                Dodano ofertę pracy
+              </p>
             ) : null}
             <Row className="w-100 justify-content-center align-items-center m-0">
               <Button
                 variant="secondary"
                 type="submit"
                 className="pl-5 pr-5 pt-2 pb-2"
+                data-testid="submitBtn"
               >
                 Dodaj
               </Button>
