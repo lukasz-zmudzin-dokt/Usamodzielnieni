@@ -7,8 +7,8 @@ import EducationTab from 'Views/CVEditorPage/components/EducationTab';
 import WorkExperienceTab from 'Views/CVEditorPage/components/WorkExperienceTab';
 import LanguagesTab from 'Views/CVEditorPage/components/LanguagesTab';
 import SkillsTab from 'Views/CVEditorPage/components/SkillsTab';
-import { connect } from 'react-redux';
 import PhotoTab from './components/PhotoTab';
+import { UserContext } from "context";
 
 import { sendData } from "Views/CVEditorPage/functions/other.js";
 import { createCVObject } from "Views/CVEditorPage/functions/createCVObject.js";
@@ -19,7 +19,6 @@ class CVEditorPage extends React.Component {
         super(props);
         this.state = {
             formTab: "personalData",
-            token: this.props.token || undefined,
 
             personalData: null,
             education: null,
@@ -58,7 +57,7 @@ class CVEditorPage extends React.Component {
             this.state.languages
         )
         console.log(JSON.stringify(cv));
-        await sendData(cv, this.state.photo);
+        await sendData(cv, this.state.photo, this.context.token);
     };
 
     getTabs() {
@@ -157,10 +156,6 @@ class CVEditorPage extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    console.log("mapStateToProps:", state);
-    const { token } = state.user;
-    return { token };
-};
+CVEditorPage.contextType = UserContext;
 
-export default connect(mapStateToProps)(CVEditorPage);
+export default CVEditorPage;
