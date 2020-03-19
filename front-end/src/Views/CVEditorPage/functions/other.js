@@ -1,8 +1,4 @@
-import Cookies from "universal-cookie";
-const cookies = new Cookies();
-
-export const sendData = (object) => {
-  const token = cookies.get("token");
+export const sendData = (e, object, token) => {
   const url = "https://usamo-back.herokuapp.com/cv/generate/";
   const headers = {
     Authorization: "Token " + token,
