@@ -1,24 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`FormGroup renders correctly 1`] = `
-<div
-  className="form-group"
->
-  <label
-    className="form-label"
-    htmlFor="Example"
-  >
-    Example
-  </label>
-  <input
-    className="form-control"
-    data-testid="default"
-    id="Example"
-    minLength="1"
-    onChange={[Function]}
-    placeholder="Example"
-    required={true}
-    type="text"
-  />
-</div>
-`;
+exports[`FormGroup renders correctly 1`] = `undefined`;

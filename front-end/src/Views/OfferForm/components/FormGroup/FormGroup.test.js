@@ -1,15 +1,17 @@
 import React from "react";
 import { render } from "@testing-library/react";
 import FormGroup from "Views/OfferForm/components/FormGroup";
-import renderer from "react-test-renderer";
 import { MemoryRouter } from "react-router-dom";
 
 describe("FormGroup", () => {
   it("renders correctly", () => {
-    const form = renderer
-      .create(<FormGroup header="Example" setVal={() => null} />)
-      .toJSON();
-    expect(form).toMatchSnapshot();
+    const { component } = render(
+      <MemoryRouter>
+        <FormGroup header="Example" setVal={() => null} />
+      </MemoryRouter>
+    );
+
+    expect(component).toMatchSnapshot();
   });
 
   it("should render voivodeships if type is select", () => {

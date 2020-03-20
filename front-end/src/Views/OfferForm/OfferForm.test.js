@@ -2,7 +2,6 @@ import React from "react";
 import { render, fireEvent, waitForElement } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import OfferForm from "Views/OfferForm";
-import renderer from "react-test-renderer";
 
 describe("OfferForm", () => {
   let token;
@@ -32,8 +31,12 @@ describe("OfferForm", () => {
   });
 
   it("renders correctly", () => {
-    const form = renderer.create(<OfferForm />).toJSON();
-    expect(form).toMatchSnapshot();
+    const { component } = render(
+      <MemoryRouter>
+        <OfferForm />
+      </MemoryRouter>
+    );
+    expect(component).toMatchSnapshot();
   });
 
   it("should return appropriate message when offer is send", async () => {
