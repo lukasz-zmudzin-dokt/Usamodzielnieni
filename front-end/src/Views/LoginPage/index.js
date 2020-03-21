@@ -1,13 +1,12 @@
 import React from "react";
-import { Container, Button, Card } from "react-bootstrap";
-import Form from "react-bootstrap/Form";
+import { Container, Button, Card, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { handleCheck, handleSubmit, renderRedirect, setRedirect } from "./functions/handlers";
 import LoginForm from "./components/loginForm";
 import { UserContext } from "context";
 
 import "Views/LoginPage/style.css";
-import bgImage from "../../assets/fot..png";
+import bgImage from "assets/fot..png";
 
 
 class LoginPage extends React.Component {

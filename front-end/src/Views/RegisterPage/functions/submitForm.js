@@ -19,6 +19,9 @@ const adjustObject = component => {
         case "Administratorem": {return({
 
         })}
+        default: {
+            console.log("Something went wrong");
+        }
     }
 };
 

@@ -34,5 +34,9 @@ export const renderSection = (component) => {
                 onBlur={companyData => component.setState({companyData})}
             /> )}
         case "Administratorem": {return null;}
+        default: {
+            console.log("Something went wrong");
+            return null;
+        }
     }
 };

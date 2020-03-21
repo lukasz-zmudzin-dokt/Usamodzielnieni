@@ -1,6 +1,4 @@
 import { setRedirect } from "./handlers";
-import Cookies from "universal-cookie";
-const cookies = new Cookies();
 
 
 export const sendData = (component, object) => {

@@ -53,7 +53,7 @@ class RegisterPage extends React.Component {
                                 onChange={e => selectType(e)}
                                 defaultValue={this.state.account_type}
                             >
-                                {types.map(type => (<option value={type}>{type}</option>))}
+                                {types.map(type => (<option key={type} value={type}>{type}</option>))}
                             </Form.Control>
                         </div>
                         <Form
