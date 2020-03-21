@@ -13,18 +13,11 @@ class RegisterPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            email: "",
-            username: "",
-            password: "",
-            passwordR: "",
-            company_nip: "",
-            name_of_place: "",
-            street: "",
-            city: "",
-            city_code: "",
-            first_name: "",
-            last_name: "",
-            phone_number: "",
+            personalData: null,
+            homeData: null,
+            companyData: null,
+            accountData: null,
+
             account_type: "Podopiecznym",
             areEqual: true,
             validated: false,
@@ -56,7 +49,7 @@ class RegisterPage extends React.Component {
                             <p>Jestem:</p>
                             <Form.Control
                                 className="register_radio_type"
-                                as="Select"
+                                as="select"
                                 onChange={e => selectType(e)}
                                 defaultValue={this.state.account_type}
                             >
@@ -70,9 +63,15 @@ class RegisterPage extends React.Component {
                             className="loginPage__form primary"
                         >
                             <section className="row">
-                                <PersonalDataForm component={this}/>
+                                <PersonalDataForm
+                                    data={this.state.personalData}
+                                    onBlur={personalData => this.setState({personalData})}
+                                />
                                 {renderSection(this)}
-                                <AccountForm component={this}/>
+                                <AccountForm
+                                    data={this.state.accountData}
+                                    onBlur={accountData => this.setState({accountData})}
+                                />
                                 {console.log(this.state)}
                             </section>
                             <Button

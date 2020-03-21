@@ -3,7 +3,7 @@ import Cookies from "universal-cookie";
 const cookies = new Cookies();
 
 
-export const sendData = (component, constObject, varObject) => {
+export const sendData = (component, object) => {
     let url;
     switch (component.state.account_type) {
         case "Podopiecznym": url = "https://usamo-back.herokuapp.com/account/register/"; break;
@@ -11,7 +11,6 @@ export const sendData = (component, constObject, varObject) => {
         case "Administratorem": url = "https://usamo-back.herokuapp.com/account/register/staff/"; break;
     }
 
-    const object = {...constObject, ...varObject};
     console.log(object);
     fetch(url, {
         method: "POST",
@@ -30,17 +29,6 @@ export const sendData = (component, constObject, varObject) => {
                 component.setState({
                     validated: false,
                     message: "Udało się zarejestrować! Teraz możesz się zalogować",
-                    email: "",
-                    first_name: "",
-                    last_name: "",
-                    username: "",
-                    phone_number: "",
-                    password: "",
-                    passwordR: "",
-                    city: "",
-                    city_code: "",
-                    street: "",
-                    name_of_place: "",
                     correct: true,
                     redirect: true
                 });
@@ -52,6 +40,9 @@ export const sendData = (component, constObject, varObject) => {
                 message: "Taki użytkownik już istnieje",
                 username: ""
             });
+            res.json().then(responseValue => {
+                console.log(responseValue);
+            })
         }
     });
 };

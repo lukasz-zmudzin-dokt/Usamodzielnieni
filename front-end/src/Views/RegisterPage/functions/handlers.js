@@ -3,12 +3,10 @@ import React from "react";
 import HomeDataForm from "../components/homeDataForm";
 import CompanyDataForm from "../components/companyDataForm";
 
-export const onChange = (component, e, val) => {
+export const onChange = (component, e) => {
+    const name = e.target.name;
     const value = e.target.value;
-
-    component.setState({
-        [val]: value
-    });
+    component.props.onBlur({ ...component.props.data, [name]: value})
 };
 
 export const renderRedirect = (component) => {
@@ -25,8 +23,16 @@ export const setRedirect = component => {
 
 export const renderSection = (component) => {
     switch(component.state.account_type) {
-        case "Podopiecznym": {return <HomeDataForm component={component} />}
-        case "Pracodawcą": {return <CompanyDataForm component={component} /> }
+        case "Podopiecznym": {return (
+            <HomeDataForm
+                data={component.state.homeData}
+                onBlur={homeData => component.setState({homeData})}
+            /> )}
+        case "Pracodawcą": {return (
+            <CompanyDataForm
+                data={component.state.companyData}
+                onBlur={companyData => component.setState({companyData})}
+            /> )}
         case "Administratorem": {return null;}
     }
-}
+};

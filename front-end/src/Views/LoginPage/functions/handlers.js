@@ -5,9 +5,6 @@ import { sendData } from "./sendData";
 //
 //przesyła dane z child do parent component
 //
-export const sendBackData = (component) => {
-    component.props.parentCallback(component.state.username, component.state.password);
-};
 
 export const onChange = (component, e) => {
     const type = e.target.type === "text" ? "username" : e.target.type;

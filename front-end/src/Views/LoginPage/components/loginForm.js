@@ -1,7 +1,6 @@
 import React from 'react';
 import { Card, Form } from 'react-bootstrap';
 import { onChange } from "../functions/handlers";
-import { sendBackData } from "../functions/handlers";
 
 class LoginForm extends React.Component {
     constructor(props) {

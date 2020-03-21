@@ -1,15 +1,20 @@
 import {sendData} from "./sendData";
 
-const chooseObject = component => {
+const adjustObject = component => {
+    let source;
     switch(component.state.account_type) {
-        case "Podopiecznym": {return({
-            facility_name: component.state.name_of_place,
-            facility_address: `${component.state.city} ${component.state.street} ${component.state.city_code}`
+        case "Podopiecznym": {
+            source = component.state.homeData;
+            return({
+            facility_name: source.name_of_place,
+            facility_address: `${source.city} ${source.street} ${source.city_code}`
         })}
-        case "Pracodawcą": {return({
-            company_name: component.state.name_of_place,
-            company_address: `${component.state.city} ${component.state.street} ${component.state.city_code}`,
-            nip: component.state.company_nip
+        case "Pracodawcą": {
+            source = component.state.companyData;
+            return({
+            company_name: source.name_of_place,
+            company_address: `${source.city} ${source.street} ${source.city_code}`,
+            nip: source.company_nip
         })}
         case "Administratorem": {return({
 
@@ -18,20 +23,16 @@ const chooseObject = component => {
 };
 
 export const handleSubmit = (component, event) => {
-    const {
-        account_type,
-        email,
-        first_name,
-        last_name,
-        username,
-        phone_number,
-        password,
-        passwordR
-    } = component.state;
+    const data = {
+        ...component.state.personalData,
+        ...component.state.accountData,
+        ...adjustObject(component)
+    };
+
     const form = event.currentTarget;
 
     event.preventDefault();
-
+    const {password, passwordR} = component.state.accountData;
     if (form.checkValidity() === false || password !== passwordR) {
         event.preventDefault();
         event.stopPropagation();
@@ -43,14 +44,7 @@ export const handleSubmit = (component, event) => {
         component.setState({
             areEqual: true
         });
-        sendData(component, {
-            email,
-            first_name,
-            last_name,
-            username,
-            phone_number,
-            password,
-        }, chooseObject(component));
+        sendData( component, data );
     }
 
     component.setState({

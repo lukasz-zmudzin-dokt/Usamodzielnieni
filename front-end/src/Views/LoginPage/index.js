@@ -2,15 +2,8 @@ import React from "react";
 import { Container, Button, Card } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import { Link } from "react-router-dom";
-import { handleCheck } from "./functions/handlers";
-import { handleSubmit } from "./functions/handlers";
-import { renderRedirect } from "./functions/handlers";
+import { handleCheck, handleSubmit, renderRedirect, setRedirect } from "./functions/handlers";
 import LoginForm from "./components/loginForm";
-import { createMessage } from "./functions/createMessage";
-import { sendData } from "./functions/sendData";
-import { onChange } from "./functions/handlers";
-import { setRedirect } from "./functions/handlers";
-import { setCookie } from "./functions/handlers";
 import { UserContext } from "context";
 
 import "Views/LoginPage/style.css";
@@ -36,8 +29,6 @@ class LoginPage extends React.Component {
 
   render() {
     const {
-      username,
-      password,
       validated,
       cookieVal,
       incorrect,
