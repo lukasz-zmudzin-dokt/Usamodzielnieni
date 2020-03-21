@@ -17,10 +17,10 @@ export const sendData = component => {
     }
   }).then(res => {
     console.log(res);
-    if (res.status === 200) {
+    if (res.status === 201) {
       res.json().then(responseValue => {
-        const { token } = responseValue;
-        component.context.login(token);
+        const { token, type } = responseValue;
+        component.context.login(token, type);
         setRedirect(component);
       });
     } else {
@@ -31,6 +31,10 @@ export const sendData = component => {
         password: "",
         message: "Coś poszło nie tak"
       });
+      res.json().then(response => {
+        console.log(response);
+        console.log(component.state);
+      })
     }
   });
 };
