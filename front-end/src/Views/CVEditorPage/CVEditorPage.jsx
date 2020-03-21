@@ -19,6 +19,7 @@ class CVEditorPage extends React.Component {
         super(props);
         this.state = {
             formTab: "personalData",
+            feedback: {},
 
             personalData: null,
             education: null,
@@ -28,7 +29,7 @@ class CVEditorPage extends React.Component {
             photo: null
         };
         this.tabs = [];
-        this.comments={};
+        this.comments = {};
     }
 
     onPrevClick = () => {
@@ -120,14 +121,15 @@ class CVEditorPage extends React.Component {
     }
 
     getComments() {
-        getFeedback(this.context.token);
+        getFeedback(this.context.token, this);
+        console.log(this.state);
         return {
-            personalData: "Jakub a nie Kuba",
-            education: "tutorial minecrafta sie nie liczy",
-            workExperience: null,
-            skills: "chodzi o coś co może się przydać w pracy",
-            languages: "nie wpisuj języka elfów",
-            photo: "załóż spodnie do zdjęcia"
+            personalData: this.state.feedback.basic_info,
+            education: this.state.feedback.schools,
+            workExperience: this.state.feedback.experiences,
+            skills: this.state.feedback.skills,
+            languages: this.state.feedback.languages,
+            photo: this.state.feedback.additional_info,
         }
     }
     

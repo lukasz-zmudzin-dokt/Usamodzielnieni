@@ -51,16 +51,20 @@ const sendData = (object, photo, token) => {
   });
 };
 
-const getFeedback = (token) => {
-  const url = "http://usamo-back.herokuapp.com/cv/feedback/";
-  return fetch(url, {
-    headers: {
-      Authorization: "Token " + token,
-      "Content-Type": "application/json"
-    }
-  }).then(response => {
-    console.log(response);
-  })
+const getFeedback = async (token, component) => {
+  const url = "https://usamo-back.herokuapp.com/cv/feedback/";
+  const headers = {
+    Authorization: "Token " + token,
+    "Content-Type": "application/json"
+  };
+
+  const response = await fetch(url, { method: "GET", headers });
+
+  if (response.status === 200) {
+    return response.json().then(body => {component.setState({feedback: body})});
+  } else {
+    throw response.status;
+  }
 };
 
 export {sendData, getFeedback};
