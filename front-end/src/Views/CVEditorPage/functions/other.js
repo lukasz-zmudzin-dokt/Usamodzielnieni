@@ -1,4 +1,4 @@
-export const sendData = (object, photo, token) => {
+const sendData = (object, photo, token) => {
   const url = "https://usamo-back.herokuapp.com/cv/generate/";
   const headers = {
     Authorization: "Token " + token,
@@ -27,7 +27,7 @@ export const sendData = (object, photo, token) => {
                 .then(response => {
                   if (response.status === 200) {
                     response.json().then(file => {
-                      let cvUrl = "https://usamo-back.herokuapp.com/" + file;
+                      let cvUrl = "https://usamo-back.herokuapp.com" + file;
                       window.open(cvUrl, "_blank");
                     });
                   }
@@ -39,7 +39,7 @@ export const sendData = (object, photo, token) => {
             .then(response => {
               if (response.status === 200) {
                 response.json().then(file => {
-                  let cvUrl = "https://usamo-back.herokuapp.com/" + file;
+                  let cvUrl = "https://usamo-back.herokuapp.com" + file;
                   window.open(cvUrl, "_blank");
                 });
               }
@@ -50,3 +50,17 @@ export const sendData = (object, photo, token) => {
     }
   });
 };
+
+const getFeedback = (token) => {
+  const url = "http://usamo-back.herokuapp.com/cv/feedback/";
+  return fetch(url, {
+    headers: {
+      Authorization: "Token " + token,
+      "Content-Type": "application/json"
+    }
+  }).then(response => {
+    console.log(response);
+  })
+};
+
+export {sendData, getFeedback};

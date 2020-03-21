@@ -10,7 +10,7 @@ import SkillsTab from 'Views/CVEditorPage/components/SkillsTab';
 import PhotoTab from './components/PhotoTab';
 import { UserContext } from "context";
 
-import { sendData } from "Views/CVEditorPage/functions/other.js";
+import { sendData, getFeedback } from "Views/CVEditorPage/functions/other.js";
 import { createCVObject } from "Views/CVEditorPage/functions/createCVObject.js";
 
 
@@ -120,6 +120,7 @@ class CVEditorPage extends React.Component {
     }
 
     getComments() {
+        getFeedback(this.context.token);
         return {
             personalData: "Jakub a nie Kuba",
             education: "tutorial minecrafta sie nie liczy",
