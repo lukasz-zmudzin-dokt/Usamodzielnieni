@@ -7,7 +7,6 @@ import { UserContext } from "context";
 import "Views/LoginPage/style.css";
 import bgImage from "../../assets/fot..png";
 
-
 class LoginPage extends React.Component {
   state = {
     username: "",
@@ -47,10 +46,10 @@ class LoginPage extends React.Component {
       }
     }).then(res => {
       console.log(res);
-      if (res.status === 200) {
+      if (res.status === 201) {
         res.json().then(responseValue => {
-          const { token } = responseValue;
-          this.context.login(token);
+          const { token, type } = responseValue;
+          this.context.login(token, type);
           this.setRedirect();
         });
       } else {
@@ -88,7 +87,6 @@ class LoginPage extends React.Component {
 
   handleSubmit = event => {
     const form = event.currentTarget;
-    const { password, username } = this.state;
 
     event.preventDefault();
 
@@ -96,12 +94,7 @@ class LoginPage extends React.Component {
       event.preventDefault();
       event.stopPropagation();
     } else {
-      // if (cookieVal) {
-      //   console.log("dodaje!");
-      //   setCookie();
-      // }
       this.sendData();
-      console.log(password, username); // login i hasło użytkownika
     }
 
     this.setState({
