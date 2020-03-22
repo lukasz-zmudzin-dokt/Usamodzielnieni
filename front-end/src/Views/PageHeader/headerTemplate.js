@@ -8,6 +8,7 @@ import logo from "../../assets/logo.png";
 import {IndexLinkContainer} from 'react-router-bootstrap';
 import {Redirect, withRouter} from "react-router-dom";
 import { UserContext } from "context";
+import Notifications from "./components/Notifications";
 
 class HeaderTemplate extends React.Component {
   displayMenu() {
@@ -33,7 +34,8 @@ class HeaderTemplate extends React.Component {
   displayButtonSet() {
     if (this.context.token)
       return (
-        <Form inline pull-right className="action_buttons">
+        <Form inline className="action_buttons">
+            <Notifications location={this.props.location} token={this.context.token} className="menu_action_button_0"/>
             <IndexLinkContainer to="/user">
               <Button className="menu_action_button_1" variant="light">
                 Profil
@@ -48,7 +50,7 @@ class HeaderTemplate extends React.Component {
       );
     else
       return (
-        <Form inline pull-right className="action_buttons">
+        <Form inline className="action_buttons">
             <IndexLinkContainer to="/login">
               <Button className="menu_action_button_3" variant="outline-light">
                 Logowanie
@@ -82,8 +84,8 @@ class HeaderTemplate extends React.Component {
   };
 
   render() {
-      const { match, location, history } = this.props;
-      console.log(match, location, history, this.props);
+      // const { match, location, history } = this.props;
+      // console.log(match, location, history, this.props);
     return (
       <Navbar id="navbar_menu" variant="dark" fixed="top" expand="lg">
         <Navbar.Brand id="navbar_logo">
