@@ -6,15 +6,18 @@ import PersonalDataForm from "./personalDataForm";
 import {MemoryRouter} from "react-router-dom";
 import {render, fireEvent} from "@testing-library/react";
 import {getByPlaceholderText, getByTestId, getByText, waitForElement} from "@testing-library/dom";
-import {RegisterPage} from "../../index";
+import RegisterPage from "../RegisterPage";
+import {UserProvider} from "context/UserContext";
 
 describe('DataForm', () => {
     let token = '123';
     let apiFail;
     const {parent} = render(
-        <MemoryRouter>
-            <RegisterPage />
-        </MemoryRouter>
+        <UserProvider token={token}>
+            <MemoryRouter>
+                <RegisterPage />
+            </MemoryRouter>
+        </UserProvider>
     );
 
     beforeEach(() => {
@@ -35,10 +38,11 @@ describe('DataForm', () => {
         });
 
         it('should return missing fields error', async () => {
-            const token = '123';
+            const data = parent.state.accountData;
+            const onBlur = jest.fn();
             const {component, getByPlaceholderText, getByText, getByTestId} = render(
                 <MemoryRouter>
-                    <AccountForm token={token} />
+                    <AccountForm data={data} onBlur={onBlur} />
                 </MemoryRouter>
             );
 
@@ -74,10 +78,11 @@ describe('DataForm', () => {
         });
 
         it('should return missing fields error', async () => {
-            const token = '123';
+            const data = parent.state.companyData;
+            const onBlur = jest.fn();
             const {component, getByPlaceholderText} = render(
                 <MemoryRouter>
-                    <CompanyDataForm token={token} />
+                    <CompanyDataForm data={data} onBlur={onBlur} />
                 </MemoryRouter>
             );
 
@@ -116,10 +121,11 @@ describe('DataForm', () => {
         });
 
         it('should return missing fields error', async () => {
-            const token = '123';
+            const data = parent.state.homeData;
+            const onBlur = jest.fn();
             const {component, getByPlaceholderText} = render(
                 <MemoryRouter>
-                    <HomeDataForm token={token} />
+                    <HomeDataForm data={data} onBlur={onBlur} />
                 </MemoryRouter>
             );
 
@@ -155,10 +161,11 @@ describe('DataForm', () => {
         });
 
         it('should return missing fields error', async () => {
-            const token = '123';
+            const data = parent.state.personalData;
+            const onBlur = jest.fn();
             const {component, getByPlaceholderText} = render(
                 <MemoryRouter>
-                    <PersonalDataForm token={token} />
+                    <PersonalDataForm data={data} onBlur={onBlur} />
                 </MemoryRouter>
             );
 

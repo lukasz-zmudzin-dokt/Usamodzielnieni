@@ -60,6 +60,7 @@ class LoginPage extends React.Component {
                 />
               </Form.Group>
               <Button
+                data-testid="loginBtn"
                 variant="secondary"
                 className="loginPage__button"
                 type="submit"
