@@ -1,14 +1,20 @@
 import React, { useState, useContext } from "react";
+import { registerLocale } from "react-datepicker";
 import { Form, Container, Card, Button, Row } from "react-bootstrap";
 import { voivodeships } from "constants/voivodeships";
 import FormGroup from "Views/OfferForm/components/FormGroup";
 import { sendData } from "Views/OfferForm/functions/sendData";
 import { UserContext } from "context";
 import "./style.css";
+import polish from "date-fns/locale/pl";
+import { useHistory } from "react-router-dom";
+
+registerLocale("pl", polish);
 
 const OfferForm = () => {
+  const history = useHistory();
   const [validated, setValidated] = useState(false);
-  const [send, setSend] = useState(false);
+  const [fail, setFail] = useState(false);
 
   const [offer, setOffer] = useState({
     offer_name: "",
@@ -26,9 +32,7 @@ const OfferForm = () => {
     event.preventDefault();
     if (form.checkValidity() === false) {
       event.stopPropagation();
-      setSend(false);
     } else {
-      console.log(expiration_date);
       const year = expiration_date.getFullYear();
       const month =
         expiration_date.getMonth() + 1 < 10
@@ -39,11 +43,15 @@ const OfferForm = () => {
           ? `0${expiration_date.getDate()}`
           : expiration_date.getDate();
       const newDate = `${year}-${month}-${day}`;
-
-      sendData(
-        { ...offer, expiration_date: newDate },
-        clearState,
-        context.token
+      sendData({ ...offer, expiration_date: newDate }, context.token).then(
+        status => {
+          if (status === 200) {
+            clearState();
+            history.push("/user");
+          } else {
+            setFail(true);
+          }
+        }
       );
     }
     setValidated(true);
@@ -59,7 +67,6 @@ const OfferForm = () => {
       expiration_date: ""
     });
     setValidated(false);
-    setSend(true);
   };
 
   const {
@@ -130,16 +137,16 @@ const OfferForm = () => {
                 val={expiration_date}
               />
             </div>
-            {send === true ? (
+            {fail === true ? (
               <p data-testid="sendMsg" className="offerForm__message">
-                Dodano ofertę pracy
+                Coś poszło nie tak. Spróbuj ponownie póżniej.
               </p>
             ) : null}
             <Row className="w-100 justify-content-center align-items-center m-0">
               <Button
                 variant="secondary"
                 type="submit"
-                className="pl-5 pr-5 pt-2 pb-2"
+                className=""
                 data-testid="submitBtn"
               >
                 Dodaj

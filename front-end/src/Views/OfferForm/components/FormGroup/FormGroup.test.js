@@ -6,8 +6,14 @@ import { MemoryRouter } from "react-router-dom";
 describe("FormGroup", () => {
   it("renders correctly", () => {
     const { component } = render(
-      <MemoryRouter>
-        <FormGroup header="Example" setVal={() => null} />
+      <MemoryRouter initialEntries={["/offerForm"]}>
+        <FormGroup
+          header="Opis stanowiska"
+          type="textarea"
+          setVal={() => null}
+          val={""}
+          incorrect="Podaj opis"
+        />
       </MemoryRouter>
     );
 
@@ -16,7 +22,7 @@ describe("FormGroup", () => {
 
   it("should render voivodeships if type is select", () => {
     const { getByTestId } = render(
-      <MemoryRouter>
+      <MemoryRouter initialEntries={["/"]}>
         <FormGroup header="test" type="select" setVal={() => null} />
       </MemoryRouter>
     );
@@ -25,7 +31,7 @@ describe("FormGroup", () => {
 
   it("should render text if type isn't given ", () => {
     const { getByTestId } = render(
-      <MemoryRouter>
+      <MemoryRouter initialEntries={["/"]}>
         <FormGroup header="test" setVal={() => null} />
       </MemoryRouter>
     );
@@ -34,7 +40,7 @@ describe("FormGroup", () => {
 
   it("should render date if type is date", () => {
     const { getByLabelText } = render(
-      <MemoryRouter>
+      <MemoryRouter initialEntries={["/"]}>
         <FormGroup header="Ważne do:" type="date" setVal={() => null} />
       </MemoryRouter>
     );
@@ -43,7 +49,7 @@ describe("FormGroup", () => {
 
   it("should render textarea if type is textarea", () => {
     const { getByTestId } = render(
-      <MemoryRouter>
+      <MemoryRouter initialEntries={["/"]}>
         <FormGroup header="test" type="textarea" setVal={() => null} />
       </MemoryRouter>
     );

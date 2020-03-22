@@ -1,6 +1,6 @@
-export const sendData = async (offer, clearState, token) => {
+export const sendData = async (offer, token) => {
   const url = "https://usamo-back.herokuapp.com/job/job-offer/";
-  const res = fetch(url, {
+  const res = await fetch(url, {
     method: "POST",
     body: JSON.stringify(offer),
     headers: {
@@ -9,9 +9,6 @@ export const sendData = async (offer, clearState, token) => {
       Authorization: `Token ${token}`
     }
   }).then(res => {
-    if (res.status === 200) {
-      clearState();
-    }
     return res.status;
   });
   return res;

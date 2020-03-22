@@ -32,7 +32,7 @@ class LoginPage extends React.Component {
 
   sendData = object => {
     const { username, password } = this.state;
-
+    console.log(username, password);
     const url = "https://usamo-back.herokuapp.com/account/login/";
     fetch(url, {
       method: "POST",
@@ -46,7 +46,7 @@ class LoginPage extends React.Component {
       }
     }).then(res => {
       console.log(res);
-      if (res.status === 200) {
+      if (res.status === 201) {
         res.json().then(responseValue => {
           const { token, type } = responseValue;
           this.context.login(token, type);
