@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Container, Card } from "react-bootstrap";
+import { Container, Card, ListGroup, Alert } from "react-bootstrap";
 import "./style.css";
 import { UserContext } from "context";
 import { JobOfferInfo } from "./_components";
@@ -46,7 +46,7 @@ const JobOffersPage = props => {
     let loadedOffers;
     try {
       loadedOffers = await getOffers(token);
-    } catch(e) {
+    } catch (e) {
       console.log(e)
       loadedOffers = [];
       setError(true);
@@ -55,18 +55,25 @@ const JobOffersPage = props => {
     setIsOffersLoading(false);
   }
 
+  const msg = isOffersLoading ? <Alert variant="primary">Ładowanie...</Alert> :
+              offers.length === 0 ? <Alert variant="primary">Brak ofert spełniających podane wymagania.</Alert> :
+              error && <Alert variant="danger">Wystąpił błąd podczas ładowania.</Alert>
+
   return (
     <Container>
       <Card>
         <Card.Header as="h2">Oferty pracy</Card.Header>
-        <Card.Body>
-        {isOffersLoading ? <div>Ładowanie...</div> :
-          error ? <div>Wystąpił błąd podczas ładowania.</div> :
-          offers.length > 0 ?
-          offers.map((offer) => <JobOfferInfo offer={offer} />) :
-          <div>Brak ofert spełniających podane wymagania.</div>
+        {
+          msg ? <Card.Body>{msg}</Card.Body> : (
+            <ListGroup variant="flush">
+              {offers.map((offer) => (
+                <ListGroup.Item>
+                  <JobOfferInfo offer={offer} />
+                </ListGroup.Item>
+              ))}
+            </ListGroup>
+          )
         }
-        </Card.Body>
       </Card>
     </Container>
   );

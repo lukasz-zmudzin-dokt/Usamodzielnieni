@@ -1,6 +1,7 @@
 import React from 'react';
-import { Row, Col, Button } from 'react-bootstrap';
+import { Card, Row, Col, Button } from 'react-bootstrap';
 import { IndexLinkContainer } from 'react-router-bootstrap';
+import DetailsItem from './DetailsItem';
 
 const JobOfferInfo = ({ offer, ...rest }) => {
     const getAddressString = (offer) => "TODO";
@@ -8,20 +9,14 @@ const JobOfferInfo = ({ offer, ...rest }) => {
     return (
       <Row {...rest}>
         <Col>
-          <Row>
-            <Col><h3>{offer.title}</h3></Col>
+          <h5>{offer.title}</h5>
+          <Row as="p">
+            <DetailsItem label="Nazwa firmy" value={offer.companyName} />
+            <DetailsItem label="Lokalizacja" value={getAddressString(offer)} />
           </Row>
-          <Row>
-            <Col>{offer.companyName}</Col>
-            <Col>{getAddressString(offer)}</Col>
-          </Row>
-          <Row>
-            <Col>
-              <IndexLinkContainer to={`/jobOffers/${offer.id}`}>
-                <Button>Pokaż szczegóły</Button>
-              </IndexLinkContainer>
-            </Col>
-          </Row>
+          <IndexLinkContainer to={`/jobOffers/${offer.id}`}>
+            <Button>Pokaż szczegóły</Button>
+          </IndexLinkContainer>
         </Col>
       </Row>
     )
