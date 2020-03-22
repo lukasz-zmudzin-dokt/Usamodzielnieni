@@ -55,8 +55,8 @@ const JobOffersPage = props => {
     setIsOffersLoading(false);
   }
 
-  const msg = isOffersLoading ? <Alert variant="primary">Ładowanie...</Alert> :
-              offers.length === 0 ? <Alert variant="primary">Brak ofert spełniających podane wymagania.</Alert> :
+  const msg = isOffersLoading ? <Alert variant="info">Ładowanie...</Alert> :
+              offers.length === 0 ? <Alert variant="info">Brak ofert spełniających podane wymagania.</Alert> :
               error && <Alert variant="danger">Wystąpił błąd podczas ładowania.</Alert>
 
   return (
