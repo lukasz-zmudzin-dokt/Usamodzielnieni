@@ -45,9 +45,10 @@ class RegisterPage extends React.Component {
                         Rejestracja
                     </Card.Header>
                     <Card.Body className="loginPage__body">
-                        <div className="register_account_type">
-                            <p>Jestem:</p>
+                        <Form.Group className="register_account_type">
+                            <Form.Label>Jestem:</Form.Label>
                             <Form.Control
+                                data-testid="typeSelector"
                                 className="register_radio_type"
                                 as="select"
                                 onChange={e => selectType(e)}
@@ -55,7 +56,7 @@ class RegisterPage extends React.Component {
                             >
                                 {types.map(type => (<option key={type} value={type}>{type}</option>))}
                             </Form.Control>
-                        </div>
+                        </Form.Group>
                         <Form
                             noValidate
                             validated={validated}
@@ -78,18 +79,19 @@ class RegisterPage extends React.Component {
                                 variant="secondary"
                                 className="loginPage__button"
                                 type="submit"
+                                data-testid="submitBtn"
                             >
                                 Utwórz konto
                             </Button>
                         </Form>
                         {incorrect ? (
                             <div className="loginPage__messageFail">
-                                <small className="loginPage__failure">{message}</small>
+                                <small className="loginPage__failure" data-testid="incorrectMsg">{message}</small>
                             </div>
                         ) : null}
                         {correct ? (
                             <div className="loginPage__messageFail">
-                                <small className="loginPage__correct">{message}</small>
+                                <small className="loginPage__correct" data-testid="correctMsg">{message}</small>
                             </div>
                         ) : null}
                         <div className="loginPage__links">
