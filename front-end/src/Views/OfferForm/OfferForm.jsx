@@ -43,16 +43,14 @@ const OfferForm = () => {
           ? `0${expiration_date.getDate()}`
           : expiration_date.getDate();
       const newDate = `${year}-${month}-${day}`;
-      sendData({ ...offer, expiration_date: newDate }, context.token).then(
-        status => {
-          if (status === 200) {
-            clearState();
-            history.push("/user");
-          } else {
-            setFail(true);
-          }
-        }
-      );
+      sendData({ ...offer, expiration_date: newDate }, context.token)
+        .then(() => {
+          clearState();
+          history.push("/myOffers");
+        })
+        .catch(() => {
+          setFail(true);
+        });
     }
     setValidated(true);
   };
@@ -138,7 +136,7 @@ const OfferForm = () => {
               />
             </div>
             {fail === true ? (
-              <p data-testid="sendMsg" className="offerForm__message">
+              <p data-testid="fail" className="offerForm__message">
                 Coś poszło nie tak. Spróbuj ponownie póżniej.
               </p>
             ) : null}

@@ -1,3 +1,18 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`FormGroup renders correctly 1`] = `undefined`;
+exports[`FormGroup renders correctly 1`] = `
+<div
+  class="form-group"
+>
+  <label
+    class="form-label"
+  >
+    test
+  </label>
+  <select
+    class="form-control"
+    data-testid="voivodeship"
+    required=""
+  />
+</div>
+`;

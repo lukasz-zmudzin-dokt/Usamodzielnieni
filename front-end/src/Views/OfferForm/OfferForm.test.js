@@ -65,12 +65,12 @@ describe("OfferForm", () => {
 
   it("renders correctly", () => {
     const location = { pathname: "/" };
-    const { component } = render(
+    const { container } = render(
       <MemoryRouter>
         <OfferForm location={location} token={token} />
       </MemoryRouter>
     );
-    expect(component).toMatchSnapshot();
+    expect(container.firstChild).toMatchSnapshot();
   });
 
   it("shoud clear state when offer is send", async () => {
@@ -145,49 +145,9 @@ describe("OfferForm", () => {
 
     fireEvent.click(getByTestId("submitBtn"));
 
-    await waitForElement(() => getByPlaceholderText("Nazwa stanowiska"));
+    await waitForElement(() => getByTestId("fail"));
 
-    expect(getByPlaceholderText("Nazwa stanowiska").value).toBe("abcd");
-  });
-
-  it("should not return appropriate message when one of input is invalid", async () => {
-    const location = { pathname: "/" };
-    const {
-      getByPlaceholderText,
-      getByTestId,
-      getByLabelText,
-      queryByTestId
-    } = render(
-      <MemoryRouter>
-        <OfferForm location={location} token={token} />
-      </MemoryRouter>
-    );
-
-    fireEvent.change(getByPlaceholderText("Nazwa stanowiska"), {
-      target: { value: "" }
-    });
-    fireEvent.change(getByPlaceholderText("Nazwa firmy"), {
-      target: { value: "abcd" }
-    });
-    fireEvent.change(getByPlaceholderText("Adres firmy"), {
-      target: { value: "abcd" }
-    });
-    fireEvent.change(getByTestId("voivodeship"), {
-      target: { value: "lubelskie" }
-    });
-    fireEvent.change(getByTestId("description"), {
-      target: { value: "abcd" }
-    });
-    fireEvent.change(getByLabelText("Ważne do:"), {
-      target: {
-        value:
-          "Wed Mar 25 2020 00:00:00 GMT+0100 (czas środkowoeuropejski standardowy)"
-      }
-    });
-
-    fireEvent.click(getByTestId("submitBtn"));
-
-    expect(queryByTestId("sendMsg")).not.toBeInTheDocument();
+    expect(getByTestId("fail")).toBeInTheDocument();
   });
 
   it("should not use fetch when form isn't validated", async () => {
@@ -225,23 +185,20 @@ describe("OfferForm", () => {
   });
 
   it("should redirect when offer is send", async () => {
-    const {
-      history,
-      getByPlaceholderText,
-      getByTestId,
-      getByLabelText
-    } = renderWithRouter(<OfferForm />);
+    const { history, getByLabelText, getByTestId } = renderWithRouter(
+      <OfferForm />
+    );
 
-    fireEvent.change(getByPlaceholderText("Nazwa stanowiska"), {
+    fireEvent.change(getByLabelText("Nazwa stanowiska"), {
       target: { value: "abcd" }
     });
-    fireEvent.change(getByPlaceholderText("Nazwa firmy"), {
+    fireEvent.change(getByLabelText("Nazwa firmy"), {
       target: { value: "abcd" }
     });
-    fireEvent.change(getByPlaceholderText("Adres firmy"), {
+    fireEvent.change(getByLabelText("Adres firmy"), {
       target: { value: "abcd" }
     });
-    fireEvent.change(getByTestId("voivodeship"), {
+    fireEvent.change(getByLabelText("Województwo"), {
       target: { value: "lubelskie" }
     });
     fireEvent.change(getByTestId("description"), {
@@ -259,6 +216,6 @@ describe("OfferForm", () => {
     await wait(() => {
       expect(fetch).toHaveBeenCalled();
     });
-    expect(history.location.pathname).toEqual("/user");
+    expect(history.location.pathname).toEqual("/myOffers");
   });
 });

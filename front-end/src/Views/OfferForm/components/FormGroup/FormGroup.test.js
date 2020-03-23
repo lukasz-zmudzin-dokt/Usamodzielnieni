@@ -5,19 +5,13 @@ import { MemoryRouter } from "react-router-dom";
 
 describe("FormGroup", () => {
   it("renders correctly", () => {
-    const { component } = render(
-      <MemoryRouter initialEntries={["/offerForm"]}>
-        <FormGroup
-          header="Opis stanowiska"
-          type="textarea"
-          setVal={() => null}
-          val={""}
-          incorrect="Podaj opis"
-        />
+    const { container } = render(
+      <MemoryRouter initialEntries={["/"]}>
+        <FormGroup header="test" type="select" setVal={() => null} />
       </MemoryRouter>
     );
 
-    expect(component).toMatchSnapshot();
+    expect(container.firstChild).toMatchSnapshot();
   });
 
   it("should render voivodeships if type is select", () => {
@@ -54,5 +48,18 @@ describe("FormGroup", () => {
       </MemoryRouter>
     );
     expect(getByTestId("description")).toBeInTheDocument();
+  });
+  it("should render invalid message if incorrect isn't null", () => {
+    const { getByText } = render(
+      <MemoryRouter initialEntries={["/"]}>
+        <FormGroup
+          header="test"
+          type="textarea"
+          setVal={() => null}
+          incorrect="xd"
+        />
+      </MemoryRouter>
+    );
+    expect(getByText("xd")).toBeInTheDocument();
   });
 });

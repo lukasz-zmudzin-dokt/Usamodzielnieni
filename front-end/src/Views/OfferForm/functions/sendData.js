@@ -9,7 +9,9 @@ export const sendData = async (offer, token) => {
       Authorization: `Token ${token}`
     }
   }).then(res => {
-    return res.status;
+    if (res.status === 200) {
+      return res.status;
+    } else return Promise.reject();
   });
   return res;
 };

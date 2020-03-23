@@ -13,6 +13,25 @@ const FormGroup = ({
   val,
   maxLength
 }) => {
+  const setControlId = () => {
+    switch (header) {
+      case "Nazwa stanowiska":
+        return "offer_name";
+      case "Nazwa firmy":
+        return "company_name";
+      case "Adres firmy":
+        return "company_address";
+      case "Województwo":
+        return "voivodeship";
+      case "Opis Stanowiska":
+        return "description";
+      case "Ważne do:":
+        return "expiration_date";
+      default:
+        return null;
+    }
+  };
+
   const setInput = e => {
     const value = e.target.value;
     setVal(value);
@@ -56,7 +75,7 @@ const FormGroup = ({
         return (
           <Form.Row className="align-items-center m-0">
             <DatePicker
-              id="Ważne do:"
+              id={setControlId()}
               className="form-control"
               locale="pl"
               dateFormat="dd.MM.yyyy"
@@ -85,7 +104,7 @@ const FormGroup = ({
 
   return (
     <Form.Group
-      controlId={header}
+      controlId={setControlId()}
       className={type === "textarea" ? "offerForm__textContainer" : ""}
     >
       <Form.Label>{header}</Form.Label>
