@@ -131,7 +131,8 @@ FormGroup.propTypes = {
   array: PropTypes.array,
   type: PropTypes.string,
   incorrect: PropTypes.string,
-  maxLength: PropTypes.number
+  maxLength: PropTypes.number,
+  required: PropTypes.bool
 };
 
 FormGroup.defaultProps = {
