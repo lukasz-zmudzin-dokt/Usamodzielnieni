@@ -11,7 +11,8 @@ const FormGroup = ({
   type,
   incorrect,
   val,
-  maxLength
+  maxLength,
+  required
 }) => {
   const setControlId = () => {
     switch (header) {
@@ -53,8 +54,14 @@ const FormGroup = ({
             as={type}
             value={val}
             onChange={setInput}
-            required
+            required={required}
           >
+            {required ? null : (
+              <option disabled selected>
+                -- Wybierz --
+              </option>
+            )}
+
             {options}
           </Form.Control>
         );
@@ -64,7 +71,7 @@ const FormGroup = ({
             as={type}
             onChange={setInput}
             value={val}
-            required
+            required={required}
             className="offerForm__textarea"
             minLength="1"
             maxLength="1000"
@@ -81,7 +88,7 @@ const FormGroup = ({
               dateFormat="dd.MM.yyyy"
               onChange={setDate}
               selected={val}
-              required
+              required={required}
               minDate={new Date()}
             />
           </Form.Row>
@@ -93,7 +100,7 @@ const FormGroup = ({
             placeholder={header}
             onChange={setInput}
             value={val}
-            required
+            required={required}
             minLength="1"
             maxLength={maxLength}
             data-testid="default"
@@ -128,7 +135,8 @@ FormGroup.propTypes = {
 };
 
 FormGroup.defaultProps = {
-  array: []
+  array: [],
+  required: true
 };
 
 export default FormGroup;
