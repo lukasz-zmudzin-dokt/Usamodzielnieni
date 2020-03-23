@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Container, Card, ListGroup, Alert } from "react-bootstrap";
+import { withRouter } from "react-router-dom";
+import qs from "query-string";
 import "./style.css";
 import { UserContext } from "context";
-import { JobOfferInfo } from "./_components";
+import { JobOfferInfo, OffersPagination } from "./_components";
 
 const getOffers = async (token) => {
   let url = "https://usamo-back.herokuapp.com/job/job-offers/";
@@ -33,8 +35,14 @@ const mapOffers = (offers) => offers.results.map(offer => ({
 const JobOffersPage = props => {
   const [offers, setOffers] = useState([]);
   const [isOffersLoading, setIsOffersLoading] = useState(false);
+  const [page, setPage] = useState(1);
   const [error, setError] = useState(false);
   const user = useContext(UserContext);
+  
+  const queryParams = qs.parse(props.location.search, {parseNumbers: true});
+  if (typeof queryParams.page === 'number' && queryParams.page !== page) {
+    setPage(queryParams.page)
+  }
 
   useEffect(
     () => { loadOffers(user.token) },
@@ -74,9 +82,12 @@ const JobOffersPage = props => {
             </ListGroup>
           )
         }
+        <Card.Body>
+          <OffersPagination current={page}/>
+        </Card.Body>
       </Card>
     </Container>
   );
 }
 
-export default JobOffersPage;
+export default withRouter(JobOffersPage);
