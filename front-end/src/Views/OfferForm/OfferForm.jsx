@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { registerLocale } from "react-datepicker";
-import { Form, Container, Card, Button, Row } from "react-bootstrap";
+import { Form, Container, Card, Button, Row, Alert } from "react-bootstrap";
 import { voivodeships } from "constants/voivodeships";
 import FormGroup from "Views/OfferForm/components/FormGroup";
 import { sendData } from "Views/OfferForm/functions/sendData";
@@ -136,9 +136,11 @@ const OfferForm = () => {
               />
             </div>
             {fail === true ? (
-              <p data-testid="fail" className="offerForm__message">
-                Coś poszło nie tak. Spróbuj ponownie póżniej.
-              </p>
+              <Row className="w-100 justify-content-center align-items-center m-0">
+                <Alert data-testid="fail" variant="danger">
+                  Coś poszło nie tak. Spróbuj ponownie póżniej.
+                </Alert>
+              </Row>
             ) : null}
             <Row className="w-100 justify-content-center align-items-center m-0">
               <Button
