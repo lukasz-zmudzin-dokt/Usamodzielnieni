@@ -6,8 +6,9 @@ import "./style.css";
 import { UserContext } from "context";
 import { JobOfferInfo, OffersPagination } from "./_components";
 
-const getOffers = async (token) => {
-  let url = "https://usamo-back.herokuapp.com/job/job-offers/";
+const getOffers = async (token, filters) => {
+  const query = `?page=${filters.page}`
+  const url = 'https://usamo-back.herokuapp.com/job/job-offers/' + query;
   const headers = {
     Authorization: "Token " + token,
     "Content-Type": "application/json"
@@ -16,50 +17,59 @@ const getOffers = async (token) => {
   const response = await fetch(url, { method: "GET", headers });
 
   if (response.status === 200) {
-    return response.json().then(offers => mapOffers(offers));
+    return response.json().then(res => mapGetOffersRes(res));
   } else {
     throw response.status;
   }
 }
 
-const mapOffers = (offers) => offers.results.map(offer => ({
-  id: offer.id,
-  title: offer.offer_name,
-  companyName: offer.company_name,
-  companyAddress: offer.company_address,
-  voivodeship: offer.voivodeship,
-  expirationDate: offer.expiration_date,
-  description: offer.description
-}))
+const mapGetOffersRes = (res) => ({
+  offers: res.results.map(offer => ({
+    id: offer.id,
+    title: offer.offer_name,
+    companyName: offer.company_name,
+    companyAddress: offer.company_address,
+    voivodeship: offer.voivodeship,
+    expirationDate: offer.expiration_date,
+    description: offer.description
+  })),
+  count: res.count
+})
 
 const JobOffersPage = props => {
   const [offers, setOffers] = useState([]);
+  const [count, setCount] = useState(0);
   const [isOffersLoading, setIsOffersLoading] = useState(false);
-  const [page, setPage] = useState(1);
+  const [filters, setFilters] = useState({
+    page: 1,
+    pageSize: 10
+  })
   const [error, setError] = useState(false);
   const user = useContext(UserContext);
   
   const queryParams = qs.parse(props.location.search, {parseNumbers: true});
-  if (typeof queryParams.page === 'number' && queryParams.page !== page) {
-    setPage(queryParams.page)
+  if (typeof queryParams.page === 'number' && queryParams.page !== filters.page) {
+    setFilters({ ...filters, page: queryParams.page });
   }
+  
 
   useEffect(
     () => { loadOffers(user.token) },
-    [user.token]
+    [user.token, filters]
   );
 
   const loadOffers = async (token) => {
     setIsOffersLoading(true);
-    let loadedOffers;
+    let res;
     try {
-      loadedOffers = await getOffers(token);
+      res = await getOffers(token, filters);
     } catch (e) {
       console.log(e)
-      loadedOffers = [];
+      res = { offers: [], count: 0 };
       setError(true);
     }
-    setOffers(loadedOffers);
+    setOffers(res.offers);
+    setCount(res.count);
     setIsOffersLoading(false);
   }
 
@@ -73,18 +83,22 @@ const JobOffersPage = props => {
         <Card.Header as="h2">Oferty pracy</Card.Header>
         {
           msg ? <Card.Body>{msg}</Card.Body> : (
-            <ListGroup variant="flush">
-              {offers.map((offer) => (
-                <ListGroup.Item>
-                  <JobOfferInfo offer={offer} />
-                </ListGroup.Item>
-              ))}
-            </ListGroup>
+            <>
+              <ListGroup variant="flush">
+                {offers.map((offer) => (
+                  <ListGroup.Item>
+                    <JobOfferInfo offer={offer} />
+                  </ListGroup.Item>
+                ))}
+              </ListGroup>
+              <Card.Body>
+                <OffersPagination 
+                  current={filters.page}
+                  max={Math.ceil(count / filters.pageSize)} />
+              </Card.Body>
+            </>
           )
         }
-        <Card.Body>
-          <OffersPagination current={page}/>
-        </Card.Body>
       </Card>
     </Container>
   );

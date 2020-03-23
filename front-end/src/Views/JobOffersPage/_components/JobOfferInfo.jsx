@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Row, Col, Button } from 'react-bootstrap';
+import { Row, Col, Button } from 'react-bootstrap';
 import { IndexLinkContainer } from 'react-router-bootstrap';
 import DetailsItem from './DetailsItem';
 
