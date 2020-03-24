@@ -43,18 +43,6 @@ describe("OfferForm", () => {
         }
       });
     });
-    OfferForm.submit = jest.fn().mockImplementation((input, init) => {
-      const exampleDate = new Date();
-      const month =
-        exampleDate.getMonth() + 1 < 10
-          ? `0${exampleDate.getMonth() + 1}`
-          : exampleDate.getMonth() + 1;
-      const day =
-        exampleDate.getDate() < 10
-          ? `0${exampleDate.getDate()}`
-          : exampleDate.getDate();
-      return { day, month };
-    });
   });
 
   beforeEach(() => {
