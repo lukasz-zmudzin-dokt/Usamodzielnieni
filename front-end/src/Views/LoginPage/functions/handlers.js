@@ -19,8 +19,8 @@ export const setRedirect = component => {
     });
 };
 
-export const renderRedirect = (component) => {
-    if (component.state.redirect) {
+export const renderRedirect = (redirect) => {
+    if (redirect) {
         return <Redirect to="/user" />;
     }
 };

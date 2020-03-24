@@ -74,7 +74,7 @@ class LoginPage extends React.Component {
             ) : null}
             <div className="loginPage__links">
               <Link to="/newAccount">Załóż konto!</Link>
-              {renderRedirect(this)}
+              {renderRedirect(this.state.redirect)}
               {/* <Link to="/newPassword">Zapomniałeś hasła?</Link> */}
             </div>
           </Card.Body>
