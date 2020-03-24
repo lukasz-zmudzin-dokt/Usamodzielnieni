@@ -24,10 +24,8 @@ const renderWithRouter = (
 };
 
 describe("OfferForm", () => {
-  let token;
   let failFetch;
   beforeAll(() => {
-    token = "123";
     global.fetch = jest.fn().mockImplementation((input, init) => {
       return new Promise((resolve, reject) => {
         if (failFetch) {
@@ -51,20 +49,18 @@ describe("OfferForm", () => {
   });
 
   it("renders correctly", () => {
-    const location = { pathname: "/" };
     const { container } = render(
       <MemoryRouter>
-        <OfferForm location={location} token={token} />
+        <OfferForm />
       </MemoryRouter>
     );
     expect(container.firstChild).toMatchSnapshot();
   });
 
   it("shoud clear state when offer is send", async () => {
-    const location = { pathname: "/" };
     const { getByPlaceholderText, getByTestId, getByLabelText } = render(
       <MemoryRouter>
-        <OfferForm location={location} token={token} />
+        <OfferForm />
       </MemoryRouter>
     );
 
@@ -103,10 +99,10 @@ describe("OfferForm", () => {
   });
   it("should not clear state when api return failure", async () => {
     failFetch = true;
-    const location = { pathname: "/" };
+
     const { getByPlaceholderText, getByTestId, getByLabelText } = render(
       <MemoryRouter>
-        <OfferForm location={location} token={token} />
+        <OfferForm />
       </MemoryRouter>
     );
 
@@ -140,10 +136,9 @@ describe("OfferForm", () => {
   });
 
   it("should not use fetch when form isn't validated", async () => {
-    const location = { pathname: "/" };
     const { getByPlaceholderText, getByTestId, getByLabelText } = render(
       <MemoryRouter>
-        <OfferForm location={location} token={token} />
+        <OfferForm />
       </MemoryRouter>
     );
 
