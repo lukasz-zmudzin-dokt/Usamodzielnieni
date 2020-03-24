@@ -9,6 +9,7 @@ import { Router } from "react-router-dom";
 import { MemoryRouter } from "react-router-dom";
 import OfferForm from "Views/OfferForm";
 import { createMemoryHistory } from "history";
+
 const renderWithRouter = (
   ui,
   {
@@ -21,8 +22,6 @@ const renderWithRouter = (
     history
   };
 };
-
-export default renderWithRouter;
 
 describe("OfferForm", () => {
   let token;
@@ -90,10 +89,12 @@ describe("OfferForm", () => {
     fireEvent.change(getByPlaceholderText("Adres firmy"), {
       target: { value: "abcd" }
     });
-    fireEvent.change(getByTestId("voivodeship"), {
+    fireEvent.change(getByLabelText("Województwo"), {
       target: { value: "lubelskie" }
     });
-    fireEvent.change(getByTestId("description"), { target: { value: "abcd" } });
+    fireEvent.change(getByLabelText("Opis stanowiska"), {
+      target: { value: "abcd" }
+    });
     fireEvent.change(getByLabelText("Ważne do:"), {
       target: {
         value:
@@ -108,8 +109,8 @@ describe("OfferForm", () => {
     expect(getByPlaceholderText("Nazwa stanowiska").value).toBe("");
     expect(getByPlaceholderText("Nazwa firmy").value).toBe("");
     expect(getByPlaceholderText("Adres firmy").value).toBe("");
-    expect(getByTestId("voivodeship").value).toBe("dolnośląskie");
-    expect(getByTestId("description").value).toBe("");
+    expect(getByLabelText("Województwo").value).toBe("dolnośląskie");
+    expect(getByLabelText("Opis stanowiska").value).toBe("");
     expect(getByLabelText("Ważne do:").value).toBe("");
   });
   it("should not clear state when api return failure", async () => {
@@ -130,10 +131,10 @@ describe("OfferForm", () => {
     fireEvent.change(getByPlaceholderText("Adres firmy"), {
       target: { value: "abcd" }
     });
-    fireEvent.change(getByTestId("voivodeship"), {
+    fireEvent.change(getByLabelText("Województwo"), {
       target: { value: "lubelskie" }
     });
-    fireEvent.change(getByTestId("description"), {
+    fireEvent.change(getByLabelText("Opis stanowiska"), {
       target: { value: "abcd" }
     });
     fireEvent.change(getByLabelText("Ważne do:"), {
@@ -167,10 +168,10 @@ describe("OfferForm", () => {
     fireEvent.change(getByPlaceholderText("Adres firmy"), {
       target: { value: "abcd" }
     });
-    fireEvent.change(getByTestId("voivodeship"), {
+    fireEvent.change(getByLabelText("Województwo"), {
       target: { value: "lubelskie" }
     });
-    fireEvent.change(getByTestId("description"), {
+    fireEvent.change(getByLabelText("Opis stanowiska"), {
       target: { value: "abcd" }
     });
     fireEvent.change(getByLabelText("Ważne do:"), {
@@ -201,7 +202,7 @@ describe("OfferForm", () => {
     fireEvent.change(getByLabelText("Województwo"), {
       target: { value: "lubelskie" }
     });
-    fireEvent.change(getByTestId("description"), {
+    fireEvent.change(getByLabelText("Opis stanowiska"), {
       target: { value: "abcd" }
     });
     fireEvent.change(getByLabelText("Ważne do:"), {

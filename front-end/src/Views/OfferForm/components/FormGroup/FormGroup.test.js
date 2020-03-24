@@ -7,7 +7,7 @@ describe("FormGroup", () => {
   it("renders correctly", () => {
     const { container } = render(
       <MemoryRouter initialEntries={["/"]}>
-        <FormGroup header="test" type="select" setVal={() => null} />
+        <FormGroup header="test" type="select" id="test" setVal={() => null} />
       </MemoryRouter>
     );
 
@@ -15,18 +15,23 @@ describe("FormGroup", () => {
   });
 
   it("should render voivodeships if type is select", () => {
-    const { getByTestId } = render(
+    const { getByLabelText } = render(
       <MemoryRouter initialEntries={["/"]}>
-        <FormGroup header="test" type="select" setVal={() => null} />
+        <FormGroup
+          header="Opis stanowiska"
+          id="description"
+          type="select"
+          setVal={() => null}
+        />
       </MemoryRouter>
     );
-    expect(getByTestId("voivodeship")).toBeInTheDocument();
+    expect(getByLabelText("Opis stanowiska")).toBeInTheDocument();
   });
 
   it("should render text if type isn't given ", () => {
     const { getByTestId } = render(
       <MemoryRouter initialEntries={["/"]}>
-        <FormGroup header="test" setVal={() => null} />
+        <FormGroup header="test" id="test" setVal={() => null} />
       </MemoryRouter>
     );
     expect(getByTestId("default")).toBeInTheDocument();
@@ -35,19 +40,29 @@ describe("FormGroup", () => {
   it("should render date if type is date", () => {
     const { getByLabelText } = render(
       <MemoryRouter initialEntries={["/"]}>
-        <FormGroup header="Ważne do:" type="date" setVal={() => null} />
+        <FormGroup
+          header="Ważne do:"
+          id="expiration_date"
+          type="date"
+          setVal={() => null}
+        />
       </MemoryRouter>
     );
     expect(getByLabelText("Ważne do:")).toBeInTheDocument();
   });
 
   it("should render textarea if type is textarea", () => {
-    const { getByTestId } = render(
+    const { getByLabelText } = render(
       <MemoryRouter initialEntries={["/"]}>
-        <FormGroup header="test" type="textarea" setVal={() => null} />
+        <FormGroup
+          header="Opis stanowiska"
+          type="textarea"
+          id="description"
+          setVal={() => null}
+        />
       </MemoryRouter>
     );
-    expect(getByTestId("description")).toBeInTheDocument();
+    expect(getByLabelText("Opis stanowiska")).toBeInTheDocument();
   });
   it("should render invalid message if incorrect isn't null", () => {
     const { getByText } = render(
@@ -57,6 +72,7 @@ describe("FormGroup", () => {
           type="textarea"
           setVal={() => null}
           incorrect="xd"
+          id="test"
         />
       </MemoryRouter>
     );

@@ -96,43 +96,56 @@ const OfferForm = () => {
                 setVal={val => setOffer({ ...offer, offer_name: val })}
                 val={offer_name}
                 incorrect="Podaj nazwę stanowiska"
-                maxLength={50}
+                length={{ min: 1, max: 50 }}
+                id="offer_name"
+                required
               />
               <FormGroup
                 header="Nazwa firmy"
+                id="company_name"
                 setVal={val => setOffer({ ...offer, company_name: val })}
                 val={company_name}
                 incorrect="Podaj nazwę firmy"
-                maxLength={70}
+                length={{ min: 1, max: 70 }}
+                required
               />
               <FormGroup
                 header="Adres firmy"
+                id="company_address"
                 setVal={val => setOffer({ ...offer, company_address: val })}
                 val={company_address}
                 incorrect="Podaj lokalizację"
-                maxLength={200}
+                length={{ min: 1, max: 200 }}
+                required
               />
               <FormGroup
                 header="Województwo"
+                id="voivodeship"
                 array={voivodeships}
                 type="select"
                 setVal={val => setOffer({ ...offer, voivodeship: val })}
                 val={voivodeship}
+                required
               />
             </div>
             <div className="offerForm__wrapper">
               <FormGroup
                 header="Opis stanowiska"
+                id="description"
                 type="textarea"
                 setVal={val => setOffer({ ...offer, description: val })}
                 val={description}
                 incorrect="Podaj opis"
+                length={{ min: 1, max: 1000 }}
+                required
               />
               <FormGroup
                 header="Ważne do:"
+                id="expiration_date"
                 type="date"
                 setVal={val => setOffer({ ...offer, expiration_date: val })}
                 val={expiration_date}
+                required
               />
             </div>
             {fail === true ? (

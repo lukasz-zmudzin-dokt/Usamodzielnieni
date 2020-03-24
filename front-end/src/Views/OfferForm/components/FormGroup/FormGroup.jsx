@@ -6,33 +6,15 @@ import "Views/OfferForm/style.css";
 
 const FormGroup = ({
   header,
+  val,
   setVal,
   array,
   type,
   incorrect,
-  val,
-  maxLength,
-  required
+  length,
+  required,
+  id
 }) => {
-  const setControlId = () => {
-    switch (header) {
-      case "Nazwa stanowiska":
-        return "offer_name";
-      case "Nazwa firmy":
-        return "company_name";
-      case "Adres firmy":
-        return "company_address";
-      case "Województwo":
-        return "voivodeship";
-      case "Opis Stanowiska":
-        return "description";
-      case "Ważne do:":
-        return "expiration_date";
-      default:
-        return null;
-    }
-  };
-
   const setInput = e => {
     const value = e.target.value;
     setVal(value);
@@ -41,7 +23,6 @@ const FormGroup = ({
   const setDate = date => {
     setVal(date);
   };
-
   const setFormType = () => {
     switch (type) {
       case "select":
@@ -50,18 +31,12 @@ const FormGroup = ({
           .map(val => <option key={val}>{val}</option>);
         return (
           <Form.Control
-            data-testid="voivodeship"
             as={type}
             value={val}
             onChange={setInput}
             required={required}
           >
-            {required ? null : (
-              <option disabled selected>
-                -- Wybierz --
-              </option>
-            )}
-
+            {required ? null : <option disabled>-- Wybierz --</option>}
             {options}
           </Form.Control>
         );
@@ -73,16 +48,15 @@ const FormGroup = ({
             value={val}
             required={required}
             className="offerForm__textarea"
-            minLength="1"
-            maxLength="1000"
-            data-testid="description"
+            minLength={length.min}
+            maxLength={length.max}
           />
         );
       case "date":
         return (
           <Form.Row className="align-items-center m-0">
             <DatePicker
-              id={setControlId()}
+              id={id}
               className="form-control"
               locale="pl"
               dateFormat="dd.MM.yyyy"
@@ -101,8 +75,8 @@ const FormGroup = ({
             onChange={setInput}
             value={val}
             required={required}
-            minLength="1"
-            maxLength={maxLength}
+            minLength={length.min}
+            maxLength={length.max}
             data-testid="default"
           />
         );
@@ -111,7 +85,7 @@ const FormGroup = ({
 
   return (
     <Form.Group
-      controlId={setControlId()}
+      controlId={id}
       className={type === "textarea" ? "offerForm__textContainer" : ""}
     >
       <Form.Label>{header}</Form.Label>
@@ -131,13 +105,15 @@ FormGroup.propTypes = {
   array: PropTypes.array,
   type: PropTypes.string,
   incorrect: PropTypes.string,
-  maxLength: PropTypes.number,
-  required: PropTypes.bool
+  length: PropTypes.object,
+  required: PropTypes.bool,
+  id: PropTypes.string.isRequired
 };
 
 FormGroup.defaultProps = {
   array: [],
-  required: true
+  required: false,
+  length: { min: 1, max: 50 }
 };
 
 export default FormGroup;

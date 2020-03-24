@@ -112,7 +112,6 @@ exports[`OfferForm renders correctly 1`] = `
             </label>
             <select
               class="form-control"
-              data-testid="voivodeship"
               id="voivodeship"
               required=""
             >
@@ -175,12 +174,13 @@ exports[`OfferForm renders correctly 1`] = `
           >
             <label
               class="form-label"
+              for="description"
             >
               Opis stanowiska
             </label>
             <textarea
               class="offerForm__textarea form-control"
-              data-testid="description"
+              id="description"
               maxlength="1000"
               minlength="1"
               required=""
