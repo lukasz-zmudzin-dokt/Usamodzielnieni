@@ -3,6 +3,10 @@ import { Container, Card, Form, Button } from "react-bootstrap";
 import { Link, Redirect } from "react-router-dom";
 import bgImage from "../../assets/fot..png";
 import { UserContext } from "context";
+import PersonalDataForm from "./components/personalDataForm";
+import HomeDataForm from "./components/homeDataForm";
+import AccountForm from "./components/accountForm";
+import {renderRedirect} from "./functions/handlers";
 
 class RegisterPage extends React.Component {
   state = {

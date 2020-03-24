@@ -2,7 +2,7 @@ import React from "react";
 import bgImage from "../../assets/fot..png";
 import {Button, Card, Container} from "react-bootstrap";
 import Form from "react-bootstrap/Form";
-import {handleBlur} from "./functions/handlers";
+import {handleBlur, renderRedirect} from "./functions/handlers";
 import {renderMessage, handleSubmit} from "./functions/submitActions";
 
 class PasswordResetPrompt extends React.Component {
@@ -10,7 +10,8 @@ class PasswordResetPrompt extends React.Component {
         super(props);
         this.state = {
             email: "",
-            correct: false
+            correct: false,
+            redirect: false
         }
     };
 
@@ -20,8 +21,14 @@ class PasswordResetPrompt extends React.Component {
         })
     };
 
+    setRedirect = () => {
+        this.setState({
+            redirect: true
+        })
+    };
+
     render() {
-        let {email, correct} = this.state;
+        let {email, correct, redirect} = this.state;
         return(
             <Container className="loginPage">
                 {window.innerWidth >= 768 ? (
@@ -53,7 +60,8 @@ class PasswordResetPrompt extends React.Component {
                                 </Form.Control.Feedback>
                             </Form.Group>
                             <Button variant="secondary" className="passwordR_submit_email" type="submit">Wyślij</Button>
-                            {renderMessage(correct)}
+                            {renderMessage(correct, this.setRedirect)}
+                            {renderRedirect(redirect)}
                         </Form>
                     </Card.Body>
                 </Card>

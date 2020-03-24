@@ -5,6 +5,7 @@ import HeaderTemplate from "Views/PageHeader";
 import CVEditorPage from "Views/CVEditorPage";
 import Footer from "Views/Footer";
 import Menu from "Views/Menu";
+import {PasswordResetPrompt, NewPasswordPage} from "Views/PasswordReset";
 
 export {
   UserProfilePage,
@@ -13,5 +14,7 @@ export {
   HeaderTemplate,
   CVEditorPage,
   Footer,
-  Menu
+  Menu,
+  PasswordResetPrompt,
+  NewPasswordPage
 };

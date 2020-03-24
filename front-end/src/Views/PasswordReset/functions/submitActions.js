@@ -2,12 +2,12 @@ import React from "react";
 import {Button} from "react-bootstrap";
 import {renderRedirect} from "./handlers";
 
-export const renderMessage = correct => {
+export const renderMessage = (correct, onClick) => {
   if (correct) {
       return (
           <div className="submit_message" data-testid="submit_message">
               <small className="msg_text">Wysłano maila. Sprawdź skrzynkę i przejdź dalej!</small>
-              <Button className="email_prompt_redirect" onClick={e => renderRedirect(e)}>Przejdź dalej</Button>
+              <Button className="email_prompt_redirect" onClick={onClick}>Przejdź dalej</Button>
           </div>
       );
   }

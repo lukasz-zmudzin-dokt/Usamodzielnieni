@@ -4,7 +4,9 @@ import {
   RegisterPage,
   Footer,
   CVEditorPage,
-  Menu
+  Menu,
+  PasswordResetPrompt,
+  NewPasswordPage
 } from "Views";
 
 const paths = {
@@ -13,7 +15,9 @@ const paths = {
   REGISTER: "/newAccount",
   FOOTER: "/footer",
   LOGIN: "/login",
-  USER: "/user"
+  USER: "/user",
+  PASSWORD_RESET: "/forgottenPassword",
+  NEW_PASSWORD: "/newPassword"
 };
 
 export default [
@@ -46,6 +50,16 @@ export default [
     path: paths.USER,
     component: UserProfilePage,
     isPrivate: true
+  },
+  {
+    path: paths.PASSWORD_RESET,
+    component: PasswordResetPrompt,
+    exact: true
+  },
+  {
+    path: paths.NEW_PASSWORD,
+    component: NewPasswordPage,
+    exact: true
   }
 ];
 

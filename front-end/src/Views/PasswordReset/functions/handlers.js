@@ -20,6 +20,7 @@ export const validatePassword = component => {
   }
 };
 
-export const renderRedirect = event => {
-    return <Redirect to="/newPassword"/>
+export const renderRedirect = (redirect) => {
+    if (redirect)
+        return <Redirect to="/newPassword"/>
 };

@@ -17,7 +17,7 @@ class NewPasswordPage extends React.Component {
     }
 
     render() {
-        const { token, new_password, new_passwordR } = this.state;
+        const { token, new_password, new_passwordR, validated } = this.state;
         return (
             <Container className="loginPage">
                 {window.innerWidth >= 768 ? (
@@ -45,16 +45,20 @@ class NewPasswordPage extends React.Component {
                                     className="loginPage__input"
                                     minLength="6"
                                 />
+                            </Form.Group>
+                            <Form.Group>
                                 <Form.Control
                                     name="new_password"
                                     type="password"
-                                    placeholder="Hasło"
+                                    placeholder="Nowe hasło"
                                     required
                                     defaultValue={new_password}
                                     onBlur={e => handleBlur(this, e)}
                                     className="loginPage__input"
                                     minLength="6"
                                 />
+                            </Form.Group>
+                            <Form.Group>
                                 <Form.Control
                                     name="new_passwordR"
                                     type="password"
