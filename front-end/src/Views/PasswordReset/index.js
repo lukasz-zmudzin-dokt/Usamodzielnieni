@@ -1,3 +1,4 @@
 import PasswordResetPrompt from "./PasswordResetPrompt";
+import NewPasswordPage from "./NewPasswordPage";
 
-export default PasswordResetPrompt;
+export  {PasswordResetPrompt, NewPasswordPage};

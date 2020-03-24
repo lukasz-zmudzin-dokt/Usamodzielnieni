@@ -26,8 +26,10 @@ export const handleSubmit = (email, setCorrect, e) => {
        body: JSON.stringify(email)
     }).then( response => {
         if (response.status === 201 || response.status === 200) {
-            console.log(response.json());
             setCorrect();
+            response.json().then( res => {
+                console.log(res);
+            })
         }
     });
 
