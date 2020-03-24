@@ -3,7 +3,8 @@ import { Card, Container } from "react-bootstrap";
 import "./style.css";
 import UserDetails from "Views/UserProfilePage/components/UserDetails";
 import UserBasicInfo from "Views/UserProfilePage/components/UserBasicInfo";
-import Cookies from "universal-cookie";
+import { UserContext } from "context";
+import { getUserData } from "Views/UserProfilePage/functions/getUserData.js";
 
 
 const names = {
@@ -39,34 +40,8 @@ class UserProfilePage extends React.Component {
 
   async componentDidMount() {
 
-
-    const cookies = new Cookies();
-    const url = "http://usamo-back.herokuapp.com/account/data";
-    const token = await cookies.get("token");
-    console.log(token);
-    const response = await fetch(url, {
-      method: 'GET',
-      headers: {
-        "Authorization": "token " + token,
-        "Content-Type": "application/json"
-      }
-    }).then(response => {
-      // if (!response.ok) throw new Error(response.status);
-      return response;
-    });
-    const data = await response.json();
-    console.log(data);
-    console.log(data.data);
-    console.log(data.data.first_name);
-    this.setState({
-      user: {
-        username: data.data.username,
-        firstName: data.data.first_name,
-        lastName: data.data.last_name,
-        email: data.data.email,
-        phoneNumber: data.data.phone_number
-      }
-    });
+    await getUserData(this.context.token, this);
+    
   }
 
   render() {
@@ -85,5 +60,7 @@ class UserProfilePage extends React.Component {
     );
   }
 }
+
+UserProfilePage.contextType = UserContext;
 
 export default UserProfilePage;
