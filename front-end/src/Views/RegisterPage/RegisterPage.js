@@ -101,7 +101,7 @@ class RegisterPage extends React.Component {
                         </div>
                     </Card.Body>
                 </Card>
-                {renderRedirect(this)}
+                {renderRedirect(this.state.redirect)}
             </Container>
         );
     }

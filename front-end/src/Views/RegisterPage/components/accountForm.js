@@ -16,7 +16,7 @@ class AccountForm extends React.Component {
 
     render() {
         let { email, username, passwordR, password, areEqual } = this.state;
-
+        let {data, onBlur} = this.props;
         return(
             <Card bg="light" className="loginPage__cardSection col-lg ">
                 <Card.Header as="h4" className="">
@@ -30,7 +30,7 @@ class AccountForm extends React.Component {
                             placeholder="Email"
                             required
                             defaultValue={email}
-                            onBlur={e => onChange(this, e)}
+                            onBlur={e => onChange(onBlur, data, e)}
                             className="loginPage__input"
                             maxLength="50"
                         />
@@ -45,7 +45,7 @@ class AccountForm extends React.Component {
                             autoComplete="on"
                             placeholder="Nazwa użytkownika"
                             defaultValue={username}
-                            onBlur={e => onChange(this, e)}
+                            onBlur={e => onChange(onBlur, data, e)}
                             required
                             minLength="6"
                             maxLength="20"
@@ -61,7 +61,7 @@ class AccountForm extends React.Component {
                             autoComplete="on"
                             placeholder="Hasło"
                             defaultValue={password}
-                            onBlur={e => onChange(this, e)}
+                            onBlur={e => onChange(onBlur, data, e)}
                             required
                             minLength="6"
                             maxLength="30"
@@ -78,7 +78,7 @@ class AccountForm extends React.Component {
                             autoComplete="on"
                             placeholder="Powtórz hasło"
                             defaultValue={passwordR}
-                            onBlur={e => onChange(this, e)}
+                            onBlur={e => onChange(onBlur, data, e)}
                             required
                             minLength="6"
                         />

@@ -3,14 +3,14 @@ import React from "react";
 import HomeDataForm from "../components/homeDataForm";
 import CompanyDataForm from "../components/companyDataForm";
 
-export const onChange = (component, e) => {
+export const onChange = (onBlur, data, e) => {
     const name = e.target.name;
     const value = e.target.value;
-    component.props.onBlur({ ...component.props.data, [name]: value})
+    onBlur({ ...data, [name]: value})
 };
 
-export const renderRedirect = (component) => {
-    if (component.state.redirect) {
+export const renderRedirect = (redirect) => {
+    if (redirect) {
         return <Redirect to="/user" />;
     }
 };

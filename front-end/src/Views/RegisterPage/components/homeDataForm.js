@@ -15,6 +15,7 @@ class HomeDataForm extends React.Component {
 
     render() {
         const { name_of_place, street, city, city_code } = this.state;
+        let {data, onBlur} = this.props;
         return (
             <Card
                 bg="light"
@@ -32,7 +33,7 @@ class HomeDataForm extends React.Component {
                             autoComplete="on"
                             placeholder="Nazwa placówki"
                             defaultValue={name_of_place}
-                            onBlur={e => onChange(this, e)}
+                            onBlur={e => onChange(onBlur, data, e)}
                             required
                         />
                         <Form.Control.Feedback type="invalid">
@@ -46,7 +47,7 @@ class HomeDataForm extends React.Component {
                             autoComplete="on"
                             placeholder="Ulica"
                             defaultValue={street}
-                            onBlur={e => onChange(this, e)}
+                            onBlur={e => onChange(onBlur, data, e)}
                             required
                         />
                         <Form.Control.Feedback type="invalid">
@@ -61,7 +62,7 @@ class HomeDataForm extends React.Component {
                             autoComplete="on"
                             placeholder="Nazwa miasta"
                             defaultValue={city}
-                            onBlur={e => onChange(this, e)}
+                            onBlur={e => onChange(onBlur, data, e)}
                             required
                         />
                         <Form.Control.Feedback type="invalid">
@@ -76,7 +77,7 @@ class HomeDataForm extends React.Component {
                             autoComplete="on"
                             placeholder="Kod pocztowy"
                             defaultValue={city_code}
-                            onBlur={e => onChange(this, e)}
+                            onBlur={e => onChange(onBlur, data, e)}
                             required
                         />
                         <Form.Control.Feedback type="invalid">

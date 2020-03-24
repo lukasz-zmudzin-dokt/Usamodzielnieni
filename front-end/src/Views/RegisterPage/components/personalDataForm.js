@@ -14,6 +14,7 @@ class PersonalDataForm extends React.Component {
 
     render () {
         let {first_name, last_name, phone_number} = this.state;
+        let {onBlur, data} = this.props;
         return (
             <Card
                 bg="light"
@@ -30,7 +31,7 @@ class PersonalDataForm extends React.Component {
                             autoComplete="on"
                             placeholder="Imię"
                             defaultValue={first_name}
-                            onBlur={e => onChange(this, e)}
+                            onBlur={e => onChange(onBlur, data, e)}
                             required
                             minLength="1"
                             maxLength="30"
@@ -46,7 +47,7 @@ class PersonalDataForm extends React.Component {
                             autoComplete="on"
                             placeholder="Nazwisko"
                             defaultValue={last_name}
-                            onBlur={e => onChange(this, e)}
+                            onBlur={e => onChange(onBlur, data, e)}
                             required
                             minLength="1"
                             maxLength="30"
@@ -64,7 +65,7 @@ class PersonalDataForm extends React.Component {
                             autoComplete="on"
                             placeholder="Numer telefonu"
                             defaultValue={phone_number}
-                            onBlur={e => onChange(this, e)}
+                            onBlur={e => onChange(onBlur, data, e)}
                         />
                         <Form.Control.Feedback type="invalid">
                             Podaj numer telefonu w formacie: +48123123123
