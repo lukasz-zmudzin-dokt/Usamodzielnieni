@@ -5,11 +5,15 @@ import { onChange } from "../functions/handlers";
 class LoginForm extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            username: "",
+            password: ""
+        }
     }
 
     render() {
-        const component = this.props.component;
-        const { username, password } = component;
+        const {username, password} = this.state;
+        const {data, onBlur} = this.props;
 
         return (
             <Card
@@ -19,11 +23,12 @@ class LoginForm extends React.Component {
                 <Card.Body className="">
                     <Form.Group controlId="formGroupUsername">
                         <Form.Control
+                            name="login"
                             type="text"
                             placeholder="Login"
                             required
-                            value={username}
-                            onChange={e => onChange(component, e)}
+                            defaultValue={username}
+                            onChange={e => onChange(onBlur, data, e)}
                             className="loginPage__input"
                             minLength="6"
                         />
@@ -33,11 +38,12 @@ class LoginForm extends React.Component {
                     </Form.Group>
                     <Form.Group controlId="formGroupPassword">
                         <Form.Control
+                            name="password"
                             type="password"
                             autoComplete="on"
                             placeholder="Hasło"
-                            value={password}
-                            onChange={e => onChange(component, e)}
+                            defaultValue={password}
+                            onChange={e => onChange(onBlur, data, e)}
                             required
                             minLength="6"
                         />

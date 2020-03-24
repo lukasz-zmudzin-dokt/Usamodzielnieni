@@ -11,8 +11,7 @@ import bgImage from "assets/fot..png";
 
 class LoginPage extends React.Component {
   state = {
-    username: "",
-    password: "",
+    credentials: null,
     message: "",
     redirect: false,
     incorrect: false,
@@ -50,7 +49,7 @@ class LoginPage extends React.Component {
               onSubmit={e => handleSubmit(this, e)}
               className="primary"
             >
-              <LoginForm component={this}/>
+              <LoginForm data={this.state.credentials} onBlur={credentials => this.setState({credentials})}/>
               <Form.Group controlId="formBasicCheckbox">
                 <Form.Check
                   type="checkbox"
