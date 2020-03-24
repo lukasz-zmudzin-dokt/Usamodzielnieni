@@ -2,21 +2,22 @@ import React from "react";
 import bgImage from "../../assets/fot..png";
 import {Button, Card, Container} from "react-bootstrap";
 import Form from "react-bootstrap/Form";
-import {handleBlur, handlePasswordChange, validatePassword} from "./functions/handlers";
+import {handleBlur, validatePassword} from "./functions/handlers";
+import {handlePasswordChange} from "./functions/submitActions";
 
 class NewPasswordPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: this.props.username || "",
-            new_password: undefined,
-            new_passwordR: undefined,
+            token: "",
+            new_password: "",
+            new_passwordR: "",
             validated: false
         }
     }
 
     render() {
-        const { username, new_password, new_passwordR } = this.state;
+        const { token, new_password, new_passwordR } = this.state;
         return (
             <Container className="loginPage">
                 {window.innerWidth >= 768 ? (
@@ -35,20 +36,32 @@ class NewPasswordPage extends React.Component {
                         >
                             <Form.Group controlId="formGroupUsername">
                                 <Form.Control
-                                    type="password"
-                                    placeholder="Hasło"
+                                    name="token"
+                                    type="text"
+                                    placeholder="Token"
                                     required
-                                    defaultValue={new_password}
-                                    onBlur={e => handleBlur(this, e, "new_password")}
+                                    defaultValue={token}
+                                    onBlur={e => handleBlur(this, e)}
                                     className="loginPage__input"
                                     minLength="6"
                                 />
                                 <Form.Control
+                                    name="new_password"
+                                    type="password"
+                                    placeholder="Hasło"
+                                    required
+                                    defaultValue={new_password}
+                                    onBlur={e => handleBlur(this, e)}
+                                    className="loginPage__input"
+                                    minLength="6"
+                                />
+                                <Form.Control
+                                    name="new_passwordR"
                                     type="password"
                                     placeholder="Powtórz hasło"
                                     required
                                     defaultValue={new_passwordR}
-                                    onBlur={e => handleBlur(this, e, "new_passwordR")}
+                                    onBlur={e => handleBlur(this, e)}
                                     className="loginPage__input"
                                     minLength="6"
                                 />

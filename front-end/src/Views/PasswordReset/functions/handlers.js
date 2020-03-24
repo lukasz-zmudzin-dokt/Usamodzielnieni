@@ -1,16 +1,10 @@
-export const handleBlur = (component, e, name) => {
-    component.setState({
-        [name]: e.target.value
-    })
-};
+import {Redirect} from "react-router-dom";
+import React from "react";
 
-export const handleSubmit = (component, e) => {
-    e.preventDefault();
-    //component.setState({
-    //    validated: true
-    //});
-    console.log(component.state);
-    console.log("waiting for connection with endpoint");
+export const handleBlur = (component, e) => {
+    component.setState({
+        [e.target.name]: e.target.value
+    })
 };
 
 export const validatePassword = component => {
@@ -26,6 +20,6 @@ export const validatePassword = component => {
   }
 };
 
-export const handlePasswordChange = (component, e) => {
-    e.preventDefault();
+export const renderRedirect = event => {
+    return <Redirect to="/newPassword"/>
 };

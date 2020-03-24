@@ -2,19 +2,26 @@ import React from "react";
 import bgImage from "../../assets/fot..png";
 import {Button, Card, Container} from "react-bootstrap";
 import Form from "react-bootstrap/Form";
-import {handleBlur, handleSubmit} from "./functions/handlers";
+import {handleBlur} from "./functions/handlers";
+import {renderMessage, handleSubmit} from "./functions/submitActions";
 
 class PasswordResetPrompt extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: "",
-            validated: false
+            email: "",
+            correct: false
         }
     };
 
+    setCorrect = () => {
+        this.setState({
+            correct: true
+        })
+    };
+
     render() {
-        let {username, validated} = this.state;
+        let {email, correct} = this.state;
         return(
             <Container className="loginPage">
                 {window.innerWidth >= 768 ? (
@@ -27,25 +34,26 @@ class PasswordResetPrompt extends React.Component {
                     <Card.Body className="loginPage__body">
                         <Form
                             noValidate
-                            validated={validated}
-                            onSubmit={e => handleSubmit(this, e)}
+                            onSubmit={e => handleSubmit({email}, this.setCorrect, e)}
                             className="primary"
                         >
                             <Form.Group controlId="formGroupUsername">
                                 <Form.Control
+                                    name="email"
                                     type="text"
-                                    placeholder="Login"
+                                    placeholder="Email"
                                     required
-                                    defaultValue={username}
-                                    onBlur={e => handleBlur(this, e, "username")}
+                                    defaultValue={email}
+                                    onBlur={e => handleBlur(this, e)}
                                     className="loginPage__input"
                                     minLength="6"
                                 />
                                 <Form.Control.Feedback type="invalid">
-                                    Podaj właściwy login
+                                    Podaj właściwy email
                                 </Form.Control.Feedback>
                             </Form.Group>
-                            <Button variant="secondary" className="loginPage__button" type="submit">Wyślij</Button>
+                            <Button variant="secondary" className="passwordR_submit_email" type="submit">Wyślij</Button>
+                            {renderMessage(correct)}
                         </Form>
                     </Card.Body>
                 </Card>
