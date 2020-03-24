@@ -1,38 +1,149 @@
 import React from "react";
 import { Container, Card, Form, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import Cookies from "universal-cookie";
+import { Link, Redirect } from "react-router-dom";
 import bgImage from "../../assets/fot..png";
-import { connect } from "react-redux";
-import { setUserToken } from "redux/actions";
-import PersonalDataForm from "./components/personalDataForm";
-import HomeDataForm from "./components/homeDataForm";
-import AccountForm from "./components/accountForm";
-import {handleSubmit} from "./functions/submitForm";
-import {renderRedirect} from "./functions/handlers";
-
-const cookies = new Cookies();
+import { UserContext } from "context";
 
 class RegisterPage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      email: "",
-      first_name: "",
-      last_name: "",
-      username: "",
-      phone_number: "",
-      name_of_place: "",
-      street: "",
-      city: "",
-      city_code: "",
-      password: "",
-      passwordR: "",
-      areEqual: true,
-      validated: false,
-      redirect: false
-    };
-  }
+  state = {
+    email: "",
+    first_name: "",
+    last_name: "",
+    username: "",
+    phone_number: "",
+    name_of_place: "",
+    street: "",
+    city: "",
+    city_code: "",
+    password: "",
+    passwordR: "",
+    areEqual: true,
+    validated: false,
+    redirect: false
+  };
+
+  renderRedirect = () => {
+    if (this.state.redirect) {
+      return <Redirect to="/user" />;
+    }
+  };
+  onChange = (e, val) => {
+    const value = e.target.value;
+
+    this.setState({
+      [val]: value
+    });
+  };
+
+  sendData = object => {
+    console.log(object);
+    const url = "https://usamo-back.herokuapp.com/account/register/";
+    fetch(url, {
+      method: "POST",
+      body: JSON.stringify(object),
+      headers: {
+        "Content-Type": "application/json",
+        Origin: null
+      }
+    }).then(res => {
+      console.log(res);
+      if (res.status === 201) {
+        res.json().then(responseValue => {
+          const { token } = responseValue;
+          this.setRedirect();
+          this.context.login(token);
+          this.setState({
+            validated: false,
+            message: "Udało się zarejestrować! Teraz możesz się zalogować",
+            email: "",
+            first_name: "",
+            last_name: "",
+            username: "",
+            phone_number: "",
+            password: "",
+            passwordR: "",
+            city: "",
+            city_code: "",
+            street: "",
+            name_of_place: "",
+            correct: true,
+            redirect: true
+          });
+        });
+      } else {
+        this.setState({
+          validated: false,
+          incorrect: true,
+          message: "Taki użytkownik już istnieje",
+          username: ""
+        });
+      }
+    });
+  };
+
+  handleSubmit = event => {
+    const {
+      email,
+      first_name,
+      last_name,
+      username,
+      phone_number,
+      city,
+      city_code,
+      street,
+      name_of_place,
+      password,
+      passwordR
+    } = this.state;
+    const form = event.currentTarget;
+
+    event.preventDefault();
+
+    if (form.checkValidity() === false || password !== passwordR) {
+      event.preventDefault();
+      event.stopPropagation();
+    } else if (form.checkValidity() === true && password !== passwordR) {
+      this.setState({
+        areEqual: false
+      });
+    } else {
+      this.setState({
+        areEqual: true
+      });
+      const facility_name = name_of_place;
+      const facility_address = `${city} ${street} ${city_code}`;
+      console.log({
+        email,
+        first_name,
+        last_name,
+        username,
+        phone_number,
+        password,
+        facility_name,
+        facility_address
+      });
+      this.sendData({
+        email,
+        first_name,
+        last_name,
+        username,
+        phone_number,
+        password,
+        facility_name,
+        facility_address
+      });
+    }
+
+    this.setState({
+      validated: true
+    });
+  };
+
+  setRedirect = () => {
+    this.setState({
+      redirect: true
+    });
+  };
 
   render() {
     const {
@@ -93,5 +204,7 @@ class RegisterPage extends React.Component {
     );
   }
 }
+
+RegisterPage.contextType = UserContext;
                 
-export default connect(null, { setUserToken })(RegisterPage);
+export default RegisterPage;

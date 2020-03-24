@@ -1,15 +1,12 @@
 import React from "react";
 import { Container, Button, Card } from "react-bootstrap";
-import Cookies from "universal-cookie";
 import Form from "react-bootstrap/Form";
 import { Link, Redirect } from "react-router-dom";
-import { connect } from "react-redux";
-import { setUserToken } from "redux/actions";
+import { UserContext } from "context";
 
 import "Views/LoginPage/style.css";
 import bgImage from "../../assets/fot..png";
 
-const cookies = new Cookies();
 
 class LoginPage extends React.Component {
   state = {
@@ -19,8 +16,7 @@ class LoginPage extends React.Component {
     redirect: false,
     incorrect: false,
     cookieVal: false,
-    validated: false,
-    token: this.props.token || ""
+    validated: false
   };
 
   createMessage = status => {
@@ -54,12 +50,8 @@ class LoginPage extends React.Component {
       if (res.status === 200) {
         res.json().then(responseValue => {
           const { token } = responseValue;
-          this.props.setUserToken(token);
-          this.setState({ token });
+          this.context.login(token);
           this.setRedirect();
-          cookies.set(`token`, token, {
-            path: "/"
-          });
         });
       } else {
         this.setState({
@@ -85,18 +77,6 @@ class LoginPage extends React.Component {
   setRedirect = () => {
     this.setState({
       redirect: true
-    });
-  };
-
-  setCookie = token => {
-    const current = new Date();
-    const nextYear = new Date();
-
-    nextYear.setFullYear(current.getFullYear() + 1); // ciasteczko na rok
-    console.log(token);
-    cookies.set(`token`, token, {
-      path: "/",
-      expires: nextYear
     });
   };
 
@@ -136,7 +116,7 @@ class LoginPage extends React.Component {
   };
 
   componentDidMount() {
-    if (cookies.get("token")) {
+    if (this.context.token) {
       this.setRedirect();
     }
   }
@@ -231,4 +211,6 @@ class LoginPage extends React.Component {
   }
 }
 
-export default connect(null, { setUserToken })(LoginPage);
+LoginPage.contextType = UserContext;
+
+export default LoginPage;
