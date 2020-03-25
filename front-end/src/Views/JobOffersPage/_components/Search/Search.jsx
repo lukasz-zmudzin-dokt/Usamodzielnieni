@@ -4,37 +4,18 @@ import "./style.css";
 import FormGroup from "components/FormGroup";
 import { voivodeships } from "constants/voivodeships";
 
-const typeOfWork = ["Szkolenie", "Praca", "Staż"];
-const earningsTab = ["Płatne", "Bezpłatne"];
-
 const Search = ({ offers, setFilter }) => {
   const [voivodeship, setVoivodeship] = useState("-- Wybierz --");
-  const [companyName, setCompanyName] = useState("-- Wybierz --");
-  const [type, setType] = useState("-- Wybierz --");
-  const [earnings, setEarnings] = useState("-- Wybierz --");
+  const [pageSize, setPageSize] = useState(1);
+  const [minExpirationDate, setMinExpirationDate] = useState();
 
   const filter = event => {
     event.preventDefault();
-    const filters = { voivodeship, companyName, type, earnings };
-    let newTab = offers;
-    for (let key in filters) {
-      if (filters[key] !== "-- Wybierz --") {
-        newTab = newTab.filter(val => {
-          return val[key] === filters[key];
-        });
-      }
-    }
-    setFilter(newTab);
   };
 
   const deleteFilter = e => {
     setVoivodeship("-- Wybierz --");
-    setCompanyName("-- Wybierz --");
-    setType("-- Wybierz --");
-    setEarnings("-- Wybierz --");
-    setFilter(offers);
   };
-  let companies = [...new Set(offers.map(({ companyName }) => companyName))];
   return (
     <Form className="mb-2" onSubmit={filter}>
       <div className="search__wrapper">
@@ -44,27 +25,22 @@ const Search = ({ offers, setFilter }) => {
           val={voivodeship}
           setVal={setVoivodeship}
           type="select"
+          id="voivodes"
         />
         <FormGroup
-          header="Firma"
-          array={companies}
-          val={companyName}
-          setVal={setCompanyName}
-          type="select"
+          header="Minimalna data wygaśnięcia oferty"
+          val={minExpirationDate}
+          setVal={setMinExpirationDate}
+          type="date"
+          id="minExpirationDate"
         />
         <FormGroup
-          header="Szkolenie/Praca"
-          array={typeOfWork}
-          val={type}
-          setVal={setType}
-          type="select"
-        />
-        <FormGroup
-          header="Płatne/Bezpłatne"
-          array={earningsTab}
-          val={earnings}
-          setVal={setEarnings}
-          type="select"
+          header="Ilość ofert na stronie"
+          val={pageSize}
+          setVal={setPageSize}
+          type="number"
+          id="pageSize"
+          length={{ min: 1, max: 100 }}
         />
       </div>
       <Row className="justify-content-center align-items-center m-0">

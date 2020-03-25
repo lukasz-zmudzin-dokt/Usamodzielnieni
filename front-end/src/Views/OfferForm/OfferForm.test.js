@@ -93,7 +93,7 @@ describe("OfferForm", () => {
     expect(getByPlaceholderText("Nazwa stanowiska").value).toBe("");
     expect(getByPlaceholderText("Nazwa firmy").value).toBe("");
     expect(getByPlaceholderText("Adres firmy").value).toBe("");
-    expect(getByLabelText("Województwo").value).toBe("dolnośląskie");
+    expect(getByLabelText("Województwo").value).toBe("zachodniopomorskie");
     expect(getByLabelText("Opis stanowiska").value).toBe("");
     expect(getByLabelText("Ważne do:").value).toBe("");
   });

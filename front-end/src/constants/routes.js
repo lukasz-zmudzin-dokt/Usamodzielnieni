@@ -6,7 +6,7 @@ import {
   CVEditorPage,
   Menu,
   OfferForm,
-  JobOffersPage
+  JobOffersPage,
   MyOffersPage
 } from "Views";
 
@@ -64,9 +64,9 @@ export default [
   },
   {
     path: paths.JOB_OFFERS,
-    component: UserProfilePage, // tu trzeba zmienić komponent
+    component: JobOffersPage, // tu trzeba zmienić komponent
     isPrivate: true,
-    type: userTypes.EMPLOYER
+    type: userTypes.STANDARD
   },
   {
     path: paths.OFFER_FORM,

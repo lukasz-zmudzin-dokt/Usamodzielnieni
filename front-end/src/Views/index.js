@@ -18,6 +18,6 @@ export {
   Footer,
   Menu,
   OfferForm,
-  JobOffersPage
+  JobOffersPage,
   MyOffersPage
 };

@@ -116,31 +116,7 @@ exports[`OfferForm renders correctly 1`] = `
               required=""
             >
               <option>
-                dolnośląskie
-              </option>
-              <option>
-                kujawsko-pomorskie
-              </option>
-              <option>
-                lubelskie
-              </option>
-              <option>
-                lubuskie
-              </option>
-              <option>
-                mazowieckie
-              </option>
-              <option>
-                małopolskie
-              </option>
-              <option>
-                opolskie
-              </option>
-              <option>
-                podkarpackie
-              </option>
-              <option>
-                podlaskie
+                zachodniopomorskie
               </option>
               <option>
                 pomorskie
@@ -149,19 +125,43 @@ exports[`OfferForm renders correctly 1`] = `
                 warmińsko-mazurskie
               </option>
               <option>
+                podlaskie
+              </option>
+              <option>
+                lubuskie
+              </option>
+              <option>
                 wielkopolskie
               </option>
               <option>
-                zachodniopomorskie
+                kujawsko-pomorskie
+              </option>
+              <option>
+                mazowieckie
+              </option>
+              <option>
+                lubelskie
+              </option>
+              <option>
+                dolnośląskie
               </option>
               <option>
                 łódzkie
               </option>
               <option>
-                śląskie
+                opolskie
               </option>
               <option>
                 świętokrzyskie
+              </option>
+              <option>
+                śląskie
+              </option>
+              <option>
+                małopolskie
+              </option>
+              <option>
+                podkarpackie
               </option>
             </select>
           </div>

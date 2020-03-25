@@ -26,7 +26,6 @@ const FormGroup = ({
   const setFormType = () => {
     switch (type) {
       case "select":
-        console.log(val);
         return (
           <Form.Control
             as={type}
@@ -35,7 +34,9 @@ const FormGroup = ({
             required={required}
           >
             {required ? null : <option disabled>-- Wybierz --</option>}
-            {options}
+            {array.map(val => (
+              <option key={val}>{val}</option>
+            ))}
           </Form.Control>
         );
       case "textarea":
@@ -64,6 +65,19 @@ const FormGroup = ({
               minDate={new Date()}
             />
           </Form.Row>
+        );
+      case "number":
+        return (
+          <Form.Control
+            type={type}
+            placeholder={header}
+            onChange={setInput}
+            value={val}
+            required={required}
+            min={length.min}
+            max={length.max}
+            data-testid="default"
+          />
         );
       default:
         return (
