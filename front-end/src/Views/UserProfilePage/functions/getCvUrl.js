@@ -1,12 +1,6 @@
-import Cookies from "universal-cookie";
+export const getCvUrl = async (token) => {
 
-
-export const getCvUrl = async () => {
-
-
-    const cookies = new Cookies();
     const url = "http://usamo-back.herokuapp.com/cv/generate/";
-    const token = await cookies.get("token");
     console.log(token);
     const response = await fetch(url, {
         method: "GET",
