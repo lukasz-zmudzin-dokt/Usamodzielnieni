@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`JobOffersPage should render without crashing 1`] = `
+<div>
+  <div
+    class="container"
+  >
+    <div
+      class="card"
+    >
+      <h2
+        class="card-header"
+      >
+        Oferty pracy
+      </h2>
+      <div
+        class="card-body"
+      >
+        <div
+          class="fade alert alert-info show"
+          role="alert"
+        >
+          Ładowanie...
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
