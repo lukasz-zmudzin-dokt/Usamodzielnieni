@@ -4,17 +4,23 @@ import "./style.css";
 import FormGroup from "components/FormGroup";
 import { voivodeships } from "constants/voivodeships";
 
-const Search = ({ offers, setFilter }) => {
+const Search = ({ setFilters, filters }) => {
   const [voivodeship, setVoivodeship] = useState("-- Wybierz --");
   const [pageSize, setPageSize] = useState(1);
   const [minExpirationDate, setMinExpirationDate] = useState();
 
   const filter = event => {
     event.preventDefault();
+    const voivodeshipV =
+      voivodeship !== "-- Wybierz --" ? voivodeship : undefined;
+    setFilters({ page: 1, voivodeshipV, pageSize, minExpirationDate });
   };
 
   const deleteFilter = e => {
     setVoivodeship("-- Wybierz --");
+    setPageSize(1);
+    setMinExpirationDate();
+    setFilters({ page: 1, pageSize: 10 });
   };
   return (
     <Form className="mb-2" onSubmit={filter}>
