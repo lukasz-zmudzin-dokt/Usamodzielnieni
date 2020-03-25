@@ -1,7 +1,8 @@
 import { setRedirect } from "./handlers";
 
 
-export const sendData = (component, object) => {
+export const sendData = (component, object, e) => {
+    e.preventDefault();
     let url;
     switch (component.state.account_type) {
         case "Podopiecznym": url = "https://usamo-back.herokuapp.com/account/register/"; break;

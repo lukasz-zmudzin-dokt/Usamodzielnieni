@@ -26,28 +26,27 @@ const adjustObject = component => {
 };
 
 export const handleSubmit = (component, event) => {
-    const data = {
-        ...component.state.personalData,
-        ...component.state.accountData,
-        ...adjustObject(component)
-    };
 
     const form = event.currentTarget;
 
     event.preventDefault();
-    const {password, passwordR} = component.state.accountData;
+    const {password, passwordR} = component.state.accountData || {};
     if (form.checkValidity() === false || password !== passwordR) {
-        event.preventDefault();
         event.stopPropagation();
     } else if (form.checkValidity() === true && password !== passwordR) {
         component.setState({
             areEqual: false
         });
     } else {
+        const data = {
+            ...component.state.personalData,
+            ...component.state.accountData,
+            ...adjustObject(component)
+        };
         component.setState({
             areEqual: true
         });
-        sendData( component, data );
+        sendData( component, data, event );
     }
 
     component.setState({
