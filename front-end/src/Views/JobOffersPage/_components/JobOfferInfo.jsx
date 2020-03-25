@@ -8,7 +8,7 @@ const JobOfferInfo = ({ offer, ...rest }) => {
       <Row {...rest}>
         <Col>
           <h5>{offer.title}</h5>
-          <Row as="p">
+          <Row className="mb-3">
             <DetailsItem label="Nazwa firmy" value={offer.companyName} />
             <DetailsItem label="Lokalizacja" value={offer.voivodeship} />
             <DetailsItem label="Ważne do" value={offer.expirationDate} />

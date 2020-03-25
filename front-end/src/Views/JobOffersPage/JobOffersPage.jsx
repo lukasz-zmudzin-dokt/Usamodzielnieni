@@ -52,26 +52,26 @@ const JobOffersPage = props => {
     setFilters({ ...filters, page: queryParams.page });
   }
   
-
   useEffect(
-    () => { loadOffers(user.token) },
+    () => { 
+      const loadOffers = async (token) => {
+        setIsOffersLoading(true);
+        let res;
+        try {
+          res = await getOffers(token, filters);
+        } catch (e) {
+          console.log(e)
+          res = { offers: [], count: 0 };
+          setError(true);
+        }
+        setOffers(res.offers);
+        setCount(res.count);
+        setIsOffersLoading(false);
+      }
+      loadOffers(user.token)
+    },
     [user.token, filters]
   );
-
-  const loadOffers = async (token) => {
-    setIsOffersLoading(true);
-    let res;
-    try {
-      res = await getOffers(token, filters);
-    } catch (e) {
-      console.log(e)
-      res = { offers: [], count: 0 };
-      setError(true);
-    }
-    setOffers(res.offers);
-    setCount(res.count);
-    setIsOffersLoading(false);
-  }
 
   const msg = isOffersLoading ? <Alert variant="info">Ładowanie...</Alert> :
               offers.length === 0 ? <Alert variant="info">Brak ofert spełniających podane wymagania.</Alert> :
@@ -86,7 +86,7 @@ const JobOffersPage = props => {
             <>
               <ListGroup variant="flush">
                 {offers.map((offer) => (
-                  <ListGroup.Item>
+                  <ListGroup.Item key={offer.id}>
                     <JobOfferInfo offer={offer} />
                   </ListGroup.Item>
                 ))}

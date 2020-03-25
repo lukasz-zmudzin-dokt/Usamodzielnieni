@@ -7,7 +7,7 @@ const OffersPagination = ({current, max}) => {
     const items = [];
     for (let p = Math.max(1, current - 2); p <= Math.min(max, current + 2); p++) {
         items.push(
-            <IndexLinkContainer to={`?page=${p}`}>
+            <IndexLinkContainer key={p} to={`?page=${p}`}>
                 <Pagination.Item active={p === current}>{p}</Pagination.Item>
             </IndexLinkContainer>
         )
