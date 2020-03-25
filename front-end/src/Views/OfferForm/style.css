@@ -1,0 +1,40 @@
+.offerForm {
+  min-height: 100vh;
+  padding-top: 100px;
+}
+
+.offerForm__header {
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .offerForm {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 0px;
+  }
+  .offerForm__card {
+    margin-top: 50px;
+    width: 100% !important;
+  }
+  .offerForm__form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  .offerForm__wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 48%;
+    justify-content: center;
+  }
+  .offerForm__textContainer {
+    flex-grow: 1 !important;
+    display: flex;
+    flex-direction: column;
+  }
+  .offerForm__textarea {
+    flex-grow: 1;
+  }
+}
