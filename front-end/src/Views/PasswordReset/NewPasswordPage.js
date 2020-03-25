@@ -10,22 +10,27 @@ class NewPasswordPage extends React.Component {
         super(props);
         this.state = {
             token: "",
-            new_password: "",
-            new_passwordR: "",
+            password: "",
+            passwordR: "",
             validated: false,
             password_changed: false
         }
     }
 
-    setVariable = object => {
-        const {key, value} = object;
+    setPasswordChanged = () => {
         this.setState({
-            [key] : value
+            password_changed: true
+        })
+    };
+
+    setValidated = () => {
+        this.setState({
+            validated: true
         })
     };
 
     render() {
-        const { token, new_password, new_passwordR, validated, password_changed } = this.state;
+        const { token, password, passwordR, validated, password_changed } = this.state;
         return (
             <Container className="loginPage">
                 {window.innerWidth >= 768 ? (
@@ -39,7 +44,7 @@ class NewPasswordPage extends React.Component {
                         <Form
                             noValidate
                             validated={validated}
-                            onSubmit={e => handlePasswordChange({new_password, token}, this.setVariable, e)}
+                            onSubmit={e => handlePasswordChange({password, token}, this.setPasswordChanged, e)}
                             className="primary"
                         >
                             <Form.Group controlId="formGroupUsername">
@@ -56,11 +61,11 @@ class NewPasswordPage extends React.Component {
                             </Form.Group>
                             <Form.Group>
                                 <Form.Control
-                                    name="new_password"
+                                    name="password"
                                     type="password"
                                     placeholder="Nowe hasło"
                                     required
-                                    defaultValue={new_password}
+                                    defaultValue={password}
                                     onBlur={e => handleBlur(this, e)}
                                     className="loginPage__input"
                                     minLength="6"
@@ -68,17 +73,17 @@ class NewPasswordPage extends React.Component {
                             </Form.Group>
                             <Form.Group>
                                 <Form.Control
-                                    name="new_passwordR"
+                                    name="passwordR"
                                     type="password"
                                     placeholder="Powtórz hasło"
                                     required
-                                    defaultValue={new_passwordR}
+                                    defaultValue={passwordR}
                                     onBlur={e => handleBlur(this, e)}
                                     className="loginPage__input"
                                     minLength="6"
                                 />
                                 <Form.Control.Feedback type="invalid">
-                                    {validatePassword(new_password, new_passwordR, this.setVariable)}
+                                    {e => validatePassword(password, passwordR, this.setValidated, e)}
                                 </Form.Control.Feedback>
                             </Form.Group>
                             <Button variant="secondary" className="loginPage__button" type="submit">Wyślij</Button>

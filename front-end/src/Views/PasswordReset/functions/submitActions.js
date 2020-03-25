@@ -35,9 +35,10 @@ export const handleSubmit = (email, setCorrect, e) => {
 
 };
 
-export const handlePasswordChange = (object, setVariable, e) => {
-    const url = "http://usamo-back.herokuapp.com/account/password_reset/confirm";
+export const handlePasswordChange = (object, setPasswordChanged, e) => {
+    const url = "http://usamo-back.herokuapp.com/account/password_reset/confirm/";
     e.preventDefault();
+    console.log(JSON.stringify(object));
     fetch(url, {
         method: "POST",
         headers: {
@@ -46,10 +47,10 @@ export const handlePasswordChange = (object, setVariable, e) => {
         body: JSON.stringify(object)
     }).then(response => {
         if (response.status === 201 || response.status === 200) {
-            setVariable({password_changed: true});
-            response.json().then( res => {
-                console.log(res);
-            });
+            setPasswordChanged();
         }
-    })
+        response.json().then( res => {
+            console.log(res);
+        });
+    });
 };

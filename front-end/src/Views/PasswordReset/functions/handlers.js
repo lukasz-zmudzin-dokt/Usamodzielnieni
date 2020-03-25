@@ -7,13 +7,15 @@ export const handleBlur = (component, e) => {
     })
 };
 
-export const validatePassword = (new_password, new_passwordR, setVariable) => {
+export const validatePassword = (new_password, new_passwordR, setValidated, e) => {
+    e.preventDefault();
   if (new_password !== new_passwordR)
       return "Hasła się nie zgadzają!";
   else if (new_password.length < 6)
       return "Hasło jest za krótkie!";
   else {
-      setVariable({validated: true});
+      setValidated();
+      return null;
   }
 };
 
