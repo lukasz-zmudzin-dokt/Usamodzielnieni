@@ -1,23 +1,24 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders correctly 1`] = `
+exports[`FormGroup renders correctly 1`] = `
 <div
-  className="form-group"
+  class="form-group"
 >
   <label
-    className="form-label"
-    htmlFor="Example"
+    class="form-label"
+    for="test"
   >
-    Example
+    test
   </label>
-  <input
-    className="form-control"
-    id="Example"
-    onChange={[Function]}
-    placeholder="Example"
-    required={true}
-    type="text"
-    value=""
-  />
+  <select
+    class="form-control"
+    id="test"
+  >
+    <option
+      disabled=""
+    >
+      -- Wybierz --
+    </option>
+  </select>
 </div>
 `;

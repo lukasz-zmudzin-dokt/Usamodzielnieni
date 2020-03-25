@@ -1,241 +1,232 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders correctly 1`] = `
+exports[`OfferForm renders correctly 1`] = `
 <div
-  className="offerForm container"
+  class="offerForm container"
 >
   <div
-    className="offerForm__card card"
+    class="offerForm__card card"
   >
     <h2
-      className="offerForm__header card-header"
+      class="offerForm__header card-header"
     >
       Dodaj ofertę
     </h2>
     <div
-      className="card-body"
+      class="card-body"
     >
       <form
-        className="offerForm__form"
-        onSubmit={[Function]}
+        class="offerForm__form"
+        data-testid="form"
+        novalidate=""
       >
         <div
-          className="offerForm__wrapper"
+          class="offerForm__wrapper"
         >
           <div
-            className="form-group"
+            class="form-group"
           >
             <label
-              className="form-label"
-              htmlFor="Nazwa stanowiska"
+              class="form-label"
+              for="offer_name"
             >
               Nazwa stanowiska
             </label>
             <input
-              className="form-control"
-              id="Nazwa stanowiska"
-              onChange={[Function]}
+              class="form-control"
+              data-testid="default"
+              id="offer_name"
+              maxlength="50"
+              minlength="1"
               placeholder="Nazwa stanowiska"
-              required={true}
+              required=""
               type="text"
               value=""
             />
             <div
-              className="invalid-feedback"
+              class="invalid-feedback"
             >
               Podaj nazwę stanowiska
             </div>
           </div>
           <div
-            className="form-group"
+            class="form-group"
           >
             <label
-              className="form-label"
-              htmlFor="Nazwa firmy"
+              class="form-label"
+              for="company_name"
             >
               Nazwa firmy
             </label>
             <input
-              className="form-control"
-              id="Nazwa firmy"
-              onChange={[Function]}
+              class="form-control"
+              data-testid="default"
+              id="company_name"
+              maxlength="70"
+              minlength="1"
               placeholder="Nazwa firmy"
-              required={true}
+              required=""
               type="text"
               value=""
             />
             <div
-              className="invalid-feedback"
+              class="invalid-feedback"
             >
               Podaj nazwę firmy
             </div>
           </div>
           <div
-            className="form-group"
+            class="form-group"
           >
             <label
-              className="form-label"
-              htmlFor="Lokalizacja"
+              class="form-label"
+              for="company_address"
             >
-              Lokalizacja
+              Adres firmy
             </label>
             <input
-              className="form-control"
-              id="Lokalizacja"
-              onChange={[Function]}
-              placeholder="Lokalizacja"
-              required={true}
+              class="form-control"
+              data-testid="default"
+              id="company_address"
+              maxlength="200"
+              minlength="1"
+              placeholder="Adres firmy"
+              required=""
               type="text"
               value=""
             />
             <div
-              className="invalid-feedback"
+              class="invalid-feedback"
             >
               Podaj lokalizację
             </div>
           </div>
           <div
-            className="form-group"
+            class="form-group"
           >
             <label
-              className="form-label"
-              htmlFor="Województwo"
+              class="form-label"
+              for="voivodeship"
             >
               Województwo
             </label>
             <select
-              className="form-control"
-              id="Województwo"
-              onChange={[Function]}
-              val=""
+              class="form-control"
+              id="voivodeship"
+              required=""
             >
               <option>
-                Dolnośląskie
+                dolnośląskie
               </option>
               <option>
-                Kujawsko-pomorskie
+                kujawsko-pomorskie
               </option>
               <option>
-                Lubelskie
+                lubelskie
               </option>
               <option>
-                Lubuskie
+                lubuskie
               </option>
               <option>
-                Mazowieckie
+                mazowieckie
               </option>
               <option>
-                Małopolskie
+                małopolskie
               </option>
               <option>
-                Opolskie
+                opolskie
               </option>
               <option>
-                Podkarpackie
+                podkarpackie
               </option>
               <option>
-                Podlaskie
+                podlaskie
               </option>
               <option>
-                Pomorskie
+                pomorskie
               </option>
               <option>
-                Warmińsko-Mazurskie
+                warmińsko-mazurskie
               </option>
               <option>
-                Wielkopolskie
+                wielkopolskie
               </option>
               <option>
-                Zachodnio-pomorskie
+                zachodniopomorskie
               </option>
               <option>
-                Łódzkie
+                łódzkie
               </option>
               <option>
-                Śląskie
+                śląskie
               </option>
               <option>
-                Świętokrzystkie
+                świętokrzyskie
               </option>
             </select>
           </div>
         </div>
         <div
-          className="offerForm__wrapper"
+          class="offerForm__wrapper"
         >
           <div
-            className="offerForm__textContainer form-group"
+            class="offerForm__textContainer form-group"
           >
             <label
-              className="form-label"
-              htmlFor="Opis stanowiska"
+              class="form-label"
+              for="description"
             >
               Opis stanowiska
             </label>
             <textarea
-              className="offerForm__textarea form-control"
-              id="Opis stanowiska"
-              onChange={[Function]}
-              required={true}
+              class="offerForm__textarea form-control"
+              id="description"
+              maxlength="1000"
+              minlength="1"
+              required=""
             />
             <div
-              className="invalid-feedback"
+              class="invalid-feedback"
             >
               Podaj opis
             </div>
           </div>
           <div
-            className="form-group"
+            class="form-group"
           >
             <label
-              className="form-label"
-              htmlFor="Data ważności"
+              class="form-label"
+              for="expiration_date"
             >
-              Data ważności
+              Ważne do:
             </label>
             <div
-              className="align-items-center form-row"
+              class="align-items-center m-0 form-row"
             >
-              <p
-                className="mr-2 mb-0"
-              >
-                Do:
-              </p>
               <div
-                className="react-datepicker-wrapper"
+                class="react-datepicker-wrapper"
               >
                 <div
-                  className="react-datepicker__input-container"
+                  class="react-datepicker__input-container"
                 >
                   <input
-                    className="form-control"
-                    disabled={false}
-                    onBlur={[Function]}
-                    onChange={[Function]}
-                    onClick={[Function]}
-                    onFocus={[Function]}
-                    onKeyDown={[Function]}
-                    readOnly={false}
-                    required={true}
+                    class="form-control"
+                    id="expiration_date"
+                    required=""
                     type="text"
                     value=""
                   />
                 </div>
               </div>
             </div>
-            <div
-              className="invalid-feedback"
-            >
-              Podaj datę ważności
-            </div>
           </div>
         </div>
         <div
-          className="w-100 justify-content-center align-items-center m-0 row"
+          class="w-100 justify-content-center align-items-center m-0 row"
         >
           <button
-            className="pl-5 pr-5 pt-2 pb-2 btn btn-secondary"
-            disabled={false}
+            class="btn btn-secondary"
+            data-testid="submitBtn"
             type="submit"
           >
             Dodaj

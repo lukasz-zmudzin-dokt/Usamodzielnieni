@@ -1,12 +1,6 @@
 .offerForm {
   min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.offerForm__card {
-  margin-top: 100px;
+  padding-top: 100px;
 }
 
 .offerForm__header {
@@ -14,6 +8,12 @@
 }
 
 @media (min-width: 768px) {
+  .offerForm {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 0px;
+  }
   .offerForm__card {
     margin-top: 50px;
     width: 100% !important;
