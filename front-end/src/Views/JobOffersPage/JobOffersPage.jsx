@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Container, Card, ListGroup, Alert } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
-import Search from "./_components/Search";
+import Filter from "./_components/Filter";
 import qs from "query-string";
 import "./style.css";
 import { UserContext } from "context";
@@ -91,7 +91,7 @@ const JobOffersPage = props => {
     <Container>
       <Card>
         <Card.Header as="h2">Oferty pracy</Card.Header>
-        <Search setFilters={setFilters} filters={filters} offers={offers} />
+        <Filter setFilters={setFilters} />
         {msg ? (
           <Card.Body>{msg}</Card.Body>
         ) : (

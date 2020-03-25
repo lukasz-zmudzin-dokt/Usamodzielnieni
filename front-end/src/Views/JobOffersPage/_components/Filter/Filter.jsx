@@ -4,7 +4,7 @@ import "./style.css";
 import FormGroup from "components/FormGroup";
 import { voivodeships } from "constants/voivodeships";
 
-const Search = ({ setFilters, filters }) => {
+const Filter = ({ setFilters }) => {
   const [voivodeship, setVoivodeship] = useState("-- Wybierz --");
   const [pageSize, setPageSize] = useState(10);
   const [minExpirationDate, setMinExpirationDate] = useState();
@@ -50,7 +50,7 @@ const Search = ({ setFilters, filters }) => {
           val={voivodeship}
           setVal={setVoivodeship}
           type="select"
-          id="voivodes"
+          id="voivodeship"
         />
         <FormGroup
           header="Minimalna data wygaśnięcia oferty"
@@ -88,4 +88,4 @@ const Search = ({ setFilters, filters }) => {
   );
 };
 
-export default Search;
+export default Filter;
