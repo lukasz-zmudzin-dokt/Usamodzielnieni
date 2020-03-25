@@ -2,7 +2,7 @@ import React from "react";
 import bgImage from "../../assets/fot..png";
 import {Button, Card, Container} from "react-bootstrap";
 import Form from "react-bootstrap/Form";
-import {handleBlur, validatePassword} from "./functions/handlers";
+import {handleBlur, renderPasswordMessage, validatePassword} from "./functions/handlers";
 import {handlePasswordChange} from "./functions/submitActions";
 
 class NewPasswordPage extends React.Component {
@@ -12,12 +12,20 @@ class NewPasswordPage extends React.Component {
             token: "",
             new_password: "",
             new_passwordR: "",
-            validated: false
+            validated: false,
+            password_changed: false
         }
     }
 
+    setVariable = object => {
+        const {key, value} = object;
+        this.setState({
+            [key] : value
+        })
+    };
+
     render() {
-        const { token, new_password, new_passwordR, validated } = this.state;
+        const { token, new_password, new_passwordR, validated, password_changed } = this.state;
         return (
             <Container className="loginPage">
                 {window.innerWidth >= 768 ? (
@@ -31,7 +39,7 @@ class NewPasswordPage extends React.Component {
                         <Form
                             noValidate
                             validated={validated}
-                            onSubmit={e => handlePasswordChange(this, e)}
+                            onSubmit={e => handlePasswordChange({new_password, token}, this.setVariable, e)}
                             className="primary"
                         >
                             <Form.Group controlId="formGroupUsername">
@@ -70,10 +78,11 @@ class NewPasswordPage extends React.Component {
                                     minLength="6"
                                 />
                                 <Form.Control.Feedback type="invalid">
-                                    {validatePassword(this)}
+                                    {validatePassword(new_password, new_passwordR, this.setVariable)}
                                 </Form.Control.Feedback>
                             </Form.Group>
                             <Button variant="secondary" className="loginPage__button" type="submit">Wyślij</Button>
+                            {renderPasswordMessage(password_changed)}
                         </Form>
                     </Card.Body>
                 </Card>

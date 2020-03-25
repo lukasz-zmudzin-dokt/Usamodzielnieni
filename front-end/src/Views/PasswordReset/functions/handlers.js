@@ -7,16 +7,13 @@ export const handleBlur = (component, e) => {
     })
 };
 
-export const validatePassword = component => {
-  let { new_password, new_passwordR } = component.state;
+export const validatePassword = (new_password, new_passwordR, setVariable) => {
   if (new_password !== new_passwordR)
       return "Hasła się nie zgadzają!";
   else if (new_password.length < 6)
       return "Hasło jest za krótkie!";
   else {
-      component.setState({
-          validated: true
-      });
+      setVariable({validated: true});
   }
 };
 
@@ -24,3 +21,15 @@ export const renderRedirect = (redirect) => {
     if (redirect)
         return <Redirect to="/newPassword"/>
 };
+
+export const renderPasswordMessage = isOK => {
+    if (isOK)
+        return (
+          <div className="message_pass_changed" data-testid="passMsg">
+              <small className="msgText_correct">Hasło zostało zmienione. Przekierowuję...</small>
+              {setTimeout( function () {
+                return (<Redirect to="/login"/>)
+              }, 3000)}
+          </div>
+        );
+}
