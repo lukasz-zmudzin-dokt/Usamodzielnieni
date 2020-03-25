@@ -8,7 +8,13 @@ import { UserContext } from "context";
 import { JobOfferInfo, OffersPagination } from "./_components";
 
 const getOffers = async (token, filters) => {
-  const query = `?page=${filters.page}`;
+  const { page, pageSize, voivodeship, minExpirationDate } = filters;
+  const voivodeshipQ = voivodeship ? `&voivodeship=${voivodeship}` : "";
+  const expirationDateQ = minExpirationDate
+    ? `&min_expiration_date=${minExpirationDate}`
+    : "";
+  const query = `?page=${page}&page_size=${pageSize}${voivodeshipQ}${expirationDateQ}`;
+
   const url = "https://usamo-back.herokuapp.com/job/job-offers/" + query;
   const headers = {
     Authorization: "Token " + token,
@@ -16,7 +22,6 @@ const getOffers = async (token, filters) => {
   };
 
   const response = await fetch(url, { method: "GET", headers });
-
   if (response.status === 200) {
     return response.json().then(res => mapGetOffersRes(res));
   } else {
@@ -42,7 +47,7 @@ const JobOffersPage = props => {
   const [count, setCount] = useState(0);
   const [isOffersLoading, setIsOffersLoading] = useState(false);
   const [filters, setFilters] = useState({
-    page: 2,
+    page: 1,
     pageSize: 10
   });
   const [error, setError] = useState(false);
@@ -85,8 +90,8 @@ const JobOffersPage = props => {
   return (
     <Container>
       <Card>
-        <Search setFilters={setFilters} filters={filters} offers={offers} />
         <Card.Header as="h2">Oferty pracy</Card.Header>
+        <Search setFilters={setFilters} filters={filters} offers={offers} />
         {msg ? (
           <Card.Body>{msg}</Card.Body>
         ) : (

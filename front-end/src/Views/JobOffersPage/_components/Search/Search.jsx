@@ -6,24 +6,43 @@ import { voivodeships } from "constants/voivodeships";
 
 const Search = ({ setFilters, filters }) => {
   const [voivodeship, setVoivodeship] = useState("-- Wybierz --");
-  const [pageSize, setPageSize] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
   const [minExpirationDate, setMinExpirationDate] = useState();
 
   const filter = event => {
     event.preventDefault();
+    let newDate;
+    if (minExpirationDate !== undefined) {
+      const year = minExpirationDate.getFullYear();
+      const month =
+        minExpirationDate.getMonth() + 1 < 10
+          ? `0${minExpirationDate.getMonth() + 1}`
+          : minExpirationDate.getMonth() + 1;
+      const day =
+        minExpirationDate.getDate() < 10
+          ? `0${minExpirationDate.getDate()}`
+          : minExpirationDate.getDate();
+      newDate = `${year}-${month}-${day}`;
+    }
+
     const voivodeshipV =
       voivodeship !== "-- Wybierz --" ? voivodeship : undefined;
-    setFilters({ page: 1, voivodeshipV, pageSize, minExpirationDate });
+    setFilters({
+      page: 1,
+      voivodeship: voivodeshipV,
+      pageSize,
+      minExpirationDate: newDate
+    });
   };
 
   const deleteFilter = e => {
     setVoivodeship("-- Wybierz --");
-    setPageSize(1);
+    setPageSize(10);
     setMinExpirationDate();
     setFilters({ page: 1, pageSize: 10 });
   };
   return (
-    <Form className="mb-2" onSubmit={filter}>
+    <Form className="p-2" onSubmit={filter}>
       <div className="search__wrapper">
         <FormGroup
           header="Województwo"
