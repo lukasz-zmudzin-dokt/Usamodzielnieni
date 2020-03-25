@@ -32,7 +32,6 @@ class LoginPage extends React.Component {
 
   sendData = object => {
     const { username, password } = this.state;
-
     const url = "https://usamo-back.herokuapp.com/account/login/";
     fetch(url, {
       method: "POST",
