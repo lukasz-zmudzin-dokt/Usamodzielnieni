@@ -5,8 +5,9 @@ import HeaderTemplate from "Views/PageHeader";
 import CVEditorPage from "Views/CVEditorPage";
 import Footer from "Views/Footer";
 import Menu from "Views/Menu";
-import OfferForm from "Views/OfferForm";
 import JobOffersPage from "Views/JobOffersPage";
+import JobOfferDetails from "Views/JobOfferDetails";
+import OfferForm from "Views/OfferForm";
 import MyOffersPage from "Views/MyOffersPage";
 
 export {
@@ -19,5 +20,6 @@ export {
   Menu,
   OfferForm,
   JobOffersPage,
-  MyOffersPage
+  MyOffersPage,
+  JobOfferDetails
 };

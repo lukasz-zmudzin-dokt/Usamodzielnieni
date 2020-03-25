@@ -7,7 +7,8 @@ import {
   Menu,
   OfferForm,
   JobOffersPage,
-  MyOffersPage
+  MyOffersPage,
+  JobOfferDetails
 } from "Views";
 
 const paths = {
@@ -20,7 +21,8 @@ const paths = {
   OFFER_FORM: "/offerForm",
   JOB_OFFERS: "/jobOffers",
   CV_APPROVAL: "/cvApproval",
-  MY_OFFERS: "/myOffers"
+  MY_OFFERS: "/myOffers",
+  JOB_OFFER_DETAILS: "/jobOffers/:id"
 };
 
 export const userTypes = {
@@ -67,6 +69,12 @@ export default [
     component: JobOffersPage, // tu trzeba zmienić komponent
     isPrivate: true,
     type: userTypes.STANDARD
+  },
+  {
+    path: paths.JOB_OFFER_DETAILS,
+    component: JobOfferDetails,
+    isPrivate: true,
+    type: undefined
   },
   {
     path: paths.OFFER_FORM,

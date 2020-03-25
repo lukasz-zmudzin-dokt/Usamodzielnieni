@@ -1,12 +1,15 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Container, Card } from "react-bootstrap";
+import { Container, Card, ListGroup, Alert } from "react-bootstrap";
+import { withRouter } from "react-router-dom";
+import Search from "./_components/Search";
+import qs from "query-string";
 import "./style.css";
 import { UserContext } from "context";
-import { JobOfferInfo } from "./_components/JobOfferInfo";
-import Search from "Views/JobOffersPage/_components/Search";
+import { JobOfferInfo, OffersPagination } from "./_components";
 
-const getOffers = async token => {
-  let url = "https://usamo-back.herokuapp.com/offers/.../";
+const getOffers = async (token, filters) => {
+  const query = `?page=${filters.page}`;
+  const url = "https://usamo-back.herokuapp.com/job/job-offers/" + query;
   const headers = {
     Authorization: "Token " + token,
     "Content-Type": "application/json"
@@ -15,101 +18,97 @@ const getOffers = async token => {
   const response = await fetch(url, { method: "GET", headers });
 
   if (response.status === 200) {
-    return response.json().then(offers => mapOffers(offers));
+    return response.json().then(res => mapGetOffersRes(res));
   } else {
     throw response.status;
   }
-  // TODO
 };
 
-const mapOffers = offers =>
-  offers.map(offer => ({
+const mapGetOffersRes = res => ({
+  offers: res.results.map(offer => ({
     id: offer.id,
-    title: offer.title,
+    title: offer.offer_name,
+    companyName: offer.company_name,
+    companyAddress: offer.company_address,
+    voivodeship: offer.voivodeship,
+    expirationDate: offer.expiration_date,
     description: offer.description
-    // TODO
-  }));
+  })),
+  count: res.count
+});
 
 const JobOffersPage = props => {
   const [offers, setOffers] = useState([]);
+  const [count, setCount] = useState(0);
   const [isOffersLoading, setIsOffersLoading] = useState(false);
-  const [filter, setFilter] = useState([]);
+  const [filters, setFilters] = useState({
+    page: 2,
+    pageSize: 10
+  });
+  const [error, setError] = useState(false);
   const user = useContext(UserContext);
 
-  useEffect(() => {
-    loadOffers(user.token);
-  }, [user.token]);
+  const queryParams = qs.parse(props.location.search, { parseNumbers: true });
+  if (
+    typeof queryParams.page === "number" &&
+    queryParams.page !== filters.page
+  ) {
+    setFilters({ ...filters, page: queryParams.page });
+  }
 
-  const loadOffers = async token => {
-    setIsOffersLoading(true);
-    let loadedOffers;
-    try {
-      loadedOffers = await getOffers(token);
-    } catch {
-      loadedOffers = [
-        {
-          id: "1",
-          title: "Stolarz poszukiwany!",
-          description:
-            "Do naszego zakładu potrzebujemy osoby, która ma chęć rąbać drewno! To możesz być ty!!!",
-          companyName: "Rębacze z Cintry sp. z o.o.",
-          firstName: "Jarosław",
-          lastName: "Psikuta",
-          email: "paniewidzisztamsnakońcu@gmail.com",
-          phone: "133792137",
-          voivodeship: "Lubelskie",
-          type: "Szkolenie",
-          earnings: "Bezpłatne"
-        },
-        {
-          id: "2",
-          title: "Pszczelarz poszukiwany!",
-          description:
-            "Do naszego zakładu potrzebujemy osoby, która ma chęć wyciagac miody pszczolom! To możesz być ty!!!",
-          companyName: "Miody sp. z o.o.",
-          firstName: "Jarosław",
-          lastName: "Psikuta",
-          email: "paniewidzisztamsnakońcu@gmail.com",
-          phone: "133792137",
-          voivodeship: "Pomorskie",
-          type: "Staż",
-          earnings: "Płatne"
-        },
-        {
-          id: "3",
-          title: "Pszczelarz poszukiwany!",
-          description:
-            "Do naszego zakładu potrzebujemy osoby, która ma chęć wyciagac miody pszczolom! To możesz być ty!!!",
-          companyName: "Google",
-          firstName: "Jarosław",
-          lastName: "Psikuta",
-          email: "paniewidzisztamsnakońcu@gmail.com",
-          phone: "133792137",
-          voivodeship: "Lubelskie",
-          type: "Praca",
-          earnings: "Płatne"
-        }
-      ]; // TODO: dodanie informacji o błędzie
+  useEffect(() => {
+    async function loadOffers(token) {
+      setIsOffersLoading(true);
+      let res;
+      try {
+        res = await getOffers(token, filters);
+      } catch (e) {
+        console.log(e);
+        res = { offers: [], count: 0 };
+        setError(true);
+      }
+      setOffers(res.offers);
+      setCount(res.count);
+      setIsOffersLoading(false);
     }
-    setFilter(loadedOffers);
-    setOffers(loadedOffers);
-    setIsOffersLoading(false);
-  };
+    loadOffers(user.token);
+  }, [user.token, filters]);
+
+  const msg = isOffersLoading ? (
+    <Alert variant="info">Ładowanie...</Alert>
+  ) : offers.length === 0 ? (
+    <Alert variant="info">Brak ofert spełniających podane wymagania.</Alert>
+  ) : (
+    error && <Alert variant="danger">Wystąpił błąd podczas ładowania.</Alert>
+  );
 
   return (
-    <Container className="mt-5">
-      <Search setFilter={setFilter} offers={offers} />
+    <Container>
       <Card>
+        <Search setFilters={setFilters} filters={filters} offers={offers} />
         <Card.Header as="h2">Oferty pracy</Card.Header>
-        <Card.Body>
-          {isOffersLoading ? (
-            <div>Ładowanie...</div>
-          ) : (
-            filter.map(offer => <JobOfferInfo offer={offer} />)
-          )}
-        </Card.Body>
+        {msg ? (
+          <Card.Body>{msg}</Card.Body>
+        ) : (
+          <>
+            <ListGroup variant="flush">
+              {offers.map(offer => (
+                <ListGroup.Item>
+                  <JobOfferInfo offer={offer} />
+                </ListGroup.Item>
+              ))}
+            </ListGroup>
+            <Card.Body>
+              <OffersPagination
+                current={filters.page}
+                max={Math.ceil(count / filters.pageSize)}
+              />
+            </Card.Body>
+          </>
+        )}
       </Card>
     </Container>
   );
 };
-export default JobOffersPage;
+
+export default withRouter(JobOffersPage);
