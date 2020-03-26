@@ -45,7 +45,7 @@ const Filter = ({ setFilters }) => {
     setFilters({ page: 1, pageSize: 10 });
   };
   return (
-    <Form className="p-2" onSubmit={filter}>
+    <Form className="search__form" onSubmit={filter}>
       <div className="search__wrapper">
         <FormGroup
           header="Województwo"
@@ -56,12 +56,13 @@ const Filter = ({ setFilters }) => {
           id="voivodeship"
         />
         <FormGroup
-          header="Minimalna data wygaśnięcia oferty"
+          header="Okres ważności"
           val={minExpirationDate}
           setVal={setMinExpirationDate}
           type="date"
           id="minExpirationDate"
         />
+
         <FormGroup
           header="Ilość ofert na stronie"
           val={pageSize}
@@ -71,22 +72,13 @@ const Filter = ({ setFilters }) => {
           length={{ min: 1, max: 100 }}
         />
       </div>
-      <Row className="justify-content-center align-items-center m-0">
-        <Button
-          variant="secondary"
-          type="submit"
-          className="pl-4 pr-4 pt-2 pb-2 mr-5"
-        >
-          Filtruj
-        </Button>
-        <Button
-          variant="secondary"
-          onClick={deleteFilter}
-          className="pl-4 pr-4 pt-2 pb-2"
-        >
-          Usuń filtr
-        </Button>
-      </Row>
+
+      <Button type="submit" className="mr-3" variant="primary">
+        Filtruj oferty
+      </Button>
+      <Button variant="outline-primary" onClick={deleteFilter}>
+        Wyczyść filtry
+      </Button>
     </Form>
   );
 };

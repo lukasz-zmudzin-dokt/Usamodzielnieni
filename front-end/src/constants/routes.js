@@ -68,7 +68,7 @@ export default [
     path: paths.JOB_OFFERS,
     component: JobOffersPage, // tu trzeba zmienić komponent
     isPrivate: true,
-    type: userTypes.STANDARD
+    type: undefined
   },
   {
     path: paths.JOB_OFFER_DETAILS,

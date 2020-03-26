@@ -116,52 +116,52 @@ exports[`OfferForm renders correctly 1`] = `
               required=""
             >
               <option>
-                zachodniopomorskie
-              </option>
-              <option>
-                pomorskie
-              </option>
-              <option>
-                warmińsko-mazurskie
-              </option>
-              <option>
-                podlaskie
-              </option>
-              <option>
-                lubuskie
-              </option>
-              <option>
-                wielkopolskie
+                dolnośląskie
               </option>
               <option>
                 kujawsko-pomorskie
               </option>
               <option>
-                mazowieckie
-              </option>
-              <option>
                 lubelskie
               </option>
               <option>
-                dolnośląskie
+                lubuskie
               </option>
               <option>
                 łódzkie
               </option>
               <option>
+                małopolskie
+              </option>
+              <option>
+                mazowieckie
+              </option>
+              <option>
                 opolskie
               </option>
               <option>
-                świętokrzyskie
+                podkarpackie
+              </option>
+              <option>
+                podlaskie
+              </option>
+              <option>
+                pomorskie
               </option>
               <option>
                 śląskie
               </option>
               <option>
-                małopolskie
+                świętokrzyskie
               </option>
               <option>
-                podkarpackie
+                warmińsko-mazurskie
+              </option>
+              <option>
+                wielkopolskie
+              </option>
+              <option>
+                zachodniopomorskie
               </option>
             </select>
           </div>

@@ -104,7 +104,7 @@ describe("JobOffersPage", () => {
         target: { value: "lubelskie" }
       });
 
-      fireEvent.click(getByText("Filtruj"));
+      fireEvent.click(getByText("Filtruj oferty"));
 
       await waitForElement(() => getAllByText("Pokaż szczegóły"));
 
@@ -140,11 +140,11 @@ describe("JobOffersPage", () => {
         </MemoryRouter>
       );
 
-      fireEvent.change(getByLabelText("Minimalna data wygaśnięcia oferty"), {
+      fireEvent.change(getByLabelText("Okres ważności"), {
         target: { value: "2020-05-05" }
       });
 
-      fireEvent.click(getByText("Filtruj"));
+      fireEvent.click(getByText("Filtruj oferty"));
 
       await waitForElement(() => getAllByText("Pokaż szczegóły"));
 
@@ -181,7 +181,7 @@ describe("JobOffersPage", () => {
         </MemoryRouter>
       );
 
-      fireEvent.change(getByLabelText("Minimalna data wygaśnięcia oferty"), {
+      fireEvent.change(getByLabelText("Okres ważności"), {
         target: { value: "2020-05-05" }
       });
       fireEvent.change(getByLabelText("Województwo"), {
@@ -191,7 +191,7 @@ describe("JobOffersPage", () => {
         target: { value: 21 }
       });
 
-      fireEvent.click(getByText("Filtruj"));
+      fireEvent.click(getByText("Filtruj oferty"));
 
       await waitForElement(() => getAllByText("Pokaż szczegóły"));
 
