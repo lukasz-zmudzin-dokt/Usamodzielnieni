@@ -2,9 +2,9 @@ import React from "react";
 import "Views/Menu/style.css";
 import {Row, Col, Container, Button, ButtonToolbar} from "react-bootstrap";
 import {LinkContainer} from 'react-router-bootstrap';
-import logo from "../../assets/logo.png";
+import logo from "assets/logo.png";
 import {Redirect} from 'react-router-dom';
-import {UserContext} from "../../context/UserContext";
+import {UserContext} from "context/UserContext";
 
 class Menu extends React.Component {
     userLogout = e => {
