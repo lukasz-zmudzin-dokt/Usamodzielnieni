@@ -3,10 +3,18 @@
 exports[`AddCvForm should render without crashing 1`] = `
 <div>
   <div
-    class="fade mb-0 alert alert-info show"
-    role="alert"
+    class="row"
   >
-    Ładowanie...
+    <div
+      class="col"
+    >
+      <a
+        class="btn btn-primary"
+        href="/cvEditor/"
+      >
+        Utwórz CV
+      </a>
+    </div>
   </div>
 </div>
 `;
