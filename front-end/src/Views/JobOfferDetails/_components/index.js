@@ -1,4 +1,4 @@
-import AddCvForm from "./AddCvForm";
+import AddCvForm from "./AddCvForm/AddCvForm";
 
 export {
     AddCvForm
