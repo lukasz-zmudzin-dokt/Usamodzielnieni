@@ -4,32 +4,27 @@ import { IndexLinkContainer } from 'react-router-bootstrap';
 import './OffersPagination.css';
 
 const OffersPagination = ({current, max}) => {
+    const addLinkWhenActive = (item, page, isActive) => {
+        return isActive ? (
+            <IndexLinkContainer to={`?page=${page}`}>{item}</IndexLinkContainer>
+        ) : item;
+    }
+
     const items = [];
     for (let p = Math.max(1, current - 2); p <= Math.min(max, current + 2); p++) {
-        items.push(
-            <IndexLinkContainer to={`?page=${p}`}>
-                <Pagination.Item active={p === current}>{p}</Pagination.Item>
-            </IndexLinkContainer>
-        )
+        const item = <Pagination.Item active={p === current}>{p}</Pagination.Item>;
+        items.push(addLinkWhenActive(item, p, p !== current));
     }
 
     return (
         <Pagination className="offersPagination">
-            <IndexLinkContainer to={`?page=${1}`}>
-                <Pagination.First disabled={current === 1}/>
-            </IndexLinkContainer>
-            <IndexLinkContainer to={`?page=${current - 1}`}>
-                <Pagination.Prev disabled={current === 1}/>
-            </IndexLinkContainer>
+            {addLinkWhenActive(<Pagination.First disabled={current === 1}/>, 1, current !== 1)}
+            {addLinkWhenActive(<Pagination.Prev disabled={current === 1}/>, current - 1, current !== 1)}
 
             {items}
 
-            <IndexLinkContainer to={`?page=${current + 1}`}>
-                <Pagination.Next disabled={current === max}/>
-            </IndexLinkContainer>
-            <IndexLinkContainer to={`?page=${max}`}>
-                <Pagination.Last disabled={current === max}/>
-            </IndexLinkContainer>
+            {addLinkWhenActive(<Pagination.Next disabled={current === max}/>, current + 1, current !== max)}
+            {addLinkWhenActive(<Pagination.Last disabled={current === max}/>, max, current !== max)}
         </Pagination>
     )
 }

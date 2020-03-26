@@ -106,11 +106,6 @@
   }
 }
 
-h3 {
-  position: relative;
-  top: 1vh;
-}
-
 .rendered_cv_area {
   min-height: 5vh;
 }
