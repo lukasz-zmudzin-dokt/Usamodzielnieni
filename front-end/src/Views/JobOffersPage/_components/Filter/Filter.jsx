@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { registerLocale } from "react-datepicker";
-import { Form, Button, Row } from "react-bootstrap";
+import { Form, Button, Col } from "react-bootstrap";
 import "./style.css";
 import FormGroup from "components/FormGroup";
 import { voivodeships } from "constants/voivodeships";
@@ -46,8 +46,8 @@ const Filter = ({ setFilters }) => {
   };
   return (
     <Form className="search__form" onSubmit={filter}>
-      <div className="search__wrapper">
-        <FormGroup
+      <Form.Row>
+        <FormGroup as={Col} xs={12} md={4}
           header="Województwo"
           array={voivodeships}
           val={voivodeship}
@@ -55,7 +55,7 @@ const Filter = ({ setFilters }) => {
           type="select"
           id="voivodeship"
         />
-        <FormGroup
+        <FormGroup as={Col}  xs={12} md={4}
           header="Okres ważności"
           val={minExpirationDate}
           setVal={setMinExpirationDate}
@@ -63,7 +63,7 @@ const Filter = ({ setFilters }) => {
           id="minExpirationDate"
         />
 
-        <FormGroup
+        <FormGroup as={Col} xs={12} md={4}
           header="Ilość ofert na stronie"
           val={pageSize}
           setVal={setPageSize}
@@ -71,7 +71,7 @@ const Filter = ({ setFilters }) => {
           id="pageSize"
           length={{ min: 1, max: 100 }}
         />
-      </div>
+      </Form.Row>
 
       <Button type="submit" className="mr-3" variant="primary">
         Filtruj oferty

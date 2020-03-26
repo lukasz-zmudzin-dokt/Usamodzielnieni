@@ -13,7 +13,8 @@ const FormGroup = ({
   incorrect,
   length,
   required,
-  id
+  id,
+  ...rest
 }) => {
   const setInput = e => {
     const value = e.target.value;
@@ -99,6 +100,7 @@ const FormGroup = ({
     <Form.Group
       controlId={id}
       className={type === "textarea" ? "offerForm__textContainer" : ""}
+      {...rest}
     >
       <Form.Label>{header}</Form.Label>
       {setFormType()}
