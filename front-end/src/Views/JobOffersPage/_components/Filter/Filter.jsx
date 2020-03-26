@@ -1,8 +1,11 @@
 import React, { useState } from "react";
+import { registerLocale } from "react-datepicker";
 import { Form, Button, Row } from "react-bootstrap";
 import "./style.css";
 import FormGroup from "components/FormGroup";
 import { voivodeships } from "constants/voivodeships";
+import polish from "date-fns/locale/pl";
+registerLocale("pl", polish);
 
 const Filter = ({ setFilters }) => {
   const [voivodeship, setVoivodeship] = useState("-- Wybierz --");

@@ -1,6 +1,6 @@
 import React from "react";
 import { MemoryRouter } from "react-router-dom";
-import { render, fireEvent, waitForElement } from "@testing-library/react";
+import { render, fireEvent } from "@testing-library/react";
 import Filter from "Views/JobOffersPage/_components/Filter";
 
 describe("Filter(JobOffers)", () => {

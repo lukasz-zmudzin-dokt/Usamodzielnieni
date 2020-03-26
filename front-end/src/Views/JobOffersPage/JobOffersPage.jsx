@@ -98,7 +98,7 @@ const JobOffersPage = props => {
           <>
             <ListGroup variant="flush">
               {offers.map(offer => (
-                <ListGroup.Item>
+                <ListGroup.Item key={offer.id}>
                   <JobOfferInfo offer={offer} />
                 </ListGroup.Item>
               ))}
