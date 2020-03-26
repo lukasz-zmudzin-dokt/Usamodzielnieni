@@ -70,9 +70,10 @@ const JobOfferDetails = props => {
           <div>
             <h3>{offer.title}</h3>
             <Row>
-              <DetailsItem md="4" xl="3" label="Nazwa firmy">{offer.companyName}</DetailsItem>
-              <DetailsItem md="4" xl="3" label="Lokalizacja">{offer.voivodeship}</DetailsItem>
-              <DetailsItem md="4" xl="3" label="Ważne do">{offer.expirationDate}</DetailsItem>
+              <DetailsItem md="6" xl="3" label="Nazwa firmy">{offer.companyName}</DetailsItem>
+              <DetailsItem md="6" xl="3" label="Adres firmy">{offer.companyAddress}</DetailsItem>
+              <DetailsItem md="6" xl="3" label="Lokalizacja">{offer.voivodeship}</DetailsItem>
+              <DetailsItem md="6" xl="3" label="Ważne do">{offer.expirationDate}</DetailsItem>
             </Row>
             <p>{offer.description}</p>
           </div>
