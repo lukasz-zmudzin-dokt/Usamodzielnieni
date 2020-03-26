@@ -60,57 +60,55 @@ const JobOffersPage = props => {
   ) {
     setFilters({ ...filters, page: queryParams.page });
   }
-
-  useEffect(() => {
-    async function loadOffers(token) {
-      setIsOffersLoading(true);
-      let res;
-      try {
-        res = await getOffers(token, filters);
-      } catch (e) {
-        console.log(e);
-        res = { offers: [], count: 0 };
-        setError(true);
+  
+  useEffect(
+    () => { 
+      const loadOffers = async (token) => {
+        setIsOffersLoading(true);
+        let res;
+        try {
+          res = await getOffers(token, filters);
+        } catch (e) {
+          console.log(e)
+          res = { offers: [], count: 0 };
+          setError(true);
+        }
+        setOffers(res.offers);
+        setCount(res.count);
+        setIsOffersLoading(false);
       }
-      setOffers(res.offers);
-      setCount(res.count);
-      setIsOffersLoading(false);
-    }
-    loadOffers(user.token);
-  }, [user.token, filters]);
-
-  const msg = isOffersLoading ? (
-    <Alert variant="info">Ładowanie...</Alert>
-  ) : offers.length === 0 ? (
-    <Alert variant="info">Brak ofert spełniających podane wymagania.</Alert>
-  ) : (
-    error && <Alert variant="danger">Wystąpił błąd podczas ładowania.</Alert>
+      loadOffers(user.token)
+    },
+    [user.token, filters]
   );
+
+  const msg = isOffersLoading ? <Alert variant="info">Ładowanie...</Alert> :
+              offers.length === 0 ? <Alert variant="info">Brak ofert spełniających podane wymagania.</Alert> :
+              error && <Alert variant="danger">Wystąpił błąd podczas ładowania.</Alert>
 
   return (
     <Container>
       <Card>
         <Card.Header as="h2">Oferty pracy</Card.Header>
         <Filter setFilters={setFilters} />
-        {msg ? (
-          <Card.Body>{msg}</Card.Body>
-        ) : (
-          <>
-            <ListGroup variant="flush">
-              {offers.map(offer => (
-                <ListGroup.Item key={offer.id}>
-                  <JobOfferInfo offer={offer} />
-                </ListGroup.Item>
-              ))}
-            </ListGroup>
-            <Card.Body>
-              <OffersPagination
-                current={filters.page}
-                max={Math.ceil(count / filters.pageSize)}
-              />
-            </Card.Body>
-          </>
-        )}
+        {
+          msg ? <Card.Body>{msg}</Card.Body> : (
+            <>
+              <ListGroup variant="flush">
+                {offers.map((offer) => (
+                  <ListGroup.Item key={offer.id}>
+                    <JobOfferInfo offer={offer} />
+                  </ListGroup.Item>
+                ))}
+              </ListGroup>
+              <Card.Body>
+                <OffersPagination 
+                  current={filters.page}
+                  max={Math.ceil(count / filters.pageSize)} />
+              </Card.Body>
+            </>
+          )
+        }
       </Card>
     </Container>
   );

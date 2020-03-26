@@ -1,0 +1,79 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`JobOfferDetails should render without crashing 1`] = `
+<div>
+  <div
+    class="container"
+  >
+    <div
+      class="card"
+    >
+      <h2
+        class="card-header"
+      >
+        Szczegóły oferty pracy
+      </h2>
+      <div
+        class="card-body"
+      >
+        <div>
+          <h3>
+            Jakaś nazwa oferty
+          </h3>
+          <div
+            class="row"
+          >
+            <div
+              class="detailsItem col-xl-3 col-md-4"
+            >
+              <div
+                class="detailsItem__label"
+              >
+                Nazwa firmy
+              </div>
+              <div
+                class="detailsItem__value"
+              >
+                Jakaś nazwa firmy
+              </div>
+            </div>
+            <div
+              class="detailsItem col-xl-3 col-md-4"
+            >
+              <div
+                class="detailsItem__label"
+              >
+                Lokalizacja
+              </div>
+              <div
+                class="detailsItem__value"
+              >
+                Jakieś województwo
+              </div>
+            </div>
+            <div
+              class="detailsItem col-xl-3 col-md-4"
+            >
+              <div
+                class="detailsItem__label"
+              >
+                Ważne do
+              </div>
+              <div
+                class="detailsItem__value"
+              >
+                2020-12-12
+              </div>
+            </div>
+          </div>
+          <p>
+            Jakiś baaaaaaaaaaaaaaaaaardzo dłuuuuuuuuuuuuuuugi opis oferty pracy
+123 asdasd
+          </p>
+        </div>
+        <div />
+      </div>
+    </div>
+  </div>
+</div>
+`;

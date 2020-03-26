@@ -66,13 +66,15 @@ export default [
   },
   {
     path: paths.JOB_OFFERS,
-    component: JobOffersPage, // tu trzeba zmienić komponent
+    component: JobOffersPage,
+    exact: true,
     isPrivate: true,
     type: userTypes.STANDARD
   },
   {
     path: paths.JOB_OFFER_DETAILS,
     component: JobOfferDetails,
+    exact: true,
     isPrivate: true,
     type: undefined
   },
