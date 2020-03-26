@@ -11,15 +11,15 @@ import OfferForm from "Views/OfferForm";
 import MyOffersPage from "Views/MyOffersPage";
 
 export {
-    UserProfilePage,
-    LoginPage,
-    RegisterPage,
-    HeaderTemplate,
-    CVEditorPage,
-    Footer,
-    Menu,
-    JobOffersPage,
-    JobOfferDetails,
-    OfferForm,
-    MyOffersPage
+  UserProfilePage,
+  LoginPage,
+  RegisterPage,
+  HeaderTemplate,
+  CVEditorPage,
+  Footer,
+  Menu,
+  OfferForm,
+  JobOffersPage,
+  MyOffersPage,
+  JobOfferDetails
 };

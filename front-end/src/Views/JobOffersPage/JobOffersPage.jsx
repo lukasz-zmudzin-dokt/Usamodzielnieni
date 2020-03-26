@@ -1,29 +1,35 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Container, Card, ListGroup, Alert } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
+import Filter from "./_components/Filter";
 import qs from "query-string";
 import "./style.css";
 import { UserContext } from "context";
 import { JobOfferInfo, OffersPagination } from "./_components";
 
 const getOffers = async (token, filters) => {
-  const query = `?page=${filters.page}`
-  const url = 'https://usamo-back.herokuapp.com/job/job-offers/' + query;
+  const { page, pageSize, voivodeship, minExpirationDate } = filters;
+  const voivodeshipQ = voivodeship ? `&voivodeship=${voivodeship}` : "";
+  const expirationDateQ = minExpirationDate
+    ? `&min_expiration_date=${minExpirationDate}`
+    : "";
+  const query = `?page=${page}&page_size=${pageSize}${voivodeshipQ}${expirationDateQ}`;
+
+  const url = "https://usamo-back.herokuapp.com/job/job-offers/" + query;
   const headers = {
     Authorization: "Token " + token,
     "Content-Type": "application/json"
   };
 
   const response = await fetch(url, { method: "GET", headers });
-
   if (response.status === 200) {
     return response.json().then(res => mapGetOffersRes(res));
   } else {
     throw response.status;
   }
-}
+};
 
-const mapGetOffersRes = (res) => ({
+const mapGetOffersRes = res => ({
   offers: res.results.map(offer => ({
     id: offer.id,
     title: offer.offer_name,
@@ -34,7 +40,7 @@ const mapGetOffersRes = (res) => ({
     description: offer.description
   })),
   count: res.count
-})
+});
 
 const JobOffersPage = props => {
   const [offers, setOffers] = useState([]);
@@ -43,12 +49,15 @@ const JobOffersPage = props => {
   const [filters, setFilters] = useState({
     page: 1,
     pageSize: 10
-  })
+  });
   const [error, setError] = useState(false);
   const user = useContext(UserContext);
-  
-  const queryParams = qs.parse(props.location.search, {parseNumbers: true});
-  if (typeof queryParams.page === 'number' && queryParams.page !== filters.page) {
+
+  const queryParams = qs.parse(props.location.search, { parseNumbers: true });
+  if (
+    typeof queryParams.page === "number" &&
+    queryParams.page !== filters.page
+  ) {
     setFilters({ ...filters, page: queryParams.page });
   }
   
@@ -81,6 +90,7 @@ const JobOffersPage = props => {
     <Container>
       <Card>
         <Card.Header as="h2">Oferty pracy</Card.Header>
+        <Filter setFilters={setFilters} />
         {
           msg ? <Card.Body>{msg}</Card.Body> : (
             <>
@@ -102,6 +112,6 @@ const JobOffersPage = props => {
       </Card>
     </Container>
   );
-}
+};
 
 export default withRouter(JobOffersPage);

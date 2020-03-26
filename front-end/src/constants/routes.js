@@ -5,10 +5,10 @@ import {
   Footer,
   CVEditorPage,
   Menu,
-  JobOffersPage,
-  JobOfferDetails,
   OfferForm,
-  MyOffersPage
+  JobOffersPage,
+  MyOffersPage,
+  JobOfferDetails
 } from "Views";
 
 const paths = {
@@ -20,9 +20,9 @@ const paths = {
   USER: "/user",
   OFFER_FORM: "/offerForm",
   JOB_OFFERS: "/jobOffers",
-  JOB_OFFER_DETAILS: "/jobOffers/:id",
   CV_APPROVAL: "/cvApproval",
-  MY_OFFERS: "/myOffers"
+  MY_OFFERS: "/myOffers",
+  JOB_OFFER_DETAILS: "/jobOffers/:id"
 };
 
 export const userTypes = {

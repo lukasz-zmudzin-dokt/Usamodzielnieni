@@ -128,10 +128,13 @@ exports[`OfferForm renders correctly 1`] = `
                 lubuskie
               </option>
               <option>
-                mazowieckie
+                łódzkie
               </option>
               <option>
                 małopolskie
+              </option>
+              <option>
+                mazowieckie
               </option>
               <option>
                 opolskie
@@ -146,6 +149,12 @@ exports[`OfferForm renders correctly 1`] = `
                 pomorskie
               </option>
               <option>
+                śląskie
+              </option>
+              <option>
+                świętokrzyskie
+              </option>
+              <option>
                 warmińsko-mazurskie
               </option>
               <option>
@@ -153,15 +162,6 @@ exports[`OfferForm renders correctly 1`] = `
               </option>
               <option>
                 zachodniopomorskie
-              </option>
-              <option>
-                łódzkie
-              </option>
-              <option>
-                śląskie
-              </option>
-              <option>
-                świętokrzyskie
               </option>
             </select>
           </div>
