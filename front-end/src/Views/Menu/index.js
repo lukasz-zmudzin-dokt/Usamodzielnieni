@@ -4,6 +4,7 @@ import {Row, Col, Container, Button, ButtonToolbar} from "react-bootstrap";
 import {LinkContainer} from 'react-router-bootstrap';
 import logo from "../../assets/logo.png";
 import {Redirect} from 'react-router-dom';
+import {UserContext} from "../../context/UserContext";
 
 class Menu extends React.Component {
     userLogout = e => {
@@ -30,7 +31,7 @@ class Menu extends React.Component {
     };
 
     displayButtonToolbar() {
-        if (!this.context.token)
+        if (this.context.token === undefined)
             return (
                 <ButtonToolbar>
                     <LinkContainer to="/newAccount">
@@ -89,5 +90,7 @@ class Menu extends React.Component {
         )
     }
 }
+
+Menu.contextType = UserContext;
 
 export default Menu;
