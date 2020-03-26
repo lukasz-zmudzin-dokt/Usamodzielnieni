@@ -4,6 +4,7 @@ import {Button, Card, Container} from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import {handleBlur, renderRedirect} from "./functions/handlers";
 import {renderMessage, handleSubmit} from "./functions/submitActions";
+import "./style.css"
 
 class PasswordResetPrompt extends React.Component {
     constructor(props) {

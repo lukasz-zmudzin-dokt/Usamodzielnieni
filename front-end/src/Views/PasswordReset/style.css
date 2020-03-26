@@ -1,0 +1,10 @@
+.email_prompt_redirect {
+    width: 100% !important;
+    background-color: #7345a9 !important;
+}
+
+@media(max-width: 768px) {
+    .loginPage__card {
+        width: 100% !important;
+    }
+}

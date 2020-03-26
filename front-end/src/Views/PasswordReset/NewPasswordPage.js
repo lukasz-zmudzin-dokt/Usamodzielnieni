@@ -5,6 +5,7 @@ import Form from "react-bootstrap/Form";
 import {handleBlur, renderPasswordMessage, validatePassword} from "./functions/handlers";
 import {handlePasswordChange} from "./functions/submitActions";
 import {Redirect} from "react-router-dom";
+import "./style.css"
 
 class NewPasswordPage extends React.Component {
     constructor(props) {
