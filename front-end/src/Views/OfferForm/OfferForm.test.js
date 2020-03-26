@@ -57,7 +57,7 @@ describe("OfferForm", () => {
     expect(container.firstChild).toMatchSnapshot();
   });
 
-  it("shoud clear state when offer is send", async () => {
+  it("should clear state when offer is send", async () => {
     const { getByPlaceholderText, getByTestId, getByLabelText } = render(
       <MemoryRouter>
         <OfferForm />
@@ -81,8 +81,7 @@ describe("OfferForm", () => {
     });
     fireEvent.change(getByLabelText("Ważne do:"), {
       target: {
-        value:
-          "Wed Mar 25 2020 00:00:00 GMT+0100 (czas środkowoeuropejski standardowy)"
+        value: new Date()
       }
     });
 
@@ -123,8 +122,7 @@ describe("OfferForm", () => {
     });
     fireEvent.change(getByLabelText("Ważne do:"), {
       target: {
-        value:
-          "Wed Mar 25 2020 00:00:00 GMT+0100 (czas środkowoeuropejski standardowy)"
+        value: new Date()
       }
     });
 
