@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AddCvForm should render without crashing 1`] = `
+<div>
+  <div
+    class="fade mb-0 alert alert-info show"
+    role="alert"
+  >
+    Ładowanie...
+  </div>
+</div>
+`;
