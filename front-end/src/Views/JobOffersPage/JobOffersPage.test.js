@@ -136,7 +136,7 @@ describe("JobOffersPage", () => {
       );
 
       fireEvent.change(getByLabelText("Okres ważności"), {
-        target: { value: "2020-05-05" }
+        target: { value: new Date("May 5, 2020 00:00:00") }
       });
 
       fireEvent.click(getByText("Filtruj oferty"));
@@ -175,7 +175,7 @@ describe("JobOffersPage", () => {
       );
 
       fireEvent.change(getByLabelText("Okres ważności"), {
-        target: { value: "2020-05-05" }
+        target: { value: new Date("December 31, 2020 00:00:00") }
       });
       fireEvent.change(getByLabelText("Województwo"), {
         target: { value: "lubelskie" }
@@ -189,7 +189,7 @@ describe("JobOffersPage", () => {
       await waitForElement(() => getAllByText("Pokaż szczegóły"));
 
       expect(fetch).toHaveBeenCalledWith(
-        "https://usamo-back.herokuapp.com/job/job-offers/?page=1&page_size=21&voivodeship=lubelskie&min_expiration_date=2020-05-05",
+        "https://usamo-back.herokuapp.com/job/job-offers/?page=1&page_size=21&voivodeship=lubelskie&min_expiration_date=2020-12-31",
         {
           headers: {
             Authorization: "Token undefined",
@@ -201,10 +201,10 @@ describe("JobOffersPage", () => {
     });
   });
 
-  describe('main component tests', () => {
+  describe("main component tests", () => {
     let location;
     beforeEach(() => {
-      location = { search: '' };
+      location = { search: "" };
       apiOffers = [
         {
           id: "abc123",
@@ -219,7 +219,7 @@ describe("JobOffersPage", () => {
       count = 1;
     });
 
-    it('should render without crashing', async () => {
+    it("should render without crashing", async () => {
       const { container, getByText } = render(
         <MemoryRouter>
           <JobOffersPage location={location} />
@@ -231,19 +231,19 @@ describe("JobOffersPage", () => {
       expect(container).toMatchSnapshot();
     });
 
-    it('should render loading alert when component is waiting for api response', async () => {
+    it("should render loading alert when component is waiting for api response", async () => {
       const { getByText, queryByText } = render(
         <MemoryRouter>
           <JobOffersPage location={location} />
         </MemoryRouter>
       );
 
-      expect(getByText('Ładowanie', { exact: false })).toBeInTheDocument();
-      expect(queryByText('Nazwa oferty 1')).not.toBeInTheDocument();
-      await waitForElement(() => getByText('Nazwa oferty 1'));
+      expect(getByText("Ładowanie", { exact: false })).toBeInTheDocument();
+      expect(queryByText("Nazwa oferty 1")).not.toBeInTheDocument();
+      await waitForElement(() => getByText("Nazwa oferty 1"));
     });
 
-    it('should render error alert when api returns error', async () => {
+    it("should render error alert when api returns error", async () => {
       failFetch = true;
       const { getByText, queryByText } = render(
         <MemoryRouter>
@@ -251,12 +251,12 @@ describe("JobOffersPage", () => {
         </MemoryRouter>
       );
 
-      await waitForElement(() => getByText('Wystąpił błąd', { exact: false }));
-      expect(getByText('Wystąpił błąd', { exact: false })).toBeInTheDocument();
-      expect(queryByText('Nazwa oferty 1')).not.toBeInTheDocument();
+      await waitForElement(() => getByText("Wystąpił błąd", { exact: false }));
+      expect(getByText("Wystąpił błąd", { exact: false })).toBeInTheDocument();
+      expect(queryByText("Nazwa oferty 1")).not.toBeInTheDocument();
     });
 
-    it('should render info alert when api returns empty list', async () => {
+    it("should render info alert when api returns empty list", async () => {
       apiOffers = [];
       const { getByText } = render(
         <MemoryRouter>
@@ -264,9 +264,8 @@ describe("JobOffersPage", () => {
         </MemoryRouter>
       );
 
-      await waitForElement(() => getByText('Brak ofert', { exact: false }));
-      expect(getByText('Brak ofert', { exact: false })).toBeInTheDocument();
+      await waitForElement(() => getByText("Brak ofert", { exact: false }));
+      expect(getByText("Brak ofert", { exact: false })).toBeInTheDocument();
     });
-  })
-
+  });
 });

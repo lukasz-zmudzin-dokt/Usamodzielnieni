@@ -24,7 +24,7 @@ describe("Filter(JobOffers)", () => {
       target: { value: "dolnośląskie" }
     });
     fireEvent.change(getByLabelText("Okres ważności"), {
-      target: { value: "2020-05-03" }
+      target: { value: new Date("October 13, 2020 00:00:00") }
     });
     fireEvent.change(getByLabelText("Ilość ofert na stronie"), {
       target: { value: "80" }
