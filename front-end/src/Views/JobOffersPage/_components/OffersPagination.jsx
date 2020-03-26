@@ -6,13 +6,13 @@ import './OffersPagination.css';
 const OffersPagination = ({current, max}) => {
     const addLinkWhenActive = (item, page, isActive) => {
         return isActive ? (
-            <IndexLinkContainer to={`?page=${page}`}>{item}</IndexLinkContainer>
+            <IndexLinkContainer key={page} to={`?page=${page}`}>{item}</IndexLinkContainer>
         ) : item;
     }
 
     const items = [];
     for (let p = Math.max(1, current - 2); p <= Math.min(max, current + 2); p++) {
-        const item = <Pagination.Item active={p === current}>{p}</Pagination.Item>;
+        const item = <Pagination.Item key={p} active={p === current}>{p}</Pagination.Item>;
         items.push(addLinkWhenActive(item, p, p !== current));
     }
 

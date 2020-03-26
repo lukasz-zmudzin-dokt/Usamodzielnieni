@@ -50,7 +50,6 @@ const JobOfferDetails = props => {
           loadedOffer = {};
           setError(true);
         }
-        console.log(loadedOffer);
         setOffer(loadedOffer);
         setIsOfferLoading(false);
       }

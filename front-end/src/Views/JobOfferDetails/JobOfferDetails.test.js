@@ -54,7 +54,7 @@ describe('JobOfferDetails', () => {
         expect(container).toMatchSnapshot();
     });
 
-    it('should render loading alert when component is waiting for api response', () => {
+    it('should render loading alert when component is waiting for api response', async () => {
         const { getByText, queryByText } = render(
             <MemoryRouter>
                 <JobOfferDetails match={match}/>
@@ -63,6 +63,7 @@ describe('JobOfferDetails', () => {
 
         expect(getByText('Ładowanie', { exact: false })).toBeInTheDocument();
         expect(queryByText('Jakaś nazwa oferty')).not.toBeInTheDocument();
+        await waitForElement(() => getByText('Jakaś nazwa oferty'));
     });
 
     it('should render error alert when api returns error', async () => {

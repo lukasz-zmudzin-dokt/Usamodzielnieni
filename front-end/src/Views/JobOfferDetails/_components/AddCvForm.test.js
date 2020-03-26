@@ -142,7 +142,7 @@ describe('AddCvForm', () => {
         expect(queryByText('Utwórz CV')).not.toBeInTheDocument();
     });
 
-    it('should render loading alert when component is waiting for api response', () => {
+    it('should render loading alert when component is waiting for api response', async () => {
         const { getByText, queryByText } = render(
             <MemoryRouter>
                 <AddCvForm id={id} user={user} />
@@ -152,5 +152,7 @@ describe('AddCvForm', () => {
         expect(getByText('Ładowanie', { exact: false })).toBeInTheDocument();
         expect(queryByText('Aplikuj')).not.toBeInTheDocument();
         expect(queryByText('Utwórz CV')).not.toBeInTheDocument();
+
+        await waitForElement(() => getByText('Utwórz CV'));
     });
 });
