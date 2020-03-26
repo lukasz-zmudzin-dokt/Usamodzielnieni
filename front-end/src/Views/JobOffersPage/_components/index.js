@@ -1,5 +1,5 @@
-import JobOfferInfo from "./JobOfferInfo";
-import OffersPagination from "./OffersPagination";
+import JobOfferInfo from "./JobOfferInfo/JobOfferInfo";
+import OffersPagination from "./OffersPagination/OffersPagination";
 
 export {
     JobOfferInfo,
