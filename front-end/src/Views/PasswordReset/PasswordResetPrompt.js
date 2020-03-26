@@ -13,6 +13,8 @@ class PasswordResetPrompt extends React.Component {
             correct: false,
             redirect: false
         }
+        this.setCorrect.bind(this);
+        this.setRedirect.bind(this);
     };
 
     setCorrect = () => {
@@ -59,7 +61,7 @@ class PasswordResetPrompt extends React.Component {
                                     Podaj właściwy email
                                 </Form.Control.Feedback>
                             </Form.Group>
-                            <Button variant="secondary" className="passwordR_submit_email" type="submit">Wyślij</Button>
+                            <Button variant="secondary" className="passwordR_submit_email" type="submit" data-testid="sendMailBtn">Wyślij</Button>
                             {renderMessage(correct, this.setRedirect)}
                             {renderRedirect(redirect)}
                         </Form>

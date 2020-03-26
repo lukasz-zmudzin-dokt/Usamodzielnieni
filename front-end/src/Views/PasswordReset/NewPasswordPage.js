@@ -4,6 +4,7 @@ import {Button, Card, Container} from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import {handleBlur, renderPasswordMessage, validatePassword} from "./functions/handlers";
 import {handlePasswordChange} from "./functions/submitActions";
+import {Redirect} from "react-router-dom";
 
 class NewPasswordPage extends React.Component {
     constructor(props) {
@@ -15,6 +16,9 @@ class NewPasswordPage extends React.Component {
             validated: false,
             password_changed: false
         }
+        this.setPasswordChanged.bind(this);
+        this.setValidated.bind(this);
+        this.redirectToLogin.bind(this);
     }
 
     setPasswordChanged = () => {
@@ -27,6 +31,13 @@ class NewPasswordPage extends React.Component {
         this.setState({
             validated: true
         })
+    };
+
+    redirectToLogin = () => {
+        if (this.state.password_changed)
+            setTimeout( function() {
+                return (<Redirect to="/login"/>)
+            }, 3000)
     };
 
     render() {
@@ -86,8 +97,8 @@ class NewPasswordPage extends React.Component {
                                     {e => validatePassword(password, passwordR, this.setValidated, e)}
                                 </Form.Control.Feedback>
                             </Form.Group>
-                            <Button variant="secondary" className="loginPage__button" type="submit">Wyślij</Button>
-                            {renderPasswordMessage(password_changed)}
+                            <Button variant="secondary" className="loginPage__button" data-testid="btn_change_pass" type="submit">Wyślij</Button>
+                            {renderPasswordMessage(password_changed, e => this.redirectToLogin(e))}
                         </Form>
                     </Card.Body>
                 </Card>

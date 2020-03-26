@@ -7,7 +7,7 @@ export const renderMessage = (correct, onClick) => {
       return (
           <div className="submit_message" data-testid="submit_message">
               <small className="msg_text">Wysłano maila. Sprawdź skrzynkę i przejdź dalej!</small>
-              <Button className="email_prompt_redirect" onClick={onClick}>Przejdź dalej</Button>
+              <Button className="email_prompt_redirect" data-testid="btn_redirect" onClick={onClick}>Przejdź dalej</Button>
           </div>
       );
   }

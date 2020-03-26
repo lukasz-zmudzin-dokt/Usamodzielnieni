@@ -24,14 +24,12 @@ export const renderRedirect = (redirect) => {
         return <Redirect to="/newPassword"/>
 };
 
-export const renderPasswordMessage = isOK => {
+export const renderPasswordMessage = (isOK, redirectToLogin) => {
     if (isOK)
         return (
           <div className="message_pass_changed" data-testid="passMsg">
               <small className="msgText_correct">Hasło zostało zmienione. Przekierowuję...</small>
-              {setTimeout( function () {
-                return (<Redirect to="/login"/>)
-              }, 3000)}
+              {redirectToLogin}
           </div>
         );
-}
+};
