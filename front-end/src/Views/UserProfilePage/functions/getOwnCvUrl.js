@@ -1,11 +1,6 @@
-export const getCvUrl = async (token) => {
+export const getOwnCvUrl = async (token) => {
 
-    console.log("NOt working - API needs fixing");
-
-    return ;
-
-    
-    const url = "http://usamo-back.herokuapp.com/cv/generate/........";
+    const url = "http://usamo-back.herokuapp.com/cv/generate/";
     console.log(token);
     const response = await fetch(url, {
         method: "GET",
