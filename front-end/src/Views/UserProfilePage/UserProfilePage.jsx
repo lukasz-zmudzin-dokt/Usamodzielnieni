@@ -35,15 +35,12 @@ class UserProfilePage extends React.Component {
     }
   };
 
-
-
-
   async componentDidMount() {
 
     await getUserData(this.context.token, this);
-    
-  }
 
+  }
+  
   render() {
     return (
       <Container>
