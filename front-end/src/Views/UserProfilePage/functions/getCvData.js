@@ -8,9 +8,15 @@ export const getCvData = async (token) => {
             "Authorization": "token " + token,
             "Content-Type": "application/json",
         }
-    }).then(result => {
-        //if (!response.ok) throw new Error(response.status);
-        return result.json();
+    }).then(response => {
+        if(response.status === 200) {
+            return response.json();
+        } else if(response.status === 404) {
+            console.log("404 - CV NOT FOUND")
+            return ;
+        } else {
+            return response.status;
+        }
     });
     console.log(response);
 };

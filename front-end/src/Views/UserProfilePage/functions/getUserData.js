@@ -9,10 +9,13 @@ export const getUserData = async (token, component) => {
         "Content-Type": "application/json"
       }
     }).then(response => {
-      // if (!response.ok) throw new Error(response.status);
-      return response;
+      if(response.status === 200) {
+        return response.json();
+      } else {
+        return response.status;
+      }
     });
-    const data = await response.json();
+    const data = await response;
     console.log(data);
     console.log(data.data);
     console.log(data.data.first_name);
