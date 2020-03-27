@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CVEditorTab should render without crashing 1`] = `
+<div>
+  <div>
+    <h3>
+      Tytuł karty
+    </h3>
+    <img
+      alt=""
+      class="CVEditorTab__img"
+      src="./ścieżka_do_pliku.png"
+    />
+    <div
+      class="row"
+    >
+      <div
+        class="col"
+      >
+        <button
+          class="form_navigation_prev btn btn-primary btn-block"
+          type="button"
+        >
+          ← Wstecz
+        </button>
+      </div>
+      <div
+        class="col"
+      >
+        <button
+          class="form_navigation_next btn btn-primary btn-block"
+          type="button"
+        >
+          Dalej →
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+`;

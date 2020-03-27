@@ -1,13 +1,11 @@
 import React from "react";
+import { Button, Row, Col } from "react-bootstrap";
 import "./CVEditorTab.css";
-import { Form, Button, Row, Col } from "react-bootstrap";
 
 const CVEditorTab = ({ title, movie, children, onPrevClick, onNextClick }) => (
     <div>
         <h3>{title}</h3>
-        <Form.Group controlId="">
-            <img className="CVEditorTab__img" src={movie} alt="" />
-        </Form.Group>
+        <img className="CVEditorTab__img" src={movie} alt="" />
         {children}
         <Row>
             <Col>
