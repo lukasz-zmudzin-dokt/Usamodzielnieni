@@ -2,12 +2,14 @@ import React from "react";
 import { Card, Container, Form, Tab, Tabs } from "react-bootstrap";
 import "react-datepicker/dist/react-datepicker.css";
 import "./CVEditorPage.css";
-import PersonalDataTab from 'Views/CVEditorPage/components/PersonalDataTab';
-import EducationTab from 'Views/CVEditorPage/components/EducationTab';
-import WorkExperienceTab from 'Views/CVEditorPage/components/WorkExperienceTab';
-import LanguagesTab from 'Views/CVEditorPage/components/LanguagesTab';
-import SkillsTab from 'Views/CVEditorPage/components/SkillsTab';
-import PhotoTab from './components/PhotoTab';
+import {
+    PersonalDataTab,
+    EducationTab,
+    WorkExperienceTab,
+    LanguagesTab,
+    SkillsTab,
+    PhotoTab 
+} from './components';
 import { UserContext } from "context";
 
 import { sendData } from "Views/CVEditorPage/functions/other.js";
