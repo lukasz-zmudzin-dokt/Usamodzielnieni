@@ -3,7 +3,7 @@ import { Form, Col, Row } from "react-bootstrap";
 import movie_1 from "../../../assets/movie_1.png";
 import DatePicker, { registerLocale } from "react-datepicker";
 import polish from "date-fns/locale/pl";
-import CVEditorTab from 'Views/CVEditorPage/components/CvEditorTab';
+import { CVEditorTab } from '.';
 
 registerLocale("pl", polish);
 

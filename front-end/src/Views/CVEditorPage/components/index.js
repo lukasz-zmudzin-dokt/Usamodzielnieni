@@ -4,6 +4,9 @@ import WorkExperienceTab from './WorkExperienceTab';
 import LanguagesTab from './LanguagesTab';
 import SkillsTab from './SkillsTab';
 import PhotoTab from './PhotoTab';
+import ActionWithDate from './ActionWithDate';
+import CVEditorTab from './CVEditorTab/CVEditorTab';
+import ItemsList from './ItemsList';
 
 export {
     PersonalDataTab,
@@ -11,5 +14,8 @@ export {
     WorkExperienceTab,
     LanguagesTab,
     SkillsTab,
-    PhotoTab
+    PhotoTab,
+    ActionWithDate,
+    CVEditorTab,
+    ItemsList
 }

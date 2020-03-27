@@ -1,8 +1,7 @@
 import React from "react";
 import { Form } from "react-bootstrap";
 import movie_4 from "../../../assets/movie_4.png";
-import CVEditorTab from 'Views/CVEditorPage/components/CvEditorTab';
-import ItemsList from 'Views/CVEditorPage/components/ItemsList';
+import { CVEditorTab, ItemsList } from '.';
 
 class SkillsTab extends React.Component {
     constructor(props) {

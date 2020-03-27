@@ -1,7 +1,6 @@
 import React from "react";
 import movie_2 from "../../../assets/movie_2.png";
-import CVEditorTab from 'Views/CVEditorPage/components/CvEditorTab';
-import ActionWithDate from "./ActionWithDate";
+import { CVEditorTab, ActionWithDate } from '.';
 
 const EducationTab = ({ data, onChange, onPrevClick, onNextClick }) => (
     <CVEditorTab

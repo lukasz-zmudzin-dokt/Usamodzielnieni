@@ -1,6 +1,6 @@
 import React from "react";
 import { Form, Col } from "react-bootstrap";
-import CVEditorTab from "./CvEditorTab";
+import { CVEditorTab } from ".";
 import movie_1 from "../../../assets/movie_1.png";
 
 

@@ -1,5 +1,5 @@
 import React from "react";
-import "./CvEditorTab.css";
+import "./CVEditorTab.css";
 import { Form, Button, Row, Col } from "react-bootstrap";
 
 const CVEditorTab = ({ title, movie, children, onPrevClick, onNextClick }) => (
