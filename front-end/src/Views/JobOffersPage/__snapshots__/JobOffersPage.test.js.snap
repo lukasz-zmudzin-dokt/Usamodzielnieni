@@ -143,11 +143,16 @@ exports[`JobOffersPage main component tests should render without crashing 1`] =
           Filtruj oferty
         </button>
         <button
-          class="btn btn-outline-primary"
+          class="mr-3 btn btn-outline-primary"
           type="button"
         >
           Wyczyść filtry
         </button>
+        <small>
+          Znaleziono 
+          1
+           ofert
+        </small>
       </form>
       <div
         class="list-group list-group-flush"

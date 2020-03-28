@@ -37,6 +37,7 @@ describe("JobOffersPage", () => {
 
   describe("filter tests", () => {
     it("should return every offer if not filters is used", async () => {
+      count = 3;
       apiOffers = [
         {
           id: "abcdc",
@@ -79,6 +80,7 @@ describe("JobOffersPage", () => {
       expect(getAllByText("Pokaż szczegóły").length).toBe(3);
     });
     it("should return url with appropriate voivodeships", async () => {
+      count = 1;
       apiOffers = [
         {
           id: "abcdc",
@@ -117,6 +119,7 @@ describe("JobOffersPage", () => {
       );
     });
     it("should return url with appropriate date", async () => {
+      count = 1;
       apiOffers = [
         {
           id: "abcdc",
@@ -156,6 +159,7 @@ describe("JobOffersPage", () => {
     });
 
     it("should return url with appropriate filters", async () => {
+      count = 1;
       apiOffers = [
         {
           id: "abcdc",

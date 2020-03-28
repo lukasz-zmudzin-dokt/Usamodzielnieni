@@ -44,7 +44,7 @@ const mapGetOffersRes = res => ({
 
 const JobOffersPage = props => {
   const [offers, setOffers] = useState([]);
-  const [count, setCount] = useState(null);
+  const [count, setCount] = useState(0);
   const [isOffersLoading, setIsOffersLoading] = useState(false);
   const [filters, setFilters] = useState({
     page: 1,
@@ -70,7 +70,7 @@ const JobOffersPage = props => {
           res = await getOffers(token, filters);
         } catch (e) {
           console.log(e)
-          res = { offers: [], count: null };
+          res = { offers: [], count: 0 };
           setError(true);
         }
         setOffers(res.offers);

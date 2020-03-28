@@ -7,7 +7,7 @@ describe("Filter(JobOffers)", () => {
   it("renders correctly", () => {
     const { container } = render(
       <MemoryRouter initialEntries={["/"]}>
-        <Filter setFilters={() => null} />
+        <Filter setFilters={() => null} count={10} />
       </MemoryRouter>
     );
 
@@ -17,7 +17,7 @@ describe("Filter(JobOffers)", () => {
   it("should clear filters if clear button is clicked", async () => {
     const { getByLabelText, getByText } = render(
       <MemoryRouter initialEntries={["/"]}>
-        <Filter setFilters={jest.fn()} />
+        <Filter setFilters={jest.fn()} count={10} />
       </MemoryRouter>
     );
     fireEvent.change(getByLabelText("Województwo"), {
@@ -36,4 +36,14 @@ describe("Filter(JobOffers)", () => {
     expect(getByLabelText("Okres ważności").value).toBe("");
     expect(getByLabelText("Ilość ofert na stronie").value).toBe("10");
   });
+
+  it("should not render offers count when offers count is 0", () => {
+    const { queryByText } = render(
+      <MemoryRouter initialEntries={["/"]}>
+        <Filter setFilters={jest.fn()} count={0}/>
+      </MemoryRouter>
+    );
+
+    expect(queryByText("Znaleziono", { exact: false })).not.toBeInTheDocument();
+  })
 });

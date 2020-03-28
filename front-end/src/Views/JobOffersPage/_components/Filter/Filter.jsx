@@ -79,7 +79,7 @@ const Filter = ({ setFilters, count }) => {
       <Button variant="outline-primary" className="mr-3" onClick={deleteFilter}>
         Wyczyść filtry
       </Button>
-      { count !== null && count !== 0 && <small>Znaleziono {count} ofert</small>}
+      { count !== 0 && <small>Znaleziono {count} ofert</small>}
     </Form>
   );
 };
