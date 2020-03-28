@@ -7,6 +7,7 @@ import PhotoTab from './PhotoTab';
 import ActionWithDate from './ActionWithDate';
 import CVEditorTab from './CVEditorTab/CVEditorTab';
 import ItemsList from './ItemsList';
+import Items from './Items/Items';
 
 export {
     PersonalDataTab,
@@ -17,5 +18,6 @@ export {
     PhotoTab,
     ActionWithDate,
     CVEditorTab,
-    ItemsList
+    ItemsList,
+    Items
 }

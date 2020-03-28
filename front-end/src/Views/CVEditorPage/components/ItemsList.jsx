@@ -1,6 +1,6 @@
 import React from "react";
 import { Form, Button } from "react-bootstrap";
-import Items from 'Views/CVEditorPage/components/Items';
+import { Items } from '.';
 
 class ItemsList extends React.Component {
     constructor(props) {
