@@ -87,7 +87,7 @@ const JobOffersPage = props => {
               offers.length === 0 && <Alert variant="info">Brak ofert spełniających podane wymagania.</Alert>
 
   return (
-    <Container>
+    <Container className="jobOffersPage">
       <Card>
         <Card.Header as="h2">Oferty pracy</Card.Header>
         <Filter setFilters={setFilters} count={count} />

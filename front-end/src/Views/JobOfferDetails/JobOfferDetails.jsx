@@ -62,7 +62,7 @@ const JobOfferDetails = props => {
               error && <Alert variant="danger">Wystąpił błąd podczas ładowania oferty.</Alert>
 
   return (
-    <Container>
+    <Container className="jobOfferDetails">
       <Card>
       <Card.Header as="h2">Szczegóły oferty pracy</Card.Header>
       <Card.Body>
