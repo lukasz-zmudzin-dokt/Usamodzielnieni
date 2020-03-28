@@ -82,8 +82,8 @@ const JobOffersPage = props => {
     [user.token, filters]
   );
 
-  const msg = error ? <Alert variant="danger">Wystąpił błąd podczas ładowania.</Alert> :
-              isOffersLoading ? <Alert variant="info">Ładowanie...</Alert> :
+  const msg = error ? <Alert variant="danger">Wystąpił błąd podczas ładowania ofert.</Alert> :
+              isOffersLoading ? <Alert variant="info">Ładowanie ofert...</Alert> :
               offers.length === 0 && <Alert variant="info">Brak ofert spełniających podane wymagania.</Alert>
 
   return (
