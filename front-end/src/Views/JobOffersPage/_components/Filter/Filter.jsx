@@ -7,7 +7,7 @@ import { voivodeships } from "constants/voivodeships";
 import polish from "date-fns/locale/pl";
 registerLocale("pl", polish);
 
-const Filter = ({ setFilters }) => {
+const Filter = ({ setFilters, count }) => {
   const [voivodeship, setVoivodeship] = useState("-- Wybierz --");
   const [pageSize, setPageSize] = useState(10);
   const [minExpirationDate, setMinExpirationDate] = useState();
@@ -76,9 +76,10 @@ const Filter = ({ setFilters }) => {
       <Button type="submit" className="mr-3" variant="primary">
         Filtruj oferty
       </Button>
-      <Button variant="outline-primary" onClick={deleteFilter}>
+      <Button variant="outline-primary" className="mr-3" onClick={deleteFilter}>
         Wyczyść filtry
       </Button>
+      { count !== null && count !== 0 && <small>Znaleziono {count} ofert</small>}
     </Form>
   );
 };

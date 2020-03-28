@@ -44,7 +44,7 @@ const mapGetOffersRes = res => ({
 
 const JobOffersPage = props => {
   const [offers, setOffers] = useState([]);
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(null);
   const [isOffersLoading, setIsOffersLoading] = useState(false);
   const [filters, setFilters] = useState({
     page: 1,
@@ -70,7 +70,7 @@ const JobOffersPage = props => {
           res = await getOffers(token, filters);
         } catch (e) {
           console.log(e)
-          res = { offers: [], count: 0 };
+          res = { offers: [], count: null };
           setError(true);
         }
         setOffers(res.offers);
@@ -90,7 +90,7 @@ const JobOffersPage = props => {
     <Container>
       <Card>
         <Card.Header as="h2">Oferty pracy</Card.Header>
-        <Filter setFilters={setFilters} />
+        <Filter setFilters={setFilters} count={count} />
         {
           msg ? <Card.Body>{msg}</Card.Body> : (
             <>
