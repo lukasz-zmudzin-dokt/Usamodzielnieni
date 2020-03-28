@@ -64,6 +64,7 @@ const FormGroup = ({
               selected={val}
               required={required}
               minDate={new Date()}
+              placeholderText={header}
             />
           </Form.Row>
         );
