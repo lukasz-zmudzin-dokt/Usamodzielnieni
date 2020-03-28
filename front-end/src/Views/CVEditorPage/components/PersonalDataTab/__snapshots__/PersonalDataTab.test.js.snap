@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ItemsList should render without crashing 1`] = `
+exports[`PersonalDataTab should render without crashing 1`] = `
 <div>
   <div
     class="row"

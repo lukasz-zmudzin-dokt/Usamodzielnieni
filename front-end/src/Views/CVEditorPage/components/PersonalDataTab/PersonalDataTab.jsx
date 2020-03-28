@@ -44,7 +44,6 @@ class PersonalDataTab extends React.Component {
                         </Form.Label>
                         <Form.Control
                             name="firstName"
-                            inline
                             type="text"
                             required
                             defaultValue={data.firstName}
@@ -58,7 +57,6 @@ class PersonalDataTab extends React.Component {
                         </Form.Label>
                         <Form.Control
                             name="lastName"
-                            inline
                             type="text"
                             required
                             defaultValue={data.lastName}

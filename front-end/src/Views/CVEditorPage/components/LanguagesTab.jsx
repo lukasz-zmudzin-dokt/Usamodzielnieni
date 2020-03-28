@@ -14,16 +14,10 @@ class LanguagesTab extends React.Component {
         }
     }
 
-    getLanguage = () => {
-        const lang = this.state.newLanguage;
-        this.setState({
-            newLanguage: { name: '', level: 'podstawowy' }
-        });
-        return lang;
-    }
+    getLanguage = () => this.state.newLanguage;
     getLanguageId = (lang) => `${lang.name}_${lang.level}`;
     getLanguageName = (lang) => `${lang.name} - ${lang.level}`;
-
+    clear = () => this.setState({ newLanguage: { name: '', level: 'podstawowy' } });
 
     handleNameChange = (e) => {
         const name = e.target.value;
@@ -52,10 +46,10 @@ class LanguagesTab extends React.Component {
             >
                 <ItemsList
                     getItemId={this.getLanguageId} getItemName={this.getLanguageName} getItem={this.getLanguage}
-                    data={this.props.data} onChange={this.props.onChange}
+                    data={this.props.data} onChange={this.props.onChange} clear={this.clear}
                 >
                     <Row>
-                        <Form.Group as={Col} controlId="">
+                        <Form.Group as={Col}>
                             <Form.Label>Język</Form.Label>
                             <Form.Control
                                 id="languageName"
@@ -65,15 +59,15 @@ class LanguagesTab extends React.Component {
                                 onChange={this.handleNameChange}
                             />
                         </Form.Group>
-                        <Form.Group as={Col} controlId="">
+                        <Form.Group as={Col}>
                             <Form.Label>Poziom</Form.Label>
                             <Form.Control
                                 id="languageLevel"
-                                as="Select"
+                                as="select"
                                 onChange={this.handleLevelChange}
                                 value={this.state.newLanguage.level}
                             >
-                                {levels.map(lev => (<option value={lev}>{lev}</option>))}
+                                {levels.map(lev => (<option key={lev} value={lev}>{lev}</option>))}
                             </Form.Control>
                         </Form.Group>
                     </Row>

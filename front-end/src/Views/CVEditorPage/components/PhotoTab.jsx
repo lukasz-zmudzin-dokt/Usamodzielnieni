@@ -29,7 +29,6 @@ class PhotoTab extends React.Component {
                     </Form.Label>
                     <Form.Control
                         name="photo"
-                        inline
                         type="file"
                         ref={(ref) => this.fileInput = ref}
                         onChange={this.onChange}

@@ -135,7 +135,7 @@ class CVEditorPage extends React.Component {
                                 onSelect={e => this.setState({ formTab: e })}
                                 className="CVEditorPage_tabs" // https://github.com/react-bootstrap/react-bootstrap/issues/4771
                             >
-                                {this.tabs.map(tab => (<Tab eventKey={tab.id} title={tab.name}>{tab.component}</Tab>))}
+                                {this.tabs.map(tab => (<Tab eventKey={tab.id} key={tab.id} title={tab.name}>{tab.component}</Tab>))}
                             </Tabs>
                         </Form>
                     </Card.Body>

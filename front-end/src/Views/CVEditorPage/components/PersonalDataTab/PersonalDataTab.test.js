@@ -4,7 +4,7 @@ import PersonalDataTab from './PersonalDataTab';
 
 jest.mock('../', () => ({ CVEditorTab: ({children}) => children }))
 
-describe('ItemsList', () => {
+describe('PersonalDataTab', () => {
     let props;
     beforeEach(() => {
         props = {

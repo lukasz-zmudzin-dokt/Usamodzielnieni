@@ -1,7 +1,7 @@
 import React from "react";
 import { Form } from "react-bootstrap";
 import movie_4 from "assets/movie_4.png";
-import { CVEditorTab, ItemsList } from '.';
+import { CVEditorTab, ItemsList } from '../';
 
 class SkillsTab extends React.Component {
     constructor(props) {
@@ -13,16 +13,10 @@ class SkillsTab extends React.Component {
         }
     }
 
-    getSkill = () => {
-        const skill = this.state.newSkill;
-        this.setState({
-            newSkill: { name: '' }
-        });
-        return skill;
-    }
+    getSkill = () => this.state.newSkill;
     getSkillId = (skill) => skill.name;
     getSkillName = (skill) => skill.name;
-
+    clear = () => this.setState({ newSkill: { name: '' } });
     onNameChange = (e) => {
         const name = e.target.value;
 
@@ -41,7 +35,7 @@ class SkillsTab extends React.Component {
             >
                 <ItemsList
                     getItemId={this.getSkillId} getItemName={this.getSkillName} getItem={this.getSkill}
-                    data={this.props.data} onChange={this.props.onChange}
+                    data={this.props.data} onChange={this.props.onChange} clear={this.clear}
                 >
                     <Form.Group controlId="">
                         <Form.Label>Umiejętność</Form.Label>

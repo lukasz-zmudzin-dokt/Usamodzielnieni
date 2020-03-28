@@ -4,7 +4,7 @@ import { Button } from "react-bootstrap";
 const Items = ({ items, onCutClick, getItemId, getItemName }) => (
     <ul className="list-inline">
       {items.map((item, i) => (
-        <li className="list-inline-item">
+        <li key={getItemId(item)} className="list-inline-item">
           <Button
             variant="dark"
             id={getItemId(item)}
