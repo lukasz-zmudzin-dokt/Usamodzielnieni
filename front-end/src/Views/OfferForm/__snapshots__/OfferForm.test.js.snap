@@ -212,6 +212,7 @@ exports[`OfferForm renders correctly 1`] = `
                   <input
                     class="form-control"
                     id="expiration_date"
+                    placeholder="Ważne do:"
                     required=""
                     type="text"
                     value=""

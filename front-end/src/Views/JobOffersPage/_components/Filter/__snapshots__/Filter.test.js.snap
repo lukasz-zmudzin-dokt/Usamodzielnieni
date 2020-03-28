@@ -96,6 +96,7 @@ exports[`Filter(JobOffers) renders correctly 1`] = `
             <input
               class="form-control"
               id="minExpirationDate"
+              placeholder="Okres ważności"
               type="text"
               value=""
             />
@@ -136,7 +137,9 @@ exports[`Filter(JobOffers) renders correctly 1`] = `
   >
     Wyczyść filtry
   </button>
-  <small>
+  <small
+    class="search__countText"
+  >
     Znaleziono 
     10
      ofert

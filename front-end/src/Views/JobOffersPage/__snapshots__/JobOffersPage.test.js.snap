@@ -3,7 +3,7 @@
 exports[`JobOffersPage main component tests should render without crashing 1`] = `
 <div>
   <div
-    class="container"
+    class="jobOffersPage container"
   >
     <div
       class="card"
@@ -108,6 +108,7 @@ exports[`JobOffersPage main component tests should render without crashing 1`] =
                   <input
                     class="form-control"
                     id="minExpirationDate"
+                    placeholder="Okres ważności"
                     type="text"
                     value=""
                   />
@@ -148,7 +149,9 @@ exports[`JobOffersPage main component tests should render without crashing 1`] =
         >
           Wyczyść filtry
         </button>
-        <small>
+        <small
+          class="search__countText"
+        >
           Znaleziono 
           1
            ofert

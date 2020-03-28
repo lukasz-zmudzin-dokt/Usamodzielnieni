@@ -3,7 +3,7 @@
 exports[`JobOfferDetails should render without crashing 1`] = `
 <div>
   <div
-    class="container"
+    class="jobOfferDetails container"
   >
     <div
       class="card"
