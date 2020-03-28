@@ -1,0 +1,114 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ItemsList should render without crashing 1`] = `
+<div>
+  <div
+    class="row"
+  >
+    <div
+      class="form-group col"
+    >
+      <label
+        class="form-label"
+        for=""
+      >
+        Imię:
+      </label>
+      <input
+        class="form-control"
+        id=""
+        name="firstName"
+        placeholder="Jan"
+        required=""
+        type="text"
+        value="Jan"
+      />
+    </div>
+    <div
+      class="form-group col"
+    >
+      <label
+        class="form-label"
+        for=""
+      >
+        Nazwisko:
+      </label>
+      <input
+        class="form-control"
+        id=""
+        name="lastName"
+        placeholder="Przykładowy"
+        required=""
+        type="text"
+        value="Kowalski"
+      />
+    </div>
+  </div>
+  <div
+    class="row"
+  >
+    <div
+      class="form-group col"
+    >
+      <label
+        class="form-label"
+        for=""
+      >
+        Data urodzenia:
+      </label>
+      <div>
+        <div
+          class="react-datepicker__input-container"
+        >
+          <input
+            class="form-control"
+            type="text"
+            value="28.03.2020"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="form-group col"
+    >
+      <label
+        class="form-label"
+        for=""
+      >
+        Numer telefonu:
+      </label>
+      <input
+        class="form-control"
+        id=""
+        name="phoneNumber"
+        placeholder="+48123456789"
+        type="text"
+        value="+48123123123"
+      />
+    </div>
+  </div>
+  <div
+    class="row"
+  >
+    <div
+      class="form-group col-sm-6"
+    >
+      <label
+        class="form-label"
+        for=""
+      >
+        Adres email:
+      </label>
+      <input
+        class="form-control"
+        id=""
+        name="email"
+        placeholder="example@domain.com"
+        required=""
+        type="email"
+        value="abc@abc.com"
+      />
+    </div>
+  </div>
+</div>
+`;
