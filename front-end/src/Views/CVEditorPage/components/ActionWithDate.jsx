@@ -1,6 +1,6 @@
 import React from "react";
 import { Form, Row, Col } from "react-bootstrap";
-import ItemsList from 'Views/CVEditorPage/components/ItemsList';
+import { ItemsList } from '.';
 import DatePicker, { registerLocale } from "react-datepicker";
 import polish from "date-fns/locale/pl";
 
@@ -11,7 +11,7 @@ class ActionWithDate extends React.Component {
         super(props);
         this.state = {
             newAction: {
-                startTime: new Date(),
+                startTime: undefined,
                 endTime: undefined,
                 place: '',
                 description: ''
@@ -45,12 +45,22 @@ class ActionWithDate extends React.Component {
             newAction: { ...prevState.newAction, [key]: value }
         }))
     }
+    clear = () => {
+        this.setState({
+            newAction: {
+                startTime: undefined,
+                endTime: undefined,
+                place: '',
+                description: ''
+            }
+        });
+    }
 
     render() {
         return (
             <ItemsList
                 getItemId={this.getActionId} getItemName={this.getActionName} getItem={this.getAction}
-                data={this.props.data} onChange={this.props.onChange}
+                data={this.props.data} onChange={this.props.onChange} clear={this.clear}
             >
                 <Row>
                     <Form.Group as={Col} controlId="">
@@ -59,6 +69,7 @@ class ActionWithDate extends React.Component {
                             className="form-control"
                             locale="pl"
                             dateFormat=" MM.yyyy"
+                            placeholderText="Data rozpoczęcia"
                             selected={this.state.newAction.startTime}
                             onChange={startTime => this.setState(prevState => ({ newAction: { ...prevState.newAction, startTime } }))}
                             showMonthYearPicker
@@ -70,6 +81,7 @@ class ActionWithDate extends React.Component {
                             className="form-control"
                             locale="pl"
                             dateFormat=" MM.yyyy"
+                            placeholderText="Data zakończenia"
                             selected={this.state.newAction.endTime}
                             onChange={endTime => this.setState(prevState => ({ newAction: { ...prevState.newAction, endTime } }))}
                             showMonthYearPicker
@@ -81,8 +93,8 @@ class ActionWithDate extends React.Component {
                     <Form.Control
                         inline
                         type="text"
-                        //defaultValue={this.state.fullName}
                         placeholder="Nazwa szkoły/miejsca pracy"
+                        value={this.state.newAction.place}
                         onChange={e => this.onChange(e, 'place')}
                     />
                 </Form.Group>
@@ -91,8 +103,8 @@ class ActionWithDate extends React.Component {
                     <Form.Control
                         inline
                         type="text"
-                        //defaultValue={this.state.fullName}
                         placeholder="Profil/stanowisko ..."
+                        value={this.state.newAction.description}
                         onChange={e => this.onChange(e, 'description')}
                     />
                 </Form.Group>

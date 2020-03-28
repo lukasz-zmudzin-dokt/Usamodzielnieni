@@ -1,18 +1,27 @@
 import React from "react";
-import { Form, Button } from "react-bootstrap";
-import { Items } from '.';
+import { Form, Button, Alert } from "react-bootstrap";
+import { Items } from '../';
 
 class ItemsList extends React.Component {
     constructor(props) {
         super(props);
-
+        this.state = {
+            error: false
+        }
         this.props.onChange([]);
     }
 
     addItem = (e) => {
-        const item = this.props.getItem();
+        const { data, getItemId, getItem } = this.props;
+        const item = getItem();
 
-        this.props.onChange([...this.props.data, item])
+        if (data.find(dt => getItemId(dt) === getItemId(item))) {
+            this.setState({ error: true });
+        } else {
+            this.setState({ error: false });
+            this.props.onChange([...this.props.data, item])
+            this.props.clear();
+        }
     }
 
     cutItem = (e, i) => {
@@ -38,6 +47,7 @@ class ItemsList extends React.Component {
                     />
                 </Form.Group>
                 }
+                { this.state.error && (<Alert variant="danger">Taka sama pozycja znajduje się już na liście.</Alert>) }
                 {children}
                 <Form.Group controlId="">
                     <Button variant="success" onClick={e => this.addItem(e)}>+ Dodaj</Button>

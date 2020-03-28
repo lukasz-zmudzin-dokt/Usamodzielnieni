@@ -6,7 +6,7 @@ import SkillsTab from './SkillsTab';
 import PhotoTab from './PhotoTab';
 import ActionWithDate from './ActionWithDate';
 import CVEditorTab from './CVEditorTab/CVEditorTab';
-import ItemsList from './ItemsList';
+import ItemsList from './ItemsList/ItemsList';
 import Items from './Items/Items';
 
 export {
