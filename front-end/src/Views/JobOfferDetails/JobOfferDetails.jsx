@@ -58,8 +58,8 @@ const JobOfferDetails = props => {
     [props.match.params.id, user.token]
   );
 
-  const msg = isOfferLoading ? <Alert variant="info">Ładowanie...</Alert> :
-              error && <Alert variant="danger">Wystąpił błąd podczas ładowania.</Alert>
+  const msg = isOfferLoading ? <Alert variant="info">Ładowanie oferty...</Alert> :
+              error && <Alert variant="danger">Wystąpił błąd podczas ładowania oferty.</Alert>
 
   return (
     <Container>

@@ -70,8 +70,8 @@ const AddCvForm = ({ id, user, ...props }) => {
     setCvStatus(newStatus);
   }
 
-  const msg = error ? { variant: "danger", value: "Wystąpił błąd podczas ładowania." }:
-              isCvStatusLoading ? { variant: "info", value: "Ładowanie..." }:
+  const msg = error ? { variant: "danger", value: "Wystąpił błąd podczas ładowania statusu CV." }:
+              isCvStatusLoading ? { variant: "info", value: "Ładowanie statusu CV..." }:
               cvStatus === 'ADDED' ? { variant: "success", value: "Pomyślnie zaaplikowano do ogłoszenia." }:
               cvStatus === 'ALREADY_ADDED' && { variant: "danger", value: "Już zaaplikowano do danego ogłoszenia." };
 
