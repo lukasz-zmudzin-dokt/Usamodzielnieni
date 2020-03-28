@@ -1,5 +1,5 @@
 import React from "react";
-import movie_3 from "../../../assets/movie_3.png";
+import movie_3 from "assets/movie_3.png";
 import { CVEditorTab, ActionWithDate } from ".";
 
 const WorkExperienceTab = ({ data, onChange, onPrevClick, onNextClick }) => (

@@ -1,4 +1,4 @@
-import PersonalDataTab from './PersonalDataTab';
+import PersonalDataTab from './PersonalDataTab/PersonalDataTab';
 import EducationTab from './EducationTab';
 import WorkExperienceTab from './WorkExperienceTab';
 import LanguagesTab from './LanguagesTab';

@@ -1,9 +1,9 @@
 import React from "react";
 import { Form, Col, Row } from "react-bootstrap";
-import movie_1 from "../../../assets/movie_1.png";
+import movie_1 from "assets/movie_1.png";
 import DatePicker, { registerLocale } from "react-datepicker";
 import polish from "date-fns/locale/pl";
-import { CVEditorTab } from '.';
+import { CVEditorTab } from '../';
 
 registerLocale("pl", polish);
 
