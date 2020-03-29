@@ -8,7 +8,6 @@ import { UserContext } from "context";
 import "Views/LoginPage/style.css";
 import bgImage from "assets/fot..png";
 
-
 class LoginPage extends React.Component {
   state = {
     credentials: null,

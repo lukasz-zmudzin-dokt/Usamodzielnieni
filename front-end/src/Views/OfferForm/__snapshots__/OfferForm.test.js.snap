@@ -1,0 +1,239 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`OfferForm renders correctly 1`] = `
+<div
+  class="offerForm container"
+>
+  <div
+    class="offerForm__card card"
+  >
+    <h2
+      class="offerForm__header card-header"
+    >
+      Dodaj ofertę
+    </h2>
+    <div
+      class="card-body"
+    >
+      <form
+        class="offerForm__form"
+        data-testid="form"
+        novalidate=""
+      >
+        <div
+          class="offerForm__wrapper"
+        >
+          <div
+            class="form-group"
+          >
+            <label
+              class="form-label"
+              for="offer_name"
+            >
+              Nazwa stanowiska
+            </label>
+            <input
+              class="form-control"
+              data-testid="default"
+              id="offer_name"
+              maxlength="50"
+              minlength="1"
+              placeholder="Nazwa stanowiska"
+              required=""
+              type="text"
+              value=""
+            />
+            <div
+              class="invalid-feedback"
+            >
+              Podaj nazwę stanowiska
+            </div>
+          </div>
+          <div
+            class="form-group"
+          >
+            <label
+              class="form-label"
+              for="company_name"
+            >
+              Nazwa firmy
+            </label>
+            <input
+              class="form-control"
+              data-testid="default"
+              id="company_name"
+              maxlength="70"
+              minlength="1"
+              placeholder="Nazwa firmy"
+              required=""
+              type="text"
+              value=""
+            />
+            <div
+              class="invalid-feedback"
+            >
+              Podaj nazwę firmy
+            </div>
+          </div>
+          <div
+            class="form-group"
+          >
+            <label
+              class="form-label"
+              for="company_address"
+            >
+              Adres firmy
+            </label>
+            <input
+              class="form-control"
+              data-testid="default"
+              id="company_address"
+              maxlength="200"
+              minlength="1"
+              placeholder="Adres firmy"
+              required=""
+              type="text"
+              value=""
+            />
+            <div
+              class="invalid-feedback"
+            >
+              Podaj lokalizację
+            </div>
+          </div>
+          <div
+            class="form-group"
+          >
+            <label
+              class="form-label"
+              for="voivodeship"
+            >
+              Województwo
+            </label>
+            <select
+              class="form-control"
+              id="voivodeship"
+              required=""
+            >
+              <option>
+                dolnośląskie
+              </option>
+              <option>
+                kujawsko-pomorskie
+              </option>
+              <option>
+                lubelskie
+              </option>
+              <option>
+                lubuskie
+              </option>
+              <option>
+                mazowieckie
+              </option>
+              <option>
+                małopolskie
+              </option>
+              <option>
+                opolskie
+              </option>
+              <option>
+                podkarpackie
+              </option>
+              <option>
+                podlaskie
+              </option>
+              <option>
+                pomorskie
+              </option>
+              <option>
+                warmińsko-mazurskie
+              </option>
+              <option>
+                wielkopolskie
+              </option>
+              <option>
+                zachodniopomorskie
+              </option>
+              <option>
+                łódzkie
+              </option>
+              <option>
+                śląskie
+              </option>
+              <option>
+                świętokrzyskie
+              </option>
+            </select>
+          </div>
+        </div>
+        <div
+          class="offerForm__wrapper"
+        >
+          <div
+            class="offerForm__textContainer form-group"
+          >
+            <label
+              class="form-label"
+              for="description"
+            >
+              Opis stanowiska
+            </label>
+            <textarea
+              class="offerForm__textarea form-control"
+              id="description"
+              maxlength="1000"
+              minlength="1"
+              required=""
+            />
+            <div
+              class="invalid-feedback"
+            >
+              Podaj opis
+            </div>
+          </div>
+          <div
+            class="form-group"
+          >
+            <label
+              class="form-label"
+              for="expiration_date"
+            >
+              Ważne do:
+            </label>
+            <div
+              class="align-items-center m-0 form-row"
+            >
+              <div
+                class="react-datepicker-wrapper"
+              >
+                <div
+                  class="react-datepicker__input-container"
+                >
+                  <input
+                    class="form-control"
+                    id="expiration_date"
+                    required=""
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="w-100 justify-content-center align-items-center m-0 row"
+        >
+          <button
+            class="btn btn-secondary"
+            data-testid="submitBtn"
+            type="submit"
+          >
+            Dodaj
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+`;
