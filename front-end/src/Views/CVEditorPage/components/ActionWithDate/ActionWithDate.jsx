@@ -19,13 +19,7 @@ class ActionWithDate extends React.Component {
         }
     }
 
-    getAction = () => {
-        const action = this.state.newAction;
-        this.setState({
-            newAction: { startTime: new Date(), endTime: undefined, place: '', description: '' }
-        });
-        return action;
-    }
+    getAction = () => this.state.newAction;
     getActionId = (action) => `${action.place}_${action.description}`
     getActionName = (action) => {      
         const dateToString = (date) => {

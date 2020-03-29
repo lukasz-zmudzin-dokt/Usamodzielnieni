@@ -1,5 +1,27 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`ActionWithDate - integration should add action item to list 1`] = `
+<button
+  class="btn btn-dark"
+  id="Warszawa_Jakiś opis"
+  type="button"
+>
+  Jakiś opis od: 02/2020 do: 12/2020 (Warszawa)
+   x
+</button>
+`;
+
+exports[`ActionWithDate - integration should add action item to list when endTime is undefined 1`] = `
+<button
+  class="btn btn-dark"
+  id="Warszawa_Jakiś opis"
+  type="button"
+>
+  Jakiś opis od: 02/2020 do: teraz (Warszawa)
+   x
+</button>
+`;
+
 exports[`ActionWithDate should render without crashing 1`] = `
 <div>
   <div>
