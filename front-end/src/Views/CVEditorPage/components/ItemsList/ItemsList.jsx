@@ -24,10 +24,10 @@ class ItemsList extends React.Component {
         }
     }
 
-    cutItem = (e, i) => {
-        this.props.onChange([
+    cutItem = (i) => {
+        this.props.onChange(
             this.props.data.filter((_, index) => index !== i)
-        ]);
+        );
     }
     
     render() {
@@ -41,7 +41,7 @@ class ItemsList extends React.Component {
                 <Form.Group controlId="">
                     <Items 
                         items={data}
-                        onCutClick={(e, i) => this.cutItem(e, i)}
+                        onCutClick={this.cutItem}
                         getItemId={getItemId}
                         getItemName={getItemName}
                     />
@@ -50,7 +50,7 @@ class ItemsList extends React.Component {
                 { this.state.error && (<Alert variant="danger">Taka sama pozycja znajduje się już na liście.</Alert>) }
                 {children}
                 <Form.Group controlId="">
-                    <Button variant="success" onClick={e => this.addItem(e)}>+ Dodaj</Button>
+                    <Button variant="success" onClick={this.addItem}>+ Dodaj</Button>
                 </Form.Group>
             </div>
         )

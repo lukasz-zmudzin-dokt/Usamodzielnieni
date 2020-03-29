@@ -25,7 +25,7 @@ describe('Items', () => {
     });
 
 
-    it('should call onNextClick function when next button is clicked', () => {
+    it('should call onCutClick function when item is clicked', () => {
         props.onCutClick = jest.fn();
         const { getByText } = render(
             <Items {...props} />

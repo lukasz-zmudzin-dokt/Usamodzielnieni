@@ -8,7 +8,7 @@ const Items = ({ items, onCutClick, getItemId, getItemName }) => (
           <Button
             variant="dark"
             id={getItemId(item)}
-            onClick={e => onCutClick(e, i)}
+            onClick={() => onCutClick(i)}
           >
             {getItemName(item)} x
           </Button>
