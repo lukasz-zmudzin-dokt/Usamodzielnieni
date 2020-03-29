@@ -69,7 +69,7 @@ class ActionWithDate extends React.Component {
                             id="startTime"
                             className="form-control"
                             locale="pl"
-                            dateFormat=" MM.yyyy"
+                            dateFormat="MM.yyyy"
                             placeholderText="Data rozpoczęcia"
                             selected={this.state.newAction.startTime}
                             onChange={startTime => this.setState(prevState => ({ newAction: { ...prevState.newAction, startTime } }))}
@@ -82,7 +82,7 @@ class ActionWithDate extends React.Component {
                             id="endTime"
                             className="form-control"
                             locale="pl"
-                            dateFormat=" MM.yyyy"
+                            dateFormat="MM.yyyy"
                             placeholderText="Data zakończenia"
                             selected={this.state.newAction.endTime}
                             onChange={endTime => this.setState(prevState => ({ newAction: { ...prevState.newAction, endTime } }))}

@@ -19,27 +19,37 @@ describe('ActionWithDate', () => {
         expect(container).toMatchSnapshot();
     });
 
-    // it('should call handleNameChange function when text input value change', async () => {
-    //     const { getByLabelText } = render(
-    //         <LanguagesTab {...props} />
-    //     );
+    it('should call onChange function when text input value change', async () => {
+        const { getByLabelText } = render(
+            <ActionWithDate {...props} />
+        );
 
-    //     fireEvent.change(
-    //         getByLabelText("Język", { exact: false }), 
-    //         { target: { value: "angielski" } }
-    //     );
-    //     expect(getByLabelText("Język", { exact: false }).value).toBe("angielski");
-    // });
+        fireEvent.change(
+            getByLabelText("Miejsce", { exact: false }), 
+            { target: { value: "Warszawa" } }
+        );
+        fireEvent.change(
+            getByLabelText("Opis", { exact: false }), 
+            { target: { value: "Jakiś opis" } }
+        );
+        expect(getByLabelText("Miejsce", { exact: false }).value).toBe("Warszawa");
+        expect(getByLabelText("Opis", { exact: false }).value).toBe("Jakiś opis");
+    });
 
-    // it('should call handleLevelChange function when select input value change', async () => {
-    //     const { getByLabelText } = render(
-    //         <LanguagesTab {...props} />
-    //     );
+    it('should change value when date input value change', async () => {
+        const { getByLabelText } = render(
+            <ActionWithDate {...props} />
+        );
 
-    //     fireEvent.change(
-    //         getByLabelText("Poziom", { exact: false }), 
-    //         { target: { value: "podstawowy" } }
-    //     );
-    //     expect(getByLabelText("Poziom", { exact: false }).value).toBe("podstawowy");
-    // });
+        fireEvent.change(
+            getByLabelText("Od", { exact: false }), 
+            { target: { value: new Date("October 13, 2020 00:00:00") } }
+        );
+        fireEvent.change(
+            getByLabelText("Do", { exact: false }), 
+            { target: { value: new Date("October 15, 2021 00:00:00") } }
+        );
+        expect(getByLabelText("Od", { exact: false }).value).toBe("10.2020");
+        expect(getByLabelText("Do", { exact: false }).value).toBe("10.2021");
+    });
 });
