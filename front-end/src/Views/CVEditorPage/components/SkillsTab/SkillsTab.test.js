@@ -30,4 +30,27 @@ describe('SkillsTab', () => {
         );
         expect(getByLabelText("Umiejętność", { exact: false }).value).toBe("Nazwa umiejętności");
     });
+
+    it('should add action item to list', () => {
+        props.data = [{ name: 'Nazwa mojej umiejętności' }];
+        const { getByText } = render(
+            <SkillsTab {...props} />
+        );
+
+        expect(getByText('Nazwa mojej umiejętności', { exact: false })).toBeInTheDocument();
+    });
+
+    it('should clear input when add buttons is clicked', async () => {
+        const { getByLabelText, getByText } = render(
+            <SkillsTab {...props} />
+        );
+
+        fireEvent.change(
+            getByLabelText("Umiejętność", { exact: false }), 
+            { target: { value: "Nazwa mojej umiejętności" } }
+        );
+        fireEvent.click(getByText('Dodaj', { exact: false }));
+        
+        expect(getByLabelText("Umiejętność", { exact: false }).value).toBe("");
+    });
 });
