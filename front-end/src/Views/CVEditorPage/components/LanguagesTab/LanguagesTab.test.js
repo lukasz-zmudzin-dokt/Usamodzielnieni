@@ -42,4 +42,37 @@ describe('LanguagesTab', () => {
         );
         expect(getByLabelText("Poziom", { exact: false }).value).toBe("podstawowy");
     });
+
+    it('should add action item to list', () => {
+        props.data = [
+            {
+                name: 'angielski',
+                level: 'podstawowy'
+            }
+        ];
+        const { getByText } = render(
+            <LanguagesTab {...props} />
+        );
+
+        expect(getByText('angielski - podstawowy', { exact: false })).toBeInTheDocument();
+    });
+
+    it('should clear input and set select to default value when add buttons is clicked', async () => {
+        const { getByLabelText, getByText } = render(
+            <LanguagesTab {...props} />
+        );
+
+        fireEvent.change(
+            getByLabelText("Język", { exact: false }), 
+            { target: { value: "angielski" } }
+        );
+        fireEvent.change(
+            getByLabelText("Poziom", { exact: false }), 
+            { target: { value: "komunikatywny" } }
+        );
+        fireEvent.click(getByText('Dodaj', { exact: false }));
+        
+        expect(getByLabelText("Język", { exact: false }).value).toBe("");
+        expect(getByLabelText("Poziom", { exact: false }).value).toBe("podstawowy");
+    });
 });
