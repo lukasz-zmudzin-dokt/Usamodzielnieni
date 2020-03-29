@@ -11,6 +11,7 @@ exports[`CVEditorTab should render without crashing 1`] = `
       class="CVEditorTab__img"
       src="./ścieżka_do_pliku.png"
     />
+    <div />
     <div
       class="row"
     >

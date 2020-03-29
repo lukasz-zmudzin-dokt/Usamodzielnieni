@@ -63,7 +63,7 @@ exports[`PersonalDataTab should render without crashing 1`] = `
           <input
             class="form-control"
             type="text"
-            value="28.03.2020"
+            value="13.04.2020"
           />
         </div>
       </div>

@@ -8,7 +8,7 @@ describe('CVEditorTab', () => {
         props = {
             title: 'Tytuł karty',
             movie: './ścieżka_do_pliku.png',
-            children: () => <div></div>,
+            children: <div></div>,
             onPrevClick: () => {},
             onNextClick: () => {}
         }

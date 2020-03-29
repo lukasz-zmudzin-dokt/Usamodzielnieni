@@ -11,7 +11,7 @@ describe('PersonalDataTab', () => {
             data: {
                 firstName: "Jan",
                 lastName: "Kowalski",
-                birthDate: new Date(),
+                birthDate: new Date(2020, 3, 13),
                 phoneNumber: "+48123123123",
                 email: "abc@abc.com"
             },
