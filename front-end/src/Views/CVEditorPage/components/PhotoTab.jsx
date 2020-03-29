@@ -23,7 +23,7 @@ class PhotoTab extends React.Component {
                 movie={movie_1}
                 onPrevClick={this.props.onPrevClick}
                 >
-                <Form.Group as={Col} controlId="">
+                <Form.Group as={Col} controlId="photo">
                     <Form.Label>
                         Wybierz zdjęcie:
                     </Form.Label>

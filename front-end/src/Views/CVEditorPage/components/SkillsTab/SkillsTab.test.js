@@ -20,7 +20,6 @@ describe('SkillsTab', () => {
     });
 
     it('should call onNameChange function when text input value change', async () => {
-        props.onChange = jest.fn();
         const { getByLabelText } = render(
             <SkillsTab {...props} />
         );

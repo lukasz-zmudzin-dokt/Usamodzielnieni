@@ -1,6 +1,6 @@
 import React from "react";
 import { Form, Row, Col } from "react-bootstrap";
-import { ItemsList } from '.';
+import { ItemsList } from '../';
 import DatePicker, { registerLocale } from "react-datepicker";
 import polish from "date-fns/locale/pl";
 
@@ -63,9 +63,10 @@ class ActionWithDate extends React.Component {
                 data={this.props.data} onChange={this.props.onChange} clear={this.clear}
             >
                 <Row>
-                    <Form.Group as={Col} xs={12} md={6} controlId="">
-                        <Form.Label>Od:</Form.Label>
+                    <Form.Group as={Col} xs={12} md={6}>
+                        <Form.Label htmlFor="startTime">Od:</Form.Label>
                         <DatePicker
+                            id="startTime"
                             className="form-control"
                             locale="pl"
                             dateFormat=" MM.yyyy"
@@ -75,9 +76,10 @@ class ActionWithDate extends React.Component {
                             showMonthYearPicker
                         />
                     </Form.Group>
-                    <Form.Group as={Col} xs={12} md={6} controlId="">
-                        <Form.Label>Do:</Form.Label>
+                    <Form.Group as={Col} xs={12} md={6}>
+                        <Form.Label htmlFor="endTime">Do:</Form.Label>
                         <DatePicker
+                            id="endTime"
                             className="form-control"
                             locale="pl"
                             dateFormat=" MM.yyyy"
@@ -88,7 +90,7 @@ class ActionWithDate extends React.Component {
                         />
                     </Form.Group>
                 </Row>
-                <Form.Group controlId="">
+                <Form.Group controlId="actionPlace">
                     <Form.Label>Miejsce:</Form.Label>
                     <Form.Control
                         type="text"
@@ -97,7 +99,7 @@ class ActionWithDate extends React.Component {
                         onChange={e => this.onChange(e, 'place')}
                     />
                 </Form.Group>
-                <Form.Group controlId="">
+                <Form.Group controlId="actionDescription">
                     <Form.Label>Opis:</Form.Label>
                     <Form.Control
                         type="text"

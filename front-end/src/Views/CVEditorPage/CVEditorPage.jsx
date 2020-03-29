@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Container, Form, Tab, Tabs } from "react-bootstrap";
+import { Card, Container, Form, Tab, Tabs, Alert } from "react-bootstrap";
 import "react-datepicker/dist/react-datepicker.css";
 import "./CVEditorPage.css";
 import {
@@ -21,6 +21,7 @@ class CVEditorPage extends React.Component {
         super(props);
         this.state = {
             formTab: "personalData",
+            error: false,
 
             personalData: null,
             education: null,
@@ -58,7 +59,11 @@ class CVEditorPage extends React.Component {
             this.state.languages
         )
         console.log(JSON.stringify(cv));
-        await sendData(cv, this.state.photo, this.context.token);
+        try {
+            await sendData(cv, this.state.photo, this.context.token);
+        } catch (e) {
+            this.setState({ error: true });
+        }
     };
 
     getTabs() {
@@ -138,6 +143,7 @@ class CVEditorPage extends React.Component {
                                 {this.tabs.map(tab => (<Tab eventKey={tab.id} key={tab.id} title={tab.name}>{tab.component}</Tab>))}
                             </Tabs>
                         </Form>
+                        { this.state.error && <Alert variant="danger">Wystąpił błąd podczas generowania CV.</Alert> }
                     </Card.Body>
                 </Card>
             </Container>

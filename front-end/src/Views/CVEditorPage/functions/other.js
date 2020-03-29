@@ -1,52 +1,67 @@
-export const sendData = (object, photo, token) => {
-  const url = "https://usamo-back.herokuapp.com/cv/generate/";
-  const headers = {
-    Authorization: "Token " + token,
-    "Content-Type": "application/json"
-  };
+const domain = "https://usamo-back.herokuapp.com/";
+const url = {
+  generate: `${domain}cv/generate/`,
+  picture: `${domain}cv/picture/`
+}
+const getHeaders = (token) => ({ Authorization: "Token " + token, "Content-Type": "application/json" });
 
+const deleteCv = async (token) => {
+  const headers = getHeaders(token);
+  const res = await fetch(url.generate, { method: "DELETE", headers });
+
+  if (res.status === 200 || res.status === 404) {
+    return;
+  } else {
+    throw res.status;
+  }
+}
+
+const generateCv = async (token, object) => {
+  const headers = getHeaders(token);
+  const res = await fetch(url.generate, { method: "POST", body: JSON.stringify(object), headers });
+
+  if (res.status === 201) {
+    return;
+  } else {
+    throw res.status;
+  }
+}
+
+const getCv = async (token) => {
+  const headers = getHeaders(token);
+  const res = await fetch(url.generate, { method: "GET", headers })
+
+  if (res.status === 200) {
+    return res.json();
+  } else {
+    throw res.status;
+  }
+}
+
+const addPhoto = async (token, photo) => {
+  const formData = new FormData();
+  formData.append('picture', photo, photo.name);
+  const photoRes = await fetch(
+    url.picture, 
+    { method: "POST", body: formData, headers: { Authorization: "Token " + token } }
+  )
+
+  if (photoRes.status === 201) {
+    return;
+  } else {
+    throw photoRes.status;
+  }
+}
+
+export const sendData = async (object, photo, token) => {
   console.log(JSON.stringify(object));
-  return fetch(url, { method: "DELETE", headers })
-  .then(initialDel => {
-    if (initialDel.status === 200 || initialDel.status === 404) {
-      return fetch(url, { method: "POST", body: JSON.stringify(object), headers })
-      .then(res => {
-        if (res.status === 201) {
-          if (photo) {
-            const formData = new FormData();
-            formData.append('picture', photo, photo.name);
-            console.log(formData.getAll('picture'));
 
-            return fetch("https://usamo-back.herokuapp.com/cv/picture/", { 
-              method: "POST", 
-              body: formData,
-              headers: { Authorization: "Token " + token }
-            }).then(res => {
-              if (res.status === 201) {
-                return fetch(url, { method: "GET", headers })
-                .then(response => {
-                  if (response.status === 200) {
-                    response.json().then(file => {
-                      let cvUrl = "https://usamo-back.herokuapp.com/" + file;
-                      window.open(cvUrl, "_blank");
-                    });
-                  }
-                });
-              }
-            }, err => console.log(err))
-          } else {
-          return fetch(url, { method: "GET", headers })
-            .then(response => {
-              if (response.status === 200) {
-                response.json().then(file => {
-                  let cvUrl = "https://usamo-back.herokuapp.com/" + file;
-                  window.open(cvUrl, "_blank");
-                });
-              }
-            });
-          }
-        }
-      });
-    }
-  });
+  await deleteCv(token);
+  await generateCv(token, object);
+  if (photo) {
+    await addPhoto(token, photo);
+  }
+  const file = await getCv(token);
+  const cvUrl = `${domain}${file}`;
+  window.open(cvUrl, "_blank");
 };

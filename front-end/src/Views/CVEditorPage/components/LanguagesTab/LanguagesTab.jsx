@@ -1,7 +1,7 @@
 import React from "react";
 import { Form, Row, Col } from "react-bootstrap";
 import movie_5 from "assets/movie_5.png";
-import { CVEditorTab, ItemsList } from '.';
+import { CVEditorTab, ItemsList } from '..';
 
 class LanguagesTab extends React.Component {
     constructor(props) {
@@ -49,20 +49,18 @@ class LanguagesTab extends React.Component {
                     data={this.props.data} onChange={this.props.onChange} clear={this.clear}
                 >
                     <Row>
-                        <Form.Group as={Col} xs={12} md={6}>
+                        <Form.Group as={Col} xs={12} md={6} controlId="languageName">
                             <Form.Label>Język</Form.Label>
                             <Form.Control
-                                id="languageName"
                                 type="text"
                                 placeholder="Język"
                                 value={this.state.newLanguage.name}
                                 onChange={this.handleNameChange}
                             />
                         </Form.Group>
-                        <Form.Group as={Col} xs={12} md={6}>
+                        <Form.Group as={Col} xs={12} md={6} controlId="languageLevel">
                             <Form.Label>Poziom</Form.Label>
                             <Form.Control
-                                id="languageLevel"
                                 as="select"
                                 onChange={this.handleLevelChange}
                                 value={this.state.newLanguage.level}
