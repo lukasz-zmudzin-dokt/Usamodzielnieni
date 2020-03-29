@@ -1,6 +1,7 @@
 import React from "react";
 import { Form, Button, Alert } from "react-bootstrap";
 import { Items } from '../';
+import "./ItemsList.css";
 
 class ItemsList extends React.Component {
     constructor(props) {
@@ -8,7 +9,9 @@ class ItemsList extends React.Component {
         this.state = {
             error: false
         }
-        this.props.onChange([]);
+        if (this.props.data === null) {
+            this.props.onChange([]);
+        }
     }
 
     addItem = (e) => {
@@ -38,7 +41,7 @@ class ItemsList extends React.Component {
         return (
             <div>
                 {data.length > 0 &&
-                <Form.Group controlId="">
+                <Form.Group controlId="items">
                     <Items 
                         items={data}
                         onCutClick={this.cutItem}
@@ -49,9 +52,7 @@ class ItemsList extends React.Component {
                 }
                 { this.state.error && (<Alert variant="danger">Taka sama pozycja znajduje się już na liście.</Alert>) }
                 {children}
-                <Form.Group controlId="">
-                    <Button variant="success" onClick={this.addItem}>+ Dodaj</Button>
-                </Form.Group>
+                <Button className="itemsList__addButton" variant="success" onClick={this.addItem}>+ Dodaj</Button>
             </div>
         )
     }

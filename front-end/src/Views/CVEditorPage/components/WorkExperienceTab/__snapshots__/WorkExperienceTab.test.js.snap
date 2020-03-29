@@ -1,0 +1,136 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`WorkExperienceTab should render without crashing 1`] = `
+<div>
+  <div>
+    <h3>
+      Doświadczenie zawodowe
+    </h3>
+    <img
+      alt=""
+      class="CVEditorTab__img"
+      src="movie_3.png"
+    />
+    <div>
+      <div
+        class="row"
+      >
+        <div
+          class="form-group col-md-6 col-12"
+        >
+          <label
+            class="form-label"
+            for=""
+          >
+            Od:
+          </label>
+          <div
+            class="react-datepicker-wrapper"
+          >
+            <div
+              class="react-datepicker__input-container"
+            >
+              <input
+                class="form-control"
+                placeholder="Data rozpoczęcia"
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="form-group col-md-6 col-12"
+        >
+          <label
+            class="form-label"
+            for=""
+          >
+            Do:
+          </label>
+          <div
+            class="react-datepicker-wrapper"
+          >
+            <div
+              class="react-datepicker__input-container"
+            >
+              <input
+                class="form-control"
+                placeholder="Data zakończenia"
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="form-group"
+      >
+        <label
+          class="form-label"
+          for=""
+        >
+          Miejsce:
+        </label>
+        <input
+          class="form-control"
+          id=""
+          placeholder="Nazwa szkoły/miejsca pracy"
+          type="text"
+          value=""
+        />
+      </div>
+      <div
+        class="form-group"
+      >
+        <label
+          class="form-label"
+          for=""
+        >
+          Opis:
+        </label>
+        <input
+          class="form-control"
+          id=""
+          placeholder="Profil/stanowisko ..."
+          type="text"
+          value=""
+        />
+      </div>
+      <button
+        class="itemsList__addButton btn btn-success"
+        type="button"
+      >
+        + Dodaj
+      </button>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col-md-6 col-12"
+      >
+        <button
+          class="form_navigation_prev btn btn-primary btn-block"
+          disabled=""
+          type="button"
+        >
+          ← Wstecz
+        </button>
+      </div>
+      <div
+        class="col-md-6 col-12"
+      >
+        <button
+          class="btn btn-success btn-block"
+          id="saveButton"
+          type="submit"
+        >
+          Generuj CV
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+`;

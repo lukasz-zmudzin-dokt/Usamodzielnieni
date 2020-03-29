@@ -16,7 +16,7 @@ exports[`CVEditorTab should render without crashing 1`] = `
       class="row"
     >
       <div
-        class="col"
+        class="col-md-6 col-12"
       >
         <button
           class="form_navigation_prev btn btn-primary btn-block"
@@ -26,7 +26,7 @@ exports[`CVEditorTab should render without crashing 1`] = `
         </button>
       </div>
       <div
-        class="col"
+        class="col-md-6 col-12"
       >
         <button
           class="form_navigation_next btn btn-primary btn-block"

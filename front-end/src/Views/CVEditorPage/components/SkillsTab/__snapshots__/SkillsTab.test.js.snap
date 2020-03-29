@@ -17,34 +17,30 @@ exports[`SkillsTab should render without crashing 1`] = `
       >
         <label
           class="form-label"
-          for=""
+          for="skillName"
         >
           Umiejętność
         </label>
         <input
           class="form-control"
-          id=""
+          id="skillName"
           placeholder="Wpisz umiejętność"
           type="text"
           value=""
         />
       </div>
-      <div
-        class="form-group"
+      <button
+        class="itemsList__addButton btn btn-success"
+        type="button"
       >
-        <button
-          class="btn btn-success"
-          type="button"
-        >
-          + Dodaj
-        </button>
-      </div>
+        + Dodaj
+      </button>
     </div>
     <div
       class="row"
     >
       <div
-        class="col"
+        class="col-md-6 col-12"
       >
         <button
           class="form_navigation_prev btn btn-primary btn-block"
@@ -55,7 +51,7 @@ exports[`SkillsTab should render without crashing 1`] = `
         </button>
       </div>
       <div
-        class="col"
+        class="col-md-6 col-12"
       >
         <button
           class="btn btn-success btn-block"

@@ -11,13 +11,15 @@ class PersonalDataTab extends React.Component {
     constructor(props) {
         super(props);
 
-        this.props.onChange({
-            firstName: "",
-            lastName: "",
-            birthDate: new Date(),
-            phoneNumber: "",
-            email: ""
-        })
+        if (this.props.data === null) {
+            this.props.onChange({
+                firstName: "",
+                lastName: "",
+                birthDate: "",
+                phoneNumber: "",
+                email: ""
+            })
+        }
     }
 
     onChange = (e) => {
@@ -38,7 +40,7 @@ class PersonalDataTab extends React.Component {
                 onNextClick={this.props.onNextClick}
             >
                 <Row>
-                    <Form.Group as={Col} controlId="">
+                    <Form.Group as={Col} xs={12} md={6} controlId="firstName">
                         <Form.Label>
                             Imię:
                         </Form.Label>
@@ -51,7 +53,7 @@ class PersonalDataTab extends React.Component {
                             onChange={this.onChange}
                         />
                     </Form.Group>
-                    <Form.Group as={Col} controlId="">
+                    <Form.Group as={Col} xs={12} md={6} controlId="lastName">
                         <Form.Label>
                             Nazwisko:
                         </Form.Label>
@@ -66,13 +68,15 @@ class PersonalDataTab extends React.Component {
                     </Form.Group>
                 </Row>
                 <Row>
-                    <Form.Group as={Col} controlId="">
-                        <Form.Label>
+                    <Form.Group as={Col} xs={12} md={6}>
+                        <Form.Label htmlFor="birthDate">
                             Data urodzenia:
                         </Form.Label>
                         <DatePicker
+                            id="birthDate"
                             className="form-control"
                             locale="pl"
+                            placeholderText="Data urodzenia"
                             dateFormat="dd.MM.yyyy"
                             selected={data.birthDate}
                             onChange={birthDate => this.props.onChange({ ...this.props.data, birthDate })}
@@ -83,7 +87,7 @@ class PersonalDataTab extends React.Component {
                             dropdownMode="select"
                         />
                     </Form.Group>
-                    <Form.Group as={Col} controlId="">
+                    <Form.Group as={Col} xs={12} md={6} controlId="phoneNumber">
                         <Form.Label>
                             Numer telefonu:
                         </Form.Label>
@@ -97,7 +101,7 @@ class PersonalDataTab extends React.Component {
                     </Form.Group>
                 </Row>
                 <Row>
-                    <Form.Group as={Col} sm="6" controlId="">
+                    <Form.Group as={Col} xs={12} md={6} controlId="email">
                         <Form.Label>
                             Adres email:
                         </Form.Label>

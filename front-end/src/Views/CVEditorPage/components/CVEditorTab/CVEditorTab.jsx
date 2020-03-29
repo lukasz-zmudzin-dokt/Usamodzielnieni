@@ -8,7 +8,7 @@ const CVEditorTab = ({ title, movie, children, onPrevClick, onNextClick }) => (
         <img className="CVEditorTab__img" src={movie} alt="" />
         {children}
         <Row>
-            <Col>
+            <Col xs={12} md={6}>
                 <Button
                     className="form_navigation_prev"
                     onClick={e => onPrevClick(e)}
@@ -18,7 +18,7 @@ const CVEditorTab = ({ title, movie, children, onPrevClick, onNextClick }) => (
                     ← Wstecz
                 </Button>
             </Col>
-            <Col>
+            <Col xs={12} md={6}>
                 { onNextClick ? (
                 <Button
                     className="form_navigation_next"

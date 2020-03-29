@@ -49,7 +49,7 @@ class LanguagesTab extends React.Component {
                     data={this.props.data} onChange={this.props.onChange} clear={this.clear}
                 >
                     <Row>
-                        <Form.Group as={Col}>
+                        <Form.Group as={Col} xs={12} md={6}>
                             <Form.Label>Język</Form.Label>
                             <Form.Control
                                 id="languageName"
@@ -59,7 +59,7 @@ class LanguagesTab extends React.Component {
                                 onChange={this.handleNameChange}
                             />
                         </Form.Group>
-                        <Form.Group as={Col}>
+                        <Form.Group as={Col} xs={12} md={6}>
                             <Form.Label>Poziom</Form.Label>
                             <Form.Control
                                 id="languageLevel"

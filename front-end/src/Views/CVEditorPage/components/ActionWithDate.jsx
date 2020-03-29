@@ -63,7 +63,7 @@ class ActionWithDate extends React.Component {
                 data={this.props.data} onChange={this.props.onChange} clear={this.clear}
             >
                 <Row>
-                    <Form.Group as={Col} controlId="">
+                    <Form.Group as={Col} xs={12} md={6} controlId="">
                         <Form.Label>Od:</Form.Label>
                         <DatePicker
                             className="form-control"
@@ -75,7 +75,7 @@ class ActionWithDate extends React.Component {
                             showMonthYearPicker
                         />
                     </Form.Group>
-                    <Form.Group as={Col} controlId="">
+                    <Form.Group as={Col} xs={12} md={6} controlId="">
                         <Form.Label>Do:</Form.Label>
                         <DatePicker
                             className="form-control"

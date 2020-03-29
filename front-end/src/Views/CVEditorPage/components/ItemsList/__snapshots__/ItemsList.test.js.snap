@@ -6,16 +6,12 @@ exports[`ItemsList should render without crashing 1`] = `
 <div>
   <div>
     <div />
-    <div
-      class="form-group"
+    <button
+      class="itemsList__addButton btn btn-success"
+      type="button"
     >
-      <button
-        class="btn btn-success"
-        type="button"
-      >
-        + Dodaj
-      </button>
-    </div>
+      + Dodaj
+    </button>
   </div>
 </div>
 `;

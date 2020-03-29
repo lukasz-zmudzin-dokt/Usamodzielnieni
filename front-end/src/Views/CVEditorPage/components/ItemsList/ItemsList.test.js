@@ -68,9 +68,9 @@ describe('ItemsList', () => {
         );
 
         await waitForElement(() => getByText('Dodaj', { exact: false }));
-        expect(props.onChange).toHaveBeenCalledTimes(1);
+        expect(props.onChange).toHaveBeenCalledTimes(0);
         fireEvent.click(getByText('Dodaj', { exact: false }));
-        expect(props.onChange).toHaveBeenCalledTimes(2);
+        expect(props.onChange).toHaveBeenCalledTimes(1);
         expect(props.clear).toHaveBeenCalledTimes(1);
         expect(queryByText('Taka sama pozycja', { exact: false })).not.toBeInTheDocument();
     });
@@ -88,14 +88,14 @@ describe('ItemsList', () => {
         );
 
         await waitForElement(() => getByText('Dodaj', { exact: false }));
-        expect(props.onChange).toHaveBeenCalledTimes(1);
+        expect(props.onChange).toHaveBeenCalledTimes(0);
         fireEvent.click(getByText('Dodaj', { exact: false }));
-        expect(props.onChange).toHaveBeenCalledTimes(1);
+        expect(props.onChange).toHaveBeenCalledTimes(0);
         expect(props.clear).toHaveBeenCalledTimes(0);
         expect(getByText('Taka sama pozycja', { exact: false })).toBeInTheDocument();
     });
 
-    it('should call func', async () => {
+    it('should remove item from array when onCutClick function is called', async () => {
         Items.mockImplementation(({ onCutClick }) => {
             onCutClick(2);
             return <div>Items</div>;
@@ -113,8 +113,7 @@ describe('ItemsList', () => {
         );
 
         await waitForElement(() => getByText('Dodaj', { exact: false }));
-        expect(props.onChange).toHaveBeenCalledTimes(2);
-        expect(props.onChange).toHaveBeenNthCalledWith(1, []);
-        expect(props.onChange).toHaveBeenNthCalledWith(2, ['item0', 'item1', 'item3']);
+        expect(props.onChange).toHaveBeenCalledTimes(1);
+        expect(props.onChange).toHaveBeenNthCalledWith(1, ['item0', 'item1', 'item3']);
     });
 });
