@@ -1,40 +1,28 @@
-import {setRedirect} from "./handlers";
-
-export const sendData = component => {
-  const { username, password } = component.state.credentials;
-  console.log(component.state);
-
+export const sendData = async (credentials, event) => {
+  event.preventDefault();
   const url = "https://usamo-back.herokuapp.com/account/login/";
-  fetch(url, {
+  const response =  await fetch(url, {
     method: "POST",
-    body: JSON.stringify({
-      username,
-      password
-    }),
+    body: JSON.stringify(credentials),
     headers: {
       "Content-Type": "application/json",
       Origin: null
     }
-  }).then(res => {
-    console.log(res);
-    if (res.status === 201) {
-      res.json().then(responseValue => {
-        const { token, type } = responseValue;
-        component.context.login(token, type);
-        setRedirect(component);
-      });
-    } else {
-      component.setState({
-        validated: false,
-        incorrect: true,
-        username: "",
-        password: "",
-        message: "Coś poszło nie tak"
-      });
-      res.json().then(response => {
-        console.log(response);
-        console.log(component.state);
-      })
-    }
   });
+
+  if (response.status === 201) {
+    console.log(response);
+    const data = await response.json().then(data => mapData(data));
+    return {
+      status: response.status,
+      ...data
+    }
+  } else {
+    return {status: response.status}
+  }
 };
+
+const mapData = data => ({
+  token: data.token,
+  type: data.type
+});

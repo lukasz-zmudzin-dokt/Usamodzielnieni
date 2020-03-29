@@ -1,6 +1,5 @@
 import React from 'react';
 import { Card, Form } from 'react-bootstrap';
-import { onChange } from "../functions/handlers";
 
 class LoginForm extends React.Component {
     constructor(props) {
@@ -11,9 +10,17 @@ class LoginForm extends React.Component {
         }
     }
 
+    onChange = (e) => {
+        let {onBlur, data} = this.props;
+        const type = e.target.type === "text" ? "username" : e.target.type;
+
+        const value = e.target.value;
+        onBlur({...data, [type]:value});
+    };
+
     render() {
         const {username, password} = this.state;
-        const {data, onBlur} = this.props;
+        const { onChange } = this;
 
         return (
             <Card
@@ -28,12 +35,12 @@ class LoginForm extends React.Component {
                             placeholder="Login"
                             required
                             defaultValue={username}
-                            onChange={e => onChange(onBlur, data, e)}
+                            onBlur={e => onChange(e)}
                             className="loginPage__input"
                             minLength="6"
                         />
                         <Form.Control.Feedback type="invalid">
-                            Podaj właściwy login
+                            Podaj login
                         </Form.Control.Feedback>
                     </Form.Group>
                     <Form.Group controlId="formGroupPassword">
@@ -43,12 +50,12 @@ class LoginForm extends React.Component {
                             autoComplete="on"
                             placeholder="Hasło"
                             defaultValue={password}
-                            onChange={e => onChange(onBlur, data, e)}
+                            onBlur={e => onChange(e)}
                             required
                             minLength="6"
                         />
                         <Form.Control.Feedback type="invalid">
-                            Podaj właściwe hasło
+                            Podaj hasło
                         </Form.Control.Feedback>
                     </Form.Group>
                 </Card.Body>
