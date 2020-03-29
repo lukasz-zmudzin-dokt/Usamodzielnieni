@@ -30,6 +30,7 @@ class LoginForm extends React.Component {
                 <Card.Body className="">
                     <Form.Group controlId="formGroupUsername">
                         <Form.Control
+                            data-testid="loginPage_login"
                             name="login"
                             type="text"
                             placeholder="Login"
@@ -45,6 +46,7 @@ class LoginForm extends React.Component {
                     </Form.Group>
                     <Form.Group controlId="formGroupPassword">
                         <Form.Control
+                            data-testid="loginPage_password"
                             name="password"
                             type="password"
                             autoComplete="on"

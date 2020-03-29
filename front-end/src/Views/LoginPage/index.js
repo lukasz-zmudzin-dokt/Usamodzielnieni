@@ -30,8 +30,8 @@ class LoginPage extends React.Component {
     });
   };
 
-  renderRedirect = (redirect) => {
-    if (redirect) {
+  renderRedirect = () => {
+    if (this.state.redirect) {
       return <Redirect to="/user" />;
     }
   };
@@ -43,7 +43,7 @@ class LoginPage extends React.Component {
   };
 
   handleIncorrectResponse = (status) => {
-    const msg = status === 400 ? "Niepoprawny login lub hasło" : "Błąd serwera. Proszę spróbować później";
+    const msg = status === 406 ? "Niepoprawny login lub hasło." : "Błąd serwera. Proszę spróbować później.";
     this.setState({
       message: msg,
       incorrect: true,
@@ -99,6 +99,7 @@ class LoginPage extends React.Component {
               className="primary"
             >
               <LoginForm
+                  data-testId="loginForm"
                   data={this.state.credentials}
                   onBlur={credentials => this.setState({credentials})}
               />
@@ -120,14 +121,14 @@ class LoginPage extends React.Component {
                 </Button>
             </Form>
             {incorrect ? (
-              <div className="loginPage__messageFail">
+              <div className="loginPage__messageFail" data-testid="login_msgFail">
                 <Alert variant="danger" className="loginPage__failure">{message}</Alert>
               </div>
             ) : null}
             {console.log(this.state)}
             <div className="loginPage__links">
               <Link to="/newAccount">Załóż konto!</Link>
-              {renderRedirect(this.state.redirect)}
+              {renderRedirect()}
               {/* <Link to="/newPassword">Zapomniałeś hasła?</Link> */}
             </div>
           </Card.Body>

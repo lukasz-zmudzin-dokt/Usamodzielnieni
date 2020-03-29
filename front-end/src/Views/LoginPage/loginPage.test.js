@@ -2,17 +2,17 @@ import React from "react";
 import {fireEvent, render} from "@testing-library/react";
 import LoginPage from "Views/LoginPage/index.js"
 
-import {BrowserRouter as Router, MemoryRouter} from 'react-router-dom';
+import {MemoryRouter} from 'react-router-dom';
 import { UserProvider } from "context";
-import {getByTestId, getByText, waitForElement} from "@testing-library/dom";
+import {getByTestId, getByText, waitForElement} from "@testing-library/react";
+import LoginForm from "./components/loginForm";
 
 
 describe( "LoginPageTest", () => {
-    let token;
+    let credentials;
     let apiFail;
 
     beforeAll(() => {
-        token = '123';
         global.fetch = jest.fn().mockImplementation((input, init) => {
            return new Promise((resolve, reject) => {
                if (apiFail) {
@@ -32,32 +32,26 @@ describe( "LoginPageTest", () => {
 
     beforeEach(() => {
         apiFail = false;
+        credentials  = {
+            username: "qweqwe",
+            password: "123123"
+        };
         jest.clearAllMocks();
-    });
-
-    it("should render without crashing", () => {
-        render(
-            <UserProvider>
-                <Router>
-                    <LoginPage />
-                </Router>
-            </UserProvider>
-        );
     });
 
     it("should match snapshot", () => {
         const { container } = render(
             <UserProvider>
-                <Router>
+                <MemoryRouter>
                     <LoginPage />
-                </Router>
+                </MemoryRouter>
             </UserProvider>
         );
         expect(container).toMatchSnapshot();
     });
 
-    it('should check credentials', async() => {
-        const component = render(
+    it('should load error message', async() => {
+        const {getByPlaceholderText, getByTestId} = render(
             <UserProvider>
                 <MemoryRouter>
                     <LoginPage />
@@ -65,27 +59,70 @@ describe( "LoginPageTest", () => {
             </UserProvider>
         );
 
-        component.setState({
-            username: "abc",
-            password: "abcabc"
+        fireEvent.change(getByPlaceholderText("Login", {exact: false}), {
+            target: {value: "qweqwe"}
+        });
+        fireEvent.change(getByPlaceholderText("Hasło", {exact: false}), {
+            target: {value: "qweqwe"}
         });
 
-        fireEvent.click(getByTestId(component,"loginBtn"));
-        await waitForElement(() => getByText(component,"coś poszło nie tak", {exact: false}));
-        expect(getByText(component, "coś poszło nie tak", {exact: false})).toBeInTheDocument();
+        fireEvent.click(getByTestId("loginBtn"));
+        await waitForElement(() => getByTestId("login_msgFail", {exact: false}));
+        expect(getByTestId("login_msgFail", {exact: false})).toBeInTheDocument();
     });
 
-    it('should call setRedirect method', async() => {
-        const component = render(
-            <UserProvider token={token}>
+    it('should call setRedirect method', async () => {
+        const {component, getByTestId} = render(
+            <UserProvider>
                 <MemoryRouter>
-                    <LoginPage {...props}/>
+                    <LoginPage />
                 </MemoryRouter>
             </UserProvider>
         );
 
-        const setRedirect = jest.fn();
+        let onBlur = (data) => component.setState({data});
 
-        expect(setRedirect).toHaveBeenCalledTimes(1);
+        const {child} = render(
+            <LoginForm data={credentials} onBlur={onBlur}/>
+        );
+
+        fireEvent.change(getByTestId(child, "loginPage_login", {exact: false}), {
+            target: {value: "staff1"}
+        });
+        fireEvent.change(getByTestId(child, "loginPage_password", {exact: false}), {
+            target: {value: "staff1"}
+        });
+
+        fireEvent.click(component, getByTestId("loginBtn", {exact: false}));
+        await waitForElement(() => component.renderRedirect());
+
+        expect(component.renderRedirect()).toHaveBeenCalled();
     });
+
+    it('should render alert when api fails', async () => {
+        apiFail = true;
+        const state = {
+            credentials: credentials,
+            validated: false,
+            incorrect: false
+        };
+
+        const {getByTestId, getByText} = render(
+            <UserProvider>
+                <MemoryRouter>
+                    <LoginPage state={state}/>
+                </MemoryRouter>
+            </UserProvider>
+        );
+
+        const handleIncorrectResponse = jest.fn(500);
+
+        const msgFail = "Błąd serwera.";
+
+        fireEvent.click(getByTestId("loginBtn", {exact: false}));
+        await waitForElement(() => getByText(msgFail, {exact: false}));
+
+        expect(handleIncorrectResponse).toHaveBeenCalled();
+        expect(msgFail).toBeInTheDocument();
+    })
 });
