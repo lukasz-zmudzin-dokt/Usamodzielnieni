@@ -12,7 +12,7 @@ import {
 } from './components';
 import { UserContext } from "context";
 
-import { sendData } from "Views/CVEditorPage/functions/other.js";
+import { sendData } from "./functions/other.js";
 import { createCVObject } from "Views/CVEditorPage/functions/createCVObject.js";
 
 
@@ -44,6 +44,7 @@ class CVEditorPage extends React.Component {
     onNextClick = () => {
         const { formTab } = this.state;
         const tabIndex = this.tabs.findIndex(tab => tab.id === formTab);
+        console.log(tabIndex, this.tabs);
         if (tabIndex !== -1 && tabIndex < this.tabs.length - 1) {
             this.setState({ formTab: this.tabs[tabIndex + 1].id });
         }
@@ -66,61 +67,43 @@ class CVEditorPage extends React.Component {
         }
     };
 
-    getTabs() {
+    getTabs = () => {
+        const getTabProps = (key) => ({
+            data: this.state[key],
+            onChange: data => this.setState({ [key]: data }),
+            onPrevClick: this.onPrevClick,
+            onNextClick: this.onNextClick
+        })
         return [
             {
                 id: 'personalData',
                 name: 'Dane osobowe',
-                component: (
-                    <PersonalDataTab
-                        data={this.state.personalData} onChange={personalData => this.setState({ personalData })}
-                        onNextClick={this.onNextClick} />
-                )
+                component: <PersonalDataTab {...getTabProps('personalData')} onPrevClick={undefined} />
             },
             {
                 id: 'education',
                 name: 'Edukacja',
-                component: (
-                    <EducationTab
-                        data={this.state.education} onChange={education => this.setState({ education })}
-                        onPrevClick={this.onPrevClick} onNextClick={this.onNextClick} />
-                )
+                component: <EducationTab {...getTabProps('education')} />
             },
             {
                 id: 'workExperience',
                 name: 'Doświadczenie zawodowe',
-                component: (
-                    <WorkExperienceTab
-                        data={this.state.workExperience} onChange={workExperience => this.setState({ workExperience })}
-                        onPrevClick={this.onPrevClick} onNextClick={this.onNextClick} />
-                )
+                component: <WorkExperienceTab {...getTabProps('workExperience')} />
             },
             {
                 id: 'skills',
                 name: 'Umiejętności',
-                component: (
-                    <SkillsTab
-                        data={this.state.skills} onChange={skills => this.setState({ skills })}
-                        onPrevClick={this.onPrevClick} onNextClick={this.onNextClick} />
-                )
+                component: <SkillsTab {...getTabProps('skills')} />
             },
             {
                 id: 'languages',
                 name: 'Języki obce',
-                component: (
-                    <LanguagesTab
-                        data={this.state.languages} onChange={languages => this.setState({ languages })}
-                        onPrevClick={this.onPrevClick} onNextClick={this.onNextClick} />
-                )
+                component: <LanguagesTab {...getTabProps('languages')} />
             },
             {
                 id: 'photo',
                 name: 'Zdjęcie',
-                component: (
-                    <PhotoTab
-                        data={this.state.photo} onChange={photo => this.setState({ photo })}
-                        onPrevClick={this.onPrevClick} />
-                )
+                component: <PhotoTab {...getTabProps('photo')} onNextClick={undefined} />
             }
         ]
     }
