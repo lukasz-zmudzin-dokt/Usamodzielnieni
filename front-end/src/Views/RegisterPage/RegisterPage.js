@@ -1,12 +1,15 @@
 import React from "react";
-import {Container, Card, Form, Button} from "react-bootstrap";
-import { Link } from "react-router-dom";
-import bgImage from "../../assets/fot..png";
-import PersonalDataForm from "./components/personalDataForm";
-import AccountForm from "./components/accountForm";
-import {renderRedirect, renderSection} from "./functions/handlers";
+import {Container, Card, Form, Button, Alert} from "react-bootstrap";
+import {Link, Redirect} from "react-router-dom";
+import bgImage from "assets/fot..png";
+import PersonalDataForm from "./components/Personal/personalDataForm";
+import AccountForm from "./components/Account/accountForm";
+import {handleIncorrectResponse} from "./functions/handlers";
 import {handleSubmit} from "./functions/submitForm";
 import { UserContext } from "context";
+import HomeDataForm from "./components/FosterHome/homeDataForm";
+import CompanyDataForm from "./components/Company/companyDataForm";
+import {sendData} from "./functions/sendData";
 
 
 class RegisterPage extends React.Component {
@@ -19,11 +22,16 @@ class RegisterPage extends React.Component {
             accountData: null,
 
             account_type: "Podopiecznym",
-            areEqual: true,
+            areEqual: undefined,
             validated: false,
-            redirect: false
+            redirect: false,
+            submitted: false,
+            fail_message: "",
+            error_flag: false
         };
-    }
+    };
+
+
 
     selectType = (e) => {
         this.setState({
@@ -31,9 +39,99 @@ class RegisterPage extends React.Component {
         });
     };
 
+    renderSection = () => {
+        switch(this.state.account_type) {
+            case "Podopiecznym": {return (
+                <HomeDataForm
+                    data={this.state.homeData}
+                    onBlur={homeData => this.setState({homeData})}
+                /> )}
+            case "Pracodawcą": {return (
+                <CompanyDataForm
+                    data={this.state.companyData}
+                    onBlur={companyData => this.setState({companyData})}
+                /> )}
+            case "Administratorem": {return null;}
+            default: {
+                console.log("Something went wrong");
+                return null;
+            }
+        }
+    };
+
+    setRedirect = () => {
+        this.setState({
+            redirect: true
+        });
+    };
+
+    setValidated = () => {
+        this.setState({
+            validated: true
+        })
+    };
+
+    setEqual = () => {
+        this.setState({
+            areEqual: true
+        })
+    };
+
+    renderRedirect = () => {
+        if (this.state.redirect) {
+            return <Redirect to="/user" />;
+        }
+    };
+
+    handleResponse = async (e) => {
+        const data = {
+          personalData: this.state.personalData,
+          homeData: this.state.homeData,
+          companyData: this.state.companyData,
+          accountData: this.state.accountData,
+          account_type: this.state.account_type
+        };
+
+        console.log(data);
+        const isOK = handleSubmit(data, e);
+        if (isOK) {
+            this.setValidated();
+            this.setEqual();
+            const contextData = await sendData(data, e).then(response => {
+                const {status} = response;
+                if (status === 201) {
+                    const {token, type} = response;
+                    return {
+                        token: token,
+                        type: type,
+                        status: status
+                    };
+                } else {
+                    return response;
+                }
+            });
+
+            const {status} = contextData;
+            if (status === 201) {
+                const {token, type} = contextData;
+                this.context.login(token, type);
+                this.setRedirect();
+            } else {
+                const msg = handleIncorrectResponse(status);
+                this.setState({
+                    fail_message: msg,
+                    error_flag: true
+                })
+            }
+        } else {
+            e.stopPropagation();
+        }
+
+    };
+
     render() {
-        const { validated, incorrect, message, correct } = this.state;
-        const { selectType } = this;
+        const { validated, error_flag, fail_message } = this.state;
+        const { selectType, renderSection, handleResponse, renderRedirect } = this;
         const types = this.props.accountTypes || ['Podopiecznym', 'Pracodawcą'];
         return (
             <Container className="loginPage loginPage__register">
@@ -60,7 +158,7 @@ class RegisterPage extends React.Component {
                         <Form
                             noValidate
                             validated={validated}
-                            onSubmit={e => handleSubmit(this, e)}
+                            onSubmit={ e => handleResponse(e) }
                             className="loginPage__form primary"
                         >
                             <section className="row">
@@ -68,7 +166,7 @@ class RegisterPage extends React.Component {
                                     data={this.state.personalData}
                                     onBlur={personalData => this.setState({personalData})}
                                 />
-                                {renderSection(this)}
+                                {renderSection()}
                                 <AccountForm
                                     data={this.state.accountData}
                                     onBlur={accountData => this.setState({accountData})}
@@ -84,14 +182,9 @@ class RegisterPage extends React.Component {
                                 Utwórz konto
                             </Button>
                         </Form>
-                        {incorrect ? (
+                        {error_flag ? (
                             <div className="loginPage__messageFail">
-                                <small className="loginPage__failure" data-testid="incorrectMsg">{message}</small>
-                            </div>
-                        ) : null}
-                        {correct ? (
-                            <div className="loginPage__messageFail">
-                                <small className="loginPage__correct" data-testid="correctMsg">{message}</small>
+                                <Alert variant="danger" className="loginPage__failure" data-testid="incorrectMsg">{fail_message}</Alert>
                             </div>
                         ) : null}
                         <div className="loginPage__links">

@@ -1,9 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`DataForm AccountForm should render correctly 1`] = `undefined`;
-
-exports[`DataForm CompanyDataForm  should render correctly 1`] = `undefined`;
-
-exports[`DataForm HomeDataForm should render correctly 1`] = `undefined`;
-
-exports[`DataForm PersonalDataForm should render correctly 1`] = `undefined`;

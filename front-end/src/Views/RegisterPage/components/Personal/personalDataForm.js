@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, Form } from 'react-bootstrap';
-import {onChange} from "../functions/handlers";
+import {onChange} from "../../functions/handlers";
 
 class PersonalDataForm extends React.Component {
     constructor(props) {
@@ -61,6 +61,7 @@ class PersonalDataForm extends React.Component {
                         <Form.Control
                             name="phone_number"
                             type="tel"
+                            required
                             pattern="[+]{1}[4]{1}[8]{1}[0-9]{3}[0-9]{3}[0-9]{3}"
                             autoComplete="on"
                             placeholder="Numer telefonu"

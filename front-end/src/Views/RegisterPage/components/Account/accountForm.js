@@ -1,6 +1,6 @@
 import {Card, Form} from "react-bootstrap";
 import React from "react";
-import {onChange} from "../functions/handlers";
+import {onChange} from "../../functions/handlers";
 
 class AccountForm extends React.Component {
     constructor(props) {
