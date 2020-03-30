@@ -94,8 +94,8 @@ class RegisterPage extends React.Component {
 
         console.log(data);
         const isOK = handleSubmit(data, e);
+        this.setValidated();
         if (isOK) {
-            this.setValidated();
             this.setEqual();
             const contextData = await sendData(data, e).then(response => {
                 const {status} = response;
@@ -124,6 +124,7 @@ class RegisterPage extends React.Component {
                 })
             }
         } else {
+            console.log("stop2");
             e.stopPropagation();
         }
 
