@@ -1,0 +1,338 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RegisterPage RegisterPageTest should match snapshot 1`] = `
+<div>
+  <div
+    class="loginPage loginPage__register container"
+  >
+    <img
+      alt="Tło"
+      class="loginPage__bgImage"
+      src="fot..png"
+    />
+    <div
+      class="loginPage__card card"
+    >
+      <h2
+        class="loginPage__header card-header"
+      >
+        Rejestracja
+      </h2>
+      <div
+        class="loginPage__body card-body"
+      >
+        <div
+          class="register_account_type form-group"
+        >
+          <label
+            class="form-label"
+          >
+            Jestem:
+          </label>
+          <select
+            class="register_radio_type form-control"
+            data-testid="typeSelector"
+          >
+            <option
+              selected=""
+              value="Podopiecznym"
+            >
+              Podopiecznym
+            </option>
+            <option
+              value="Pracodawcą"
+            >
+              Pracodawcą
+            </option>
+          </select>
+        </div>
+        <form
+          class="loginPage__form primary"
+          novalidate=""
+        >
+          <section
+            class="row"
+          >
+            <div
+              class="loginPage__cardSection col-lg mr-lg-3 card bg-light"
+            >
+              <h4
+                class="card-header"
+              >
+                Dane osobowe
+              </h4>
+              <div
+                class="card-body"
+              >
+                <div
+                  class="form-group"
+                >
+                  <input
+                    autocomplete="on"
+                    class="form-control"
+                    id="formGroupFirstName"
+                    maxlength="30"
+                    minlength="1"
+                    name="first_name"
+                    placeholder="Imię"
+                    required=""
+                    type="text"
+                    value=""
+                  />
+                  <div
+                    class="invalid-feedback"
+                  >
+                    Podaj imię
+                  </div>
+                </div>
+                <div
+                  class="form-group"
+                >
+                  <input
+                    autocomplete="on"
+                    class="form-control"
+                    id="formGroupLastName"
+                    maxlength="30"
+                    minlength="1"
+                    name="last_name"
+                    placeholder="Nazwisko"
+                    required=""
+                    type="text"
+                    value=""
+                  />
+                  <div
+                    class="invalid-feedback"
+                  >
+                    Podaj nazwisko
+                  </div>
+                </div>
+                <div
+                  class="form-group"
+                >
+                  <input
+                    autocomplete="on"
+                    class="form-control"
+                    id="formGroupPhoneNumber"
+                    name="phone_number"
+                    pattern="[+]{1}[4]{1}[8]{1}[0-9]{3}[0-9]{3}[0-9]{3}"
+                    placeholder="Numer telefonu"
+                    required=""
+                    type="tel"
+                    value=""
+                  />
+                  <div
+                    class="invalid-feedback"
+                  >
+                    Podaj numer telefonu w formacie: +48123123123
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="loginPage__cardSection col-lg mr-lg-3 card bg-light"
+            >
+              <h4
+                class="card-header"
+              >
+                Dane placówki
+              </h4>
+              <div
+                class="account_form_card card-body"
+              >
+                <div
+                  class="form-group"
+                >
+                  <input
+                    autocomplete="on"
+                    class="form-control"
+                    id="formGroupNameOfPlace"
+                    name="name_of_place"
+                    placeholder="Nazwa placówki"
+                    required=""
+                    type="tel"
+                    value=""
+                  />
+                  <div
+                    class="invalid-feedback"
+                  >
+                    Podaj nazwę placówki
+                  </div>
+                </div>
+                <div
+                  class="form-group"
+                >
+                  <input
+                    autocomplete="on"
+                    class="form-control"
+                    id="formGroupStreet"
+                    name="street"
+                    placeholder="Ulica"
+                    required=""
+                    type="tel"
+                    value=""
+                  />
+                  <div
+                    class="invalid-feedback"
+                  >
+                    Podaj ulicę na której znajduje się placówka
+                  </div>
+                </div>
+                <div
+                  class="form-group"
+                >
+                  <input
+                    autocomplete="on"
+                    class="form-control"
+                    id="formGroupCity"
+                    name="city"
+                    placeholder="Nazwa miasta"
+                    required=""
+                    type="tel"
+                    value=""
+                  />
+                  <div
+                    class="invalid-feedback"
+                  >
+                    Podaj nazwę miasta
+                  </div>
+                </div>
+                <div
+                  class="form-group"
+                >
+                  <input
+                    autocomplete="on"
+                    class="form-control"
+                    id="formGroupCityCode"
+                    name="city_code"
+                    placeholder="Kod pocztowy"
+                    required=""
+                    type="tel"
+                    value=""
+                  />
+                  <div
+                    class="invalid-feedback"
+                  >
+                    Podaj kod pocztowy
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="loginPage__cardSection col-lg  card bg-light"
+            >
+              <h4
+                class="card-header"
+              >
+                Dane konta
+              </h4>
+              <div
+                class="card-body"
+              >
+                <div
+                  class="form-group"
+                >
+                  <input
+                    class="loginPage__input form-control"
+                    id="formGroupEmail"
+                    maxlength="50"
+                    name="email"
+                    placeholder="Email"
+                    required=""
+                    type="email"
+                    value=""
+                  />
+                  <div
+                    class="invalid-feedback"
+                  >
+                    Podaj właściwy email
+                  </div>
+                </div>
+                <div
+                  class="form-group"
+                >
+                  <input
+                    autocomplete="on"
+                    class="form-control"
+                    id="formGroupUsername"
+                    maxlength="20"
+                    minlength="6"
+                    name="username"
+                    placeholder="Nazwa użytkownika"
+                    required=""
+                    type="text"
+                    value=""
+                  />
+                  <div
+                    class="invalid-feedback"
+                  >
+                    Minimalna ilośc znaków: 6
+                  </div>
+                </div>
+                <div
+                  class="form-group"
+                >
+                  <input
+                    autocomplete="on"
+                    class="form-control"
+                    id="formGroupPassword"
+                    maxlength="30"
+                    minlength="6"
+                    name="password"
+                    placeholder="Hasło"
+                    required=""
+                    type="password"
+                    value=""
+                  />
+                  <div
+                    class="invalid-feedback"
+                  >
+                    Minimalna ilośc znaków: 6
+                  </div>
+                </div>
+                <div
+                  class="form-group"
+                >
+                  <input
+                    autocomplete="on"
+                    class="form-control"
+                    id="formGroupPasswordRepeat"
+                    minlength="6"
+                    name="passwordR"
+                    placeholder="Powtórz hasło"
+                    required=""
+                    type="password"
+                    value=""
+                  />
+                  <div
+                    class="invalid-feedback"
+                  >
+                    Minimalna ilośc znaków: 6
+                  </div>
+                  
+                </div>
+              </div>
+            </div>
+          </section>
+          <button
+            class="loginPage__button btn btn-secondary"
+            data-testid="submitBtn"
+            type="submit"
+          >
+            Utwórz konto
+          </button>
+        </form>
+        <div
+          class="loginPage__links"
+        >
+          <a
+            class="loginPage__link"
+            href="/login"
+          >
+            Masz już konto? Zaloguj się!
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

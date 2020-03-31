@@ -1,15 +1,14 @@
-import {fireEvent, render} from "@testing-library/react";
 import {MemoryRouter} from "react-router-dom";
 import HomeDataForm from "./homeDataForm";
-import {getByTestId, getByText, waitForElement} from "@testing-library/dom";
+import {getByTestId, getByText, waitForElement, fireEvent, render} from "@testing-library/react";
 import React from "react";
 
 
 describe('HomeDataForm', () => {
     it('should render correctly', () => {
-        const data = null;
-        const onBlur = jest.fn();
-        const { component } = render(
+        let data = null;
+        const onBlur = () => {};
+        const  {component}  = render(
             <MemoryRouter>
                 <HomeDataForm data={data} onBlur={onBlur} />
             </MemoryRouter>

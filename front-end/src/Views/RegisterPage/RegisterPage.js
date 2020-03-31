@@ -27,7 +27,8 @@ class RegisterPage extends React.Component {
             redirect: false,
             submitted: false,
             fail_message: "",
-            error_flag: false
+            error_flag: false,
+            incorrect_input: false
         };
     };
 
@@ -124,14 +125,15 @@ class RegisterPage extends React.Component {
                 })
             }
         } else {
-            console.log("stop2");
-            e.stopPropagation();
+            this.setState({
+                incorrect_input: true
+            })
         }
 
     };
 
     render() {
-        const { validated, error_flag, fail_message } = this.state;
+        const { validated, error_flag, fail_message, incorrect_input } = this.state;
         const { selectType, renderSection, handleResponse, renderRedirect } = this;
         const types = this.props.accountTypes || ['Podopiecznym', 'Pracodawcą'];
         return (
@@ -183,6 +185,7 @@ class RegisterPage extends React.Component {
                                 Utwórz konto
                             </Button>
                         </Form>
+                        {incorrect_input ? (e => e.stopPropagation()) : null}
                         {error_flag ? (
                             <div className="loginPage__messageFail">
                                 <Alert variant="danger" className="loginPage__failure" data-testid="incorrectMsg">{fail_message}</Alert>
