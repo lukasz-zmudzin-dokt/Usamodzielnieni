@@ -36,18 +36,13 @@ class CVEditorPage extends React.Component {
     onPrevClick = () => {
         const { formTab } = this.state;
         const tabIndex = this.tabs.findIndex(tab => tab.id === formTab);
-        if (tabIndex !== -1 && tabIndex > 0) {
-            this.setState({ formTab: this.tabs[tabIndex - 1].id });
-        }
+        this.setState({ formTab: this.tabs[tabIndex - 1].id });
     }
 
     onNextClick = () => {
         const { formTab } = this.state;
         const tabIndex = this.tabs.findIndex(tab => tab.id === formTab);
-        console.log(tabIndex, this.tabs);
-        if (tabIndex !== -1 && tabIndex < this.tabs.length - 1) {
-            this.setState({ formTab: this.tabs[tabIndex + 1].id });
-        }
+        this.setState({ formTab: this.tabs[tabIndex + 1].id });
     }
 
     handleCVSubmit = async (e) => {

@@ -56,12 +56,17 @@ const addPhoto = async (token, photo) => {
 export const sendData = async (object, photo, token) => {
   console.log(JSON.stringify(object));
 
-  await deleteCv(token);
-  await generateCv(token, object);
-  if (photo) {
-    await addPhoto(token, photo);
+  let file;
+  try {
+    await deleteCv(token);
+    await generateCv(token, object);
+    if (photo) {
+      await addPhoto(token, photo);
+    }
+    file = await getCv(token);
+  } catch (e) {
+    throw new Error('api error');
   }
-  const file = await getCv(token);
   const cvUrl = `${domain}${file}`;
   window.open(cvUrl, "_blank");
 };
