@@ -1,12 +1,11 @@
 import React from "react";
-import {Button} from "react-bootstrap";
-import {renderRedirect} from "./handlers";
+import {Alert, Button} from "react-bootstrap";
 
 export const renderMessage = (correct, onClick) => {
   if (correct) {
       return (
           <div className="submit_message" data-testid="submit_message">
-              <small className="msg_text">Wysłano maila. Sprawdź skrzynkę i przejdź dalej!</small>
+              <Alert variant="success" className="msg_text">Wysłano maila. Sprawdź skrzynkę i przejdź dalej!</Alert>
               <Button className="email_prompt_redirect" data-testid="btn_redirect" onClick={onClick}>Przejdź dalej</Button>
           </div>
       );

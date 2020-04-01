@@ -2,9 +2,9 @@ import React from "react";
 import bgImage from "../../assets/fot..png";
 import {Button, Card, Container} from "react-bootstrap";
 import Form from "react-bootstrap/Form";
-import {handleBlur, renderRedirect} from "./functions/handlers";
 import {renderMessage, handleSubmit} from "./functions/submitActions";
 import "./style.css"
+import {Redirect} from "react-router-dom";
 
 class PasswordResetPrompt extends React.Component {
     constructor(props) {
@@ -30,8 +30,14 @@ class PasswordResetPrompt extends React.Component {
         })
     };
 
+    renderRedirect = (redirect) => {
+        if (redirect)
+            return <Redirect to="/newPassword"/>
+    };
+
     render() {
         let {email, correct, redirect} = this.state;
+        let {renderRedirect, setRedirect} = this;
         return(
             <Container className="loginPage">
                 {window.innerWidth >= 768 ? (
@@ -54,16 +60,16 @@ class PasswordResetPrompt extends React.Component {
                                     placeholder="Email"
                                     required
                                     defaultValue={email}
-                                    onBlur={e => handleBlur(this, e)}
+                                    onBlur={e => this.setState({email: e.target.value})}
                                     className="loginPage__input"
                                     minLength="6"
                                 />
                                 <Form.Control.Feedback type="invalid">
-                                    Podaj właściwy email
+                                    Podaj email
                                 </Form.Control.Feedback>
                             </Form.Group>
                             <Button variant="secondary" className="passwordR_submit_email" type="submit" data-testid="sendMailBtn">Wyślij</Button>
-                            {renderMessage(correct, this.setRedirect)}
+                            {renderMessage(correct, setRedirect)}
                             {renderRedirect(redirect)}
                         </Form>
                     </Card.Body>
