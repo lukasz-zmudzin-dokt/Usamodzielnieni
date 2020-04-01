@@ -14,7 +14,9 @@ class NewPasswordPage extends React.Component {
             password: "",
             passwordR: "",
             validated: false,
-            password_changed: undefined
+            password_changed: undefined,
+            message: "",
+            redirect: false
         };
     }
 
@@ -24,8 +26,7 @@ class NewPasswordPage extends React.Component {
         })
     };
 
-    validatePassword = (new_password, new_passwordR, e) => {
-        e.preventDefault();
+    validatePassword = (new_password, new_passwordR) => {
         if (new_password !== new_passwordR)
             return "Hasła się nie zgadzają!";
         else if (new_password.length < 6)
@@ -48,7 +49,7 @@ class NewPasswordPage extends React.Component {
                 return (
                     <div className="message_pass_changed" data-testid="passMsg">
                         <Alert variant="success" className="msgText_correct">Hasło zostało zmienione. Przekierowuję...</Alert>
-                        {this.renderDelayedRedirect()}
+                        {this.setDelayedRedirect()}
                     </div>
                 );
             else return (
@@ -59,15 +60,42 @@ class NewPasswordPage extends React.Component {
         }
     };
 
-    renderDelayedRedirect = async () => {
+    setDelayedRedirect = () => {
         setTimeout( () => {
-            return (<Redirect to="/login"/>)
+            this.setState({
+                redirect: true
+            })
         }, 3000);
     };
 
     handleBlur = (e) => {
         this.setState({
             [e.target.name]: e.target.value
+        })
+    };
+
+    renderRedirect = () => {
+        if (this.state.redirect)
+            return <Redirect to="/login" />
+    };
+
+    handleSubmit = (e) => {
+        const {token, password, passwordR} = this.state;
+        const password_msg = this.validatePassword(password, passwordR);
+        this.setState({
+            message: password_msg
+        });
+
+        const data = {
+            token: token,
+            password: password
+        };
+        handlePasswordChange(data, e).then( response => {
+            console.log(response);
+            const {status} = response;
+            this.setState({
+                password_changed: (status === 200)
+            });
         })
     };
 
@@ -87,7 +115,7 @@ class NewPasswordPage extends React.Component {
                         <Form
                             noValidate
                             validated={validated}
-                            onSubmit={e => handlePasswordChange({password, token}, this.setPasswordChanged(), e)}
+                            onSubmit={e => this.handleSubmit(e)}
                             className="primary"
                         >
                             <Form.Group controlId="formGroupUsername">
@@ -126,11 +154,12 @@ class NewPasswordPage extends React.Component {
                                     minLength="6"
                                 />
                                 <Form.Control.Feedback type="invalid">
-                                    {e => this.validatePassword(password, passwordR, e)}
+
                                 </Form.Control.Feedback>
                             </Form.Group>
                             <Button variant="secondary" className="loginPage__button" data-testid="btn_change_pass" type="submit">Wyślij</Button>
                             {this.renderPasswordMessage()}
+                            {this.renderRedirect()}
                         </Form>
                     </Card.Body>
                 </Card>

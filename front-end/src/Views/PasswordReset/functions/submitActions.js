@@ -34,22 +34,23 @@ export const handleSubmit = (email, setCorrect, e) => {
 
 };
 
-export const handlePasswordChange = (object, setPasswordChanged, e) => {
+export const handlePasswordChange = async (object, e) => {
     const url = "http://usamo-back.herokuapp.com/account/password_reset/confirm/";
     e.preventDefault();
     console.log(JSON.stringify(object));
-    fetch(url, {
+    return await fetch(url, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
         body: JSON.stringify(object)
     }).then(response => {
-        if (response.status === 201 || response.status === 200) {
-            setPasswordChanged();
-        }
-        response.json().then( res => {
-            console.log(res);
-        });
+        console.log(response);
+        //response.json().then(res => console.log(res));
+        if (response.status !== 404) return {
+            status: response.status,
+            ...response.json()
+        };
+        else return {status: response.status};
     });
 };
