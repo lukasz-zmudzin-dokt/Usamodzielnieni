@@ -6,7 +6,8 @@ import {
   CVEditorPage,
   Menu,
   OfferForm,
-  MyOffersPage
+  MyOffersPage,
+  CVApprovalPage
 } from "Views";
 
 const paths = {
@@ -75,7 +76,7 @@ export default [
   },
   {
     path: paths.CV_APPROVAL,
-    component: UserProfilePage, // tu trzeba zmienić komponent
+    component: CVApprovalPage,
     isPrivate: true,
     type: userTypes.STAFF
   },
