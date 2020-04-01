@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FormGroup renders correctly 1`] = `
+<div
+  class="form-group"
+>
+  <label
+    class="form-label"
+    for="test"
+  >
+    test
+  </label>
+  <select
+    class="form-control"
+    id="test"
+  >
+    <option
+      disabled=""
+    >
+      -- Wybierz --
+    </option>
+  </select>
+</div>
+`;

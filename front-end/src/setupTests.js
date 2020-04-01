@@ -1,2 +1,13 @@
 import '@testing-library/jest-dom/extend-expect';
-import '@testing-library/react/cleanup-after-each';
+
+// https://github.com/popperjs/popper-core/issues/478#issuecomment-407422016
+if (global.document) {
+    document.createRange = () => ({
+        setStart: () => {},
+        setEnd: () => {},
+        commonAncestorContainer: {
+            nodeName: "BODY",
+            ownerDocument: document,
+        },
+    });
+}

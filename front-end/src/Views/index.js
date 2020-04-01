@@ -6,6 +6,8 @@ import CVEditorPage from "Views/CVEditorPage";
 import Footer from "Views/Footer";
 import Menu from "Views/Menu";
 import {PasswordResetPrompt, NewPasswordPage} from "Views/PasswordReset";
+import OfferForm from "Views/OfferForm";
+import MyOffersPage from "Views/MyOffersPage";
 
 export {
   UserProfilePage,
@@ -16,5 +18,7 @@ export {
   Footer,
   Menu,
   PasswordResetPrompt,
-  NewPasswordPage
+  NewPasswordPage,
+  OfferForm,
+  MyOffersPage
 };

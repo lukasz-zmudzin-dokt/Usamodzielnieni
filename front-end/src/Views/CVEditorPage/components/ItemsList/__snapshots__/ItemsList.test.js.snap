@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ItemsList should not render when data is null 1`] = `<div />`;
+
+exports[`ItemsList should render without crashing 1`] = `
+<div>
+  <div>
+    <div />
+    <button
+      class="itemsList__addButton btn btn-success"
+      type="button"
+    >
+      + Dodaj
+    </button>
+  </div>
+</div>
+`;
