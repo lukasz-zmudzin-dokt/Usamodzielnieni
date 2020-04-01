@@ -20,7 +20,7 @@ class CVApprovalPage extends React.Component {
         return (
             <Container>
                 <div className="background">
-                    <Card className="main-card center">
+                    <Card className="center">
                         <Card.Header className="border pb-4"><h3>CV do przejrzenia</h3></Card.Header>
                         <Card.Body className="border">
                             <CVApprovalBody cvs={this.state.cvs} />

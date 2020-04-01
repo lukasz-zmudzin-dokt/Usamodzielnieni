@@ -3,13 +3,16 @@ import { render } from "@testing-library/react";
 import NoCVs from "./NoCVs";
 
 describe("NoCVs", () => {
-    it("should render without crashing with undefined parameter", () => {
-        render(<NoCVs cvs={undefined} />);
+    test("should match with snapshot 1", () => {
+        const { profile1 } = render ( <NoCVs cvs={[{id: 0}]} /> );
+        expect(profile1).toMatchSnapshot();
     });
-    it("should render without crashing with empty table", () => {
-        render(<NoCVs cvs={[]} />);
+    test("should match with snapshot 2", () => {
+        const { profile2 } = render ( <NoCVs cvs={undefined} /> );
+        expect(profile2).toMatchSnapshot();
     });
-    it("should render without crashing with table with records", () => {
-        render(<NoCVs cvs={[{id: 0}]} />);
+    test("should match with snapshot 3", () => {
+        const { profile3 } = render ( <NoCVs cvs={[]} /> );
+        expect(profile3).toMatchSnapshot();
     });
 });
