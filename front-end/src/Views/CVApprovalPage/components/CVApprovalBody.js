@@ -3,7 +3,7 @@ import NoCVs from "./NoCVs";
 import CVLegend from "./CVLegend";
 import CVsToApprove from "./CVsToApprove";
 
-const CVApprovalBody = ({ cvs }) => {
+const CVApprovalBody = ({ cvs = [] }) => {
     return (
         <div>
             <NoCVs cvs={cvs} />
