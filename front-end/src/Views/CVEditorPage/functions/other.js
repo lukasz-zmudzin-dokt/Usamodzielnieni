@@ -81,6 +81,7 @@ const getFeedback = async (token, component) => {
   const response = await fetch(url, { method: "GET", headers });
 
   if (response.status === 200) {
+    console.log("response: " + response.json());
     return response.json().then(body => {component.setState({feedback: body})});
   } else {
     throw response.status;
