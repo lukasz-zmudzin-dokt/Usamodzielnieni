@@ -1,0 +1,63 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`photo tab tests should render without crashing 1`] = `
+<div>
+  <div>
+    <h3>
+      Zdjęcie
+    </h3>
+    <div
+      class="form-group"
+    >
+      <img
+        alt=""
+        class="CVEditorTab__img"
+        src="movie_1.png"
+      />
+    </div>
+    <div
+      class="form-group col"
+    >
+      <label
+        class="form-label"
+        for="photo"
+      >
+        Wybierz zdjęcie:
+      </label>
+      <input
+        accept="image/*"
+        class="form-control-file"
+        id="photo"
+        name="photo"
+        type="file"
+      />
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col-md-6 col-12"
+      >
+        <button
+          class="form_navigation_prev btn btn-primary btn-block"
+          disabled=""
+          type="button"
+        >
+          ← Wstecz
+        </button>
+      </div>
+      <div
+        class="col-md-6 col-12"
+      >
+        <button
+          class="btn btn-success btn-block"
+          id="saveButton"
+          type="submit"
+        >
+          Generuj CV
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+`;
