@@ -1,9 +1,9 @@
 import React from "react";
-import bgImage from "../../assets/fot..png";
+import bgImage from "assets/fot..png";
 import {Button, Card, Container} from "react-bootstrap";
 import Form from "react-bootstrap/Form";
-import {renderMessage, handleSubmit} from "./functions/submitActions";
-import "./style.css"
+import {renderMessage, handleSubmit} from "../functions/submitActions";
+import "../style.css"
 import {Redirect} from "react-router-dom";
 
 class PasswordResetPrompt extends React.Component {

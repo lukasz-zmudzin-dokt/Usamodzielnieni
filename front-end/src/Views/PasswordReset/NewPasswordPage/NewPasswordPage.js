@@ -1,10 +1,10 @@
 import React from "react";
-import bgImage from "../../assets/fot..png";
+import bgImage from "../../../assets/fot..png";
 import {Alert, Button, Card, Container} from "react-bootstrap";
 import Form from "react-bootstrap/Form";
-import {handlePasswordChange} from "./functions/submitActions";
+import {handlePasswordChange} from "../functions/submitActions";
 import {Redirect} from "react-router-dom";
-import "./style.css"
+import "../style.css"
 
 class NewPasswordPage extends React.Component {
     constructor(props) {
