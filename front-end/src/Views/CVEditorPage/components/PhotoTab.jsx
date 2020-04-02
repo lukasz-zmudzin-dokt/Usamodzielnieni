@@ -1,7 +1,7 @@
 import React from "react";
 import { Form, Col } from "react-bootstrap";
-import CVEditorTab from "./CvEditorTab";
-import movie_1 from "../../../assets/movie_1.png";
+import { CVEditorTab } from ".";
+import movie_1 from "assets/movie_1.png";
 
 
 class PhotoTab extends React.Component {  
@@ -24,13 +24,12 @@ class PhotoTab extends React.Component {
                 onPrevClick={this.props.onPrevClick}
                 comments={this.props.comments}
                 >
-                <Form.Group as={Col} controlId="">
+                <Form.Group as={Col} controlId="photo">
                     <Form.Label>
                         Wybierz zdjęcie:
                     </Form.Label>
                     <Form.Control
                         name="photo"
-                        inline
                         type="file"
                         ref={(ref) => this.fileInput = ref}
                         onChange={this.onChange}
