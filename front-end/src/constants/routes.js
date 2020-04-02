@@ -62,7 +62,8 @@ export default [
   {
     path: paths.USER,
     component: UserProfilePage,
-    isPrivate: true
+    isPrivate: true,
+    type: undefined
   },
   {
     path: paths.PASSWORD_RESET,
@@ -72,9 +73,7 @@ export default [
   {
     path: paths.NEW_PASSWORD,
     component: NewPasswordPage,
-    exact: true,
-    isPrivate: false,
-    type: undefined // jeżeli jest undefined to znaczy że jest dostępne dla wszystkich typów konta
+    exact: true
   },
   {
     path: paths.JOB_OFFERS,
