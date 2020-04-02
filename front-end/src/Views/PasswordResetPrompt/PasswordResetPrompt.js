@@ -1,9 +1,8 @@
 import React from "react";
 import bgImage from "assets/fot..png";
-import {Button, Card, Container} from "react-bootstrap";
-import Form from "react-bootstrap/Form";
-import {renderMessage, handleSubmit} from "../functions/submitActions";
-import "../style.css"
+import {Alert, Button, Card, Container, Form} from "react-bootstrap";
+import {handleConnection} from "./functions/submitActions";
+import "./style.css"
 import {Redirect} from "react-router-dom";
 
 class PasswordResetPrompt extends React.Component {
@@ -11,33 +10,60 @@ class PasswordResetPrompt extends React.Component {
         super(props);
         this.state = {
             email: "",
-            correct: false,
+            correct: undefined,
             redirect: false
-        }
-        this.setCorrect.bind(this);
-        this.setRedirect.bind(this);
+        };
     };
 
-    setCorrect = () => {
+    setCorrect = (bool) => {
         this.setState({
-            correct: true
+            correct: bool
         })
     };
 
     setRedirect = () => {
-        this.setState({
-            redirect: true
-        })
+        setTimeout( () => {
+            this.setState({
+                redirect: true
+            });
+        }, 3000);
     };
 
     renderRedirect = (redirect) => {
         if (redirect)
-            return <Redirect to="/newPassword"/>
+            return <Redirect to="/newPassword" />
+    };
+
+    handleSubmit = (e) => {
+        e.preventDefault();
+        if (this.state.email === "")
+            e.stopPropagation();
+        handleConnection(this.state.email, e).then( res => {
+            this.setCorrect(res);
+        });
+    };
+
+    renderMessage = (correct, setRedirect) => {
+        if (correct !== undefined) {
+            if (correct) {
+                return (
+                    <div className="submit_message" data-testid="submit_message">
+                        <Alert variant="success" className="msg_text">Jeżeli Twoje konto istnieje, to właśnie otrzymałeś maila. Sprawdź skrzynkę i przejdź dalej!</Alert>
+                        {setRedirect()}
+                    </div>
+                );
+            }
+            return (
+                <div className="submit_message" data-testid="submit_message">
+                    <Alert variant="danger" className="msg_text">Coś poszło nie tak.</Alert>
+                </div>
+            );
+        }
     };
 
     render() {
         let {email, correct, redirect} = this.state;
-        let {renderRedirect, setRedirect} = this;
+        let {renderRedirect, setRedirect, renderMessage, handleSubmit} = this;
         return(
             <Container className="loginPage">
                 {window.innerWidth >= 768 ? (
@@ -50,13 +76,12 @@ class PasswordResetPrompt extends React.Component {
                     <Card.Body className="loginPage__body">
                         <Form
                             noValidate
-                            onSubmit={e => handleSubmit({email}, this.setCorrect, e)}
+                            onSubmit={e => handleSubmit(e)}
                             className="primary"
                         >
                             <Form.Group controlId="formGroupUsername">
                                 <Form.Control
-                                    name="email"
-                                    type="text"
+                                    type="email"
                                     placeholder="Email"
                                     required
                                     defaultValue={email}

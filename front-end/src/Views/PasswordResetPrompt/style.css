@@ -3,6 +3,10 @@
     background-color: #7345a9 !important;
 }
 
+.submit_message {
+    margin-top: 2vh;
+}
+
 @media(max-width: 768px) {
     .loginPage__card {
         width: 100% !important;

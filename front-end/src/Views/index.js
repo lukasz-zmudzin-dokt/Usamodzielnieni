@@ -5,8 +5,8 @@ import HeaderTemplate from "Views/PageHeader";
 import CVEditorPage from "Views/CVEditorPage";
 import Footer from "Views/Footer";
 import Menu from "Views/Menu";
-import PasswordResetPrompt from "Views/PasswordReset/PasswordResetPrompt";
-import NewPasswordPage from "Views/PasswordReset/NewPasswordPage";
+import PasswordResetPrompt from "Views/PasswordResetPrompt";
+import NewPasswordPage from "Views/NewPasswordPage";
 import OfferForm from "Views/OfferForm";
 import MyOffersPage from "Views/MyOffersPage";
 

@@ -73,7 +73,7 @@ export default [
     path: paths.NEW_PASSWORD,
     component: NewPasswordPage,
     exact: true,
-    isPrivate: true,
+    isPrivate: false,
     type: undefined // jeżeli jest undefined to znaczy że jest dostępne dla wszystkich typów konta
   },
   {

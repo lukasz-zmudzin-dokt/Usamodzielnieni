@@ -1,10 +1,9 @@
 import React from "react";
-import bgImage from "../../../assets/fot..png";
-import {Alert, Button, Card, Container} from "react-bootstrap";
-import Form from "react-bootstrap/Form";
-import {handlePasswordChange} from "../functions/submitActions";
+import bgImage from "../../assets/fot..png";
+import {Alert, Button, Card, Container, Form} from "react-bootstrap";
+import {handlePasswordChange} from "./functions/submitActions";
 import {Redirect} from "react-router-dom";
-import "../style.css"
+import "../PasswordResetPrompt/style.css"
 
 class NewPasswordPage extends React.Component {
     constructor(props) {
@@ -29,7 +28,7 @@ class NewPasswordPage extends React.Component {
     validatePassword = (new_password, new_passwordR) => {
         if (new_password !== new_passwordR)
             return "Hasła się nie zgadzają!";
-        else if (new_password.length < 6)
+        else if (new_password.length < 8)
             return "Hasło jest za krótkie!";
         else {
             this.setValidated();
@@ -85,7 +84,7 @@ class NewPasswordPage extends React.Component {
         this.setState({
             message: password_msg
         });
-
+        e.preventDefault();
         const data = {
             token: token,
             password: password
@@ -100,7 +99,7 @@ class NewPasswordPage extends React.Component {
     };
 
     render() {
-        const { token, password, passwordR, validated } = this.state;
+        const { token, password, passwordR, validated, password_msg } = this.state;
         const {handleBlur} = this;
         return (
             <Container className="loginPage">
@@ -139,7 +138,7 @@ class NewPasswordPage extends React.Component {
                                     defaultValue={password}
                                     onBlur={e => handleBlur(e)}
                                     className="loginPage__input"
-                                    minLength="6"
+                                    minLength="8"
                                 />
                             </Form.Group>
                             <Form.Group>
@@ -151,10 +150,10 @@ class NewPasswordPage extends React.Component {
                                     defaultValue={passwordR}
                                     onBlur={e => handleBlur(e)}
                                     className="loginPage__input"
-                                    minLength="6"
+                                    minLength="8"
                                 />
                                 <Form.Control.Feedback type="invalid">
-
+                                    {password_msg}
                                 </Form.Control.Feedback>
                             </Form.Group>
                             <Button variant="secondary" className="loginPage__button" data-testid="btn_change_pass" type="submit">Wyślij</Button>
