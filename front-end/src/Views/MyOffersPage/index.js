@@ -1,3 +1,3 @@
-import MyOffersPage from './MyOffersPage';
+import MyOffersPage from "./MyOffersPage";
 
 export default MyOffersPage;
