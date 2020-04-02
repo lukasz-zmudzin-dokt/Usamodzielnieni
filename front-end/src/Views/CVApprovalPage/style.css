@@ -1,13 +1,14 @@
-
-.users-approval-card {
-    padding-top: 10vh;
-}
-.no-border {
-    border: none !important;
-}
 .border {
     border: gray;
 }
 .center {
-    margin-top: 20vh;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+.max-height {
+    height: 90vh;
 }
