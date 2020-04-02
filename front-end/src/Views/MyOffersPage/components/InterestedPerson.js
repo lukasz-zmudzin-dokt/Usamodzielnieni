@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Col, Row } from "react-bootstrap";
-import { downloadCV } from "../functions/functions";
+import { downloadCV } from "Views/MyOffersPage/functions/functions";
 
 const InterestedPerson = ({ person })  => {
     return (

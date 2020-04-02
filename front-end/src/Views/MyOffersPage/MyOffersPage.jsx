@@ -3,7 +3,7 @@ import "./style.css";
 import {Card, Container} from "react-bootstrap";
 import MyOffers from "./components/MyOffers";
 import { getOffers } from "./functions/getOffers";
-import {UserContext} from "../../context/UserContext";
+import { UserContext } from "context/UserContext";
 
 class MyOffersPage extends React.Component {
     constructor(props) {
@@ -21,7 +21,7 @@ class MyOffersPage extends React.Component {
 
         return(
             <Container>
-                <div className="background">
+                <div className="max-height">
                     <Card className="center">
                         <Card.Header><h3>Moje oferty</h3></Card.Header>
                         <Card.Body>

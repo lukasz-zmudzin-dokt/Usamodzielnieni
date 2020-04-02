@@ -2,8 +2,8 @@ import React from "react";
 import {Accordion, Card} from "react-bootstrap";
 import InterestedPerson from "./InterestedPerson";
 import MyOffersLegend from "./MyOffersLegend";
-import { getInterestedPeople } from "../functions/getInterestedPeople";
-import "../style.css";
+import { getInterestedPeople } from "Views/MyOffersPage/functions/getInterestedPeople";
+import "Views/MyOffersPage/style.css";
 
 const MyOffer = ({ offer, token, component})  => {
     return (
