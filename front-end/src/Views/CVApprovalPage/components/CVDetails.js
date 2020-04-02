@@ -2,7 +2,7 @@ import React from "react";
 import {Button, Col, Row} from "react-bootstrap";
 import { downloadCV } from "../functions/downloadCV";
 import { acceptCV } from "../functions/acceptCV";
-import { improveCV } from "../functions/improveCV";
+import {Link} from "react-router-dom";
 
 const CVDetails = ({ cv })  => {
     return (
@@ -15,7 +15,7 @@ const CVDetails = ({ cv })  => {
             <Col xs={12} md={4} className="d-flex justify-content-end">
                 <Button variant="primary m-1 p-1" className="btnDownload" onClick={e => (downloadCV(e, cv.cv_id))}>Pobierz</Button>
                 <Button variant="success m-1 p-1" className="btnAccept" onClick={e => (acceptCV(e, cv.cv_id))}>Akceptuj</Button>
-                <Button variant="warning m-1 p-1" className="btnImprove" onClick={e => (improveCV(e, cv.cv_id))}>Popraw</Button>
+                <Link to="/"/*tu będzie link do strony poprawiania cv*/ ><Button variant="warning m-1 p-1" className="btnImprove">Popraw</Button></Link>
             </Col>
         </Row>
     );
