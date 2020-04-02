@@ -20,6 +20,11 @@ class HeaderTemplate extends React.Component {
               Kreator CV
             </Nav.Link>
           </IndexLinkContainer>
+          <IndexLinkContainer to={this.context.type === "Staff" ? "/cvApproval" : "/"}>
+              <Nav.Link id="cvApproval">
+                  Akceptacja CV
+              </Nav.Link>
+          </IndexLinkContainer>
           <Nav.Link id="learningTheRopes">Jak zacząć?</Nav.Link>
           <Nav.Link id="jobOffers">Oferty pracy</Nav.Link>
           {/* <Nav.Link id="jobDescriptions">Opis stanowisk</Nav.Link> */}

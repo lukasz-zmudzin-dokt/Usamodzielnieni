@@ -79,6 +79,9 @@ class Menu extends React.Component {
                                 <LinkContainer to={!this.context.token ? "/login" : "/cvEditor"}>
                                     <Button className="menu-button-small menu-button-white" >Kreator CV</Button>
                                 </LinkContainer>
+                                <LinkContainer to={this.context.type === "Staff" ? "/cvApproval" : "/"}>
+                                    <Button className="menu-button-small menu-button-white" >Akceptacja CV</Button>
+                                </LinkContainer>
                                 <Button className="menu-button-small menu-button-white disabled">Jak zacząć?</Button>
                                 <Button className="menu-button-small menu-button-white disabled">Oferty pracy</Button>
                             </ButtonToolbar>

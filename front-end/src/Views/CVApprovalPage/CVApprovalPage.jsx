@@ -10,10 +10,9 @@ class CVApprovalPage extends React.Component {
         super(props);
         this.state = { cvs: [] };
     }
-    static ContextType = UserContext;
 
     componentDidMount() {
-        getCVs().then(response => this.setState({ cvs: response}));
+        getCVs(this.context.token).then(response => this.setState({ cvs: response}));
     }
 
     render() {
@@ -31,5 +30,7 @@ class CVApprovalPage extends React.Component {
         )
     };
 }
+
+CVApprovalPage.contextType = UserContext;
 
 export default CVApprovalPage;

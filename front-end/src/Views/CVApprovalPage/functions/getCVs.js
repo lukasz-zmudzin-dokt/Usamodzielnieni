@@ -1,8 +1,4 @@
-import Cookies from "universal-cookie";
-
-export const getCVs = async () => {
-    const cookies = new Cookies();
-    const token = await cookies.get("token");
+export const getCVs = async (token) => {
     return await fetch("http://usamo-back.herokuapp.com/cv/admin/list/", {
         method: "GET",
         headers: {
