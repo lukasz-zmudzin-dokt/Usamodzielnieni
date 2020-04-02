@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, fireEvent, queries } from '@testing-library/react';
 import CVEditorPage from './CVEditorPage';
-import { sendData } from "./functions/other.js";
+import { sendData, getFeedback } from "./functions/other.js";
 
 let mock_submitData = {};
 
@@ -68,10 +68,23 @@ jest.mock('./components', () => ({
 jest.mock('./functions/other.js');
 
 describe('CVEditorPage', () => {
+    let apiComments = {
+        personalata: "abc",
+        education: "def",
+        workExperience: "ghi",
+        skills: "jkl",
+        languages: "mno",
+        photo: "xd"
+    };
     beforeEach(() => {
         jest.clearAllMocks();
         mock_submitData = {};
         sendData.mockImplementation(() => jest.fn());
+        getFeedback.mockImplementation(() => {
+            return new Promise((resolve, reject) => {
+              resolve({ apiComments });
+            });
+        });
     });
 
     it('should render without crashing', () => {

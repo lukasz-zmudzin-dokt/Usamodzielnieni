@@ -71,7 +71,7 @@ const sendData = async (object, photo, token) => {
   window.open(cvUrl, "_blank");
 };
 
-const getFeedback = async (token, component) => {
+const getFeedback = async (token) => {
   const url = "https://usamo-back.herokuapp.com/cv/feedback/";
   const headers = {
     Authorization: "Token " + token,
@@ -81,8 +81,8 @@ const getFeedback = async (token, component) => {
   const response = await fetch(url, { method: "GET", headers });
 
   if (response.status === 200) {
-    console.log("response: " + response.json());
-    return response.json().then(body => {component.setState({feedback: body})});
+    //console.log("response: " + response.json());
+    return response.json();
   } else {
     throw response.status;
   }

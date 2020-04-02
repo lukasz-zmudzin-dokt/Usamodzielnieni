@@ -21,7 +21,7 @@ class CVEditorPage extends React.Component {
         super(props);
         this.state = {
             formTab: "personalData",
-            feedback: {},
+            comments: {},
             error: false,
 
             personalData: null,
@@ -70,7 +70,7 @@ class CVEditorPage extends React.Component {
             onChange: data => this.setState({ [key]: data }),
             onPrevClick: this.onPrevClick,
             onNextClick: this.onNextClick,
-            comments: this.comments[key]
+            comments: this.state.comments[key]
         })
         return [
             {
@@ -106,22 +106,23 @@ class CVEditorPage extends React.Component {
         ]
     }
 
-    getComments() {
-        getFeedback(this.context.token, this);
-        console.log(this.state);
-        return {
-            personalData: this.state.feedback.basic_info,
-            education: this.state.feedback.schools,
-            workExperience: this.state.feedback.experiences,
-            skills: this.state.feedback.skills,
-            languages: this.state.feedback.languages,
-            photo: this.state.feedback.additional_info,
-        }
+    componentDidMount() {
+        getFeedback(this.context.token).then(res => {
+          this.setState({
+            comments: {
+              personalData: res.basic_info,
+              education: res.schools,
+              workExperience: res.experiences,
+              skills: res.skills,
+              languages: res.languages,
+              photo: res.additional_info
+            }
+          });
+        });
     }
     
     render() {
         this.tabs = this.getTabs();
-        this.comments = this.getComments();
 
         return (
             <Container>

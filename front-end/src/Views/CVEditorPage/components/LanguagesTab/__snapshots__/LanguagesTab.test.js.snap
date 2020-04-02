@@ -6,11 +6,15 @@ exports[`LanguagesTab should render without crashing 1`] = `
     <h3>
       Języki obce
     </h3>
-    <img
-      alt=""
-      class="CVEditorTab__img"
-      src="movie_5.png"
-    />
+    <div
+      class="form-group"
+    >
+      <img
+        alt=""
+        class="CVEditorTab__img"
+        src="movie_5.png"
+      />
+    </div>
     <div>
       <div
         class="row"
