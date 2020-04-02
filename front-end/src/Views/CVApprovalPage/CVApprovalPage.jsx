@@ -18,15 +18,13 @@ class CVApprovalPage extends React.Component {
 
     render() {
         return (
-            <Container>
-                <div className="background">
+            <Container fluid>
                     <Card className="center">
                         <Card.Header className="border pb-4"><h3>CV do przejrzenia</h3></Card.Header>
                         <Card.Body className="border">
                             <CVApprovalBody cvs={this.state.cvs} />
                         </Card.Body>
                     </Card>
-                </div>
             </Container>
         )
     };

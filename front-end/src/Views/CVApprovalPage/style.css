@@ -1,13 +1,3 @@
-.background {
-    background-image: url("../../assets/menu-backdrop.png");
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    position: relative;
-
-    height: 100vh;
-    flex-direction: column;
-}
 
 .users-approval-card {
     padding-top: 10vh;
@@ -19,10 +9,5 @@
     border: gray;
 }
 .center {
-    margin: 0;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
+    margin-top: 20vh;
 }
