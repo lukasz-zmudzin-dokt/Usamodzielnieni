@@ -1,4 +1,5 @@
 import React from "react";
+<<<<<<< HEAD
 import "./style.css";
 import {Card, Container} from "react-bootstrap";
 import MyOffers from "./components/MyOffers";
@@ -33,5 +34,9 @@ class MyOffersPage extends React.Component {
         );
     }
 }
+=======
+
+const MyOffersPage = () => <h1>Moje oferty</h1>;
+>>>>>>> master
 
 export default MyOffersPage;

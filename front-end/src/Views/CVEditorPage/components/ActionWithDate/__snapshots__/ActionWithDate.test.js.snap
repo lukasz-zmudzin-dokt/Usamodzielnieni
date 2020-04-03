@@ -1,0 +1,124 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ActionWithDate - integration should add action item to list 1`] = `
+<button
+  class="btn btn-dark"
+  id="Warszawa_Jakiś opis"
+  type="button"
+>
+  Jakiś opis od: 02/2020 do: 12/2020 (Warszawa)
+   x
+</button>
+`;
+
+exports[`ActionWithDate - integration should add action item to list when endTime is undefined 1`] = `
+<button
+  class="btn btn-dark"
+  id="Warszawa_Jakiś opis"
+  type="button"
+>
+  Jakiś opis od: 02/2020 do: teraz (Warszawa)
+   x
+</button>
+`;
+
+exports[`ActionWithDate should render without crashing 1`] = `
+<div>
+  <div>
+    <div
+      class="row"
+    >
+      <div
+        class="form-group col-md-6 col-12"
+      >
+        <label
+          class="form-label"
+          for="startTime"
+        >
+          Od:
+        </label>
+        <div
+          class="react-datepicker-wrapper"
+        >
+          <div
+            class="react-datepicker__input-container"
+          >
+            <input
+              class="form-control"
+              id="startTime"
+              placeholder="Data rozpoczęcia"
+              type="text"
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="form-group col-md-6 col-12"
+      >
+        <label
+          class="form-label"
+          for="endTime"
+        >
+          Do:
+        </label>
+        <div
+          class="react-datepicker-wrapper"
+        >
+          <div
+            class="react-datepicker__input-container"
+          >
+            <input
+              class="form-control"
+              id="endTime"
+              placeholder="Data zakończenia"
+              type="text"
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="form-group"
+    >
+      <label
+        class="form-label"
+        for="actionPlace"
+      >
+        Miejsce:
+      </label>
+      <input
+        class="form-control"
+        id="actionPlace"
+        placeholder="Nazwa szkoły/miejsca pracy"
+        type="text"
+        value=""
+      />
+    </div>
+    <div
+      class="form-group"
+    >
+      <label
+        class="form-label"
+        for="actionDescription"
+      >
+        Opis:
+      </label>
+      <input
+        class="form-control"
+        id="actionDescription"
+        placeholder="Profil/stanowisko ..."
+        type="text"
+        value=""
+      />
+    </div>
+    <button
+      class="itemsList__addButton btn btn-success"
+      type="button"
+    >
+      + Dodaj
+    </button>
+  </div>
+</div>
+`;

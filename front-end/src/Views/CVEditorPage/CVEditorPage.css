@@ -1,0 +1,24 @@
+@media (min-width: 768px) {
+  #root {
+    padding-top: 56px;
+    min-height: 100vh;
+
+    background-image: linear-gradient(#FFFFFFB2, #FFFFFFB2), url("/fot.png");;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+}
+
+.card-header {
+  text-align: center;
+}
+
+.react-datepicker-wrapper {
+  display: block;
+}
+
+.CVEditorPage_tabs {
+  margin: 0 !important;
+  border-bottom: 1px solid #dee2e6 !important;
+}
