@@ -10,7 +10,7 @@ const MyOffer = ({ offer, token, component})  => {
         <Card className="border">
             <Accordion.Toggle className="mouse-hand-pointer" as={Card.Header} eventKey={offer.id} onClick={e => (getInterestedPeople(token, offer.id)).then(r => r !== undefined ? component.setState({answers: r}):component.setState({answers: []}))}>
                 {offer.offer_name} -
-                <Alert.Link href="/"> strona oferty</Alert.Link>
+                <Alert.Link href={"/jobOffers/" + offer.id}> strona oferty</Alert.Link>
             </Accordion.Toggle>
             <Accordion.Collapse eventKey={offer.id}>
                 <Card.Body>
