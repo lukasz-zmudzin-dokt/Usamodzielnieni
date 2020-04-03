@@ -4,13 +4,12 @@ import { downloadCV } from "Views/MyOffersPage/functions/functions";
 
 const InterestedPerson = ({ person })  => {
     return (
-        <Row className="mt-3">
-            <Col xs={6} md={3}>{person.first_name}</Col>
-            <Col xs={6} md={3}>{person.last_name}</Col>
+        <Row className="mt-2">
+            <Col xs={12} md={6}>{person.first_name} {person.last_name}</Col>
             <Col xs={12} md={4}>
                 {person.email}
             </Col>
-            <Col xs={12} md={2}>
+            <Col xs={12} md={2} className="d-flex justify-content-end">
                 <Button variant="primary m-1 p-1" onClick={e => downloadCV(e, person.id)}>Zobacz CV</Button>
             </Col>
         </Row>

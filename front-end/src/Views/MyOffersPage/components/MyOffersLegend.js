@@ -1,14 +1,13 @@
 import React from "react";
 import {Col, Row} from "react-bootstrap";
+import "Views/MyOffersPage/style.css";
 
 const MyOffersLegend = ({ answers = [] })  => {
     if(answers.length > 0) {
         return (
-            <Row className="mt-3">
-                <Col xs={6} md={3}><b>Imię</b></Col>
-                <Col xs={6} md={3}><b>Nazwisko</b></Col>
-                <Col xs={12} md={4}><b>Email</b></Col>
-                <Col xs={12} md={2}><b>CV</b></Col>
+            <Row className="mt-3 hide-on-mobile">
+                <Col xs={12} md={6}><b>Imię i nazwisko</b></Col>
+                <Col xs={12} md={6}><b>Email</b></Col>
             </Row>
         );
     } else {

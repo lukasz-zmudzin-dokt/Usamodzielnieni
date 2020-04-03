@@ -12,3 +12,11 @@
 .max-height {
     height: 90vh;
 }
+@media (max-width: 767px) {
+    .hide-on-mobile {
+        display: none!important;
+    }
+}
+.mouse-hand-pointer {
+    cursor: pointer;
+}
