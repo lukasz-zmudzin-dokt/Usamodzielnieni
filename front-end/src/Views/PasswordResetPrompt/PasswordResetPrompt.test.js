@@ -8,7 +8,20 @@ describe('PasswordResetPrompt', () => {
     let apiResponseOK;
 
     beforeAll(() => {
-
+        jest.fn().mockImplementation((input, init) => {
+            return new Promise((resolve, reject) => {
+                if(apiFail) {
+                    resolve({status: 500});
+                } else if (init.method === "POST") {
+                    resolve({
+                        status: 201,
+                        json: () => Promise.resolve(apiResponseOK)
+                    })
+                } else {
+                    reject({});
+                }
+            });
+        });
     });
 
     beforeEach(() => {
