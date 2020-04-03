@@ -7,6 +7,7 @@ import Footer from "Views/Footer";
 import Menu from "Views/Menu";
 import OfferForm from "Views/OfferForm";
 import MyOffersPage from "Views/MyOffersPage";
+import ContactPage from "Views/ContactPage";
 
 export {
   UserProfilePage,
@@ -17,5 +18,6 @@ export {
   Footer,
   Menu,
   OfferForm,
-  MyOffersPage
+  MyOffersPage,
+  ContactPage
 };
