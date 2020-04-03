@@ -106,18 +106,31 @@ class CVEditorPage extends React.Component {
     }
 
     componentDidMount() {
-        getFeedback(this.context.token).then(res => {
-          this.setState({
-            comments: {
-              personalData: res.basic_info,
-              education: res.schools,
-              workExperience: res.experiences,
-              skills: res.skills,
-              languages: res.languages,
-              photo: res.additional_info
-            }
-          });
-        });
+        try {
+            getFeedback(this.context.token).then(res => {
+                this.setState({
+                    comments: {
+                    personalData: res.basic_info,
+                    education: res.schools,
+                    workExperience: res.experiences,
+                    skills: res.skills,
+                    languages: res.languages,
+                    photo: res.additional_info
+                    }
+                });
+            });
+        } catch(e) {
+            this.setState({
+                comments: {
+                    personalData: undefined,
+                    education: undefined,
+                    workExperience: undefined,
+                    skills: undefined,
+                    languages: undefined,
+                    photo: undefined
+                }
+            })
+        }
     }
     
     render() {
