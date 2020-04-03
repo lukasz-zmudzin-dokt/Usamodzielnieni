@@ -1,20 +1,22 @@
 import React from "react";
-import { Button, Row, Col } from "react-bootstrap";
+import { Button, Row, Col, Alert } from "react-bootstrap";
 import "./CVEditorTab.css";
 import {Form} from "react-bootstrap";
 
 const CVEditorTab = ({ title, movie, children, onPrevClick, onNextClick, comments }) => (
     <div>
         <h3>{title}</h3>
-        <Form.Group controlId="">
-            <img className="CVEditorTab__img" src={movie} alt="" />
-        </Form.Group>
+        <img className="CVEditorTab__img" src={movie} alt="" />
         
-        {(comments !== undefined && comments !== "" && comments !== null)? (
-        <>
-          <h5>Uwagi:</h5>
-          <h6>{comments}</h6>
-        </>
+        {(comments)? (
+        <Alert variant="info">
+            <Alert.Heading>
+              Uwagi:
+            </Alert.Heading>
+            <p>
+                {comments}
+            </p>
+        </Alert>
         ) : null}
 
         {children}

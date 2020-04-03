@@ -6,15 +6,11 @@ exports[`SkillsTab should render without crashing 1`] = `
     <h3>
       Umiejętności
     </h3>
-    <div
-      class="form-group"
-    >
-      <img
-        alt=""
-        class="CVEditorTab__img"
-        src="movie_4.png"
-      />
-    </div>
+    <img
+      alt=""
+      class="CVEditorTab__img"
+      src="movie_4.png"
+    />
     <div>
       <div
         class="form-group"

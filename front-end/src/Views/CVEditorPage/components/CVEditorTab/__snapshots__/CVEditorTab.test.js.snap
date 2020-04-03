@@ -6,15 +6,11 @@ exports[`CVEditorTab should render without crashing 1`] = `
     <h3>
       Tytuł karty
     </h3>
-    <div
-      class="form-group"
-    >
-      <img
-        alt=""
-        class="CVEditorTab__img"
-        src="./ścieżka_do_pliku.png"
-      />
-    </div>
+    <img
+      alt=""
+      class="CVEditorTab__img"
+      src="./ścieżka_do_pliku.png"
+    />
     <div />
     <div
       class="row"

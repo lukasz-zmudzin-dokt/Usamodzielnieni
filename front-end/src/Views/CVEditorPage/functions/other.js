@@ -72,11 +72,8 @@ const sendData = async (object, photo, token) => {
 };
 
 const getFeedback = async (token) => {
-  const url = "https://usamo-back.herokuapp.com/cv/feedback/";
-  const headers = {
-    Authorization: "Token " + token,
-    "Content-Type": "application/json"
-  };
+  const url = `${domain}cv/feedback/`;
+  const headers = getHeaders(token);
 
   const response = await fetch(url, { method: "GET", headers });
 

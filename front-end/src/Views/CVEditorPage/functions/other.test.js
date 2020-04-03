@@ -107,6 +107,7 @@ describe('getFeedback test', () => {
 
     beforeEach(() => {
         failFetch = false;
+        comments = {};
     })
 
     it('should return comments', async () => {

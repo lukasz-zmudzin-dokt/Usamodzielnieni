@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Col } from "react-bootstrap";
+import { Form, Row } from "react-bootstrap";
 import { CVEditorTab } from "..";
 import movie_1 from "assets/movie_1.png";
 
@@ -24,7 +24,7 @@ class PhotoTab extends React.Component {
                 onPrevClick={this.props.onPrevClick}
                 comments={this.props.comments}
                 >
-                <Form.Group as={Col} controlId="photo">
+                <Form.Group controlId="photo">
                     <Form.Label>
                         Wybierz zdjęcie:
                     </Form.Label>

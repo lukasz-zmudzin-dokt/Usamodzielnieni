@@ -32,7 +32,6 @@ class CVEditorPage extends React.Component {
             photo: null
         };
         this.tabs = [];
-        this.comments = {};
     }
 
     onPrevClick = () => {
