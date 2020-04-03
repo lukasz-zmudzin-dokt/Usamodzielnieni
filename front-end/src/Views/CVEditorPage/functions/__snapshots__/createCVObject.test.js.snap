@@ -1,0 +1,121 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`createCVObject should create cv object 1`] = `
+Object {
+  "basic_info": Object {
+    "date_of_birth": "4-11-2000",
+    "email": "jan.kowalski@mail.com",
+    "first_name": "Jan",
+    "last_name": "Kowalski",
+    "phone_number": "+48123123123",
+  },
+  "experiences": Array [
+    Object {
+      "description": "Jakiś opis",
+      "title": "Warszawa",
+      "year_end": 2003,
+      "year_start": 2002,
+    },
+  ],
+  "languages": Array [
+    Object {
+      "level": "podstawowy",
+      "name": "angielski",
+    },
+  ],
+  "schools": Array [
+    Object {
+      "additional_info": "Jakiś opis",
+      "name": "Warszawa",
+      "year_end": 2003,
+      "year_start": 2002,
+    },
+  ],
+  "skills": Array [
+    Object {
+      "description": "Jakaś umiejętność",
+    },
+  ],
+  "wants_verification": true,
+}
+`;
+
+exports[`createCVObject should create cv object when education endTime is undefined 1`] = `
+Object {
+  "basic_info": Object {
+    "date_of_birth": "4-11-2000",
+    "email": "jan.kowalski@mail.com",
+    "first_name": "Jan",
+    "last_name": "Kowalski",
+    "phone_number": "+48123123123",
+  },
+  "experiences": Array [
+    Object {
+      "description": "Jakiś opis",
+      "title": "Warszawa",
+      "year_end": 2003,
+      "year_start": 2002,
+    },
+  ],
+  "languages": Array [
+    Object {
+      "level": "podstawowy",
+      "name": "angielski",
+    },
+  ],
+  "schools": Array [
+    Object {
+      "additional_info": "Jakiś opis",
+      "name": "Warszawa",
+      "year_end": undefined,
+      "year_start": 2002,
+    },
+  ],
+  "skills": Array [
+    Object {
+      "description": "Jakaś umiejętność",
+    },
+  ],
+  "wants_verification": true,
+}
+`;
+
+exports[`createCVObject should create cv object when workExperience endTime is undefined 1`] = `
+Object {
+  "basic_info": Object {
+    "date_of_birth": "4-11-2000",
+    "email": "jan.kowalski@mail.com",
+    "first_name": "Jan",
+    "last_name": "Kowalski",
+    "phone_number": "+48123123123",
+  },
+  "experiences": Array [
+    Object {
+      "description": "Jakiś opis",
+      "title": "Warszawa",
+      "year_end": undefined,
+      "year_start": 2002,
+    },
+  ],
+  "languages": Array [
+    Object {
+      "level": "podstawowy",
+      "name": "angielski",
+    },
+  ],
+  "schools": Array [
+    Object {
+      "additional_info": "Jakiś opis",
+      "name": "Warszawa",
+      "year_end": 2003,
+      "year_start": 2002,
+    },
+  ],
+  "skills": Array [
+    Object {
+      "description": "Jakaś umiejętność",
+    },
+  ],
+  "wants_verification": true,
+}
+`;
