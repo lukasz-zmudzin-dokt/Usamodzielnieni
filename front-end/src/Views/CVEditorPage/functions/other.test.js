@@ -124,10 +124,12 @@ describe('getFeedback test', () => {
     })
     it('should throw status 500', async () => {
         failFetch=true;
+        let status;
         try {
             await getFeedback();
         } catch(e) {
-            expect(e).toEqual(500);
+            status = e;
         }
+        expect(status).toEqual(500);
     })
 });
