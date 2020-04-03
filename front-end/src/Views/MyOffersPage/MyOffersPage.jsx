@@ -12,8 +12,7 @@ class MyOffersPage extends React.Component {
     }
 
     componentDidMount() {
-        console.log(this.context.token);
-        getOffers(this.context.token).then(response => this.setState({ offers: response.results}));
+        getOffers(this.context.token).then(response => response !== undefined ? this.setState({ offers: response.results}) : []);
     }
 
     render() {

@@ -6,6 +6,5 @@ export const getInterestedPeople = async (token, id) => {
             "Content-Type": "application/json"
         }
     })
-    .then(res => (res.status === 200 ? res : Promise.reject(res)))
-    .then(res => res.json());
+    .then(res => (res.status === 200 ? res.json() : window.alert("Błąd pobierania danych z serwera.")));
 };

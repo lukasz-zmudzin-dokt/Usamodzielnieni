@@ -2,7 +2,7 @@ import React from "react";
 import {Accordion} from "react-bootstrap";
 import MyOffer from "./MyOffer";
 
-const MyOffers = ({ offers, token, component })  => {
+const MyOffers = ({ offers = [], token, component })  => {
     return (
         <Accordion defaultActiveKey="0">
             {offers.map((value) => {

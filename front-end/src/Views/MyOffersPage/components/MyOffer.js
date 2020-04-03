@@ -8,7 +8,7 @@ import "Views/MyOffersPage/style.css";
 const MyOffer = ({ offer, token, component})  => {
     return (
         <Card className="border">
-            <Accordion.Toggle as={Card.Header} eventKey={offer.id} onClick={e => (getInterestedPeople(token, offer.id)).then(r => component.setState({answers: r}))}>
+            <Accordion.Toggle as={Card.Header} eventKey={offer.id} onClick={e => (getInterestedPeople(token, offer.id)).then(r => r !== undefined ? component.setState({answers: r}):component.setState({answers: []}))}>
                 {offer.offer_name}
             </Accordion.Toggle>
             <Accordion.Collapse eventKey={offer.id}>
