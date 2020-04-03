@@ -11,9 +11,8 @@ class MyOffersPage extends React.Component {
         this.state = { offers: [], answers: [] };
     }
 
-    static contextType = UserContext;
-
     componentDidMount() {
+        console.log(this.context.token);
         getOffers(this.context.token).then(response => this.setState({ offers: response.results}));
     }
 
@@ -33,5 +32,7 @@ class MyOffersPage extends React.Component {
         );
     }
 }
+
+MyOffersPage.contextType = UserContext;
 
 export default MyOffersPage;
