@@ -1,9 +1,9 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { registerLocale } from "react-datepicker";
 import { Form, Container, Card, Button, Row, Alert } from "react-bootstrap";
 import { voivodeships } from "constants/voivodeships";
 import FormGroup from "components/FormGroup";
-import { sendData } from "Views/OfferForm/functions/sendData";
+import { sendData, getSelects } from "Views/OfferForm/functions/fetchData";
 import { UserContext } from "context";
 import "./style.css";
 import polish from "date-fns/locale/pl";
@@ -15,6 +15,7 @@ const OfferForm = () => {
   const history = useHistory();
   const [validated, setValidated] = useState(false);
   const [fail, setFail] = useState(false);
+  const [arrays, setArrays] = useState({});
 
   const [offer, setOffer] = useState({
     offer_name: "",
@@ -28,6 +29,20 @@ const OfferForm = () => {
   });
 
   const context = useContext(UserContext);
+
+  useEffect(() => {
+    const loadSelects = async token => {
+      let res;
+      try {
+        res = await getSelects(token);
+      } catch (e) {
+        console.log(e);
+        res = { categories: [], types: [] };
+      }
+      setArrays(res);
+    };
+    loadSelects(context.token);
+  }, [context.token]);
 
   const submit = event => {
     const form = event.currentTarget;
@@ -51,6 +66,7 @@ const OfferForm = () => {
           history.push("/myOffers");
         })
         .catch(() => {
+          console.log("tutaj");
           setFail(true);
         });
     }
@@ -64,7 +80,9 @@ const OfferForm = () => {
       company_address: "",
       voivodeship: voivodeships[0],
       description: "",
-      expiration_date: ""
+      expiration_date: "",
+      category: "",
+      type: ""
     });
     setValidated(false);
   };
@@ -136,6 +154,8 @@ const OfferForm = () => {
                 id="type"
                 setVal={val => setOffer({ ...offer, type: val })}
                 val={type}
+                type="select"
+                array={arrays.types}
                 required
                 incorrect="Podaj wymiar pracy np. staż,praca"
               />
@@ -156,6 +176,8 @@ const OfferForm = () => {
                 id="category"
                 setVal={val => setOffer({ ...offer, category: val })}
                 val={category}
+                type="select"
+                array={arrays.categories}
                 required
                 incorrect="Podaj branżę np. IT, marketing"
               />

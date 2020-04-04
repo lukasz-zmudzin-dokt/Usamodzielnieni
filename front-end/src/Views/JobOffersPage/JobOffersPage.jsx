@@ -17,14 +17,13 @@ const getOffers = async (token, filters) => {
     type
   } = filters;
   const voivodeshipQ = voivodeship ? `&voivodeship=${voivodeship}` : "";
-  const categoryQ = category ? `&category=${category}` : "";
-  const typeQ = type ? `&type=${type}` : "";
+  const categoryQ = category ? `&categories=${category}` : "";
+  const typeQ = type ? `&types=${type}` : "";
 
   const expirationDateQ = minExpirationDate
     ? `&min_expiration_date=${minExpirationDate}`
     : "";
   const query = `?page=${page}&page_size=${pageSize}${voivodeshipQ}${expirationDateQ}${categoryQ}${typeQ}`;
-
   const url = "https://usamo-back.herokuapp.com/job/job-offers/" + query;
   const headers = {
     Authorization: "Token " + token,
