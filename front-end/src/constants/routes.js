@@ -6,7 +6,8 @@ import {
   CVEditorPage,
   Menu,
   OfferForm,
-  MyOffersPage
+  MyOffersPage,
+  BlogPage
 } from "Views";
 
 const paths = {
@@ -19,7 +20,8 @@ const paths = {
   OFFER_FORM: "/offerForm",
   JOB_OFFERS: "/jobOffers",
   CV_APPROVAL: "/cvApproval",
-  MY_OFFERS: "/myOffers"
+  MY_OFFERS: "/myOffers",
+  BLOG_PAGE: "/blog"
 };
 
 export const userTypes = {
@@ -84,6 +86,12 @@ export default [
     component: MyOffersPage,
     isPrivate: true,
     type: userTypes.EMPLOYER
+  },
+  {
+    path: paths.BLOG_PAGE,
+    component: BlogPage,
+    isPrivate: true,
+    type: undefined
   }
 ];
 
