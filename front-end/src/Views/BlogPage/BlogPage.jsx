@@ -1,12 +1,21 @@
 import React from "react";
 import { Container, Card } from "react-bootstrap";
+import {
+  NewComment,
+  CommentsList,
+  BlogContent
+} from './_components';
 
 const BlogPage = () => {
   return (
     <Container>
       <Card>
-        <Card.Header as="h2">Blogi</Card.Header>
-        <Card.Body></Card.Body>
+        <Card.Header as="h2">Blog</Card.Header>
+        <Card.Body>
+          <BlogContent />
+          <CommentsList />
+          <NewComment />
+        </Card.Body>
       </Card>
     </Container>
   );

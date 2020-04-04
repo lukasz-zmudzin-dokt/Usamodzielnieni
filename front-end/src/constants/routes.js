@@ -21,7 +21,7 @@ const paths = {
   JOB_OFFERS: "/jobOffers",
   CV_APPROVAL: "/cvApproval",
   MY_OFFERS: "/myOffers",
-  BLOG_PAGE: "/blog"
+  BLOG_PAGE: "/blog/:id"
 };
 
 export const userTypes = {
@@ -91,7 +91,8 @@ export default [
     path: paths.BLOG_PAGE,
     component: BlogPage,
     isPrivate: true,
-    type: undefined
+    type: undefined,
+    exact: true
   }
 ];
 
