@@ -44,6 +44,7 @@ class LanguagesTab extends React.Component {
                 onPrevClick={this.props.onPrevClick}
                 onNextClick={this.props.onNextClick}
                 comments={this.props.comments}
+                loading={this.props.loading}
             >
                 <ItemsList
                     getItemId={this.getLanguageId} getItemName={this.getLanguageName} getItem={this.getLanguage}

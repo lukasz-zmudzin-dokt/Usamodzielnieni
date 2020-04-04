@@ -29,7 +29,8 @@ class CVEditorPage extends React.Component {
             workExperience: null,
             skills: null,
             languages: null,
-            photo: null
+            photo: null,
+            loading: false
         };
         this.tabs = [];
     }
@@ -69,7 +70,8 @@ class CVEditorPage extends React.Component {
             onChange: data => this.setState({ [key]: data }),
             onPrevClick: this.onPrevClick,
             onNextClick: this.onNextClick,
-            comments: this.state.comments[key]
+            comments: this.state.comments[key],
+            loading: this.state.loading
         })
         return [
             {
@@ -107,6 +109,7 @@ class CVEditorPage extends React.Component {
 
     componentDidMount() {
         try {
+            this.setState({loading: true});
             getFeedback(this.context.token).then(res => {
                 this.setState({
                     comments: {
@@ -116,7 +119,8 @@ class CVEditorPage extends React.Component {
                     skills: res.skills,
                     languages: res.languages,
                     photo: res.additional_info
-                    }
+                    },
+                    loading: false
                 });
             });
         } catch(e) {
@@ -128,7 +132,8 @@ class CVEditorPage extends React.Component {
                     skills: undefined,
                     languages: undefined,
                     photo: undefined
-                }
+                },
+                loading: false
             })
         }
     }

@@ -2,13 +2,22 @@ import React from "react";
 import { Button, Row, Col, Alert } from "react-bootstrap";
 import "./CVEditorTab.css";
 import {Form} from "react-bootstrap";
+import Loader from 'react-loader-spinner';
 
-const CVEditorTab = ({ title, movie, children, onPrevClick, onNextClick, comments }) => (
+const CVEditorTab = ({ title, movie, children, onPrevClick, onNextClick, comments, loading }) => (
     <div>
         <h3>{title}</h3>
         <img className="CVEditorTab__img" src={movie} alt="" />
         
-        {(comments)? (
+        {(loading)? (
+            <Alert variant="info">
+            <Alert.Heading>
+              Wczytuję uwagi...
+            </Alert.Heading>
+            <Loader type="ThreeDots" color="blue" />
+        </Alert>
+            
+        ) : (comments)? (
         <Alert variant="info">
             <Alert.Heading>
               Uwagi:
