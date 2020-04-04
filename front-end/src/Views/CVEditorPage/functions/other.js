@@ -1,6 +1,6 @@
 const domain = "https://usamo-back.herokuapp.com/";
 const url = {
-  generate: `${domain}cv/generate/`,
+  generate: `${domain}cv/generator/`,
   picture: `${domain}cv/picture/`
 }
 const getHeaders = (token) => ({ Authorization: "Token " + token, "Content-Type": "application/json" });
@@ -72,11 +72,11 @@ const sendData = async (object, photo, token) => {
 };
 
 const getFeedback = async (token) => {
-  const url = `${domain}cv/feedback/`;
+  const url = `${domain}cv/feedback`;
   const headers = getHeaders(token);
 
   const response = await fetch(url, { method: "GET", headers });
-  
+
   if (response.status === 200) {
     //console.log("response: " + response.json());
     return response.json();

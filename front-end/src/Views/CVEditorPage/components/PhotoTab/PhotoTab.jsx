@@ -2,8 +2,6 @@ import React from "react";
 import { Form, Row } from "react-bootstrap";
 import { CVEditorTab } from "..";
 import movie_1 from "assets/movie_1.png";
-//import "./PhotoTab.css"
-
 
 class PhotoTab extends React.Component {  
     

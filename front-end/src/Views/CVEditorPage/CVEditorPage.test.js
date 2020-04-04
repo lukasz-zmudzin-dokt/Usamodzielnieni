@@ -2,7 +2,6 @@ import React from 'react';
 import { render, fireEvent, queries } from '@testing-library/react';
 import CVEditorPage from './CVEditorPage';
 import { sendData, getFeedback } from "./functions/other.js";
-//import { it } from 'date-fns/locale';
 
 let mock_submitData = {};
 
