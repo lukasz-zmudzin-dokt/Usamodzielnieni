@@ -25,7 +25,7 @@ describe('ActionWithDate', () => {
                     default:
                         resolve({ 
                             status: 200,
-                            json: () => Promise.resolve("CV_Jan_Kowalski")
+                            json: () => Promise.resolve("/CV_Jan_Kowalski")
                         });
                         break;
                 }
