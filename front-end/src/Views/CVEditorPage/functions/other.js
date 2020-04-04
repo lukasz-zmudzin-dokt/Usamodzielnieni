@@ -76,7 +76,7 @@ const getFeedback = async (token) => {
   const headers = getHeaders(token);
 
   const response = await fetch(url, { method: "GET", headers });
-
+  
   if (response.status === 200) {
     //console.log("response: " + response.json());
     return response.json();

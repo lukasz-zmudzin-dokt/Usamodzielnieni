@@ -108,7 +108,35 @@ class CVEditorPage extends React.Component {
     }
 
     componentDidMount() {
-        try {
+        this.setState({loading: true});
+        getFeedback(this.context.token).then(res => {
+            this.setState({
+                comments: {
+                personalData: res.basic_info,
+                education: res.schools,
+                workExperience: res.experiences,
+                skills: res.skills,
+                languages: res.languages,
+                photo: res.additional_info
+                },
+                loading: false
+            });
+        }).catch(err => {
+            console.log(err);
+            this.setState({
+                comments: {
+                    personalData: undefined,
+                    education: undefined,
+                    workExperience: undefined,
+                    skills: undefined,
+                    languages: undefined,
+                    photo: undefined
+                },
+                loading: false
+            })
+        });
+        /*
+        try {            
             this.setState({loading: true});
             getFeedback(this.context.token).then(res => {
                 this.setState({
@@ -123,7 +151,8 @@ class CVEditorPage extends React.Component {
                     loading: false
                 });
             });
-        } catch(e) {
+        } catch(err) {
+            console.log(err);
             this.setState({
                 comments: {
                     personalData: undefined,
@@ -136,6 +165,7 @@ class CVEditorPage extends React.Component {
                 loading: false
             })
         }
+        */
     }
     
     render() {
