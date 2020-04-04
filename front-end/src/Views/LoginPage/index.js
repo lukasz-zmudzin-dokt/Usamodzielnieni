@@ -1,15 +1,11 @@
 import React from "react";
 import { Container, Button, Card } from "react-bootstrap";
-import Cookies from "universal-cookie";
 import Form from "react-bootstrap/Form";
 import { Link, Redirect } from "react-router-dom";
-import { connect } from "react-redux";
-import { setUserToken } from "redux/actions";
+import { UserContext } from "context";
 
 import "Views/LoginPage/style.css";
-import bgImage from "assets/fot..png";
-
-const cookies = new Cookies();
+import bgImage from "../../assets/fot..png";
 
 class LoginPage extends React.Component {
   state = {
@@ -19,8 +15,7 @@ class LoginPage extends React.Component {
     redirect: false,
     incorrect: false,
     cookieVal: false,
-    validated: false,
-    token: this.props.token || ""
+    validated: false
   };
 
   createMessage = status => {
@@ -37,7 +32,6 @@ class LoginPage extends React.Component {
 
   sendData = object => {
     const { username, password } = this.state;
-
     const url = "https://usamo-back.herokuapp.com/account/login/";
     fetch(url, {
       method: "POST",
@@ -51,15 +45,11 @@ class LoginPage extends React.Component {
       }
     }).then(res => {
       console.log(res);
-      if (res.status === 200) {
+      if (res.status === 201) {
         res.json().then(responseValue => {
-          const { token } = responseValue;
-          this.props.setUserToken(token);
-          this.setState({ token });
+          const { token, type } = responseValue;
+          this.context.login(token, type);
           this.setRedirect();
-          cookies.set(`token`, token, {
-            path: "/"
-          });
         });
       } else {
         this.setState({
@@ -88,18 +78,6 @@ class LoginPage extends React.Component {
     });
   };
 
-  setCookie = token => {
-    const current = new Date();
-    const nextYear = new Date();
-
-    nextYear.setFullYear(current.getFullYear() + 1); // ciasteczko na rok
-    console.log(token);
-    cookies.set(`token`, token, {
-      path: "/",
-      expires: nextYear
-    });
-  };
-
   handleCheck = e => {
     this.setState({
       cookieVal: e.target.checked
@@ -108,7 +86,6 @@ class LoginPage extends React.Component {
 
   handleSubmit = event => {
     const form = event.currentTarget;
-    const { password, username } = this.state;
 
     event.preventDefault();
 
@@ -116,12 +93,7 @@ class LoginPage extends React.Component {
       event.preventDefault();
       event.stopPropagation();
     } else {
-      // if (cookieVal) {
-      //   console.log("dodaje!");
-      //   setCookie();
-      // }
       this.sendData();
-      console.log(password, username); // login i hasło użytkownika
     }
 
     this.setState({
@@ -136,7 +108,7 @@ class LoginPage extends React.Component {
   };
 
   componentDidMount() {
-    if (cookies.get("token")) {
+    if (this.context.token) {
       this.setRedirect();
     }
   }
@@ -230,4 +202,6 @@ class LoginPage extends React.Component {
   }
 }
 
-export default connect(null, { setUserToken })(LoginPage);
+LoginPage.contextType = UserContext;
+
+export default LoginPage;

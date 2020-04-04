@@ -3,14 +3,12 @@ import Container from "react-bootstrap/Container";
 import FbIcon from "../../assets/facebook-128.ico";
 import LinkedInIcon from "../../assets/linkedin-128.ico";
 import YouTubeIcon from "../../assets/youtube-128.ico";
-import Background from "../../assets/menu-backdrop.png";
 
 import "Views/Footer/style.css";
 
 class Footer extends React.Component {
 
     render() {
-        console.log(Background);
         return (
             <Container className="Footer">
                 <div className="footer">
