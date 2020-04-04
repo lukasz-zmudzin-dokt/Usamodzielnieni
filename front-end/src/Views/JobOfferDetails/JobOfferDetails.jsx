@@ -25,6 +25,8 @@ const getOfferDetails = async (id, token) => {
 const mapOffer = (offer) => ({
   id: offer.id,
   title: offer.offer_name,
+  category: offer.category,
+  type: offer.type,
   companyName: offer.company_name,
   companyAddress: offer.company_address,
   voivodeship: offer.voivodeship,
@@ -70,10 +72,12 @@ const JobOfferDetails = props => {
           <div>
             <h3>{offer.title}</h3>
             <Row>
-              <DetailsItem md="6" xl="3" label="Nazwa firmy">{offer.companyName}</DetailsItem>
-              <DetailsItem md="6" xl="3" label="Adres firmy">{offer.companyAddress}</DetailsItem>
-              <DetailsItem md="6" xl="3" label="Lokalizacja">{offer.voivodeship}</DetailsItem>
-              <DetailsItem md="6" xl="3" label="Ważne do">{offer.expirationDate}</DetailsItem>
+              <DetailsItem md="6" xl="4" label="Nazwa firmy">{offer.companyName}</DetailsItem>
+              <DetailsItem md="6" xl="4" label="Adres firmy">{offer.companyAddress}</DetailsItem>
+              <DetailsItem md="6" xl="4" label="Lokalizacja">{offer.voivodeship}</DetailsItem>
+              <DetailsItem md="6" xl="4" label="Ważne do">{offer.expirationDate}</DetailsItem>
+              <DetailsItem md="6" xl="4" label="Kategoria">{offer.category}</DetailsItem>
+              <DetailsItem md="6" xl="4" label="Typ">{offer.type}</DetailsItem>
             </Row>
             <p>{offer.description}</p>
           </div>

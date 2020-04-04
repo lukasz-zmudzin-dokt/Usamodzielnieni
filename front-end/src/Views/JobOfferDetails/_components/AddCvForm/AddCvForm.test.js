@@ -21,7 +21,7 @@ describe('AddCvForm', () => {
                     case "GET":
                         resolve( apiStatus !== 200 ? { status: apiStatus } : { 
                             status: 200,
-                            json: () => Promise.resolve({ is_verified: isVerified })
+                            json: () => Promise.resolve([ { cv_id: '1', is_verified: isVerified } ])
                         });
                         break;
                     default:
@@ -44,7 +44,7 @@ describe('AddCvForm', () => {
             </MemoryRouter>
         );
 
-        await waitForElement(() => getByText('Utwórz CV'));
+        await waitForElement(() => getByText('utwórz nowe CV'));
 
         expect(container).toMatchSnapshot();
     });
@@ -59,7 +59,7 @@ describe('AddCvForm', () => {
 
         await waitForElement(() => getByText('Wystąpił błąd', { exact: false }));
         expect(getByText('Wystąpił błąd', { exact: false })).toBeInTheDocument();
-        expect(queryByText('Aplikuj')).not.toBeInTheDocument();
+        expect(queryByText('Aplikuj do oferty')).not.toBeInTheDocument();
         expect(queryByText('Utwórz CV')).not.toBeInTheDocument();
     });
 
@@ -71,9 +71,9 @@ describe('AddCvForm', () => {
             </MemoryRouter>
         );
 
-        await waitForElement(() => getByText('Utwórz CV'));
-        expect(getByText('Utwórz CV')).toBeInTheDocument();
-        expect(queryByText('Aplikuj')).not.toBeInTheDocument();
+        await waitForElement(() => getByText('utwórz nowe CV'));
+        expect(getByText('utwórz nowe CV')).toBeInTheDocument();
+        expect(queryByText('Aplikuj do oferty')).not.toBeInTheDocument();
     });
 
     it('should render apply button when user is verified', async () => {
@@ -84,9 +84,9 @@ describe('AddCvForm', () => {
             </MemoryRouter>
         );
 
-        await waitForElement(() => getByText('Aplikuj'));
-        expect(getByText('Aplikuj')).toBeInTheDocument();
-        expect(queryByText('Utwórz CV')).not.toBeInTheDocument();
+        await waitForElement(() => getByText('Aplikuj do oferty'));
+        expect(getByText('Aplikuj do oferty')).toBeInTheDocument();
+        expect(queryByText('utwórz nowe CV')).not.toBeInTheDocument();
     });
 
     it('should render error alert when api returns error after click', async () => {
@@ -97,14 +97,14 @@ describe('AddCvForm', () => {
             </MemoryRouter>
         );
 
-        await waitForElement(() => getByText('Aplikuj'));
+        await waitForElement(() => getByText('Aplikuj do oferty'));
         apiStatus = 500;
-        fireEvent.click(getByText('Aplikuj'));
+        fireEvent.click(getByText('Aplikuj do oferty'));
 
         await waitForElement(() => getByText('Wystąpił błąd', { exact: false }));
         expect(getByText('Wystąpił błąd', { exact: false })).toBeInTheDocument();
-        expect(queryByText('Aplikuj')).not.toBeInTheDocument();
-        expect(queryByText('Utwórz CV')).not.toBeInTheDocument();
+        expect(queryByText('Aplikuj do oferty')).not.toBeInTheDocument();
+        expect(queryByText('utwórz nowe CV')).not.toBeInTheDocument();
     });
 
     it('should render fail alert when api returns already added status after click', async () => {
@@ -115,14 +115,14 @@ describe('AddCvForm', () => {
             </MemoryRouter>
         );
 
-        await waitForElement(() => getByText('Aplikuj'));
+        await waitForElement(() => getByText('Aplikuj do oferty'));
         apiStatus = 400;
-        fireEvent.click(getByText('Aplikuj'));
+        fireEvent.click(getByText('Aplikuj do oferty'));
 
         await waitForElement(() => getByText('Już zaaplikowano', { exact: false }));
         expect(getByText('Już zaaplikowano', { exact: false })).toBeInTheDocument();
-        expect(queryByText('Aplikuj')).not.toBeInTheDocument();
-        expect(queryByText('Utwórz CV')).not.toBeInTheDocument();
+        expect(queryByText('Aplikuj do oferty')).not.toBeInTheDocument();
+        expect(queryByText('utwórz nowe CV')).not.toBeInTheDocument();
     });
 
     it('should render success alert when api returns success after click', async () => {
@@ -133,13 +133,13 @@ describe('AddCvForm', () => {
             </MemoryRouter>
         );
 
-        await waitForElement(() => getByText('Aplikuj'));
-        fireEvent.click(getByText('Aplikuj'));
+        await waitForElement(() => getByText('Aplikuj do oferty'));
+        fireEvent.click(getByText('Aplikuj do oferty'));
 
         await waitForElement(() => getByText('Pomyślnie zaaplikowano', { exact: false }));
         expect(getByText('Pomyślnie zaaplikowano', { exact: false })).toBeInTheDocument();
-        expect(queryByText('Aplikuj')).not.toBeInTheDocument();
-        expect(queryByText('Utwórz CV')).not.toBeInTheDocument();
+        expect(queryByText('Aplikuj do oferty')).not.toBeInTheDocument();
+        expect(queryByText('utwórz nowe CV')).not.toBeInTheDocument();
     });
 
     it('should render loading alert when component is waiting for api response', async () => {
@@ -150,9 +150,9 @@ describe('AddCvForm', () => {
         );
 
         expect(getByText('Ładowanie', { exact: false })).toBeInTheDocument();
-        expect(queryByText('Aplikuj')).not.toBeInTheDocument();
-        expect(queryByText('Utwórz CV')).not.toBeInTheDocument();
+        expect(queryByText('Aplikuj do oferty')).not.toBeInTheDocument();
+        expect(queryByText('utwórz nowe CV')).not.toBeInTheDocument();
 
-        await waitForElement(() => getByText('Utwórz CV'));
+        await waitForElement(() => getByText('utwórz nowe CV'));
     });
 });
