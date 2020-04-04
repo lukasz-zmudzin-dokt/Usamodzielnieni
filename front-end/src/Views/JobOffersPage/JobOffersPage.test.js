@@ -74,7 +74,7 @@ describe("JobOffersPage", () => {
         </MemoryRouter>
       );
 
-      expect(fetch).toHaveBeenCalledTimes(1);
+      expect(fetch).toHaveBeenCalledTimes(2);
 
       await waitForElement(() => getAllByText("Pokaż szczegóły"));
       expect(getAllByText("Pokaż szczegóły").length).toBe(3);
