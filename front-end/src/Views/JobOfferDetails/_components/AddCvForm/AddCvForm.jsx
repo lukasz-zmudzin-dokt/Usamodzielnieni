@@ -25,7 +25,7 @@ const mapCvList = (res) => res.map(cv => ({
 }));
 
 const sendCv = async (offerId, cvId, token) => {
-  let url = `https://usamo-back.herokuapp.com/job/offer-interested/${offerId}/`; // ${cvId}
+  let url = `https://usamo-back.herokuapp.com/job/offer-interested/${offerId}/${cvId}/`;
   const headers = {
     Authorization: "Token " + token,
     "Content-Type": "application/json"
