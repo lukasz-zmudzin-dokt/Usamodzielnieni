@@ -8,12 +8,22 @@ import { UserContext } from "context";
 import { JobOfferInfo, OffersPagination } from "./_components";
 
 const getOffers = async (token, filters) => {
-  const { page, pageSize, voivodeship, minExpirationDate } = filters;
+  const {
+    page,
+    pageSize,
+    voivodeship,
+    minExpirationDate,
+    category,
+    type
+  } = filters;
   const voivodeshipQ = voivodeship ? `&voivodeship=${voivodeship}` : "";
+  const categoryQ = category ? `&category=${category}` : "";
+  const typeQ = type ? `&type=${type}` : "";
+
   const expirationDateQ = minExpirationDate
     ? `&min_expiration_date=${minExpirationDate}`
     : "";
-  const query = `?page=${page}&page_size=${pageSize}${voivodeshipQ}${expirationDateQ}`;
+  const query = `?page=${page}&page_size=${pageSize}${voivodeshipQ}${expirationDateQ}${categoryQ}${typeQ}`;
 
   const url = "https://usamo-back.herokuapp.com/job/job-offers/" + query;
   const headers = {
@@ -60,55 +70,59 @@ const JobOffersPage = props => {
   ) {
     setFilters({ ...filters, page: queryParams.page });
   }
-  
-  useEffect(
-    () => { 
-      const loadOffers = async (token) => {
-        setIsOffersLoading(true);
-        let res;
-        try {
-          res = await getOffers(token, filters);
-        } catch (e) {
-          console.log(e)
-          res = { offers: [], count: 0 };
-          setError(true);
-        }
-        setOffers(res.offers);
-        setCount(res.count);
-        setIsOffersLoading(false);
-      }
-      loadOffers(user.token)
-    },
-    [user.token, filters]
-  );
 
-  const msg = error ? <Alert variant="danger">Wystąpił błąd podczas ładowania ofert.</Alert> :
-              isOffersLoading ? <Alert variant="info">Ładowanie ofert...</Alert> :
-              offers.length === 0 && <Alert variant="info">Brak ofert spełniających podane wymagania.</Alert>
+  useEffect(() => {
+    const loadOffers = async token => {
+      setIsOffersLoading(true);
+      let res;
+      try {
+        res = await getOffers(token, filters);
+      } catch (e) {
+        console.log(e);
+        res = { offers: [], count: 0 };
+        setError(true);
+      }
+      setOffers(res.offers);
+      setCount(res.count);
+      setIsOffersLoading(false);
+    };
+    loadOffers(user.token);
+  }, [user.token, filters]);
+
+  const msg = error ? (
+    <Alert variant="danger">Wystąpił błąd podczas ładowania ofert.</Alert>
+  ) : isOffersLoading ? (
+    <Alert variant="info">Ładowanie ofert...</Alert>
+  ) : (
+    offers.length === 0 && (
+      <Alert variant="info">Brak ofert spełniających podane wymagania.</Alert>
+    )
+  );
 
   return (
     <Container className="jobOffersPage">
       <Card>
         <Card.Header as="h2">Oferty pracy</Card.Header>
         <Filter setFilters={setFilters} count={count} />
-        {
-          msg ? <Card.Body>{msg}</Card.Body> : (
-            <>
-              <ListGroup variant="flush">
-                {offers.map((offer) => (
-                  <ListGroup.Item key={offer.id}>
-                    <JobOfferInfo offer={offer} />
-                  </ListGroup.Item>
-                ))}
-              </ListGroup>
-              <Card.Body>
-                <OffersPagination 
-                  current={filters.page}
-                  max={Math.ceil(count / filters.pageSize)} />
-              </Card.Body>
-            </>
-          )
-        }
+        {msg ? (
+          <Card.Body>{msg}</Card.Body>
+        ) : (
+          <>
+            <ListGroup variant="flush">
+              {offers.map(offer => (
+                <ListGroup.Item key={offer.id}>
+                  <JobOfferInfo offer={offer} />
+                </ListGroup.Item>
+              ))}
+            </ListGroup>
+            <Card.Body>
+              <OffersPagination
+                current={filters.page}
+                max={Math.ceil(count / filters.pageSize)}
+              />
+            </Card.Body>
+          </>
+        )}
       </Card>
     </Container>
   );

@@ -11,6 +11,8 @@ const Filter = ({ setFilters, count }) => {
   const [voivodeship, setVoivodeship] = useState("-- Wybierz --");
   const [pageSize, setPageSize] = useState(10);
   const [minExpirationDate, setMinExpirationDate] = useState();
+  const [category, setCategory] = useState("-- Wybierz --");
+  const [type, setType] = useState("-- Wybierz --");
 
   const filter = event => {
     event.preventDefault();
@@ -34,7 +36,9 @@ const Filter = ({ setFilters, count }) => {
       page: 1,
       voivodeship: voivodeshipV,
       pageSize,
-      minExpirationDate: newDate
+      minExpirationDate: newDate,
+      category,
+      type
     });
   };
 
@@ -47,7 +51,10 @@ const Filter = ({ setFilters, count }) => {
   return (
     <Form className="search__form" onSubmit={filter}>
       <Form.Row>
-        <FormGroup as={Col} xs={12} md={4}
+        <FormGroup
+          as={Col}
+          xs={12}
+          md={4}
           header="Województwo"
           array={voivodeships}
           val={voivodeship}
@@ -55,7 +62,10 @@ const Filter = ({ setFilters, count }) => {
           type="select"
           id="voivodeship"
         />
-        <FormGroup as={Col}  xs={12} md={4}
+        <FormGroup
+          as={Col}
+          xs={12}
+          md={4}
           header="Okres ważności"
           val={minExpirationDate}
           setVal={setMinExpirationDate}
@@ -63,13 +73,49 @@ const Filter = ({ setFilters, count }) => {
           id="minExpirationDate"
         />
 
-        <FormGroup as={Col} xs={12} md={4}
+        <FormGroup
+          as={Col}
+          xs={12}
+          md={4}
           header="Ilość ofert na stronie"
           val={pageSize}
           setVal={setPageSize}
           type="number"
           id="pageSize"
           length={{ min: 1, max: 100 }}
+        />
+        <FormGroup
+          as={Col}
+          xs={12}
+          md={4}
+          header="Ilość ofert na stronie"
+          val={pageSize}
+          setVal={setPageSize}
+          type="number"
+          id="pageSize"
+          length={{ min: 1, max: 100 }}
+        />
+        <FormGroup
+          as={Col}
+          xs={12}
+          md={4}
+          header="Braża"
+          type="select"
+          array={[]}
+          val={category}
+          setVal={setCategory}
+          id="category"
+        />
+        <FormGroup
+          as={Col}
+          xs={12}
+          md={4}
+          header="Typ stanowiska"
+          type="select"
+          array={[]}
+          val={type}
+          setVal={setType}
+          id="category"
         />
       </Form.Row>
 
@@ -79,7 +125,9 @@ const Filter = ({ setFilters, count }) => {
       <Button variant="outline-primary" className="mr-3" onClick={deleteFilter}>
         Wyczyść filtry
       </Button>
-      { count !== 0 && <small className="search__countText">Znaleziono {count} ofert</small>}
+      {count !== 0 && (
+        <small className="search__countText">Znaleziono {count} ofert</small>
+      )}
     </Form>
   );
 };

@@ -22,7 +22,9 @@ const OfferForm = () => {
     company_address: "",
     voivodeship: voivodeships[0],
     description: "",
-    expiration_date: ""
+    expiration_date: "",
+    category: "",
+    type: ""
   });
 
   const context = useContext(UserContext);
@@ -73,7 +75,9 @@ const OfferForm = () => {
     company_name,
     description,
     expiration_date,
-    voivodeship
+    voivodeship,
+    category,
+    type
   } = offer;
 
   return (
@@ -127,6 +131,14 @@ const OfferForm = () => {
                 val={voivodeship}
                 required
               />
+              <FormGroup
+                header="Wymiar pracy"
+                id="type"
+                setVal={val => setOffer({ ...offer, type: val })}
+                val={type}
+                required
+                incorrect="Podaj wymiar pracy np. staż,praca"
+              />
             </div>
             <div className="offerForm__wrapper">
               <FormGroup
@@ -138,6 +150,14 @@ const OfferForm = () => {
                 incorrect="Podaj opis"
                 length={{ min: 1, max: 1000 }}
                 required
+              />
+              <FormGroup
+                header="Branża"
+                id="category"
+                setVal={val => setOffer({ ...offer, category: val })}
+                val={category}
+                required
+                incorrect="Podaj branżę np. IT, marketing"
               />
               <FormGroup
                 header="Ważne do:"
