@@ -11,7 +11,8 @@ describe('CVEditorTab', () => {
             children: <div></div>,
             onPrevClick: () => {},
             onNextClick: () => {},
-            comments: ""
+            comments: "",
+            loading: false
         }
     });
 
@@ -77,4 +78,10 @@ describe('CVEditorTab', () => {
         const comHeader = queryByText("Uwagi:");
         expect(comHeader).not.toBeInTheDocument();
     });
+    it("should show loading spinner", () => {
+        props.loading = true;
+        const {queryByText} = render(<CVEditorTab {...props} />);
+        const comHeader = queryByText("Wczytuję uwagi...");
+        expect(comHeader).toBeInTheDocument();
+    })
 });
