@@ -28,7 +28,6 @@ class PersonalDataForm extends React.Component {
                         <Form.Control
                             name="first_name"
                             type="text"
-                            autoComplete="on"
                             placeholder="Imię"
                             defaultValue={first_name}
                             onBlur={e => onChange(onBlur, data, e)}
@@ -44,7 +43,6 @@ class PersonalDataForm extends React.Component {
                         <Form.Control
                             name="last_name"
                             type="text"
-                            autoComplete="on"
                             placeholder="Nazwisko"
                             defaultValue={last_name}
                             onBlur={e => onChange(onBlur, data, e)}
@@ -63,7 +61,6 @@ class PersonalDataForm extends React.Component {
                             type="tel"
                             required
                             pattern="[+]{1}[4]{1}[8]{1}[0-9]{3}[0-9]{3}[0-9]{3}"
-                            autoComplete="on"
                             placeholder="Numer telefonu"
                             defaultValue={phone_number}
                             onBlur={e => onChange(onBlur, data, e)}

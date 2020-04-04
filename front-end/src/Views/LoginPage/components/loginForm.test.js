@@ -2,7 +2,7 @@ import React from "react";
 import LoginForm from "./loginForm";
 import {MemoryRouter} from "react-router-dom";
 import {render} from "@testing-library/react"
-import {UserProvider} from "../../../context/UserContext";
+import {UserProvider} from "context/UserContext";
 
 describe('LoginForm', () => {
 

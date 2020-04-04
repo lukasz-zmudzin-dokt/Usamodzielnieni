@@ -30,7 +30,6 @@ class CompanyDataForm extends React.Component {
                         <Form.Control
                             name="name_of_place"
                             type="text"
-                            autoComplete="on"
                             placeholder="Nazwa firmy"
                             defaultValue={name_of_place}
                             onBlur={e => onChange(onBlur, data, e)}
@@ -44,7 +43,6 @@ class CompanyDataForm extends React.Component {
                         <Form.Control
                             name="street"
                             type="text"
-                            autoComplete="on"
                             placeholder="Ulica"
                             defaultValue={street}
                             onBlur={e => onChange(onBlur, data, e)}
@@ -58,7 +56,6 @@ class CompanyDataForm extends React.Component {
                         <Form.Control
                             name="city"
                             type="text"
-                            autoComplete="on"
                             placeholder="Nazwa miasta"
                             defaultValue={city}
                             onBlur={e => onChange(onBlur, data, e)}
@@ -73,7 +70,6 @@ class CompanyDataForm extends React.Component {
                         <Form.Control
                             name="city_code"
                             type="text"
-                            autoComplete="on"
                             placeholder="Kod pocztowy"
                             defaultValue={city_code}
                             onBlur={e => onChange(onBlur, data, e)}
@@ -87,7 +83,6 @@ class CompanyDataForm extends React.Component {
                         <Form.Control
                             name="company_nip"
                             type="text"
-                            autoComplete="on"
                             placeholder="NIP"
                             defaultValue={company_nip}
                             onBlur={e => onChange(onBlur, data, e)}

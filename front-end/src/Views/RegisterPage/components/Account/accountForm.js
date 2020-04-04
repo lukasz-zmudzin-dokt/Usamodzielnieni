@@ -1,6 +1,6 @@
 import {Card, Form} from "react-bootstrap";
 import React from "react";
-import {onChange} from "../../functions/handlers";
+import {onChange} from "Views/RegisterPage/functions/handlers";
 
 class AccountForm extends React.Component {
     constructor(props) {
@@ -32,7 +32,7 @@ class AccountForm extends React.Component {
                             defaultValue={email}
                             onBlur={e => onChange(onBlur, data, e)}
                             className="loginPage__input"
-                            maxLength="50"
+                            maxLength="60"
                         />
                         <Form.Control.Feedback type="invalid">
                             Podaj właściwy email
@@ -42,13 +42,12 @@ class AccountForm extends React.Component {
                         <Form.Control
                             name="username"
                             type="text"
-                            autoComplete="on"
                             placeholder="Nazwa użytkownika"
                             defaultValue={username}
                             onBlur={e => onChange(onBlur, data, e)}
                             required
                             minLength="6"
-                            maxLength="20"
+                            maxLength="30"
                         />
                         <Form.Control.Feedback type="invalid">
                             Minimalna ilośc znaków: 6
@@ -58,7 +57,6 @@ class AccountForm extends React.Component {
                         <Form.Control
                             name="password"
                             type="password"
-                            autoComplete="on"
                             placeholder="Hasło"
                             defaultValue={password}
                             onBlur={e => onChange(onBlur, data, e)}
@@ -75,12 +73,12 @@ class AccountForm extends React.Component {
                         <Form.Control
                             name="passwordR"
                             type="password"
-                            autoComplete="on"
                             placeholder="Powtórz hasło"
                             defaultValue={passwordR}
                             onBlur={e => onChange(onBlur, data, e)}
                             required
                             minLength="6"
+                            maxLength="30"
                         />
                         <Form.Control.Feedback type="invalid">
                             Minimalna ilośc znaków: 6

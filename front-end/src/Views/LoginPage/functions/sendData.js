@@ -11,7 +11,6 @@ export const sendData = async (credentials, event) => {
   });
 
   if (response.status === 201) {
-    console.log(response);
     const data = await response.json().then(data => mapData(data));
     return {
       status: response.status,

@@ -1,6 +1,6 @@
 import React from "react";
 import {Card, Form} from "react-bootstrap";
-import {onChange} from "../../functions/handlers";
+import {onChange} from "Views/RegisterPage/functions/handlers";
 
 class HomeDataForm extends React.Component {
     constructor(props) {
@@ -28,8 +28,7 @@ class HomeDataForm extends React.Component {
                     <Form.Group controlId="formGroupNameOfPlace">
                         <Form.Control
                             name="name_of_place"
-                            type="tel"
-                            autoComplete="on"
+                            type="text"
                             placeholder="Nazwa placówki"
                             defaultValue={name_of_place}
                             onBlur={e => onChange(onBlur, data, e)}
@@ -42,8 +41,7 @@ class HomeDataForm extends React.Component {
                     <Form.Group controlId="formGroupStreet">
                         <Form.Control
                             name="street"
-                            type="tel"
-                            autoComplete="on"
+                            type="text"
                             placeholder="Ulica"
                             defaultValue={street}
                             onBlur={e => onChange(onBlur, data, e)}
@@ -56,8 +54,7 @@ class HomeDataForm extends React.Component {
                     <Form.Group controlId="formGroupCity" className="">
                         <Form.Control
                             name="city"
-                            type="tel"
-                            autoComplete="on"
+                            type="text"
                             placeholder="Nazwa miasta"
                             defaultValue={city}
                             onBlur={e => onChange(onBlur, data, e)}
@@ -71,8 +68,7 @@ class HomeDataForm extends React.Component {
                     <Form.Group controlId="formGroupCityCode" className="">
                         <Form.Control
                             name="city_code"
-                            type="tel"
-                            autoComplete="on"
+                            type="text"
                             placeholder="Kod pocztowy"
                             defaultValue={city_code}
                             onBlur={e => onChange(onBlur, data, e)}

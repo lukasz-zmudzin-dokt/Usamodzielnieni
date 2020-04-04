@@ -54,7 +54,6 @@ class RegisterPage extends React.Component {
                 /> )}
             case "Administratorem": {return null;}
             default: {
-                console.log("Something went wrong");
                 return null;
             }
         }
@@ -93,7 +92,6 @@ class RegisterPage extends React.Component {
           account_type: this.state.account_type
         };
 
-        console.log(data);
         const isOK = handleSubmit(data, e);
         this.setValidated();
         if (isOK) {
@@ -133,7 +131,7 @@ class RegisterPage extends React.Component {
     };
 
     render() {
-        const { validated, error_flag, fail_message, incorrect_input } = this.state;
+        const { validated, error_flag, fail_message, incorrect_input, account_type, accountData, personalData, redirect } = this.state;
         const { selectType, renderSection, handleResponse, renderRedirect } = this;
         const types = this.props.accountTypes || ['Podopiecznym', 'Pracodawcą'];
         return (
@@ -153,7 +151,7 @@ class RegisterPage extends React.Component {
                                 className="register_radio_type"
                                 as="select"
                                 onChange={e => selectType(e)}
-                                defaultValue={this.state.account_type}
+                                defaultValue={account_type}
                             >
                                 {types.map(type => (<option key={type} value={type}>{type}</option>))}
                             </Form.Control>
@@ -166,15 +164,14 @@ class RegisterPage extends React.Component {
                         >
                             <section className="row">
                                 <PersonalDataForm
-                                    data={this.state.personalData}
+                                    data={personalData}
                                     onBlur={personalData => this.setState({personalData})}
                                 />
                                 {renderSection()}
                                 <AccountForm
-                                    data={this.state.accountData}
+                                    data={accountData}
                                     onBlur={accountData => this.setState({accountData})}
                                 />
-                                {console.log(this.state)}
                             </section>
                             <Button
                                 variant="secondary"
@@ -198,7 +195,7 @@ class RegisterPage extends React.Component {
                         </div>
                     </Card.Body>
                 </Card>
-                {renderRedirect(this.state.redirect)}
+                {renderRedirect(redirect)}
             </Container>
         );
     }
