@@ -9,18 +9,18 @@ describe('CompanyDataForm', () => {
     it(' should render correctly', () => {
         const data = null;
         const onBlur = jest.fn();
-        const { component } = render(
+        const { container } = render(
             <MemoryRouter>
                 <CompanyDataForm data={data} onBlur={onBlur} />
             </MemoryRouter>
         );
-        expect(component).toMatchSnapshot();
+        expect(container).toMatchSnapshot();
     });
 
     it('should return missing fields error', async () => {
         const data = parent.state.companyData;
         const onBlur = jest.fn();
-        const {component, getByPlaceholderText} = render(
+        const {container, getByPlaceholderText} = render(
             <MemoryRouter>
                 <CompanyDataForm data={data} onBlur={onBlur} />
             </MemoryRouter>
@@ -43,7 +43,7 @@ describe('CompanyDataForm', () => {
         });
 
         fireEvent.click(getByTestId(parent, "submitBtn"));
-        await waitForElement(() => getByText(component, "Podaj "));
+        await waitForElement(() => getByText(container, "Podaj "));
         expect(getByText("Podaj ", {exact: false})).toBeInTheDocument();
     });
 });

@@ -15,12 +15,12 @@ describe('AccountForm', () => {
     });
 
     it('should render correctly', () => {
-        const { component } = render(
+        const { container } = render(
             <MemoryRouter>
                 <AccountForm {...props} />
             </MemoryRouter>
         );
-        expect(component).toMatchSnapshot();
+        expect(container).toMatchSnapshot();
     });
 
     it('should return missing fields error', async () => {

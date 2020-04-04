@@ -63,10 +63,7 @@ class LoginPage extends React.Component {
       });
       event.preventDefault();
       sendData(this.state.credentials, event).then(response => {
-        //response === undefined
-        console.log(response);
         const {status} = response;
-        console.log(status);
         if (status === 201) {
           const {token, type} = response;
           this.context.login(token, type);

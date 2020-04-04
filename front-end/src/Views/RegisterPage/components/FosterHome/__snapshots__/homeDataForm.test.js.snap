@@ -1,35 +1,35 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`AccountForm should render correctly 1`] = `
+exports[`HomeDataForm should render correctly 1`] = `
 <div>
   <div
-    class="loginPage__cardSection col-lg  card bg-light"
+    class="loginPage__cardSection col-lg mr-lg-3 card bg-light"
   >
     <h4
       class="card-header"
     >
-      Dane konta
+      Dane placówki
     </h4>
     <div
-      class="card-body"
+      class="account_form_card card-body"
     >
       <div
         class="form-group"
       >
         <input
-          class="loginPage__input form-control"
-          id="formGroupEmail"
-          maxlength="50"
-          name="email"
-          placeholder="Email"
+          autocomplete="on"
+          class="form-control"
+          id="formGroupNameOfPlace"
+          name="name_of_place"
+          placeholder="Nazwa placówki"
           required=""
-          type="email"
+          type="tel"
           value=""
         />
         <div
           class="invalid-feedback"
         >
-          Podaj właściwy email
+          Podaj nazwę placówki
         </div>
       </div>
       <div
@@ -38,19 +38,17 @@ exports[`AccountForm should render correctly 1`] = `
         <input
           autocomplete="on"
           class="form-control"
-          id="formGroupUsername"
-          maxlength="20"
-          minlength="6"
-          name="username"
-          placeholder="Nazwa użytkownika"
+          id="formGroupStreet"
+          name="street"
+          placeholder="Ulica"
           required=""
-          type="text"
+          type="tel"
           value=""
         />
         <div
           class="invalid-feedback"
         >
-          Minimalna ilośc znaków: 6
+          Podaj ulicę na której znajduje się placówka
         </div>
       </div>
       <div
@@ -59,19 +57,17 @@ exports[`AccountForm should render correctly 1`] = `
         <input
           autocomplete="on"
           class="form-control"
-          id="formGroupPassword"
-          maxlength="30"
-          minlength="6"
-          name="password"
-          placeholder="Hasło"
+          id="formGroupCity"
+          name="city"
+          placeholder="Nazwa miasta"
           required=""
-          type="password"
+          type="tel"
           value=""
         />
         <div
           class="invalid-feedback"
         >
-          Minimalna ilośc znaków: 6
+          Podaj nazwę miasta
         </div>
       </div>
       <div
@@ -80,20 +76,18 @@ exports[`AccountForm should render correctly 1`] = `
         <input
           autocomplete="on"
           class="form-control"
-          id="formGroupPasswordRepeat"
-          minlength="6"
-          name="passwordR"
-          placeholder="Powtórz hasło"
+          id="formGroupCityCode"
+          name="city_code"
+          placeholder="Kod pocztowy"
           required=""
-          type="password"
+          type="tel"
           value=""
         />
         <div
           class="invalid-feedback"
         >
-          Minimalna ilośc znaków: 6
+          Podaj kod pocztowy
         </div>
-        
       </div>
     </div>
   </div>

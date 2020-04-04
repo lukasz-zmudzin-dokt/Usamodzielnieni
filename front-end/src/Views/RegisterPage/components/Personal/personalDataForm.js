@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, Form } from 'react-bootstrap';
-import {onChange} from "../../functions/handlers";
+import {onChange} from "Views/RegisterPage/functions/handlers";
 
 class PersonalDataForm extends React.Component {
     constructor(props) {

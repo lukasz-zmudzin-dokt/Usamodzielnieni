@@ -11,35 +11,35 @@ describe('PersonalDataForm', () => {
             personalData: null
         };
         const onBlur = jest.fn();
-        const { component } = render(
+        const { container } = render(
             <MemoryRouter>
                 <PersonalDataForm data={data} onBlur={onBlur} />
             </MemoryRouter>
         );
-        expect(component).toMatchSnapshot();
+        expect(container).toMatchSnapshot();
     });
 
     it('should return missing fields error', async () => {
         const data = parent.state.personalData;
         const onBlur = jest.fn();
-        const {component, getByPlaceholderText} = render(
+        const {container, getByPlaceholderText} = render(
             <MemoryRouter>
                 <PersonalDataForm data={data} onBlur={onBlur} />
             </MemoryRouter>
         );
 
-        fireEvent.change(getByPlaceholderText(component, "Imię"), {
+        fireEvent.change(getByPlaceholderText(container, "Imię"), {
             target: {value: "qwe"}
         });
-        fireEvent.change(getByPlaceholderText(component, "Nazwisko"), {
+        fireEvent.change(getByPlaceholderText(container, "Nazwisko"), {
             target: {value: "qweqwe"}
         });
-        fireEvent.change(getByPlaceholderText(component, "Numer telefonu"), {
+        fireEvent.change(getByPlaceholderText(container, "Numer telefonu"), {
             target: {value: "+48123456789"}
         });
 
         fireEvent.click(getByTestId(parent, "submitBtn"));
-        await waitForElement(() => getByText(component, "Podaj "));
-        expect(getByText(component,"Podaj ")).toBeInTheDocument();
+        await waitForElement(() => getByText(container, "Podaj "));
+        expect(getByText(container,"Podaj ")).toBeInTheDocument();
     });
 });

@@ -25,7 +25,6 @@ class HomeDataForm extends React.Component {
                     Dane placówki
                 </Card.Header>
                 <Card.Body className="account_form_card">
-                    {/*console.log(this.state)*/}
                     <Form.Group controlId="formGroupNameOfPlace">
                         <Form.Control
                             name="name_of_place"
@@ -54,7 +53,6 @@ class HomeDataForm extends React.Component {
                             Podaj ulicę na której znajduje się placówka
                         </Form.Control.Feedback>
                     </Form.Group>
-                    {/* <section className="row"> */}
                     <Form.Group controlId="formGroupCity" className="">
                         <Form.Control
                             name="city"
@@ -84,7 +82,6 @@ class HomeDataForm extends React.Component {
                             Podaj kod pocztowy
                         </Form.Control.Feedback>
                     </Form.Group>
-                    {/* </section> */}
                 </Card.Body>
             </Card>
         )
