@@ -1,0 +1,33 @@
+.loginPage {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+.register_account_type {
+    margin-bottom: 2vh !important;
+}
+
+.loginPage__cardSection {
+    margin-bottom: 15px;
+}
+
+.loginPage__messageFail {
+    margin-bottom: 0.5rem;
+}
+
+.loginPage__links {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+
+@media (orientation: portrait) {
+    .loginPage__register {
+        top: 94px;
+    }
+}

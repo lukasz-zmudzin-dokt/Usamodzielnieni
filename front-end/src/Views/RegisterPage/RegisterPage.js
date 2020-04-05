@@ -1,7 +1,6 @@
 import React from "react";
 import {Container, Card, Form, Button, Alert} from "react-bootstrap";
 import {Link, Redirect} from "react-router-dom";
-import bgImage from "assets/fot..png";
 import PersonalDataForm from "./components/Personal/personalDataForm";
 import AccountForm from "./components/Account/accountForm";
 import {handleIncorrectResponse} from "./functions/handlers";
@@ -10,7 +9,7 @@ import { UserContext } from "context";
 import HomeDataForm from "./components/FosterHome/homeDataForm";
 import CompanyDataForm from "./components/Company/companyDataForm";
 import {sendData} from "./functions/sendData";
-
+import "./RegisterPage.css";
 
 class RegisterPage extends React.Component {
     constructor(props) {
@@ -136,9 +135,6 @@ class RegisterPage extends React.Component {
         const types = this.props.accountTypes || ['Podopiecznym', 'Pracodawcą'];
         return (
             <Container className="loginPage loginPage__register">
-                {window.innerWidth >= 768 ? (
-                    <img className="loginPage__bgImage" src={bgImage} alt="Tło" />
-                ) : null}
                 <Card className="loginPage__card">
                     <Card.Header as="h2" className="loginPage__header">
                         Rejestracja
