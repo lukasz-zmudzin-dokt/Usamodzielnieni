@@ -26,16 +26,22 @@ class PhotoTab extends React.Component {
                 error={this.props.error}
                 >
                 <Form.Group controlId="photo">
-                    <Form.Label>
-                        Wybierz zdjęcie:
-                    </Form.Label>
-                    <Form.Control
+                    <Form.File
+                        id="custom-file"
+                        label="Wybierz zdjęcie"
+                        custom
+                        ref={(ref) => this.fileInput = ref}
+                        onChange={this.onChange}
+                        accept="image/*"
+                        data-browse="Dodaj"
+                    />
+                    {/*<Form.Control
                         name="photo"
                         type="file"
                         ref={(ref) => this.fileInput = ref}
                         onChange={this.onChange}
                         accept="image/*"
-                    />
+                    />*/}
                 </Form.Group>
             </CVEditorTab>
         );
