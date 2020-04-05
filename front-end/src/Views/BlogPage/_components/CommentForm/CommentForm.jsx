@@ -3,19 +3,35 @@ import { Card, Form, Button, Alert } from "react-bootstrap";
 import { UserContext } from "context";
 import "./CommentForm.css";
 
-const sendComment = async (token, content, blogId, commentId) => {
-    let url = `https://usamo-back.herokuapp.com/job/job-offer/`;
+const updateComment = async (token, content, commentId) => {
+    let url = `https://usamo-back.herokuapp.com/blog/comment/${commentId}`;
     const headers = {
-      Authorization: "Token " + token,
-      "Content-Type": "application/json"
+        Authorization: "Token " + token,
+        "Content-Type": "application/json"
     };
-  
-    const response = await fetch(url, { method: commentId ? "PUT" : "POST", headers });
-  
+
+    const response = await fetch(url, { method: "PUT", headers });
+
     if (response.status === 200) {
-      return response.json();
+        return response.json();
     } else {
-      throw response.status;
+        throw response.status;
+    }
+}
+
+const addComment = async (token, content, blogId) => {
+    let url = `https://usamo-back.herokuapp.com/blog/${blogId}/comment/`;
+    const headers = {
+        Authorization: "Token " + token,
+        "Content-Type": "application/json"
+    };
+
+    const response = await fetch(url, { method: "POST", headers });
+
+    if (response.status === 200) {
+        return response.json();
+    } else {
+        throw response.status;
     }
 }
 
@@ -37,12 +53,19 @@ const CommentForm = ({ blogId, comment, ...rest }) => {
     const onSubmit = async (e) => {
         e.preventDefault();
         try {
-            await sendComment(
-                user.token,
-                commentContent,
-                blogId,
-                comment ? comment.id : undefined
-            );
+            if (comment) {
+                await updateComment(
+                    user.token,
+                    commentContent,
+                    comment.id
+                );
+            } else {
+                await addComment(
+                    user.token,
+                    commentContent,
+                    blogId
+                );
+            }
             setSubmitted(true);
         } catch (e) {
             setError(true);
@@ -50,7 +73,7 @@ const CommentForm = ({ blogId, comment, ...rest }) => {
     }
 
     const msg = error ? (<Alert variant="danger">Wystąpił błąd podczas przesyłania komentarza.</Alert>) :
-                submitted && (<Alert variant="success">Pomyślnie przesłano komentarz.</Alert>);
+        submitted && (<Alert variant="success">Pomyślnie przesłano komentarz.</Alert>);
 
     return (
         <Card {...rest}>
