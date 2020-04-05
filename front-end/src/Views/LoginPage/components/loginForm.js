@@ -4,10 +4,6 @@ import { Card, Form } from 'react-bootstrap';
 class LoginForm extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            username: "",
-            password: ""
-        }
     }
 
     onChange = (e) => {
@@ -22,7 +18,6 @@ class LoginForm extends React.Component {
     };
 
     render() {
-        const {username, password} = this.state;
         const { onChange } = this;
 
         return (
@@ -34,7 +29,6 @@ class LoginForm extends React.Component {
                         type="text"
                         placeholder="Login"
                         required
-                        defaultValue={username}
                         onChange={e => onChange(e)}
                         className="loginPage__input"
                     />
@@ -48,7 +42,6 @@ class LoginForm extends React.Component {
                         name="password"
                         type="password"
                         placeholder="Hasło"
-                        defaultValue={password}
                         onChange={e => onChange(e)}
                         required
                     />
