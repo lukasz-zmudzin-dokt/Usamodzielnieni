@@ -44,7 +44,7 @@ const mapAuthor = (author) => ({
 
 const BlogPost = () => {
   const [post, setPost] = useState(null);
-  const [isPostLoading, setIsPostLoading] = useState(true);
+  const [isPostLoading, setIsPostLoading] = useState(false);
   const [error, setError] = useState(false);
   const user = useContext(UserContext);
 
@@ -64,7 +64,7 @@ const BlogPost = () => {
         }
         setPost(loadedPost);
         setIsPostLoading(false);
-      }
+      };
       loadPost(post_Id, user.token)
     },
     [post_Id, user.token]

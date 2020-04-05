@@ -1,7 +1,7 @@
 import React from 'react'
 import {Card} from "react-bootstrap";
 
-const BlogContent = ({ post }, type) => {
+const BlogContent = ({ post }, user) => {
     const {first_name, last_name, email} = post.author;
     return (
         <Card>
