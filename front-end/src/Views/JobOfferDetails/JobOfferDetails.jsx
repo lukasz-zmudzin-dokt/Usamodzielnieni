@@ -82,7 +82,7 @@ const JobOfferDetails = props => {
             <p>{offer.description}</p>
           </div>
         )}
-        <AddCvForm id={props.match.params.id} user={user}/>
+        { user.type === 'Standard' && <AddCvForm id={props.match.params.id} user={user}/> }
       </Card.Body>
       </Card>
     </Container>

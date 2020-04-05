@@ -58,11 +58,18 @@ const AddCvForm = ({ id, user, ...props }) => {
         setError(true);
       }
       setCvList(loadedCvList);
-      if (loadedCvList.length > 0) setSelectedCv(loadedCvList[0].id);
+      if (loadedCvList.length > 0) {
+        setSelectedCv(loadedCvList[0].id);
+      }
       setIsCvListLoading(false);
     }
     loadCvList(user.token)
   }, [user.token]);
+
+  const onChange = (e) => {
+    const value = e.target.value;
+    setSelectedCv(value);
+  }
 
   const onApplyClick = async (e) => {
     e.preventDefault()
@@ -103,7 +110,7 @@ const AddCvForm = ({ id, user, ...props }) => {
             <Form.Control
               as="select" 
               value={selectedCv}
-              onChange={e => setSelectedCv(e.target.value)}
+              onChange={onChange}
               required>
               {getVerifiedCvs(cvList).map((cv, i) => <option key={cv.id} value={cv.id}>Wersja {i+1}</option>)}
             </Form.Control>
