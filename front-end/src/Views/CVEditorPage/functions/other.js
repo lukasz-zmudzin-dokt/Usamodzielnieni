@@ -53,7 +53,7 @@ const addPhoto = async (token, photo, cvId) => {
   }
 }
 
-export const sendData = async (object, photo, token) => {
+const sendData = async (object, photo, token) => {
   console.log(JSON.stringify(object));
 
   let file;
@@ -70,3 +70,37 @@ export const sendData = async (object, photo, token) => {
   const cvUrl = `${domain}${file.substring(1)}`;
   window.open(cvUrl, "_blank");
 };
+
+const getCvId = async (token, cvNumber) => {
+  const url = `${domain}cv/user/list`;
+  const headers = getHeaders(token);
+  const response = await fetch(url, {method: "GET", headers});
+  
+  if(response.status === 200) {
+    const cvList = await response.json();
+    const cv = cvList[cvNumber];
+    const cvId = cv.cv_id;
+    return cvId;
+  } else {
+    throw response.status;
+  }
+}
+
+const getFeedback = async (token, id) => {
+  try {
+    //const id = await getCvId(token, 0);
+    const url = `${domain}cv/feedback/${id}`;
+    const headers = getHeaders(token);
+    const response = await fetch(url, { method: "GET", headers });
+
+    if (response.status === 200) {
+      return await response.json();
+    } else {
+      throw response.status;
+    }
+  } catch(e) {
+    throw e;
+  }
+};
+
+export {sendData, getFeedback};

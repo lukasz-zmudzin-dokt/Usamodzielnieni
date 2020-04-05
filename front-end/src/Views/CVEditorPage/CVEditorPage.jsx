@@ -12,8 +12,9 @@ import {
 } from './components';
 import { UserContext } from "context";
 
-import { sendData } from "./functions/other.js";
+import { sendData, getFeedback } from "Views/CVEditorPage/functions/other.js";
 import { createCVObject } from "Views/CVEditorPage/functions/createCVObject.js";
+import {withRouter} from "react-router-dom";
 
 
 class CVEditorPage extends React.Component {
@@ -21,6 +22,7 @@ class CVEditorPage extends React.Component {
         super(props);
         this.state = {
             formTab: "personalData",
+            comments: {},
             error: false,
 
             personalData: null,
@@ -28,7 +30,10 @@ class CVEditorPage extends React.Component {
             workExperience: null,
             skills: null,
             languages: null,
-            photo: null
+            photo: null,
+            loading: false,
+            commentsError: false,
+            showComments: true
         };
         this.tabs = [];
     }
@@ -67,7 +72,11 @@ class CVEditorPage extends React.Component {
             data: this.state[key],
             onChange: data => this.setState({ [key]: data }),
             onPrevClick: this.onPrevClick,
-            onNextClick: this.onNextClick
+            onNextClick: this.onNextClick,
+            comments: this.state.comments[key],
+            loading: this.state.loading,
+            error: this.state.commentsError,
+            showComments: this.state.showComments
         })
         return [
             {
@@ -102,6 +111,35 @@ class CVEditorPage extends React.Component {
             }
         ]
     }
+
+    componentDidMount() {
+        let cvId = this.props.match.params.id;
+        if(cvId) {
+            this.setState({loading: true});
+            getFeedback(this.context.token, this.props.match.params.id).then(res => {
+                this.setState({
+                    comments: {
+                    personalData: res.basic_info,
+                    education: res.schools,
+                    workExperience: res.experiences,
+                    skills: res.skills,
+                    languages: res.languages,
+                    photo: res.additional_info
+                    },
+                    loading: false,
+                    commentsError: false
+                });
+            }).catch(err => {
+                console.log(err);
+                this.setState({
+                    loading: false,
+                    commentsError: true
+                });
+            });
+        } else {
+            this.setState({showComments: false});
+        }
+    }
     
     render() {
         this.tabs = this.getTabs();
@@ -131,4 +169,4 @@ class CVEditorPage extends React.Component {
 
 CVEditorPage.contextType = UserContext;
 
-export default CVEditorPage;
+export default withRouter(CVEditorPage);
