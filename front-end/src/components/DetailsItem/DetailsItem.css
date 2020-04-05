@@ -1,0 +1,9 @@
+.detailsItem {
+    margin-bottom: .5rem;
+}
+.detailsItem__label::after {
+    content: ":";
+}
+.detailsItem__value {
+    font-weight: 600;
+}

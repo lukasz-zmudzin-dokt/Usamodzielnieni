@@ -19,12 +19,12 @@ describe('ActionWithDate', () => {
                         resolve({ status: 200 });
                         break;
                     case "POST":
-                        resolve({ status: init.body ? 201 : 400 });
+                        resolve(init.body ? { status: 201, json: () => Promise.resolve({cv_id: '1'}) } : { status: 400 } );
                         break;
                     default:
                         resolve({ 
                             status: 200,
-                            json: () => Promise.resolve("CV_Jan_Kowalski")
+                            json: () => Promise.resolve("/CV_Jan_Kowalski")
                         });
                         break;
                 }
@@ -57,25 +57,25 @@ describe('ActionWithDate', () => {
 
     it('should throw an error when delete api return wrong status', async () => {
         failFetch = 'DELETE';
-        failFetchUrl = 'https://usamo-back.herokuapp.com/cv/generate/'
+        failFetchUrl = 'https://usamo-back.herokuapp.com/cv/generator/'
         await expect(sendData(cv, file, token)).rejects.toThrow('api error');
     })
 
     it('should throw an error when get api return wrong status', async () => {
         failFetch = 'GET';
-        failFetchUrl = 'https://usamo-back.herokuapp.com/cv/generate/'
+        failFetchUrl = 'https://usamo-back.herokuapp.com/cv/generator/1/'
         await expect(sendData(cv, file, token)).rejects.toThrow('api error');
     })
 
     it('should throw an error when post cv api return wrong status', async () => {
         failFetch = 'POST';
-        failFetchUrl = 'https://usamo-back.herokuapp.com/cv/generate/'
+        failFetchUrl = 'https://usamo-back.herokuapp.com/cv/generator/'
         await expect(sendData(cv, file, token)).rejects.toThrow('api error');
     })
 
     it('should throw an error when post photo api return wrong status', async () => {
         failFetch = 'POST';
-        failFetchUrl = 'https://usamo-back.herokuapp.com/cv/picture/'
+        failFetchUrl = 'https://usamo-back.herokuapp.com/cv/picture/1/'
         await expect(sendData(cv, file, token)).rejects.toThrow('api error');
     })
 });
