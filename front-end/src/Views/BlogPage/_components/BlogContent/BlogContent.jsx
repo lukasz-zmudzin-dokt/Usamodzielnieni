@@ -1,9 +1,9 @@
 import React from 'react'
 
-const BlogContent = () => {
+const BlogContent = ({ blog }) => {
     return (
         <div>
-            BlogContent
+            {blog.content}
         </div>
     )
 }
