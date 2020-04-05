@@ -25,6 +25,18 @@
     align-items: flex-start;
 }
 
+.registerPage_body.card-body {
+    padding: 0;
+}
+
+.h4 {
+    padding: 0;
+    background-color: inherit;
+    display: flex;
+    justify-content: center;
+}
+
+
 
 @media (orientation: portrait) {
     .loginPage__register {

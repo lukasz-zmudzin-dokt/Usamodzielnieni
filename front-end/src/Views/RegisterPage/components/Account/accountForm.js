@@ -1,24 +1,21 @@
 import {Card, Form} from "react-bootstrap";
 import React from "react";
-import {onChange} from "Views/RegisterPage/functions/handlers";
 
 class AccountForm extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            email: "",
-            username: "",
-            password: "",
-            passwordR: "",
-            areEqual: true
-        }
     }
+    onChange = (onBlur, data, e) => {
+        const name = e.target.name;
+        const value = e.target.value;
+        onBlur({ ...data, [name]: value})
+    };
 
     render() {
-        let { email, username, passwordR, password, areEqual } = this.state;
         let {data, onBlur} = this.props;
+        let {onChange} = this;
         return(
-            <Card bg="light" className="loginPage__cardSection col-lg ">
+            <Card bg="light" className="loginPage__cardSection col-lg mr-lg-3">
                 <Card.Header as="h4" className="">
                     Dane konta
                 </Card.Header>
@@ -29,8 +26,7 @@ class AccountForm extends React.Component {
                             type="email"
                             placeholder="Email"
                             required
-                            defaultValue={email}
-                            onBlur={e => onChange(onBlur, data, e)}
+                            onChange={e => onChange(onBlur, data, e)}
                             className="loginPage__input"
                             maxLength="60"
                         />
@@ -43,8 +39,7 @@ class AccountForm extends React.Component {
                             name="username"
                             type="text"
                             placeholder="Nazwa użytkownika"
-                            defaultValue={username}
-                            onBlur={e => onChange(onBlur, data, e)}
+                            onChange={e => onChange(onBlur, data, e)}
                             required
                             minLength="6"
                             maxLength="30"
@@ -58,11 +53,10 @@ class AccountForm extends React.Component {
                             name="password"
                             type="password"
                             placeholder="Hasło"
-                            defaultValue={password}
-                            onBlur={e => onChange(onBlur, data, e)}
+                            onChange={e => onChange(onBlur, data, e)}
                             required
                             minLength="6"
-                            maxLength="30"
+                            maxLength="128"
                         />
 
                         <Form.Control.Feedback type="invalid">
@@ -74,22 +68,14 @@ class AccountForm extends React.Component {
                             name="passwordR"
                             type="password"
                             placeholder="Powtórz hasło"
-                            defaultValue={passwordR}
-                            onBlur={e => onChange(onBlur, data, e)}
+                            onChange={e => onChange(onBlur, data, e)}
                             required
                             minLength="6"
-                            maxLength="30"
+                            maxLength="128"
                         />
                         <Form.Control.Feedback type="invalid">
                             Minimalna ilośc znaków: 6
                         </Form.Control.Feedback>
-                        {!areEqual ? (
-                            <small className="invalidMessage">
-                                Hasła są odpowiedniej długości, ale nie są takie same
-                            </small>
-                        ) : (
-                            ""
-                        )}
                     </Form.Group>
                 </Card.Body>
             </Card>

@@ -1,22 +1,20 @@
 import React from 'react';
-import { onChange } from '../../functions/handlers';
 import {Card, Form} from "react-bootstrap";
 
 class CompanyDataForm extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            name_of_place: "",
-            street: "",
-            city: "",
-            city_code: "",
-            company_nip: ""
-        }
     }
 
+    onChange = (onBlur, data, e) => {
+        const name = e.target.name;
+        const value = e.target.value;
+        onBlur({ ...data, [name]: value})
+    };
+
     render () {
-        let { name_of_place, street, city, city_code, company_nip } = this.state;
         let {data, onBlur} = this.props;
+        let {onChange} = this;
         return (
             <Card
                 bg="light"
@@ -31,8 +29,7 @@ class CompanyDataForm extends React.Component {
                             name="name_of_place"
                             type="text"
                             placeholder="Nazwa firmy"
-                            defaultValue={name_of_place}
-                            onBlur={e => onChange(onBlur, data, e)}
+                            onChange={e => onChange(onBlur, data, e)}
                             required
                         />
                         <Form.Control.Feedback type="invalid">
@@ -44,8 +41,7 @@ class CompanyDataForm extends React.Component {
                             name="street"
                             type="text"
                             placeholder="Ulica"
-                            defaultValue={street}
-                            onBlur={e => onChange(onBlur, data, e)}
+                            onChange={e => onChange(onBlur, data, e)}
                             required
                         />
                         <Form.Control.Feedback type="invalid">
@@ -57,8 +53,7 @@ class CompanyDataForm extends React.Component {
                             name="city"
                             type="text"
                             placeholder="Nazwa miasta"
-                            defaultValue={city}
-                            onBlur={e => onChange(onBlur, data, e)}
+                            onChange={e => onChange(onBlur, data, e)}
                             required
                         />
                         <Form.Control.Feedback type="invalid">
@@ -71,8 +66,7 @@ class CompanyDataForm extends React.Component {
                             name="city_code"
                             type="text"
                             placeholder="Kod pocztowy"
-                            defaultValue={city_code}
-                            onBlur={e => onChange(onBlur, data, e)}
+                            onChange={e => onChange(onBlur, data, e)}
                             required
                         />
                         <Form.Control.Feedback type="invalid">
@@ -84,8 +78,7 @@ class CompanyDataForm extends React.Component {
                             name="company_nip"
                             type="text"
                             placeholder="NIP"
-                            defaultValue={company_nip}
-                            onBlur={e => onChange(onBlur, data, e)}
+                            onChange={e => onChange(onBlur, data, e)}
                             required
                         />
                         <Form.Control.Feedback type="invalid">

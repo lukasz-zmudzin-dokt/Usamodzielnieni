@@ -27,8 +27,3 @@
   }
 
 }
-@media (orientation: landscape) {
-  .loginPage {
-    top: 56px;
-  }
-}

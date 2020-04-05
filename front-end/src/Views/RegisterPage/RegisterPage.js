@@ -1,13 +1,8 @@
 import React from "react";
 import {Container, Card, Form, Button, Alert} from "react-bootstrap";
 import {Link, Redirect} from "react-router-dom";
-import PersonalDataForm from "./components/Personal/personalDataForm";
-import AccountForm from "./components/Account/accountForm";
-import {handleIncorrectResponse} from "./functions/handlers";
-import {handleSubmit} from "./functions/submitForm";
+import {HomeDataForm, PersonalDataForm, CompanyDataForm, AccountForm} from "./components";
 import { UserContext } from "context";
-import HomeDataForm from "./components/FosterHome/homeDataForm";
-import CompanyDataForm from "./components/Company/companyDataForm";
 import {sendData} from "./functions/sendData";
 import "./RegisterPage.css";
 
@@ -21,16 +16,32 @@ class RegisterPage extends React.Component {
             accountData: null,
 
             account_type: "Podopiecznym",
-            areEqual: undefined,
             validated: false,
             redirect: false,
-            submitted: false,
             fail_message: "",
             error_flag: false,
             incorrect_input: false
         };
     };
 
+    handleIncorrectResponse = (status) => {
+        switch (status) {
+            case 400: return "Niepoprawne dane. Spróbuj jeszcze raz.";
+            case 500: return "Błąd serwera. Spróbuj ponownie za jakiś czas.";
+            default: return "Nieznany błąd.";
+        }
+    };
+
+    handleSubmit = (data, event) => {
+        const form = event.currentTarget;
+        event.preventDefault();
+        const {password, passwordR} = data.accountData || {};
+
+        if (form.checkValidity() === false || password !== passwordR) {
+            event.stopPropagation();
+            return false;
+        } else return !(form.checkValidity() === true && password !== passwordR);
+    };
 
 
     selectType = (e) => {
@@ -70,12 +81,6 @@ class RegisterPage extends React.Component {
         })
     };
 
-    setEqual = () => {
-        this.setState({
-            areEqual: true
-        })
-    };
-
     renderRedirect = () => {
         if (this.state.redirect) {
             return <Redirect to="/user" />;
@@ -91,31 +96,21 @@ class RegisterPage extends React.Component {
           account_type: this.state.account_type
         };
 
-        const isOK = handleSubmit(data, e);
+        const isOK = this.handleSubmit(data, e);
         this.setValidated();
         if (isOK) {
-            this.setEqual();
-            const contextData = await sendData(data, e).then(response => {
-                const {status} = response;
-                if (status === 201) {
-                    const {token, type} = response;
-                    return {
-                        token: token,
-                        type: type,
-                        status: status
-                    };
-                } else {
+            try {
+                const contextData = await sendData(data).then(response => {
                     return response;
+                });
+                const {status} = contextData;
+                if (status === 201) {
+                    const {token, type} = contextData;
+                    this.context.login(token, type);
+                    this.setRedirect();
                 }
-            });
-
-            const {status} = contextData;
-            if (status === 201) {
-                const {token, type} = contextData;
-                this.context.login(token, type);
-                this.setRedirect();
-            } else {
-                const msg = handleIncorrectResponse(status);
+            } catch(error) {
+                const msg = this.handleIncorrectResponse(error.status);
                 this.setState({
                     fail_message: msg,
                     error_flag: true
@@ -130,16 +125,26 @@ class RegisterPage extends React.Component {
     };
 
     render() {
-        const { validated, error_flag, fail_message, incorrect_input, account_type, accountData, personalData, redirect } = this.state;
+        const {
+            validated,
+            error_flag,
+            fail_message,
+            incorrect_input,
+            account_type,
+            accountData,
+            personalData,
+            redirect
+        } = this.state;
         const { selectType, renderSection, handleResponse, renderRedirect } = this;
         const types = this.props.accountTypes || ['Podopiecznym', 'Pracodawcą'];
         return (
             <Container className="loginPage loginPage__register">
+                {console.log(this.state)}
                 <Card className="loginPage__card">
                     <Card.Header as="h2" className="loginPage__header">
                         Rejestracja
                     </Card.Header>
-                    <Card.Body className="loginPage__body">
+                    <Card.Body className="registerPage__body">
                         <Form.Group className="register_account_type">
                             <Form.Label>Jestem:</Form.Label>
                             <Form.Control
@@ -149,7 +154,9 @@ class RegisterPage extends React.Component {
                                 onChange={e => selectType(e)}
                                 defaultValue={account_type}
                             >
-                                {types.map(type => (<option key={type} value={type}>{type}</option>))}
+                                {types.map(type =>
+                                    (<option key={type} value={type}>{type}</option>)
+                                )}
                             </Form.Control>
                         </Form.Group>
                         <Form
@@ -161,12 +168,16 @@ class RegisterPage extends React.Component {
                             <section className="row">
                                 <PersonalDataForm
                                     data={personalData}
-                                    onBlur={personalData => this.setState({personalData})}
+                                    onBlur={personalData =>
+                                        this.setState({personalData})
+                                    }
                                 />
                                 {renderSection()}
                                 <AccountForm
                                     data={accountData}
-                                    onBlur={accountData => this.setState({accountData})}
+                                    onBlur={accountData =>
+                                        this.setState({accountData})
+                                    }
                                 />
                             </section>
                             <Button
@@ -180,9 +191,13 @@ class RegisterPage extends React.Component {
                         </Form>
                         {incorrect_input ? (e => e.stopPropagation()) : null}
                         {error_flag ? (
-                            <div className="loginPage__messageFail">
-                                <Alert variant="danger" className="loginPage__failure" data-testid="incorrectMsg">{fail_message}</Alert>
-                            </div>
+                            <Alert
+                                variant="danger"
+                                className="loginPage__failure"
+                                data-testid="incorrectMsg"
+                            >
+                                {fail_message}
+                            </Alert>
                         ) : null}
                         <div className="loginPage__links">
                             <Link to="/login" className="loginPage__link">

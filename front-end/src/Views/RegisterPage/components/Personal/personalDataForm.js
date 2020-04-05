@@ -1,24 +1,24 @@
 import React from 'react';
 import { Card, Form } from 'react-bootstrap';
-import {onChange} from "Views/RegisterPage/functions/handlers";
 
 class PersonalDataForm extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            first_name: "",
-            last_name: "",
-            phone_number: ""
-        }
     }
 
+    onChange = (onBlur, data, e) => {
+        const name = e.target.name;
+        const value = e.target.value;
+        onBlur({ ...data, [name]: value})
+    };
+
     render () {
-        let {first_name, last_name, phone_number} = this.state;
         let {onBlur, data} = this.props;
+        let {onChange} = this;
         return (
             <Card
                 bg="light"
-                className="loginPage__cardSection col-lg mr-lg-3"
+                className="loginPage__cardSection col-lg mx-lg-3"
             >
                 <Card.Header as="h4" className="">
                     Dane osobowe
@@ -29,8 +29,7 @@ class PersonalDataForm extends React.Component {
                             name="first_name"
                             type="text"
                             placeholder="Imię"
-                            defaultValue={first_name}
-                            onBlur={e => onChange(onBlur, data, e)}
+                            onChange={e => onChange(onBlur, data, e)}
                             required
                             minLength="1"
                             maxLength="30"
@@ -44,8 +43,7 @@ class PersonalDataForm extends React.Component {
                             name="last_name"
                             type="text"
                             placeholder="Nazwisko"
-                            defaultValue={last_name}
-                            onBlur={e => onChange(onBlur, data, e)}
+                            onChange={e => onChange(onBlur, data, e)}
                             required
                             minLength="1"
                             maxLength="30"
@@ -62,8 +60,7 @@ class PersonalDataForm extends React.Component {
                             required
                             pattern="[+]{1}[4]{1}[8]{1}[0-9]{3}[0-9]{3}[0-9]{3}"
                             placeholder="Numer telefonu"
-                            defaultValue={phone_number}
-                            onBlur={e => onChange(onBlur, data, e)}
+                            onChange={e => onChange(onBlur, data, e)}
                         />
                         <Form.Control.Feedback type="invalid">
                             Podaj numer telefonu w formacie: +48123123123

@@ -25,8 +25,7 @@ const adjustObject = (account_type, home, company)  => {
 };
 
 
-export const sendData = async (source, e) => {
-    e.preventDefault();
+export const sendData = async (source) => {
     const account_type = source.account_type;
     let url;
     switch (account_type) {
@@ -63,7 +62,7 @@ export const sendData = async (source, e) => {
             ...data
         }
     } else {
-        return {status: res.status}
+        throw {status: res.status}
     }
 };
 
