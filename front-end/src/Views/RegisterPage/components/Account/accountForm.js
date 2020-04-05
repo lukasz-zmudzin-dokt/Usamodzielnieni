@@ -15,7 +15,7 @@ class AccountForm extends React.Component {
         let {data, onBlur} = this.props;
         let {onChange} = this;
         return(
-            <Card bg="light" className="loginPage__cardSection col-lg mr-lg-3">
+            <Card bg="light" className="loginPage__cardSection px-0 col-lg mr-lg-3">
                 <Card.Header as="h4" className="">
                     Dane konta
                 </Card.Header>

@@ -18,7 +18,7 @@ class PersonalDataForm extends React.Component {
         return (
             <Card
                 bg="light"
-                className="loginPage__cardSection col-lg mx-lg-3"
+                className="loginPage__cardSection px-0 col-lg mx-lg-3"
             >
                 <Card.Header as="h4" className="">
                     Dane osobowe
