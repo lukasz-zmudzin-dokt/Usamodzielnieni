@@ -71,18 +71,35 @@ const sendData = async (object, photo, token) => {
   window.open(cvUrl, "_blank");
 };
 
-const getFeedback = async (token) => {
-  const id = "3e9a657b-7b05-46b5-9a1c-9dda7ce03467";
-  const url = `${domain}cv/feedback/${id}`;
+const getCvId = async (token, cvNumber) => {
+  const url = `${domain}cv/user/list`;
   const headers = getHeaders(token);
-
-  const response = await fetch(url, { method: "GET", headers });
-
-  if (response.status === 200) {
-    //console.log("response: " + response.json());
-    return response.json();
+  const response = await fetch(url, {method: "GET", headers});
+  
+  if(response.status === 200) {
+    const cvList = await response.json();
+    const cv = cvList[cvNumber];
+    const cvId = cv.cv_id;
+    return cvId;
   } else {
     throw response.status;
+  }
+}
+
+const getFeedback = async (token) => {
+  try {
+    const id = await getCvId(token, 0);
+    const url = `${domain}cv/feedback/${id}`;
+    const headers = getHeaders(token);
+    const response = await fetch(url, { method: "GET", headers });
+
+    if (response.status === 200) {
+      return await response.json();
+    } else {
+      throw response.status;
+    }
+  } catch(e) {
+    throw e;
   }
 };
 
