@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Items should render without crashing 1`] = `
+<div>
+  <ul
+    class="list-inline"
+  >
+    <li
+      class="list-inline-item"
+    >
+      <button
+        class="btn btn-dark"
+        id="a1"
+        type="button"
+      >
+        b1
+         x
+      </button>
+    </li>
+    <li
+      class="list-inline-item"
+    >
+      <button
+        class="btn btn-dark"
+        id="a2"
+        type="button"
+      >
+        b2
+         x
+      </button>
+    </li>
+  </ul>
+</div>
+`;
