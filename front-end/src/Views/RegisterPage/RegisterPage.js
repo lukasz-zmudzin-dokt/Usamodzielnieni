@@ -174,7 +174,7 @@ class RegisterPage extends React.Component {
                                 />
                             </section>
                             <Button
-                                variant="secondary"
+                                variant="primary"
                                 className="loginPage__button"
                                 type="submit"
                                 data-testid="submitBtn"

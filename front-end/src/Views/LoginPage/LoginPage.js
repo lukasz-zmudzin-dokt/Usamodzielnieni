@@ -84,7 +84,7 @@ class LoginPage extends React.Component {
                             />
                             <Button
                                 data-testid="loginBtn"
-                                variant="secondary"
+                                variant="primary"
                                 className="loginPage__button"
                                 type="submit"
                             >
