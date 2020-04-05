@@ -116,10 +116,6 @@ class RegisterPage extends React.Component {
                     error_flag: true
                 })
             }
-        } else {
-            this.setState({
-                incorrect_input: true
-            })
         }
 
     };
@@ -129,7 +125,6 @@ class RegisterPage extends React.Component {
             validated,
             error_flag,
             fail_message,
-            incorrect_input,
             account_type,
             accountData,
             personalData,
@@ -139,7 +134,6 @@ class RegisterPage extends React.Component {
         const types = this.props.accountTypes || ['Podopiecznym', 'Pracodawcą'];
         return (
             <Container className="loginPage loginPage__register">
-                {console.log(this.state)}
                 <Card className="loginPage__card">
                     <Card.Header as="h2" className="loginPage__header">
                         Rejestracja
@@ -152,7 +146,6 @@ class RegisterPage extends React.Component {
                                 className="register_radio_type"
                                 as="select"
                                 onChange={e => selectType(e)}
-                                defaultValue={account_type}
                             >
                                 {types.map(type =>
                                     (<option key={type} value={type}>{type}</option>)
@@ -189,7 +182,6 @@ class RegisterPage extends React.Component {
                                 Utwórz konto
                             </Button>
                         </Form>
-                        {incorrect_input ? (e => e.stopPropagation()) : null}
                         {error_flag ? (
                             <Alert
                                 variant="danger"
