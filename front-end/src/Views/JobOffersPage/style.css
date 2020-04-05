@@ -1,0 +1,7 @@
+.jobOffersPage.container {
+  margin-top: 100px;
+  margin-bottom: 100px;
+}
+.jobOffersPage h2.card-header {
+  text-align: center;
+}

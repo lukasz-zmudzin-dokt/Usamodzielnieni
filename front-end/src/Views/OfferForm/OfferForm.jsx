@@ -1,9 +1,9 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { registerLocale } from "react-datepicker";
 import { Form, Container, Card, Button, Row, Alert } from "react-bootstrap";
 import { voivodeships } from "constants/voivodeships";
-import FormGroup from "Views/OfferForm/components/FormGroup";
-import { sendData } from "Views/OfferForm/functions/sendData";
+import FormGroup from "components/FormGroup";
+import { sendData, getSelects } from "Views/OfferForm/functions/fetchData";
 import { UserContext } from "context";
 import "./style.css";
 import polish from "date-fns/locale/pl";
@@ -15,6 +15,7 @@ const OfferForm = () => {
   const history = useHistory();
   const [validated, setValidated] = useState(false);
   const [fail, setFail] = useState(false);
+  const [arrays, setArrays] = useState({});
 
   const [offer, setOffer] = useState({
     offer_name: "",
@@ -22,10 +23,26 @@ const OfferForm = () => {
     company_address: "",
     voivodeship: voivodeships[0],
     description: "",
-    expiration_date: ""
+    expiration_date: "",
+    category: "",
+    type: ""
   });
 
   const context = useContext(UserContext);
+
+  useEffect(() => {
+    const loadSelects = async token => {
+      let res;
+      try {
+        res = await getSelects(token);
+      } catch (e) {
+        console.log(e);
+        res = { categories: [], types: [] };
+      }
+      setArrays(res);
+    };
+    loadSelects(context.token);
+  }, [context.token]);
 
   const submit = event => {
     const form = event.currentTarget;
@@ -49,6 +66,7 @@ const OfferForm = () => {
           history.push("/myOffers");
         })
         .catch(() => {
+          console.log("tutaj");
           setFail(true);
         });
     }
@@ -62,7 +80,9 @@ const OfferForm = () => {
       company_address: "",
       voivodeship: voivodeships[0],
       description: "",
-      expiration_date: ""
+      expiration_date: "",
+      category: "",
+      type: ""
     });
     setValidated(false);
   };
@@ -73,7 +93,9 @@ const OfferForm = () => {
     company_name,
     description,
     expiration_date,
-    voivodeship
+    voivodeship,
+    category,
+    type
   } = offer;
 
   return (
@@ -127,6 +149,16 @@ const OfferForm = () => {
                 val={voivodeship}
                 required
               />
+              <FormGroup
+                header="Wymiar pracy"
+                id="type"
+                setVal={val => setOffer({ ...offer, type: val })}
+                val={type}
+                type="select"
+                array={arrays.types}
+                required
+                incorrect="Podaj wymiar pracy np. staż,praca"
+              />
             </div>
             <div className="offerForm__wrapper">
               <FormGroup
@@ -138,6 +170,16 @@ const OfferForm = () => {
                 incorrect="Podaj opis"
                 length={{ min: 1, max: 1000 }}
                 required
+              />
+              <FormGroup
+                header="Branża"
+                id="category"
+                setVal={val => setOffer({ ...offer, category: val })}
+                val={category}
+                type="select"
+                array={arrays.categories}
+                required
+                incorrect="Podaj branżę np. IT, marketing"
               />
               <FormGroup
                 header="Ważne do:"
