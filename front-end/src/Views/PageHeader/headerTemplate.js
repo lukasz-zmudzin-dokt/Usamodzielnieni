@@ -20,6 +20,11 @@ class HeaderTemplate extends React.Component {
               Kreator CV
             </Nav.Link>
           </IndexLinkContainer>
+            <IndexLinkContainer to={!this.context.token ? "/login" : "/myCVs"}>
+                <Nav.Link id="myCVs">
+                    Moje CV
+                </Nav.Link>
+            </IndexLinkContainer>
           <Nav.Link id="learningTheRopes">Jak zacząć?</Nav.Link>
           <IndexLinkContainer to="/jobOffers">
             <Nav.Link id="jobOffers">Oferty pracy</Nav.Link>
