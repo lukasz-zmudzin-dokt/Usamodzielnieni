@@ -122,7 +122,7 @@ const Filter = ({ setFilters, count }) => {
           as={Col}
           xs={12}
           md={4}
-          header="Braża"
+          header="Branża"
           type="select"
           array={arrays.categories}
           val={category}
