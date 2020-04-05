@@ -13,10 +13,6 @@
   align-items: flex-start;
 }
 
-.loginPage__header {
-  text-align: center;
-}
-
 .loginPage__button {
   margin-bottom: 1rem !important;
 }

@@ -1,0 +1,10 @@
+$theme-colors: (
+    "primary": #7345A9
+);
+
+.card-header {
+    text-align: center;
+}
+
+// Import Bootstrap and its default variables
+@import '~bootstrap/scss/bootstrap.scss';
