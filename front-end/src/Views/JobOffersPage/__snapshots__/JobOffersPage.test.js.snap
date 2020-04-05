@@ -163,7 +163,7 @@ exports[`JobOffersPage main component tests should render without crashing 1`] =
               class="form-label"
               for="category"
             >
-              Braża
+              Branża
             </label>
             <select
               class="form-control"
