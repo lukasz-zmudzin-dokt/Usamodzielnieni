@@ -2,6 +2,18 @@ $theme-colors: (
     "primary": #7345A9
 );
 
+@media (min-width: 768px) {
+#root {
+    padding-top: 56px;
+    min-height: 100vh;
+
+    background-image: linear-gradient(#FFFFFFB2, #FFFFFFB2), url("/fot.png");;
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+}
+
 .card-header {
     text-align: center;
 }
