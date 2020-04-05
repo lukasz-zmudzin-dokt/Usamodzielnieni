@@ -9,6 +9,7 @@ import {
 
 const getPost = async (id, token) => {
   let url = `https://usamo-back.herokuapp.com/blog/blogpost/${id}`;
+  console.log(url);
   const headers = {
       Authorization: "Token " + token,
       "Content-Type": "application/json"
@@ -21,7 +22,7 @@ const getPost = async (id, token) => {
   } else {
       throw response.status;
   }
-}
+};
 
 const mapPost = (res) => ({
   id: res.id,
@@ -42,21 +43,21 @@ const mapAuthor = (author) => ({
   lastName: author.last_name
 });
 
-const BlogPost = () => {
+const BlogPost = props => {
   const [post, setPost] = useState(null);
   const [isPostLoading, setIsPostLoading] = useState(false);
   const [error, setError] = useState(false);
   const user = useContext(UserContext);
 
-  const post_Id = 1; // TODO
-
+  const post_Id = window.location.pathname.replace(/\/blog\/blogpost\//, ''); // TODO
+  console.log(props)
   useEffect(
     () => {
-      const loadPost = async (blogId, token) => {
+      const loadPost = async (postId, token) => {
         setIsPostLoading(true);
         let loadedPost;
         try {
-          loadedPost = await getPost(blogId, token);
+          loadedPost = await getPost(postId, token);
         } catch (e) {
           console.log(e);
           loadedPost = null;

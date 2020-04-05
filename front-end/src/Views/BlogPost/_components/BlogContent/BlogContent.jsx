@@ -1,14 +1,16 @@
 import React from 'react'
-import {Card} from "react-bootstrap";
+import {Card, Col, Row} from "react-bootstrap";
+import "./BlogContent.css";
 
 const BlogContent = ({ post }, user) => {
-    const {first_name, last_name, email} = post.author;
+    console.log(post);
+    const {firstName, lastName, email} = post.author;
     return (
         <Card>
-            <Card.Header>
-                <img src={null} alt="Post header (img)" className="post_header_img"/>
-            </Card.Header>
-            <Card.Body>
+            {post.header !== undefined ?
+                <Card.Img variant="top" src={post.header}/> : <Card.Header/>
+            }
+            <Card.Body className="post_content">
                 <Card.Title className="post_title">Post title</Card.Title>
                 <Card.Text>
                     {post.content}
@@ -16,8 +18,13 @@ const BlogContent = ({ post }, user) => {
                 <p className="post_taglist">{post.tags}</p>
             </Card.Body>
             <Card.Footer className="blogpost_summary">
-                {`Autor: ${first_name} ${last_name} (${email}), opublikowano ${post.creationDate}.`}
-                <p className="post_comment_counter">Liczba komentarzy: {post.comments.length}</p>
+                <Row>
+                    <Col>
+                        <Row>{`Autor: ${firstName} ${lastName} (${email})`}</Row>
+                        <Row>{`opublikowano ${post.creationDate}.`}</Row>
+                    </Col>
+                    <Col className="post_comment_counter float-right">Liczba komentarzy: {post.comments.length}</Col>
+                </Row>
             </Card.Footer>
         </Card>
     )

@@ -1,9 +1,9 @@
 .post_comment_counter {
-    display: inline;
-    justify-content: end;
+    display: flex;
+    text-align: end;
 }
 
 .blogpost_summary {
-    color: #333333;
+    color: #333333 !important;
 }
 
