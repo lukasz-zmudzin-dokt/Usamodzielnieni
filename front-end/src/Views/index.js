@@ -8,6 +8,7 @@ import Menu from "Views/Menu";
 import OfferForm from "Views/OfferForm";
 import MyOffersPage from "Views/MyOffersPage";
 import BlogPost from "Views/BlogPost";
+import BlogPage from "Views/BlogPage";
 
 export {
   UserProfilePage,
@@ -19,5 +20,6 @@ export {
   Menu,
   OfferForm,
   MyOffersPage,
-  BlogPost
+  BlogPost,
+  BlogPage
 };
