@@ -12,9 +12,12 @@ class LoginForm extends React.Component {
 
     onChange = (e) => {
         let {onBlur, data} = this.props;
-        const type = e.target.type === "text" ? "username" : e.target.type;
+        const type = e.target.name;
 
         const value = e.target.value;
+        this.setState({
+            [type]: value
+        });
         onBlur({...data, [type]:value});
     };
 
@@ -27,14 +30,13 @@ class LoginForm extends React.Component {
                 <Form.Group controlId="formGroupUsername">
                     <Form.Control
                         data-testid="loginPage_login"
-                        name="login"
+                        name="username"
                         type="text"
                         placeholder="Login"
                         required
                         defaultValue={username}
-                        onBlur={e => onChange(e)}
+                        onChange={e => onChange(e)}
                         className="loginPage__input"
-                        minLength="6"
                     />
                     <Form.Control.Feedback type="invalid">
                         Podaj login
@@ -45,12 +47,10 @@ class LoginForm extends React.Component {
                         data-testid="loginPage_password"
                         name="password"
                         type="password"
-                        autoComplete="on"
                         placeholder="Hasło"
                         defaultValue={password}
-                        onBlur={e => onChange(e)}
+                        onChange={e => onChange(e)}
                         required
-                        minLength="6"
                     />
                     <Form.Control.Feedback type="invalid">
                         Podaj hasło

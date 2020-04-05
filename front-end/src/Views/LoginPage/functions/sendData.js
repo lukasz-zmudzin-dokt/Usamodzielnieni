@@ -1,5 +1,4 @@
-export const sendData = async (credentials, event) => {
-  event.preventDefault();
+export const sendData = async (credentials) => {
   const url = "https://usamo-back.herokuapp.com/account/login/";
   const response =  await fetch(url, {
     method: "POST",
@@ -17,7 +16,7 @@ export const sendData = async (credentials, event) => {
       ...data
     }
   } else {
-    return {status: response.status}
+    throw {status: response.status}
   }
 };
 
