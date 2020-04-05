@@ -1,7 +1,6 @@
 import React, { useState, useContext } from 'react'
-import { Card, Form, Button, Alert } from "react-bootstrap";
+import { Form, Button, Alert } from "react-bootstrap";
 import { UserContext } from "context";
-import "./CommentForm.css";
 
 const updateComment = async (token, content, commentId) => {
     let url = `https://usamo-back.herokuapp.com/blog/comment/${commentId}`;
@@ -35,17 +34,11 @@ const addComment = async (token, content, blogId) => {
     }
 }
 
-const CommentForm = ({ blogId, comment, ...rest }) => {
-    const [commentContent, setCommentContent] = useState("");
+const CommentForm = ({ blogId, comment, afterSubmit, ...rest }) => {
+    const [commentContent, setCommentContent] = useState(comment ? comment.content : "");
     const [submitted, setSubmitted] = useState(false);
     const [error, setError] = useState(false);
     const user = useContext(UserContext);
-
-    console.log(blogId)
-
-    if (comment) {
-        setCommentContent(comment.value);
-    }
 
     const onChange = (e) => {
         const value = e.target.value;
@@ -61,6 +54,11 @@ const CommentForm = ({ blogId, comment, ...rest }) => {
                     commentContent,
                     comment.id
                 );
+                afterSubmit({
+                    ...comment,
+                    content: commentContent,
+                    creationDate: new Date()
+                })
             } else {
                 await addComment(
                     user.token,
@@ -74,29 +72,40 @@ const CommentForm = ({ blogId, comment, ...rest }) => {
         }
     }
 
+    const onCancelClick = () => {
+        afterSubmit(comment);
+    }
+
     const msg = error ? (<Alert variant="danger">Wystąpił błąd podczas przesyłania komentarza.</Alert>) :
         submitted && (<Alert variant="success">Pomyślnie przesłano komentarz.</Alert>);
 
     return (
-        <Card {...rest}>
-            <Card.Body>
-                <Card.Title>{comment ? 'Edytuj komentarz' : 'Dodaj komentarz'}</Card.Title>
-                <Form onSubmit={onSubmit}>
-                    <Form.Group controlId="commentContent">
-                        <Form.Control
-                            as="textarea"
-                            placeholder="Treść komentarza"
-                            onChange={onChange}
-                            value={commentContent}
-                            required />
-                    </Form.Group>
-                    {msg}
-                    <Form.Group className="CommentForm__submitGroup mb-0">
-                        <Button type="submit">Prześlij</Button>
-                    </Form.Group>
-                </Form>
-            </Card.Body>
-        </Card>
+        <div {...rest}>
+            <h5>{comment ? 'Edytuj komentarz' : 'Dodaj komentarz'}</h5>
+            <Form onSubmit={onSubmit}>
+                <Form.Group controlId="commentContent">
+                    <Form.Control
+                        as="textarea"
+                        placeholder="Treść komentarza"
+                        onChange={onChange}
+                        value={commentContent}
+                        required />
+                </Form.Group>
+                {msg}
+                <Form.Group className="CommentForm__submitGroup mb-0">
+                    <Button type="submit">Prześlij</Button>
+                    {comment && (
+                        <Button 
+                            type="button"
+                            variant="secondary"
+                            className="ml-2"
+                            onClick={onCancelClick}>
+                            Anuluj
+                        </Button>
+                    )}
+                </Form.Group>
+            </Form>
+        </div>
     )
 }
 

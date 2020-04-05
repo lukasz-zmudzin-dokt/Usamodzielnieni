@@ -49,6 +49,8 @@ const BlogPost = () => {
 
   const blogId = 1; // TODO
 
+  const setComments = (comments) => setBlog({...blog, comments});
+
   useEffect(
     () => {
       const loadBlog = async (blogId, token) => {
@@ -83,7 +85,7 @@ const BlogPost = () => {
         <Card.Header as="h2">Blog</Card.Header>
         <Card.Body>
           <BlogContent blog={blog} />
-          <CommentsList user={user} blogId={blog.id} comments={blog.comments} />
+          <CommentsList user={user} blogId={blog.id} comments={blog.comments} setComments={setComments} />
           <CommentForm blogId={blog.id}/>
         </Card.Body>
       </Card>
