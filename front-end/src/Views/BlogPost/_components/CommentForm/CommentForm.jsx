@@ -10,7 +10,7 @@ const updateComment = async (token, content, commentId) => {
         "Content-Type": "application/json"
     };
 
-    const response = await fetch(url, { method: "PUT", headers });
+    const response = await fetch(url, { method: "PUT", body: JSON.stringify({content}), headers });
 
     if (response.status === 200) {
         return response.json();
@@ -26,7 +26,7 @@ const addComment = async (token, content, blogId) => {
         "Content-Type": "application/json"
     };
 
-    const response = await fetch(url, { method: "POST", headers });
+    const response = await fetch(url, { method: "POST", body: JSON.stringify({content}), headers });
 
     if (response.status === 200) {
         return response.json();
@@ -40,6 +40,8 @@ const CommentForm = ({ blogId, comment, ...rest }) => {
     const [submitted, setSubmitted] = useState(false);
     const [error, setError] = useState(false);
     const user = useContext(UserContext);
+
+    console.log(blogId)
 
     if (comment) {
         setCommentContent(comment.value);

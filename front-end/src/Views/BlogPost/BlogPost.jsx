@@ -56,6 +56,7 @@ const BlogPost = () => {
         let loadedBlog;
         try {
           loadedBlog = await getBlog(blogId, token);
+          console.log(loadedBlog)
         } catch (e) {
           console.log(e);
           loadedBlog = null;
@@ -79,8 +80,8 @@ const BlogPost = () => {
         <Card.Header as="h2">Blog</Card.Header>
         <Card.Body>
           <BlogContent blog={blog} />
-          <CommentsList comments={blog.comments} />
-          <CommentForm />
+          <CommentsList blogId={blog.id} comments={blog.comments} />
+          <CommentForm blogId={blog.id}/>
         </Card.Body>
       </Card>
     </Container>
