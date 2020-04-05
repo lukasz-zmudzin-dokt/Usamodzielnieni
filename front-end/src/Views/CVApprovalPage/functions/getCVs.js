@@ -1,5 +1,5 @@
 export const getCVs = async (token) => {
-    return await fetch("http://usamo-back.herokuapp.com/cv/admin/list/", {
+    return await fetch("http://usamo-back.herokuapp.com/cv/admin/list/unverified/", {
         method: "GET",
         headers: {
             "Authorization": "token " + token,

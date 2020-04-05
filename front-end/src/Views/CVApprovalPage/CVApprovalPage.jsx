@@ -13,7 +13,7 @@ class CVApprovalPage extends React.Component {
 
     componentDidMount() {
         getCVs(this.context.token).then(response => this.setState({ cvs: response}));
-        getCVs(this.context.token).then(response => console.log(response));
+        //getCVs(this.context.token).then(response => console.log(response));
     }
 
     render() {
