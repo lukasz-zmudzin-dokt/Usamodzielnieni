@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { Container, Card, Alert } from "react-bootstrap";
 import { UserContext } from "context";
 import {
-  NewComment,
+  CommentForm,
   CommentsList,
   BlogContent
 } from './_components';
@@ -80,7 +80,7 @@ const BlogPage = () => {
         <Card.Body>
           <BlogContent blog={blog} />
           <CommentsList comments={blog.comments} />
-          <NewComment />
+          <CommentForm />
         </Card.Body>
       </Card>
     </Container>

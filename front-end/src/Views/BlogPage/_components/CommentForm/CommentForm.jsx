@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react'
 import { Card, Form, Button, Alert } from "react-bootstrap";
 import { UserContext } from "context";
-import "./NewComment.css";
+import "./CommentForm.css";
 
 const sendComment = async (token, content, blogId, commentId) => {
     let url = `https://usamo-back.herokuapp.com/job/job-offer/`;
@@ -19,7 +19,7 @@ const sendComment = async (token, content, blogId, commentId) => {
     }
 }
 
-const NewComment = ({ blogId, comment, ...rest }) => {
+const CommentForm = ({ blogId, comment, ...rest }) => {
     const [commentContent, setCommentContent] = useState("");
     const [submitted, setSubmitted] = useState(false);
     const [error, setError] = useState(false);
@@ -66,7 +66,7 @@ const NewComment = ({ blogId, comment, ...rest }) => {
                             required />
                     </Form.Group>
                     {msg}
-                    <Form.Group className="newComment__submitGroup mb-0">
+                    <Form.Group className="CommentForm__submitGroup mb-0">
                         <Button type="submit">Prześlij</Button>
                     </Form.Group>
                 </Form>
@@ -75,4 +75,4 @@ const NewComment = ({ blogId, comment, ...rest }) => {
     )
 }
 
-export default NewComment
+export default CommentForm
