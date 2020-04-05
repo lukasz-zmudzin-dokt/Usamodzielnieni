@@ -41,6 +41,7 @@ class PersonalDataTab extends React.Component {
                 comments={this.props.comments}
                 loading={this.props.loading}
                 error={this.props.error}
+                showComments={this.props.showComments}
             >
                 <Row>
                     <Form.Group as={Col} xs={12} md={6} controlId="firstName">

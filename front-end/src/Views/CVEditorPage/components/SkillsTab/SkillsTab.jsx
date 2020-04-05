@@ -35,6 +35,7 @@ class SkillsTab extends React.Component {
                 comments={this.props.comments}
                 loading={this.props.loading}
                 error={this.props.error}
+                showComments={this.props.showComments}
             >
                 <ItemsList
                     getItemId={this.getSkillId} getItemName={this.getSkillName} getItem={this.getSkill}

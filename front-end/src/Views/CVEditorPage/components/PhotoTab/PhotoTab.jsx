@@ -24,6 +24,7 @@ class PhotoTab extends React.Component {
                 comments={this.props.comments}
                 loading={this.props.loading}
                 error={this.props.error}
+                showComments={this.props.showComments}
                 >
                 <Form.Group controlId="photo">
                     <Form.File

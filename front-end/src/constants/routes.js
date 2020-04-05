@@ -9,9 +9,11 @@ import {
   MyOffersPage
 } from "Views";
 
+
 const paths = {
   DASHBOARD: "/",
-  CV_EDITOR: "/cvEditor",
+  CV_CREATOR: "/cvEditor",
+  CV_EDITOR: "/cvEditor/:id",
   REGISTER: "/newAccount",
   FOOTER: "/footer",
   LOGIN: "/login",
@@ -35,10 +37,18 @@ export default [
     exact: true
   },
   {
+    path: paths.CV_CREATOR,
+    component: CVEditorPage,
+    isPrivate: true,
+    type: userTypes.STANDARD,
+    exact: true
+  },
+  {
     path: paths.CV_EDITOR,
     component: CVEditorPage,
     isPrivate: true,
-    type: userTypes.STANDARD
+    type: userTypes.STANDARD,
+    exact: true
   },
   {
     path: paths.REGISTER,
@@ -88,3 +98,4 @@ export default [
 ];
 
 export { paths };
+

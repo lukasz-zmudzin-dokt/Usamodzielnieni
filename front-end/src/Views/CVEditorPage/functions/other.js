@@ -86,9 +86,9 @@ const getCvId = async (token, cvNumber) => {
   }
 }
 
-const getFeedback = async (token) => {
+const getFeedback = async (token, id) => {
   try {
-    const id = await getCvId(token, 0);
+    //const id = await getCvId(token, 0);
     const url = `${domain}cv/feedback/${id}`;
     const headers = getHeaders(token);
     const response = await fetch(url, { method: "GET", headers });
