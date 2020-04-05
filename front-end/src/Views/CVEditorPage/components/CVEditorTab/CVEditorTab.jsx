@@ -3,7 +3,7 @@ import { Button, Row, Col, Alert } from "react-bootstrap";
 import "./CVEditorTab.css";
 import {Form} from "react-bootstrap";
 
-const CVEditorTab = ({ title, movie, children, onPrevClick, onNextClick, comments, loading }) => (
+const CVEditorTab = ({ title, movie, children, onPrevClick, onNextClick, comments, loading, error }) => (
     <div>
         <h3>{title}</h3>
         <img className="CVEditorTab__img" src={movie} alt="" />
@@ -13,16 +13,26 @@ const CVEditorTab = ({ title, movie, children, onPrevClick, onNextClick, comment
                 <Alert.Heading>Wczytuję uwagi...</Alert.Heading>
             </Alert>
             
+        ) : (error)? (
+            <Alert variant="danger">
+                <Alert.Heading>Wystąpił błąd podczas wczytywania uwag do CV.</Alert.Heading>
+            </Alert>
         ) : (comments)? (
-        <Alert variant="info">
-            <Alert.Heading>
-              Uwagi:
-            </Alert.Heading>
-            <p>
-                {comments}
-            </p>
-        </Alert>
-        ) : null}
+            <Alert variant="info">
+                <Alert.Heading>
+                Uwagi:
+                </Alert.Heading>
+                <p>
+                    {comments}
+                </p>
+            </Alert>
+        ) : (
+            <Alert variant="success">
+                <Alert.Heading>
+                    Brak uwag do tej części CV.
+                </Alert.Heading>
+            </Alert>
+        )}
 
         {children}
         <Row>

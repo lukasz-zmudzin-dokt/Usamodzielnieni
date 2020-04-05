@@ -34,6 +34,7 @@ class SkillsTab extends React.Component {
                 onNextClick={this.props.onNextClick}
                 comments={this.props.comments}
                 loading={this.props.loading}
+                error={this.props.error}
             >
                 <ItemsList
                     getItemId={this.getSkillId} getItemName={this.getSkillName} getItem={this.getSkill}

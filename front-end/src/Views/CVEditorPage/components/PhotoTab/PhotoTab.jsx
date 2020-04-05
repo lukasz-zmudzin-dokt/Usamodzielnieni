@@ -23,6 +23,7 @@ class PhotoTab extends React.Component {
                 onPrevClick={this.props.onPrevClick}
                 comments={this.props.comments}
                 loading={this.props.loading}
+                error={this.props.error}
                 >
                 <Form.Group controlId="photo">
                     <Form.Label>

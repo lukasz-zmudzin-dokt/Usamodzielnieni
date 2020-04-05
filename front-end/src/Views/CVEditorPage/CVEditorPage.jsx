@@ -30,7 +30,8 @@ class CVEditorPage extends React.Component {
             skills: null,
             languages: null,
             photo: null,
-            loading: false
+            loading: false,
+            commentsError: false
         };
         this.tabs = [];
     }
@@ -71,7 +72,8 @@ class CVEditorPage extends React.Component {
             onPrevClick: this.onPrevClick,
             onNextClick: this.onNextClick,
             comments: this.state.comments[key],
-            loading: this.state.loading
+            loading: this.state.loading,
+            error: this.state.commentsError
         })
         return [
             {
@@ -119,11 +121,15 @@ class CVEditorPage extends React.Component {
                 languages: res.languages,
                 photo: res.additional_info
                 },
-                loading: false
+                loading: false,
+                commentsError: false
             });
         }).catch(err => {
             console.log(err);
-            this.setState({loading: false})
+            this.setState({
+                loading: false,
+                commentsError: true
+            });
         });
     }
     
