@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
 import { UserContext } from "context";
-import { Container, Card, Alert } from "react-bootstrap";
+import { Container, Card, Alert, ListGroup } from "react-bootstrap";
 import { getPosts } from "Views/BlogPage/functions/fetchData";
 import BlogPost from "Views/BlogPage/components/BlogPost/BlogPost";
 import Filter from "Views/BlogPage/components/Filter";
+
 const BlogPage = () => {
   const [posts, setPosts] = useState([]);
   const [filter, setFilter] = useState({});
@@ -46,9 +47,18 @@ const BlogPage = () => {
       <Card>
         <Card.Header as="h2">Blogi</Card.Header>
         <Filter token={context.token} setFilter={setFilter} count={count} />
-        <Card.Body>
-          {msg ? msg : posts.map((data, i) => <BlogPost key={i} {...data} />)}
-        </Card.Body>
+
+        {msg ? (
+          msg
+        ) : (
+          <ListGroup variant="flush">
+            {posts.map((data, i) => (
+              <ListGroup.Item key={i}>
+                <BlogPost {...data} />
+              </ListGroup.Item>
+            ))}
+          </ListGroup>
+        )}
       </Card>
     </Container>
   );

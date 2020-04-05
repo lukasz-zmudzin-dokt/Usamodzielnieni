@@ -12,7 +12,6 @@ const getPosts = async (token, filters) => {
   const response = await fetch(url, { method: "GET", headers });
   if (response.status === 200) {
     return response.json().then(res => {
-      console.log(res);
       return res.map(({ category, tags, content, date_created, author }) => ({
         category,
         tags,

@@ -42,7 +42,6 @@ const Filter = ({ token, setFilter, count }) => {
       tag: undefined
     });
   };
-
   return (
     <Form className="blog__form" onSubmit={filter}>
       <Form.Row>
@@ -55,7 +54,7 @@ const Filter = ({ token, setFilter, count }) => {
           val={category}
           setVal={setCategory}
           type="select"
-          id="voivodeship"
+          id="category"
         />
         <FormGroup
           as={Col}
@@ -66,6 +65,7 @@ const Filter = ({ token, setFilter, count }) => {
           val={tag}
           setVal={setTag}
           type="select"
+          id="tag"
         />
       </Form.Row>
 
