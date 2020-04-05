@@ -9,7 +9,6 @@ import {
   MyOffersPage,
   CVApprovalPage,
   JobOffersPage,
-  MyOffersPage,
   JobOfferDetails
 } from "Views";
 

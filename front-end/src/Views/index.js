@@ -21,8 +21,7 @@ export {
   Menu,
   OfferForm,
   MyOffersPage,
-  CVApprovalPage
+  CVApprovalPage,
   JobOffersPage,
-  MyOffersPage,
   JobOfferDetails
 };
