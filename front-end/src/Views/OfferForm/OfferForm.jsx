@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { registerLocale } from "react-datepicker";
 import { Form, Container, Card, Button, Row, Alert } from "react-bootstrap";
 import { voivodeships } from "constants/voivodeships";
-import FormGroup from "Views/OfferForm/components/FormGroup";
+import FormGroup from "components/FormGroup";
 import { sendData } from "Views/OfferForm/functions/sendData";
 import { UserContext } from "context";
 import "./style.css";

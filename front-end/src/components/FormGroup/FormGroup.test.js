@@ -1,6 +1,6 @@
 import React from "react";
 import { render } from "@testing-library/react";
-import FormGroup from "Views/OfferForm/components/FormGroup";
+import FormGroup from "components/FormGroup";
 import { MemoryRouter } from "react-router-dom";
 
 describe("FormGroup", () => {
