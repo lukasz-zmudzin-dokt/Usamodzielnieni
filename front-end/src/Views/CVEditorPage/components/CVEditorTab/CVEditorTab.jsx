@@ -24,7 +24,7 @@ const CVEditorTab = ({ title, movie, children, onPrevClick, onNextClick, comment
                 <Alert.Heading>
                 Uwagi:
                 </Alert.Heading>
-                <p>
+                <p className="mb-0">
                     {comments}
                 </p>
             </Alert>
