@@ -4,7 +4,7 @@ import { UserContext } from "context";
 import { CommentItem } from "../";
 
 const getComments = async (blogId, token) => {
-    let url = `https://usamo-back.herokuapp.com/job/job-offer/${id}`;
+    let url = `https://usamo-back.herokuapp.com/job/job-offer/`;
     const headers = {
         Authorization: "Token " + token,
         "Content-Type": "application/json"

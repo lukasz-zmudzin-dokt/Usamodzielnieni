@@ -1,9 +1,10 @@
 import React, { useState, useContext } from 'react'
 import { Card, Form, Button, Alert } from "react-bootstrap";
 import { UserContext } from "context";
+import "./NewComment.css";
 
 const sendComment = async (token, content, blogId, commentId) => {
-    let url = `https://usamo-back.herokuapp.com/job/job-offer/${id}`;
+    let url = `https://usamo-back.herokuapp.com/job/job-offer/`;
     const headers = {
       Authorization: "Token " + token,
       "Content-Type": "application/json"
@@ -59,15 +60,16 @@ const NewComment = ({ blogId, comment, ...rest }) => {
                     <Form.Group controlId="commentContent">
                         <Form.Control
                             as="textarea"
+                            placeholder="Treść komentarza"
                             onChange={onChange}
                             value={commentContent}
                             required />
                     </Form.Group>
-                    <Form.Group>
-                        <Button type="submit" />
+                    {msg}
+                    <Form.Group className="newComment__submitGroup mb-0">
+                        <Button type="submit">Prześlij</Button>
                     </Form.Group>
                 </Form>
-                {msg}
             </Card.Body>
         </Card>
     )
