@@ -1,10 +1,11 @@
 
-import { sendData } from './other.js';
+import { sendData, getFeedback } from './other.js';
 
 describe('ActionWithDate', () => {
     let failFetch;
     let failFetchUrl;
     let cv, file, token;
+    
     beforeAll(() => {
         cv = { name: "Jan Kowalski" };
         file = new File([""], "filename");
@@ -77,5 +78,58 @@ describe('ActionWithDate', () => {
         failFetch = 'POST';
         failFetchUrl = 'https://usamo-back.herokuapp.com/cv/picture/1/'
         await expect(sendData(cv, file, token)).rejects.toThrow('api error');
+    })
+});
+
+describe('getFeedback test', () => {
+    let comments = {};
+    let failFetch;
+    beforeAll(() => {
+        global.fetch = jest.fn().mockImplementation((input, init) => {
+            return new Promise((resolve, reject) => {
+                if (failFetch) {
+                    resolve({ status: 500 });
+                } else {
+                    switch (init.method) {
+                        case 'GET':
+                            resolve({
+                                status: 200,
+                                json: () => Promise.resolve(comments)
+                            });
+                        default:
+                            resolve({});
+                            break;
+                    }
+                }
+            });
+        });
+    });
+
+    beforeEach(() => {
+        failFetch = false;
+        comments = {};
+    })
+
+    it('should return comments', async () => {
+        comments={
+            "cv_id": 12,
+            "basic_info": "dane osobowe ok",
+            "schools": "ddd",
+            "experiences": "pracy bra",
+            "skills": "duzo umiesz",
+            "languages": "poliglota",
+            "additional_info": ""
+        }
+        expect(getFeedback()).resolves.toEqual(comments);
+    })
+    it('should throw status 500', async () => {
+        failFetch=true;
+        let status;
+        try {
+            await getFeedback();
+        } catch(e) {
+            status = e;
+        }
+        expect(status).toEqual(500);
     })
 });

@@ -270,3 +270,173 @@ exports[`CVEditorPage should render without crashing 1`] = `
   </div>
 </div>
 `;
+
+exports[`CVEditorPage should render without crashing when api fails 1`] = `
+<div>
+  <div
+    class="container"
+  >
+    <div
+      class="card"
+    >
+      <h2
+        class="card-header"
+      >
+        Kreator CV
+      </h2>
+      <div
+        class="card-body"
+      >
+        <form
+          class=""
+          id="cv_data"
+        >
+          <nav
+            class="CVEditorPage_tabs nav card-header-tabs nav-tabs"
+            role="tablist"
+          >
+            <a
+              aria-selected="true"
+              class="nav-item nav-link active"
+              data-rb-event-key="personalData"
+              href="#"
+              role="tab"
+            >
+              Dane osobowe
+            </a>
+            <a
+              aria-selected="false"
+              class="nav-item nav-link"
+              data-rb-event-key="education"
+              href="#"
+              role="tab"
+              tabindex="-1"
+            >
+              Edukacja
+            </a>
+            <a
+              aria-selected="false"
+              class="nav-item nav-link"
+              data-rb-event-key="workExperience"
+              href="#"
+              role="tab"
+              tabindex="-1"
+            >
+              Doświadczenie zawodowe
+            </a>
+            <a
+              aria-selected="false"
+              class="nav-item nav-link"
+              data-rb-event-key="skills"
+              href="#"
+              role="tab"
+              tabindex="-1"
+            >
+              Umiejętności
+            </a>
+            <a
+              aria-selected="false"
+              class="nav-item nav-link"
+              data-rb-event-key="languages"
+              href="#"
+              role="tab"
+              tabindex="-1"
+            >
+              Języki obce
+            </a>
+            <a
+              aria-selected="false"
+              class="nav-item nav-link"
+              data-rb-event-key="photo"
+              href="#"
+              role="tab"
+              tabindex="-1"
+            >
+              Zdjęcie
+            </a>
+          </nav>
+          <div
+            class="tab-content"
+          >
+            <div
+              aria-hidden="false"
+              class="tab-pane active"
+              role="tabpanel"
+            >
+              <div>
+                <span>
+                  PersonalDataTabMock
+                </span>
+                <button
+                  type="button"
+                >
+                  Dalej
+                </button>
+              </div>
+            </div>
+            <div
+              aria-hidden="true"
+              class="tab-pane"
+              role="tabpanel"
+            >
+              <div>
+                <span>
+                  EducationTabMock
+                </span>
+                <button
+                  type="button"
+                >
+                  Wstecz
+                </button>
+              </div>
+            </div>
+            <div
+              aria-hidden="true"
+              class="tab-pane"
+              role="tabpanel"
+            >
+              <div>
+                WorkExperienceTabMock
+              </div>
+            </div>
+            <div
+              aria-hidden="true"
+              class="tab-pane"
+              role="tabpanel"
+            >
+              <div>
+                SkillsTabMock
+              </div>
+            </div>
+            <div
+              aria-hidden="true"
+              class="tab-pane"
+              role="tabpanel"
+            >
+              <div>
+                LanguagesTabMock
+              </div>
+            </div>
+            <div
+              aria-hidden="true"
+              class="tab-pane"
+              role="tabpanel"
+            >
+              <div>
+                <span>
+                  PhotoTabMock
+                </span>
+                <button
+                  type="submit"
+                >
+                  Prześlij
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+`;

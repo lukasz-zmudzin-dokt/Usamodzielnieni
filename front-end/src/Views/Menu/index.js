@@ -17,7 +17,7 @@ class Menu extends React.Component {
             body: {}
         }).then(res => {
             console.log(res);
-            if (res.status === 200) {
+            if (res.status === 200 || res.status === 401) {
                 res.json().then(responseValue => {
                     console.log(responseValue);
                     console.log("Wylogowano");
