@@ -4,7 +4,6 @@ const getPosts = async (token, filters) => {
     ? `${categoryQ ? `&tag=${filters.tag}` : `?tag=${filters.tag}`}`
     : "";
   const url = `http://usamo-back.herokuapp.com/blog/blogposts/${categoryQ}${tagQ}`;
-  console.log(url);
   const headers = {
     Authorization: "Token " + token,
     "Content-Type": "application/json"
@@ -12,15 +11,16 @@ const getPosts = async (token, filters) => {
 
   const response = await fetch(url, { method: "GET", headers });
   if (response.status === 200) {
-    return response.json().then(res =>
-      res.map(({ category, tags, content, date_created, author }) => ({
+    return response.json().then(res => {
+      console.log(res);
+      return res.map(({ category, tags, content, date_created, author }) => ({
         category,
         tags,
         content,
         dateCreated: date_created,
         author
-      }))
-    );
+      }));
+    });
   } else {
     throw response.status;
   }

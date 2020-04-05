@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { UserContext } from "context";
 import { Container, Card, Alert } from "react-bootstrap";
 import { getPosts } from "Views/BlogPage/functions/fetchData";
-import BlogPost from "Views/BlogPage/components/BlogPost";
+import BlogPost from "Views/BlogPage/components/BlogPost/BlogPost";
 import Filter from "Views/BlogPage/components/Filter";
 const BlogPage = () => {
   const [posts, setPosts] = useState([]);
@@ -17,9 +17,7 @@ const BlogPage = () => {
       setIsLoading(true);
       let res;
       try {
-        console.log(filter);
         res = await getPosts(token, filter);
-        console.log(res);
       } catch (e) {
         console.log(e);
         res = [];

@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { getFilters } from "Views/BlogPage/functions/fetchData";
 import { Form, Col, Button } from "react-bootstrap";
+import { DEFAULT_INPUT } from "constants/other.js";
 import "./style.css";
 import FormGroup from "components/FormGroup"; // to się zmieni jak job offers będą zmergowane do mastera
 
 const Filter = ({ token, setFilter, count }) => {
   const [filters, setFilters] = useState({ categories: [], tags: [] });
-  const [category, setCategory] = useState("-- Wybierz --");
-  const [tag, setTag] = useState("-- Wybierz --");
+  const [category, setCategory] = useState(DEFAULT_INPUT);
+  const [tag, setTag] = useState(DEFAULT_INPUT);
 
   useEffect(() => {
     const loadOffers = async token => {
@@ -25,10 +26,8 @@ const Filter = ({ token, setFilter, count }) => {
 
   const filter = event => {
     event.preventDefault();
-
-    const categoryV = category !== "-- Wybierz --" ? category : undefined;
-    const tagV = tag !== "-- Wybierz --" ? tag : undefined;
-    console.log(categoryV, tagV);
+    const categoryV = category !== DEFAULT_INPUT ? category : undefined;
+    const tagV = tag !== DEFAULT_INPUT ? tag : undefined;
     setFilter({
       category: categoryV,
       tag: tagV
@@ -36,8 +35,8 @@ const Filter = ({ token, setFilter, count }) => {
   };
 
   const clearFilter = () => {
-    setCategory("-- Wybierz --");
-    setTag("-- Wybierz --");
+    setCategory(DEFAULT_INPUT);
+    setTag(DEFAULT_INPUT);
     setFilter({
       category: undefined,
       tag: undefined
@@ -71,7 +70,7 @@ const Filter = ({ token, setFilter, count }) => {
       </Form.Row>
 
       <Button type="submit" className="mr-3" variant="primary">
-        Filtruj oferty
+        Filtruj posty
       </Button>
       <Button variant="outline-primary" className="mr-3" onClick={clearFilter}>
         Wyczyść filtry
