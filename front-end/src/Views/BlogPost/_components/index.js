@@ -1,9 +1,11 @@
-import NewComment from './NewComment/NewComment';
+import CommentForm from './CommentForm/CommentForm';
 import CommentsList from './CommentsList/CommentsList';
+import CommentItem from './CommentItem/CommentItem';
 import BlogContent from './BlogContent/BlogContent';
 
 export {
-    NewComment,
+    CommentForm,
     CommentsList,
+    CommentItem,
     BlogContent
 }
