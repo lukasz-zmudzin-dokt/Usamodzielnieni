@@ -18,7 +18,7 @@ class CVApprovalPage extends React.Component {
 
     render() {
         return (
-            <Container fluid>
+            <Container fluid className="mt-4">
                 <div className="max-height">
                     <Card className="center">
                         <Card.Header className="border pb-4"><h3>CV do przejrzenia</h3></Card.Header>
