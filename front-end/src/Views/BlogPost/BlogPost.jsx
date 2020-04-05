@@ -62,6 +62,9 @@ const BlogPost = () => {
           loadedBlog = null;
           setError(true);
         }
+        loadedBlog.comments.push({ id: 1, content: 'Zawartość komentarza 1', creationDate: new Date(), author: { email: 'a@a.pl', firstName: 'Jan', lastName: 'Kowalski' } })
+        loadedBlog.comments.push({ id: 2, content: 'Zawartość komentarza 2', creationDate: new Date(), author: { email: 'a@a.pl', firstName: 'Jan', lastName: 'Kowalski' } })
+        loadedBlog.comments.push({ id: 3, content: 'Zawartość komentarza 3', creationDate: new Date(), author: { email: 'a@a.pl', firstName: 'Jan', lastName: 'Kowalski' } })
         setBlog(loadedBlog);
         setIsBlogLoading(false);
       }
@@ -80,7 +83,7 @@ const BlogPost = () => {
         <Card.Header as="h2">Blog</Card.Header>
         <Card.Body>
           <BlogContent blog={blog} />
-          <CommentsList blogId={blog.id} comments={blog.comments} />
+          <CommentsList user={user} blogId={blog.id} comments={blog.comments} />
           <CommentForm blogId={blog.id}/>
         </Card.Body>
       </Card>

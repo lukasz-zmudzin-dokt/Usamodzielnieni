@@ -1,0 +1,10 @@
+.commentItem {
+    margin-bottom: 1rem;
+}
+.commentItem__header {
+    margin-bottom: 0;
+}
+.commentItem__content {
+    margin-top: .25rem;
+    margin-bottom: 0;
+}
