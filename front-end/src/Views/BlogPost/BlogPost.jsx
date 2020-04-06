@@ -26,6 +26,7 @@ const getPost = async (id, token) => {
 const mapPost = (res) => ({
   id: res.id,
   content: res.content,
+  category: res.category,
   comments: res.comments.map((comment) => ({
     id: comment.id,
     content: comment.content,

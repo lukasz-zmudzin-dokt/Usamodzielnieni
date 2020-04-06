@@ -24,12 +24,13 @@ const BlogContent = ({ post }, user) => {
             {post.header !== undefined ?
                 <Card.Img variant="top" src={post.header}/> : <Card.Header/>
             }
-            <Card.Body className="post_content">
-                <Card.Title as="h3" className="post_title">Post title</Card.Title>
-                <Card.Text className="blog_content_text mx-3 text-justify">
+            <Card.Body className="post_content mx-4">
+                <Card.Title as="h3" className="post_title">{post.title === undefined ? "Tytuł posta" : post.title}</Card.Title>
+                <Card.Subtitle as="h6" className="text-muted mb-4 mt-2">Kategoria: {post.category}</Card.Subtitle>
+                <Card.Text className="blog_content_text text-justify">
                     {post.content}
                 </Card.Text>
-                <p className="post_taglist mt-5 mx-4">
+                <p className="post_taglist mt-5">
                     <em>tagi: {renderTags(post.tags)}</em>
                 </p>
             </Card.Body>
@@ -37,7 +38,7 @@ const BlogContent = ({ post }, user) => {
                 <Row>
                     <Col className="mx-3">
                         <Row className="">{`Autor: ${firstName} ${lastName} (${email})`}</Row>
-                        <Row>{`opublikowano: ${getDateString(post.creationDate)}`}</Row>
+                        <Row>{`Opublikowano: ${getDateString(post.creationDate)}`}</Row>
                     </Col>
                     <div className="post_comment_counter">
                         <Row className="text-right mx-3">Liczba komentarzy: {post.comments.length}</Row>
