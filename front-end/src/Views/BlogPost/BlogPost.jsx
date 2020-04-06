@@ -33,6 +33,7 @@ const mapPost = (res) => ({
     creationDate: comment.date_created,
     author: mapAuthor(comment.author)
   })),
+  creationDate: res.date_created,
   author: mapAuthor(res.author),
   tags: res.tags
 });
@@ -80,6 +81,7 @@ const BlogPost = props => {
       <BlogContent post={post} type={user.type}/>
       <Card className="blogpost_comment_card">
         <Card.Body>
+          <Card.Title as="h3" className="mb-3">Komentarze:</Card.Title>
           <CommentsList comments={post.comments} />
           <CommentForm />
         </Card.Body>

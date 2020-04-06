@@ -1,9 +1,3 @@
-.post_comment_counter {
-    display: flex;
-    text-align: end;
-}
-
 .blogpost_summary {
     color: #333333 !important;
 }
-

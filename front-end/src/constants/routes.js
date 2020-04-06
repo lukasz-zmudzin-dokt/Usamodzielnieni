@@ -22,7 +22,7 @@ const paths = {
   JOB_OFFERS: "/jobOffers",
   CV_APPROVAL: "/cvApproval",
   MY_OFFERS: "/myOffers",
-  BLOG_POST: "/blog/:id",
+  BLOG_POST: "/blog/blogpost/:id",
   BLOG_PAGE: "/blog"
 };
 

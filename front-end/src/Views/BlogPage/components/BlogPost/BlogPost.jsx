@@ -2,14 +2,14 @@ import React from "react";
 import { Card, Row, Badge, Col } from "react-bootstrap";
 import { IndexLinkContainer } from "react-router-bootstrap";
 
-const BlogPost = (data, {...rest}) => {
-  console.log(data.id);
+const BlogPost = ({data, ...rest}) => {
+  console.log(data);
   return (
     <IndexLinkContainer to={`/blog/blogpost/${data.id}`}>
       <Row {...rest}>
         <Col>
           <h3>{data.category}</h3>
-          <p>{`${data.content.substring(0, 100)}...`}</p>
+          <p>{`${data.summary.substring(0, 100)}...`}</p>
           <Row>
             <Col>
               <small>Tagi:</small>

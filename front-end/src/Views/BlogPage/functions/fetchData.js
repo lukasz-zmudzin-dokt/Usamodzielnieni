@@ -13,11 +13,11 @@ const getPosts = async (token, filters) => {
   if (response.status === 200) {
     return response.json().then(res => {
       console.log(res);
-      return res.map(({ id, category, tags, content, date_created, author }) => ({
+      return res.map(({ id, category, tags, summary, date_created, author }) => ({
         id,
         category,
         tags,
-        content,
+        summary,
         dateCreated: date_created,
         author
       }));

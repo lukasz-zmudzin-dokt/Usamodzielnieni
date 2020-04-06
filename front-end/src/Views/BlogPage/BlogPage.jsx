@@ -54,7 +54,7 @@ const BlogPage = () => {
           <ListGroup variant="flush">
             {posts.map((data, i) => (
               <ListGroup.Item key={i}>
-                <BlogPost {...data} />
+                <BlogPost data={data} />
               </ListGroup.Item>
             ))}
           </ListGroup>
