@@ -1,5 +1,5 @@
 import React from 'react'
-import {Badge, Card, Col, Row} from "react-bootstrap";
+import {Alert, Badge, Card, Col, Row} from "react-bootstrap";
 import "./BlogContent.css";
 
 const getDateString = dateString => {
@@ -7,6 +7,8 @@ const getDateString = dateString => {
 };
 
 const BlogContent = ({ post }, user) => {
+    if (post === undefined)
+        return <Alert variant="danger" className="d-lg-block">Wystąpił błąd podczas ładowania zawartości bloga.</Alert>;
     const {firstName, lastName, email} = post.author;
     return (
         <Card>
