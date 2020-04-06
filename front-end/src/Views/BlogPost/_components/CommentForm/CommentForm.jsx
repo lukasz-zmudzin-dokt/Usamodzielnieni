@@ -74,16 +74,16 @@ const CommentForm = ({ blogId, comment, afterSubmit, ...rest }) => {
                     afterSubmit({
                         id: id,
                         author: {
-                            firstName: '--',
-                            lastName: '--',
-                            email: '--'
+                            firstName: user.data.first_name,
+                            lastName: user.data.last_name,
+                            email: user.data.email
                         },
                         content: commentContent,
                         creationDate: new Date()
                     })
                     setCommentContent('');
+                    setSubmitted(true);
                 }
-                setSubmitted(true);
             } catch (e) {
                 setError(true);
             }
