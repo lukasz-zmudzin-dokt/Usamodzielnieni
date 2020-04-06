@@ -9,7 +9,6 @@ import {
 
 const getPost = async (id, token) => {
   let url = `https://usamo-back.herokuapp.com/blog/blogpost/${id}`;
-  console.log(url);
   const headers = {
       Authorization: "Token " + token,
       "Content-Type": "application/json"
@@ -44,14 +43,14 @@ const mapAuthor = (author) => ({
   lastName: author.last_name
 });
 
-const BlogPost = props => {
+const BlogPost = () => {
   const [post, setPost] = useState(null);
   const [isPostLoading, setIsPostLoading] = useState(false);
   const [error, setError] = useState(false);
   const user = useContext(UserContext);
 
-  const post_Id = window.location.pathname.replace(/\/blog\/blogpost\//, ''); // TODO
-  console.log(props)
+  const post_Id = window.location.pathname.replace(/\/blog\/blogpost\//, '');
+
   useEffect(
     () => {
       const loadPost = async (postId, token) => {

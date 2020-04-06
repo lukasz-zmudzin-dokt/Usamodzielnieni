@@ -6,6 +6,15 @@ const getDateString = dateString => {
     return dateString.substring(8,10) + "." + dateString.substring(5, 7) + "." + dateString.substring(0, 4);
 };
 
+const renderTags = tagList => {
+    if (tagList.length === 0) {
+        return "Brak tagów.";
+    }
+    else return tagList.map(tag => {
+        return <Badge variant="info" key={tag} className="mx-1">{tag}</Badge>
+    });
+};
+
 const BlogContent = ({ post }, user) => {
     if (post === undefined)
         return <Alert variant="danger" className="d-lg-block">Wystąpił błąd podczas ładowania zawartości bloga.</Alert>;
@@ -21,9 +30,7 @@ const BlogContent = ({ post }, user) => {
                     {post.content}
                 </Card.Text>
                 <p className="post_taglist mt-5 mx-4">
-                    <em>tagi: {post.tags.map(tag => {
-                        return <Badge variant="info" key={tag} className="mx-1">{tag}</Badge>
-                    })}</em>
+                    <em>tagi: {renderTags(post.tags)}</em>
                 </p>
             </Card.Body>
             <Card.Footer className="blogpost_summary">

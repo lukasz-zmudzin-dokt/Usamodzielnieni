@@ -43,5 +43,16 @@ describe('BlogContent', () => {
         );
 
         expect(getByText("Wystąpił błąd", {exact: false})).toBeInTheDocument();
-    })
+    });
+
+    it('should return empty tag list', () => {
+       const thirdPost = post;
+       thirdPost.tags = [];
+       const {getByText, queryByText} = render(
+           <BlogContent post={thirdPost} />
+       );
+
+       expect(getByText('Brak tagów', {exact: false})).toBeInTheDocument();
+       expect(queryByText("tag1")).not.toBeInTheDocument();
+    });
 });
