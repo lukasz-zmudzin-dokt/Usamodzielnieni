@@ -19,7 +19,8 @@ class RegisterPage extends React.Component {
     passwordR: "",
     areEqual: true,
     validated: false,
-    redirect: false
+    redirect: false,
+    disabled: false
   };
 
   renderRedirect = () => {
@@ -36,6 +37,7 @@ class RegisterPage extends React.Component {
   };
 
   sendData = object => {
+    this.setState({ disabled: true });
     const url = "https://usamo-back.herokuapp.com/account/register/";
     fetch(url, {
       method: "POST",
@@ -75,7 +77,8 @@ class RegisterPage extends React.Component {
           validated: false,
           incorrect: true,
           message: "Taki użytkownik już istnieje",
-          username: ""
+          username: "",
+          disabled: false
         });
       }
     });
@@ -152,7 +155,8 @@ class RegisterPage extends React.Component {
       name_of_place,
       street,
       city,
-      city_code
+      city_code,
+      disabled
     } = this.state;
     const { onChange, handleSubmit } = this;
     return (
@@ -370,6 +374,7 @@ class RegisterPage extends React.Component {
                 variant="secondary"
                 className="loginPage__button"
                 type="submit"
+                disabled={disabled}
               >
                 Utwórz konto
               </Button>

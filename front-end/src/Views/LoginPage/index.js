@@ -15,7 +15,8 @@ class LoginPage extends React.Component {
     redirect: false,
     incorrect: false,
     cookieVal: false,
-    validated: false
+    validated: false,
+    disabled: false
   };
 
   createMessage = status => {
@@ -31,6 +32,7 @@ class LoginPage extends React.Component {
   };
 
   sendData = object => {
+    this.setState({ disabled: true });
     const { username, password } = this.state;
     const url = "https://usamo-back.herokuapp.com/account/login/";
     fetch(url, {
@@ -57,7 +59,8 @@ class LoginPage extends React.Component {
           incorrect: true,
           username: "",
           password: "",
-          message: "Coś poszło nie tak"
+          message: "Coś poszło nie tak",
+          disabled: false
         });
       }
     });
@@ -120,7 +123,8 @@ class LoginPage extends React.Component {
       validated,
       cookieVal,
       incorrect,
-      message
+      message,
+      disabled
     } = this.state;
     const { onChange, handleSubmit, handleCheck } = this;
 
@@ -181,6 +185,7 @@ class LoginPage extends React.Component {
                 variant="secondary"
                 className="loginPage__button"
                 type="submit"
+                disabled={disabled}
               >
                 Zaloguj
               </Button>
