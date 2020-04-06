@@ -7,7 +7,7 @@ import { IndexLinkContainer } from "react-router-bootstrap";
 import './style.css';
 import CVStatus from "./components/CVStatus";
 import { getUserCVs } from "./functions/getUserCVs";
-import { showCV } from "./functions/showCV";
+import { getCVUrl } from "./functions/getCVUrl";
 
 class MyCVsPage extends React.Component {
     constructor(props) {
@@ -15,6 +15,8 @@ class MyCVsPage extends React.Component {
         this.state = { cvs: [], showModal: false, errorMessage: "" };
         this.closeModal = this.closeModal.bind(this);
         this.error = this.error.bind(this);
+        this.showCV = this.showCV.bind(this);
+        this.openModal =this.openModal.bind(this);
     }
 
     componentDidMount() {
@@ -25,8 +27,29 @@ class MyCVsPage extends React.Component {
         return this.state.errorMessage.status;
     }
 
+    openModal() {
+        this.setState({showModal: true});
+    }
+
     closeModal() {
         this.setState({showModal: false});
+    }
+
+    showCV(cv_id) {
+        console.log("show cv");
+        getCVUrl(this.context.token, cv_id).then(function (r) {
+            if(r.status === "200:OK") {
+                console.log(r.result);
+                let url = "http://usamo-back.herokuapp.com" + r.result;
+                console.log("url: " + url);
+                window.open(url, '_blank');
+            } else {
+                console.log("coś się spierdoliło");
+                console.log(r.status);
+            }
+
+        });
+
     }
 
     render() {
@@ -52,7 +75,7 @@ class MyCVsPage extends React.Component {
                                             <IndexLinkContainer to={"/cvEditor" + cv.cv_id}>
                                                 <Button variant="info">Edytuj</Button>
                                             </IndexLinkContainer>
-                                            <Button className="align-self-end ml-2" variant="primary" onClick={e => showCV(this.context.token, cv.cv_id)}>Pobierz</Button>
+                                            <Button className="align-self-end ml-2" variant="primary" onClick={e => this.showCV(cv.cv_id)}>Zobacz CV</Button>
                                         </Col>
                                     </Row>
                                     </ListGroup.Item>
