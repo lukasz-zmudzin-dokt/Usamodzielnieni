@@ -3,7 +3,6 @@ import { Card, Row, Badge, Col } from "react-bootstrap";
 import { IndexLinkContainer } from "react-router-bootstrap";
 
 const BlogPost = ({data, ...rest}) => {
-  console.log(data);
   return (
     <IndexLinkContainer to={`/blog/blogpost/${data.id}`}>
       <Row {...rest}>

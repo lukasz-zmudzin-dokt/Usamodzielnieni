@@ -71,7 +71,7 @@ exports[`BlogContent should match snapshot 1`] = `
             class="text-right mx-3 row"
           >
             Liczba komentarzy: 
-            0
+            1
           </div>
         </div>
       </div>
