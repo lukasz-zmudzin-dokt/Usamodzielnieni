@@ -28,7 +28,7 @@ const addComment = async (token, content, blogId) => {
     const response = await fetch(url, { method: "POST", body: JSON.stringify({content}), headers });
 
     if (response.status === 200) {
-        return response.json();
+        return response.json().then(res => res.id);
     } else {
         throw response.status;
     }
@@ -38,6 +38,7 @@ const CommentForm = ({ blogId, comment, afterSubmit, ...rest }) => {
     const [commentContent, setCommentContent] = useState(comment ? comment.content : "");
     const [submitted, setSubmitted] = useState(false);
     const [error, setError] = useState(false);
+    const [validated, setValidated] = useState(false);
     const user = useContext(UserContext);
 
     const onChange = (e) => {
@@ -46,29 +47,46 @@ const CommentForm = ({ blogId, comment, afterSubmit, ...rest }) => {
     }
 
     const onSubmit = async (e) => {
+        setValidated(false);
         e.preventDefault();
-        try {
-            if (comment) {
-                await updateComment(
-                    user.token,
-                    commentContent,
-                    comment.id
-                );
-                afterSubmit({
-                    ...comment,
-                    content: commentContent,
-                    creationDate: new Date()
-                })
-            } else {
-                await addComment(
-                    user.token,
-                    commentContent,
-                    blogId
-                );
+        if (e.currentTarget.checkValidity() === false) {
+            setValidated(true);
+            e.stopPropagation();
+        } else {
+            try {
+                if (comment) {
+                    await updateComment(
+                        user.token,
+                        commentContent,
+                        comment.id
+                    );
+                    afterSubmit({
+                        ...comment,
+                        content: commentContent,
+                        creationDate: new Date()
+                    })
+                } else {
+                    const id = await addComment(
+                        user.token,
+                        commentContent,
+                        blogId
+                    );
+                    afterSubmit({
+                        id: id,
+                        author: {
+                            firstName: '--',
+                            lastName: '--',
+                            email: '--'
+                        },
+                        content: commentContent,
+                        creationDate: new Date()
+                    })
+                    setCommentContent('');
+                }
+                setSubmitted(true);
+            } catch (e) {
+                setError(true);
             }
-            setSubmitted(true);
-        } catch (e) {
-            setError(true);
         }
     }
 
@@ -82,7 +100,11 @@ const CommentForm = ({ blogId, comment, afterSubmit, ...rest }) => {
     return (
         <div {...rest}>
             <h5>{comment ? 'Edytuj komentarz' : 'Dodaj komentarz'}</h5>
-            <Form onSubmit={onSubmit}>
+            <Form 
+                noValidate
+                validated={validated}
+                onSubmit={onSubmit}
+            >
                 <Form.Group controlId="commentContent">
                     <Form.Control
                         as="textarea"

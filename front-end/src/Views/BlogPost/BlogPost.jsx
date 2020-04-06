@@ -29,7 +29,7 @@ const mapBlog = (res) => ({
   comments: res.comments.map((comment) => ({
     id: comment.id,
     content: comment.content,
-    creationDate: comment.date_created,
+    creationDate: new Date(comment.date_created),
     author: mapAuthor(comment.author)
   })),
   author: mapAuthor(res.author)
@@ -64,9 +64,6 @@ const BlogPost = () => {
           loadedBlog = null;
           setError(true);
         }
-        loadedBlog.comments.push({ id: 1, content: 'Zawartość komentarza 1', creationDate: new Date(), author: { email: 'a@a.pl', firstName: 'Jan', lastName: 'Kowalski' } })
-        loadedBlog.comments.push({ id: 2, content: 'Zawartość komentarza 2', creationDate: new Date(), author: { email: 'a@a.pl', firstName: 'Jan', lastName: 'Kowalski' } })
-        loadedBlog.comments.push({ id: 3, content: 'Zawartość komentarza 3', creationDate: new Date(), author: { email: 'a@a.pl', firstName: 'Jan', lastName: 'Kowalski' } })
         setBlog(loadedBlog);
         setIsBlogLoading(false);
       }
@@ -86,7 +83,7 @@ const BlogPost = () => {
         <Card.Body>
           <BlogContent blog={blog} />
           <CommentsList user={user} blogId={blog.id} comments={blog.comments} setComments={setComments} />
-          <CommentForm blogId={blog.id}/>
+          <CommentForm blogId={blog.id} afterSubmit={(comment) => setComments([ ...blog.comments, comment ])} />
         </Card.Body>
       </Card>
     </Container>
