@@ -5,7 +5,7 @@ const CommentItem = ({ content, author, creationDate, ...rest }) => {
         <div {...rest}>
             <h5>{`${author.first_name} ${author.last_name}`}</h5>
             <p>{content}</p>
-            <small>dodano: {creationDate.toLocaleDateString(undefined, {})}</small>
+            {/*<small>dodano: {creationDate.toLocaleDateString(undefined, {})}</small>*/}
         </div>
     )
 }

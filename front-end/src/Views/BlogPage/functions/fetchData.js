@@ -12,10 +12,10 @@ const getPosts = async (token, filters) => {
   const response = await fetch(url, { method: "GET", headers });
   if (response.status === 200) {
     return response.json().then(res => {
-      return res.map(({ category, tags, content, date_created, author }) => ({
+      return res.map(({ category, tags, summary, date_created, author }) => ({
         category,
         tags,
-        content,
+        content: summary,
         dateCreated: date_created,
         author
       }));
