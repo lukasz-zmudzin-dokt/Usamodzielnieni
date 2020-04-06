@@ -1,6 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
 import { UserContext } from "context";
-import { Container, Card, Alert, ListGroup } from "react-bootstrap";
+import {
+  Container,
+  Card,
+  Alert,
+  ListGroup,
+  CardColumns
+} from "react-bootstrap";
 import { getPosts } from "Views/BlogPage/functions/fetchData";
 import BlogPost from "Views/BlogPage/components/BlogPost/BlogPost";
 import Filter from "Views/BlogPage/components/Filter";
@@ -51,13 +57,11 @@ const BlogPage = () => {
         {msg ? (
           msg
         ) : (
-          <ListGroup variant="flush">
+          <CardColumns className="ml-3 mr-3">
             {posts.map((data, i) => (
-              <ListGroup.Item key={i}>
-                <BlogPost {...data} />
-              </ListGroup.Item>
+              <BlogPost key={i} {...data} />
             ))}
-          </ListGroup>
+          </CardColumns>
         )}
       </Card>
     </Container>
