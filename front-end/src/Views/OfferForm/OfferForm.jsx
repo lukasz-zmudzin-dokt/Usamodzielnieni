@@ -5,7 +5,6 @@ import { voivodeships } from "constants/voivodeships";
 import FormGroup from "components/FormGroup";
 import { sendData, getSelects } from "Views/OfferForm/functions/fetchData";
 import { UserContext } from "context";
-import "./style.css";
 import polish from "date-fns/locale/pl";
 import { useHistory } from "react-router-dom";
 
@@ -199,7 +198,7 @@ const OfferForm = () => {
             ) : null}
             <Row className="w-100 justify-content-center align-items-center m-0">
               <Button
-                variant="secondary"
+                variant="primary"
                 type="submit"
                 className=""
                 data-testid="submitBtn"

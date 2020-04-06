@@ -3,8 +3,16 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  min-height: calc(100vh - #{$nav-margin});
   overflow: hidden;
+}
+
+.loginPage__cardSection {
+  margin-bottom: 15px;
+}
+
+.loginPage__messageFail {
+  margin-bottom: 0.5rem;
 }
 
 .loginPage__links {
@@ -21,5 +29,11 @@
   .loginPage__card--login {
     width: 400px !important;
   }
+}
 
+.registerPage_body.card-body {
+  padding: 0;
+}
+.register_account_type {
+  margin-bottom: 2vh !important;
 }

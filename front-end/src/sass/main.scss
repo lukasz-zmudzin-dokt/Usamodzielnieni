@@ -1,0 +1,8 @@
+@import "utilities/variables";
+@import "sass/pages/_loginRegisterPage.scss";
+@import "sass/pages/_offerForm.scss";
+@import "sass/pages/_userProfilePage.scss";
+@import "pages/headerLayout";
+@import "bootstrap/custom";
+// Import Bootstrap and its default variables
+@import "~bootstrap/scss/bootstrap.scss";
