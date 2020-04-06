@@ -48,8 +48,29 @@ class LoginPage extends React.Component {
       if (res.status === 201) {
         res.json().then(responseValue => {
           const { token, type } = responseValue;
-          this.context.login(token, type);
-          this.setRedirect();
+          fetch("http://usamo-back.herokuapp.com/account/data/", {
+            headers: { 
+              "Content-Type": "application/json",
+              Authorization: "Token " + token
+            }
+          }).then(dataRes => {
+            if (dataRes.status === 200) {
+              dataRes.json().then(dataValue => {
+                console.log(dataValue, dataValue.data)
+                const { data } = dataValue;
+                this.context.login(token, type, data);
+                this.setRedirect();
+              })
+            } else {
+              this.setState({
+                validated: false,
+                incorrect: true,
+                username: "",
+                password: "",
+                message: "Coś poszło nie tak"
+              });
+            }
+          })
         });
       } else {
         this.setState({
