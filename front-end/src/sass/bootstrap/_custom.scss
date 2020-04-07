@@ -34,3 +34,9 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
+
+.center-container {
+  display: flex;
+  min-height: calc(100vh - #{$nav-margin});
+  align-items: center;
+}

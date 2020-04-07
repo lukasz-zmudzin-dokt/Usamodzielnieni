@@ -8,7 +8,9 @@ const App = () => (
   <UserProvider>
     <BrowserRouter>
       <HeaderTemplate />
-      <Router />
+      <div className="center-container">
+        <Router />
+      </div>
     </BrowserRouter>
   </UserProvider>
 );
