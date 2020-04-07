@@ -13,7 +13,8 @@ const FormGroup = ({
   incorrect,
   length,
   required,
-  id
+  id,
+  ...rest
 }) => {
   const setInput = e => {
     const value = e.target.value;
@@ -26,9 +27,6 @@ const FormGroup = ({
   const setFormType = () => {
     switch (type) {
       case "select":
-        const options = array
-          .sort()
-          .map(val => <option key={val}>{val}</option>);
         return (
           <Form.Control
             as={type}
@@ -37,7 +35,9 @@ const FormGroup = ({
             required={required}
           >
             {required ? null : <option disabled>-- Wybierz --</option>}
-            {options}
+            {array.map(val => (
+              <option key={val}>{val}</option>
+            ))}
           </Form.Control>
         );
       case "textarea":
@@ -64,8 +64,22 @@ const FormGroup = ({
               selected={val}
               required={required}
               minDate={new Date()}
+              placeholderText={header}
             />
           </Form.Row>
+        );
+      case "number":
+        return (
+          <Form.Control
+            type={type}
+            placeholder={header}
+            onChange={setInput}
+            value={val}
+            required={required}
+            min={length.min}
+            max={length.max}
+            data-testid="default"
+          />
         );
       default:
         return (
@@ -87,6 +101,7 @@ const FormGroup = ({
     <Form.Group
       controlId={id}
       className={type === "textarea" ? "offerForm__textContainer" : ""}
+      {...rest}
     >
       <Form.Label>{header}</Form.Label>
       {setFormType()}

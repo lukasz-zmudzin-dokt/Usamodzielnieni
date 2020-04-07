@@ -12,14 +12,16 @@ import {
 } from "./components";
 import { UserContext } from "context";
 
-import { sendData } from "./functions/other.js";
+import { sendData, getFeedback } from "Views/CVEditorPage/functions/other.js";
 import { createCVObject } from "Views/CVEditorPage/functions/createCVObject.js";
+import { withRouter } from "react-router-dom";
 
 class CVEditorPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       formTab: "personalData",
+      comments: {},
       error: false,
 
       personalData: null,
@@ -28,6 +30,9 @@ class CVEditorPage extends React.Component {
       skills: null,
       languages: null,
       photo: null,
+      loading: false,
+      commentsError: false,
+      showComments: true,
       disabled: false
     };
     this.tabs = [];
@@ -117,6 +122,89 @@ class CVEditorPage extends React.Component {
     ];
   };
 
+  getTabs = () => {
+    const getTabProps = key => ({
+      data: this.state[key],
+      onChange: data => this.setState({ [key]: data }),
+      onPrevClick: this.onPrevClick,
+      onNextClick: this.onNextClick,
+      comments: this.state.comments[key],
+      loading: this.state.loading,
+      error: this.state.commentsError,
+      showComments: this.state.showComments
+    });
+    return [
+      {
+        id: "personalData",
+        name: "Dane osobowe",
+        component: (
+          <PersonalDataTab
+            {...getTabProps("personalData")}
+            onPrevClick={undefined}
+          />
+        )
+      },
+      {
+        id: "education",
+        name: "Edukacja",
+        component: <EducationTab {...getTabProps("education")} />
+      },
+      {
+        id: "workExperience",
+        name: "Doświadczenie zawodowe",
+        component: <WorkExperienceTab {...getTabProps("workExperience")} />
+      },
+      {
+        id: "skills",
+        name: "Umiejętności",
+        component: <SkillsTab {...getTabProps("skills")} />
+      },
+      {
+        id: "languages",
+        name: "Języki obce",
+        component: <LanguagesTab {...getTabProps("languages")} />
+      },
+      {
+        id: "photo",
+        name: "Zdjęcie",
+        component: (
+          <PhotoTab {...getTabProps("photo")} onNextClick={undefined} />
+        )
+      }
+    ];
+  };
+
+  componentDidMount() {
+    let cvId = this.props.match.params.id;
+    if (cvId) {
+      this.setState({ loading: true });
+      getFeedback(this.context.token, this.props.match.params.id)
+        .then(res => {
+          this.setState({
+            comments: {
+              personalData: res.basic_info,
+              education: res.schools,
+              workExperience: res.experiences,
+              skills: res.skills,
+              languages: res.languages,
+              photo: res.additional_info
+            },
+            loading: false,
+            commentsError: false
+          });
+        })
+        .catch(err => {
+          console.log(err);
+          this.setState({
+            loading: false,
+            commentsError: true
+          });
+        });
+    } else {
+      this.setState({ showComments: false });
+    }
+  }
+
   render() {
     this.tabs = this.getTabs();
 
@@ -153,4 +241,4 @@ class CVEditorPage extends React.Component {
 
 CVEditorPage.contextType = UserContext;
 
-export default CVEditorPage;
+export default withRouter(CVEditorPage);

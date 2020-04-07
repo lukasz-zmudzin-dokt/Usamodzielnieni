@@ -1,0 +1,101 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AccountForm should render correctly 1`] = `
+<div>
+  <div
+    class="loginPage__cardSection col-lg  card bg-light"
+  >
+    <h4
+      class="card-header"
+    >
+      Dane konta
+    </h4>
+    <div
+      class="card-body"
+    >
+      <div
+        class="form-group"
+      >
+        <input
+          class="loginPage__input form-control"
+          id="formGroupEmail"
+          maxlength="50"
+          name="email"
+          placeholder="Email"
+          required=""
+          type="email"
+          value=""
+        />
+        <div
+          class="invalid-feedback"
+        >
+          Podaj właściwy email
+        </div>
+      </div>
+      <div
+        class="form-group"
+      >
+        <input
+          autocomplete="on"
+          class="form-control"
+          id="formGroupUsername"
+          maxlength="20"
+          minlength="6"
+          name="username"
+          placeholder="Nazwa użytkownika"
+          required=""
+          type="text"
+          value=""
+        />
+        <div
+          class="invalid-feedback"
+        >
+          Minimalna ilośc znaków: 6
+        </div>
+      </div>
+      <div
+        class="form-group"
+      >
+        <input
+          autocomplete="on"
+          class="form-control"
+          id="formGroupPassword"
+          maxlength="30"
+          minlength="6"
+          name="password"
+          placeholder="Hasło"
+          required=""
+          type="password"
+          value=""
+        />
+        <div
+          class="invalid-feedback"
+        >
+          Minimalna ilośc znaków: 6
+        </div>
+      </div>
+      <div
+        class="form-group"
+      >
+        <input
+          autocomplete="on"
+          class="form-control"
+          id="formGroupPasswordRepeat"
+          minlength="6"
+          name="passwordR"
+          placeholder="Powtórz hasło"
+          required=""
+          type="password"
+          value=""
+        />
+        <div
+          class="invalid-feedback"
+        >
+          Minimalna ilośc znaków: 6
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+`;
