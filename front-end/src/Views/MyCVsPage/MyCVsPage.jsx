@@ -20,19 +20,21 @@ class MyCVsPage extends React.Component {
             errorMessages: {
                 big: "",
                 small: ""
-            }
+            },
+            loading: true
         };
     }
 
     componentDidMount() {
-        getUserCVs(this.context.token).then(response => response.status === "200:OK" ? this.setState({cvs: response.result}) : this.setState({showModal: false, errors: {big: true}, errorMessages: {big: response.status}}));
+        getUserCVs(this.context.token).then(response => response.status === "200:OK" ? this.setState({cvs: response.result, loading: false}) : this.setState({showModal: false, errors: {big: true}, errorMessages: {big: response.status}, loading: false}));
     }
 
     render() {
         const {
             errors,
             errorMessages,
-            cvs
+            cvs,
+            loading
         } = this.state;
         return (
             <Container className="mt-4">
@@ -43,6 +45,11 @@ class MyCVsPage extends React.Component {
                                 Moje CV
                             </h4>
                         </Card.Header>
+                        {loading ? (
+                            <Alert variant="primary" className="m-3">
+                                Ładuję...
+                            </Alert>
+                        ) : null}
                         {errors.big ? (
                             <Alert variant="danger" className="m-3">
                                 Ups, coś poszło nie tak. Kod błędu - {errorMessages.big.status}
