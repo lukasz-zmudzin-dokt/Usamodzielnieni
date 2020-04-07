@@ -21,3 +21,11 @@ export const getFilters = async token => {
         throw responseT.status;
     }
 };
+
+export const postBlogPost = (data, token) => {
+
+};
+
+export const uploadPhoto = (photo, token) => {
+
+};

@@ -1,8 +1,11 @@
 import React from "react";
-import {Card, Col, Container, Form, Row} from "react-bootstrap";
+import {Button, Card, Col, Container, Form, Row} from "react-bootstrap";
 import {Editor, createEditorState} from 'medium-draft';
-import {getFilters} from "./functions/fetchData";
-import {FormRow} from "react-bootstrap/Form";
+import {getFilters} from "./functions/apiCalls";
+import "medium-draft/lib/index.css";
+import {customizeToolbar} from "./functions/editorConfig";
+import SelectionRow from "./components/SelectionRow";
+import {UserContext} from "../../context/UserContext";
 
 class BlogPostForm extends React.Component {
   constructor(props) {
@@ -10,11 +13,16 @@ class BlogPostForm extends React.Component {
       this.fileInput = React.createRef();
       this.state = {
           photo: null,
-          editorState: null,
+          editorState: createEditorState(),
           title: undefined,
           category: "",
-          filters: {}
-      }
+          tags: [],
+          filters: {
+              categories: [],
+              tags: []
+          }
+      };
+      this.refsEditor = React.createRef();
   }
 
   componentDidMount() {
@@ -27,7 +35,11 @@ class BlogPostForm extends React.Component {
               editorState: createEditorState()
           });
       }
-      this.loadFilters();
+      this.loadFilters().then( res => {
+          this.setState({
+              filters: res
+          });
+      });
   }
 
   loadFilters = async () => {
@@ -38,12 +50,10 @@ class BlogPostForm extends React.Component {
           console.log(e);
           res = {categories: [], tags: []}
       }
-      this.setState({
-          filters: res
-      })
+      return res;
   };
 
-    onPhotoChange = () => {
+  onPhotoChange = () => {
       this.setState({
           photo: this.fileInput.files[0]
       })
@@ -55,7 +65,23 @@ class BlogPostForm extends React.Component {
       })
   };
 
+  onEditorChange = (editorState) => {
+    this.setState({
+        editorState
+    });
+    this.refsEditor = React.createRef();
+  };
+
+  onArrayChange = e => {
+      const name = e.target.name;
+      this.setState( prevState => ({
+          [name]: [...prevState.name, e.target.value]
+      }));
+  };
+
   render () {
+      const config = customizeToolbar();
+      console.log(this.state);
       return (
           <Container>
               <Card>
@@ -74,38 +100,39 @@ class BlogPostForm extends React.Component {
                       </Form.Group>
                   </Card.Header>
                   <Card.Body>
-                      <Form.Group controlId="blogpost_title">
+                      <Form.Group controlId="blogpost_title" className="mx-3 mb-4">
                           <Form.Control
-                            name="title"
-                            className="blogpost_title_form"
-                            placeholder="Wpisz tytuł posta..."
-                            size="lg"
-                            onChange={this.onChange}
+                              name="title"
+                              className="blogpost_title_form block"
+                              placeholder="Wpisz tytuł posta..."
+                              size="lg"
+                              onChange={this.onChange}
                           />
                       </Form.Group>
-                      <Form.Row className="categories mx-1 inline">
-                          <Form.Group controlId="blogspot_category">
-                              <Form.Control
-                                as="select"
-                                name="category"
-                                placeholder="Wybierz kategorię z listy..."
-                                array={this.state.filters.categories}
-                                onSelect={this.onChange}
-                              />
-                              <div className="mx-2">lub</div>
-                              <Form.Control
-                                name="category"
-                                placeholder="Wpisz nową kategorię"
-                              />
-                          </Form.Group>
-
-
-                      </Form.Row>
+                      {console.log(this.state.filters.categories)}
+                      <SelectionRow name="category" arrayType={[this.state.filters.categories]} onChange={this.onChange} />
+                      <div className="my-4">
+                          <Editor
+                              placeholder="Napisz swoją historię..."
+                              ref={this.refsEditor}
+                              editorState={this.state.editorState}
+                              onChange={this.onEditorChange}
+                              inlineButtons={config.inline}
+                              blockButtons={config.block}
+                              sideButtons={[]}
+                          />
+                      </div>
+                      <SelectionRow className="mt-4" name="tags" arrayType={[this.state.filters.tags]} onChange={this.onArrayChange}/>
                   </Card.Body>
+                  <Card.Footer className="">
+                      <Button variant="primary" size="lg" block>Opublikuj</Button>
+                  </Card.Footer>
               </Card>
           </Container>
-      )
+      );
   }
-};
+}
+
+BlogPostForm.contextType = UserContext;
 
 export default BlogPostForm;

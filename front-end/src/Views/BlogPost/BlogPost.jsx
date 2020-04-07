@@ -33,13 +33,13 @@ const mapBlog = (res) => ({
     author: mapAuthor(comment.author)
   })),
   author: mapAuthor(res.author)
-})
+});
 
 const mapAuthor = (author) => ({
   email: author.email,
   firstName: author.first_name,
   lastName: author.last_name
-})
+});
 
 const BlogPost = () => {
   const [blog, setBlog] = useState(null);
