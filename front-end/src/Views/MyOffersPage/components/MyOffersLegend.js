@@ -5,7 +5,7 @@ import "Views/MyOffersPage/style.css";
 const MyOffersLegend = ({ answers = [] })  => {
     if(answers.length > 0) {
         return (
-            <Row className="mt-3 hide-on-mobile">
+            <Row className="mb-3 hide-on-mobile">
                 <Col xs={12} md={6}><b>Imię i nazwisko</b></Col>
                 <Col xs={12} md={6}><b>Email</b></Col>
             </Row>

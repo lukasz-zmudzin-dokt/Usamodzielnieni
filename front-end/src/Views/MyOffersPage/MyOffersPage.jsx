@@ -12,7 +12,8 @@ class MyOffersPage extends React.Component {
             offers: [],
             answers: [],
             error: false,
-            errorMessage: ""
+            errorMessage: "",
+            loading: true
         };
     }
 
@@ -30,8 +31,8 @@ class MyOffersPage extends React.Component {
         } = this.state;
         return(
             <Container>
-                <div className="max-height">
-                    <Card className="center">
+                <div className="max-height pt-4">
+                    <Card>
                         <Card.Header><h3>Moje oferty</h3></Card.Header>
                         <Card.Body>
                             {error ? (

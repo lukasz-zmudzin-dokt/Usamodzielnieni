@@ -1,4 +1,5 @@
 export const getOffers = async (token) => {
+    console.log(token);
     return await fetch("http://usamo-back.herokuapp.com/job/employer/job-offers/", {
         method: "GET",
         headers: {
