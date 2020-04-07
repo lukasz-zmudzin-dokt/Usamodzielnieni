@@ -1,7 +1,6 @@
 import React from "react";
 import { render } from "@testing-library/react";
 import UserDetails from "Views/UserProfilePage/components/UserDetails";
-import renderer from "react-test-renderer";
 
 const user = {
   username: "user1",
@@ -34,9 +33,9 @@ describe("UserDetails ", () => {
   });
 });
 
-it("renders correctly", () => {
-  const details = renderer
-    .create(<UserDetails user={user} names={names} />)
-    .toJSON();
-  expect(details).toMatchSnapshot();
+it("should render correctly", () => {
+  const { container } = render(
+    <UserDetails user={user} names={names} />
+  );
+  expect(container).toMatchSnapshot();
 });
