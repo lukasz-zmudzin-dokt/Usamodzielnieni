@@ -1,9 +1,11 @@
 import React from 'react'
 import {Alert, Badge, Card, Col, Row} from "react-bootstrap";
 import "./BlogContent.css";
+import mediumDraftImporter from 'medium-draft/lib/importer';
+import {convertToHTML} from "draft-convert";
 
 const getDateString = dateString => {
-    return dateString.substring(8,10) + "." + dateString.substring(5, 7) + "." + dateString.substring(0, 4);
+    return dateString.substring(0,2) + "." + dateString.substring(3, 5) + "." + dateString.substring(6, 10);
 };
 
 const renderTags = tagList => {
@@ -19,16 +21,17 @@ const BlogContent = ({ post }, user) => {
     if (post === undefined)
         return <Alert variant="danger" className="d-lg-block">Wystąpił błąd podczas ładowania zawartości bloga.</Alert>;
     const {firstName, lastName, email} = post.author;
+    const content = convertToHTML(mediumDraftImporter(post.content));
     return (
         <Card>
             {post.header !== undefined ?
                 <Card.Img variant="top" src={post.header}/> : <Card.Header/>
             }
             <Card.Body className="post_content mx-4">
-                <Card.Title as="h3" className="post_title">{post.title === undefined ? "Tytuł posta" : post.title}</Card.Title>
+                <Card.Title as="h1" className="post_title">{post.title === undefined ? "Tytuł posta" : post.title}</Card.Title>
                 <Card.Subtitle as="h6" className="text-muted mb-4 mt-2">Kategoria: {post.category}</Card.Subtitle>
                 <Card.Text className="blog_content_text text-justify">
-                    {post.content}
+                    <div dangerouslySetInnerHTML={{__html: content}}/>
                 </Card.Text>
                 <p className="post_taglist mt-5">
                     <em>tagi: {renderTags(post.tags)}</em>

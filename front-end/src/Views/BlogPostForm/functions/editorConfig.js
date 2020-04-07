@@ -3,16 +3,6 @@ import {Button} from "react-bootstrap";
 export const customizeToolbar = () => {
     const blockButtons = [
         {
-            label: 'H2',
-            style: 'header-two',
-            icon: 'header',
-            description: 'Nagłówek 2'
-        }, {
-            label: 'H3',
-            style: 'header-three',
-            icon: 'header',
-            description: 'Nagłówek 3'
-        }, {
             label: '\" \"',
             style: 'blockquote',
             icon: 'quote-right',
@@ -22,6 +12,11 @@ export const customizeToolbar = () => {
             style: 'unordered-list-item',
             icon: 'list-ul',
             description: 'Wypunktowanie'
+        }, {
+            label: '123',
+            style: 'ordered-list-item',
+            icon: 'list-ol',
+            description: "Numerowanie"
         }, {
             label: ' ✓ ',
             style: 'todo',

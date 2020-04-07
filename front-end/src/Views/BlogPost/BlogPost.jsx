@@ -1,29 +1,18 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Container, Card, Alert } from "react-bootstrap";
 import { UserContext } from "context";
+
 import {
   CommentForm,
   CommentsList,
   BlogContent
 } from './_components';
+import {getPost} from "./functions/apiCalls";
 
-const getPost = async (id, token) => {
-  let url = `https://usamo-back.herokuapp.com/blog/blogpost/${id}`;
-  const headers = {
-      Authorization: "Token " + token,
-      "Content-Type": "application/json"
-  };
 
-  const response = await fetch(url, { method: "GET", headers });
-
-  if (response.status === 200) {
-      return response.json().then(res => mapPost(res));
-  } else {
-      throw response.status;
-  }
-};
 
 const mapPost = (res) => ({
+  title: res.title,
   id: res.id,
   content: res.content,
   category: res.category,
@@ -58,7 +47,7 @@ const BlogPost = () => {
         setIsPostLoading(true);
         let loadedPost;
         try {
-          loadedPost = await getPost(postId, token);
+          loadedPost = mapPost(await getPost(postId, token));
         } catch (e) {
           console.log(e);
           loadedPost = null;
@@ -78,7 +67,7 @@ const BlogPost = () => {
 
   return msg || (
     <Container className="blogpost_container">
-      <BlogContent post={post} type={user.type}/>
+      <BlogContent post={post} type={user}/>
       <Card className="blogpost_comment_card">
         <Card.Body>
           <Card.Title as="h3" className="mb-3">Komentarze:</Card.Title>
