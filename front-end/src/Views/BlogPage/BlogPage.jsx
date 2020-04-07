@@ -1,15 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
 import { UserContext } from "context";
-import {
-  Container,
-  Card,
-  Alert,
-  ListGroup,
-  CardColumns
-} from "react-bootstrap";
+import { Container, Card, Alert, CardColumns } from "react-bootstrap";
 import { getPosts } from "Views/BlogPage/functions/fetchData";
-import BlogPost from "Views/BlogPage/components/BlogPost/BlogPost";
+import BlogPost from "Views/BlogPage/components/SmallBlogPost";
 import Filter from "Views/BlogPage/components/Filter";
+import "./style.css";
 
 const BlogPage = () => {
   const [posts, setPosts] = useState([]);
@@ -58,8 +53,8 @@ const BlogPage = () => {
           msg
         ) : (
           <CardColumns className="ml-3 mr-3">
-            {posts.map((data, i) => (
-              <BlogPost key={i} {...data} />
+            {posts.map(data => (
+              <BlogPost key={data.id} {...data} />
             ))}
           </CardColumns>
         )}

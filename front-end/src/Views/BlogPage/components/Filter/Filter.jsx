@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import { getFilters } from "Views/BlogPage/functions/fetchData";
 import { Form, Col, Button } from "react-bootstrap";
 import { DEFAULT_INPUT } from "constants/other.js";
-import "./style.css";
-import FormGroup from "components/FormGroup"; // to się zmieni jak job offers będą zmergowane do mastera
+import FormGroup from "components/FormGroup";
 
 const Filter = ({ token, setFilter, count }) => {
   const [filters, setFilters] = useState({ categories: [], tags: [] });
@@ -43,7 +42,7 @@ const Filter = ({ token, setFilter, count }) => {
     });
   };
   return (
-    <Form className="blog__form" onSubmit={filter}>
+    <Form className="ml-3 mr-3 mb-3" onSubmit={filter}>
       <Form.Row>
         <FormGroup
           as={Col}
