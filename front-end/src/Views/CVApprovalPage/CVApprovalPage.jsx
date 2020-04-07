@@ -42,10 +42,10 @@ class CVApprovalPage extends React.Component {
                         <Card.Body className="border p-0 pt-3">
                             {errors.big ? (
                                 <Alert variant="danger">
-                                    Ups, coś poszło nie tak. Kod błędu - {errorMessages.big}
+                                    Ups, coś poszło nie tak. Kod błędu - {errorMessages.big.status}
                                 </Alert>
                             ) : (
-                                <CVApprovalBody cvs={cvs} token={this.context.token}/>
+                                <CVApprovalBody cvs={cvs} token={this.context.token} component={this}/>
                             )}
                         </Card.Body>
                     </Card>
