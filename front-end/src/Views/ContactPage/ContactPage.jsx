@@ -1,9 +1,9 @@
 import React from "react";
-import { Card, Container, Form, Button } from "react-bootstrap";
+import { Card, Container, CardGroup, Form, Button } from "react-bootstrap";
 import { UserContext } from "context";
 import "./style.css"
 
-class ContactPage extends React.Component{
+class ContactPage extends React.Component {
 
     state = {
         msgType: "",
@@ -12,12 +12,12 @@ class ContactPage extends React.Component{
 
     handleMsgBodyChange = async (e) => {
         const body = await e.target.value;
-    
+
         this.setState({
-          msgBody: body
+            msgBody: body
         });
         console.log(this.state.msgBody);
-      }
+    }
 
     handelMsgTypeChange = async (e) => {
         const type = await e.target.value;
@@ -32,36 +32,90 @@ class ContactPage extends React.Component{
     }
 
 
-    render(){
+    render() {
         return (
             <Container>
                 <Card className="contact_page_card">
                     <Card.Header className="contact_page_title">
-                        <h3>Support</h3>
+                        <h3 align="left">Kontakt i lista przydatnych telefonów</h3>
                     </Card.Header>
                     <Card.Body>
-                        <h4>Temat wiadomości</h4>
-                        <Form id="contact_msg" onSubmit={this.handleMsgSubmit}>
-                            <Form.Group controlId="msgTypeSelect">
-                                <Form.Label>Wybierz opis najbliższy tematowi Twojej wiadomości:</Form.Label>
-                                <Form.Control as="select" onChange={this.handelMsgTypeChange}>
-                                    <option value=''>--wybierz temat--</option>
-                                    <option value='A'>A</option>
-                                    <option value='B'>B</option>
-                                    <option value='C'>C</option>
-                                    <option value='D'>D</option>
-                                    <option value='E'>E</option>
-                                    <option value='Inne'>Inne</option>
-                                </Form.Control>
-                            </Form.Group>
-                            <Form.Group controlId="msgBody" onChange={this.handleMsgBodyChange}>
-                                <Form.Label>Treść Twojej wiadomości</Form.Label>
-                                <Form.Control as="textarea" rows="5" />
-                            </Form.Group>
-                            <Button variant="primary" type="submit">
-                                Wyślij
-                            </Button>
-                        </Form>
+                        <CardGroup>
+                            <Card>
+                                <Card.Body>
+                                    <Card.Title>Card title</Card.Title>
+                                    <Card.Text>
+                                        This is a wider card with supporting text below as a natural lead-in to
+                                        additional content. This content is a little bit longer.
+                                    </Card.Text>
+                                </Card.Body>
+                                <Card.Footer>
+                                    <small className="text-muted">Last updated 3 mins ago</small>
+                                </Card.Footer>
+                            </Card>
+                            <Card>
+                                <Card.Body>
+                                    <Card.Title>Card title</Card.Title>
+                                    <Card.Text>
+                                        This is a wider card with supporting text below as a natural lead-in to
+                                        additional content. This content is a little bit longer.
+                                    </Card.Text>
+                                </Card.Body>
+                                <Card.Footer>
+                                    <small className="text-muted">Last updated 3 mins ago</small>
+                                </Card.Footer>
+                            </Card>
+                            <Card>
+                                <Card.Body>
+                                    <Card.Title>Card title</Card.Title>
+                                    <Card.Text>
+                                        This is a wider card with supporting text below as a natural lead-in to
+                                        additional content. This content is a little bit longer.
+                                    </Card.Text>
+                                </Card.Body>
+                                <Card.Footer>
+                                    <small className="text-muted">Last updated 3 mins ago</small>
+                                </Card.Footer>
+                            </Card>
+                        </CardGroup>
+                        <CardGroup>
+                            <Card>
+                                <Card.Body>
+                                    <Card.Title>Card title</Card.Title>
+                                    <Card.Text>
+                                        This is a wider card with supporting text below as a natural lead-in to
+                                        additional content. This content is a little bit longer.
+                                    </Card.Text>
+                                </Card.Body>
+                                <Card.Footer>
+                                    <small className="text-muted">Last updated 3 mins ago</small>
+                                </Card.Footer>
+                            </Card>
+                            <Card>
+                                <Card.Body>
+                                    <Card.Title>Card title</Card.Title>
+                                    <Card.Text>
+                                        This is a wider card with supporting text below as a natural lead-in to
+                                        additional content. This content is a little bit longer.
+                                    </Card.Text>
+                                </Card.Body>
+                                <Card.Footer>
+                                    <small className="text-muted">Last updated 3 mins ago</small>
+                                </Card.Footer>
+                            </Card>
+                            <Card>
+                                <Card.Body>
+                                    <Card.Title>Card title</Card.Title>
+                                    <Card.Text>
+                                        This is a wider card with supporting text below as a natural lead-in to
+                                        additional content. This content is a little bit longer.
+                                    </Card.Text>
+                                </Card.Body>
+                                <Card.Footer>
+                                    <small className="text-muted">Last updated 3 mins ago</small>
+                                </Card.Footer>
+                            </Card>
+                        </CardGroup>
                     </Card.Body>
                 </Card>
             </Container>
