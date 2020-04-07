@@ -37,10 +37,25 @@ class UserProfilePage extends React.Component {
 
   async componentDidMount() {
 
-    await getUserData(this.context.token, this);
+    await getUserData(this.context.token, this).then(async response => {
+      if (response.status === 200) {
+        const res = await response.json();
+        this.setState({
+          user: {
+            username: res.data.username,
+            firstName: res.data.first_name,
+            lastName: res.data.last_name,
+            email: res.data.email,
+            phoneNumber: res.data.phone_number
+          }
+        });
+      } else {
+        throw response.status;
+      }
+    });
 
   }
-  
+
   render() {
     return (
       <Container>

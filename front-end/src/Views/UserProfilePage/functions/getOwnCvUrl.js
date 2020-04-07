@@ -1,7 +1,6 @@
 export const getOwnCvUrl = async (token) => {
 
     const url = "http://usamo-back.herokuapp.com/cv/generate/";
-    console.log(token);
     const response = await fetch(url, {
         method: "GET",
         headers: {
@@ -17,6 +16,4 @@ export const getOwnCvUrl = async (token) => {
             return response.status
         }
     });
-    
-    console.log(response);
 }

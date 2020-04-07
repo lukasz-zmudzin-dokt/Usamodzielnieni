@@ -2,47 +2,57 @@ jest.mock('fetch');
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { getUserData } from 'Views/UserProfilePage/functions/getUserData.js';
-import UserProfilePage from '../../UserProfilePage';
-import { shallow } from 'enzyme';
-import Enzyme from 'enzyme'
-import Adapter from 'enzyme-adapter-react-16'
 
-Enzyme.configure({ adapter: new Adapter() })
+describe("getUserData", () => {
+  let failFetch;
+  let token;
+  let userData = {
+    data: {
+      username: "test_user",
+      first_name: "test_firstname",
+      last_name: "test_lastname",
+      email: "test@example.com",
+      phone_numbe: "+48321654987"
+    }
+  };
+  beforeAll(() => {
+    token = "123";
+    global.fetch = jest.fn().mockImplementation((input, init) => {
+      return new Promise((resolve, reject) => {
+        if (failFetch) {
+          resolve({ status: 500 });
+        } else {
+          switch (init.method) {
+            case "GET":
+              resolve({
+                status: 200,
+                json: () => Promise.resolve(userData)
+              });
+              break;
+            default:
+              reject({});
+              break;
+          }
+        }
+      });
+    });
+  });
 
-    it('fetches data from server when server returns a successful response', done => {
-        const mockSuccessResponse = {
-            data: {
-                data: {
-                    username: "test",
-                    first_name: "test",
-                    last_name: "test",
-                    email: "test@test.com",
-                    phone_number: "+48111122223333"
-                }
-            }
-        };
-        const mockJsonPromise = Promise.resolve(mockSuccessResponse); 
-        const mockFetchPromise = Promise.resolve({ 
-          json: () => mockJsonPromise,
-        });
-        jest.spyOn(global, 'fetch').mockImplementation(() => mockFetchPromise);
-        
-        const wrapper = shallow(<UserProfilePage />); 
-                                
-        expect(global.fetch).toHaveBeenCalledTimes(1);
-        expect(global.fetch).toHaveBeenCalledWith('http://usamo-back.herokuapp.com/account/data', {"headers": {"Authorization": "token undefined", "Content-Type": "application/json"}, "method": "GET"});
-    
-        //process.nextTick(() => { 
-        //  expect(wrapper.state()).toEqual({
-        //        user: {
-        //            username: "test",
-        //            first_name: "test",
-        //            last_name: "test",
-        //           email: "test@test.com",
-        //            phone_number: "+48111122223333"
-        //        }
-        //  });
-    
-          global.fetch.mockClear(); 
-          done(); 
-        });
+  beforeEach(() => {
+    failFetch = null;
+  });
+
+  it("should fetch the data if server response successful", async () => {
+    await getUserData(token);
+    expect(fetch).toHaveBeenCalledWith(
+      "http://usamo-back.herokuapp.com/account/data",
+      {
+        headers: {
+          Authorization: "Token 123",
+          "Content-Type": "application/json"
+        },
+        method: "GET"
+      }
+    );
+  });
+});

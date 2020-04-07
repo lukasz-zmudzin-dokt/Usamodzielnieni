@@ -1,7 +1,6 @@
 import React from "react";
 import { render } from "@testing-library/react";
 import UserProfile from "Views/UserProfilePage/index.js";
-import renderer from "react-test-renderer";
 
 describe("UserProfile", () => {
   it("should render without crashing", () => {
@@ -9,7 +8,9 @@ describe("UserProfile", () => {
   });
 });
 
-it("renders correctly", () => {
-  const profile = renderer.create(<UserProfile />).toJSON();
-  expect(profile).toMatchSnapshot();
+it("should render correctly", () => {
+  const { container } = render(
+    <UserProfile />
+  );
+  expect(container).toMatchSnapshot();
 });

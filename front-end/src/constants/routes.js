@@ -5,12 +5,6 @@ import {
   Footer,
   CVEditorPage,
   Menu,
-<<<<<<< HEAD
-  CVApprovalPage,
-  MyOffersPage,
-  UserApprovalPage
-=======
->>>>>>> master
   OfferForm,
   MyOffersPage
 } from "Views";

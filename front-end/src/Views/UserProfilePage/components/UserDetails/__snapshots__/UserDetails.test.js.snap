@@ -85,3 +85,81 @@ exports[`renders correctly 1`] = `
   </div>
 </div>
 `;
+
+exports[`should render correctly 1`] = `
+<div>
+  <div
+    class="list-group-flush list-group"
+  >
+    <div
+      class="property list-group-item"
+    >
+      <div
+        class="row"
+      >
+        <div
+          class="col-sm-auto col-12"
+        >
+          <div
+            class="property__title"
+          >
+            Nazwa użytkownika
+            :
+          </div>
+        </div>
+        <div
+          class="col"
+        >
+          user1
+        </div>
+      </div>
+    </div>
+    <div
+      class="property list-group-item"
+    >
+      <div
+        class="row"
+      >
+        <div
+          class="col-sm-auto col-12"
+        >
+          <div
+            class="property__title"
+          >
+            E-mail
+            :
+          </div>
+        </div>
+        <div
+          class="col"
+        >
+          jan.kowalski@pw.edu.pl
+        </div>
+      </div>
+    </div>
+    <div
+      class="property list-group-item"
+    >
+      <div
+        class="row"
+      >
+        <div
+          class="col-sm-auto col-12"
+        >
+          <div
+            class="property__title"
+          >
+            Numer telefonu
+            :
+          </div>
+        </div>
+        <div
+          class="col"
+        >
+          +48123456789
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

@@ -1,7 +1,6 @@
 import React from "react";
 import { render } from "@testing-library/react";
 import UserBasicInfo from "Views/UserProfilePage/components/UserBasicInfo";
-import renderer from "react-test-renderer";
 
 const user = {
   username: "user1",
@@ -34,12 +33,9 @@ describe("UserBasicInfo ", () => {
   });
 });
 
-it("renders correctly", () => {
-  const basicInfo = renderer
-    .create(<UserBasicInfo user={user} names={names} />)
-    .toJSON();
-  expect(basicInfo).toMatchSnapshot();
+it("should render correctly", () => {
+  const { container } = render(
+    <UserBasicInfo user={user} names={names} />
+  );
+  expect(container).toMatchSnapshot();
 });
-
-// const wrapper = shallow(<UserBasicInfo names={"Success!"} />);
-// expect(wrapper.props().names).to.equal("Success!");

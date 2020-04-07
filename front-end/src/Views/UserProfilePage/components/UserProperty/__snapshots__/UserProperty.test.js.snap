@@ -24,3 +24,28 @@ exports[`renders correctly 1`] = `
   </div>
 </div>
 `;
+
+exports[`should render correctly 1`] = `
+<div>
+  <div
+    class="property list-group-item"
+  >
+    <div
+      class="row"
+    >
+      <div
+        class="col-sm-auto col-12"
+      >
+        <div
+          class="property__title"
+        >
+          :
+        </div>
+      </div>
+      <div
+        class="col"
+      />
+    </div>
+  </div>
+</div>
+`;

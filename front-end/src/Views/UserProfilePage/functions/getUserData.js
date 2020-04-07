@@ -1,32 +1,19 @@
-export const getUserData = async (token, component) => {
+export const getUserData = async (token) => {
 
-    const url = "http://usamo-back.herokuapp.com/account/data";
-    console.log(token);
-    const response = await fetch(url, {
-      method: 'GET',
-      headers: {
-        "Authorization": "token " + token,
-        "Content-Type": "application/json"
-      }
-    }).then(response => {
-      if(response.status === 200) {
-        return response.json();
-      } else {
-        return response.status;
-      }
-    });
-    const data = await response;
-    console.log(data);
-    console.log(data.data);
-    console.log(data.data.first_name);
-    component.setState({
-      user: {
-        username: data.data.username,
-        firstName: data.data.first_name,
-        lastName: data.data.last_name,
-        email: data.data.email,
-        phoneNumber: data.data.phone_number
-      }
-    });
+  const url = "http://usamo-back.herokuapp.com/account/data";
+  const response = await fetch(url, {
+    method: 'GET',
+    headers: {
+      "Authorization": "Token " + token,
+      "Content-Type": "application/json"
+    }
+  });
+
+  if (response.status === 200) {
+    return response;
+  } else {
+    return response.status;
+  }
 };
+
 
