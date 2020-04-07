@@ -168,7 +168,11 @@ class CVEditorPage extends React.Component {
         id: "photo",
         name: "Zdjęcie",
         component: (
-          <PhotoTab {...getTabProps("photo")} onNextClick={undefined} />
+          <PhotoTab
+            {...getTabProps("photo")}
+            onNextClick={undefined}
+            disabled={this.state.disabled}
+          />
         )
       }
     ];

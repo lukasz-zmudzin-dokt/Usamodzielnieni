@@ -16,6 +16,7 @@ const OfferForm = () => {
   const [validated, setValidated] = useState(false);
   const [fail, setFail] = useState(false);
   const [arrays, setArrays] = useState({});
+  const [disabled, setDisabled] = useState(false);
 
   const [offer, setOffer] = useState({
     offer_name: "",
@@ -40,15 +41,28 @@ const OfferForm = () => {
         res = { categories: [], types: [] };
       }
       setArrays(res);
+      setOffer({
+        offer_name: "",
+        company_name: "",
+        company_address: "",
+        voivodeship: voivodeships[0],
+        description: "",
+        expiration_date: "",
+        category: res.categories[0],
+        type: res.types[0]
+      });
     };
     loadSelects(context.token);
   }, [context.token]);
 
   const submit = event => {
+    setDisabled(true);
     const form = event.currentTarget;
     event.preventDefault();
+    console.log(offer);
     if (form.checkValidity() === false) {
       event.stopPropagation();
+      setDisabled(false);
     } else {
       const year = expiration_date.getFullYear();
       const month =
@@ -68,6 +82,7 @@ const OfferForm = () => {
         .catch(() => {
           console.log("tutaj");
           setFail(true);
+          setDisabled(false);
         });
     }
     setValidated(true);
@@ -203,6 +218,7 @@ const OfferForm = () => {
                 type="submit"
                 className=""
                 data-testid="submitBtn"
+                disabled={disabled}
               >
                 Dodaj
               </Button>
