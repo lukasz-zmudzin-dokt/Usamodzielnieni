@@ -1,13 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { getFilters } from "Views/BlogPage/functions/fetchData";
 import { Form, Col, Button } from "react-bootstrap";
 import { DEFAULT_INPUT } from "constants/other.js";
 import FormGroup from "components/FormGroup";
+import { UserContext } from "context";
+import { IndexLinkContainer } from "react-router-bootstrap";
 
 const Filter = ({ token, setFilter, count }) => {
   const [filters, setFilters] = useState({ categories: [], tags: [] });
   const [category, setCategory] = useState(DEFAULT_INPUT);
   const [tag, setTag] = useState(DEFAULT_INPUT);
+
+  const user = useContext(UserContext);
 
   useEffect(() => {
     const loadOffers = async token => {
@@ -67,20 +71,34 @@ const Filter = ({ token, setFilter, count }) => {
           id="tag"
         />
       </Form.Row>
-
-      <Button type="submit" className="mr-3" variant="primary">
-        Filtruj posty
-      </Button>
-      <Button variant="outline-primary" className="mr-3" onClick={clearFilter}>
-        Wyczyść filtry
-      </Button>
-      {count !== 0 && (
-        <small className="blog__countText">{`Znaleziono ${count} ${
-          count >= 5 || count === 0 ? "postów" : "posty"
-        }`}</small>
-      )}
+      <div>
+        <Button type="submit" className="mr-3" variant="primary">
+          Filtruj posty
+        </Button>
+        <Button
+          variant="outline-primary"
+          className="mr-3"
+          onClick={clearFilter}
+        >
+          Wyczyść filtry
+        </Button>
+        {count !== 0 && (
+          <small className="blog__countText">{`Znaleziono ${count} ${
+            count >= 5 || count === 0 ? "postów" : "posty"
+          }`}</small>
+        )}
+      </div>
+      {user.type === "Staff" ? (
+        <IndexLinkContainer as={Button} to="/blog/newPost">
+          <Button variant="success" className="mt-2">
+            Stwórz nowy post
+          </Button>
+        </IndexLinkContainer>
+      ) : null}
     </Form>
   );
 };
 
 export default Filter;
+
+// /blog/Penostw;
