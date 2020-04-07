@@ -19,7 +19,7 @@ class ContactPage extends React.Component {
             <Container>
                 <Card className="contact_page_card">
                     <Card.Header className="contact_page_title">
-                        <h3 align="left">Kontakt i lista przydatnych telefonów</h3>
+                        <h3 align="left">Lista przydatnych telefonów</h3>
                     </Card.Header>
                     <Card.Body className='bg_card'>
                         <CardColumns>
