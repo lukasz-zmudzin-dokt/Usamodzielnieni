@@ -1,36 +1,18 @@
 import React from "react";
-import { Card, Container, CardGroup, Form, Button } from "react-bootstrap";
+import { Card, Container, CardColumns, Button } from "react-bootstrap";
 import { UserContext } from "context";
 import "./style.css"
 
 class ContactPage extends React.Component {
 
-    state = {
-        msgType: "",
-        msgBody: ""
+    copyToClipboard = (text) => {
+        var dummy = document.createElement("textarea");
+        document.body.appendChild(dummy);
+        dummy.value = text;
+        dummy.select();
+        document.execCommand("copy");
+        document.body.removeChild(dummy);
     }
-
-    handleMsgBodyChange = async (e) => {
-        const body = await e.target.value;
-
-        this.setState({
-            msgBody: body
-        });
-        console.log(this.state.msgBody);
-    }
-
-    handelMsgTypeChange = async (e) => {
-        const type = await e.target.value;
-        this.setState({
-            msgType: type
-        });
-        console.log(this.state.msgType);
-    }
-
-    handleMsgSubmit = () => {
-        return;
-    }
-
 
     render() {
         return (
@@ -39,91 +21,79 @@ class ContactPage extends React.Component {
                     <Card.Header className="contact_page_title">
                         <h3 align="left">Kontakt i lista przydatnych telefonów</h3>
                     </Card.Header>
-                    <Card.Body>
-                        <CardGroup>
-                            <Card>
-                                <Card.Body>
-                                    <Card.Title>Card title</Card.Title>
+                    <Card.Body className='bg_card'>
+                        <CardColumns>
+                            <Card style={{ width: '18rem' }}>
+                                <Card.Body className="custom_card">
+                                    <Card.Title>Telefon Zaufania Dla Dzieci i Młodzieży</Card.Title>
                                     <Card.Text>
-                                        This is a wider card with supporting text below as a natural lead-in to
-                                        additional content. This content is a little bit longer.
+                                        116 111
                                     </Card.Text>
                                 </Card.Body>
                                 <Card.Footer>
-                                    <small className="text-muted">Last updated 3 mins ago</small>
+                                    <Button variant="light" size="sm" onClick={e => this.copyToClipboard("116 111")}>
+                                        Skopiuj ten numer
+                                    </Button>
                                 </Card.Footer>
                             </Card>
-                            <Card>
-                                <Card.Body>
-                                    <Card.Title>Card title</Card.Title>
+                            <Card style={{ width: '18rem' }}>
+                                <Card.Body className="custom_card">
+                                    <Card.Title>Telefon Zaufania dla Osób Dorosłych w Kryzysie Emocjonalnym</Card.Title>
                                     <Card.Text>
-                                        This is a wider card with supporting text below as a natural lead-in to
-                                        additional content. This content is a little bit longer.
+                                        116 123
                                     </Card.Text>
                                 </Card.Body>
                                 <Card.Footer>
-                                    <small className="text-muted">Last updated 3 mins ago</small>
+                                    <Button variant="light" size="sm" onClick={e => this.copyToClipboard("116 123")}>
+                                        Skopiuj ten numer
+                                    </Button>
                                 </Card.Footer>
                             </Card>
-                            <Card>
-                                <Card.Body>
-                                    <Card.Title>Card title</Card.Title>
+                            <Card style={{ width: '18rem' }}>
+                                <Card.Body className="custom_card">
+                                    <Card.Title>Ogólnopolski Telefon Zaufania „Narkotyki – Narkomania”</Card.Title>
                                     <Card.Text>
-                                        This is a wider card with supporting text below as a natural lead-in to
-                                        additional content. This content is a little bit longer.
+                                        801 199 990
                                     </Card.Text>
                                 </Card.Body>
                                 <Card.Footer>
-                                    <small className="text-muted">Last updated 3 mins ago</small>
+                                    <Button variant="light" size="sm" onClick={e => this.copyToClipboard("801 199 990")}>
+                                        Skopiuj ten numer
+                                    </Button>
                                 </Card.Footer>
                             </Card>
-                        </CardGroup>
-                        <CardGroup>
-                            <Card>
-                                <Card.Body>
-                                    <Card.Title>Card title</Card.Title>
+                            <Card style={{ width: '18rem' }}>
+                                <Card.Body className="custom_card">
+                                    <Card.Title>Telefon Zaufania "Uzależnienia behawioralne"</Card.Title>
                                     <Card.Text>
-                                        This is a wider card with supporting text below as a natural lead-in to
-                                        additional content. This content is a little bit longer.
+                                        801 889 880
                                     </Card.Text>
                                 </Card.Body>
                                 <Card.Footer>
-                                    <small className="text-muted">Last updated 3 mins ago</small>
+                                    <Button variant="light" size="sm" onClick={e => this.copyToClipboard("801 889 880")}>
+                                        Skopiuj ten numer
+                                    </Button>
                                 </Card.Footer>
                             </Card>
-                            <Card>
-                                <Card.Body>
-                                    <Card.Title>Card title</Card.Title>
+                            <Card style={{ width: '18rem' }}>
+                                <Card.Body className="custom_card">
+                                    <Card.Title>Linia wsparcia dla osób w stanie kryzysu psychicznego</Card.Title>
                                     <Card.Text>
-                                        This is a wider card with supporting text below as a natural lead-in to
-                                        additional content. This content is a little bit longer.
+                                        800 70 22 22
                                     </Card.Text>
                                 </Card.Body>
                                 <Card.Footer>
-                                    <small className="text-muted">Last updated 3 mins ago</small>
+                                    <Button variant="light" size="sm" onClick={e => this.copyToClipboard("800 70 22 22")}>
+                                        Skopiuj ten numer
+                                    </Button>
                                 </Card.Footer>
                             </Card>
-                            <Card>
-                                <Card.Body>
-                                    <Card.Title>Card title</Card.Title>
-                                    <Card.Text>
-                                        This is a wider card with supporting text below as a natural lead-in to
-                                        additional content. This content is a little bit longer.
-                                    </Card.Text>
-                                </Card.Body>
-                                <Card.Footer>
-                                    <small className="text-muted">Last updated 3 mins ago</small>
-                                </Card.Footer>
-                            </Card>
-                        </CardGroup>
+                        </CardColumns>
                     </Card.Body>
                 </Card>
             </Container>
         );
     }
 }
-
-
-ContactPage.contextType = UserContext;
 
 export default ContactPage;
