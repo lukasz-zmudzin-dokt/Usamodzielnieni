@@ -10,7 +10,9 @@ describe('CVEditorTab', () => {
             movie: './ścieżka_do_pliku.png',
             children: <div></div>,
             onPrevClick: () => {},
-            onNextClick: () => {}
+            onNextClick: () => {},
+            comments: "",
+            loading: false
         }
     });
 
@@ -61,4 +63,25 @@ describe('CVEditorTab', () => {
         fireEvent.click(getByText('Wstecz', { exact: false }));
         expect(props.onPrevClick).toHaveBeenCalledTimes(1);
     });
+
+    it('should show comments', () => {
+        props.comments = "comment";
+        const {getByText} = render(<CVEditorTab {...props} />);
+        const comHeader = getByText("Uwagi:");
+        const comBody = getByText(props.comments).textContent;
+        expect(comHeader).toBeInTheDocument();
+        expect(comBody).toBe(props.comments);
+    });
+    it('should not show comments if empty string given', () => {
+        props.comments = "";
+        const {queryByText} = render(<CVEditorTab {...props} />);
+        const comHeader = queryByText("Uwagi:");
+        expect(comHeader).not.toBeInTheDocument();
+    });
+    it("should show loading spinner", () => {
+        props.loading = true;
+        const {queryByText} = render(<CVEditorTab {...props} />);
+        const comHeader = queryByText("Wczytuję uwagi...");
+        expect(comHeader).toBeInTheDocument();
+    })
 });

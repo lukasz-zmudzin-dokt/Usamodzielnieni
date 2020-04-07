@@ -1,0 +1,95 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HomeDataForm should render correctly 1`] = `
+<div>
+  <div
+    class="loginPage__cardSection col-lg mr-lg-3 card bg-light"
+  >
+    <h4
+      class="card-header"
+    >
+      Dane placówki
+    </h4>
+    <div
+      class="account_form_card card-body"
+    >
+      <div
+        class="form-group"
+      >
+        <input
+          autocomplete="on"
+          class="form-control"
+          id="formGroupNameOfPlace"
+          name="name_of_place"
+          placeholder="Nazwa placówki"
+          required=""
+          type="tel"
+          value=""
+        />
+        <div
+          class="invalid-feedback"
+        >
+          Podaj nazwę placówki
+        </div>
+      </div>
+      <div
+        class="form-group"
+      >
+        <input
+          autocomplete="on"
+          class="form-control"
+          id="formGroupStreet"
+          name="street"
+          placeholder="Ulica"
+          required=""
+          type="tel"
+          value=""
+        />
+        <div
+          class="invalid-feedback"
+        >
+          Podaj ulicę na której znajduje się placówka
+        </div>
+      </div>
+      <div
+        class="form-group"
+      >
+        <input
+          autocomplete="on"
+          class="form-control"
+          id="formGroupCity"
+          name="city"
+          placeholder="Nazwa miasta"
+          required=""
+          type="tel"
+          value=""
+        />
+        <div
+          class="invalid-feedback"
+        >
+          Podaj nazwę miasta
+        </div>
+      </div>
+      <div
+        class="form-group"
+      >
+        <input
+          autocomplete="on"
+          class="form-control"
+          id="formGroupCityCode"
+          name="city_code"
+          placeholder="Kod pocztowy"
+          required=""
+          type="tel"
+          value=""
+        />
+        <div
+          class="invalid-feedback"
+        >
+          Podaj kod pocztowy
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

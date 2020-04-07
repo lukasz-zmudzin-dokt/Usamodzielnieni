@@ -1,0 +1,208 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Filter(JobOffers) renders correctly 1`] = `
+<form
+  class="search__form"
+>
+  <div
+    class="form-row"
+  >
+    <div
+      class="form-group col-md-4 col-12"
+    >
+      <label
+        class="form-label"
+        for="voivodeship"
+      >
+        Województwo
+      </label>
+      <select
+        class="form-control"
+        id="voivodeship"
+      >
+        <option
+          disabled=""
+        >
+          -- Wybierz --
+        </option>
+        <option>
+          dolnośląskie
+        </option>
+        <option>
+          kujawsko-pomorskie
+        </option>
+        <option>
+          lubelskie
+        </option>
+        <option>
+          lubuskie
+        </option>
+        <option>
+          łódzkie
+        </option>
+        <option>
+          małopolskie
+        </option>
+        <option>
+          mazowieckie
+        </option>
+        <option>
+          opolskie
+        </option>
+        <option>
+          podkarpackie
+        </option>
+        <option>
+          podlaskie
+        </option>
+        <option>
+          pomorskie
+        </option>
+        <option>
+          śląskie
+        </option>
+        <option>
+          świętokrzyskie
+        </option>
+        <option>
+          warmińsko-mazurskie
+        </option>
+        <option>
+          wielkopolskie
+        </option>
+        <option>
+          zachodniopomorskie
+        </option>
+      </select>
+    </div>
+    <div
+      class="form-group col-md-4 col-12"
+    >
+      <label
+        class="form-label"
+        for="minExpirationDate"
+      >
+        Okres ważności
+      </label>
+      <div
+        class="align-items-center m-0 form-row"
+      >
+        <div
+          class="react-datepicker-wrapper"
+        >
+          <div
+            class="react-datepicker__input-container"
+          >
+            <input
+              class="form-control"
+              id="minExpirationDate"
+              placeholder="Okres ważności"
+              type="text"
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="form-group col-md-4 col-12"
+    >
+      <label
+        class="form-label"
+        for="pageSize"
+      >
+        Ilość ofert na stronie
+      </label>
+      <input
+        class="form-control"
+        data-testid="default"
+        id="pageSize"
+        max="100"
+        min="1"
+        placeholder="Ilość ofert na stronie"
+        type="number"
+        value="10"
+      />
+    </div>
+    <div
+      class="form-group col-md-4 col-12"
+    >
+      <label
+        class="form-label"
+        for="pageSize"
+      >
+        Ilość ofert na stronie
+      </label>
+      <input
+        class="form-control"
+        data-testid="default"
+        id="pageSize"
+        max="100"
+        min="1"
+        placeholder="Ilość ofert na stronie"
+        type="number"
+        value="10"
+      />
+    </div>
+    <div
+      class="form-group col-md-4 col-12"
+    >
+      <label
+        class="form-label"
+        for="category"
+      >
+        Branża
+      </label>
+      <select
+        class="form-control"
+        id="category"
+      >
+        <option
+          disabled=""
+        >
+          -- Wybierz --
+        </option>
+      </select>
+    </div>
+    <div
+      class="form-group col-md-4 col-12"
+    >
+      <label
+        class="form-label"
+        for="category"
+      >
+        Typ stanowiska
+      </label>
+      <select
+        class="form-control"
+        id="category"
+      >
+        <option
+          disabled=""
+        >
+          -- Wybierz --
+        </option>
+      </select>
+    </div>
+  </div>
+  <button
+    class="mr-3 btn btn-primary"
+    type="submit"
+  >
+    Filtruj oferty
+  </button>
+  <button
+    class="mr-3 btn btn-outline-primary"
+    type="button"
+  >
+    Wyczyść filtry
+  </button>
+  <small
+    class="search__countText"
+  >
+    Znaleziono 
+    10
+     ofert
+  </small>
+</form>
+`;
