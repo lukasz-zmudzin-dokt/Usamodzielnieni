@@ -13,13 +13,14 @@ class MyOffersPage extends React.Component {
             answers: [],
             error: false,
             errorMessage: "",
-            loading: true
+            loadingOffers: true,
+            loadingPeople: true
         };
     }
 
     componentDidMount() {
         getOffers(this.context.token).then(response => console.log(response));
-        getOffers(this.context.token).then(response => response.status === "200:OK" ? this.setState({ offers: response.result }) : this.setState({ error: true, errorMessage: response.status}));
+        getOffers(this.context.token).then(response => response.status === "200:OK" ? this.setState({ offers: response.result, loadingOffers: false }) : this.setState({ error: true, errorMessage: response.status, loadingOffers: false}));
     }
 
     render() {
@@ -27,7 +28,8 @@ class MyOffersPage extends React.Component {
             offers,
             answers,
             error,
-            errorMessage
+            errorMessage,
+            loadingOffers
         } = this.state;
         return(
             <Container>
@@ -35,6 +37,9 @@ class MyOffersPage extends React.Component {
                     <Card>
                         <Card.Header><h3>Moje oferty</h3></Card.Header>
                         <Card.Body>
+                            {loadingOffers === true ? (
+                                <Alert variant="info" className="mb-0">Ładuję...</Alert>
+                            ) : null}
                             {error ? (
                                 <Alert variant="danger">Ups, coś poszło nie tak. Kod błędu - {errorMessage}</Alert>
                             ) : (

@@ -15,10 +15,10 @@ const MyOffer = ({ offer, token, component})  => {
             </Accordion.Toggle>
             <Accordion.Collapse eventKey={offer.id}>
                 <Card.Body>
-                    {component.state.loading === true ? (
+                    {component.state.loadingPeople === true ? (
                         <Alert variant="info" className="mb-0">Ładuję...</Alert>
                     ) : null}
-                    {component.state.answers.length === 0 && component.state.loading === false ? (
+                    {component.state.answers.length === 0 && component.state.loadingPeople === false ? (
                         <Alert variant="info" className="mb-0">Do tej oferty nie zgłosiła się jeszcze żadna osoba.</Alert>
                     ) : null}
                     <MyOffersLegend answers={component.state.answers} />
