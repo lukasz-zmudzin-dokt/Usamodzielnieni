@@ -8,7 +8,6 @@ export const getUserCVs = async (token) => {
             "Content-Type": "application/json"
         }})
         .then(function(result) {
-            console.log(token);
             if(result.status === 200)
                 return result.json();
             else {

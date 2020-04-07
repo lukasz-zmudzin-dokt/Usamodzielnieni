@@ -6,7 +6,6 @@ export const getCVUrl = async (token, cv_id) => {
             "Content-Type": "application/json"
         }})
         .then(function(result) {
-            console.log(result);
             if(result.status === 200)
                 return result.json();
             else {
@@ -15,7 +14,6 @@ export const getCVUrl = async (token, cv_id) => {
                 };
             }
         }).then(function (res) {
-            console.log(res);
             if(typeof res === 'string' || res instanceof String)  // jeżeli jest to string z urlem to zwróć "200:OK" i urla
                 return {
                     status: "200:OK",
