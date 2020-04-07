@@ -94,7 +94,7 @@ class HeaderTemplate extends React.Component {
       // const { match, location, history } = this.props;
       // console.log(match, location, history, this.props);
     return (
-      <Navbar id="navbar_menu" variant="dark" fixed="top" expand="lg">
+      <Navbar id="navbar_menu" variant="dark" fixed="top" expand="xl">
         <Navbar.Brand id="navbar_logo">
           <IndexLinkContainer to="/">
             <img

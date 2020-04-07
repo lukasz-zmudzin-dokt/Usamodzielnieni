@@ -1,7 +1,5 @@
-import React from "react";
-
-export const getCVs = async (token) => {
-    return await fetch("http://usamo-back.herokuapp.com/cv/admin/list/unverified/", {
+export const getCVUrl = async (token, cv_id) => {
+    return await fetch("http://usamo-back.herokuapp.com/cv/generator/" + cv_id + "/", {
         method: "GET",
         headers: {
             "Authorization": "token " + token,
@@ -15,8 +13,8 @@ export const getCVs = async (token) => {
                     status: [result.status, result.statusText].join(":")
                 };
             }
-        }).then(function(res) {
-            if(Array.isArray(res))  // jeżeli jest to tablica z wynikami to zwróć "200:OK" i tablicę z wynikami
+        }).then(function (res) {
+            if(typeof res === 'string' || res instanceof String)  // jeżeli jest to string z urlem to zwróć "200:OK" i urla
                 return {
                     status: "200:OK",
                     result: res
@@ -25,5 +23,5 @@ export const getCVs = async (token) => {
                 return {
                     status: res
                 };
-        });
+        })
 };
