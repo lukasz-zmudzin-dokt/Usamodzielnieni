@@ -73,10 +73,20 @@ class BlogPostForm extends React.Component {
   };
 
   onArrayChange = e => {
-      const name = e.target.name;
-      this.setState( prevState => ({
-          [name]: [...prevState.name, e.target.value]
-      }));
+      const tagList = this.state.tags;
+      this.setState({
+          tags: [...tagList, e.target.value]
+      });
+  };
+
+  cutFromArray = e => {
+      const source = e.target.name;
+      const tagList = this.state.tags;
+      const index = tagList.indexOf(source);
+      if (index !== -1) tagList.splice(index, 1);
+      this.setState({
+          tags: tagList
+      });
   };
 
   render () {
@@ -122,7 +132,7 @@ class BlogPostForm extends React.Component {
                               sideButtons={[]}
                           />
                       </div>
-                      <SelectionRow className="mt-4" name="tags" arrayType={[this.state.filters.tags]} onChange={this.onArrayChange}/>
+                      <SelectionRow className="mt-4" name="tags" arrayType={[this.state.filters.tags]} onChange={this.onArrayChange} current={this.state.tags} onCut={this.cutFromArray}/>
                   </Card.Body>
                   <Card.Footer className="">
                       <Button variant="primary" size="lg" block>Opublikuj</Button>
