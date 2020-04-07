@@ -5,41 +5,64 @@ import React from "react";
 
 
 describe('HomeDataForm', () => {
+    let props;
+
+    beforeAll(() => {
+        props = {
+            data: "",
+            onBlur: jest.fn()
+        }
+    });
+
     it('should render correctly', () => {
-        let data = null;
-        const onBlur = () => {};
         const  {container}  = render(
             <MemoryRouter>
-                <HomeDataForm data={data} onBlur={onBlur} />
+                <HomeDataForm data={props.data} onBlur={props.onBlur} />
             </MemoryRouter>
         );
         expect(container).toMatchSnapshot();
     });
-
-    it('should return missing fields error', async () => {
-        const data = parent.state.homeData;
-        const onBlur = jest.fn();
-        const {container, getByPlaceholderText} = render(
+    it('should call onBlur with name of home value', () => {
+        const { getByPlaceholderText } = render(
             <MemoryRouter>
-                <HomeDataForm data={data} onBlur={onBlur} />
+                <HomeDataForm data={props.data} onBlur={props.onBlur} />
             </MemoryRouter>
         );
+        const input = getByPlaceholderText("Nazwa placówki");
+        fireEvent.change(input, {target: {value: "Dom dziecka"}});
+        expect(props.onBlur).toHaveBeenCalledWith(...props.data, {name_of_place: "Dom dziecka"});
+    });
 
-        fireEvent.change(getByPlaceholderText("Nazwa placówki"), {
-            target: {value: "qwe"}
-        });
-        fireEvent.change(getByPlaceholderText("Ulica"), {
-            target: {value: "qwe"}
-        });
-        fireEvent.change(getByPlaceholderText("Nazwa miasta"), {
-            target: {value: "qwe"}
-        });
-        fireEvent.change(getByPlaceholderText("Kod pocztowy"), {
-            target: {value: "00-001"}
-        });
+    it('should call onBlur with street value', () => {
+        const { getByPlaceholderText } = render(
+            <MemoryRouter>
+                <HomeDataForm data={props.data} onBlur={props.onBlur} />
+            </MemoryRouter>
+        );
+        const input = getByPlaceholderText("Ulica");
+        fireEvent.change(input, {target: {value: "Poznańska"}});
+        expect(props.onBlur).toHaveBeenCalledWith(...props.data, {street: "Poznańska"});
+    });
 
-        fireEvent.click(getByTestId(parent, "submitBtn"));
-        await waitForElement(() => getByText(container, "Podaj "));
-        expect(getByText("Podaj ", {exact: false})).toBeInTheDocument();
+    it('should call onBlur with city value', () => {
+        const { getByPlaceholderText } = render(
+            <MemoryRouter>
+                <HomeDataForm data={props.data} onBlur={props.onBlur} />
+            </MemoryRouter>
+        );
+        const input = getByPlaceholderText("Nazwa miasta");
+        fireEvent.change(input, {target: {value: "Warszawa"}});
+        expect(props.onBlur).toHaveBeenCalledWith(...props.data, {city: "Warszawa"});
+    });
+
+    it('should call onBlur with post code value', () => {
+        const { getByPlaceholderText } = render(
+            <MemoryRouter>
+                <HomeDataForm data={props.data} onBlur={props.onBlur} />
+            </MemoryRouter>
+        );
+        const input = getByPlaceholderText("Kod pocztowy");
+        fireEvent.change(input, {target: {value: "01-234"}});
+        expect(props.onBlur).toHaveBeenCalledWith(...props.data, {city_code: "01-234"});
     });
 });

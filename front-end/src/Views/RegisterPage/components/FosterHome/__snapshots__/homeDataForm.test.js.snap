@@ -3,7 +3,7 @@
 exports[`HomeDataForm should render correctly 1`] = `
 <div>
   <div
-    class="loginPage__cardSection col-lg mr-lg-3 card bg-light"
+    class="loginPage__cardSection px-0 col-lg mr-lg-3 card bg-light"
   >
     <h4
       class="card-header"
@@ -17,14 +17,12 @@ exports[`HomeDataForm should render correctly 1`] = `
         class="form-group"
       >
         <input
-          autocomplete="on"
           class="form-control"
           id="formGroupNameOfPlace"
           name="name_of_place"
           placeholder="Nazwa placówki"
           required=""
-          type="tel"
-          value=""
+          type="text"
         />
         <div
           class="invalid-feedback"
@@ -36,14 +34,12 @@ exports[`HomeDataForm should render correctly 1`] = `
         class="form-group"
       >
         <input
-          autocomplete="on"
           class="form-control"
           id="formGroupStreet"
           name="street"
           placeholder="Ulica"
           required=""
-          type="tel"
-          value=""
+          type="text"
         />
         <div
           class="invalid-feedback"
@@ -55,14 +51,12 @@ exports[`HomeDataForm should render correctly 1`] = `
         class="form-group"
       >
         <input
-          autocomplete="on"
           class="form-control"
           id="formGroupCity"
           name="city"
           placeholder="Nazwa miasta"
           required=""
-          type="tel"
-          value=""
+          type="text"
         />
         <div
           class="invalid-feedback"
@@ -74,14 +68,12 @@ exports[`HomeDataForm should render correctly 1`] = `
         class="form-group"
       >
         <input
-          autocomplete="on"
           class="form-control"
           id="formGroupCityCode"
           name="city_code"
           placeholder="Kod pocztowy"
           required=""
-          type="tel"
-          value=""
+          type="text"
         />
         <div
           class="invalid-feedback"

@@ -38,22 +38,4 @@ describe('LoginForm', () => {
         expect(props.onBlur).toHaveBeenCalledWith(...props.data, {username: "testusername"});
         expect(props.onBlur).toHaveBeenCalledWith(...props.data, {password: "testuserpassword"});
     });
-/*   it('should render correctly', () => {
-       const data = {
-           username: "qweqwe",
-           password: "123123"
-       };
-
-       const onBlur = jest.fn();
-
-       const {container} = render(
-           <UserProvider>
-               <MemoryRouter>
-                   <LoginForm data={data} onBlur={onBlur}/>
-               </MemoryRouter>
-           </UserProvider>
-       );
-
-       expect(container).toMatchSnapshot();
-   });*/
 });

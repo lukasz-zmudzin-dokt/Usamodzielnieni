@@ -14,19 +14,23 @@ exports[`photo tab tests should render without crashing 1`] = `
     <div
       class="form-group"
     >
-      <label
-        class="form-label"
-        for="photo"
+      <div
+        class="custom custom-file"
       >
-        Wybierz zdjęcie:
-      </label>
-      <input
-        accept="image/*"
-        class="form-control-file"
-        id="photo"
-        name="photo"
-        type="file"
-      />
+        <input
+          accept="image/*"
+          class="custom-file-input"
+          id="custom-file"
+          type="file"
+        />
+        <label
+          class="custom-file-label"
+          data-browse="Dodaj"
+          for="custom-file"
+        >
+          Wybierz zdjęcie
+        </label>
+      </div>
     </div>
     <div
       class="row"

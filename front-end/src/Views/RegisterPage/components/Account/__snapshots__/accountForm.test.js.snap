@@ -3,7 +3,7 @@
 exports[`AccountForm should render correctly 1`] = `
 <div>
   <div
-    class="loginPage__cardSection col-lg  card bg-light"
+    class="loginPage__cardSection px-0 col-lg mr-lg-3 card bg-light"
   >
     <h4
       class="card-header"
@@ -19,12 +19,11 @@ exports[`AccountForm should render correctly 1`] = `
         <input
           class="loginPage__input form-control"
           id="formGroupEmail"
-          maxlength="50"
+          maxlength="60"
           name="email"
           placeholder="Email"
           required=""
           type="email"
-          value=""
         />
         <div
           class="invalid-feedback"
@@ -36,16 +35,14 @@ exports[`AccountForm should render correctly 1`] = `
         class="form-group"
       >
         <input
-          autocomplete="on"
           class="form-control"
           id="formGroupUsername"
-          maxlength="20"
+          maxlength="30"
           minlength="6"
           name="username"
           placeholder="Nazwa użytkownika"
           required=""
           type="text"
-          value=""
         />
         <div
           class="invalid-feedback"
@@ -57,16 +54,14 @@ exports[`AccountForm should render correctly 1`] = `
         class="form-group"
       >
         <input
-          autocomplete="on"
           class="form-control"
           id="formGroupPassword"
-          maxlength="30"
+          maxlength="128"
           minlength="6"
           name="password"
           placeholder="Hasło"
           required=""
           type="password"
-          value=""
         />
         <div
           class="invalid-feedback"
@@ -78,22 +73,20 @@ exports[`AccountForm should render correctly 1`] = `
         class="form-group"
       >
         <input
-          autocomplete="on"
           class="form-control"
           id="formGroupPasswordRepeat"
+          maxlength="128"
           minlength="6"
           name="passwordR"
           placeholder="Powtórz hasło"
           required=""
           type="password"
-          value=""
         />
         <div
           class="invalid-feedback"
         >
           Minimalna ilośc znaków: 6
         </div>
-        
       </div>
     </div>
   </div>

@@ -8,16 +8,8 @@ import {waitForElement, fireEvent} from "@testing-library/dom";
 
 describe('RegisterPage', () => {
     describe( "RegisterPageTest", () => {
-        it("should render without crashing", () => {
-            render(
-                <UserProvider >
-                    <MemoryRouter>
-                        <RegisterPage />
-                    </MemoryRouter>
-                </UserProvider>);
-        });
 
-        it("onClick should be called", async () => {
+  /*      it("onClick should be called", async () => {
             const onClick = jest.fn();
             const { component, getByText } = render(
                 <MemoryRouter>
@@ -31,7 +23,7 @@ describe('RegisterPage', () => {
 
             await expect(onClick).toHaveBeenCalledWith('123');
         });
-
+*/
         it("should match snapshot", () => {
             const { container } = render(
                 <UserProvider>
@@ -43,20 +35,31 @@ describe('RegisterPage', () => {
             expect(container).toMatchSnapshot();
         });
 
-        it('should change account type', () => {
-            const {getByTestId, getByDisplayValue} = render(
+        it('should display company data form', () => {
+            const {getByTestId, getByText} = render(
                 <MemoryRouter>
                     <RegisterPage />
                 </MemoryRouter>
             );
 
-            fireEvent.change(getByTestId("typeSelector", {exact: false}), {
+            fireEvent.change(getByTestId("typeSelector"), {
                 target: {value: "Pracodawcą"}
             });
-            expect(getByDisplayValue("Pracodawcą")).toBeInTheDocument();
+            expect(getByText("Dane firmy")).toBeInTheDocument();
         });
 
-        //it('should ')
+        it('should display home data form', () => {
+            const {getByTestId, getByText} = render(
+                <MemoryRouter>
+                    <RegisterPage />
+                </MemoryRouter>
+            );
+
+            fireEvent.change(getByTestId("typeSelector"), {
+                target: {value: "Podopiecznym"}
+            });
+            expect(getByText("Dane placówki")).toBeInTheDocument();
+        });
     });
 
     describe("api connection test", () => {

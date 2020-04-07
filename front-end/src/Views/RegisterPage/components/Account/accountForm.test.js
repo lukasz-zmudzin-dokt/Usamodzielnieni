@@ -9,8 +9,8 @@ describe('AccountForm', () => {
     let props;
     beforeEach(() => {
         props = {
-            data: {},
-            onBlur: () => {}
+            data: "",
+            onBlur: jest.fn()
         };
     });
 
@@ -23,30 +23,47 @@ describe('AccountForm', () => {
         expect(container).toMatchSnapshot();
     });
 
-    it('should return missing fields error', async () => {
-        const data = parent.state.accountData;
-        const onBlur = jest.fn();
-        const {component, getByPlaceholderText, getByText, getByTestId} = render(
+    it('should call onBlur with email value', () => {
+        const { getByPlaceholderText } = render(
             <MemoryRouter>
-                <AccountForm data={data} onBlur={onBlur} />
+                <AccountForm data={props.data} onBlur={props.onBlur} />
             </MemoryRouter>
         );
+        const input = getByPlaceholderText("Email");
+        fireEvent.change(input, {target: {value: "example@onet.pl"}});
+        expect(props.onBlur).toHaveBeenCalledWith(...props.data, {email: "example@onet.pl"});
+    });
 
-        fireEvent.change(getByPlaceholderText("Email"), {
-            target: {value: "qwe@qwe.qwe"}
-        });
-        fireEvent.change(getByPlaceholderText("Nazwa użytkownika"), {
-            target: {value: "qwe"}
-        });
-        fireEvent.change(getByPlaceholderText("Hasło"), {
-            target: {value: "qweqwe"}
-        });
-        fireEvent.change(getByPlaceholderText("Powtórz hasło"), {
-            target: {value: "qweqwe"}
-        });
+    it('should call onBlur with username value', () => {
+        const { getByPlaceholderText } = render(
+            <MemoryRouter>
+                <AccountForm data={props.data} onBlur={props.onBlur} />
+            </MemoryRouter>
+        );
+        const input = getByPlaceholderText("Nazwa użytkownika");
+        fireEvent.change(input, {target: {value: "standard1"}});
+        expect(props.onBlur).toHaveBeenCalledWith(...props.data, {username: "standard1"});
+    });
 
-        fireEvent.click(getByTestId(parent, "submitBtn"));
-        await waitForElement(() => getByText(component, "Podaj"));
-        expect(getByText("Podaj ", {exact: false})).toBeInTheDocument();
+    it('should call onBlur with password value', () => {
+        const { getByPlaceholderText } = render(
+            <MemoryRouter>
+                <AccountForm data={props.data} onBlur={props.onBlur} />
+            </MemoryRouter>
+        );
+        const input = getByPlaceholderText("Hasło");
+        fireEvent.change(input, {target: {value: "standard1"}});
+        expect(props.onBlur).toHaveBeenCalledWith(...props.data, {password: "standard1"});
+    });
+
+    it('should call onBlur with passwordR value', () => {
+        const { getByPlaceholderText } = render(
+            <MemoryRouter>
+                <AccountForm data={props.data} onBlur={props.onBlur} />
+            </MemoryRouter>
+        );
+        const input = getByPlaceholderText("Powtórz hasło");
+        fireEvent.change(input, {target: {value: "standard1"}});
+        expect(props.onBlur).toHaveBeenCalledWith(...props.data, {passwordR: "standard1"});
     });
 });

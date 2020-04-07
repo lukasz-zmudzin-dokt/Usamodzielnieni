@@ -6,6 +6,15 @@ import React from "react";
 
 
 describe('PersonalDataForm', () => {
+    let props;
+
+    beforeAll(() => {
+        props = {
+            data: "",
+            onBlur: jest.fn()
+        }
+    });
+
     it('should render correctly', () => {
         const data = {
             personalData: null
@@ -13,33 +22,42 @@ describe('PersonalDataForm', () => {
         const onBlur = jest.fn();
         const { container } = render(
             <MemoryRouter>
-                <PersonalDataForm data={data} onBlur={onBlur} />
+                <PersonalDataForm data={props.data} onBlur={props.onBlur} />
             </MemoryRouter>
         );
         expect(container).toMatchSnapshot();
     });
-
-    it('should return missing fields error', async () => {
-        const data = parent.state.personalData;
-        const onBlur = jest.fn();
-        const {container, getByPlaceholderText} = render(
+    
+    it('should call onBlur with first name value', () => {
+        const { getByPlaceholderText } = render(
             <MemoryRouter>
-                <PersonalDataForm data={data} onBlur={onBlur} />
+                <PersonalDataForm data={props.data} onBlur={props.onBlur} />
             </MemoryRouter>
         );
+        const input = getByPlaceholderText("Imię");
+        fireEvent.change(input, {target: {value: "Jan"}});
+        expect(props.onBlur).toHaveBeenCalledWith(...props.data, {first_name: "Jan"});
+    });
 
-        fireEvent.change(getByPlaceholderText(container, "Imię"), {
-            target: {value: "qwe"}
-        });
-        fireEvent.change(getByPlaceholderText(container, "Nazwisko"), {
-            target: {value: "qweqwe"}
-        });
-        fireEvent.change(getByPlaceholderText(container, "Numer telefonu"), {
-            target: {value: "+48123456789"}
-        });
+    it('should call onBlur with last name value', () => {
+        const { getByPlaceholderText } = render(
+            <MemoryRouter>
+                <PersonalDataForm data={props.data} onBlur={props.onBlur} />
+            </MemoryRouter>
+        );
+        const input = getByPlaceholderText("Nazwisko");
+        fireEvent.change(input, {target: {value: "Kowalski"}});
+        expect(props.onBlur).toHaveBeenCalledWith(...props.data, {last_name: "Kowalski"});
+    });
 
-        fireEvent.click(getByTestId(parent, "submitBtn"));
-        await waitForElement(() => getByText(container, "Podaj "));
-        expect(getByText(container,"Podaj ")).toBeInTheDocument();
+    it('should call onBlur with phone number value', () => {
+        const { getByPlaceholderText } = render(
+            <MemoryRouter>
+                <PersonalDataForm data={props.data} onBlur={props.onBlur} />
+            </MemoryRouter>
+        );
+        const input = getByPlaceholderText("Numer telefonu");
+        fireEvent.change(input, {target: {value: "+48123456789"}});
+        expect(props.onBlur).toHaveBeenCalledWith(...props.data, {phone_number: "+48123456789"});
     });
 });

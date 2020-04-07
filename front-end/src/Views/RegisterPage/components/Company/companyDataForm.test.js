@@ -6,44 +6,77 @@ import React from "react";
 
 
 describe('CompanyDataForm', () => {
-    it(' should render correctly', () => {
-        const data = null;
-        const onBlur = jest.fn();
+    let props;
+
+    beforeAll(() => {
+        props = {
+            data: "",
+            onBlur: jest.fn()
+        }
+    });
+
+    it('should render correctly', () => {
         const { container } = render(
             <MemoryRouter>
-                <CompanyDataForm data={data} onBlur={onBlur} />
+                <CompanyDataForm data={props.data} onBlur={props.onBlur} />
             </MemoryRouter>
         );
         expect(container).toMatchSnapshot();
     });
 
-    it('should return missing fields error', async () => {
-        const data = parent.state.companyData;
-        const onBlur = jest.fn();
-        const {container, getByPlaceholderText} = render(
+    it('should call onBlur with name of company value', () => {
+        const { getByPlaceholderText } = render(
             <MemoryRouter>
-                <CompanyDataForm data={data} onBlur={onBlur} />
+                <CompanyDataForm data={props.data} onBlur={props.onBlur} />
             </MemoryRouter>
         );
-
-        fireEvent.change(getByPlaceholderText("Nazwa firmy"), {
-            target: {value: "qwe"}
-        });
-        fireEvent.change(getByPlaceholderText("Ulica"), {
-            target: {value: "qwe"}
-        });
-        fireEvent.change(getByPlaceholderText("Nazwa miasta"), {
-            target: {value: "qwe"}
-        });
-        fireEvent.change(getByPlaceholderText("Kod pocztowy"), {
-            target: {value: "00-001"}
-        });
-        fireEvent.change(getByPlaceholderText("NIP"), {
-            target: {value: "123"}
-        });
-
-        fireEvent.click(getByTestId(parent, "submitBtn"));
-        await waitForElement(() => getByText(container, "Podaj "));
-        expect(getByText("Podaj ", {exact: false})).toBeInTheDocument();
+        const input = getByPlaceholderText("Nazwa firmy");
+        fireEvent.change(input, {target: {value: "Politechnika Warszawska"}});
+        expect(props.onBlur).toHaveBeenCalledWith(...props.data, {name_of_place: "Politechnika Warszawska"});
     });
+
+    it('should call onBlur with street value', () => {
+        const { getByPlaceholderText } = render(
+            <MemoryRouter>
+                <CompanyDataForm data={props.data} onBlur={props.onBlur} />
+            </MemoryRouter>
+        );
+        const input = getByPlaceholderText("Ulica");
+        fireEvent.change(input, {target: {value: "Poznańska"}});
+        expect(props.onBlur).toHaveBeenCalledWith(...props.data, {street: "Poznańska"});
+    });
+
+    it('should call onBlur with city value', () => {
+        const { getByPlaceholderText } = render(
+            <MemoryRouter>
+                <CompanyDataForm data={props.data} onBlur={props.onBlur} />
+            </MemoryRouter>
+        );
+        const input = getByPlaceholderText("Nazwa miasta");
+        fireEvent.change(input, {target: {value: "Warszawa"}});
+        expect(props.onBlur).toHaveBeenCalledWith(...props.data, {city: "Warszawa"});
+    });
+
+    it('should call onBlur with post code value', () => {
+        const { getByPlaceholderText } = render(
+            <MemoryRouter>
+                <CompanyDataForm data={props.data} onBlur={props.onBlur} />
+            </MemoryRouter>
+        );
+        const input = getByPlaceholderText("Kod pocztowy");
+        fireEvent.change(input, {target: {value: "01-234"}});
+        expect(props.onBlur).toHaveBeenCalledWith(...props.data, {city_code: "01-234"});
+    });
+
+    it('should call onBlur with NIP value', () => {
+        const { getByPlaceholderText } = render(
+            <MemoryRouter>
+                <CompanyDataForm data={props.data} onBlur={props.onBlur} />
+            </MemoryRouter>
+        );
+        const input = getByPlaceholderText("NIP");
+        fireEvent.change(input, {target: {value: "0123456789"}});
+        expect(props.onBlur).toHaveBeenCalledWith(...props.data, {company_nip: "0123456789"});
+    });
+
 });
