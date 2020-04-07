@@ -24,9 +24,9 @@ const SelectionRow = ({name, arrayType, onChange, current, onCut}) => {
                     >
                         <option>{source.selectPlaceholder}</option>
                         {arrayType.length > 0 ?
-                            arrayType.map(array =>
-                                array.map(item => (<option key={item} value={item}>{item}</option>)
-                            )) : null}
+                            arrayType.map(item =>
+                                (<option key={item} value={item}>{item}</option>)
+                            ) : null}
                     </Form.Control>
                 </Col>
                 <div className="mx-0 .col-mx-0 text-center">lub</div>
@@ -38,10 +38,12 @@ const SelectionRow = ({name, arrayType, onChange, current, onCut}) => {
                     />
                 </Col>
             </Row>
-           {name === "tags" ?
-                <ButtonList array={current} cutItem={onCut} /> :
-               null
-           }
+           <div>
+               {name === "tags" ?
+                    <ButtonList array={current} cutItem={onCut} /> :
+                    <p className="mx-3 mt-2 text-muted">Kategoria: {current !== "" ? current : "nie wybrano"}</p>
+               }
+           </div>
        </div>
     );
 };

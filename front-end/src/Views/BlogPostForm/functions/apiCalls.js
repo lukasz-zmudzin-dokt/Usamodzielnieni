@@ -22,8 +22,23 @@ export const getFilters = async token => {
     }
 };
 
-export const postBlogPost = (data, token) => {
+export const postBlogPost = async (data, token) => {
+    const url = "http://usamo-back.herokuapp.com/blog/blogpost/";
+    const headers = {
+        Authorization: "Token " + token,
+        "Content-Type": "application/json"
+    };
 
+    const response = await fetch(url, {
+        method: "POST",
+        headers,
+        body: JSON.stringify(data)
+    });
+
+    if (response.status === 200) {
+        return await response.json().then(res => res);
+    } else
+        throw response.status;
 };
 
 export const uploadPhoto = (photo, token) => {

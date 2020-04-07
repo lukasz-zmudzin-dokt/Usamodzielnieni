@@ -1,11 +1,13 @@
 import React from "react";
-import {Button, Card, Col, Container, Form, Row} from "react-bootstrap";
+import {Alert, Button, Card, Container, Form} from "react-bootstrap";
 import {Editor, createEditorState} from 'medium-draft';
-import {getFilters} from "./functions/apiCalls";
+import {getFilters, postBlogPost} from "./functions/apiCalls";
 import "medium-draft/lib/index.css";
 import {customizeToolbar} from "./functions/editorConfig";
 import SelectionRow from "./components/SelectionRow";
-import {UserContext} from "../../context/UserContext";
+import {UserContext} from "context/UserContext";
+import mediumDraftExporter from "medium-draft/lib/exporter"
+import {Redirect} from "react-router-dom";
 
 class BlogPostForm extends React.Component {
   constructor(props) {
@@ -20,7 +22,11 @@ class BlogPostForm extends React.Component {
           filters: {
               categories: [],
               tags: []
-          }
+          },
+
+          error: false,
+          redirect: false,
+          post_id: -1
       };
       this.refsEditor = React.createRef();
   }
@@ -89,6 +95,28 @@ class BlogPostForm extends React.Component {
       });
   };
 
+  submitPost = async (e) => {
+      e.preventDefault();
+      const data = {
+        category: this.state.category,
+          tags: this.state.tags,
+          title: this.state.title,
+          content: mediumDraftExporter(this.state.editorState.getCurrentContent())
+      };
+      try {
+          const id = await postBlogPost(data, this.context.token);
+          this.setState({
+              redirect: true,
+              post_id: id
+          })
+      } catch(e) {
+          console.log(e);
+          this.setState({
+              error: true
+          })
+      }
+  };
+
   render () {
       const config = customizeToolbar();
       console.log(this.state);
@@ -120,7 +148,7 @@ class BlogPostForm extends React.Component {
                           />
                       </Form.Group>
                       {console.log(this.state.filters.categories)}
-                      <SelectionRow name="category" arrayType={[this.state.filters.categories]} onChange={this.onChange} />
+                      <SelectionRow name="category" arrayType={this.state.filters.categories} current={this.state.category} onChange={this.onChange} />
                       <div className="my-4">
                           <Editor
                               placeholder="Napisz swoją historię..."
@@ -132,12 +160,14 @@ class BlogPostForm extends React.Component {
                               sideButtons={[]}
                           />
                       </div>
-                      <SelectionRow className="mt-4" name="tags" arrayType={[this.state.filters.tags]} onChange={this.onArrayChange} current={this.state.tags} onCut={this.cutFromArray}/>
+                      <SelectionRow className="mt-4" name="tags" arrayType={this.state.filters.tags} onChange={this.onArrayChange} current={this.state.tags} onCut={this.cutFromArray}/>
                   </Card.Body>
                   <Card.Footer className="">
-                      <Button variant="primary" size="lg" block>Opublikuj</Button>
+                      {this.state.error ? <Alert variant="danger">Wystąpił błąd podczas dodawania posta.</Alert> : null}
+                      <Button variant="primary" size="lg" onClick={this.submitPost} block>Opublikuj</Button>
                   </Card.Footer>
               </Card>
+              {this.state.redirect ? <Redirect to={`/blog/blogpost/${this.state.id}`}/> : null}
           </Container>
       );
   }
