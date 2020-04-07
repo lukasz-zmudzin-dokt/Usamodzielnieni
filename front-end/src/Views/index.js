@@ -9,6 +9,7 @@ import OfferForm from "Views/OfferForm";
 import MyOffersPage from "Views/MyOffersPage";
 import BlogPost from "Views/BlogPost";
 import BlogPage from "Views/BlogPage";
+import BlogPostForm from "Views/BlogPostForm";
 
 export {
   UserProfilePage,
@@ -21,5 +22,6 @@ export {
   OfferForm,
   MyOffersPage,
   BlogPost,
-  BlogPage
+  BlogPage,
+  BlogPostForm
 };

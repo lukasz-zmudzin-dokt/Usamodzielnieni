@@ -8,7 +8,8 @@ import {
   OfferForm,
   MyOffersPage,
   BlogPost,
-  BlogPage
+  BlogPage,
+  BlogPostForm
 } from "Views";
 
 const paths = {
@@ -23,7 +24,8 @@ const paths = {
   CV_APPROVAL: "/cvApproval",
   MY_OFFERS: "/myOffers",
   BLOG_POST: "/blog/blogpost/:id",
-  BLOG_PAGE: "/blog"
+  BLOG_PAGE: "/blog",
+  BLOG_FORM: "/blog/newPost"
 };
 
 export const userTypes = {
@@ -99,6 +101,13 @@ export default [
   {
     path: paths.BLOG_PAGE,
     component: BlogPage,
+    isPrivate: true,
+    type: undefined,
+    exact: true
+  },
+  {
+    path: paths.BLOG_FORM,
+    component: BlogPostForm,
     isPrivate: true,
     type: undefined,
     exact: true
