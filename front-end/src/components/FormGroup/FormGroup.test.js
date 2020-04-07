@@ -1,6 +1,6 @@
 import React from "react";
 import { render } from "@testing-library/react";
-import FormGroup from "Views/OfferForm/components/FormGroup";
+import FormGroup from "components/FormGroup";
 import { MemoryRouter } from "react-router-dom";
 
 describe("FormGroup", () => {
@@ -63,6 +63,14 @@ describe("FormGroup", () => {
       </MemoryRouter>
     );
     expect(getByLabelText("Opis stanowiska")).toBeInTheDocument();
+  });
+  it("should render number input if type is number", () => {
+    const { getByLabelText } = render(
+      <MemoryRouter initialEntries={["/"]}>
+        <FormGroup header="test" type="number" id="test" setVal={() => null} />
+      </MemoryRouter>
+    );
+    expect(getByLabelText("test")).toBeInTheDocument();
   });
   it("should render invalid message if incorrect isn't null", () => {
     const { getByText } = render(

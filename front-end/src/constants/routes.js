@@ -6,12 +6,16 @@ import {
   CVEditorPage,
   Menu,
   OfferForm,
-  MyOffersPage
+  JobOffersPage,
+  MyOffersPage,
+  JobOfferDetails
 } from "Views";
+
 
 const paths = {
   DASHBOARD: "/",
-  CV_EDITOR: "/cvEditor",
+  CV_CREATOR: "/cvEditor",
+  CV_EDITOR: "/cvEditor/:id",
   REGISTER: "/newAccount",
   FOOTER: "/footer",
   LOGIN: "/login",
@@ -19,7 +23,8 @@ const paths = {
   OFFER_FORM: "/offerForm",
   JOB_OFFERS: "/jobOffers",
   CV_APPROVAL: "/cvApproval",
-  MY_OFFERS: "/myOffers"
+  MY_OFFERS: "/myOffers",
+  JOB_OFFER_DETAILS: "/jobOffers/:id"
 };
 
 export const userTypes = {
@@ -35,10 +40,18 @@ export default [
     exact: true
   },
   {
+    path: paths.CV_CREATOR,
+    component: CVEditorPage,
+    isPrivate: true,
+    type: userTypes.STANDARD,
+    exact: true
+  },
+  {
     path: paths.CV_EDITOR,
     component: CVEditorPage,
     isPrivate: true,
-    type: userTypes.STANDARD
+    type: userTypes.STANDARD,
+    exact: true
   },
   {
     path: paths.REGISTER,
@@ -63,9 +76,17 @@ export default [
   },
   {
     path: paths.JOB_OFFERS,
-    component: UserProfilePage, // tu trzeba zmienić komponent
+    component: JobOffersPage,
+    exact: true,
     isPrivate: true,
-    type: userTypes.EMPLOYER
+    type: undefined
+  },
+  {
+    path: paths.JOB_OFFER_DETAILS,
+    component: JobOfferDetails,
+    exact: true,
+    isPrivate: true,
+    type: undefined
   },
   {
     path: paths.OFFER_FORM,
@@ -88,3 +109,4 @@ export default [
 ];
 
 export { paths };
+
