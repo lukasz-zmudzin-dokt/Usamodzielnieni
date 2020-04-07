@@ -38,7 +38,7 @@ const CVEditorTab = ({ title, movie, children, onPrevClick, onNextClick, comment
         <Row>
             <Col xs={12} md={6}>
                 <Button
-                    className="form_navigation_prev"
+                    className="mb-3"
                     onClick={e => onPrevClick(e)}
                     disabled={!onPrevClick}
                     block
@@ -49,7 +49,7 @@ const CVEditorTab = ({ title, movie, children, onPrevClick, onNextClick, comment
             <Col xs={12} md={6}>
                 { onNextClick ? (
                 <Button
-                    className="form_navigation_next"
+                    className="mb-3"
                     onClick={e => onNextClick(e)}
                     block
                 >

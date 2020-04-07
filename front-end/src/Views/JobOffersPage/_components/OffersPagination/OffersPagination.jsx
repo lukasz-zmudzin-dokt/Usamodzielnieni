@@ -17,7 +17,7 @@ const OffersPagination = ({current, max}) => {
     }
 
     return (
-        <Pagination className="offersPagination">
+        <Pagination className="offersPagination mb-0 justify-content-center">
             {addLinkWhenActive(<Pagination.First disabled={current === 1}/>, 1, current !== 1, 1)}
             {addLinkWhenActive(<Pagination.Prev disabled={current === 1}/>, current - 1, current !== 1, 2)}
 
