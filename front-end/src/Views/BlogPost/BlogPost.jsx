@@ -7,7 +7,7 @@ import {
   BlogContent
 } from './_components';
 
-const getBlog = async (id, token) => {
+const getPost = async (id, token) => {
   let url = `https://usamo-back.herokuapp.com/blog/blogpost/${id}`;
   const headers = {
       Authorization: "Token " + token,
@@ -17,22 +17,25 @@ const getBlog = async (id, token) => {
   const response = await fetch(url, { method: "GET", headers });
 
   if (response.status === 200) {
-      return response.json().then(res => mapBlog(res));
+      return response.json().then(res => mapPost(res));
   } else {
       throw response.status;
   }
-}
+};
 
-const mapBlog = (res) => ({
+const mapPost = (res) => ({
   id: res.id,
   content: res.content,
+  category: res.category,
   comments: res.comments.map((comment) => ({
     id: comment.id,
     content: comment.content,
     creationDate: comment.date_created,
     author: mapAuthor(comment.author)
   })),
-  author: mapAuthor(res.author)
+  creationDate: res.date_created,
+  author: mapAuthor(res.author),
+  tags: res.tags
 });
 
 const mapAuthor = (author) => ({
@@ -42,44 +45,44 @@ const mapAuthor = (author) => ({
 });
 
 const BlogPost = () => {
-  const [blog, setBlog] = useState(null);
-  const [isBlogLoading, setIsBlogLoading] = useState(false);
+  const [post, setPost] = useState(null);
+  const [isPostLoading, setIsPostLoading] = useState(false);
   const [error, setError] = useState(false);
   const user = useContext(UserContext);
 
-  const blogId = 1; // TODO
+  const post_Id = window.location.pathname.replace(/\/blog\/blogpost\//, '');
 
   useEffect(
     () => {
-      const loadBlog = async (blogId, token) => {
-        setIsBlogLoading(true);
-        let loadedBlog;
+      const loadPost = async (postId, token) => {
+        setIsPostLoading(true);
+        let loadedPost;
         try {
-          loadedBlog = await getBlog(blogId, token);
+          loadedPost = await getPost(postId, token);
         } catch (e) {
           console.log(e);
-          loadedBlog = null;
+          loadedPost = null;
           setError(true);
         }
-        setBlog(loadedBlog);
-        setIsBlogLoading(false);
-      }
-      loadBlog(blogId, user.token)
+        setPost(loadedPost);
+        setIsPostLoading(false);
+      };
+      loadPost(post_Id, user.token)
     },
-    [blogId, user.token]
+    [post_Id, user.token]
   );
 
   const msg = error ? (<Alert variant="danger">Wystąpił błąd podczas wczytywania zawartości bloga.</Alert>) :
-              isBlogLoading ? (<Alert variant="info">Ładowanie zawartości bloga...</Alert>) :
-              !blog && (<Alert>null</Alert>);
+              isPostLoading ? (<Alert variant="info">Ładowanie zawartości bloga...</Alert>) :
+              !post && (<Alert>null</Alert>);
 
   return msg || (
-    <Container>
-      <Card>
-        <Card.Header as="h2">Blog</Card.Header>
+    <Container className="blogpost_container">
+      <BlogContent post={post} type={user.type}/>
+      <Card className="blogpost_comment_card">
         <Card.Body>
-          <BlogContent blog={blog} />
-          <CommentsList comments={blog.comments} />
+          <Card.Title as="h3" className="mb-3">Komentarze:</Card.Title>
+          <CommentsList comments={post.comments} />
           <CommentForm />
         </Card.Body>
       </Card>
