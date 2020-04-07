@@ -1,8 +1,10 @@
-import React from 'react'
-import {Alert, Badge, Card, Col, Row} from "react-bootstrap";
+import React, {useState} from 'react'
+import {Alert, Badge, Button, ButtonToolbar, Card, Col, Row} from "react-bootstrap";
 import "./BlogContent.css";
 import mediumDraftImporter from 'medium-draft/lib/importer';
 import {convertToHTML} from "draft-convert";
+import {deletePost} from "../../functions/apiCalls";
+import {Redirect} from "react-router-dom";
 
 const getDateString = dateString => {
     return dateString.substring(0,2) + "." + dateString.substring(3, 5) + "." + dateString.substring(6, 10);
@@ -17,7 +19,42 @@ const renderTags = tagList => {
     });
 };
 
-const BlogContent = ({ post }, user) => {
+const handleDeletion = async (event, id, token, errorFlag, successFlag) => {
+    event.preventDefault();
+    try {
+        const res = await deletePost(id, token);
+        console.log(res);
+        successFlag(true);
+    } catch(e) {
+        console.log(e);
+        errorFlag(true);
+    }
+};
+
+const renderButtons = (id, user, author, errorFlag, successFlag, editionFlag) => {
+    console.log(user);
+    console.log(author);
+    if (user.type === 'Admin' || user.data.email === author.email) {
+        return (
+            <ButtonToolbar className="btn_toolbar text-center">
+                <Button variant="warning" className="button-edit mx-3" onClick={e => editionFlag(true)}>Edytuj 🖉</Button>
+                <Button variant="danger" className="button-delete mx-3" onClick={e => handleDeletion(e, user.token, errorFlag, successFlag)}>Usuń ✗</Button>
+            </ButtonToolbar>
+        )
+    }
+};
+
+const renderRedirect = (flag, id) => {
+    const path = `/blog/newPost/${id}`;
+    if (flag)
+        return <Redirect to={path}/>;
+};
+
+const BlogContent = ({ post , user}) => {
+    const [delError, setDelError] = useState(false);
+    const [success, setSuccess] = useState(false);
+    const [wantsEdition, setWantsEdition] = useState(false);
+
     if (post === undefined)
         return <Alert variant="danger" className="d-lg-block">Wystąpił błąd podczas ładowania zawartości bloga.</Alert>;
     const {firstName, lastName, email} = post.author;
@@ -28,7 +65,17 @@ const BlogContent = ({ post }, user) => {
                 <Card.Img variant="top" src={post.header}/> : <Card.Header/>
             }
             <Card.Body className="post_content mx-4">
-                <Card.Title as="h1" className="post_title">{post.title === undefined ? "Tytuł posta" : post.title}</Card.Title>
+                {
+                    delError ? <Alert variant="danger">Wystąpił błąd podczas usuwania posta.</Alert> :
+                    success ? <Alert variant="info">Ten post jest usunięty.</Alert> : null
+                }
+                <Card.Title as="h1" className="post_title">
+                    {console.log(post)}
+                    <Row>
+                        {post.title === "" ? "Tytuł posta" : post.title}
+                        {renderButtons(post.id, user, post.author, setDelError, setSuccess, setWantsEdition)}
+                    </Row>
+                </Card.Title>
                 <Card.Subtitle as="h6" className="text-muted mb-4 mt-2">Kategoria: {post.category}</Card.Subtitle>
                 <Card.Text className="blog_content_text text-justify">
                     <div dangerouslySetInnerHTML={{__html: content}}/>
@@ -47,6 +94,7 @@ const BlogContent = ({ post }, user) => {
                         <Row className="text-right mx-3">Liczba komentarzy: {post.comments.length}</Row>
                     </div>
                 </Row>
+                {renderRedirect(wantsEdition, post.id)}
             </Card.Footer>
         </Card>
     )

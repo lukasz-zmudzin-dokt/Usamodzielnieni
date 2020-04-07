@@ -25,7 +25,8 @@ const paths = {
   MY_OFFERS: "/myOffers",
   BLOG_POST: "/blog/blogpost/:id",
   BLOG_PAGE: "/blog",
-  BLOG_FORM: "/blog/newPost"
+  BLOG_FORM: "/blog/newPost",
+  BLOG_EDIT: "/blog/newPost/:id"
 };
 
 export const userTypes = {
@@ -107,6 +108,13 @@ export default [
   },
   {
     path: paths.BLOG_FORM,
+    component: BlogPostForm,
+    isPrivate: true,
+    type: undefined,
+    exact: true
+  },
+  {
+    path: paths.BLOG_EDIT,
     component: BlogPostForm,
     isPrivate: true,
     type: undefined,

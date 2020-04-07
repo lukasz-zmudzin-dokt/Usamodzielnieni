@@ -48,8 +48,29 @@ class LoginPage extends React.Component {
       if (res.status === 201) {
         res.json().then(responseValue => {
           const { token, type } = responseValue;
-          this.context.login(token, type);
-          this.setRedirect();
+          fetch("http://usamo-back.herokuapp.com/account/data/", {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Token " + token
+            }
+          }).then(dataRes => {
+            if (dataRes.status === 200) {
+              dataRes.json().then(dataValue => {
+                console.log(dataValue, dataValue.data)
+                const { data } = dataValue;
+                this.context.login(token, type, data);
+                this.setRedirect();
+              })
+            } else {
+              this.setState({
+                validated: false,
+                incorrect: true,
+                username: "",
+                password: "",
+                message: "Coś poszło nie tak"
+              });
+            }
+          })
         });
       } else {
         this.setState({
@@ -125,79 +146,79 @@ class LoginPage extends React.Component {
     const { onChange, handleSubmit, handleCheck } = this;
 
     return (
-      <Container className="loginPage">
-        {window.innerWidth >= 768 ? (
-          <img className="loginPage__bgImage" src={bgImage} alt="tło" />
-        ) : null}
-        <Card className="loginPage__card loginPage__card--login">
-          <Card.Header as="h2" className="loginPage__header">
-            Logowanie
-          </Card.Header>
-          <Card.Body className="loginPage__body">
-            <Form
-              noValidate
-              validated={validated}
-              onSubmit={handleSubmit}
-              className="primary"
-            >
-              <Form.Group controlId="formGroupUsername">
-                <Form.Control
-                  type="text"
-                  placeholder="Login"
-                  required
-                  value={username}
-                  onChange={onChange}
-                  className="loginPage__input"
-                  minLength="6"
-                />
-                <Form.Control.Feedback type="invalid">
-                  Podaj właściwy login
-                </Form.Control.Feedback>
-              </Form.Group>
-              <Form.Group controlId="formGroupPassword">
-                <Form.Control
-                  type="password"
-                  autoComplete="on"
-                  placeholder="Hasło"
-                  value={password}
-                  onChange={onChange}
-                  required
-                  minLength="6"
-                />
-                <Form.Control.Feedback type="invalid">
-                  Podaj właściwe hasło
-                </Form.Control.Feedback>
-              </Form.Group>
-              <Form.Group controlId="formBasicCheckbox">
-                <Form.Check
-                  type="checkbox"
-                  checked={cookieVal}
-                  onChange={handleCheck}
-                  label="Zapamiętaj mnie"
-                />
-              </Form.Group>
-
-              <Button
-                variant="secondary"
-                className="loginPage__button"
-                type="submit"
+        <Container className="loginPage">
+          {window.innerWidth >= 768 ? (
+              <img className="loginPage__bgImage" src={bgImage} alt="tło" />
+          ) : null}
+          <Card className="loginPage__card loginPage__card--login">
+            <Card.Header as="h2" className="loginPage__header">
+              Logowanie
+            </Card.Header>
+            <Card.Body className="loginPage__body">
+              <Form
+                  noValidate
+                  validated={validated}
+                  onSubmit={handleSubmit}
+                  className="primary"
               >
-                Zaloguj
-              </Button>
-            </Form>
-            {incorrect ? (
-              <div className="loginPage__messageFail">
-                <small className="loginPage__failure">{message}</small>
+                <Form.Group controlId="formGroupUsername">
+                  <Form.Control
+                      type="text"
+                      placeholder="Login"
+                      required
+                      value={username}
+                      onChange={onChange}
+                      className="loginPage__input"
+                      minLength="6"
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    Podaj właściwy login
+                  </Form.Control.Feedback>
+                </Form.Group>
+                <Form.Group controlId="formGroupPassword">
+                  <Form.Control
+                      type="password"
+                      autoComplete="on"
+                      placeholder="Hasło"
+                      value={password}
+                      onChange={onChange}
+                      required
+                      minLength="6"
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    Podaj właściwe hasło
+                  </Form.Control.Feedback>
+                </Form.Group>
+                <Form.Group controlId="formBasicCheckbox">
+                  <Form.Check
+                      type="checkbox"
+                      checked={cookieVal}
+                      onChange={handleCheck}
+                      label="Zapamiętaj mnie"
+                  />
+                </Form.Group>
+
+                <Button
+                    variant="secondary"
+                    className="loginPage__button"
+                    type="submit"
+                >
+                  Zaloguj
+                </Button>
+              </Form>
+              {incorrect ? (
+                  <div className="loginPage__messageFail">
+                    <small className="loginPage__failure">{message}</small>
+                  </div>
+              ) : null}
+              <div className="loginPage__links">
+                <Link to="/newAccount">Załóż konto!</Link>
+                {this.renderRedirect()}
+                {/* <Link to="/newPassword">Zapomniałeś hasła?</Link> */}
               </div>
-            ) : null}
-            <div className="loginPage__links">
-              <Link to="/newAccount">Załóż konto!</Link>
-              {this.renderRedirect()}
-              {/* <Link to="/newPassword">Zapomniałeś hasła?</Link> */}
-            </div>
-          </Card.Body>
-        </Card>
-      </Container>
+            </Card.Body>
+          </Card>
+        </Container>
     );
   }
 }

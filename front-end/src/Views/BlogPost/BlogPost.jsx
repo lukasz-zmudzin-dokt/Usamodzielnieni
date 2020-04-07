@@ -67,7 +67,7 @@ const BlogPost = () => {
 
   return msg || (
     <Container className="blogpost_container">
-      <BlogContent post={post} type={user}/>
+      <BlogContent post={post} user={user}/>
       <Card className="blogpost_comment_card">
         <Card.Body>
           <Card.Title as="h3" className="mb-3">Komentarze:</Card.Title>
