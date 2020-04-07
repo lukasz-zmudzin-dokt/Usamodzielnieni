@@ -1,7 +1,7 @@
 import React from 'react'
 import { Pagination } from 'react-bootstrap';
 import { IndexLinkContainer } from 'react-router-bootstrap';
-import './OffersPagination.css';
+
 
 const OffersPagination = ({current, max}) => {
     const addLinkWhenActive = (item, page, isActive, arrowId) => {

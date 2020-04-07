@@ -3,7 +3,6 @@ import { Container, Card, ListGroup, Alert } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
 import Filter from "./_components/Filter";
 import qs from "query-string";
-import "./style.css";
 import { UserContext } from "context";
 import { JobOfferInfo, OffersPagination } from "./_components";
 

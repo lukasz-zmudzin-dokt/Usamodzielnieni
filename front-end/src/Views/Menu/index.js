@@ -1,5 +1,4 @@
 import React from "react";
-import "Views/Menu/style.css";
 import { Row, Col, Container, Button, ButtonToolbar } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import logo from "assets/logo.png";
@@ -33,14 +32,10 @@ class Menu extends React.Component {
       return (
         <ButtonToolbar>
           <LinkContainer to="/newAccount">
-            <Button className="menu-button-big menu-button-white">
-              Utwórz konto
-            </Button>
+            <Button className="menu-button-big">Utwórz konto</Button>
           </LinkContainer>
           <LinkContainer to="/login">
-            <Button className="menu-button-big menu-button-white">
-              Zaloguj się
-            </Button>
+            <Button className="menu-button-big">Zaloguj się</Button>
           </LinkContainer>
         </ButtonToolbar>
       );
@@ -48,14 +43,9 @@ class Menu extends React.Component {
       return (
         <ButtonToolbar>
           <LinkContainer to="/user">
-            <Button className="menu-button-big menu-button-white">
-              Profil
-            </Button>
+            <Button className="menu-button-big">Profil</Button>
           </LinkContainer>
-          <Button
-            className="menu-button-big menu-button-white"
-            onClick={e => this.userLogout(e)}
-          >
+          <Button className="menu-button-big" onClick={e => this.userLogout(e)}>
             Wyloguj się
           </Button>
         </ButtonToolbar>

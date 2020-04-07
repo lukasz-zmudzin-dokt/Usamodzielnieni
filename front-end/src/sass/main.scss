@@ -1,8 +1,17 @@
 @import "utilities/variables";
-@import "sass/pages/_loginRegisterPage.scss";
-@import "sass/pages/_offerForm.scss";
-@import "sass/pages/_userProfilePage.scss";
+
+@import "pages/loginRegisterPage.scss";
+@import "pages/offerForm.scss";
+@import "pages/userProfilePage.scss";
+@import "pages/menu";
 @import "pages/headerLayout";
+@import "pages/JobOffersPage";
+
 @import "bootstrap/custom";
+
+@import "components/detailsItem";
+@import "components/offersPagination";
+@import "components/_CVEditorTab";
+
 // Import Bootstrap and its default variables
 @import "~bootstrap/scss/bootstrap.scss";

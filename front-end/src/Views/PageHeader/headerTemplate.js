@@ -21,7 +21,10 @@ class HeaderTemplate extends React.Component {
           <IndexLinkContainer to="/jobOffers">
             <Nav.Link id="jobOffers">Oferty pracy</Nav.Link>
           </IndexLinkContainer>
+          {/* <Nav.Link id="jobDescriptions">Opis stanowisk</Nav.Link> */}
+          {/* <Nav.Link id="personalityTests">Testy</Nav.Link> */}
           <Nav.Link id="stories">Historia</Nav.Link>
+          {/* <Nav.Link id="moneyMgmt">Zarządzanie budżetem</Nav.Link> */}
           <Nav.Link id="contactPhones">Telefony</Nav.Link>
         </Nav>
       );
@@ -92,7 +95,12 @@ class HeaderTemplate extends React.Component {
       <Navbar id="navbar_menu" variant="dark" fixed="top" expand="lg">
         <Navbar.Brand id="navbar_logo">
           <IndexLinkContainer to="/">
-            <img className="charity_logo" src={logo} alt="Usamodzielnieni" />
+            <img
+              className="charity_logo"
+              width="200vh"
+              src={logo}
+              alt="Usamodzielnieni"
+            />
           </IndexLinkContainer>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="topMenu" />
