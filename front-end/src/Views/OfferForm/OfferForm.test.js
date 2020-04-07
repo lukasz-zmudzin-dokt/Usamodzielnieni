@@ -25,6 +25,7 @@ const renderWithRouter = (
 
 describe("OfferForm", () => {
   let failFetch;
+  let apiSelect = { offer_type: ["IT"], category: [""] };
   beforeAll(() => {
     global.fetch = jest.fn().mockImplementation((input, init) => {
       return new Promise((resolve, reject) => {
@@ -34,6 +35,9 @@ describe("OfferForm", () => {
         switch (init.method) {
           case "POST":
             resolve({ status: 200 });
+            break;
+          case "GET":
+            resolve({ status: 200, json: () => Promise.resolve(apiSelect) });
             break;
           default:
             reject({});
@@ -79,6 +83,12 @@ describe("OfferForm", () => {
     fireEvent.change(getByLabelText("Opis stanowiska"), {
       target: { value: "abcd" }
     });
+    fireEvent.change(getByLabelText("Branża"), {
+      target: { value: "IT" }
+    });
+    fireEvent.change(getByLabelText("Wymiar pracy"), {
+      target: { value: "Praca" }
+    });
     fireEvent.change(getByLabelText("Ważne do:"), {
       target: {
         value: new Date()
@@ -86,8 +96,6 @@ describe("OfferForm", () => {
     });
 
     fireEvent.click(getByTestId("submitBtn"));
-
-    await waitForElement(() => getByLabelText("Ważne do:"));
 
     expect(getByPlaceholderText("Nazwa stanowiska").value).toBe("");
     expect(getByPlaceholderText("Nazwa firmy").value).toBe("");
