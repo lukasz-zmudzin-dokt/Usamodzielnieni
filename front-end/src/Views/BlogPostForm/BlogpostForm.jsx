@@ -36,11 +36,11 @@ class BlogPostForm extends React.Component {
   }
 
   componentDidMount() {
-      if (window.location.pathname !== "/blog/newPost") {
+      if (window.location.pathname.toLowerCase() !== "/blog/newpost") {
           this.setState({
               method: "PUT"
           });
-          const post_Id = window.location.pathname.replace(/\/blog\/newPost\//, '');
+          const post_Id = window.location.pathname.replace(/\/blog\/newpost\//i, '');
 
           this.loadPost(post_Id).then(res => {
               if (res === null) {
@@ -48,6 +48,7 @@ class BlogPostForm extends React.Component {
               } else {
                   console.log(res);
                   this.setState({
+                      post_id: post_Id,
                       photo: res.photo || null,
                       tags: res.tags,
                       title: res.title,
@@ -122,6 +123,12 @@ class BlogPostForm extends React.Component {
       });
   };
 
+  setRedirect = () => {
+      this.setState({
+          redirect: true
+      });
+  };
+
   submitPost = async (e) => {
       e.preventDefault();
       console.log(this.state.editorState.getCurrentContent());
@@ -132,11 +139,12 @@ class BlogPostForm extends React.Component {
           content: mediumDraftExporter(this.state.editorState.getCurrentContent())
       };
       try {
-          const id = await postBlogPost(data, this.context.token, this.state.method);
+          const res = await postBlogPost(data, this.context.token, this.state.method, this.state.post_id);
+          console.log(res);
           this.setState({
-              redirect: true,
-              post_id: id
-          })
+              post_id: res.id
+          });
+          this.setRedirect();
       } catch(e) {
           console.log(e);
           this.setState({
@@ -203,7 +211,7 @@ class BlogPostForm extends React.Component {
                       <Button variant="primary" size="lg" onClick={this.submitPost} block>Opublikuj</Button>
                   </Card.Footer>
               </Card>
-              {this.state.redirect ? <Redirect to={`/blog/blogpost/${this.state.id}`}/> : null}
+              {this.state.redirect ? <Redirect to={`/blog/blogpost/${this.state.post_id}`}/> : null}
           </Container>
       );
   }

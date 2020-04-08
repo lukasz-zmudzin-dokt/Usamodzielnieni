@@ -1,7 +1,6 @@
 import React from "react";
-import { Card, Row, Badge, Col } from "react-bootstrap";
+import { Row, Badge, Col } from "react-bootstrap";
 import { IndexLinkContainer } from "react-router-bootstrap";
-import {convertToHTML} from "draft-convert";
 
 const stripFromTags = str => {
   console.log(str);

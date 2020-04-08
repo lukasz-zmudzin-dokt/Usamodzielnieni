@@ -38,8 +38,10 @@ export const getFilters = async token => {
     }
 };
 
-export const postBlogPost = async (data, token, method) => {
-    const url = "http://usamo-back.herokuapp.com/blog/blogpost/";
+export const postBlogPost = async (data, token, method, id) => {
+    let url = "http://usamo-back.herokuapp.com/blog/blogpost/";
+    if (id !== -1)
+        url = `${url}${id}`;
     const headers = {
         Authorization: "Token " + token,
         "Content-Type": "application/json"

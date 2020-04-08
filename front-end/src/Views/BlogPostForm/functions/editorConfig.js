@@ -1,9 +1,7 @@
-import {Button} from "react-bootstrap";
-
 export const customizeToolbar = () => {
     const blockButtons = [
         {
-            label: '\" \"',
+            label: '" "',
             style: 'blockquote',
             icon: 'quote-right',
             description: 'Cytat'

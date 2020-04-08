@@ -22,9 +22,8 @@ export const deletePost = async(id, token) => {
     };
 
     const response = await fetch(url, {method: "DELETE", headers});
-
     if (response.status === 200) {
-        return response.json().then(res => res);
+        return response.status;
     } else {
         throw response.status;
     }

@@ -38,7 +38,7 @@ const renderButtons = (id, user, author, errorFlag, successFlag, editionFlag) =>
         return (
             <ButtonToolbar className="btn_toolbar text-center">
                 <Button variant="warning" className="button-edit mx-3" onClick={e => editionFlag(true)}>Edytuj 🖉</Button>
-                <Button variant="danger" className="button-delete mx-3" onClick={e => handleDeletion(e, user.token, errorFlag, successFlag)}>Usuń ✗</Button>
+                <Button variant="danger" className="button-delete mx-3" onClick={e => handleDeletion(e, id, user.token, errorFlag, successFlag)}>Usuń ✗</Button>
             </ButtonToolbar>
         )
     }
