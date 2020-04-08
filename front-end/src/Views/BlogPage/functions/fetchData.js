@@ -11,15 +11,7 @@ const getPosts = async (token, filters) => {
 
   const response = await fetch(url, { method: "GET", headers });
   if (response.status === 200) {
-    return response.json().then(res => {
-      return res.map(({ category, tags, content, date_created, author }) => ({
-        category,
-        tags,
-        content,
-        dateCreated: date_created,
-        author
-      }));
-    });
+    return response.json();
   } else {
     throw response.status;
   }
@@ -37,8 +29,8 @@ const getFilters = async token => {
   const responseT = await fetch(urlT, { method: "GET", headers });
 
   if (responseT.status === 200 && responseC.status === 200) {
-    const tags = await responseT.json().then(res => res);
-    const categories = await responseC.json().then(res => res);
+    const tags = await responseT.json();
+    const categories = await responseC.json();
     const filters = {
       tags,
       categories
