@@ -10,6 +10,7 @@ import JobOfferDetails from "Views/JobOfferDetails";
 import OfferForm from "Views/OfferForm";
 import MyOffersPage from "Views/MyOffersPage";
 import ContactPage from "Views/ContactPage";
+import MyCVsPage from "Views/MyCVsPage";
 
 export {
   UserProfilePage,
@@ -24,4 +25,5 @@ export {
   JobOffersPage,
   MyOffersPage,
   JobOfferDetails,
+  MyCVsPage
 };
