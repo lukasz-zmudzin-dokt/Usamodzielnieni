@@ -3,7 +3,8 @@ import { ButtonGroup, Button } from "react-bootstrap";
 import "./CommentItem.css";
 
 const CommentItem = ({ comment, onEditClick, onDeleteClick, user, ...rest }) => {
-    const canModifyComment = (user) => (user.type === 'Standard' && comment.author.username === user.data.username) || user.type === 'Admin';
+    const canModifyComment = (user) => (user.type === 'Standard' && comment.author.email === user.data.email) 
+                                    || (user.type === 'Staff' && user.data.group_type === 'staff_blog_moderator');
 
     return (
         <div className="commentItem" {...rest}>
