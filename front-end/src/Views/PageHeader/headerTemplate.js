@@ -20,6 +20,11 @@ class HeaderTemplate extends React.Component {
               Kreator CV
             </Nav.Link>
           </IndexLinkContainer>
+            <IndexLinkContainer to={"/myCVs"}>
+                <Nav.Link id="myCVs">
+                    Moje CV
+                </Nav.Link>
+            </IndexLinkContainer>
           <Nav.Link id="learningTheRopes">Jak zacząć?</Nav.Link>
           <IndexLinkContainer to="/jobOffers">
             <Nav.Link id="jobOffers">Oferty pracy</Nav.Link>
@@ -89,7 +94,7 @@ class HeaderTemplate extends React.Component {
       // const { match, location, history } = this.props;
       // console.log(match, location, history, this.props);
     return (
-      <Navbar id="navbar_menu" variant="dark" fixed="top" expand="lg">
+      <Navbar id="navbar_menu" variant="dark" fixed="top" expand="xl">
         <Navbar.Brand id="navbar_logo">
           <IndexLinkContainer to="/">
             <img
