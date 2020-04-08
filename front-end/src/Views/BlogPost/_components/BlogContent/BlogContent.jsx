@@ -1,6 +1,5 @@
 import React, {useState} from 'react'
 import {Alert, Badge, Button, ButtonToolbar, Card, Col, Row} from "react-bootstrap";
-import "./BlogContent.css";
 import mediumDraftImporter from 'medium-draft/lib/importer';
 import {convertToHTML} from "draft-convert";
 import {deletePost} from "../../functions/apiCalls";
