@@ -2,24 +2,6 @@ $theme-colors: (
   "primary": #7345a9
 );
 
-#root {
-  padding-top: $nav-margin;
-  min-height: calc(100vh - #{$nav-margin});
-}
-
-@media (min-width: 768px) {
-  $nav-margin: 56px;
-  #root {
-    padding-top: $nav-margin;
-    min-height: calc(100vh - #{$nav-margin});
-    width: 100%;
-    background-image: linear-gradient(#ffffffb2, #ffffffb2), url("/fot.png");
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: contain;
-  }
-}
-
 .card-header {
   text-align: center;
 }
@@ -36,7 +18,22 @@ code {
 }
 
 .center-container {
+  $nav-margin: 94px;
   display: flex;
   min-height: calc(100vh - #{$nav-margin});
+  margin-top: $nav-margin;
   align-items: center;
+  padding: 2rem 0;
+}
+@media (min-width: 768px) {
+  .center-container {
+    $nav-margin: 56px;
+    min-height: calc(100vh - #{$nav-margin});
+    margin-top: $nav-margin;
+    width: 100%;
+    background-image: linear-gradient(#ffffffb2, #ffffffb2), url("/fot.png");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
 }
