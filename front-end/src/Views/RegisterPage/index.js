@@ -51,7 +51,15 @@ class RegisterPage extends React.Component {
         res.json().then(responseValue => {
           const { token, type } = responseValue;
           this.setRedirect();
-          this.context.login(token, type);
+          this.context.login(token, type, {
+            email: this.state.email,
+            username: this.state.username,
+            last_name: this.state.last_name,
+            first_name: this.state.first_name,
+            phone_number: this.state.phone_number,
+            facility_name: this.state.name_of_place,
+            facility_address: this.getFacilityAddress(this.state.city, this.state.street, this.state.city_code)
+          });
           this.setState({
             validated: false,
             message: "Udało się zarejestrować! Teraz możesz się zalogować",
@@ -80,6 +88,8 @@ class RegisterPage extends React.Component {
       }
     });
   };
+
+  getFacilityAddress = (city, street, cityCode) => `${city} ${street} ${cityCode}`;
 
   handleSubmit = event => {
     const {
@@ -111,7 +121,7 @@ class RegisterPage extends React.Component {
         areEqual: true
       });
       const facility_name = name_of_place;
-      const facility_address = `${city} ${street} ${city_code}`;
+      const facility_address = this.getFacilityAddress(city, street, city_code);
       this.sendData({
         email,
         first_name,
