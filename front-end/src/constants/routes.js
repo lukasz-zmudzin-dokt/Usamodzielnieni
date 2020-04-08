@@ -111,7 +111,6 @@ export default [
   {
     path: paths.CONTACT_PAGE,
     component: ContactPage,
-    isPrivate: true,
   }
 ];
 
