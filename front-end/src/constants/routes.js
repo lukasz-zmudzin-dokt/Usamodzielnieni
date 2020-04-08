@@ -6,9 +6,10 @@ import {
   CVEditorPage,
   Menu,
   OfferForm,
-  JobOffersPage,
   MyOffersPage,
-  JobOfferDetails
+  JobOffersPage,
+  JobOfferDetails,
+  ContactPage
 } from "Views";
 
 
@@ -24,6 +25,7 @@ const paths = {
   JOB_OFFERS: "/jobOffers",
   CV_APPROVAL: "/cvApproval",
   MY_OFFERS: "/myOffers",
+  CONTACT_PAGE: "/contact",
   JOB_OFFER_DETAILS: "/jobOffers/:id"
 };
 
@@ -105,6 +107,11 @@ export default [
     component: MyOffersPage,
     isPrivate: true,
     type: userTypes.EMPLOYER
+  },
+  {
+    path: paths.CONTACT_PAGE,
+    component: ContactPage,
+    isPrivate: true,
   }
 ];
 
