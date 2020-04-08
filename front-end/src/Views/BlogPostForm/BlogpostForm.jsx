@@ -1,12 +1,14 @@
 import React from "react";
 import {Alert, Button, Card, Container, Form} from "react-bootstrap";
 import {Editor, createEditorState} from 'medium-draft';
-import {getFilters, postBlogPost} from "./functions/apiCalls";
+import {getFilters, getPost, postBlogPost} from "./functions/apiCalls";
 import "medium-draft/lib/index.css";
 import {customizeToolbar} from "./functions/editorConfig";
 import SelectionRow from "./components/SelectionRow";
 import {UserContext} from "context/UserContext";
-import mediumDraftExporter from "medium-draft/lib/exporter"
+import mediumDraftExporter from "medium-draft/lib/exporter";
+import mediumDraftImporter from 'medium-draft/lib/importer';
+import {convertToRaw} from 'draft-js';
 import {Redirect} from "react-router-dom";
 
 class BlogPostForm extends React.Component {
@@ -24,21 +26,35 @@ class BlogPostForm extends React.Component {
               tags: []
           },
 
-          error: false,
+          error: "",
           redirect: false,
-          post_id: -1
+          post_id: -1,
+          method: "POST",
+          isLoading: false
       };
       this.refsEditor = React.createRef();
   }
 
   componentDidMount() {
-      if (this.props.data !== undefined) {
+      if (window.location.pathname !== "/blog/newPost") {
           this.setState({
-              editorState: createEditorState(this.props.data.content)
+              method: "PUT"
           });
-      } else {
-          this.setState({
-              editorState: createEditorState()
+          const post_Id = window.location.pathname.replace(/\/blog\/newPost\//, '');
+
+          this.loadPost(post_Id).then(res => {
+              if (res === null) {
+                  this.setState({error: "get"});
+              } else {
+                  console.log(res);
+                  this.setState({
+                      photo: res.photo || null,
+                      tags: res.tags,
+                      title: res.title,
+                      category: res.category,
+                      editorState: createEditorState(convertToRaw(mediumDraftImporter(res.content)))
+                  });
+              }
           });
       }
       this.loadFilters().then( res => {
@@ -47,6 +63,17 @@ class BlogPostForm extends React.Component {
           });
       });
   }
+
+  loadPost = async (id) => {
+      let res;
+      try {
+          res = await getPost(id, this.context.token);
+      } catch(e) {
+          console.log(e);
+          res = null;
+      }
+      return res;
+  };
 
   loadFilters = async () => {
       let res;
@@ -97,14 +124,15 @@ class BlogPostForm extends React.Component {
 
   submitPost = async (e) => {
       e.preventDefault();
+      console.log(this.state.editorState.getCurrentContent());
       const data = {
-        category: this.state.category,
+          category: this.state.category,
           tags: this.state.tags,
           title: this.state.title,
           content: mediumDraftExporter(this.state.editorState.getCurrentContent())
       };
       try {
-          const id = await postBlogPost(data, this.context.token);
+          const id = await postBlogPost(data, this.context.token, this.state.method);
           this.setState({
               redirect: true,
               post_id: id
@@ -112,7 +140,7 @@ class BlogPostForm extends React.Component {
       } catch(e) {
           console.log(e);
           this.setState({
-              error: true
+              error: "send"
           })
       }
   };
@@ -124,6 +152,9 @@ class BlogPostForm extends React.Component {
           <Container>
               <Card>
                   <Card.Header>
+                      {this.state.isLoading ?
+                        <Alert variant="info">Ładowanie edytora postów.</Alert> : null
+                      }
                       <Form.Group controlId="blogpost_photo">
                           <Form.File
                               name="photo"
@@ -142,6 +173,7 @@ class BlogPostForm extends React.Component {
                           <Form.Control
                               name="title"
                               className="blogpost_title_form block"
+                              defaultValue={this.state.title}
                               placeholder="Wpisz tytuł posta..."
                               size="lg"
                               onChange={this.onChange}
@@ -163,7 +195,11 @@ class BlogPostForm extends React.Component {
                       <SelectionRow className="mt-4" name="tags" arrayType={this.state.filters.tags} onChange={this.onArrayChange} current={this.state.tags} onCut={this.cutFromArray}/>
                   </Card.Body>
                   <Card.Footer className="">
-                      {this.state.error ? <Alert variant="danger">Wystąpił błąd podczas dodawania posta.</Alert> : null}
+                      {
+                          this.state.error === "send" ? <Alert variant="danger">Wystąpił błąd podczas dodawania posta.</Alert> :
+                          this.state.error === "get" ? <Alert variant="danger">Wystąpił błąd podczas pobierania treści posta.</Alert> :
+                          null
+                      }
                       <Button variant="primary" size="lg" onClick={this.submitPost} block>Opublikuj</Button>
                   </Card.Footer>
               </Card>

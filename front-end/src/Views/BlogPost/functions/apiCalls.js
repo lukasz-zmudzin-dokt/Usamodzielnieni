@@ -21,7 +21,7 @@ export const deletePost = async(id, token) => {
         "Content-Type": "application/json"
     };
 
-    const response = await fetch(url, {method: "DELETE", headers})
+    const response = await fetch(url, {method: "DELETE", headers});
 
     if (response.status === 200) {
         return response.json().then(res => res);

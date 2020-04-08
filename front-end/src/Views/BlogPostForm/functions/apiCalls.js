@@ -1,3 +1,19 @@
+export const getPost = async (id, token) => {
+    let url = `https://usamo-back.herokuapp.com/blog/blogpost/${id}`;
+    const headers = {
+        Authorization: "Token " + token,
+        "Content-Type": "application/json"
+    };
+
+    const response = await fetch(url, { method: "GET", headers });
+
+    if (response.status === 200) {
+        return response.json().then(res =>res );
+    } else {
+        throw response.status;
+    }
+};
+
 export const getFilters = async token => {
     const urlC = "http://usamo-back.herokuapp.com/blog/categories/";
     const urlT = "http://usamo-back.herokuapp.com/blog/tags/";
@@ -22,7 +38,7 @@ export const getFilters = async token => {
     }
 };
 
-export const postBlogPost = async (data, token) => {
+export const postBlogPost = async (data, token, method) => {
     const url = "http://usamo-back.herokuapp.com/blog/blogpost/";
     const headers = {
         Authorization: "Token " + token,
@@ -30,7 +46,7 @@ export const postBlogPost = async (data, token) => {
     };
 
     const response = await fetch(url, {
-        method: "POST",
+        method: method,
         headers,
         body: JSON.stringify(data)
     });
