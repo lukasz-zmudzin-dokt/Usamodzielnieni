@@ -1,5 +1,3 @@
-import React from "react";
-
 export const getUserCVs = async (token) => {
     return await fetch("http://usamo-back.herokuapp.com/cv/user/list/", {
         method: "GET",

@@ -1,9 +1,8 @@
-import React, {useState} from "react";
+import React from "react";
 import {Container, Card, Row, Col, Button, ListGroup, Alert} from "react-bootstrap";
 import { UserContext } from "context/UserContext";
 import { IndexLinkContainer } from "react-router-bootstrap";
 
-import './style.css';
 import CVStatus from "./components/CVStatus";
 import { getUserCVs } from "./functions/getUserCVs";
 import { showCV } from "./functions/showCV";
@@ -38,12 +37,9 @@ class MyCVsPage extends React.Component {
         } = this.state;
         return (
             <Container className="mt-4">
-                <div className="width-100">
                     <Card>
-                        <Card.Header>
-                            <h4>
-                                Moje CV
-                            </h4>
+                        <Card.Header as="h2">
+                            Moje CV
                         </Card.Header>
                         {loading ? (
                             <Alert variant="primary" className="m-3">
@@ -56,13 +52,15 @@ class MyCVsPage extends React.Component {
                             </Alert>
                         ) :
                             <ListGroup variant="flush">
-                                <ListGroup.Item>
-                                    <Row>
-                                        <Col xs={12} md={5} l={6}><h6>Identyfikator CV</h6></Col>
-                                        <Col xs={4} md={3} l={2}><h6>Status</h6></Col>
-                                        <Col xs={8} md={4} l={4} className="text-right"><h6>Akcje</h6></Col>
-                                    </Row>
-                                </ListGroup.Item>
+                                {!loading ? (
+                                    <ListGroup.Item>
+                                        <Row>
+                                            <Col xs={12} md={5}><h6>Identyfikator CV</h6></Col>
+                                            <Col xs={4} md={3}><h6>Status</h6></Col>
+                                            <Col xs={8} md={4} className="text-right"><h6>Akcje</h6></Col>
+                                        </Row>
+                                    </ListGroup.Item>
+                                ) : null}
                                 {errors.small ? (
                                     <Alert variant="danger" className="m-3">
                                         Ups, coś poszło nie tak. Kod błędu - {errorMessages.small.status}
@@ -71,14 +69,14 @@ class MyCVsPage extends React.Component {
                                 }
                                 {cvs.map((cv) =>
                                     <ListGroup.Item key={cv.cv_id}>
-                                        <Row>
-                                            <Col xs={12} md={5} l={6}>{cv.cv_id}</Col>
-                                            <Col xs={4} md={3} l={2}><CVStatus wants_verification={cv.wants_verification} is_verified={cv.is_verified} /></Col>
-                                            <Col xs={8} md={4} l={4} className="text-right">
-                                                <IndexLinkContainer to={"/cvEditor" + cv.cv_id}>
+                                        <Row className="d-flex align-items-center">
+                                            <Col xs={12} md={5}>{cv.cv_id}</Col>
+                                            <Col xs={4} md={3}><CVStatus wants_verification={cv.wants_verification} is_verified={cv.is_verified} /></Col>
+                                            <Col xs={8} md={4} className="text-right">
+                                                <IndexLinkContainer to={"/cvEditor/" + cv.cv_id}>
                                                     <Button variant="info">Edytuj</Button>
                                                 </IndexLinkContainer>
-                                                <Button className="align-self-end ml-2" variant="primary" onClick={e => showCV(this.context.token, cv.cv_id, this)}>Zobacz CV</Button>
+                                                <Button className="ml-2" variant="primary" onClick={e => showCV(this.context.token, cv.cv_id, this)}>Zobacz CV</Button>
                                             </Col>
                                         </Row>
                                     </ListGroup.Item>
@@ -86,7 +84,6 @@ class MyCVsPage extends React.Component {
                             </ListGroup>
                         }
                     </Card>
-                </div>
             </Container>
         )
     }
