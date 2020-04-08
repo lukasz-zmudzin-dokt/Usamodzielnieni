@@ -59,7 +59,7 @@ class Menu extends React.Component {
           <Row>
             <Col />
             <Col xs={7}>
-              <img src={logo} className="menu-logo" />
+              <img src={logo} className="menu-logo" alt=""/>
             </Col>
             <Col />
           </Row>
@@ -72,12 +72,11 @@ class Menu extends React.Component {
             <Col />
             <Col>
               <ButtonToolbar>
-                <LinkContainer
-                  to={!this.context.token ? "/login" : "/cvEditor"}
-                >
-                  <Button className="menu-button-small menu-button-white">
-                    Kreator CV
-                  </Button>
+                <LinkContainer to={!this.context.token ? "/login" : "/cvEditor"}>
+                    <Button className="menu-button-small menu-button-white" >Kreator CV</Button>
+                </LinkContainer>
+                <LinkContainer to="/myCVs">
+                    <Button className="menu-button-small menu-button-white" >Moje CV</Button>
                 </LinkContainer>
                 <Button className="menu-button-small menu-button-white disabled">
                   Jak zacząć?

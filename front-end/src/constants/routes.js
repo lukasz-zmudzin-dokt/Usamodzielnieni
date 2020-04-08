@@ -8,7 +8,8 @@ import {
   OfferForm,
   JobOffersPage,
   MyOffersPage,
-  JobOfferDetails
+  JobOfferDetails,
+  MyCVsPage
 } from "Views";
 
 
@@ -24,7 +25,8 @@ const paths = {
   JOB_OFFERS: "/jobOffers",
   CV_APPROVAL: "/cvApproval",
   MY_OFFERS: "/myOffers",
-  JOB_OFFER_DETAILS: "/jobOffers/:id"
+  JOB_OFFER_DETAILS: "/jobOffers/:id",
+  MY_CVS: "/myCVs"
 };
 
 export const userTypes = {
@@ -105,6 +107,12 @@ export default [
     component: MyOffersPage,
     isPrivate: true,
     type: userTypes.EMPLOYER
+  },
+  {
+    path: paths.MY_CVS,
+    component: MyCVsPage,
+    isPrivate: true,
+    type: userTypes.STANDARD
   }
 ];
 
