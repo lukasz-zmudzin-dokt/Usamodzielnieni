@@ -1,7 +1,7 @@
 import React from "react";
 import {Alert, Button, Card, Container, Form} from "react-bootstrap";
 import {Editor, createEditorState} from 'medium-draft';
-import {getFilters, getPost, postBlogPost} from "./functions/apiCalls";
+import {getFilters, getPost, postBlogPost, uploadPhoto} from "./functions/apiCalls";
 import "medium-draft/lib/index.css";
 import {customizeToolbar} from "./functions/editorConfig";
 import SelectionRow from "./components/SelectionRow";
@@ -144,7 +144,16 @@ class BlogPostForm extends React.Component {
           this.setState({
               post_id: res.id
           });
-          this.setRedirect();
+          try {
+              const photores = await uploadPhoto(this.state.post_id, this.state.photo, this.context.token);
+              console.log(photores);
+              this.setRedirect();
+          } catch(e) {
+              console.log(e);
+              this.setState({
+                  error: "photo"
+              });
+          }
       } catch(e) {
           console.log(e);
           this.setState({
@@ -206,6 +215,7 @@ class BlogPostForm extends React.Component {
                       {
                           this.state.error === "send" ? <Alert variant="danger">Wystąpił błąd podczas dodawania posta.</Alert> :
                           this.state.error === "get" ? <Alert variant="danger">Wystąpił błąd podczas pobierania treści posta.</Alert> :
+                          this.state.error === "photo" ? <Alert variant="danger">Wystąpił błąd podczas dodawania zdjęcia.</Alert> :
                           null
                       }
                       <Button variant="primary" size="lg" onClick={this.submitPost} block>Opublikuj</Button>

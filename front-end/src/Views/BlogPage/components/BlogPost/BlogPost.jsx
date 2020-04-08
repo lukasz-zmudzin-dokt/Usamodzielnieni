@@ -3,7 +3,6 @@ import { Row, Badge, Col } from "react-bootstrap";
 import { IndexLinkContainer } from "react-router-bootstrap";
 
 const stripFromTags = str => {
-  console.log(str);
   str = str.replace(/(<([^>]+)>)|(<([^>]+)\.\.\.)/gi, '');
   return str;
 };

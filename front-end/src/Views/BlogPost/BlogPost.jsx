@@ -12,6 +12,7 @@ import {getPost} from "./functions/apiCalls";
 
 
 const mapPost = (res) => ({
+  header: res.header,
   title: res.title,
   id: res.id,
   content: res.content,

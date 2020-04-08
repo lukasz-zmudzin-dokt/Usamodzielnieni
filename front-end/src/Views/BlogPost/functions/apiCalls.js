@@ -22,6 +22,8 @@ export const deletePost = async(id, token) => {
     };
 
     const response = await fetch(url, {method: "DELETE", headers});
+    url = url + "/header";
+    const photoDel = await fetch(url, {method: "DELETE", headers});
     if (response.status === 200) {
         return response.status;
     } else {

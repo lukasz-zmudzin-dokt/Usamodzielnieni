@@ -34,7 +34,7 @@ const handleDeletion = async (event, id, token, errorFlag, successFlag) => {
 const renderButtons = (id, user, author, errorFlag, successFlag, editionFlag) => {
     console.log(user);
     console.log(author);
-    if (user.type === 'Admin' || user.data.email === author.email) {
+    if (user.type === 'Admin' || user.data.id === author.id) {
         return (
             <ButtonToolbar className="btn_toolbar text-center">
                 <Button variant="warning" className="button-edit mx-3" onClick={e => editionFlag(true)}>Edytuj 🖉</Button>
@@ -54,7 +54,6 @@ const BlogContent = ({ post , user}) => {
     const [delError, setDelError] = useState(false);
     const [success, setSuccess] = useState(false);
     const [wantsEdition, setWantsEdition] = useState(false);
-
     if (post === undefined)
         return <Alert variant="danger" className="d-lg-block">Wystąpił błąd podczas ładowania zawartości bloga.</Alert>;
     const {firstName, lastName, email} = post.author;

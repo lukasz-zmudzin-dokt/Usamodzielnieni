@@ -59,6 +59,23 @@ export const postBlogPost = async (data, token, method, id) => {
         throw response.status;
 };
 
-export const uploadPhoto = (photo, token) => {
+export const uploadPhoto = async (id, photo, token) => {
+    const formData = new FormData();
+    formData.append('file', photo, photo.name);
+    console.log(formData);
+    const url = `http://usamo-back.herokuapp.com/blog/blogpost/${id}/header`;
+    const headers = {
+        Authorization: "Token " + token
+    };
 
+    const response = await fetch(url, {
+        method: "POST",
+        headers,
+        body: formData
+    });
+
+    if (response.status === 200) {
+        return response.status;
+    } else
+        throw response.status;
 };
