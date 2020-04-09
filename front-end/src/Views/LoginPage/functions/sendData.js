@@ -16,6 +16,6 @@ export const sendData = async (credentials) => {
       ...data
     }
   } else {
-    throw {status: response.status}
+    throw response.status;
   }
 };
