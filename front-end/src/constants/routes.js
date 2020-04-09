@@ -6,8 +6,11 @@ import {
   CVEditorPage,
   Menu,
   OfferForm,
-  JobOffersPage,
   MyOffersPage,
+  BlogPost,
+  BlogPage,
+  BlogPostForm,
+  JobOffersPage,
   JobOfferDetails,
   MyCVsPage
 } from "Views";
@@ -25,6 +28,10 @@ const paths = {
   JOB_OFFERS: "/jobOffers",
   CV_APPROVAL: "/cvApproval",
   MY_OFFERS: "/myOffers",
+  BLOG_POST: "/blog/blogpost/:id",
+  BLOG_PAGE: "/blog",
+  BLOG_FORM: "/blog/newPost",
+  BLOG_EDIT: "/blog/newPost/:id",
   JOB_OFFER_DETAILS: "/jobOffers/:id",
   MY_CVS: "/myCVs"
 };
@@ -109,6 +116,33 @@ export default [
     type: userTypes.EMPLOYER
   },
   {
+    path: paths.BLOG_POST,
+    component: BlogPost,
+    isPrivate: true,
+    type: undefined,
+    exact: true
+  },
+  {
+    path: paths.BLOG_PAGE,
+    component: BlogPage,
+    isPrivate: true,
+    type: undefined,
+    exact: true
+  },
+  {
+    path: paths.BLOG_FORM,
+    component: BlogPostForm,
+    isPrivate: true,
+    type: userTypes.STAFF,
+    exact: true
+  },
+  {
+    path: paths.BLOG_EDIT,
+    component: BlogPostForm,
+    isPrivate: true,
+    type: userTypes.STAFF,
+    exact: true
+  }, {
     path: paths.MY_CVS,
     component: MyCVsPage,
     isPrivate: true,

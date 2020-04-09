@@ -1,0 +1,158 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BlogPage should match snapshot 1`] = `
+<div>
+  <div
+    class="container"
+  >
+    <div
+      class="card"
+    >
+      <h2
+        class="card-header"
+      >
+        Blogi
+      </h2>
+      <form
+        class="blog__form"
+      >
+        <div
+          class="form-row"
+        >
+          <div
+            class="form-group col-md-6 col-12"
+          >
+            <label
+              class="form-label"
+              for="category"
+            >
+              Kategoria
+            </label>
+            <select
+              class="form-control"
+              id="category"
+            >
+              <option
+                disabled=""
+              >
+                -- Wybierz --
+              </option>
+            </select>
+          </div>
+          <div
+            class="form-group col-md-6 col-12"
+          >
+            <label
+              class="form-label"
+              for="tag"
+            >
+              Tag
+            </label>
+            <select
+              class="form-control"
+              id="tag"
+            >
+              <option
+                disabled=""
+              >
+                -- Wybierz --
+              </option>
+            </select>
+          </div>
+        </div>
+        <button
+          class="mr-3 btn btn-primary"
+          type="submit"
+        >
+          Filtruj posty
+        </button>
+        <button
+          class="mr-3 btn btn-outline-primary"
+          type="button"
+        >
+          Wyczyść filtry
+        </button>
+        <small
+          class="blog__countText"
+        >
+          Znaleziono 2 posty
+        </small>
+      </form>
+      <div
+        class="list-group list-group-flush"
+      >
+        <div
+          class="list-group-item"
+        >
+          <div
+            class="row"
+            href="/blog/blogpost/undefined"
+          >
+            <div
+              class="col"
+            >
+              <h3>
+                abc
+              </h3>
+              <p>
+                aaaaa...
+              </p>
+              <div
+                class="row"
+              >
+                <div
+                  class="col"
+                >
+                  <small>
+                    Tagi:
+                  </small>
+                  <span
+                    class="ml-1 badge badge-info"
+                  >
+                    def
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="list-group-item"
+        >
+          <div
+            class="row"
+            href="/blog/blogpost/undefined"
+          >
+            <div
+              class="col"
+            >
+              <h3>
+                ghi
+              </h3>
+              <p>
+                bbbbb...
+              </p>
+              <div
+                class="row"
+              >
+                <div
+                  class="col"
+                >
+                  <small>
+                    Tagi:
+                  </small>
+                  <span
+                    class="ml-1 badge badge-info"
+                  >
+                    abc
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

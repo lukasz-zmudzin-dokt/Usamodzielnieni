@@ -52,46 +52,49 @@ class Menu extends React.Component {
       );
   }
 
+
   render() {
     return (
       <Container className="Menu" fluid={true}>
-        <div className="menu-background d-flex justify-content-center align-items-center">
-          <Row>
-            <Col />
-            <Col xs={7}>
-              <img src={logo} className="menu-logo" alt=""/>
-            </Col>
-            <Col />
-          </Row>
-          <Row className="menu-button-row">
-            <Col />
-            <Col>{this.displayButtonToolbar()}</Col>
-            <Col />
-          </Row>
-          <Row className="menu-button-row">
-            <Col />
-            <Col>
-              <ButtonToolbar>
-                <LinkContainer to={!this.context.token ? "/login" : "/cvEditor"}>
-                    <Button className="menu-button-small menu-button-white" >Kreator CV</Button>
-                </LinkContainer>
-                <LinkContainer to="/myCVs">
-                    <Button className="menu-button-small menu-button-white" >Moje CV</Button>
-                </LinkContainer>
-                <Button className="menu-button-small menu-button-white disabled">
-                  Jak zacząć?
-                </Button>
-                <Button className="menu-button-small menu-button-white disabled">
-                  Oferty pracy
-                </Button>
-              </ButtonToolbar>
-            </Col>
-            <Col />
-          </Row>
-        </div>
-      </Container>
-    );
-  }
+            <div className="menu-background d-flex justify-content-center align-items-center">
+                <Row>
+                    <Col/>
+                    <Col xs={7}>
+                        <img src={logo} className="menu-logo"/>
+                    </Col>
+                    <Col />
+                </Row>
+                <Row className="menu-button-row">
+                    <Col />
+                    <Col>
+                        {this.displayButtonToolbar()}
+                    </Col>
+                    <Col />
+                </Row>
+                <Row className="menu-button-row">
+                    <Col />
+                    <Col >
+                        <ButtonToolbar>
+                            <LinkContainer to={!this.context.token ? "/login" : "/cvEditor"}>
+                                <Button className="menu-button-small menu-button-white" >Kreator CV</Button>
+                            </LinkContainer>
+                            <LinkContainer to={"/myCVs"}>
+                                <Button className="menu-button-small menu-button-white" >Moje CV</Button>
+                            </LinkContainer>
+                            <LinkContainer to={!this.context.token ? "/login" : "/jobOffers"}>
+                                <Button className="menu-button-small menu-button-white">Oferty pracy</Button>
+                            </LinkContainer>
+                            <LinkContainer to="/blog">
+                                <Button className="menu-button-small menu-button-white">Blogi</Button>
+                            </LinkContainer>
+                        </ButtonToolbar>
+                    </Col>
+                    <Col />
+                </Row>
+            </div>
+        </Container>
+      )
+    }
 }
 
 Menu.contextType = UserContext;

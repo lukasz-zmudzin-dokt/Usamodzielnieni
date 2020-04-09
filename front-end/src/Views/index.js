@@ -9,6 +9,9 @@ import JobOffersPage from "Views/JobOffersPage";
 import JobOfferDetails from "Views/JobOfferDetails";
 import OfferForm from "Views/OfferForm";
 import MyOffersPage from "Views/MyOffersPage";
+import BlogPost from "Views/BlogPost";
+import BlogPage from "Views/BlogPage";
+import BlogPostForm from "Views/BlogPostForm";
 import MyCVsPage from "Views/MyCVsPage";
 
 export {
@@ -20,8 +23,11 @@ export {
   Footer,
   Menu,
   OfferForm,
-  JobOffersPage,
   MyOffersPage,
+  BlogPost,
+  BlogPage,
+  BlogPostForm,
+  JobOffersPage,
   JobOfferDetails,
   MyCVsPage
 };
