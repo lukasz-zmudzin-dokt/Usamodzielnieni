@@ -5,11 +5,14 @@ import HeaderTemplate from "Views/PageHeader";
 import CVEditorPage from "Views/CVEditorPage";
 import Footer from "Views/Footer";
 import Menu from "Views/Menu";
+import JobOffersPage from "Views/JobOffersPage";
+import JobOfferDetails from "Views/JobOfferDetails";
 import OfferForm from "Views/OfferForm";
 import MyOffersPage from "Views/MyOffersPage";
 import BlogPost from "Views/BlogPost";
 import BlogPage from "Views/BlogPage";
 import BlogPostForm from "Views/BlogPostForm";
+import MyCVsPage from "Views/MyCVsPage";
 
 export {
   UserProfilePage,
@@ -23,5 +26,8 @@ export {
   MyOffersPage,
   BlogPost,
   BlogPage,
-  BlogPostForm
+  BlogPostForm,
+  JobOffersPage,
+  JobOfferDetails,
+  MyCVsPage
 };

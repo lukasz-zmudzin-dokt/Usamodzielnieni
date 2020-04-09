@@ -20,8 +20,15 @@ class HeaderTemplate extends React.Component {
               Kreator CV
             </Nav.Link>
           </IndexLinkContainer>
+            <IndexLinkContainer to={"/myCVs"}>
+                <Nav.Link id="myCVs">
+                    Moje CV
+                </Nav.Link>
+            </IndexLinkContainer>
           <Nav.Link id="learningTheRopes">Jak zacząć?</Nav.Link>
-          <Nav.Link id="jobOffers">Oferty pracy</Nav.Link>
+          <IndexLinkContainer to="/jobOffers">
+            <Nav.Link id="jobOffers">Oferty pracy</Nav.Link>
+          </IndexLinkContainer>
           {/* <Nav.Link id="jobDescriptions">Opis stanowisk</Nav.Link> */}
           {/* <Nav.Link id="personalityTests">Testy</Nav.Link> */}
           <Nav.Link id="stories">Historia</Nav.Link>
@@ -70,7 +77,7 @@ class HeaderTemplate extends React.Component {
           body: {}
       }).then(res => {
           console.log(res);
-          if (res.status === 200) {
+          if (res.status === 200 || res.status === 401) {
               res.json().then(responseValue => {
                   console.log(responseValue);
                   console.log("Wylogowano");
@@ -87,7 +94,7 @@ class HeaderTemplate extends React.Component {
       // const { match, location, history } = this.props;
       // console.log(match, location, history, this.props);
     return (
-      <Navbar id="navbar_menu" variant="dark" fixed="top" expand="lg">
+      <Navbar id="navbar_menu" variant="dark" fixed="top" expand="xl">
         <Navbar.Brand id="navbar_logo">
           <IndexLinkContainer to="/">
             <img

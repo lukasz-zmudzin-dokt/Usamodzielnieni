@@ -1,0 +1,69 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`JobOfferInfo should render without crashing 1`] = `
+<div>
+  <div
+    class="row"
+  >
+    <div
+      class="col"
+    >
+      <h5>
+        Tytuł oferty
+      </h5>
+      <div
+        class="row"
+      >
+        <div
+          class="detailsItem col-xl-3 col-md-4"
+        >
+          <div
+            class="detailsItem__label"
+          >
+            Nazwa firmy
+          </div>
+          <div
+            class="detailsItem__value"
+          >
+            Nazwa firmy
+          </div>
+        </div>
+        <div
+          class="detailsItem col-xl-3 col-md-4"
+        >
+          <div
+            class="detailsItem__label"
+          >
+            Lokalizacja
+          </div>
+          <div
+            class="detailsItem__value"
+          >
+            mazowieckie
+          </div>
+        </div>
+        <div
+          class="detailsItem col-xl-3 col-md-4"
+        >
+          <div
+            class="detailsItem__label"
+          >
+            Ważne do
+          </div>
+          <div
+            class="detailsItem__value"
+          >
+            2020-12-24
+          </div>
+        </div>
+      </div>
+      <a
+        class="btn btn-primary"
+        href="/jobOffers/123"
+      >
+        Pokaż szczegóły
+      </a>
+    </div>
+  </div>
+</div>
+`;

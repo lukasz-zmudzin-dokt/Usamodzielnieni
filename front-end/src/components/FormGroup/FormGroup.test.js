@@ -64,6 +64,14 @@ describe("FormGroup", () => {
     );
     expect(getByLabelText("Opis stanowiska")).toBeInTheDocument();
   });
+  it("should render number input if type is number", () => {
+    const { getByLabelText } = render(
+      <MemoryRouter initialEntries={["/"]}>
+        <FormGroup header="test" type="number" id="test" setVal={() => null} />
+      </MemoryRouter>
+    );
+    expect(getByLabelText("test")).toBeInTheDocument();
+  });
   it("should render invalid message if incorrect isn't null", () => {
     const { getByText } = render(
       <MemoryRouter initialEntries={["/"]}>
