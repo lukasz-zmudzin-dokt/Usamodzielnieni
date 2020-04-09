@@ -40,7 +40,7 @@ class ContactPage extends React.Component {
                     <Card.Body className='bg_card'>
                         <CardColumns>
                             {phoneList.map(contact => (
-                                <PhoneCard name={contact.name} number={contact.phone} />
+                                <PhoneCard key={contact.name + contact.phone} name={contact.name} number={contact.phone} />
                             ))}
                         </CardColumns>
                     </Card.Body>
