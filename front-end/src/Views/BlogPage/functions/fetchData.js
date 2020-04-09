@@ -5,7 +5,7 @@ const getPosts = async (token, filters) => {
   const tagQ = filters.tag
     ? `${categoryQ ? `&tag=${enTags}` : `?tag=${enTags}`}`
     : "";
-  const url = `http://usamo-back.herokuapp.com/blog/blogposts/${categoryQ}${tagQ}`;
+  const url = `https://usamo-back.herokuapp.com/blog/blogposts/${categoryQ}${tagQ}`;
   const headers = {
     Authorization: "Token " + token,
     "Content-Type": "application/json"
@@ -20,8 +20,8 @@ const getPosts = async (token, filters) => {
 };
 
 const getFilters = async token => {
-  const urlC = "http://usamo-back.herokuapp.com/blog/categories/";
-  const urlT = "http://usamo-back.herokuapp.com/blog/tags/";
+  const urlC = "https://usamo-back.herokuapp.com/blog/categories/";
+  const urlT = "https://usamo-back.herokuapp.com/blog/tags/";
   const headers = {
     Authorization: "Token " + token,
     "Content-Type": "application/json"
