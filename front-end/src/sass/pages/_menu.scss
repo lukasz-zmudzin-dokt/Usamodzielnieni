@@ -2,7 +2,7 @@
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-  // height: 100vh;
+  min-height: calc(100vh - #{$nav-marginD});
   flex-direction: column;
 }
 
@@ -37,5 +37,6 @@
   .menu-background {
     background-size: cover;
     background-image: url("../../assets/menu-backdrop.png");
+    min-height: calc(100vh - #{$nav-marginM});
   }
 }

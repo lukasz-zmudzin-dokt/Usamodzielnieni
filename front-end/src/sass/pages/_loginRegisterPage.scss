@@ -4,6 +4,7 @@
   justify-content: center;
   align-items: center;
   overflow: hidden;
+  min-height: calc(100vh - #{$nav-marginM});
 }
 
 .loginPage__cardSection {
@@ -25,6 +26,10 @@
 }
 
 @media (min-width: 768px) {
+  .loginPage {
+    min-height: calc(100vh - #{$nav-marginD});
+  }
+
   .loginPage__card--login {
     width: 400px !important;
   }

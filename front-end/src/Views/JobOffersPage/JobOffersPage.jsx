@@ -101,7 +101,7 @@ const JobOffersPage = props => {
   );
 
   return (
-    <Container className="jobOffersPage">
+    <Container>
       <Card>
         <Card.Header as="h2">Oferty pracy</Card.Header>
         <Filter setFilters={setFilters} count={count} disabled={disabled} />
