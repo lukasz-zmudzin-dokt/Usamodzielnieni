@@ -1,5 +1,5 @@
 import React from "react";
-import {Card, Container, CardDeck} from "react-bootstrap";
+import {Card, Container, CardColumns} from "react-bootstrap";
 import PhoneCard from "./components/PhoneCard";
 
 class ContactPage extends React.Component {
@@ -38,11 +38,11 @@ class ContactPage extends React.Component {
                         Lista przydatnych telefonów
                     </Card.Header>
                     <Card.Body className='bg_card'>
-                        <CardDeck>
+                        <CardColumns>
                             {phoneList.map(contact => (
                                 <PhoneCard name={contact.name} number={contact.phone} />
                             ))}
-                        </CardDeck>
+                        </CardColumns>
                     </Card.Body>
                 </Card>
             </Container>
