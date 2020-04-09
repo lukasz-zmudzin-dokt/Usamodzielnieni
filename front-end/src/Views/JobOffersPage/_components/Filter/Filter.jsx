@@ -9,7 +9,7 @@ import { getSelects } from "Views/OfferForm/functions/fetchData";
 import { UserContext } from "context";
 registerLocale("pl", polish);
 
-const Filter = ({ setFilters, count }) => {
+const Filter = ({ setFilters, count, disabled }) => {
   const [voivodeship, setVoivodeship] = useState("-- Wybierz --");
   const [pageSize, setPageSize] = useState(10);
   const [minExpirationDate, setMinExpirationDate] = useState();
@@ -142,11 +142,21 @@ const Filter = ({ setFilters, count }) => {
         />
       </Form.Row>
 
-      <Button type="submit" className="mr-3" variant="primary">
-        Filtruj oferty
+      <Button
+        type="submit"
+        className="mr-3"
+        variant="primary"
+        disabled={disabled}
+      >
+        {disabled ? "Ładowanie..." : "Filtruj oferty"}
       </Button>
-      <Button variant="outline-primary" className="mr-3" onClick={deleteFilter}>
-        Wyczyść filtry
+      <Button
+        variant="outline-primary"
+        className="mr-3"
+        onClick={deleteFilter}
+        disabled={disabled}
+      >
+        {disabled ? "Ładowanie..." : "Wyczyść filtry"}
       </Button>
       {count !== 0 && (
         <small className="search__countText">Znaleziono {count} ofert</small>
