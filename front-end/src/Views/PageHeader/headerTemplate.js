@@ -1,12 +1,11 @@
 import React from "react";
 import { Navbar, Nav, Button, Form } from "react-bootstrap";
 
-import "Views/PageHeader/headerLayout.css";
 import logo from "../../assets/logo.png";
 
 // https://github.com/ReactTraining/react-router/issues/83#issuecomment-214794477
-import {IndexLinkContainer} from 'react-router-bootstrap';
-import {Redirect, withRouter} from "react-router-dom";
+import { IndexLinkContainer } from "react-router-bootstrap";
+import { Redirect, withRouter } from "react-router-dom";
 import { UserContext } from "context";
 import Notifications from "./components/Notifications";
 
@@ -16,9 +15,7 @@ class HeaderTemplate extends React.Component {
       return (
         <Nav className="mr-auto ">
           <IndexLinkContainer to={!this.context.token ? "/login" : "/cvEditor"}>
-            <Nav.Link id="cvEditor">
-              Kreator CV
-            </Nav.Link>
+            <Nav.Link id="cvEditor">Kreator CV</Nav.Link>
           </IndexLinkContainer>
             <IndexLinkContainer to={"/myCVs"}>
                 <Nav.Link id="myCVs">
@@ -42,57 +39,63 @@ class HeaderTemplate extends React.Component {
     if (this.context.token)
       return (
         <Form inline className="action_buttons">
-            <Notifications location={this.props.location} token={this.context.token} className="menu_action_button_0"/>
-            <IndexLinkContainer to="/user">
-              <Button className="menu_action_button_1" variant="light">
-                Profil
-              </Button>
-            </IndexLinkContainer>
-            <IndexLinkContainer to="/">
-              <Button className="menu_action_button_2" variant="outline-light" onClick={e => this.userLogout(e)}>
-                Wyloguj
-              </Button>
-            </IndexLinkContainer>
+          <Notifications
+            location={this.props.location}
+            token={this.context.token}
+            className="menu_action_button_0"
+          />
+          <IndexLinkContainer to="/user">
+            <Button className="menu_action_button_1" variant="light">
+              Profil
+            </Button>
+          </IndexLinkContainer>
+          <IndexLinkContainer to="/">
+            <Button
+              className="menu_action_button_2"
+              variant="outline-light"
+              onClick={e => this.userLogout(e)}
+            >
+              Wyloguj
+            </Button>
+          </IndexLinkContainer>
         </Form>
       );
     else
       return (
         <Form inline className="action_buttons">
-            <IndexLinkContainer to="/login">
-              <Button className="menu_action_button_3" variant="outline-light">
-                Logowanie
-              </Button>
-            </IndexLinkContainer>
+          <IndexLinkContainer to="/login">
+            <Button className="menu_action_button_3" variant="outline-light">
+              Logowanie
+            </Button>
+          </IndexLinkContainer>
         </Form>
       );
   }
 
-    userLogout = e => {
-      const url = "https://usamo-back.herokuapp.com/account/logout/";
-      fetch(url, {
-          method: "POST",
-          headers: {
-              "Authorization": "token " + this.context.token
-          },
-          body: {}
-      }).then(res => {
-          console.log(res);
-          if (res.status === 200 || res.status === 401) {
-              res.json().then(responseValue => {
-                  console.log(responseValue);
-                  console.log("Wylogowano");
-                  this.context.logout();
-                  return (
-                      <Redirect to="/"/>
-                  );
-              });
-          }
-      });
+  userLogout = e => {
+    const url = "https://usamo-back.herokuapp.com/account/logout/";
+    fetch(url, {
+      method: "POST",
+      headers: {
+        Authorization: "token " + this.context.token
+      },
+      body: {}
+    }).then(res => {
+      console.log(res);
+      if (res.status === 200 || res.status === 401) {
+        res.json().then(responseValue => {
+          console.log(responseValue);
+          console.log("Wylogowano");
+          this.context.logout();
+          return <Redirect to="/" />;
+        });
+      }
+    });
   };
 
   render() {
-      // const { match, location, history } = this.props;
-      // console.log(match, location, history, this.props);
+    // const { match, location, history } = this.props;
+    // console.log(match, location, history, this.props);
     return (
       <Navbar id="navbar_menu" variant="dark" fixed="top" expand="xl">
         <Navbar.Brand id="navbar_logo">

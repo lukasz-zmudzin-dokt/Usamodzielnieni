@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Container, Card, Alert, Row } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
-import "./style.css";
 import { UserContext } from "context";
 import { DetailsItem } from 'components';
 import { AddCvForm } from "./_components";

@@ -1,6 +1,5 @@
 import React from "react";
 import { Button, Row, Col, Alert } from "react-bootstrap";
-import "./CVEditorTab.css";
 import { Form } from "react-bootstrap";
 
 const CVEditorTab = ({

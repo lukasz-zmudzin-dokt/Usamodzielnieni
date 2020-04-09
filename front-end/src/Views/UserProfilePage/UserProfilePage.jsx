@@ -1,11 +1,9 @@
 import React from "react";
 import { Card, Container } from "react-bootstrap";
-import "./style.css";
 import UserDetails from "Views/UserProfilePage/components/UserDetails";
 import UserBasicInfo from "Views/UserProfilePage/components/UserBasicInfo";
 import { UserContext } from "context";
 import { getUserData } from "Views/UserProfilePage/functions/getUserData.js";
-
 
 const names = {
   role: {
@@ -36,7 +34,6 @@ class UserProfilePage extends React.Component {
   };
 
   async componentDidMount() {
-
     await getUserData(this.context.token, this).then(async response => {
       if (response.status === 200) {
         const res = await response.json();
@@ -53,7 +50,6 @@ class UserProfilePage extends React.Component {
         throw response.status;
       }
     });
-
   }
 
   render() {

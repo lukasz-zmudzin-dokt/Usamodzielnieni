@@ -3,8 +3,16 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
   overflow: hidden;
+  min-height: calc(100vh - #{$nav-marginM});
+}
+
+.loginPage__cardSection {
+  margin-bottom: 15px;
+}
+
+.loginPage__messageFail {
+  margin-bottom: 0.5rem;
 }
 
 .loginPage__links {
@@ -13,17 +21,23 @@
   align-items: flex-start;
 }
 
-.loginPage__header {
-  text-align: center;
-}
-
 .loginPage__button {
   margin-bottom: 1rem !important;
 }
 
 @media (min-width: 768px) {
+  .loginPage {
+    min-height: calc(100vh - #{$nav-marginD});
+  }
+
   .loginPage__card--login {
     width: 400px !important;
   }
+}
 
+.registerPage_body.card-body {
+  padding: 0;
+}
+.register_account_type {
+  margin-bottom: 2vh !important;
 }
