@@ -2,13 +2,19 @@ import React from "react";
 import { Card, Badge } from "react-bootstrap";
 import { IndexLinkContainer } from "react-router-bootstrap";
 
+const stripFromTags = str => {
+  str = str.replace(/(<([^>]+)>)|(<([^>]+)\.\.\.)/gi, '');
+  return str;
+};
+
 const BlogPost = data => {
+  const stripped_str = stripFromTags(data.summary);
   return (
     <IndexLinkContainer to={`/blog/blogpost/${data.id}`}>
       <Card>
         <Card.Body>
-          <Card.Title as="h3">{data.category}</Card.Title>
-          <Card.Text>{data.summary}</Card.Text>
+          <Card.Title as="h3">{data.title}</Card.Title>
+          <Card.Text>{stripped_str}</Card.Text>
         </Card.Body>
         <Card.Footer>
           <small>Tagi:</small>
