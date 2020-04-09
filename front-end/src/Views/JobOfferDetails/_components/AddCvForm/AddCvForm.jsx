@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Col, Button, Alert, Form } from 'react-bootstrap';
 import { IndexLinkContainer } from 'react-router-bootstrap';
-import "./AddCvForm.css";
 
 const getCvList = async (token) => {
   let url = "https://usamo-back.herokuapp.com/cv/user/list/";
@@ -115,11 +114,11 @@ const AddCvForm = ({ id, user, ...props }) => {
               {getVerifiedCvs(cvList).map((cv, i) => <option key={cv.id} value={cv.id}>Wersja {i+1}</option>)}
             </Form.Control>
           </Form.Group>
-          <Form.Group className="addCvForm__applyGroup mb-0">
-            <Button className="addCvForm__applyButton" type="submit">
+          <Row className="mb-0 justify-content-center" >
+            <Button className="addCvForm__applyButton " type="submit">
               Aplikuj do oferty
             </Button>
-          </Form.Group>
+          </Row>
         </Form>
       </Col>
     </Row>

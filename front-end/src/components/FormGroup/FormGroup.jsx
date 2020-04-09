@@ -2,7 +2,6 @@ import React from "react";
 import { Form } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import PropTypes from "prop-types";
-import "Views/OfferForm/style.css";
 
 const FormGroup = ({
   header,

@@ -1,11 +1,14 @@
 import React from "react";
 import { Navbar, Nav, Button, Form } from "react-bootstrap";
 
-import "Views/PageHeader/headerLayout.css";
 import logo from "../../assets/logo.png";
 
 // https://github.com/ReactTraining/react-router/issues/83#issuecomment-214794477
+<<<<<<< HEAD
 import { IndexLinkContainer } from 'react-router-bootstrap';
+=======
+import { IndexLinkContainer } from "react-router-bootstrap";
+>>>>>>> master
 import { Redirect, withRouter } from "react-router-dom";
 import { UserContext } from "context";
 import Notifications from "./components/Notifications";
@@ -16,9 +19,7 @@ class HeaderTemplate extends React.Component {
       return (
         <Nav className="mr-auto ">
           <IndexLinkContainer to={!this.context.token ? "/login" : "/cvEditor"}>
-            <Nav.Link id="cvEditor">
-              Kreator CV
-            </Nav.Link>
+            <Nav.Link id="cvEditor">Kreator CV</Nav.Link>
           </IndexLinkContainer>
             <IndexLinkContainer to={"/myCVs"}>
                 <Nav.Link id="myCVs">
@@ -44,16 +45,24 @@ class HeaderTemplate extends React.Component {
     if (this.context.token)
       return (
         <Form inline className="action_buttons">
-          <Notifications location={this.props.location} token={this.context.token} className="menu_action_button_0" />
+          <Notifications
+            location={this.props.location}
+            token={this.context.token}
+            className="menu_action_button_0"
+          />
           <IndexLinkContainer to="/user">
             <Button className="menu_action_button_1" variant="light">
               Profil
-              </Button>
+            </Button>
           </IndexLinkContainer>
           <IndexLinkContainer to="/">
-            <Button className="menu_action_button_2" variant="outline-light" onClick={e => this.userLogout(e)}>
+            <Button
+              className="menu_action_button_2"
+              variant="outline-light"
+              onClick={e => this.userLogout(e)}
+            >
               Wyloguj
-              </Button>
+            </Button>
           </IndexLinkContainer>
         </Form>
       );
@@ -63,7 +72,7 @@ class HeaderTemplate extends React.Component {
           <IndexLinkContainer to="/login">
             <Button className="menu_action_button_3" variant="outline-light">
               Logowanie
-              </Button>
+            </Button>
           </IndexLinkContainer>
         </Form>
       );
@@ -74,7 +83,7 @@ class HeaderTemplate extends React.Component {
     fetch(url, {
       method: "POST",
       headers: {
-        "Authorization": "token " + this.context.token
+        Authorization: "token " + this.context.token
       },
       body: {}
     }).then(res => {
@@ -84,9 +93,7 @@ class HeaderTemplate extends React.Component {
           console.log(responseValue);
           console.log("Wylogowano");
           this.context.logout();
-          return (
-            <Redirect to="/" />
-          );
+          return <Redirect to="/" />;
         });
       }
     });
