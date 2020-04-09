@@ -82,8 +82,12 @@ class Menu extends React.Component {
                                 <LinkContainer to={"/myCVs"}>
                                     <Button className="menu-button-small menu-button-white" >Moje CV</Button>
                                 </LinkContainer>
-                                <Button className="menu-button-small menu-button-white disabled">Jak zacząć?</Button>
-                                <Button className="menu-button-small menu-button-white disabled">Oferty pracy</Button>
+                                <LinkContainer to={!this.context.token ? "/login" : "/jobOffers"}>
+                                    <Button className="menu-button-small menu-button-white">Oferty pracy</Button>
+                                </LinkContainer>
+                                <LinkContainer to="/blog">
+                                    <Button className="menu-button-small menu-button-white">Blogi</Button>
+                                </LinkContainer>
                             </ButtonToolbar>
                         </Col>
                         <Col />
