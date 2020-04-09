@@ -63,7 +63,7 @@ const CVEditorTab = ({
             block
             disabled={disabled}
           >
-            Generuj CV
+            {disabled ? "Ładowanie..." : "Generuj CV"}
           </Button>
         )}
       </Col>

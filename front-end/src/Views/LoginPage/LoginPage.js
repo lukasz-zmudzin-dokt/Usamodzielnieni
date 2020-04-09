@@ -95,7 +95,7 @@ class LoginPage extends React.Component {
                 type="submit"
                 disabled={disabled}
               >
-                Zaloguj
+                {disabled ? "Ładowanie..." : "Zaloguj"}
               </Button>
             </Form>
             {incorrect ? (

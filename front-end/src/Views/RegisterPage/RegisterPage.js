@@ -197,7 +197,7 @@ class RegisterPage extends React.Component {
                 data-testid="submitBtn"
                 disabled={disabled}
               >
-                Utwórz konto
+                {disabled ? "Ładowanie..." : "Utwórz konto"}
               </Button>
             </Form>
             {error_flag ? (

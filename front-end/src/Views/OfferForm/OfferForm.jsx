@@ -32,6 +32,7 @@ const OfferForm = () => {
   const context = useContext(UserContext);
 
   useEffect(() => {
+    setDisabled(true);
     const loadSelects = async token => {
       let res;
       try {
@@ -51,19 +52,19 @@ const OfferForm = () => {
         category: res.categories[0],
         type: res.types[0]
       });
+      setDisabled(false);
     };
     loadSelects(context.token);
   }, [context.token]);
 
   const submit = event => {
-    setDisabled(true);
     const form = event.currentTarget;
     event.preventDefault();
     console.log(offer);
     if (form.checkValidity() === false) {
       event.stopPropagation();
-      setDisabled(false);
     } else {
+      setDisabled(true);
       const year = expiration_date.getFullYear();
       const month =
         expiration_date.getMonth() + 1 < 10
@@ -220,7 +221,7 @@ const OfferForm = () => {
                 data-testid="submitBtn"
                 disabled={disabled}
               >
-                Dodaj
+                {disabled ? "Ładowanie..." : "Dodaj"}
               </Button>
             </Row>
           </Form>

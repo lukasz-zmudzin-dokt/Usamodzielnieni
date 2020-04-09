@@ -148,7 +148,7 @@ const Filter = ({ setFilters, count, disabled }) => {
         variant="primary"
         disabled={disabled}
       >
-        Filtruj oferty
+        {disabled ? "Ładowanie..." : "Filtruj oferty"}
       </Button>
       <Button
         variant="outline-primary"
@@ -156,7 +156,7 @@ const Filter = ({ setFilters, count, disabled }) => {
         onClick={deleteFilter}
         disabled={disabled}
       >
-        Wyczyść filtry
+        {disabled ? "Ładowanie..." : "Wyczyść filtry"}
       </Button>
       {count !== 0 && (
         <small className="search__countText">Znaleziono {count} ofert</small>
