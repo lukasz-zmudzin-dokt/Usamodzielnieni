@@ -9,7 +9,6 @@ import {
 } from "./components";
 import { UserContext } from "context";
 import { sendData } from "./functions/sendData";
-import "./RegisterPage.css";
 
 class RegisterPage extends React.Component {
   constructor(props) {

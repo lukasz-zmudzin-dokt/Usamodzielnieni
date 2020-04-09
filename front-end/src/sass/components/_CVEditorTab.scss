@@ -4,16 +4,9 @@
     display: block;
 }
 
-.form_navigation_prev, .form_navigation_next {
-  background-color: #7345A9 !important;
-}
-
 @media (max-width: 767px) {
     .CVEditorTab__img {
         width: 100%;
         margin: 0 0 1rem;
-    }
-    .form_navigation_prev {
-        margin-bottom: 1rem;
     }
 }

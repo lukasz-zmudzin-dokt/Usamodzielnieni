@@ -3,8 +3,6 @@ import { Container, Button, Card, Form, Alert } from "react-bootstrap";
 import { Link, Redirect } from "react-router-dom";
 import LoginForm from "./components/loginForm";
 import { UserContext } from "context";
-
-import "Views/LoginPage/style.css";
 import { sendData } from "./functions/sendData";
 
 class LoginPage extends React.Component {

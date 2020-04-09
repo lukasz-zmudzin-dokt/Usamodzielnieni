@@ -1,7 +1,7 @@
 import React from "react";
 import { Form, Button, Alert } from "react-bootstrap";
 import { Items } from '../';
-import "./ItemsList.css";
+
 
 class ItemsList extends React.Component {
     constructor(props) {
@@ -52,7 +52,7 @@ class ItemsList extends React.Component {
                 }
                 { this.state.error && (<Alert variant="danger">Taka sama pozycja znajduje się już na liście.</Alert>) }
                 {children}
-                <Button className="itemsList__addButton" variant="success" onClick={this.addItem}>+ Dodaj</Button>
+                <Button className="mb-3" variant="success" onClick={this.addItem}>+ Dodaj</Button>
             </div>
         )
     }
