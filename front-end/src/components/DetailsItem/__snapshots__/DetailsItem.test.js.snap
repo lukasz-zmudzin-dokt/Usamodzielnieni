@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DetailsItem should render without crashing 1`] = `
+<div>
+  <div
+    class="detailsItem col"
+  >
+    <div
+      class="detailsItem__label"
+    >
+      Jakaś etykieta
+    </div>
+    <div
+      class="detailsItem__value"
+    >
+      Treść potrzebująca etykiety
+    </div>
+  </div>
+</div>
+`;

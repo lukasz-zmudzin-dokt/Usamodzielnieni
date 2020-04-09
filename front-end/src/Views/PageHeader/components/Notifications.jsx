@@ -3,7 +3,7 @@ import { Nav, Dropdown, Col } from "react-bootstrap";
 import NotificationItemContainer from './NotificationItemContainer';
 import NotificationItem from './NotificationItem';
 import NotificationToggle from './NotificationToggle';
-import "./Notifications.css";
+
 
 const getNotifications = async (token) => {
     let url = "https://usamo-back.herokuapp.com/notifications/.../"; // TODO
