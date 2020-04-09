@@ -1,7 +1,6 @@
 import React, { useState, useContext } from 'react'
-import { Card, Form, Button, Alert } from "react-bootstrap";
+import { Form, Button, Alert } from "react-bootstrap";
 import { UserContext } from "context";
-import "./CommentForm.css";
 
 const updateComment = async (token, content, commentId) => {
     let url = `https://usamo-back.herokuapp.com/blog/comment/${commentId}`;
@@ -10,7 +9,7 @@ const updateComment = async (token, content, commentId) => {
         "Content-Type": "application/json"
     };
 
-    const response = await fetch(url, { method: "PUT", headers });
+    const response = await fetch(url, { method: "PUT", body: JSON.stringify({content}), headers });
 
     if (response.status === 200) {
         return response.json();
@@ -26,24 +25,21 @@ const addComment = async (token, content, blogId) => {
         "Content-Type": "application/json"
     };
 
-    const response = await fetch(url, { method: "POST", headers });
+    const response = await fetch(url, { method: "POST", body: JSON.stringify({content}), headers });
 
     if (response.status === 200) {
-        return response.json();
+        return response.json().then(res => res.id);
     } else {
         throw response.status;
     }
 }
 
-const CommentForm = ({ blogId, comment, ...rest }) => {
-    const [commentContent, setCommentContent] = useState("");
+const CommentForm = ({ blogId, comment, afterSubmit, ...rest }) => {
+    const [commentContent, setCommentContent] = useState(comment ? comment.content : "");
     const [submitted, setSubmitted] = useState(false);
     const [error, setError] = useState(false);
+    const [validated, setValidated] = useState(false);
     const user = useContext(UserContext);
-
-    if (comment) {
-        setCommentContent(comment.value);
-    }
 
     const onChange = (e) => {
         const value = e.target.value;
@@ -51,50 +47,87 @@ const CommentForm = ({ blogId, comment, ...rest }) => {
     }
 
     const onSubmit = async (e) => {
+        setValidated(false);
         e.preventDefault();
-        try {
-            if (comment) {
-                await updateComment(
-                    user.token,
-                    commentContent,
-                    comment.id
-                );
-            } else {
-                await addComment(
-                    user.token,
-                    commentContent,
-                    blogId
-                );
+        if (e.currentTarget.checkValidity() === false) {
+            setValidated(true);
+            e.stopPropagation();
+        } else {
+            try {
+                if (comment) {
+                    await updateComment(
+                        user.token,
+                        commentContent,
+                        comment.id
+                    );
+                    afterSubmit({
+                        ...comment,
+                        content: commentContent,
+                        creationDate: new Date()
+                    })
+                } else {
+                    const id = await addComment(
+                        user.token,
+                        commentContent,
+                        blogId
+                    );
+                    afterSubmit({
+                        id: id,
+                        author: {
+                            firstName: user.data.first_name,
+                            lastName: user.data.last_name,
+                            email: user.data.email
+                        },
+                        content: commentContent,
+                        creationDate: new Date()
+                    })
+                    setCommentContent('');
+                    setSubmitted(true);
+                }
+            } catch (e) {
+                setError(true);
             }
-            setSubmitted(true);
-        } catch (e) {
-            setError(true);
         }
+    }
+
+    const onCancelClick = () => {
+        afterSubmit(comment);
     }
 
     const msg = error ? (<Alert variant="danger">Wystąpił błąd podczas przesyłania komentarza.</Alert>) :
         submitted && (<Alert variant="success">Pomyślnie przesłano komentarz.</Alert>);
 
     return (
-        <Card {...rest}>
-            <Card.Body>
-                <Card.Title>{comment ? 'Edytuj komentarz' : 'Dodaj komentarz'}</Card.Title>
-                <Form onSubmit={onSubmit}>
-                    <Form.Group controlId="commentContent">
-                        <Form.Control
-                            as="textarea"
-                            placeholder="Treść komentarza"
-                            onChange={onChange}
-                            value={commentContent}
-                            required />
-                    </Form.Group>
-                    {msg}
-                    <Form.Group className="CommentForm__submitGroup mb-0">
-                        <Button type="submit">Prześlij</Button>
-                    </Form.Group>
-                </Form>
-            </Card.Body>
-        </Card>
+        <div {...rest}>
+            <h5>{comment ? 'Edytuj komentarz' : 'Dodaj komentarz'}</h5>
+            <Form 
+                noValidate
+                validated={validated}
+                onSubmit={onSubmit}
+            >
+                <Form.Group controlId="commentContent">
+                    <Form.Control
+                        as="textarea"
+                        placeholder="Treść komentarza"
+                        onChange={onChange}
+                        value={commentContent}
+                        required />
+                </Form.Group>
+                {msg}
+                <Form.Group className="CommentForm__submitGroup mb-0">
+                    <Button type="submit">Prześlij</Button>
+                    {comment && (
+                        <Button 
+                            type="button"
+                            variant="secondary"
+                            className="ml-2"
+                            onClick={onCancelClick}>
+                            Anuluj
+                        </Button>
+                    )}
+                </Form.Group>
+            </Form>
+        </div>
     )
 }
 

@@ -57,8 +57,8 @@ class RegisterPage extends React.Component {
             last_name: this.state.last_name,
             first_name: this.state.first_name,
             phone_number: this.state.phone_number,
-            facility_name: this.state.facility_name,
-            facility_address: this.state.facility_address
+            facility_name: this.state.name_of_place,
+            facility_address: this.getFacilityAddress(this.state.city, this.state.street, this.state.city_code)
           });
           this.setState({
             validated: false,
@@ -88,6 +88,8 @@ class RegisterPage extends React.Component {
       }
     });
   };
+
+  getFacilityAddress = (city, street, cityCode) => `${city} ${street} ${cityCode}`;
 
   handleSubmit = event => {
     const {
@@ -119,7 +121,7 @@ class RegisterPage extends React.Component {
         areEqual: true
       });
       const facility_name = name_of_place;
-      const facility_address = `${city} ${street} ${city_code}`;
+      const facility_address = this.getFacilityAddress(city, street, city_code);
       this.sendData({
         email,
         first_name,

@@ -20,7 +20,7 @@ const mapPost = (res) => ({
   comments: res.comments.map((comment) => ({
     id: comment.id,
     content: comment.content,
-    creationDate: comment.date_created,
+    creationDate: new Date(comment.date_created),
     author: mapAuthor(comment.author)
   })),
   creationDate: res.date_created,
@@ -41,6 +41,8 @@ const BlogPost = () => {
   const user = useContext(UserContext);
 
   const post_Id = window.location.pathname.replace(/\/blog\/blogpost\//, '');
+
+  const setComments = (comments) => setPost({...post, comments});
 
   useEffect(
     () => {
@@ -72,8 +74,8 @@ const BlogPost = () => {
       <Card className="blogpost_comment_card">
         <Card.Body>
           <Card.Title as="h3" className="mb-3">Komentarze:</Card.Title>
-          <CommentsList comments={post.comments} />
-          <CommentForm />
+          <CommentsList user={user} blogId={post.id} comments={post.comments} setComments={setComments} />
+          <CommentForm blogId={post.id} afterSubmit={(comment) => setComments([ ...post.comments, comment ])} />
         </Card.Body>
       </Card>
     </Container>
