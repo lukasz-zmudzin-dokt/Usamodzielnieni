@@ -15,6 +15,7 @@ const OfferForm = () => {
   const [validated, setValidated] = useState(false);
   const [fail, setFail] = useState(false);
   const [arrays, setArrays] = useState({});
+  const [disabled, setDisabled] = useState(false);
 
   const [offer, setOffer] = useState({
     offer_name: "",
@@ -30,6 +31,7 @@ const OfferForm = () => {
   const context = useContext(UserContext);
 
   useEffect(() => {
+    setDisabled(true);
     const loadSelects = async token => {
       let res;
       try {
@@ -39,6 +41,17 @@ const OfferForm = () => {
         res = { categories: [], types: [] };
       }
       setArrays(res);
+      setOffer({
+        offer_name: "",
+        company_name: "",
+        company_address: "",
+        voivodeship: voivodeships[0],
+        description: "",
+        expiration_date: "",
+        category: res.categories[0],
+        type: res.types[0]
+      });
+      setDisabled(false);
     };
     loadSelects(context.token);
   }, [context.token]);
@@ -46,9 +59,11 @@ const OfferForm = () => {
   const submit = event => {
     const form = event.currentTarget;
     event.preventDefault();
+    console.log(offer);
     if (form.checkValidity() === false) {
       event.stopPropagation();
     } else {
+      setDisabled(true);
       const year = expiration_date.getFullYear();
       const month =
         expiration_date.getMonth() + 1 < 10
@@ -67,6 +82,7 @@ const OfferForm = () => {
         .catch(() => {
           console.log("tutaj");
           setFail(true);
+          setDisabled(false);
         });
     }
     setValidated(true);
@@ -202,8 +218,9 @@ const OfferForm = () => {
                 type="submit"
                 className=""
                 data-testid="submitBtn"
+                disabled={disabled}
               >
-                Dodaj
+                {disabled ? "Ładowanie..." : "Dodaj"}
               </Button>
             </Row>
           </Form>

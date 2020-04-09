@@ -11,7 +11,8 @@ class LoginPage extends React.Component {
     message: "",
     redirect: false,
     incorrect: false,
-    validated: false
+    validated: false,
+    disabled: false
   };
 
   setRedirect = () => {
@@ -39,6 +40,7 @@ class LoginPage extends React.Component {
   };
 
   handleSubmit = async event => {
+    this.setState({ disabled: true });
     const form = event.currentTarget;
     event.preventDefault();
     if (form.checkValidity() === false) {
@@ -60,10 +62,11 @@ class LoginPage extends React.Component {
         this.handleIncorrectResponse(response.status);
       }
     }
+    this.setState({ disabled: false });
   };
 
   render() {
-    const { validated, incorrect, message } = this.state;
+    const { validated, incorrect, message, disabled } = this.state;
     const { renderRedirect, handleSubmit } = this;
 
     return (
@@ -88,8 +91,9 @@ class LoginPage extends React.Component {
                 variant="primary"
                 className="loginPage__button"
                 type="submit"
+                disabled={disabled}
               >
-                Zaloguj
+                {disabled ? "Ładowanie..." : "Zaloguj"}
               </Button>
             </Form>
             {incorrect ? (

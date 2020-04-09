@@ -24,7 +24,8 @@ class RegisterPage extends React.Component {
       redirect: false,
       fail_message: "",
       error_flag: false,
-      incorrect_input: false
+      incorrect_input: false,
+      disabled: false
     };
   }
 
@@ -102,6 +103,7 @@ class RegisterPage extends React.Component {
   };
 
   handleResponse = async e => {
+    this.setState({ disabled: true });
     const data = {
       personalData: this.state.personalData,
       homeData: this.state.homeData,
@@ -127,10 +129,12 @@ class RegisterPage extends React.Component {
         const msg = this.handleIncorrectResponse(error.status);
         this.setState({
           fail_message: msg,
-          error_flag: true
+          error_flag: true,
+          disabled: false
         });
       }
     }
+    this.setState({ disabled: false });
   };
 
   render() {
@@ -141,7 +145,8 @@ class RegisterPage extends React.Component {
       account_type,
       accountData,
       personalData,
-      redirect
+      redirect,
+      disabled
     } = this.state;
     const { selectType, renderSection, handleResponse, renderRedirect } = this;
     const types = this.props.accountTypes || ["Podopiecznym", "Pracodawcą"];
@@ -189,8 +194,9 @@ class RegisterPage extends React.Component {
                 className="loginPage__button"
                 type="submit"
                 data-testid="submitBtn"
+                disabled={disabled}
               >
-                Utwórz konto
+                {disabled ? "Ładowanie..." : "Utwórz konto"}
               </Button>
             </Form>
             {error_flag ? (

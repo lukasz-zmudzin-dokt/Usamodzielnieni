@@ -60,6 +60,7 @@ const JobOffersPage = props => {
   });
   const [error, setError] = useState(false);
   const user = useContext(UserContext);
+  const [disabled, setDisabled] = useState(false);
 
   const queryParams = qs.parse(props.location.search, { parseNumbers: true });
   if (
@@ -70,6 +71,7 @@ const JobOffersPage = props => {
   }
 
   useEffect(() => {
+    setDisabled(true);
     const loadOffers = async token => {
       setIsOffersLoading(true);
       let res;
@@ -83,6 +85,7 @@ const JobOffersPage = props => {
       setOffers(res.offers);
       setCount(res.count);
       setIsOffersLoading(false);
+      setDisabled(false);
     };
     loadOffers(user.token);
   }, [user.token, filters]);
@@ -101,7 +104,7 @@ const JobOffersPage = props => {
     <Container className="jobOffersPage">
       <Card>
         <Card.Header as="h2">Oferty pracy</Card.Header>
-        <Filter setFilters={setFilters} count={count} />
+        <Filter setFilters={setFilters} count={count} disabled={disabled} />
         {msg ? (
           <Card.Body>{msg}</Card.Body>
         ) : (
