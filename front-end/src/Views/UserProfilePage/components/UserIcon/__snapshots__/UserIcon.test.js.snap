@@ -1,0 +1,55 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<svg
+  height="80"
+  width="80"
+>
+  <circle
+    cx="40"
+    cy="40"
+    fill="white"
+    r="37"
+    stroke="black"
+    strokeWidth="3"
+  />
+  <circle
+    cx="40"
+    cy="30"
+    fill="black"
+    r="10"
+  />
+  <path
+    d="M 20 60 q 20 -30 40 0"
+    fill="black"
+  />
+</svg>
+`;
+
+exports[`should render correctly 1`] = `
+<div>
+  <svg
+    height="80"
+    width="80"
+  >
+    <circle
+      cx="40"
+      cy="40"
+      fill="white"
+      r="37"
+      stroke="black"
+      stroke-width="3"
+    />
+    <circle
+      cx="40"
+      cy="30"
+      fill="black"
+      r="10"
+    />
+    <path
+      d="M 20 60 q 20 -30 40 0"
+      fill="black"
+    />
+  </svg>
+</div>
+`;
