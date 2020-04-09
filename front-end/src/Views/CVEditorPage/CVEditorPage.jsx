@@ -1,7 +1,6 @@
 import React from "react";
 import { Card, Container, Form, Tab, Tabs, Alert } from "react-bootstrap";
 import "react-datepicker/dist/react-datepicker.css";
-import "./CVEditorPage.css";
 import {
     PersonalDataTab,
     EducationTab,

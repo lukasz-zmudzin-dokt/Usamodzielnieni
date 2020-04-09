@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { registerLocale } from "react-datepicker";
 import { Form, Button, Col } from "react-bootstrap";
-import "./style.css";
+
 import FormGroup from "components/FormGroup";
 import { voivodeships } from "constants/voivodeships";
 import polish from "date-fns/locale/pl";

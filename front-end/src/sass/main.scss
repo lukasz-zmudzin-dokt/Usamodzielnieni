@@ -5,13 +5,16 @@
 @import "pages/userProfilePage.scss";
 @import "pages/menu";
 @import "pages/headerLayout";
-
+@import "pages/CVEditorPage";
 
 @import "bootstrap/custom";
 
 @import "components/detailsItem";
-@import "components/_CVEditorTab";
-@import "components/_footer";
+@import "components/CVEditorTab";
+@import "components/footer";
+@import "components/filter";
+@import "components/notifications";
+@import "components/notificationItemContainer";
 
 // Import Bootstrap and its default variables
 @import "~bootstrap/scss/bootstrap.scss";
