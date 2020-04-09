@@ -1,0 +1,83 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Filter should match snapshot 1`] = `
+<div>
+  <form
+    class="blog__form"
+  >
+    <div
+      class="form-row"
+    >
+      <div
+        class="form-group col-md-6 col-12"
+      >
+        <label
+          class="form-label"
+          for="category"
+        >
+          Kategoria
+        </label>
+        <select
+          class="form-control"
+          id="category"
+        >
+          <option
+            disabled=""
+          >
+            -- Wybierz --
+          </option>
+          <option>
+            abcd
+          </option>
+          <option>
+            abcde
+          </option>
+        </select>
+      </div>
+      <div
+        class="form-group col-md-6 col-12"
+      >
+        <label
+          class="form-label"
+          for="tag"
+        >
+          Tag
+        </label>
+        <select
+          class="form-control"
+          id="tag"
+        >
+          <option
+            disabled=""
+          >
+            -- Wybierz --
+          </option>
+          <option>
+            abcd
+          </option>
+          <option>
+            abcde
+          </option>
+        </select>
+      </div>
+    </div>
+    <button
+      class="mr-3 btn btn-primary"
+      type="submit"
+    >
+      Filtruj posty
+    </button>
+    <button
+      class="mr-3 btn btn-outline-primary"
+      type="button"
+    >
+      Wyczyść filtry
+    </button>
+    <small
+      class="blog__countText"
+    >
+      Znaleziono 2 posty
+    </small>
+  </form>
+</div>
+`;
