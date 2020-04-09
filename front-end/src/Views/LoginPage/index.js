@@ -44,7 +44,6 @@ class LoginPage extends React.Component {
         Origin: null
       }
     }).then(res => {
-      console.log(res);
       if (res.status === 201) {
         res.json().then(responseValue => {
           const { token, type } = responseValue;
