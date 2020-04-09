@@ -1,7 +1,9 @@
 const getPosts = async (token, filters) => {
-  const categoryQ = filters.category ? `?category=${filters.category}` : "";
+  const enTags = encodeURIComponent(filters.tag);
+  const enCategories = encodeURIComponent(filters.category);
+  const categoryQ = filters.category ? `?category=${enCategories}` : "";
   const tagQ = filters.tag
-    ? `${categoryQ ? `&tag=${filters.tag}` : `?tag=${filters.tag}`}`
+    ? `${categoryQ ? `&tag=${enTags}` : `?tag=${enTags}`}`
     : "";
   const url = `http://usamo-back.herokuapp.com/blog/blogposts/${categoryQ}${tagQ}`;
   const headers = {
