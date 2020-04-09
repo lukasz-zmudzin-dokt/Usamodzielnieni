@@ -32,7 +32,9 @@ class HeaderTemplate extends React.Component {
           {/* <Nav.Link id="personalityTests">Testy</Nav.Link> */}
           <Nav.Link id="stories">Historia</Nav.Link>
           {/* <Nav.Link id="moneyMgmt">Zarządzanie budżetem</Nav.Link> */}
-          <Nav.Link id="contactPhones">Telefony</Nav.Link>
+          <IndexLinkContainer to="/contact">
+            <Nav.Link id="contactPhones">Telefony</Nav.Link>
+          </IndexLinkContainer>
         </Nav>
       );
   }

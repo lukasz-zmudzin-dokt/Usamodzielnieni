@@ -12,7 +12,8 @@ import {
   BlogPostForm,
   JobOffersPage,
   JobOfferDetails,
-  MyCVsPage
+  ContactPage,
+  MyCVsPage,
 } from "Views";
 
 
@@ -28,6 +29,7 @@ const paths = {
   JOB_OFFERS: "/jobOffers",
   CV_APPROVAL: "/cvApproval",
   MY_OFFERS: "/myOffers",
+  CONTACT_PAGE: "/contact",
   BLOG_POST: "/blog/blogpost/:id",
   BLOG_PAGE: "/blog",
   BLOG_FORM: "/blog/newPost",
@@ -114,6 +116,10 @@ export default [
     component: MyOffersPage,
     isPrivate: true,
     type: userTypes.EMPLOYER
+  },
+  {
+    path: paths.CONTACT_PAGE,
+    component: ContactPage,
   },
   {
     path: paths.BLOG_POST,
