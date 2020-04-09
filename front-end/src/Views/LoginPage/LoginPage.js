@@ -55,7 +55,7 @@ class LoginPage extends React.Component {
         const { status } = response;
         if (status === 201) {
           const { token, type } = response; //do poprawy
-          fetch("http://usamo-back.herokuapp.com/account/data/", {
+          fetch("https://usamo-back.herokuapp.com/account/data/", {
             headers: {
               "Content-Type": "application/json",
               Authorization: "Token " + token

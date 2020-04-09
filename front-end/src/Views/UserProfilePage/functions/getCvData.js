@@ -1,6 +1,6 @@
 export const getCvData = async (token) => {
 
-    const url = "http://usamo-back.herokuapp.com/cv/data/";
+    const url = "https://usamo-back.herokuapp.com/cv/data/";
     console.log(token);
     const response = await fetch(url, {
         method: "GET",
