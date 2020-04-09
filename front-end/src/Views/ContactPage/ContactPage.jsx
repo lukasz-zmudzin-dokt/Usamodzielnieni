@@ -1,6 +1,5 @@
 import React from "react";
 import { Card, Container, CardColumns, Button } from "react-bootstrap";
-import { UserContext } from "context";
 import "./style.css"
 
 class ContactPage extends React.Component {
@@ -18,8 +17,8 @@ class ContactPage extends React.Component {
         return (
             <Container>
                 <Card className="contact_page_card">
-                    <Card.Header className="contact_page_title">
-                        <h3 align="left">Lista przydatnych telefonów</h3>
+                    <Card.Header as="h2" className="contact_page_title">
+                        Lista przydatnych telefonów
                     </Card.Header>
                     <Card.Body className='bg_card'>
                         <CardColumns>
