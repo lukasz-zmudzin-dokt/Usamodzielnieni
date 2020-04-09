@@ -56,7 +56,6 @@ const BlogContent = ({ post , user }) => {
     const content = convertToHTML(mediumDraftImporter(post.content));
     return (
         <Card>
-            {console.log(post.header)}
             {post.header !== null && post.header !== "" ?
                 <Card.Img variant="top" src={`https://usamo-back.herokuapp.com${post.header}`}/> : <Card.Header/>
             }
