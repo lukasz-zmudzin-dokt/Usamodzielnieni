@@ -73,7 +73,6 @@ const BlogPost = () => {
       <BlogContent post={post} user={user}/>
       <Card className="blogpost_comment_card">
         <Card.Body>
-          <Card.Title as="h3" className="mb-3">Komentarze:</Card.Title>
           <CommentsList user={user} blogId={post.id} comments={post.comments} setComments={setComments} />
           <CommentForm blogId={post.id} afterSubmit={(comment) => setComments([ ...post.comments, comment ])} />
         </Card.Body>

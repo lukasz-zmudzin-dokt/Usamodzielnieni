@@ -29,8 +29,10 @@ const handleDeletion = async (event, id, token, errorFlag, successFlag) => {
     }
 };
 
-const renderButtons = (id, user, author, errorFlag, successFlag, editionFlag) => {
-    if (user.type === 'Admin' || user.data.id === author.id) {
+const renderButtons = (id, user, author, errorFlag, successFlag, editionFlag, flag) => {
+    console.log(author.email)
+    console.log(user.data.email)
+    if ( (user.type === 'Staff' || user.data.email === author.email) && !flag) {
         return (
             <ButtonToolbar className="btn_toolbar text-center">
                 <Button variant="warning" className="button-edit mx-3" onClick={e => editionFlag(true)}>Edytuj 🖉</Button>
@@ -62,12 +64,12 @@ const BlogContent = ({ post , user }) => {
             <Card.Body className="post_content mx-4">
                 {
                     delError ? <Alert variant="danger">Wystąpił błąd podczas usuwania posta.</Alert> :
-                    success ? <Alert variant="info">Ten post jest usunięty.</Alert> : null
+                    success ? <Alert variant="info">Ten post został usunięty.</Alert> : null
                 }
                 <Card.Title as="h1" className="post_title">
                     <Row>
                         {post.title === "" ? "Tytuł posta" : post.title}
-                        {renderButtons(post.id, user, post.author, setDelError, setSuccess, setWantsEdition)}
+                        {renderButtons(post.id, user, post.author, setDelError, setSuccess, setWantsEdition, success)}
                     </Row>
                 </Card.Title>
                 <Card.Subtitle as="h6" className="text-muted mb-4 mt-2">Kategoria: {post.category}</Card.Subtitle>

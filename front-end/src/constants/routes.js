@@ -133,14 +133,14 @@ export default [
     path: paths.BLOG_FORM,
     component: BlogPostForm,
     isPrivate: true,
-    type: undefined,
+    type: userTypes.STAFF,
     exact: true
   },
   {
     path: paths.BLOG_EDIT,
     component: BlogPostForm,
     isPrivate: true,
-    type: undefined,
+    type: userTypes.STAFF,
     exact: true
   }, {
     path: paths.MY_CVS,
