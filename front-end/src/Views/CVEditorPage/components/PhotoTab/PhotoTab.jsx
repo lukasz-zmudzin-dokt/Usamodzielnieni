@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Row } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import { CVEditorTab } from "..";
 import movie_1 from "assets/movie_1.png";
 
@@ -11,7 +11,6 @@ class PhotoTab extends React.Component {
 
   onChange = e => {
     this.props.onChange(this.fileInput.files[0]);
-    console.log(this.fileInput.files[0]);
   };
 
   render() {
