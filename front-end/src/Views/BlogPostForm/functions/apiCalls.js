@@ -62,7 +62,6 @@ export const postBlogPost = async (data, token, method, id) => {
 export const uploadPhoto = async (id, photo, token) => {
     const formData = new FormData();
     formData.append('file', photo, photo.name);
-    console.log(formData);
     const url = `http://usamo-back.herokuapp.com/blog/blogpost/${id}/header`;
     const headers = {
         Authorization: "Token " + token

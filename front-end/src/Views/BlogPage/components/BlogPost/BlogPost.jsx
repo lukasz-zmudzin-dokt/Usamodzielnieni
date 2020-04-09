@@ -2,19 +2,13 @@ import React from "react";
 import { Row, Badge, Col } from "react-bootstrap";
 import { IndexLinkContainer } from "react-router-bootstrap";
 
-const stripFromTags = str => {
-  str = str.replace(/(<([^>]+)>)|(<([^>]+)\.\.\.)/gi, '');
-  return str;
-};
-
 const BlogPost = ({data, ...rest}) => {
-  const str = stripFromTags(data.summary);
   return (
     <IndexLinkContainer to={`/blog/blogpost/${data.id}`}>
       <Row {...rest}>
         <Col>
           <h3>{data.category}</h3>
-          <p>{`${str.substring(0, 100)}...`}</p>
+          <p>{`${data.summary.substring(0, 100)}...`}</p>
           <Row>
             <Col>
               <small>Tagi:</small>

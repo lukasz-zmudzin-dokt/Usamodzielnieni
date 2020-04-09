@@ -56,7 +56,6 @@ class LoginPage extends React.Component {
           }).then(dataRes => {
             if (dataRes.status === 200) {
               dataRes.json().then(dataValue => {
-                console.log(dataValue, dataValue.data)
                 const { data } = dataValue;
                 this.context.login(token, type, data);
                 this.setRedirect();

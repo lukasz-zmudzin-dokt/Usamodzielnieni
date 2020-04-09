@@ -8,7 +8,7 @@ export const getPost = async (id, token) => {
     const response = await fetch(url, { method: "GET", headers });
 
     if (response.status === 200) {
-        return response.json().then(res =>res );
+        return await response.json();
     } else {
         throw response.status;
     }

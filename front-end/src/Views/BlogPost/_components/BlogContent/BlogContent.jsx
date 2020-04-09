@@ -21,8 +21,7 @@ const renderTags = tagList => {
 const handleDeletion = async (event, id, token, errorFlag, successFlag) => {
     event.preventDefault();
     try {
-        const res = await deletePost(id, token);
-        console.log(res);
+        await deletePost(id, token);
         successFlag(true);
     } catch(e) {
         console.log(e);
@@ -31,8 +30,6 @@ const handleDeletion = async (event, id, token, errorFlag, successFlag) => {
 };
 
 const renderButtons = (id, user, author, errorFlag, successFlag, editionFlag) => {
-    console.log(user);
-    console.log(author);
     if (user.type === 'Admin' || user.data.id === author.id) {
         return (
             <ButtonToolbar className="btn_toolbar text-center">
@@ -49,7 +46,7 @@ const renderRedirect = (flag, id) => {
         return <Redirect to={path}/>;
 };
 
-const BlogContent = ({ post , user}) => {
+const BlogContent = ({ post , user }) => {
     const [delError, setDelError] = useState(false);
     const [success, setSuccess] = useState(false);
     const [wantsEdition, setWantsEdition] = useState(false);
@@ -59,8 +56,9 @@ const BlogContent = ({ post , user}) => {
     const content = convertToHTML(mediumDraftImporter(post.content));
     return (
         <Card>
-            {post.header !== undefined ?
-                <Card.Img variant="top" src={post.header}/> : <Card.Header/>
+            {console.log(post.header)}
+            {post.header !== null && post.header !== "" ?
+                <Card.Img variant="top" src={`https://usamo-back.herokuapp.com${post.header}`}/> : <Card.Header/>
             }
             <Card.Body className="post_content mx-4">
                 {
@@ -68,7 +66,6 @@ const BlogContent = ({ post , user}) => {
                     success ? <Alert variant="info">Ten post jest usunięty.</Alert> : null
                 }
                 <Card.Title as="h1" className="post_title">
-                    {console.log(post)}
                     <Row>
                         {post.title === "" ? "Tytuł posta" : post.title}
                         {renderButtons(post.id, user, post.author, setDelError, setSuccess, setWantsEdition)}

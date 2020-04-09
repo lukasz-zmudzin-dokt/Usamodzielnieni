@@ -41,12 +41,10 @@ class BlogPostForm extends React.Component {
               method: "PUT"
           });
           const post_Id = window.location.pathname.replace(/\/blog\/newpost\//i, '');
-
           this.loadPost(post_Id).then(res => {
               if (res === null) {
                   this.setState({error: "get"});
               } else {
-                  console.log(res);
                   this.setState({
                       post_id: post_Id,
                       photo: res.photo || null,
@@ -131,7 +129,6 @@ class BlogPostForm extends React.Component {
 
   submitPost = async (e) => {
       e.preventDefault();
-      console.log(this.state.editorState.getCurrentContent());
       const data = {
           category: this.state.category,
           tags: this.state.tags,
@@ -140,20 +137,20 @@ class BlogPostForm extends React.Component {
       };
       try {
           const res = await postBlogPost(data, this.context.token, this.state.method, this.state.post_id);
-          console.log(res);
           this.setState({
               post_id: res.id
           });
-          try {
-              const photores = await uploadPhoto(this.state.post_id, this.state.photo, this.context.token);
-              console.log(photores);
-              this.setRedirect();
-          } catch(e) {
-              console.log(e);
-              this.setState({
-                  error: "photo"
-              });
+          if (this.state.photo !== null) {
+              try {
+                  await uploadPhoto(this.state.post_id, this.state.photo, this.context.token);
+              } catch(e) {
+                  console.log(e);
+                  this.setState({
+                      error: "photo"
+                  });
+              }
           }
+          this.setRedirect();
       } catch(e) {
           console.log(e);
           this.setState({
@@ -164,7 +161,6 @@ class BlogPostForm extends React.Component {
 
   render () {
       const config = customizeToolbar();
-      console.log(this.state);
       return (
           <Container>
               <Card>
@@ -196,7 +192,6 @@ class BlogPostForm extends React.Component {
                               onChange={this.onChange}
                           />
                       </Form.Group>
-                      {console.log(this.state.filters.categories)}
                       <SelectionRow name="category" arrayType={this.state.filters.categories} current={this.state.category} onChange={this.onChange} />
                       <div className="my-4">
                           <Editor

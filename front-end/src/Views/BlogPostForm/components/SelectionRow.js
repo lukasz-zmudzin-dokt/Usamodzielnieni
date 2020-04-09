@@ -15,7 +15,6 @@ const SelectionRow = ({name, arrayType, onChange, current, onCut}) => {
     return (
        <div>
             <Row className="categories mx-0">
-                {console.log(arrayType)}
                 <Col>
                     <Form.Control
                         as="select"
