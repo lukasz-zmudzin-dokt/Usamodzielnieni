@@ -4,11 +4,7 @@ import { Navbar, Nav, Button, Form } from "react-bootstrap";
 import logo from "../../assets/logo.png";
 
 // https://github.com/ReactTraining/react-router/issues/83#issuecomment-214794477
-<<<<<<< HEAD
-import { IndexLinkContainer } from 'react-router-bootstrap';
-=======
 import { IndexLinkContainer } from "react-router-bootstrap";
->>>>>>> master
 import { Redirect, withRouter } from "react-router-dom";
 import { UserContext } from "context";
 import Notifications from "./components/Notifications";
