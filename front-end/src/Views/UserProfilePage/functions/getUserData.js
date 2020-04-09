@@ -1,6 +1,6 @@
 export const getUserData = async (token) => {
 
-    const url = "http://usamo-back.herokuapp.com/account/data";
+    const url = "https://usamo-back.herokuapp.com/account/data";
     const response = await fetch(url, {
       method: 'GET',
       headers: {
