@@ -48,7 +48,6 @@ const BlogPage = () => {
       <Card>
         <Card.Header as="h2">Blogi</Card.Header>
         <Filter token={context.token} setFilter={setFilter} count={count} />
-
         {msg ? (
           msg
         ) : (
