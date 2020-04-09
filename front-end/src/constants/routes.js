@@ -7,14 +7,10 @@ import {
   Menu,
   OfferForm,
   MyOffersPage,
-<<<<<<< HEAD
   JobOffersPage,
   JobOfferDetails,
-  ContactPage
-=======
-  JobOfferDetails,
-  MyCVsPage
->>>>>>> 7d441cc400cab580bfe6224d21bbc382e87717da
+  ContactPage,
+  MyCVsPage,
 } from "Views";
 
 
@@ -30,13 +26,9 @@ const paths = {
   JOB_OFFERS: "/jobOffers",
   CV_APPROVAL: "/cvApproval",
   MY_OFFERS: "/myOffers",
-<<<<<<< HEAD
   CONTACT_PAGE: "/contact",
-  JOB_OFFER_DETAILS: "/jobOffers/:id"
-=======
   JOB_OFFER_DETAILS: "/jobOffers/:id",
   MY_CVS: "/myCVs"
->>>>>>> 7d441cc400cab580bfe6224d21bbc382e87717da
 };
 
 export const userTypes = {
