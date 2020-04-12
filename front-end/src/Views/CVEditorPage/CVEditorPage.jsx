@@ -32,7 +32,8 @@ class CVEditorPage extends React.Component {
       loading: false,
       commentsError: false,
       showComments: true,
-      disabled: false
+      disabled: false,
+      validated: false
     };
     this.tabs = [];
   }
@@ -216,7 +217,11 @@ class CVEditorPage extends React.Component {
         <Card>
           <Card.Header as="h2">Kreator CV</Card.Header>
           <Card.Body>
-            <Form id="cv_data" onSubmit={this.handleCVSubmit}>
+            <Form 
+              id="cv_data"
+              noValidate
+              validated={this.state.validated}
+              onSubmit={this.handleCVSubmit}>
               <Tabs
                 transition={false}
                 activeKey={this.state.formTab}
@@ -231,7 +236,7 @@ class CVEditorPage extends React.Component {
               </Tabs>
             </Form>
             {this.state.error && (
-              <Alert variant="danger">
+              <Alert className="mt-3" variant="danger">
                 Wystąpił błąd podczas generowania CV.
               </Alert>
             )}
