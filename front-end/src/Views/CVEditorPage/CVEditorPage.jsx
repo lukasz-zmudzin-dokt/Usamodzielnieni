@@ -22,13 +22,14 @@ class CVEditorPage extends React.Component {
       formTab: "personalData",
       comments: {},
       error: false,
-
-      personalData: null,
-      education: null,
-      workExperience: null,
-      skills: null,
-      languages: null,
-      photo: null,
+      data: {
+        personalData: null,
+        education: null,
+        workExperience: null,
+        skills: null,
+        languages: null,
+        photo: null,
+      },
       loading: false,
       commentsError: false,
       showComments: true,
@@ -54,15 +55,15 @@ class CVEditorPage extends React.Component {
     this.setState({ disabled: true });
     e.preventDefault();
     const cv = createCVObject(
-      this.state.personalData,
-      this.state.education,
-      this.state.workExperience,
-      this.state.skills,
-      this.state.languages
+      this.state.data.personalData,
+      this.state.data.education,
+      this.state.data.workExperience,
+      this.state.data.skills,
+      this.state.data.languages
     );
     console.log(JSON.stringify(cv));
     try {
-      await sendData(cv, this.state.photo, this.context.token).then(() =>
+      await sendData(cv, this.state.data.photo, this.context.token).then(() =>
         this.setState({ disabled: false })
       );
     } catch (e) {
@@ -72,8 +73,8 @@ class CVEditorPage extends React.Component {
 
   getTabs = () => {
     const getTabProps = key => ({
-      data: this.state[key],
-      onChange: data => this.setState({ [key]: data }),
+      data: this.state.data[key],
+      onChange: data => this.setState(prevState => ({ data: { ...prevState.data, [key]: data } })),
       onPrevClick: this.onPrevClick,
       onNextClick: this.onNextClick,
       comments: this.state.comments[key],
