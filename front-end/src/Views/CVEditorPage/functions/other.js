@@ -58,7 +58,7 @@ const sendData = async (object, photo, token) => {
 
   let file;
   try {
-    await deleteCv(token);
+    // await deleteCv(token);
     let cvRes = await generateCv(token, object);
     if (photo) {
       await addPhoto(token, photo, cvRes.cv_id);
@@ -70,21 +70,6 @@ const sendData = async (object, photo, token) => {
   const cvUrl = `${domain}${file.substring(1)}`;
   window.open(cvUrl, "_blank");
 };
-
-const getCvId = async (token, cvNumber) => {
-  const url = `${domain}cv/user/list`;
-  const headers = getHeaders(token);
-  const response = await fetch(url, {method: "GET", headers});
-  
-  if(response.status === 200) {
-    const cvList = await response.json();
-    const cv = cvList[cvNumber];
-    const cvId = cv.cv_id;
-    return cvId;
-  } else {
-    throw response.status;
-  }
-}
 
 const getFeedback = async (token, id) => {
   try {
