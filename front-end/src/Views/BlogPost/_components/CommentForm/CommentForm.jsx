@@ -63,7 +63,7 @@ const CommentForm = ({ blogId, comment, afterSubmit, ...rest }) => {
                     afterSubmit({
                         ...comment,
                         content: commentContent,
-                        creationDate: new Date()
+                        creationDate: new Date(Date.now())
                     })
                 } else {
                     const id = await addComment(
@@ -79,7 +79,7 @@ const CommentForm = ({ blogId, comment, afterSubmit, ...rest }) => {
                             email: user.data.email
                         },
                         content: commentContent,
-                        creationDate: new Date()
+                        creationDate: new Date(Date.now())
                     })
                     setCommentContent('');
                     setSubmitted(true);
@@ -112,6 +112,9 @@ const CommentForm = ({ blogId, comment, afterSubmit, ...rest }) => {
                         onChange={onChange}
                         value={commentContent}
                         required />
+                    <Form.Control.Feedback type="invalid">
+                        Wprowadź treść komentarza.
+                    </Form.Control.Feedback>
                 </Form.Group>
                 {msg}
                 <Form.Group className="CommentForm__submitGroup mb-0">
