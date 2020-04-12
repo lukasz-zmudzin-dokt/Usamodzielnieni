@@ -54,20 +54,25 @@ class CVEditorPage extends React.Component {
   handleCVSubmit = async e => {
     this.setState({ disabled: true });
     e.preventDefault();
-    const cv = createCVObject(
-      this.state.data.personalData,
-      this.state.data.education,
-      this.state.data.workExperience,
-      this.state.data.skills,
-      this.state.data.languages
-    );
-    console.log(JSON.stringify(cv));
-    try {
-      await sendData(cv, this.state.data.photo, this.context.token).then(() =>
-        this.setState({ disabled: false })
+    if (e.currentTarget.checkValidity() === false) {
+      e.stopPropagation();
+      this.setState({ validated: true });
+    } else {
+      const cv = createCVObject(
+        this.state.data.personalData,
+        this.state.data.education,
+        this.state.data.workExperience,
+        this.state.data.skills,
+        this.state.data.languages
       );
-    } catch (e) {
-      this.setState({ error: true, disabled: false });
+      console.log(JSON.stringify(cv));
+      try {
+        await sendData(cv, this.state.data.photo, this.context.token).then(() =>
+          this.setState({ disabled: false })
+        );
+      } catch (e) {
+        this.setState({ error: true, disabled: false });
+      }
     }
   };
 
