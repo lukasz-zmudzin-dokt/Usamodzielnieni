@@ -75,58 +75,6 @@ class CVEditorPage extends React.Component {
       data: this.state[key],
       onChange: data => this.setState({ [key]: data }),
       onPrevClick: this.onPrevClick,
-      onNextClick: this.onNextClick
-    });
-    return [
-      {
-        id: "personalData",
-        name: "Dane osobowe",
-        component: (
-          <PersonalDataTab
-            {...getTabProps("personalData")}
-            onPrevClick={undefined}
-          />
-        )
-      },
-      {
-        id: "education",
-        name: "Edukacja",
-        component: <EducationTab {...getTabProps("education")} />
-      },
-      {
-        id: "workExperience",
-        name: "Doświadczenie zawodowe",
-        component: <WorkExperienceTab {...getTabProps("workExperience")} />
-      },
-      {
-        id: "skills",
-        name: "Umiejętności",
-        component: <SkillsTab {...getTabProps("skills")} />
-      },
-      {
-        id: "languages",
-        name: "Języki obce",
-        component: <LanguagesTab {...getTabProps("languages")} />
-      },
-      {
-        id: "photo",
-        name: "Zdjęcie",
-        component: (
-          <PhotoTab
-            {...getTabProps("photo")}
-            onNextClick={undefined}
-            disabled={this.state.disabled}
-          />
-        )
-      }
-    ];
-  };
-
-  getTabs = () => {
-    const getTabProps = key => ({
-      data: this.state[key],
-      onChange: data => this.setState({ [key]: data }),
-      onPrevClick: this.onPrevClick,
       onNextClick: this.onNextClick,
       comments: this.state.comments[key],
       loading: this.state.loading,
