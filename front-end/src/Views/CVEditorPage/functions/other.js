@@ -5,17 +5,6 @@ const url = {
 }
 const getHeaders = (token) => ({ Authorization: "Token " + token, "Content-Type": "application/json" });
 
-const deleteCv = async (token) => {
-  const headers = getHeaders(token);
-  const res = await fetch(url.generate(), { method: "DELETE", headers });
-
-  if (res.status === 200 || res.status === 404) {
-    return;
-  } else {
-    throw res.status;
-  }
-}
-
 const generateCv = async (token, object) => {
   const headers = getHeaders(token);
   const res = await fetch(url.generate(), { method: "POST", body: JSON.stringify(object), headers });
@@ -58,7 +47,6 @@ const sendData = async (object, photo, token) => {
 
   let file;
   try {
-    // await deleteCv(token);
     let cvRes = await generateCv(token, object);
     if (photo) {
       await addPhoto(token, photo, cvRes.cv_id);
