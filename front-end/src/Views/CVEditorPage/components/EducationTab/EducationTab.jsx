@@ -2,7 +2,7 @@ import React from "react";
 import movie_2 from "assets/movie_2.png";
 import { CVEditorTab, ActionWithDate } from '../';
 
-const EducationTab = ({ data, onChange, onPrevClick, onNextClick, comments, loading, showComments, refValue }) => (
+const EducationTab = ({ data, onChange, onPrevClick, onNextClick, comments, loading, showComments }) => (
     <CVEditorTab
         title="Edukacja"
         movie={movie_2}
@@ -12,7 +12,7 @@ const EducationTab = ({ data, onChange, onPrevClick, onNextClick, comments, load
         loading={loading}
         showComments={showComments}
     >
-        <ActionWithDate data={data} onChange={onChange} refValue={refValue} />
+        <ActionWithDate data={data} onChange={onChange} />
     </CVEditorTab>
 )
 

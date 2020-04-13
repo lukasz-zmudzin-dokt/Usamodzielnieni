@@ -26,7 +26,7 @@ class PhotoTab extends React.Component {
         showComments={this.props.showComments}
         disabled={this.props.disabled}
       >
-        <Form ref={this.props.refValue}>
+        <Form>
           <Form.Group controlId="photo">
             <Form.File
               id="custom-file"

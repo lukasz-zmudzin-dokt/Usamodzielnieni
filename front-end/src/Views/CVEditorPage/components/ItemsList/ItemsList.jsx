@@ -35,12 +35,12 @@ class ItemsList extends React.Component {
     }
     
     render() {
-        const { data, getItemId, getItemName, children, refValue } = this.props;
+        const { data, getItemId, getItemName, children } = this.props;
 
         if (data === null) return null;
 
         return (
-            <Form onSubmit={this.addItem} ref={refValue}>
+            <Form onSubmit={this.addItem}>
                 {data.length > 0 &&
                 <Form.Group controlId="items">
                     <Items 
