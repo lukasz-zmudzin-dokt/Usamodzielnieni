@@ -15,6 +15,7 @@ class ItemsList extends React.Component {
     }
 
     addItem = (e) => {
+        e.preventDefault();
         const { data, getItemId, getItem } = this.props;
         const item = getItem();
 
@@ -34,12 +35,12 @@ class ItemsList extends React.Component {
     }
     
     render() {
-        const { data, getItemId, getItemName, children } = this.props;
+        const { data, getItemId, getItemName, children, refValue } = this.props;
 
         if (data === null) return null;
 
         return (
-            <div>
+            <Form onSubmit={this.addItem} ref={refValue}>
                 {data.length > 0 &&
                 <Form.Group controlId="items">
                     <Items 
@@ -52,8 +53,13 @@ class ItemsList extends React.Component {
                 }
                 { this.state.error && (<Alert variant="danger">Taka sama pozycja znajduje się już na liście.</Alert>) }
                 {children}
-                <Button className="mb-3" variant="success" onClick={this.addItem}>+ Dodaj</Button>
-            </div>
+                <Button
+                    type="submit"
+                    className="mb-3"
+                    variant="success">
+                    + Dodaj
+                </Button>
+            </Form>
         )
     }
 }

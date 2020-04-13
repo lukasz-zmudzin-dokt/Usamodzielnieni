@@ -43,92 +43,94 @@ class PersonalDataTab extends React.Component {
                 error={this.props.error}
                 showComments={this.props.showComments}
             >
-                <Row>
-                    <Form.Group as={Col} xs={12} md={6} controlId="firstName">
-                        <Form.Label>
-                            Imię:
-                        </Form.Label>
-                        <Form.Control
-                            name="firstName"
-                            type="text"
-                            required
-                            minlength="1"
-                            maxlength="30"
-                            defaultValue={data.firstName}
-                            placeholder="Jan"
-                            onChange={this.onChange}
-                        />
-                    </Form.Group>
-                    <Form.Group as={Col} xs={12} md={6} controlId="lastName">
-                        <Form.Label>
-                            Nazwisko:
-                        </Form.Label>
-                        <Form.Control
-                            name="lastName"
-                            type="text"
-                            required
-                            minlength="1"
-                            maxlength="50"
-                            defaultValue={data.lastName}
-                            placeholder="Przykładowy"
-                            onChange={this.onChange}
-                        />
-                    </Form.Group>
-                </Row>
-                <Row>
-                    <Form.Group as={Col} xs={12} md={6}>
-                        <Form.Label htmlFor="birthDate">
-                            Data urodzenia:
-                        </Form.Label>
-                        <DatePicker
-                            id="birthDate"
-                            className="form-control"
-                            locale="pl"
-                            placeholderText="Data urodzenia"
-                            dateFormat="dd.MM.yyyy"
-                            selected={data.birthDate}
-                            onChange={birthDate => this.props.onChange({ ...this.props.data, birthDate })}
-                            withPortal
-                            peekNextMonth
-                            showMonthDropdown
-                            showYearDropdown
-                            dropdownMode="select"
-                            required
-                        />
-                    </Form.Group>
-                    <Form.Group as={Col} xs={12} md={6} controlId="phoneNumber">
-                        <Form.Label>
-                            Numer telefonu:
-                        </Form.Label>
-                        <Form.Control
-                            name="phoneNumber"
-                            type="text"
-                            required
-                            minlength="1"
-                            maxlength="12"
-                            defaultValue={data.phoneNumber}
-                            placeholder="+48123456789"
-                            onChange={this.onChange}
-                        />
-                    </Form.Group>
-                </Row>
-                <Row>
-                    <Form.Group as={Col} xs={12} md={6} controlId="email">
-                        <Form.Label>
-                            Adres email:
-                        </Form.Label>
-                        <Form.Control
-                            name="email"
-                            type="email"
-                            required
-                            minlength="1"
-                            maxlength="254"
-                            defaultValue={data.email}
-                            placeholder="example@domain.com"
-                            onChange={this.onChange}
-                        />
-                    </Form.Group>
-                </Row>
+                <Form ref={this.props.refValue}>
+                    <Row>
+                        <Form.Group as={Col} xs={12} md={6} controlId="firstName">
+                            <Form.Label>
+                                Imię:
+                            </Form.Label>
+                            <Form.Control
+                                name="firstName"
+                                type="text"
+                                required
+                                minlength="1"
+                                maxlength="30"
+                                defaultValue={data.firstName}
+                                placeholder="Jan"
+                                onChange={this.onChange}
+                            />
+                        </Form.Group>
+                        <Form.Group as={Col} xs={12} md={6} controlId="lastName">
+                            <Form.Label>
+                                Nazwisko:
+                            </Form.Label>
+                            <Form.Control
+                                name="lastName"
+                                type="text"
+                                required
+                                minlength="1"
+                                maxlength="50"
+                                defaultValue={data.lastName}
+                                placeholder="Przykładowy"
+                                onChange={this.onChange}
+                            />
+                        </Form.Group>
+                    </Row>
+                    <Row>
+                        <Form.Group as={Col} xs={12} md={6}>
+                            <Form.Label htmlFor="birthDate">
+                                Data urodzenia:
+                            </Form.Label>
+                            <DatePicker
+                                id="birthDate"
+                                className="form-control"
+                                locale="pl"
+                                placeholderText="Data urodzenia"
+                                dateFormat="dd.MM.yyyy"
+                                selected={data.birthDate}
+                                onChange={birthDate => this.props.onChange({ ...this.props.data, birthDate })}
+                                withPortal
+                                peekNextMonth
+                                showMonthDropdown
+                                showYearDropdown
+                                dropdownMode="select"
+                                required
+                            />
+                        </Form.Group>
+                        <Form.Group as={Col} xs={12} md={6} controlId="phoneNumber">
+                            <Form.Label>
+                                Numer telefonu:
+                            </Form.Label>
+                            <Form.Control
+                                name="phoneNumber"
+                                type="text"
+                                required
+                                minlength="1"
+                                maxlength="12"
+                                defaultValue={data.phoneNumber}
+                                placeholder="+48123456789"
+                                onChange={this.onChange}
+                            />
+                        </Form.Group>
+                    </Row>
+                    <Row>
+                        <Form.Group as={Col} xs={12} md={6} controlId="email">
+                            <Form.Label>
+                                Adres email:
+                            </Form.Label>
+                            <Form.Control
+                                name="email"
+                                type="email"
+                                required
+                                minlength="1"
+                                maxlength="254"
+                                defaultValue={data.email}
+                                placeholder="example@domain.com"
+                                onChange={this.onChange}
+                            />
+                        </Form.Group>
+                    </Row>
+                </Form>
             </CVEditorTab>
         )
     }

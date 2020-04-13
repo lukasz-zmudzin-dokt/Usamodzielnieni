@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Row } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import { CVEditorTab } from "..";
 import movie_1 from "assets/movie_1.png";
 
@@ -26,18 +26,20 @@ class PhotoTab extends React.Component {
         showComments={this.props.showComments}
         disabled={this.props.disabled}
       >
-        <Form.Group controlId="photo">
-          <Form.File
-            id="custom-file"
-            label={this.props.data ? this.props.data.name : "Wybierz zdjęcie"}
-            custom
-            ref={ref => (this.fileInput = ref)}
-            onChange={this.onChange}
-            accept="image/*"
-            data-browse="Dodaj"
-            // value="this.props.data"
-          />
-        </Form.Group>
+        <Form ref={this.props.refValue}>
+          <Form.Group controlId="photo">
+            <Form.File
+              id="custom-file"
+              label={this.props.data ? this.props.data.name : "Wybierz zdjęcie"}
+              custom
+              ref={ref => (this.fileInput = ref)}
+              onChange={this.onChange}
+              accept="image/*"
+              data-browse="Dodaj"
+              // value="this.props.data"
+            />
+          </Form.Group>
+        </Form>
       </CVEditorTab>
     );
   }

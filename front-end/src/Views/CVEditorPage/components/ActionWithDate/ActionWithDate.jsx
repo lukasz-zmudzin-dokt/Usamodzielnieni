@@ -54,7 +54,7 @@ class ActionWithDate extends React.Component {
         return (
             <ItemsList
                 getItemId={this.getActionId} getItemName={this.getActionName} getItem={this.getAction}
-                data={this.props.data} onChange={this.props.onChange} clear={this.clear}
+                data={this.props.data} onChange={this.props.onChange} clear={this.clear} refValue={this.props.refValue}
             >
                 <Row>
                     <Form.Group as={Col} xs={12} md={6}>

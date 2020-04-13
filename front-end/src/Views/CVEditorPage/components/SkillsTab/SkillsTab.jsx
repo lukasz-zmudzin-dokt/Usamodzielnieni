@@ -39,7 +39,7 @@ class SkillsTab extends React.Component {
             >
                 <ItemsList
                     getItemId={this.getSkillId} getItemName={this.getSkillName} getItem={this.getSkill}
-                    data={this.props.data} onChange={this.props.onChange} clear={this.clear}
+                    data={this.props.data} onChange={this.props.onChange} clear={this.clear} refValue={this.props.refValue}
                 >
                     <Form.Group controlId="skillName">
                         <Form.Label>Umiejętność</Form.Label>
