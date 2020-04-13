@@ -50,7 +50,7 @@ class LanguagesTab extends React.Component {
             >
                 <ItemsList
                     getItemId={this.getLanguageId} getItemName={this.getLanguageName} getItem={this.getLanguage}
-                    data={this.props.data} onChange={this.props.onChange} clear={this.clear}
+                    data={this.props.data} onChange={this.props.onChange} clear={this.clear} validated={this.props.validated} required
                 >
                     <Row>
                         <Form.Group as={Col} xs={12} md={6} controlId="languageName">

@@ -52,12 +52,20 @@ class CVEditorPage extends React.Component {
 
   checkValidity = () => {
     const { tabs } = this.state;
-    if (
-      tabs.personalData.refValue.current.checkValidity() === false ||
-      !tabs.education.data?.length ||
-      !tabs.skills.data?.length ||
-      !tabs.languages.data?.length
-    ) {
+    if (tabs.personalData.refValue.current.checkValidity() === false) {
+      this.setState({ formTab: 'personalData' })
+      return false;
+    }
+    if (!tabs.education.data?.length) {
+      this.setState({ formTab: 'education' })
+      return false;
+    }
+    if (!tabs.skills.data?.length) {
+      this.setState({ formTab: 'skills' })
+      return false;
+    }
+    if (!tabs.languages.data?.length) {
+      this.setState({ formTab: 'languages' })
       return false;
     }
     return true;

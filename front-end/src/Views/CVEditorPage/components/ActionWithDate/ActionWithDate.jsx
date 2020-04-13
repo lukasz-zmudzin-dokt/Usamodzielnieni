@@ -22,16 +22,16 @@ class ActionWithDate extends React.Component {
     getAction = () => this.state.newAction;
     getActionId = (action) => `${action.place}_${action.description}`
     getActionName = (action) => {      
-        const dateToString = (date) => {
-            if (!date) {
-                return "teraz";
+        const dateToString = (date, label) => {
+            if (date) {
+                const month = date.getMonth() + 1;
+                const year = date.getYear() + 1900;
+                return `${label}: ${(month < 10 ? "0" : "")}${month}/${year}`;
             }
-            const month = date.getMonth() + 1;
-            const year = date.getYear() + 1900;
-            return (month < 10 ? "0" : "") + month + "/" + year;
+            return '';
         }
       
-        return `${action.description} od: ${dateToString(action.startTime)} do: ${dateToString(action.endTime)} (${action.place})`
+        return `${action.place} ${dateToString(action.startTime, 'od')} ${dateToString(action.endTime, 'do')} ${action.description ? `(${action.description})` : ''}`
     };
     onChange = (e, key) => {
         const { value } = e.target;
@@ -54,7 +54,7 @@ class ActionWithDate extends React.Component {
         return (
             <ItemsList
                 getItemId={this.getActionId} getItemName={this.getActionName} getItem={this.getAction}
-                data={this.props.data} onChange={this.props.onChange} clear={this.clear}
+                data={this.props.data} onChange={this.props.onChange} clear={this.clear} validated={this.props.validated} required={this.props.required}
             >
                 <Row>
                     <Form.Group as={Col} xs={12} md={6}>

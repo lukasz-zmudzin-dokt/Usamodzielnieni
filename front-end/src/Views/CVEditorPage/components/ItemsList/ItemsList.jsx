@@ -46,6 +46,9 @@ class ItemsList extends React.Component {
 
         if (data === null) return null;
 
+        const msg = this.state.error ? (<Alert variant="danger">Taka sama pozycja znajduje się już na liście.</Alert>) :
+                    (this.props.required && this.props.validated && !data.length) && (<Alert variant="danger">List nie może być pusta.</Alert>)
+
         return (
             <Form onSubmit={this.addItem} noValidate validated={this.state.validated}>
                 {data.length > 0 &&
@@ -58,7 +61,7 @@ class ItemsList extends React.Component {
                     />
                 </Form.Group>
                 }
-                { this.state.error && (<Alert variant="danger">Taka sama pozycja znajduje się już na liście.</Alert>) }
+                { msg }
                 {children}
                 <Button
                     type="submit"
