@@ -54,20 +54,27 @@ class LanguagesTab extends React.Component {
                 >
                     <Row>
                         <Form.Group as={Col} xs={12} md={6} controlId="languageName">
-                            <Form.Label>Język</Form.Label>
+                            <Form.Label>Język:</Form.Label>
                             <Form.Control
                                 type="text"
                                 placeholder="Język"
                                 value={this.state.newLanguage.name}
                                 onChange={this.handleNameChange}
+                                required
+                                minLength="1"
+                                maxLength="20"
                             />
+                            <Form.Control.Feedback type="invalid">
+                                Nazwa języka jest wymagana.
+                            </Form.Control.Feedback>
                         </Form.Group>
                         <Form.Group as={Col} xs={12} md={6} controlId="languageLevel">
-                            <Form.Label>Poziom</Form.Label>
+                            <Form.Label>Poziom:</Form.Label>
                             <Form.Control
                                 as="select"
                                 onChange={this.handleLevelChange}
                                 value={this.state.newLanguage.level}
+                                required
                             >
                                 {levels.map(lev => (<option key={lev} value={lev}>{lev}</option>))}
                             </Form.Control>

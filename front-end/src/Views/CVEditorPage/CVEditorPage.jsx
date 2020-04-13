@@ -51,18 +51,25 @@ class CVEditorPage extends React.Component {
   };
 
   checkValidity = () => {
-    if (this.state.data.personalData) {
-
+    const { tabs } = this.state;
+    if (
+      tabs.personalData.refValue.current.checkValidity() === false ||
+      !tabs.education.data?.length ||
+      !tabs.skills.data?.length ||
+      !tabs.languages.data?.length
+    ) {
+      return false;
     }
+    return true;
   }
 
   handleCVSubmit = async e => {
-    this.setState({ disabled: true });
+    this.setState({ disabled: true, validated: true });
     e.preventDefault();
     const validity = this.checkValidity();
-    if (validity) {
+    if (!validity) {
       e.stopPropagation();
-      this.setState({ disabled: false, validated: validity });
+      this.setState({ disabled: false });
     } else {
       const cv = createCVObject(
         this.state.tabs.personalData.data,
@@ -92,7 +99,8 @@ class CVEditorPage extends React.Component {
       onNextClick: this.onNextClick,
       loading: this.state.loading,
       error: this.state.commentsError,
-      showComments: this.state.showComments
+      showComments: this.state.showComments,
+      validated: this.state.validated
     });
     return [
       {
@@ -189,7 +197,7 @@ class CVEditorPage extends React.Component {
                 transition={false}
                 activeKey={this.state.formTab}
                 onSelect={e => this.setState({ formTab: e })}
-                className="CVEditorPage_tabs" // https://github.com/react-bootstrap/react-bootstrap/issues/4771
+                className="CVEditorPage_tabs mb-1" // https://github.com/react-bootstrap/react-bootstrap/issues/4771
               >
                 {this.tabs.map(tab => (
                   <Tab eventKey={tab.id} key={tab.id} title={tab.name}>

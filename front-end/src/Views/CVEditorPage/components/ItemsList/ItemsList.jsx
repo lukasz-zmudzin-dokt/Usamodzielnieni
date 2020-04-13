@@ -7,6 +7,7 @@ class ItemsList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            validated: false,
             error: false
         }
         if (this.props.data === null) {
@@ -16,15 +17,21 @@ class ItemsList extends React.Component {
 
     addItem = (e) => {
         e.preventDefault();
-        const { data, getItemId, getItem } = this.props;
-        const item = getItem();
-
-        if (data.find(dt => getItemId(dt) === getItemId(item))) {
-            this.setState({ error: true });
+        if (!e.currentTarget.checkValidity()) {
+            this.setState({ validated: true });
+            e.stopPropagation();
         } else {
-            this.setState({ error: false });
-            this.props.onChange([...this.props.data, item])
-            this.props.clear();
+            this.setState({ validated: false });
+            const { data, getItemId, getItem } = this.props;
+            const item = getItem();
+
+            if (data.find(dt => getItemId(dt) === getItemId(item))) {
+                this.setState({ error: true });
+            } else {
+                this.setState({ error: false });
+                this.props.onChange([...this.props.data, item])
+                this.props.clear();
+            }
         }
     }
 
@@ -40,7 +47,7 @@ class ItemsList extends React.Component {
         if (data === null) return null;
 
         return (
-            <Form onSubmit={this.addItem}>
+            <Form onSubmit={this.addItem} noValidate validated={this.state.validated}>
                 {data.length > 0 &&
                 <Form.Group controlId="items">
                     <Items 

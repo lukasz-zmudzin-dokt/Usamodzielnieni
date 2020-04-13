@@ -87,6 +87,7 @@ class ActionWithDate extends React.Component {
                 <Form.Group controlId="actionPlace">
                     <Form.Label>Miejsce:</Form.Label>
                     <Form.Control
+                        {...this.props.place}
                         type="text"
                         placeholder="Nazwa szkoły/miejsca pracy"
                         value={this.state.newAction.place}
@@ -96,6 +97,7 @@ class ActionWithDate extends React.Component {
                 <Form.Group controlId="actionDescription">
                     <Form.Label>Opis:</Form.Label>
                     <Form.Control
+                        {...this.props.description}
                         type="text"
                         placeholder="Profil/stanowisko ..."
                         value={this.state.newAction.description}

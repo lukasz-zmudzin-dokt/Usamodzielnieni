@@ -12,7 +12,12 @@ const EducationTab = ({ data, onChange, onPrevClick, onNextClick, comments, load
         loading={loading}
         showComments={showComments}
     >
-        <ActionWithDate data={data} onChange={onChange} />
+        <ActionWithDate 
+            data={data}
+            onChange={onChange}
+            place={{ required: true, minLength: 1, maxLength: 200 }}
+            description={{ minLength: 1, maxLength: 150 }}
+        />
     </CVEditorTab>
 )
 

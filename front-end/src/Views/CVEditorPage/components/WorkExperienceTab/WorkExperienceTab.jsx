@@ -13,7 +13,12 @@ const WorkExperienceTab = ({ data, onChange, onPrevClick, onNextClick, comments,
         error={error}
         showComments={showComments}
     >
-        <ActionWithDate data={data} onChange={onChange} />
+        <ActionWithDate
+            data={data}
+            onChange={onChange}
+            place={{ required: true, minLength: 1, maxLength: 50 }}
+            description={{ required: true, minLength: 1, maxLength: 400 }}
+        />
     </CVEditorTab>
 )
 

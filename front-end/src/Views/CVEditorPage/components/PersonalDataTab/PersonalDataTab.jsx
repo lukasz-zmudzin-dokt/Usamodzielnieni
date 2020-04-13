@@ -29,7 +29,7 @@ class PersonalDataTab extends React.Component {
     } 
 
     render() {
-        const { data } = this.props;
+        const { data, validated } = this.props;
 
         if (data === null) return null;
 
@@ -43,7 +43,7 @@ class PersonalDataTab extends React.Component {
                 error={this.props.error}
                 showComments={this.props.showComments}
             >
-                <Form ref={this.props.refValue}>
+                <Form ref={this.props.refValue} noValidate validated={validated}>
                     <Row>
                         <Form.Group as={Col} xs={12} md={6} controlId="firstName">
                             <Form.Label>
@@ -59,6 +59,9 @@ class PersonalDataTab extends React.Component {
                                 placeholder="Jan"
                                 onChange={this.onChange}
                             />
+                            <Form.Control.Feedback type="invalid">
+                                Imię jest wymagane.
+                            </Form.Control.Feedback>
                         </Form.Group>
                         <Form.Group as={Col} xs={12} md={6} controlId="lastName">
                             <Form.Label>
@@ -74,6 +77,9 @@ class PersonalDataTab extends React.Component {
                                 placeholder="Przykładowy"
                                 onChange={this.onChange}
                             />
+                            <Form.Control.Feedback type="invalid">
+                                Nazwisko jest wymagane.
+                            </Form.Control.Feedback>
                         </Form.Group>
                     </Row>
                     <Row>
@@ -96,6 +102,9 @@ class PersonalDataTab extends React.Component {
                                 dropdownMode="select"
                                 required
                             />
+                            <Form.Control.Feedback type="invalid">
+                                Data urodzenia jest wymagana.
+                            </Form.Control.Feedback>
                         </Form.Group>
                         <Form.Group as={Col} xs={12} md={6} controlId="phoneNumber">
                             <Form.Label>
@@ -111,6 +120,9 @@ class PersonalDataTab extends React.Component {
                                 placeholder="+48123456789"
                                 onChange={this.onChange}
                             />
+                            <Form.Control.Feedback type="invalid">
+                                Numer telefonu jest wymagany.
+                            </Form.Control.Feedback>
                         </Form.Group>
                     </Row>
                     <Row>
@@ -128,6 +140,9 @@ class PersonalDataTab extends React.Component {
                                 placeholder="example@domain.com"
                                 onChange={this.onChange}
                             />
+                            <Form.Control.Feedback type="invalid">
+                                Adres email jest wymagany.
+                            </Form.Control.Feedback>
                         </Form.Group>
                     </Row>
                 </Form>
