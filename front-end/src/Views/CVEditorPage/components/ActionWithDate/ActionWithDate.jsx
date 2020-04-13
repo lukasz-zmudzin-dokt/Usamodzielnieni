@@ -93,6 +93,9 @@ class ActionWithDate extends React.Component {
                         value={this.state.newAction.place}
                         onChange={e => this.onChange(e, 'place')}
                     />
+                    <Form.Control.Feedback type="invalid">
+                        Miejsce jest wymagane.
+                    </Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group controlId="actionDescription">
                     <Form.Label>Opis:</Form.Label>
@@ -103,6 +106,9 @@ class ActionWithDate extends React.Component {
                         value={this.state.newAction.description}
                         onChange={e => this.onChange(e, 'description')}
                     />
+                    <Form.Control.Feedback type="invalid">
+                        Opis jest wymagany.
+                    </Form.Control.Feedback>
                 </Form.Group>
             </ItemsList>
         );

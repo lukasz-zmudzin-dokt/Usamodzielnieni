@@ -84,7 +84,7 @@ class PersonalDataTab extends React.Component {
                     </Row>
                     <Row>
                         <Form.Group as={Col} xs={12} md={6}>
-                            <Form.Label htmlFor="birthDate">
+                            <Form.Label htmlFor="birthDate" className={validated && !data.birthDate && 'is-invalid'}>
                                 Data urodzenia:
                             </Form.Label>
                             <DatePicker
