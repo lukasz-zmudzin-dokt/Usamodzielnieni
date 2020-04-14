@@ -19,7 +19,7 @@ class RegisterPage extends React.Component {
       companyData: null,
       accountData: null,
 
-      account_type: "Podopiecznym",
+      account_type: window.location.pathname !== "/staff/register" ? "Podopiecznym" : "Weryfikacja użytkowników",
       validated: false,
       redirect: false,
       fail_message: "",
@@ -58,30 +58,21 @@ class RegisterPage extends React.Component {
   };
 
   renderSection = () => {
-    switch (this.state.account_type) {
-      case "Podopiecznym": {
+      if (this.state.account_type === "Podopiecznym") {
         return (
-          <HomeDataForm
-            data={this.state.homeData}
-            onBlur={homeData => this.setState({ homeData })}
-          />
+            <HomeDataForm
+                data={this.state.homeData}
+                onBlur={homeData => this.setState({ homeData })}
+            />
+        );
+      } else if (this.state.account_type === "Pracodawcą") {
+        return (
+            <CompanyDataForm
+                data={this.state.companyData}
+                onBlur={companyData => this.setState({ companyData })}
+            />
         );
       }
-      case "Pracodawcą": {
-        return (
-          <CompanyDataForm
-            data={this.state.companyData}
-            onBlur={companyData => this.setState({ companyData })}
-          />
-        );
-      }
-      case "Administratorem": {
-        return null;
-      }
-      default: {
-        return null;
-      }
-    }
   };
 
   setRedirect = () => {
@@ -111,7 +102,8 @@ class RegisterPage extends React.Component {
       homeData: this.state.homeData,
       companyData: this.state.companyData,
       accountData: this.state.accountData,
-      account_type: this.state.account_type
+      account_type: this.state.account_type,
+      account_group: this.state.account_group
     };
 
     const isOK = this.handleSubmit(data, e);
@@ -147,19 +139,44 @@ class RegisterPage extends React.Component {
     this.setState({ disabled: false });
   };
 
+  renderSelection = (isAdmin) => {
+    let array;
+    if (isAdmin) {
+      array = ['Weryfikacja użytkowników', 'Weryfikacja CV', 'Weryfikacja ofert pracy', 'Kreator postów na blogu', 'Moderator bloga'];
+    } else {
+      array = ['Podopiecznym', 'Pracodawcą']
+    }
+
+    return (
+      <Form.Group className="register_account_type">
+        <Form.Label>{isAdmin ? "Nowa rola:" : "Jestem:"}</Form.Label>
+        <Form.Control
+            data-testid="typeSelector"
+            className="register_radio_type"
+            as="select"
+            onChange={e => this.selectType(e)}
+        >
+          {array.map(type => (
+              <option key={type} value={type}>
+                {type}
+              </option>
+          ))}
+        </Form.Control>
+      </Form.Group>
+    )
+  };
+
   render() {
     const {
       validated,
       error_flag,
       fail_message,
-      account_type,
       accountData,
       personalData,
       redirect,
       disabled
     } = this.state;
-    const { selectType, renderSection, handleResponse, renderRedirect } = this;
-    const types = this.props.accountTypes || ["Podopiecznym", "Pracodawcą"];
+    const { renderSelection, renderSection, handleResponse, renderRedirect } = this;
     return (
       <Container className="loginPage loginPage__register">
         <Card className="loginPage__card">
@@ -167,21 +184,7 @@ class RegisterPage extends React.Component {
             Rejestracja
           </Card.Header>
           <Card.Body className="registerPage__body">
-            <Form.Group className="register_account_type">
-              <Form.Label>Jestem:</Form.Label>
-              <Form.Control
-                data-testid="typeSelector"
-                className="register_radio_type"
-                as="select"
-                onChange={e => selectType(e)}
-              >
-                {types.map(type => (
-                  <option key={type} value={type}>
-                    {type}
-                  </option>
-                ))}
-              </Form.Control>
-            </Form.Group>
+            {renderSelection(window.location.pathname.toLowerCase() === "/staff/register")}
             <Form
               noValidate
               validated={validated}

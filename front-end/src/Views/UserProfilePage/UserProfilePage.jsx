@@ -1,9 +1,10 @@
 import React from "react";
-import { Card, Container } from "react-bootstrap";
+import {Button, Card, Container} from "react-bootstrap";
 import UserDetails from "Views/UserProfilePage/components/UserDetails";
 import UserBasicInfo from "Views/UserProfilePage/components/UserBasicInfo";
 import { UserContext } from "context";
 import { getUserData } from "Views/UserProfilePage/functions/getUserData.js";
+import { LinkContainer } from 'react-router-bootstrap';
 
 const names = {
   role: {
@@ -52,6 +53,16 @@ class UserProfilePage extends React.Component {
     });
   }
 
+  renderRegister = () => {
+    return (
+        <LinkContainer to="/staff/register">
+          <Button className="mt-3" variant="success" block>
+            Zarejestruj administratora
+          </Button>
+        </LinkContainer>
+    )
+  };
+
   render() {
     return (
       <Container>
@@ -64,6 +75,7 @@ class UserProfilePage extends React.Component {
           </Card.Body>
           <UserDetails user={this.state.user} names={names} />
         </Card>
+        {this.context.type === 'Staff' ? this.renderRegister() : null}
       </Container>
     );
   }

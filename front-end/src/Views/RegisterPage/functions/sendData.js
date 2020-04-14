@@ -15,11 +15,17 @@ const adjustObject = (account_type, home, company)  => {
                 company_address: `${source.city} ${source.street} ${source.city_code}`,
                 nip: source.company_nip
             })}
-        case "Administratorem": {return({
-
-        })}
         default: {
-
+            let type;
+            switch(account_type) {
+                case 'Weryfikacja użytkowników': type = 'staff_verification'; break;
+                case 'Weryfikacja CV': type = 'staff_cv'; break;
+                case 'Weryfikacja ofert pracy': type = 'staff_jobs'; break;
+                case 'Kreator postów na blogu': type = 'staff_blog_creator'; break;
+                case 'Moderator bloga': type = 'staff_blog_moderator'; break;
+                default: type = undefined;
+            }
+            return {group_type: type};
         }
     }
 };
@@ -35,16 +41,18 @@ export const sendData = async (source) => {
         case "Pracodawcą":
             url = "https://usamo-back.herokuapp.com/account/register/employer/";
             break;
-        case "Administratorem":
+        default:
             url = "https://usamo-back.herokuapp.com/account/register/staff/";
             break;
     }
+    console.log(url);
 
     const object = {
         ...source.personalData,
         ...source.accountData,
         ...adjustObject(account_type, source.homeData, source.companyData)
     };
+    console.log(object);
 
     const res = await fetch(url, {
         method: "POST",
