@@ -86,4 +86,19 @@ describe("FormGroup", () => {
     );
     expect(getByText("xd")).toBeInTheDocument();
   });
+  it("should render disabled option if disabled is true", () => {
+    const { getByText } = render(
+      <MemoryRouter initialEntries={["/"]}>
+        <FormGroup
+          header="test"
+          type="select"
+          setVal={() => null}
+          incorrect="xd"
+          id="test"
+          disabled
+        />
+      </MemoryRouter>
+    );
+    expect(getByText("-- Wybierz --")).toBeInTheDocument();
+  });
 });

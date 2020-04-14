@@ -25,14 +25,14 @@ const OfferForm = () => {
     description: "",
     expiration_date: "",
     category: "",
-    type: ""
+    type: "",
   });
 
   const context = useContext(UserContext);
 
   useEffect(() => {
     setDisabled(true);
-    const loadSelects = async token => {
+    const loadSelects = async (token) => {
       let res;
       try {
         res = await getSelects(token);
@@ -43,20 +43,20 @@ const OfferForm = () => {
       setArrays(res);
       setOffer({
         offer_name: "",
-        company_name: "",
-        company_address: "",
+        company_name: context.data.company_name,
+        company_address: context.data.company_address,
         voivodeship: voivodeships[0],
         description: "",
         expiration_date: "",
         category: res.categories[0],
-        type: res.types[0]
+        type: res.types[0],
       });
       setDisabled(false);
     };
     loadSelects(context.token);
-  }, [context.token]);
+  }, [context.data.company_address, context.data.company_name, context.token]);
 
-  const submit = event => {
+  const submit = (event) => {
     const form = event.currentTarget;
     event.preventDefault();
     console.log(offer);
@@ -91,13 +91,13 @@ const OfferForm = () => {
   const clearState = () => {
     setOffer({
       offer_name: "",
-      company_name: "",
-      company_address: "",
+      company_name: context.data.company_name,
+      company_address: context.data.company_address,
       voivodeship: voivodeships[0],
       description: "",
       expiration_date: "",
       category: "",
-      type: ""
+      type: "",
     });
     setValidated(false);
   };
@@ -110,7 +110,7 @@ const OfferForm = () => {
     expiration_date,
     voivodeship,
     category,
-    type
+    type,
   } = offer;
 
   return (
@@ -130,7 +130,7 @@ const OfferForm = () => {
             <div className="offerForm__wrapper">
               <FormGroup
                 header="Nazwa stanowiska"
-                setVal={val => setOffer({ ...offer, offer_name: val })}
+                setVal={(val) => setOffer({ ...offer, offer_name: val })}
                 val={offer_name}
                 incorrect="Podaj nazwę stanowiska"
                 length={{ min: 1, max: 50 }}
@@ -140,34 +140,36 @@ const OfferForm = () => {
               <FormGroup
                 header="Nazwa firmy"
                 id="company_name"
-                setVal={val => setOffer({ ...offer, company_name: val })}
+                setVal={(val) => setOffer({ ...offer, company_name: val })}
                 val={company_name}
                 incorrect="Podaj nazwę firmy"
                 length={{ min: 1, max: 70 }}
                 required
+                disabled
               />
               <FormGroup
                 header="Adres firmy"
                 id="company_address"
-                setVal={val => setOffer({ ...offer, company_address: val })}
+                setVal={(val) => setOffer({ ...offer, company_address: val })}
                 val={company_address}
                 incorrect="Podaj lokalizację"
                 length={{ min: 1, max: 200 }}
                 required
+                disabled
               />
               <FormGroup
                 header="Województwo"
                 id="voivodeship"
                 array={voivodeships}
                 type="select"
-                setVal={val => setOffer({ ...offer, voivodeship: val })}
+                setVal={(val) => setOffer({ ...offer, voivodeship: val })}
                 val={voivodeship}
                 required
               />
               <FormGroup
                 header="Wymiar pracy"
                 id="type"
-                setVal={val => setOffer({ ...offer, type: val })}
+                setVal={(val) => setOffer({ ...offer, type: val })}
                 val={type}
                 type="select"
                 array={arrays.types}
@@ -180,7 +182,7 @@ const OfferForm = () => {
                 header="Opis stanowiska"
                 id="description"
                 type="textarea"
-                setVal={val => setOffer({ ...offer, description: val })}
+                setVal={(val) => setOffer({ ...offer, description: val })}
                 val={description}
                 incorrect="Podaj opis"
                 length={{ min: 1, max: 1000 }}
@@ -189,7 +191,7 @@ const OfferForm = () => {
               <FormGroup
                 header="Branża"
                 id="category"
-                setVal={val => setOffer({ ...offer, category: val })}
+                setVal={(val) => setOffer({ ...offer, category: val })}
                 val={category}
                 type="select"
                 array={arrays.categories}
@@ -200,7 +202,7 @@ const OfferForm = () => {
                 header="Ważne do:"
                 id="expiration_date"
                 type="date"
-                setVal={val => setOffer({ ...offer, expiration_date: val })}
+                setVal={(val) => setOffer({ ...offer, expiration_date: val })}
                 val={expiration_date}
                 required
               />
