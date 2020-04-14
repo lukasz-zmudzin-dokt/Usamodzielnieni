@@ -68,6 +68,7 @@ class ActionWithDate extends React.Component {
                             selected={this.state.newAction.startTime}
                             onChange={startTime => this.setState(prevState => ({ newAction: { ...prevState.newAction, startTime } }))}
                             showMonthYearPicker
+                            maxDate={this.state.newAction.endTime}
                         />
                     </Form.Group>
                     <Form.Group as={Col} xs={12} md={6}>
@@ -81,6 +82,7 @@ class ActionWithDate extends React.Component {
                             selected={this.state.newAction.endTime}
                             onChange={endTime => this.setState(prevState => ({ newAction: { ...prevState.newAction, endTime } }))}
                             showMonthYearPicker
+                            minDate={this.state.newAction.startTime}
                         />
                     </Form.Group>
                 </Row>

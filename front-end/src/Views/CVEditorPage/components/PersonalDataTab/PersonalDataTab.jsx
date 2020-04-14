@@ -101,6 +101,7 @@ class PersonalDataTab extends React.Component {
                                 showYearDropdown
                                 dropdownMode="select"
                                 required
+                                maxDate={new Date(Date.now())}
                             />
                             <Form.Control.Feedback type="invalid">
                                 Data urodzenia jest wymagana.
