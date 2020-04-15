@@ -21,10 +21,9 @@ const renderWithRouter = (
   let context = { data: { company_name: "abc", company_address: "xd" } };
   return {
     ...render(
-      <Router history={history}>
-        {" "}
-        <UserContext.Provider value={context}>{ui}</UserContext.Provider>
-      </Router>
+      <UserContext.Provider value={context}>
+        <Router history={history}>{ui}</Router>
+      </UserContext.Provider>
     ),
     history,
   };
@@ -61,25 +60,52 @@ describe("OfferForm", () => {
     context = { data: { company_name: "abc", company_address: "xd" } };
   });
 
-  it("renders correctly", () => {
-    const { container } = render(
+  it("renders correctly", async () => {
+    const { container, getByText } = render(
       <UserContext.Provider value={context}>
         <MemoryRouter>
           <OfferForm />
         </MemoryRouter>
       </UserContext.Provider>
     );
+
+    await waitForElement(() => getByText("Dodaj"));
+
     expect(container.firstChild).toMatchSnapshot();
   });
 
-  it("should clear state when offer is send", async () => {
-    const { getByPlaceholderText, getByTestId, getByLabelText } = render(
+  it("should return [] if api fails(selects)", async () => {
+    failFetch = true;
+
+    const { getByText } = render(
       <UserContext.Provider value={context}>
         <MemoryRouter>
           <OfferForm />
         </MemoryRouter>
       </UserContext.Provider>
     );
+    await waitForElement(() => getByText("Dodaj"));
+
+    await waitForElement(() =>
+      getByText("Coś poszło nie tak.", { exact: false })
+    );
+    expect(
+      getByText("Coś poszło nie tak.", { exact: false })
+    ).toBeInTheDocument();
+  });
+
+  it("should not clear state when api return failure", async () => {
+    const { getByPlaceholderText, getByLabelText, getByText } = render(
+      <UserContext.Provider value={context}>
+        <MemoryRouter>
+          <OfferForm />
+        </MemoryRouter>
+      </UserContext.Provider>
+    );
+
+    await waitForElement(() => getByText("Dodaj"));
+
+    failFetch = true;
 
     fireEvent.change(getByPlaceholderText("Nazwa stanowiska"), {
       target: { value: "abcd" },
@@ -97,67 +123,30 @@ describe("OfferForm", () => {
       target: { value: "abcd" },
     });
     fireEvent.change(getByLabelText("Branża"), {
-      target: { value: "IT" },
-    });
-    fireEvent.change(getByLabelText("Wymiar pracy"), {
       target: { value: "xd" },
     });
+    fireEvent.change(getByLabelText("Wymiar pracy"), {
+      target: { value: "IT" },
+    });
     fireEvent.change(getByLabelText("Ważne do:"), {
       target: {
         value: new Date(),
       },
     });
 
-    fireEvent.click(getByTestId("submitBtn"));
+    fireEvent.click(getByText("Dodaj"));
 
-    expect(getByPlaceholderText("Nazwa stanowiska").value).toBe("");
-    expect(getByPlaceholderText("Nazwa firmy").value).toBe("");
-    expect(getByPlaceholderText("Adres firmy").value).toBe("");
-    expect(getByLabelText("Województwo").value).toBe("dolnośląskie");
-    expect(getByLabelText("Opis stanowiska").value).toBe("");
-    expect(getByLabelText("Ważne do:").value).toBe("");
-  });
-  it("should not clear state when api return failure", async () => {
-    failFetch = true;
-
-    const { getByPlaceholderText, getByTestId, getByLabelText } = render(
-      <UserContext.Provider value={context}>
-        <MemoryRouter>
-          <OfferForm />
-        </MemoryRouter>
-      </UserContext.Provider>
+    await waitForElement(() =>
+      getByText("Coś poszło nie tak.", { exact: false })
     );
 
-    fireEvent.change(getByPlaceholderText("Nazwa stanowiska"), {
-      target: { value: "abcd" },
-    });
-    fireEvent.change(getByPlaceholderText("Nazwa firmy"), {
-      target: { value: "abcd" },
-    });
-    fireEvent.change(getByPlaceholderText("Adres firmy"), {
-      target: { value: "abcd" },
-    });
-    fireEvent.change(getByLabelText("Województwo"), {
-      target: { value: "lubelskie" },
-    });
-    fireEvent.change(getByLabelText("Opis stanowiska"), {
-      target: { value: "abcd" },
-    });
-    fireEvent.change(getByLabelText("Ważne do:"), {
-      target: {
-        value: new Date(),
-      },
-    });
-
-    fireEvent.click(getByTestId("submitBtn"));
-
-    // await waitForElement(() => getByTestId("fail"));
-
-    expect(fetch).rejects.toBe(true);
+    expect(
+      getByText("Coś poszło nie tak.", { exact: false })
+    ).toBeInTheDocument();
   });
 
   it("should not use fetch when form isn't validated", async () => {
-    const { getByPlaceholderText, getByTestId, getByLabelText } = render(
+    const { getByPlaceholderText, getByText, getByLabelText } = render(
       <UserContext.Provider value={context}>
         <MemoryRouter>
           <OfferForm />
@@ -165,8 +154,52 @@ describe("OfferForm", () => {
       </UserContext.Provider>
     );
 
+    await waitForElement(() => getByText("Dodaj"));
+
     fireEvent.change(getByPlaceholderText("Nazwa stanowiska"), {
+      target: { value: "abcd" },
+    });
+    fireEvent.change(getByPlaceholderText("Nazwa firmy"), {
+      target: { value: "abcd" },
+    });
+    fireEvent.change(getByPlaceholderText("Adres firmy"), {
+      target: { value: "abcd" },
+    });
+    fireEvent.change(getByLabelText("Województwo"), {
+      target: { value: "lubelskie" },
+    });
+    fireEvent.change(getByLabelText("Opis stanowiska"), {
       target: { value: "" },
+    });
+    fireEvent.change(getByLabelText("Branża"), {
+      target: { value: "xd" },
+    });
+    fireEvent.change(getByLabelText("Wymiar pracy"), {
+      target: { value: "IT" },
+    });
+    fireEvent.change(getByLabelText("Ważne do:"), {
+      target: {
+        value: new Date(),
+      },
+    });
+
+    fireEvent.click(getByText("Dodaj"));
+
+    expect(fetch).toHaveBeenCalledTimes(2);
+  });
+
+  it("should redirect when offer is send", async () => {
+    const {
+      history,
+      getByLabelText,
+      getByPlaceholderText,
+      getByText,
+    } = renderWithRouter(<OfferForm />);
+
+    await waitForElement(() => getByText("Dodaj"));
+
+    fireEvent.change(getByPlaceholderText("Nazwa stanowiska"), {
+      target: { value: "abcd" },
     });
     fireEvent.change(getByPlaceholderText("Nazwa firmy"), {
       target: { value: "abcd" },
@@ -180,49 +213,25 @@ describe("OfferForm", () => {
     fireEvent.change(getByLabelText("Opis stanowiska"), {
       target: { value: "abcd" },
     });
+    fireEvent.change(getByLabelText("Branża"), {
+      target: { value: "xd" },
+    });
+    fireEvent.change(getByLabelText("Wymiar pracy"), {
+      target: { value: "IT" },
+    });
     fireEvent.change(getByLabelText("Ważne do:"), {
       target: {
-        value: "",
+        value:
+          "Wed Dec 04 2020 00:00:00 GMT+0100 (czas środkowoeuropejski standardowy)",
       },
     });
 
-    fireEvent.click(getByTestId("submitBtn"));
+    fireEvent.click(getByText("Dodaj"));
 
-    expect(fetch).toHaveBeenCalledTimes(1);
+    await wait(() => {
+      expect(fetch).toHaveBeenCalled();
+    });
+
+    expect(history.location.pathname).toEqual("/myOffers");
   });
-
-  // it("should redirect when offer is send", async () => {
-  //   const { history, getByLabelText, getByTestId } = renderWithRouter(
-  //     <OfferForm />
-  //   );
-
-  //   fireEvent.change(getByLabelText("Nazwa stanowiska"), {
-  //     target: { value: "abcd" },
-  //   });
-  //   fireEvent.change(getByLabelText("Nazwa firmy"), {
-  //     target: { value: "abcd" },
-  //   });
-  //   fireEvent.change(getByLabelText("Adres firmy"), {
-  //     target: { value: "abcd" },
-  //   });
-  //   fireEvent.change(getByLabelText("Województwo"), {
-  //     target: { value: "lubelskie" },
-  //   });
-  //   fireEvent.change(getByLabelText("Opis stanowiska"), {
-  //     target: { value: "abcd" },
-  //   });
-  //   fireEvent.change(getByLabelText("Ważne do:"), {
-  //     target: {
-  //       value:
-  //         "Wed Dec 04 2020 00:00:00 GMT+0100 (czas środkowoeuropejski standardowy)",
-  //     },
-  //   });
-
-  //   fireEvent.click(getByTestId("submitBtn"));
-
-  //   await wait(() => {
-  //     expect(fetch).toHaveBeenCalled();
-  //   });
-  //   expect(history.location.pathname).toEqual("/myOffers");
-  // });
 });

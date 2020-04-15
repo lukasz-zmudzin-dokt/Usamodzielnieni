@@ -38,6 +38,7 @@ const OfferForm = () => {
         res = await getSelects(token);
       } catch (e) {
         console.log(e);
+        setFail(true);
         res = { categories: [], types: [] };
       }
       setArrays(res);
@@ -76,30 +77,14 @@ const OfferForm = () => {
       const newDate = `${year}-${month}-${day}`;
       sendData({ ...offer, expiration_date: newDate }, context.token)
         .then(() => {
-          clearState();
           history.push("/myOffers");
         })
         .catch(() => {
-          console.log("tutaj");
           setFail(true);
           setDisabled(false);
         });
     }
     setValidated(true);
-  };
-
-  const clearState = () => {
-    setOffer({
-      offer_name: "",
-      company_name: context.data.company_name,
-      company_address: context.data.company_address,
-      voivodeship: voivodeships[0],
-      description: "",
-      expiration_date: "",
-      category: "",
-      type: "",
-    });
-    setValidated(false);
   };
 
   const {
@@ -121,7 +106,6 @@ const OfferForm = () => {
         </Card.Header>
         <Card.Body>
           <Form
-            data-testid="form"
             onSubmit={submit}
             noValidate
             validated={validated}
@@ -209,7 +193,7 @@ const OfferForm = () => {
             </div>
             {fail === true ? (
               <Row className="w-100 justify-content-center align-items-center m-0">
-                <Alert data-testid="fail" variant="danger">
+                <Alert variant="danger">
                   Coś poszło nie tak. Spróbuj ponownie póżniej.
                 </Alert>
               </Row>
@@ -219,7 +203,6 @@ const OfferForm = () => {
                 variant="primary"
                 type="submit"
                 className=""
-                data-testid="submitBtn"
                 disabled={disabled}
               >
                 {disabled ? "Ładowanie..." : "Dodaj"}
