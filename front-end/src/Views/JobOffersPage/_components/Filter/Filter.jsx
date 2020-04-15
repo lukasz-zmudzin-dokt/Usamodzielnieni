@@ -1,28 +1,28 @@
 import React, { useState, useEffect, useContext } from "react";
 import { registerLocale } from "react-datepicker";
 import { Form, Button, Col } from "react-bootstrap";
-
+import { DEFAULT_INPUT } from "constants/other";
 import FormGroup from "components/FormGroup";
 import { voivodeships } from "constants/voivodeships";
 import polish from "date-fns/locale/pl";
 import { getSelects } from "Views/OfferForm/functions/fetchData";
 import { UserContext } from "context";
-import {IndexLinkContainer} from "react-router-bootstrap";
+import { IndexLinkContainer } from "react-router-bootstrap";
 registerLocale("pl", polish);
 
 const Filter = ({ setFilters, count, disabled }) => {
-  const [voivodeship, setVoivodeship] = useState("-- Wybierz --");
+  const [voivodeship, setVoivodeship] = useState(DEFAULT_INPUT);
   const [pageSize, setPageSize] = useState(10);
   const [minExpirationDate, setMinExpirationDate] = useState();
-  const [category, setCategory] = useState("-- Wybierz --");
-  const [type, setType] = useState("-- Wybierz --");
+  const [category, setCategory] = useState(DEFAULT_INPUT);
+  const [type, setType] = useState(DEFAULT_INPUT);
   const [arrays, setArrays] = useState([]);
   const user = useContext(UserContext);
 
   const context = useContext(UserContext);
 
   useEffect(() => {
-    const loadSelects = async token => {
+    const loadSelects = async (token) => {
       let res;
       try {
         res = await getSelects(token);
@@ -35,7 +35,7 @@ const Filter = ({ setFilters, count, disabled }) => {
     loadSelects(context.token);
   }, [context.token]);
 
-  const filter = event => {
+  const filter = (event) => {
     event.preventDefault();
     let newDate;
     if (minExpirationDate !== undefined) {
@@ -52,24 +52,24 @@ const Filter = ({ setFilters, count, disabled }) => {
     }
 
     const voivodeshipV =
-      voivodeship !== "-- Wybierz --" ? voivodeship : undefined;
-    const categoryV = category !== "-- Wybierz --" ? category : undefined;
-    const typeV = type !== "-- Wybierz --" ? type : undefined;
+      voivodeship !== DEFAULT_INPUT ? voivodeship : undefined;
+    const categoryV = category !== DEFAULT_INPUT ? category : undefined;
+    const typeV = type !== DEFAULT_INPUT ? type : undefined;
     setFilters({
       page: 1,
       voivodeship: voivodeshipV,
       pageSize,
       minExpirationDate: newDate,
       category: categoryV,
-      type: typeV
+      type: typeV,
     });
   };
 
-  const deleteFilter = e => {
-    setVoivodeship("-- Wybierz --");
+  const deleteFilter = (e) => {
+    setVoivodeship(DEFAULT_INPUT);
     setPageSize(10);
-    setCategory("-- Wybierz --");
-    setType("-- Wybierz --");
+    setCategory(DEFAULT_INPUT);
+    setType(DEFAULT_INPUT);
     setMinExpirationDate();
     setFilters({ page: 1, pageSize: 10 });
   };
@@ -140,7 +140,7 @@ const Filter = ({ setFilters, count, disabled }) => {
           array={arrays.types}
           val={type}
           setVal={setType}
-          id="category"
+          id="type"
         />
       </Form.Row>
 
@@ -161,16 +161,17 @@ const Filter = ({ setFilters, count, disabled }) => {
         {disabled ? "Ładowanie..." : "Wyczyść filtry"}
       </Button>
       {count !== 0 && (
-          <small className="search__countText">{`Znaleziono ${count} ${
-              count >= 5 || count === 0 ? "ofert" : "oferty"
-          }`}</small>
-      )}<br/>
+        <small className="search__countText">{`Znaleziono ${count} ${
+          count >= 5 || count === 0 ? "ofert" : "oferty"
+        }`}</small>
+      )}
+      <br />
       {user.type === "Employer" ? (
-          <IndexLinkContainer as={Button} to="/offerForm">
-            <Button variant="success" className="mt-2">
-              Dodaj ofertę
-            </Button>
-          </IndexLinkContainer>
+        <IndexLinkContainer as={Button} to="/offerForm">
+          <Button variant="success" className="mt-2">
+            Dodaj ofertę
+          </Button>
+        </IndexLinkContainer>
       ) : null}
     </Form>
   );

@@ -169,13 +169,13 @@ exports[`Filter(JobOffers) renders correctly 1`] = `
     >
       <label
         class="form-label"
-        for="category"
+        for="type"
       >
         Typ stanowiska
       </label>
       <select
         class="form-control"
-        id="category"
+        id="type"
       >
         <option
           disabled=""
@@ -200,9 +200,8 @@ exports[`Filter(JobOffers) renders correctly 1`] = `
   <small
     class="search__countText"
   >
-    Znaleziono 
-    10
-     ofert
+    Znaleziono 10 ofert
   </small>
+  <br />
 </form>
 `;
