@@ -13,14 +13,15 @@ const FormGroup = ({
   length,
   required,
   id,
+  disabled,
   ...rest
 }) => {
-  const setInput = e => {
+  const setInput = (e) => {
     const value = e.target.value;
     setVal(value);
   };
 
-  const setDate = date => {
+  const setDate = (date) => {
     setVal(date);
   };
   const setFormType = () => {
@@ -34,7 +35,7 @@ const FormGroup = ({
             required={required}
           >
             {required ? null : <option disabled>-- Wybierz --</option>}
-            {array.map(val => (
+            {array.map((val) => (
               <option key={val}>{val}</option>
             ))}
           </Form.Control>
@@ -49,6 +50,7 @@ const FormGroup = ({
             className="offerForm__textarea"
             minLength={length.min}
             maxLength={length.max}
+            disabled={disabled}
           />
         );
       case "date":
@@ -78,6 +80,7 @@ const FormGroup = ({
             min={length.min}
             max={length.max}
             data-testid="default"
+            disabled={disabled}
           />
         );
       default:
@@ -91,6 +94,7 @@ const FormGroup = ({
             minLength={length.min}
             maxLength={length.max}
             data-testid="default"
+            disabled={disabled}
           />
         );
     }
@@ -121,13 +125,15 @@ FormGroup.propTypes = {
   incorrect: PropTypes.string,
   length: PropTypes.object,
   required: PropTypes.bool,
-  id: PropTypes.string.isRequired
+  id: PropTypes.string.isRequired,
+  disabled: PropTypes.bool,
 };
 
 FormGroup.defaultProps = {
   array: [],
   required: false,
-  length: { min: 1, max: 50 }
+  length: { min: 1, max: 50 },
+  disabled: false,
 };
 
 export default FormGroup;
