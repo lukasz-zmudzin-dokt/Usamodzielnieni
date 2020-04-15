@@ -152,7 +152,6 @@ class RegisterPage extends React.Component {
       validated,
       error_flag,
       fail_message,
-      account_type,
       accountData,
       personalData,
       redirect,

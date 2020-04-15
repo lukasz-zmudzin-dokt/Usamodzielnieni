@@ -1,4 +1,3 @@
-import React from "react";
 import { getCVUrl } from "./getCVUrl";
 
 export const showCV = (token, cvId, component) => {
