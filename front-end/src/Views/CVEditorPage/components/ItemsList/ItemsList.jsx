@@ -7,6 +7,7 @@ class ItemsList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            validated: false,
             error: false
         }
         if (this.props.data === null) {
@@ -15,15 +16,22 @@ class ItemsList extends React.Component {
     }
 
     addItem = (e) => {
-        const { data, getItemId, getItem } = this.props;
-        const item = getItem();
-
-        if (data.find(dt => getItemId(dt) === getItemId(item))) {
-            this.setState({ error: true });
+        e.preventDefault();
+        if (!e.currentTarget.checkValidity()) {
+            this.setState({ validated: true });
+            e.stopPropagation();
         } else {
-            this.setState({ error: false });
-            this.props.onChange([...this.props.data, item])
-            this.props.clear();
+            this.setState({ validated: false });
+            const { data, getItemId, getItem } = this.props;
+            const item = getItem();
+
+            if (data.find(dt => getItemId(dt) === getItemId(item))) {
+                this.setState({ error: true });
+            } else {
+                this.setState({ error: false });
+                this.props.onChange([...this.props.data, item])
+                this.props.clear();
+            }
         }
     }
 
@@ -38,8 +46,11 @@ class ItemsList extends React.Component {
 
         if (data === null) return null;
 
+        const msg = this.state.error ? (<Alert variant="danger">Taka sama pozycja znajduje się już na liście.</Alert>) :
+                    (this.props.required && this.props.validated && !data.length) && (<Alert variant="danger">Lista nie może być pusta.</Alert>)
+
         return (
-            <div>
+            <Form onSubmit={this.addItem} noValidate validated={this.state.validated}>
                 {data.length > 0 &&
                 <Form.Group controlId="items">
                     <Items 
@@ -50,10 +61,15 @@ class ItemsList extends React.Component {
                     />
                 </Form.Group>
                 }
-                { this.state.error && (<Alert variant="danger">Taka sama pozycja znajduje się już na liście.</Alert>) }
+                { msg }
                 {children}
-                <Button className="mb-3" variant="success" onClick={this.addItem}>+ Dodaj</Button>
-            </div>
+                <Button
+                    type="submit"
+                    className="mb-3"
+                    variant="success">
+                    + Dodaj
+                </Button>
+            </Form>
         )
     }
 }

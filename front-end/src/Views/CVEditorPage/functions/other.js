@@ -57,21 +57,6 @@ const sendData = async (object, photo, token) => {
   window.open(cvUrl, "_blank");
 };
 
-const getCvId = async (token, cvNumber) => {
-  const url = `${domain}cv/user/list`;
-  const headers = getHeaders(token);
-  const response = await fetch(url, {method: "GET", headers});
-  
-  if(response.status === 200) {
-    const cvList = await response.json();
-    const cv = cvList[cvNumber];
-    const cvId = cv.cv_id;
-    return cvId;
-  } else {
-    throw response.status;
-  }
-}
-
 const getFeedback = async (token, id) => {
   try {
     //const id = await getCvId(token, 0);

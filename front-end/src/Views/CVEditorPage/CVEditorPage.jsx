@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Container, Form, Tab, Tabs, Alert } from "react-bootstrap";
+import { Card, Container, Tab, Tabs, Alert } from "react-bootstrap";
 import "react-datepicker/dist/react-datepicker.css";
 import {
   PersonalDataTab,
@@ -20,19 +20,20 @@ class CVEditorPage extends React.Component {
     super(props);
     this.state = {
       formTab: "personalData",
-      comments: {},
       error: false,
-
-      personalData: null,
-      education: null,
-      workExperience: null,
-      skills: null,
-      languages: null,
-      photo: null,
+      tabs: {
+        personalData: { data: null, refValue: React.createRef(), comments: undefined },
+        education: { data: null, comments: undefined },
+        workExperience: { data: null, comments: undefined },
+        skills: { data: null, comments: undefined },
+        languages: { data: null, comments: undefined },
+        photo: { data: null, comments: undefined },
+      },
       loading: false,
       commentsError: false,
       showComments: true,
-      disabled: false
+      disabled: false,
+      validated: false
     };
     this.tabs = [];
   }
@@ -49,87 +50,65 @@ class CVEditorPage extends React.Component {
     this.setState({ formTab: this.tabs[tabIndex + 1].id });
   };
 
+  checkValidity = () => {
+    const { tabs } = this.state;
+    if (tabs.personalData.refValue.current.checkValidity() === false) {
+      this.setState({ formTab: 'personalData' })
+      return false;
+    }
+    if (!tabs.education.data?.length) {
+      this.setState({ formTab: 'education' })
+      return false;
+    }
+    if (!tabs.skills.data?.length) {
+      this.setState({ formTab: 'skills' })
+      return false;
+    }
+    if (!tabs.languages.data?.length) {
+      this.setState({ formTab: 'languages' })
+      return false;
+    }
+    return true;
+  }
+
   handleCVSubmit = async e => {
-    this.setState({ disabled: true });
+    this.setState({ disabled: true, validated: true });
     e.preventDefault();
-    const cv = createCVObject(
-      this.state.personalData,
-      this.state.education,
-      this.state.workExperience,
-      this.state.skills,
-      this.state.languages
-    );
-    try {
-      await sendData(cv, this.state.photo, this.context.token).then(() =>
-        this.setState({ disabled: false })
+    const validity = this.checkValidity();
+    if (!validity) {
+      e.stopPropagation();
+      this.setState({ disabled: false });
+    } else {
+      const cv = createCVObject(
+        this.state.tabs.personalData.data,
+        this.state.tabs.education.data,
+        this.state.tabs.workExperience.data,
+        this.state.tabs.skills.data,
+        this.state.tabs.languages.data
       );
-    } catch (e) {
-      this.setState({ error: true, disabled: false });
+      console.log(JSON.stringify(cv));
+      try {
+        await sendData(cv, this.state.tabs.photo.data, this.context.token).then(() =>
+          this.setState({ disabled: false })
+        );
+      } catch (e) {
+        this.setState({ error: true, disabled: false });
+      }
     }
   };
 
   getTabs = () => {
     const getTabProps = key => ({
-      data: this.state[key],
-      onChange: data => this.setState({ [key]: data }),
-      onPrevClick: this.onPrevClick,
-      onNextClick: this.onNextClick
-    });
-    return [
-      {
-        id: "personalData",
-        name: "Dane osobowe",
-        component: (
-          <PersonalDataTab
-            {...getTabProps("personalData")}
-            onPrevClick={undefined}
-          />
-        )
-      },
-      {
-        id: "education",
-        name: "Edukacja",
-        component: <EducationTab {...getTabProps("education")} />
-      },
-      {
-        id: "workExperience",
-        name: "Doświadczenie zawodowe",
-        component: <WorkExperienceTab {...getTabProps("workExperience")} />
-      },
-      {
-        id: "skills",
-        name: "Umiejętności",
-        component: <SkillsTab {...getTabProps("skills")} />
-      },
-      {
-        id: "languages",
-        name: "Języki obce",
-        component: <LanguagesTab {...getTabProps("languages")} />
-      },
-      {
-        id: "photo",
-        name: "Zdjęcie",
-        component: (
-          <PhotoTab
-            {...getTabProps("photo")}
-            onNextClick={undefined}
-            disabled={this.state.disabled}
-          />
-        )
-      }
-    ];
-  };
-
-  getTabs = () => {
-    const getTabProps = key => ({
-      data: this.state[key],
-      onChange: data => this.setState({ [key]: data }),
+      ...this.state.tabs[key],
+      onChange: data => this.setState(prevState => ({ 
+        tabs: { ...prevState.tabs, [key]: { ...prevState.tabs[key], data } }
+      })),
       onPrevClick: this.onPrevClick,
       onNextClick: this.onNextClick,
-      comments: this.state.comments[key],
       loading: this.state.loading,
       error: this.state.commentsError,
-      showComments: this.state.showComments
+      showComments: this.state.showComments,
+      validated: this.state.validated
     });
     return [
       {
@@ -169,6 +148,7 @@ class CVEditorPage extends React.Component {
           <PhotoTab
             {...getTabProps("photo")}
             onNextClick={undefined}
+            onSubmit={this.handleCVSubmit}
             disabled={this.state.disabled}
           />
         )
@@ -182,15 +162,21 @@ class CVEditorPage extends React.Component {
       this.setState({ loading: true });
       getFeedback(this.context.token, this.props.match.params.id)
         .then(res => {
+          const setTabComments = (key, comments) => {
+            this.setState(prevState => ({
+              tabs: {
+                ...prevState.tabs,
+                [key]: { ...prevState.tabs[key], comments }
+              }
+            }))
+          }
+          setTabComments('personalData', res.basic_info);
+          setTabComments('education', res.schools);
+          setTabComments('workExperience', res.experiences);
+          setTabComments('skills', res.skills);
+          setTabComments('languages', res.languages);
+          setTabComments('photo', res.additional_info);
           this.setState({
-            comments: {
-              personalData: res.basic_info,
-              education: res.schools,
-              workExperience: res.experiences,
-              skills: res.skills,
-              languages: res.languages,
-              photo: res.additional_info
-            },
             loading: false,
             commentsError: false
           });
@@ -215,12 +201,11 @@ class CVEditorPage extends React.Component {
         <Card>
           <Card.Header as="h2">Kreator CV</Card.Header>
           <Card.Body>
-            <Form id="cv_data" onSubmit={this.handleCVSubmit}>
               <Tabs
                 transition={false}
                 activeKey={this.state.formTab}
                 onSelect={e => this.setState({ formTab: e })}
-                className="CVEditorPage_tabs" // https://github.com/react-bootstrap/react-bootstrap/issues/4771
+                className="CVEditorPage_tabs mb-1" // https://github.com/react-bootstrap/react-bootstrap/issues/4771
               >
                 {this.tabs.map(tab => (
                   <Tab eventKey={tab.id} key={tab.id} title={tab.name}>
@@ -228,9 +213,8 @@ class CVEditorPage extends React.Component {
                   </Tab>
                 ))}
               </Tabs>
-            </Form>
             {this.state.error && (
-              <Alert variant="danger">
+              <Alert className="mt-3" variant="danger">
                 Wystąpił błąd podczas generowania CV.
               </Alert>
             )}

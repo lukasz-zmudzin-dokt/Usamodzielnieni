@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Row, Col, Alert } from "react-bootstrap";
+import { Button, Row, Col, Alert, Form } from "react-bootstrap";
 
 const CVEditorTab = ({
   title,
@@ -7,6 +7,7 @@ const CVEditorTab = ({
   children,
   onPrevClick,
   onNextClick,
+  onSubmit,
   comments,
   loading,
   error,
@@ -54,15 +55,17 @@ const CVEditorTab = ({
             Dalej →
           </Button>
         ) : (
-          <Button
-            variant="success"
-            type="submit"
-            id="saveButton"
-            block
-            disabled={disabled}
-          >
-            {disabled ? "Ładowanie..." : "Generuj CV"}
-          </Button>
+          <Form onSubmit={onSubmit}>
+            <Button
+              variant="success"
+              type="submit"
+              id="saveButton"
+              block
+              disabled={disabled}
+            >
+              {disabled ? "Ładowanie..." : "Generuj CV"}
+            </Button>
+          </Form>
         )}
       </Col>
     </Row>
