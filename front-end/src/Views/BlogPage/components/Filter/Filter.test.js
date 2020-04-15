@@ -1,7 +1,6 @@
 import React from "react";
 import { render, fireEvent, waitForElement } from "@testing-library/react";
 import Filter from "Views/BlogPage/components/Filter";
-import { MemoryRouter } from "react-router-dom";
 
 describe("Filter", () => {
   let failFetch = false;
@@ -16,7 +15,7 @@ describe("Filter", () => {
           case "GET":
             resolve({
               status: 200,
-              json: () => Promise.resolve(apiFilters)
+              json: () => Promise.resolve(apiFilters),
             });
             break;
           default:
@@ -36,5 +35,18 @@ describe("Filter", () => {
     await waitForElement(() => getByText("wyczyść filtry", { exact: false }));
 
     expect(container).toMatchSnapshot();
+  });
+
+  it("should show message if api failed", async () => {
+    failFetch = true;
+    const { container, getByText } = render(<Filter {...props} />);
+
+    await waitForElement(() =>
+      getByText("Wystąpił błąd podczas ładowania filtrów.", { exact: false })
+    );
+
+    expect(
+      getByText("Wystąpił błąd podczas ładowania filtrów.", { exact: false })
+    ).toBeInTheDocument();
   });
 });

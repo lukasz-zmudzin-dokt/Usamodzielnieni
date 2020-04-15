@@ -14,7 +14,7 @@ exports[`BlogPage should match snapshot 1`] = `
         Blogi
       </h2>
       <form
-        class="blog__form"
+        class="ml-3 mr-3 mb-3"
       >
         <div
           class="form-row"
@@ -37,6 +37,9 @@ exports[`BlogPage should match snapshot 1`] = `
               >
                 -- Wybierz --
               </option>
+              <option>
+                abcd
+              </option>
             </select>
           </div>
           <div
@@ -57,98 +60,100 @@ exports[`BlogPage should match snapshot 1`] = `
               >
                 -- Wybierz --
               </option>
+              <option>
+                abcd
+              </option>
             </select>
           </div>
         </div>
-        <button
-          class="mr-3 btn btn-primary"
-          type="submit"
-        >
-          Filtruj posty
-        </button>
-        <button
-          class="mr-3 btn btn-outline-primary"
-          type="button"
-        >
-          Wyczyść filtry
-        </button>
-        <small
-          class="blog__countText"
-        >
-          Znaleziono 2 posty
-        </small>
+        <div>
+          <button
+            class="mr-3 btn btn-primary"
+            type="submit"
+          >
+            Filtruj posty
+          </button>
+          <button
+            class="mr-3 btn btn-outline-primary"
+            type="button"
+          >
+            Wyczyść filtry
+          </button>
+          <small
+            class="blog__countText"
+          >
+            Znaleziono 2 posty
+          </small>
+        </div>
       </form>
       <div
-        class="list-group list-group-flush"
+        class="ml-3 mr-3 card-columns"
       >
         <div
-          class="list-group-item"
+          class="card"
+          href="/blog/blogpost/1"
         >
           <div
-            class="row"
-            href="/blog/blogpost/undefined"
+            class="card-body"
           >
-            <div
-              class="col"
+            <h3
+              class="card-title"
             >
-              <h3>
-                abc
-              </h3>
-              <p>
-                aaaaa...
-              </p>
-              <div
-                class="row"
-              >
-                <div
-                  class="col"
-                >
-                  <small>
-                    Tagi:
-                  </small>
-                  <span
-                    class="ml-1 badge badge-info"
-                  >
-                    def
-                  </span>
-                </div>
-              </div>
-            </div>
+              tytuł
+            </h3>
+            <p
+              class="card-text"
+            >
+              summary
+            </p>
+          </div>
+          <div
+            class="card-footer"
+          >
+            <small>
+              Tagi:
+            </small>
+            <span
+              class="ml-1 badge badge-info"
+            >
+              tag
+            </span>
           </div>
         </div>
         <div
-          class="list-group-item"
+          class="card"
+          href="/blog/blogpost/2"
         >
           <div
-            class="row"
-            href="/blog/blogpost/undefined"
+            class="card-body"
           >
-            <div
-              class="col"
+            <h3
+              class="card-title"
             >
-              <h3>
-                ghi
-              </h3>
-              <p>
-                bbbbb...
-              </p>
-              <div
-                class="row"
-              >
-                <div
-                  class="col"
-                >
-                  <small>
-                    Tagi:
-                  </small>
-                  <span
-                    class="ml-1 badge badge-info"
-                  >
-                    abc
-                  </span>
-                </div>
-              </div>
-            </div>
+              tytuł2
+            </h3>
+            <p
+              class="card-text"
+            >
+              summary2
+            </p>
+          </div>
+          <div
+            class="card-footer"
+          >
+            <small>
+              Tagi:
+            </small>
+            <span
+              class="ml-1 badge badge-info"
+            >
+              tag
+            </span>
+            <span
+              class="ml-1 badge badge-info"
+            >
+              abcd
+            </span>
           </div>
         </div>
       </div>

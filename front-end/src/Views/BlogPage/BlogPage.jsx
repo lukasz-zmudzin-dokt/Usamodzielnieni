@@ -15,7 +15,7 @@ const BlogPage = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const loadOffers = async token => {
+    const loadOffers = async (token) => {
       setIsLoading(true);
       let res;
       try {
@@ -52,7 +52,7 @@ const BlogPage = () => {
           msg
         ) : (
           <CardColumns className="ml-3 mr-3">
-            {posts.map(data => (
+            {posts.map((data) => (
               <BlogPost key={data.id} {...data} />
             ))}
           </CardColumns>

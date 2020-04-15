@@ -1,51 +1,73 @@
 import React from "react";
-import { render, waitForElement } from "@testing-library/react";
+import {
+  render,
+  waitForElement,
+  fireEvent,
+  waitFor,
+} from "@testing-library/react";
 import BlogPage from "Views/BlogPage";
 import { MemoryRouter } from "react-router-dom";
 
-jest.mock("./functions/fetchData", () => ({
-  getPosts: () => {
-    const obj = [
-      {
-        category: ["abc"],
-        tags: ["def"],
-        content: "aaaaa",
-        dateCreated: "2020-04-20",
-        author: {
-          email: "staff4@staff4.com",
-          first_name: "staff4",
-          last_name: "staff4"
-        }
-      },
-      {
-        category: ["ghi"],
-        tags: ["abc"],
-        content: "bbbbb",
-        dateCreated: "2020-04-20",
-        author: {
-          email: "staff4@staff4.com",
-          first_name: "staff4",
-          last_name: "staff4"
-        }
-      }
-    ];
-    return obj;
-  },
-  getFilters: () => {
-    const filters = ["abc", "def"];
-    return filters;
-  }
-}));
-
 describe("BlogPage", () => {
+  let failFetch;
+  let apiFilters = ["abcd"];
+  let apiPosts = [
+    {
+      tags: ["tag"],
+      summary: "summary",
+      category: "abcd",
+      id: 1,
+      title: "tytuł",
+    },
+    {
+      tags: ["tag", "abcd"],
+      category: "abcd",
+      summary: "summary2",
+      id: 2,
+      title: "tytuł2",
+    },
+  ];
+  beforeAll(() => {
+    global.fetch = jest.fn().mockImplementation((input, init) => {
+      console.log(input);
+      return new Promise((resolve, reject) => {
+        if (failFetch) {
+          resolve({ status: 500 });
+        }
+        switch (init.method) {
+          case "POST":
+            resolve({ status: 200 });
+            break;
+          case "GET":
+            if (
+              input.includes("https://usamo-back.herokuapp.com/blog/blogposts/")
+            ) {
+              resolve({ status: 200, json: () => Promise.resolve(apiPosts) });
+            } else {
+              resolve({ status: 200, json: () => Promise.resolve(apiFilters) });
+            }
+
+            break;
+          default:
+            reject({});
+            break;
+        }
+      });
+    });
+  });
+
+  beforeEach(() => {
+    failFetch = false;
+    jest.clearAllMocks();
+  });
+
   it("should match snapshot", async () => {
     const { container, getByText } = render(
       <MemoryRouter>
         <BlogPage />
       </MemoryRouter>
     );
-
-    await waitForElement(() => getByText("aaaaa", { exact: false }));
+    await waitForElement(() => getByText("tytuł"));
     expect(container).toMatchSnapshot();
   });
 
@@ -56,60 +78,129 @@ describe("BlogPage", () => {
       </MemoryRouter>
     );
 
-    await waitForElement(() => getByText("aaaaa", { exact: false }));
-    expect(getByText("aaaaa", { exact: false })).toBeInTheDocument();
+    await waitForElement(() => getByText("tytuł"));
+    expect(getByText("tytuł")).toBeInTheDocument();
   });
 
-  //   describe("Filter", () => {
-  //     let apiFilters = ["abcd", "abcde"];
-  //     global.fetch = jest.fn().mockImplementation((input, init) => {
-  //       return new Promise((resolve, reject) => {
-  //         if (failFetch) {
-  //           resolve({ status: 500 });
-  //         } else {
-  //           switch (init.method) {
-  //             case "GET":
-  //               resolve({
-  //                 status: 200,
-  //                 json: () => Promise.resolve(apiFilters)
-  //               });
-  //               break;
-  //             default:
-  //               reject({});
-  //               break;
-  //           }
-  //         }
-  //       });
-  //     });
-  //     it("should be called with appropriate url", () => {
-  //       const { getByText, getByLabelText } = render(
-  //         <MemoryRouter>
-  //           <BlogPage />
-  //         </MemoryRouter>
-  //       );
+  it("should load filters", async () => {
+    const { getAllByText } = render(
+      <MemoryRouter>
+        <BlogPage />
+      </MemoryRouter>
+    );
 
-  //       fireEvent.change(getByLabelText("Kategoria"), {
-  //         target: { value: "abc" }
-  //       });
+    await waitForElement(() => getAllByText("abcd"));
 
-  //       fireEvent.change(getByLabelText("Tag"), {
-  //         target: { value: "def" }
-  //       });
+    expect(getAllByText("abcd").length).toBe(3);
+  });
 
-  //       fireEvent.click(getByText("Filtruj posty"));
+  it("should show message if apiFails", async () => {
+    failFetch = true;
+    const { getByText } = render(
+      <MemoryRouter>
+        <BlogPage />
+      </MemoryRouter>
+    );
 
-  //       expect(fetch).toHaveBeenCalled();
+    await waitForElement(() =>
+      getByText("Wystąpił błąd podczas ładowania postów.")
+    );
 
-  //       //   expect(fetch).toHaveBeenCalledWith(
-  //       //     `http://usamo-back.herokuapp.com/blog/blogposts/?category=abc&tag=def`,
-  //       //     {
-  //       //       headers: {
-  //       //         Authorization: "Token undefined",
-  //       //         "Content-Type": "application/json"
-  //       //       },
-  //       //       method: "GET"
-  //       //     }
-  //       //   );
-  //     });
-  //   });
+    expect(
+      getByText("Wystąpił błąd podczas ładowania postów.")
+    ).toBeInTheDocument();
+  });
+
+  describe("Filter", () => {
+    it("should be called with appropriate url(2 filters)", async () => {
+      const { getByText, getAllByText, getByLabelText } = render(
+        <MemoryRouter>
+          <BlogPage />
+        </MemoryRouter>
+      );
+
+      await waitForElement(() => getAllByText("abcd"));
+
+      fireEvent.change(getByLabelText("Kategoria"), {
+        target: { value: "abcd" },
+      });
+
+      fireEvent.change(getByLabelText("Tag"), {
+        target: { value: "abcd" },
+      });
+
+      fireEvent.click(getByText("Filtruj posty"));
+
+      await waitForElement(() => getAllByText("abcd"));
+
+      await expect(fetch).toHaveBeenCalledWith(
+        `https://usamo-back.herokuapp.com/blog/blogposts/?category=abcd&tag=abcd`,
+        {
+          headers: {
+            Authorization: "Token undefined",
+            "Content-Type": "application/json",
+          },
+          method: "GET",
+        }
+      );
+    });
+
+    it("should be called with appropriate url(1 filter - tag)", async () => {
+      const { getByText, getAllByText, getByLabelText } = render(
+        <MemoryRouter>
+          <BlogPage />
+        </MemoryRouter>
+      );
+
+      await waitForElement(() => getAllByText("abcd"));
+
+      fireEvent.change(getByLabelText("Tag"), {
+        target: { value: "abcd" },
+      });
+
+      fireEvent.click(getByText("Filtruj posty"));
+
+      await waitForElement(() => getAllByText("abcd"));
+
+      await expect(fetch).toHaveBeenCalledWith(
+        `https://usamo-back.herokuapp.com/blog/blogposts/?tag=abcd`,
+        {
+          headers: {
+            Authorization: "Token undefined",
+            "Content-Type": "application/json",
+          },
+          method: "GET",
+        }
+      );
+    });
+
+    it("should be called with appropriate url(1 filter - category)", async () => {
+      const { getByText, getAllByText, getByLabelText } = render(
+        <MemoryRouter>
+          <BlogPage />
+        </MemoryRouter>
+      );
+
+      await waitForElement(() => getAllByText("abcd"));
+
+      fireEvent.change(getByLabelText("Kategoria"), {
+        target: { value: "abcd" },
+      });
+
+      fireEvent.click(getByText("Filtruj posty"));
+
+      await waitForElement(() => getAllByText("abcd"));
+
+      await expect(fetch).toHaveBeenCalledWith(
+        `https://usamo-back.herokuapp.com/blog/blogposts/?category=abcd`,
+        {
+          headers: {
+            Authorization: "Token undefined",
+            "Content-Type": "application/json",
+          },
+          method: "GET",
+        }
+      );
+    });
+  });
 });
