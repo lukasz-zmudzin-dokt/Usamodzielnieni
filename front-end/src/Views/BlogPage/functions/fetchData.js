@@ -39,11 +39,7 @@ const getFilters = async (token) => {
     };
     return filters;
   } else {
-    if (responseT.status !== 200) {
-      throw responseT.status;
-    } else {
-      throw responseC.status;
-    }
+    throw new Error({ tagRes: responseT.status, catRes: responseC.status });
   }
 };
 

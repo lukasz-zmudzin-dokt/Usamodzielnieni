@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  render,
-  waitForElement,
-  fireEvent,
-  waitFor,
-} from "@testing-library/react";
+import { render, waitForElement, fireEvent } from "@testing-library/react";
 import BlogPage from "Views/BlogPage";
 import { MemoryRouter } from "react-router-dom";
 
@@ -29,7 +24,6 @@ describe("BlogPage", () => {
   ];
   beforeAll(() => {
     global.fetch = jest.fn().mockImplementation((input, init) => {
-      console.log(input);
       return new Promise((resolve, reject) => {
         if (failFetch) {
           resolve({ status: 500 });
