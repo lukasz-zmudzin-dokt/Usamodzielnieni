@@ -43,8 +43,6 @@ const addPhoto = async (token, photo, cvId) => {
 }
 
 const sendData = async (object, photo, token) => {
-  console.log(JSON.stringify(object));
-
   let file;
   try {
     let cvRes = await generateCv(token, object);

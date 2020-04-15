@@ -38,6 +38,7 @@ export const sendData = async (source) => {
         case "Administratorem":
             url = "https://usamo-back.herokuapp.com/account/register/staff/";
             break;
+        default: throw new Error();
     }
 
     const object = {
@@ -62,7 +63,7 @@ export const sendData = async (source) => {
             ...data
         }
     } else {
-        throw {status: res.status}
+        throw res.status;
     }
 };
 

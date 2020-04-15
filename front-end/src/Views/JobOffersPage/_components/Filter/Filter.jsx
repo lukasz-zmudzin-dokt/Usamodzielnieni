@@ -7,6 +7,7 @@ import { voivodeships } from "constants/voivodeships";
 import polish from "date-fns/locale/pl";
 import { getSelects } from "Views/OfferForm/functions/fetchData";
 import { UserContext } from "context";
+import {IndexLinkContainer} from "react-router-bootstrap";
 registerLocale("pl", polish);
 
 const Filter = ({ setFilters, count, disabled }) => {
@@ -16,6 +17,7 @@ const Filter = ({ setFilters, count, disabled }) => {
   const [category, setCategory] = useState("-- Wybierz --");
   const [type, setType] = useState("-- Wybierz --");
   const [arrays, setArrays] = useState([]);
+  const user = useContext(UserContext);
 
   const context = useContext(UserContext);
 
@@ -159,8 +161,17 @@ const Filter = ({ setFilters, count, disabled }) => {
         {disabled ? "Ładowanie..." : "Wyczyść filtry"}
       </Button>
       {count !== 0 && (
-        <small className="search__countText">Znaleziono {count} ofert</small>
-      )}
+          <small className="search__countText">{`Znaleziono ${count} ${
+              count >= 5 || count === 0 ? "ofert" : "oferty"
+          }`}</small>
+      )}<br/>
+      {user.type === "Employer" ? (
+          <IndexLinkContainer as={Button} to="/offerForm">
+            <Button variant="success" className="mt-2">
+              Dodaj ofertę
+            </Button>
+          </IndexLinkContainer>
+      ) : null}
     </Form>
   );
 };
