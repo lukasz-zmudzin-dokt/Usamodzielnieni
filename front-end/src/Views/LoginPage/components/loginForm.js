@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Form } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 
 class LoginForm extends React.Component {
     constructor(props) {

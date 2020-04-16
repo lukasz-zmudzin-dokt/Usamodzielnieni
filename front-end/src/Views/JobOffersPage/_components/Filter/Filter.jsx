@@ -1,21 +1,23 @@
 import React, { useState, useEffect, useContext } from "react";
 import { registerLocale } from "react-datepicker";
 import { Form, Button, Col } from "react-bootstrap";
-import "./style.css";
+
 import FormGroup from "components/FormGroup";
 import { voivodeships } from "constants/voivodeships";
 import polish from "date-fns/locale/pl";
 import { getSelects } from "Views/OfferForm/functions/fetchData";
 import { UserContext } from "context";
+import {IndexLinkContainer} from "react-router-bootstrap";
 registerLocale("pl", polish);
 
-const Filter = ({ setFilters, count }) => {
+const Filter = ({ setFilters, count, disabled }) => {
   const [voivodeship, setVoivodeship] = useState("-- Wybierz --");
   const [pageSize, setPageSize] = useState(10);
   const [minExpirationDate, setMinExpirationDate] = useState();
   const [category, setCategory] = useState("-- Wybierz --");
   const [type, setType] = useState("-- Wybierz --");
   const [arrays, setArrays] = useState([]);
+  const user = useContext(UserContext);
 
   const context = useContext(UserContext);
 
@@ -142,15 +144,34 @@ const Filter = ({ setFilters, count }) => {
         />
       </Form.Row>
 
-      <Button type="submit" className="mr-3" variant="primary">
-        Filtruj oferty
+      <Button
+        type="submit"
+        className="mr-3"
+        variant="primary"
+        disabled={disabled}
+      >
+        {disabled ? "Ładowanie..." : "Filtruj oferty"}
       </Button>
-      <Button variant="outline-primary" className="mr-3" onClick={deleteFilter}>
-        Wyczyść filtry
+      <Button
+        variant="outline-primary"
+        className="mr-3"
+        onClick={deleteFilter}
+        disabled={disabled}
+      >
+        {disabled ? "Ładowanie..." : "Wyczyść filtry"}
       </Button>
       {count !== 0 && (
-        <small className="search__countText">Znaleziono {count} ofert</small>
-      )}
+          <small className="search__countText">{`Znaleziono ${count} ${
+              count >= 5 || count === 0 ? "ofert" : "oferty"
+          }`}</small>
+      )}<br/>
+      {user.type === "Employer" ? (
+          <IndexLinkContainer as={Button} to="/offerForm">
+            <Button variant="success" className="mt-2">
+              Dodaj ofertę
+            </Button>
+          </IndexLinkContainer>
+      ) : null}
     </Form>
   );
 };

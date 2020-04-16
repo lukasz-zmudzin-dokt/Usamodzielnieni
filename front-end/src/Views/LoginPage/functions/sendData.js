@@ -10,17 +10,12 @@ export const sendData = async (credentials) => {
   });
 
   if (response.status === 201) {
-    const data = await response.json().then(data => mapData(data));
+    const data = await response.json().then(data => data);
     return {
       status: response.status,
       ...data
     }
   } else {
-    throw {status: response.status}
+    throw response.status;
   }
 };
-
-const mapData = data => ({
-  token: data.token,
-  type: data.type
-});

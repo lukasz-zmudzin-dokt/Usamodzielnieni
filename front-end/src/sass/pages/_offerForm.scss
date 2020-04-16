@@ -1,0 +1,36 @@
+.react-datepicker-wrapper {
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .offerForm {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 0px;
+  }
+
+  .offerForm__card {
+    width: 100%;
+  }
+
+  .offerForm__form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  .offerForm__wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 48%;
+    justify-content: center;
+  }
+  .offerForm__textContainer {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .offerForm__textarea {
+    flex-grow: 1;
+  }
+}
