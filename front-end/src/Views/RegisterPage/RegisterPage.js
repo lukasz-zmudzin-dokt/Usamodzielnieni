@@ -9,6 +9,7 @@ import {
 } from "./components";
 import { UserContext } from "context";
 import { sendData } from "./functions/sendData";
+import TypeSelection from "./components/TypeSelection/TypeSelection";
 
 class RegisterPage extends React.Component {
   constructor(props) {
@@ -139,33 +140,6 @@ class RegisterPage extends React.Component {
     this.setState({ disabled: false });
   };
 
-  renderSelection = (isAdmin) => {
-    let array;
-    if (isAdmin) {
-      array = ['Weryfikacja użytkowników', 'Weryfikacja CV', 'Weryfikacja ofert pracy', 'Kreator postów na blogu', 'Moderator bloga'];
-    } else {
-      array = ['Podopiecznym', 'Pracodawcą']
-    }
-
-    return (
-      <Form.Group className="register_account_type">
-        <Form.Label>{isAdmin ? "Nowa rola:" : "Jestem:"}</Form.Label>
-        <Form.Control
-            data-testid="typeSelector"
-            className="register_radio_type"
-            as="select"
-            onChange={e => this.selectType(e)}
-        >
-          {array.map(type => (
-              <option key={type} value={type}>
-                {type}
-              </option>
-          ))}
-        </Form.Control>
-      </Form.Group>
-    )
-  };
-
   render() {
     const {
       validated,
@@ -176,7 +150,7 @@ class RegisterPage extends React.Component {
       redirect,
       disabled
     } = this.state;
-    const { renderSelection, renderSection, handleResponse, renderRedirect } = this;
+    const { renderSection, handleResponse, renderRedirect } = this;
     return (
       <Container className="loginPage loginPage__register">
         <Card className="loginPage__card">
@@ -184,7 +158,7 @@ class RegisterPage extends React.Component {
             Rejestracja
           </Card.Header>
           <Card.Body className="registerPage__body">
-            {renderSelection(window.location.pathname.toLowerCase() === "/staff/register")}
+            <TypeSelection isAdmin={window.location.pathname.toLowerCase() === "/staff/register"} selectType={this.selectType}/>
             <Form
               noValidate
               validated={validated}

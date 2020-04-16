@@ -1,5 +1,5 @@
 import React from "react";
-import {Button, Card, Container} from "react-bootstrap";
+import {Card, Container} from "react-bootstrap";
 import UserDetails from "Views/UserProfilePage/components/UserDetails";
 import UserBasicInfo from "Views/UserProfilePage/components/UserBasicInfo";
 import { UserContext } from "context";
