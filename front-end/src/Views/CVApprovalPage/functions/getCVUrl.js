@@ -20,8 +20,6 @@ export const getCVUrl = async (token, cv_id) => {
                     result: res
                 };
             else    // jeżeli jest to obiekt z kodem błędu i opisem to zwróć "kod:opis_błędu"
-                return {
-                    status: res
-                };
+                return res;
         })
 };
