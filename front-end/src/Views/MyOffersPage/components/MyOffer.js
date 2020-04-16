@@ -4,33 +4,53 @@ import InterestedPerson from "./InterestedPerson";
 import MyOffersLegend from "./MyOffersLegend";
 import { getInterestedPeople } from "Views/MyOffersPage/functions/getInterestedPeople";
 import "Views/MyOffersPage/style.css";
-import {loadInterestedPeople} from "../functions/loadInterestedPeople";
+import { UserContext } from "context/UserContext";
 
-const MyOffer = ({ offer, token, component})  => {
-    return (
-        <Card className="border">
-            <Accordion.Toggle className="mouse-hand-pointer" as={Card.Header} eventKey={offer.id} onClick={e => loadInterestedPeople(token, offer.id, component)}>
-                {offer.offer_name} -
-                <Alert.Link href={"/jobOffers/" + offer.id}> strona oferty</Alert.Link>
-            </Accordion.Toggle>
-            <Accordion.Collapse eventKey={offer.id}>
-                <Card.Body>
-                    {component.state.loadingPeople === true ? (
-                        <Alert variant="info" className="mb-0">Ładuję...</Alert>
-                    ) : null}
-                    {component.state.answers.length === 0 && component.state.loadingPeople === false ? (
-                        <Alert variant="info" className="mb-0">Do tej oferty nie zgłosiła się jeszcze żadna osoba.</Alert>
-                    ) : null}
-                    <MyOffersLegend answers={component.state.answers} />
-                    {component.state.answers.map((value) => {
-                        return (
-                            <InterestedPerson person={value} key={value.id}/>
-                        )
-                    })}
-                </Card.Body>
-            </Accordion.Collapse>
-        </Card>
-    );
-};
+class MyOffer extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            offer: {},
+            answers: [],
+            loading: true
+        };
+    }
+
+    render() {
+        const {
+            offer
+        } = this.props;
+        const {
+            answers,
+            loading
+        } = this.state;
+        return (
+            <Card className="no-lrborder">
+                <Accordion.Toggle className="mouse-hand-pointer" as={Card.Header} eventKey={offer.id} onClick={e => getInterestedPeople(this.context.token, offer.id).then(resp => resp.status === "200:OK" ? this.setState({loading: false, answers: resp.result}) : this.setState({ loading: true }))}>
+                    {offer.offer_name} -
+                    <Alert.Link href={"/jobOffers/" + offer.id}> strona oferty</Alert.Link>
+                </Accordion.Toggle>
+                <Accordion.Collapse eventKey={offer.id}>
+                    <Card.Body>
+                        {loading === true ? (
+                            <Alert variant="info" className="mb-0">Ładuję...</Alert>
+                        ) : null}
+                        {answers.length === 0 && loading === false ? (
+                            <Alert variant="info" className="mb-0">Do tej oferty nie zgłosiła się jeszcze żadna osoba.</Alert>
+                        ) : null}
+                        <MyOffersLegend answers={answers} />
+                        {answers.map((value) => {
+                            return (
+                                <InterestedPerson person={value} key={value.user_id}/>
+                            )
+                        })}
+                    </Card.Body>
+                </Accordion.Collapse>
+            </Card>
+        );
+    }
+}
+
+MyOffer.contextType = UserContext;
 
 export default MyOffer;

@@ -87,6 +87,9 @@ class Menu extends React.Component {
                             <LinkContainer to="/blog">
                                 <Button className="menu-button-small menu-button-white">Blogi</Button>
                             </LinkContainer>
+                            <LinkContainer to="/myOffers">
+                                <Button className="menu-button-small menu-button-white">Moje Oferty</Button>
+                            </LinkContainer>
                         </ButtonToolbar>
                     </Col>
                     <Col />

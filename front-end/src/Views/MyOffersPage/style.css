@@ -20,3 +20,7 @@
 .mouse-hand-pointer {
     cursor: pointer;
 }
+.no-lrborder {
+    border-left: none;
+    border-right: none;
+}

@@ -22,6 +22,9 @@ class HeaderTemplate extends React.Component {
                     Moje CV
                 </Nav.Link>
             </IndexLinkContainer>
+            <IndexLinkContainer to="/myOffers">
+                <Nav.Link id="myOffers">Moje oferty</Nav.Link>
+            </IndexLinkContainer>
           <Nav.Link id="learningTheRopes">Jak zacząć?</Nav.Link>
           <IndexLinkContainer to="/jobOffers">
             <Nav.Link id="jobOffers">Oferty pracy</Nav.Link>
@@ -35,6 +38,7 @@ class HeaderTemplate extends React.Component {
           <IndexLinkContainer to="/contact">
             <Nav.Link id="contactPhones">Telefony</Nav.Link>
           </IndexLinkContainer>
+
         </Nav>
       );
   }

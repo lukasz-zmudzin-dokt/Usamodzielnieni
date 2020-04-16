@@ -10,44 +10,41 @@ class MyOffersPage extends React.Component {
         super(props);
         this.state = {
             offers: [],
-            answers: [],
             error: false,
             errorMessage: "",
-            loadingOffers: true,
-            loadingPeople: true
+            loading: true
         };
     }
 
     componentDidMount() {
-        getOffers(this.context.token).then(response => console.log(response));
-        getOffers(this.context.token).then(response => response.status === "200:OK" ? this.setState({ offers: response.result, loadingOffers: false }) : this.setState({ error: true, errorMessage: response.status, loadingOffers: false}));
+        getOffers(this.context.token)
+        .then(response => response.status === "200:OK" ?
+            this.setState({ offers: response.result, loading: false }) :
+            this.setState({ error: true, errorMessage: response.status, loading: false}));
     }
 
     render() {
         const {
             offers,
-            answers,
             error,
             errorMessage,
-            loadingOffers
+            loading
         } = this.state;
-        return(
-            <Container>
-                <div className="max-height pt-4">
+        return (
+            <Container className="pt-4">
                     <Card>
                         <Card.Header><h3>Moje oferty</h3></Card.Header>
-                        <Card.Body>
-                            {loadingOffers === true ? (
+                        <Card.Body className="p-0">
+                            {loading === true ? (
                                 <Alert variant="info" className="mb-0">Ładuję...</Alert>
                             ) : null}
                             {error ? (
                                 <Alert variant="danger">Ups, coś poszło nie tak. Kod błędu - {errorMessage}</Alert>
                             ) : (
-                                <MyOffers offers={offers} token={this.context.token} component={this}/>
+                                <MyOffers offers={offers}/>
                             )}
                         </Card.Body>
                     </Card>
-                </div>
             </Container>
         );
     }
