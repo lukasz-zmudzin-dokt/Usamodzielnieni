@@ -4,7 +4,7 @@ import UserDetails from "Views/UserProfilePage/components/UserDetails";
 import UserBasicInfo from "Views/UserProfilePage/components/UserBasicInfo";
 import { UserContext } from "context";
 import { getUserData } from "Views/UserProfilePage/functions/getUserData.js";
-import { LinkContainer } from 'react-router-bootstrap';
+import AdminRegisterButton from "./components/AdminRegisterButton/AdminRegisterButton";
 
 const names = {
   role: {
@@ -53,16 +53,6 @@ class UserProfilePage extends React.Component {
     });
   }
 
-  renderRegister = () => {
-    return (
-        <LinkContainer to="/staff/register">
-          <Button className="mt-3" variant="success" block>
-            Zarejestruj administratora
-          </Button>
-        </LinkContainer>
-    )
-  };
-
   render() {
     return (
       <Container>
@@ -74,8 +64,8 @@ class UserProfilePage extends React.Component {
             <UserBasicInfo user={this.state.user} names={names} />
           </Card.Body>
           <UserDetails user={this.state.user} names={names} />
+          <AdminRegisterButton userType={this.context.type} />
         </Card>
-        {this.context.type === 'Staff' ? this.renderRegister() : null}
       </Container>
     );
   }

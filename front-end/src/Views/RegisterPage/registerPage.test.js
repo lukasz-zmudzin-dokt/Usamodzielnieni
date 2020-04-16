@@ -56,7 +56,7 @@ describe('RegisterPage', () => {
             expect(getByDisplayValue("Pracodawcą")).toBeInTheDocument();
         });
 
-        //it('should ')
+        //it('should ')git
     });
 
     describe("api connection test", () => {
