@@ -16,14 +16,9 @@ const adjustObject = (account_type, home, company)  => {
                 company_address: `${source.city} ${source.street} ${source.city_code}`,
                 nip: source.company_nip
             })}
-        case 'Weryfikacja użytkowników': type = 'staff_verification'; break;
-        case 'Weryfikacja CV': type = 'staff_cv'; break;
-        case 'Weryfikacja ofert pracy': type = 'staff_jobs'; break;
-        case 'Kreator postów na blogu': type = 'staff_blog_creator'; break;
-        case 'Moderator bloga': type = 'staff_blog_moderator'; break;
-        default: type = undefined;
+        default:
+            return {group_type: account_type};
     }
-    return {group_type: type};
 };
 
 

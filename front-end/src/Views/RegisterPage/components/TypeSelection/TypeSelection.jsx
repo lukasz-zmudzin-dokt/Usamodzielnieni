@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {Form} from "react-bootstrap";
-import {adminGroup, commonGroup} from "../../../../constants/roles";
+import {adminGroup, commonGroup} from "constants/roles";
 
 const TypeSelection = ({isAdmin, selectType}) => (
     <Form.Group className="register_account_type">

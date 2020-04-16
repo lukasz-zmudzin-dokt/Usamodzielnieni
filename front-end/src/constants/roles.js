@@ -1,18 +1,18 @@
 export const adminGroup = [
     {
-        name: "",
+        name: "staff_verification",
         placeholder: 'Weryfikacja użytkowników'
     }, {
-        name: "",
+        name: "staff_cv",
         placeholder: "Weryfikacja CV"
     }, {
-        name: "",
+        name: "staff_jobs",
         placeholder: "Weryfikacja ofert pracy"
     }, {
-        name: "",
+        name: "staff_blog_creator",
         placeholder: "Kreator postów na blogu",
     }, {
-        name: "",
+        name: "staff_blog_moderator",
         placeholder: "Moderator bloga"
     }
 ];
