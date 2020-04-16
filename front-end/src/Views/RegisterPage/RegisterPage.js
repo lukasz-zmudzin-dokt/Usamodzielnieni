@@ -1,6 +1,6 @@
 import React from "react";
 import { Container, Card, Form, Button, Alert } from "react-bootstrap";
-import { Link, Redirect } from "react-router-dom";
+import {Link, Redirect, withRouter} from "react-router-dom";
 import {
   HomeDataForm,
   PersonalDataForm,
@@ -20,7 +20,7 @@ class RegisterPage extends React.Component {
       companyData: null,
       accountData: null,
 
-      account_type: window.location.pathname !== "/staff/register" ? "Podopiecznym" : "Weryfikacja użytkowników",
+      account_type: this.props.match.params.role !== 'staff' ? "Podopiecznym" : "Weryfikacja użytkowników",
       validated: false,
       redirect: false,
       fail_message: "",
@@ -103,8 +103,7 @@ class RegisterPage extends React.Component {
       homeData: this.state.homeData,
       companyData: this.state.companyData,
       accountData: this.state.accountData,
-      account_type: this.state.account_type,
-      account_group: this.state.account_group
+      account_type: this.state.account_type
     };
 
     const isOK = this.handleSubmit(data, e);
@@ -158,7 +157,7 @@ class RegisterPage extends React.Component {
             Rejestracja
           </Card.Header>
           <Card.Body className="registerPage__body">
-            <TypeSelection isAdmin={window.location.pathname.toLowerCase() === "/staff/register"} selectType={this.selectType}/>
+            <TypeSelection isAdmin={this.props.match.params.role === 'staff'} selectType={this.selectType}/>
             <Form
               noValidate
               validated={validated}
@@ -210,4 +209,4 @@ class RegisterPage extends React.Component {
 
 RegisterPage.contextType = UserContext;
 
-export default RegisterPage;
+export default withRouter(RegisterPage);

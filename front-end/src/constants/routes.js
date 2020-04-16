@@ -21,7 +21,7 @@ const paths = {
   DASHBOARD: "/",
   CV_CREATOR: "/cvEditor",
   CV_EDITOR: "/cvEditor/:id",
-  REGISTER: "/newAccount",
+  REGISTER: "/newAccount/:role?",
   FOOTER: "/footer",
   LOGIN: "/login",
   USER: "/user",
@@ -35,8 +35,7 @@ const paths = {
   BLOG_FORM: "/blog/newPost",
   BLOG_EDIT: "/blog/newPost/:id",
   JOB_OFFER_DETAILS: "/jobOffers/:id",
-  MY_CVS: "/myCVs",
-  REGISTER_ADMIN: "/staff/register"
+  MY_CVS: "/myCVs"
 };
 
 export const userTypes = {
@@ -154,12 +153,6 @@ export default [
     component: MyCVsPage,
     isPrivate: true,
     type: userTypes.STANDARD
-  }, {
-    path: paths.REGISTER_ADMIN,
-    component: RegisterPage,
-    isPrivate: true,
-    type: userTypes.STAFF,
-    exact: true
   }
 ];
 
