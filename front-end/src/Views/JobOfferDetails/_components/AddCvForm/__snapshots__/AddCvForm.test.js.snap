@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AddCvForm should render without crashing 1`] = `
+<div>
+  <div
+    class="fade mb-0 alert alert-info show"
+    role="alert"
+  >
+    Poczekaj na pozytywną weryfikację CV lub 
+    <a
+      class="alert-link"
+      href="/cvEditor"
+    >
+      utwórz nowe CV
+    </a>
+    .
+  </div>
+</div>
+`;

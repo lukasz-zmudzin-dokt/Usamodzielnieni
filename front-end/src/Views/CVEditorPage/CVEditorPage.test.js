@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, fireEvent, queries } from '@testing-library/react';
 import CVEditorPage from './CVEditorPage';
-import { sendData } from "./functions/other.js";
+import { sendData, getFeedback } from "./functions/other.js";
 
 let mock_submitData = {};
 
@@ -68,10 +68,29 @@ jest.mock('./components', () => ({
 jest.mock('./functions/other.js');
 
 describe('CVEditorPage', () => {
+    let apiComments = {
+        personalata: "abc",
+        education: "def",
+        workExperience: "ghi",
+        skills: "jkl",
+        languages: "mno",
+        photo: "xd"
+    };
+    let apiShouldFail;
     beforeEach(() => {
+        apiShouldFail = false;
         jest.clearAllMocks();
         mock_submitData = {};
         sendData.mockImplementation(() => jest.fn());
+        getFeedback.mockImplementation(() => {
+            if(apiShouldFail) {
+                throw 500;
+            } else {
+                return new Promise((resolve, reject) => {
+                    resolve({ apiComments });
+                });
+            }
+        });
     });
 
     it('should render without crashing', () => {
@@ -80,6 +99,13 @@ describe('CVEditorPage', () => {
         );
         expect(container).toMatchSnapshot();
     });
+    it('should render without crashing when api fails', () => {
+        apiShouldFail = true;
+        const { container } = render(
+            <CVEditorPage />
+        );
+        expect(container).toMatchSnapshot();
+    })
 
     it('should change tab when the active card calls onNextClick and onPrevClick function', () => {
         let activeTab
