@@ -26,6 +26,9 @@ class HeaderTemplate extends React.Component {
           <IndexLinkContainer to="/jobOffers">
             <Nav.Link id="jobOffers">Oferty pracy</Nav.Link>
           </IndexLinkContainer>
+            <IndexLinkContainer to="/cvApproval">
+                <Nav.Link id="cvApproval">Zatwierdzanie CV</Nav.Link>
+            </IndexLinkContainer>
             <IndexLinkContainer to="/blog">
                 <Nav.Link id="blogs">Blogi</Nav.Link>
             </IndexLinkContainer>
