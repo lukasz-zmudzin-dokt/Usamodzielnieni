@@ -4,8 +4,17 @@ import PhoneCard from "./PhoneCard";
 
 describe("PhoneCard", () => {
 
+    const contact = {
+        name: "abc_name",
+        number: "123456789"
+    }
+
     it("should render without crashing", () => {
-        render(<PhoneCard />);
+        const { getByText } = render(
+            <PhoneCard name={contact.name} number={contact.number} />
+        );
+        expect(getByText("abc_name", { exact: false })).toBeInTheDocument();
+        expect(getByText("123456789", { exact: false })).toBeInTheDocument();
     });
 
     it("should match snapshot", async () => {
