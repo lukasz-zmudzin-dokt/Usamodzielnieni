@@ -5,7 +5,7 @@ import {Button} from "react-bootstrap";
 const AdminRegisterButton = ({userType}) => (
     userType === "Staff" ? (
         <LinkContainer to="/newAccount/staff">
-            <Button className="my-3 mx-auto" size="lg" variant="primary">
+            <Button variant="primary">
                 Zarejestruj administratora
             </Button>
         </LinkContainer>

@@ -64,7 +64,9 @@ class UserProfilePage extends React.Component {
             <UserBasicInfo user={this.state.user} names={names} />
           </Card.Body>
           <UserDetails user={this.state.user} names={names} />
-          <AdminRegisterButton className="justify-content-center" userType={this.context.type} />
+          <Card.Body className="text-center">
+            <AdminRegisterButton userType={this.context.type} />
+          </Card.Body>
         </Card>
       </Container>
     );
