@@ -2,6 +2,26 @@ import React from "react";
 import BlogContent from "./BlogContent";
 import {fireEvent, render} from "@testing-library/react";
 import {waitForElement} from "@testing-library/dom";
+import {Router} from "react-router-dom";
+import {createMemoryHistory} from 'history';
+import {UserContext} from "context/UserContext";
+
+const renderWithRouter = (
+    ui, {
+        route = `/blog/blogPost/1`,
+        history = createMemoryHistory({initialEntries: [route]}),
+    } = {}
+) => {
+    let context = {data: {}};
+    return {
+        ...render(
+            <UserContext.Provider value={context}>
+                <Router history={history}>{ui}</Router>
+            </UserContext.Provider>
+        ),
+        history
+    };
+};
 
 describe('BlogContent', () => {
     let post;
@@ -55,6 +75,7 @@ describe('BlogContent', () => {
             },
             token: '123'
         };
+        apiFail = false;
     });
 
     it('should match snapshot', () => {
@@ -120,8 +141,6 @@ describe('BlogContent', () => {
     });
 
     it('should delete post', async() => {
-        apiFail = false;
-
         const {getByText} = render(
             <BlogContent post={post} user={admin} />
         );
@@ -144,5 +163,15 @@ describe('BlogContent', () => {
         await waitForElement(() => getByText('Wystąpił błąd podczas usuwania posta.', {exact: false}));
         expect(getByText('Wystąpił błąd podczas usuwania posta.', {exact: false})).toBeInTheDocument();
         expect(queryByText('Ten post został usunięty', {exact: false})).not.toBeInTheDocument();
+    });
+
+    it('should redirect on edit click', async () => {
+        const {history, getByText} = renderWithRouter(
+            <BlogContent post={post} user={admin} />
+        );
+
+        fireEvent.click(getByText('Edytuj', {exact: false}));
+        
+        expect(history.location.pathname).toEqual("/blog/newPost/" + post.id);
     });
 });

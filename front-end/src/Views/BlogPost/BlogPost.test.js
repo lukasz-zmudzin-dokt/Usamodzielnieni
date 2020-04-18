@@ -1,13 +1,14 @@
 import React from "react";
 import BlogPost from "./BlogPost";
 import {render, waitForElement} from "@testing-library/react";
-import {MemoryRouter} from "react-router-dom";
+import {UserContext} from "context/UserContext";
 
 
 describe('BlogPost', () => {
     let post;
     let apiStatus;
     let id;
+    let user;
 
     beforeAll(() => {
         id = 123;
@@ -26,6 +27,12 @@ describe('BlogPost', () => {
                 }
             });
         });
+        user = {
+            type: "Staff",
+            data: {
+                email: "qwe@qwe.fgh"
+            }
+        }
     });
 
     beforeEach(() => {
@@ -41,16 +48,22 @@ describe('BlogPost', () => {
             date_created: "2019-07-06qweqwe",
             category: "qwe",
             tags: ["tag1", "tag2", "tag3"],
-            comments: []
+            comments: [{
+                author: {
+                    first_name: "Jan",
+                    last_name: "Nowak",
+                    email: "qwe@qwe.qwe"
+                }
+            }]
         };
         jest.clearAllMocks();
     });
 
     it('should match snapshot after loaded', async () => {
         const { container, getByText } = render(
-            <MemoryRouter>
+            <UserContext.Provider value={user}>
                 <BlogPost/>
-            </MemoryRouter>
+            </UserContext.Provider>
         );
         await waitForElement(() => getByText('Lorem ipsum dolor', {exact: false}));
 
@@ -59,9 +72,9 @@ describe('BlogPost', () => {
 
     it('should render loading when loading lol', async() => {
         const {getByText, queryByText} = render(
-            <MemoryRouter>
+            <UserContext.Provider value={user}>
                 <BlogPost/>
-            </MemoryRouter>
+            </UserContext.Provider>
         );
 
         expect(getByText("Ładowanie", {exact: false})).toBeInTheDocument();
@@ -72,13 +85,24 @@ describe('BlogPost', () => {
     it('should render error on api fail', async() => {
         apiStatus = 500;
         const {getByText, queryByText} = render(
-            <MemoryRouter>
+            <UserContext.Provider value={user}>
                 <BlogPost/>
-            </MemoryRouter>
+            </UserContext.Provider>
         );
 
         await waitForElement(() => getByText("Wystąpił błąd", {exact: false}));
         expect(getByText("Wystąpił błąd", {exact: false})).toBeInTheDocument();
         expect(queryByText("Lorem ipsum dolor", {exact: false})).not.toBeInTheDocument();
+    });
+
+    it('should render comments', async () => {
+        const {getByText} = render(
+            <UserContext.Provider value={user}>
+                <BlogPost/>
+            </UserContext.Provider>
+        );
+
+        await waitForElement(() => fetch);
+        expect(getByText("Jan Nowak", {exact: false})).toBeInTheDocument();
     });
 });

@@ -8,17 +8,38 @@ exports[`BlogPost should match snapshot after loaded 1`] = `
     <div
       class="card"
     >
-      <div
-        class="card-header"
+      <img
+        class="card-img-top"
+        src="https://usamo-back.herokuapp.comundefined"
       />
       <div
         class="post_content mx-4 card-body"
       >
-        <h3
+        <h1
           class="post_title card-title"
         >
-          Tytuł posta
-        </h3>
+          <div
+            class="row"
+          >
+            <div
+              class="btn_toolbar text-center btn-toolbar"
+              role="toolbar"
+            >
+              <button
+                class="button-edit mx-3 btn btn-warning"
+                type="button"
+              >
+                Edytuj 🖉
+              </button>
+              <button
+                class="button-delete mx-3 btn btn-danger"
+                type="button"
+              >
+                Usuń ✗
+              </button>
+            </div>
+          </div>
+        </h1>
         <h6
           class="text-muted mb-4 mt-2 card-subtitle"
         >
@@ -28,7 +49,11 @@ exports[`BlogPost should match snapshot after loaded 1`] = `
         <p
           class="blog_content_text text-justify card-text"
         >
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin nibh augue, suscipit a, scelerisque sed, lacinia in, mi. Cras vel lorem. Etiam pellentesque aliquet tellus. Phasellus pharetra nulla ac diam. Quisque semper justo at risus. Donec venenatis, turpis vel hendrerit interdum, dui ligula ultricies purus, sed posuere libero dui id orci. Nam congue, pede vitae dapibus aliquet, elit magna vulputate arcu, vel tempus metus leo non est. Etiam sit amet lectus quis est congue mollis. Phasellus congue lacus eget neque. Phasellus ornare, ante vitae consectetuer consequat, purus sapien ultricies dolor, et mollis pede metus eget nisi. Praesent sodales velit quis augue. Cras suscipit, urna at aliquam rhoncus, urna quam viverra nisi, in interdum massa nibh nec erat.
+          <div>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin nibh augue, suscipit a, scelerisque sed, lacinia in, mi. Cras vel lorem. Etiam pellentesque aliquet tellus. Phasellus pharetra nulla ac diam. Quisque semper justo at risus. Donec venenatis, turpis vel hendrerit interdum, dui ligula ultricies purus, sed posuere libero dui id orci. Nam congue, pede vitae dapibus aliquet, elit magna vulputate arcu, vel tempus metus leo non est. Etiam sit amet lectus quis est congue mollis. Phasellus congue lacus eget neque. Phasellus ornare, ante vitae consectetuer consequat, purus sapien ultricies dolor, et mollis pede metus eget nisi. Praesent sodales velit quis augue. Cras suscipit, urna at aliquam rhoncus, urna quam viverra nisi, in interdum massa nibh nec erat.
+            </p>
+          </div>
         </p>
         <p
           class="post_taglist mt-5"
@@ -70,7 +95,7 @@ exports[`BlogPost should match snapshot after loaded 1`] = `
             <div
               class="row"
             >
-              Opublikowano: 06.07.2019
+              Opublikowano: 20.9-.7-06
             </div>
           </div>
           <div
@@ -80,7 +105,7 @@ exports[`BlogPost should match snapshot after loaded 1`] = `
               class="text-right mx-3 row"
             >
               Liczba komentarzy: 
-              0
+              1
             </div>
           </div>
         </div>
@@ -92,53 +117,63 @@ exports[`BlogPost should match snapshot after loaded 1`] = `
       <div
         class="card-body"
       >
-        <h3
-          class="mb-3 card-title"
-        >
-          Komentarze:
-        </h3>
-        <div
-          class="fade alert alert-info show"
-          role="alert"
-        >
-          Brak komentarzy.
-        </div>
-        <div
-          class="card"
-        >
+        <div>
+          <h4>
+            Komentarze
+          </h4>
           <div
-            class="card-body"
+            class="commentItem"
+          >
+            <h5
+              class="commentItem__header"
+            >
+              Jan Nowak
+            </h5>
+            <small
+              class="commentItem__date"
+            >
+              dodano: 
+              Invalid Date
+            </small>
+            <p
+              class="commentItem__content"
+            />
+          </div>
+        </div>
+        <div>
+          <h5>
+            Dodaj komentarz
+          </h5>
+          <form
+            class=""
+            novalidate=""
           >
             <div
-              class="card-title h5"
+              class="form-group"
             >
-              Dodaj komentarz
+              <textarea
+                class="form-control"
+                id="commentContent"
+                placeholder="Treść komentarza"
+                required=""
+              />
+              <div
+                class="invalid-feedback"
+              >
+                Wprowadź treść komentarza.
+              </div>
             </div>
-            <form
-              class=""
+            <div
+              class="CommentForm__submitGroup mb-0 form-group"
             >
-              <div
-                class="form-group"
+              <button
+                class="btn btn-primary"
+                type="submit"
               >
-                <textarea
-                  class="form-control"
-                  id="commentContent"
-                  placeholder="Treść komentarza"
-                  required=""
-                />
-              </div>
-              <div
-                class="CommentForm__submitGroup mb-0 form-group"
-              >
-                <button
-                  class="btn btn-primary"
-                  type="submit"
-                >
-                  Prześlij
-                </button>
-              </div>
-            </form>
-          </div>
+                Prześlij
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
