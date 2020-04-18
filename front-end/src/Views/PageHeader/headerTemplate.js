@@ -13,29 +13,86 @@ class HeaderTemplate extends React.Component {
   displayMenu() {
     if (this.props.location.pathname !== "/")
       return (
-        <Nav className="mr-auto ">
-          <IndexLinkContainer to={!this.context.token ? "/login" : "/cvEditor"}>
-            <Nav.Link id="cvEditor">Kreator CV</Nav.Link>
-          </IndexLinkContainer>
-            <IndexLinkContainer to={"/myCVs"}>
-                <Nav.Link id="myCVs">
-                    Moje CV
-                </Nav.Link>
+        this.context.token? (
+          (this.context.type === 'Standard')? (
+            <Nav className="mr-auto ">
+              <IndexLinkContainer to={!this.context.token ? "/login" : "/cvEditor"}>
+                <Nav.Link id="cvEditor">Kreator CV</Nav.Link>
+              </IndexLinkContainer>
+                <IndexLinkContainer to={"/myCVs"}>
+                  <Nav.Link id="myCVs">Moje CV</Nav.Link>
+                </IndexLinkContainer>
+              {/*<Nav.Link id="learningTheRopes">Jak zacząć?</Nav.Link>*/}
+              <IndexLinkContainer to="/jobOffers">
+                <Nav.Link id="jobOffers">Oferty pracy</Nav.Link>
+              </IndexLinkContainer>
+                <IndexLinkContainer to="/blog">
+                    <Nav.Link id="blogs">Blogi</Nav.Link>
+                </IndexLinkContainer>
+              {/* <Nav.Link id="personalityTests">Testy</Nav.Link> */}
+              {/*<Nav.Link id="stories">Historia</Nav.Link>*/}
+              {/* <Nav.Link id="moneyMgmt">Zarządzanie budżetem</Nav.Link> */}
+              <IndexLinkContainer to="/contact">
+                <Nav.Link id="contactPhones">Telefony</Nav.Link>
+              </IndexLinkContainer>
+            </Nav>
+          ) : (
+            (this.context.type === 'Employer')? (
+              <Nav className="mr-auto ">
+                <IndexLinkContainer to="/jobOffers">
+                  <Nav.Link id="jobOffers">Oferty pracy</Nav.Link>
+                </IndexLinkContainer>
+                <IndexLinkContainer to="/offerForm">
+                  <Nav.Link id="jobOffers">Dodaj ofertę</Nav.Link>
+                </IndexLinkContainer>
+                <IndexLinkContainer to="/myOffers">
+                  <Nav.Link id="myOffers">Moje oferty</Nav.Link>
+                </IndexLinkContainer>
+                <IndexLinkContainer to="/blog">
+                  <Nav.Link id="blogs">Blogi</Nav.Link>
+                </IndexLinkContainer>
+                <IndexLinkContainer to="/contact">
+                  <Nav.Link id="contactPhones">Telefony</Nav.Link>
+                </IndexLinkContainer>
+                {/* <Nav.Link id="personalityTests">Testy</Nav.Link> */}
+                {/*<Nav.Link id="stories">Historia</Nav.Link>*/}
+                {/* <Nav.Link id="moneyMgmt">Zarządzanie budżetem</Nav.Link> */}
+              </Nav>
+            ) : (
+              <Nav className="mr-auto ">
+                <IndexLinkContainer to="/jobOffers">
+                  <Nav.Link id="jobOffers">Oferty pracy</Nav.Link>
+                </IndexLinkContainer>
+                <IndexLinkContainer to="/blog">
+                  <Nav.Link id="blogs">Blogi</Nav.Link>
+                </IndexLinkContainer>
+                <IndexLinkContainer to="/cvApproval">
+                  <Nav.Link id="cvApproval">Akceptacja CV</Nav.Link>
+                </IndexLinkContainer>
+                <IndexLinkContainer to="/blog/newPost">
+                  <Nav.Link id="newPost">Nowy post</Nav.Link>
+                </IndexLinkContainer>
+                {/* <Nav.Link id="personalityTests">Testy</Nav.Link> */}
+                {/*<Nav.Link id="stories">Historia</Nav.Link>*/}
+                {/* <Nav.Link id="moneyMgmt">Zarządzanie budżetem</Nav.Link> */}
+                <IndexLinkContainer to="/contact">
+                  <Nav.Link id="contactPhones">Telefony</Nav.Link>
+                </IndexLinkContainer>
+              </Nav>
+            )
+          )
+        ) : (
+          <Nav className="mr-auto ">
+            {/*<Nav.Link id="learningTheRopes">Jak zacząć?</Nav.Link>*/}
+            {/* <Nav.Link id="personalityTests">Testy</Nav.Link> */}
+            {/*<Nav.Link id="stories">Historia</Nav.Link>*/}
+            {/* <Nav.Link id="moneyMgmt">Zarządzanie budżetem</Nav.Link> */}
+            <IndexLinkContainer to="/contact">
+              <Nav.Link id="contactPhones">Telefony</Nav.Link>
             </IndexLinkContainer>
-          <Nav.Link id="learningTheRopes">Jak zacząć?</Nav.Link>
-          <IndexLinkContainer to="/jobOffers">
-            <Nav.Link id="jobOffers">Oferty pracy</Nav.Link>
-          </IndexLinkContainer>
-            <IndexLinkContainer to="/blog">
-                <Nav.Link id="blogs">Blogi</Nav.Link>
-            </IndexLinkContainer>
-          {/* <Nav.Link id="personalityTests">Testy</Nav.Link> */}
-          <Nav.Link id="stories">Historia</Nav.Link>
-          {/* <Nav.Link id="moneyMgmt">Zarządzanie budżetem</Nav.Link> */}
-          <IndexLinkContainer to="/contact">
-            <Nav.Link id="contactPhones">Telefony</Nav.Link>
-          </IndexLinkContainer>
-        </Nav>
+          </Nav>
+        )
+        
       );
   }
 
@@ -100,6 +157,8 @@ class HeaderTemplate extends React.Component {
   render() {
     // const { match, location, history } = this.props;
     // console.log(match, location, history, this.props);
+    //if(this.context.token)
+    //  console.log(this.context.type);
     return (
       <Navbar id="navbar_menu" variant="dark" fixed="top" expand="xl">
         <Navbar.Brand id="navbar_logo">
