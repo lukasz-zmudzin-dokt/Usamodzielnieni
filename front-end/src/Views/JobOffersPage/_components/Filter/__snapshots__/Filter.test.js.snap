@@ -200,8 +200,9 @@ exports[`Filter(JobOffers) renders correctly 1`] = `
   <small
     class="search__countText"
   >
-    Znaleziono 10 ofert
+    Znaleziono 
+    10
+     ofert
   </small>
-  <br />
 </form>
 `;
