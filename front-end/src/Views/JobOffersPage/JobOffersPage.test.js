@@ -206,7 +206,7 @@ describe("JobOffersPage", () => {
         },
       ];
 
-      const { getByLabelText, getByText, getAllByText } = render(
+      const { getByLabelText, getByText } = render(
         <MemoryRouter initialEntries={["/jobOffers"]}>
           <JobOffersPage />
         </MemoryRouter>

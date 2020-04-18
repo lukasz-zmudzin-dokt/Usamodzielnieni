@@ -224,9 +224,8 @@ exports[`JobOffersPage main component tests should render without crashing 1`] =
         <small
           class="search__countText"
         >
-          Znaleziono 1 oferty
+          Ilość znalezionych ofert: 1
         </small>
-        <br />
       </form>
       <div
         class="list-group list-group-flush"

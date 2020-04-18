@@ -161,11 +161,8 @@ const Filter = ({ setFilters, count, disabled }) => {
         {disabled ? "Ładowanie..." : "Wyczyść filtry"}
       </Button>
       {count !== 0 && (
-        <small className="search__countText">{`Znaleziono ${count} ${
-          count >= 5 || count === 0 ? "ofert" : "oferty"
-        }`}</small>
+        <small className="search__countText">{`Ilość znalezionych ofert: ${count}`}</small>
       )}
-      <br />
       {user.type === "Employer" ? (
         <IndexLinkContainer as={Button} to="/offerForm">
           <Button variant="success" className="mt-2">
