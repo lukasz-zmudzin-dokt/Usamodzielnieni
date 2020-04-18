@@ -30,8 +30,6 @@ const handleDeletion = async (event, id, token, errorFlag, successFlag) => {
 };
 
 const renderButtons = (id, user, author, errorFlag, successFlag, editionFlag, flag) => {
-    console.log(author.email)
-    console.log(user.data.email)
     if ( (user.type === 'Staff' || user.data.email === author.email) && !flag) {
         return (
             <ButtonToolbar className="btn_toolbar text-center">
