@@ -85,35 +85,24 @@ describe("Filter", () => {
     expect(input2.value).toBe(DEFAULT_INPUT);
   });
 
-  it("should change text if number of posts >= 5", async () => {
+  it("should show correct number of posts", async () => {
     props = { token: "abcd", setFilter: jest.fn(), count: 6 };
     const { getByText } = render(<Filter {...props} />);
 
     await waitForElement(() =>
-      getByText("Znaleziono 6 postów", { exact: false })
+      getByText("Ilość znalezionych postów: 6", { exact: false })
     );
 
     expect(
-      getByText("Znaleziono 6 postów", { exact: false })
-    ).toBeInTheDocument();
-  });
-
-  it("should change text if number of posts < 5", async () => {
-    props = { token: "abcd", setFilter: jest.fn(), count: 3 };
-    const { getByText } = render(<Filter {...props} />);
-
-    await waitForElement(() =>
-      getByText("Znaleziono 3 posty", { exact: false })
-    );
-
-    expect(
-      getByText("Znaleziono 3 posty", { exact: false })
+      getByText("Ilość znalezionych postów: 6", { exact: false })
     ).toBeInTheDocument();
   });
 
   it("should show button if type account = Staff", async () => {
     const { getByText } = render(
-      <UserContext.Provider value={{ type: "Staff" }}>
+      <UserContext.Provider
+        value={{ type: "Staff", data: { group_type: "staff_blog_creator" } }}
+      >
         <MemoryRouter>
           <Filter {...props} />
         </MemoryRouter>

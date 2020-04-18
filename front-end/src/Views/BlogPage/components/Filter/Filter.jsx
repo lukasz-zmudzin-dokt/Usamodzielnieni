@@ -91,19 +91,20 @@ const Filter = ({ token, setFilter, count }) => {
         >
           Wyczyść filtry
         </Button>
-        {count !== 0 && (
-          <small className="blog__countText">{`Znaleziono ${count} ${
-            count >= 5 || count === 0 ? "postów" : "posty"
-          }`}</small>
-        )}
       </div>
-      {user.type === "Staff" ? (
+      {user.type === "Staff" &&
+      user.data.group_type === "staff_blog_creator" ? (
         <IndexLinkContainer as={Button} to="/blog/newPost">
           <Button variant="success" className="mt-2">
             Stwórz nowy post
           </Button>
         </IndexLinkContainer>
       ) : null}
+      <div>
+        {count !== 0 && (
+          <small className="blog__countText">{`Ilość znalezionych postów: ${count}`}</small>
+        )}
+      </div>
       {msg}
     </Form>
   );
