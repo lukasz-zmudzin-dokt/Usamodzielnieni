@@ -4,7 +4,6 @@ import { Container, Card, Alert, CardColumns } from "react-bootstrap";
 import { getPosts } from "Views/BlogPage/functions/fetchData";
 import BlogPost from "Views/BlogPage/components/SmallBlogPost";
 import Filter from "Views/BlogPage/components/Filter";
-import "./style.css";
 
 const BlogPage = () => {
   const [posts, setPosts] = useState([]);
