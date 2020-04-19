@@ -5,11 +5,11 @@ import {
   HomeDataForm,
   PersonalDataForm,
   CompanyDataForm,
-  AccountForm
+  AccountForm,
+  TypeSelection
 } from "./components";
 import { UserContext } from "context";
 import { sendData } from "./functions/sendData";
-import TypeSelection from "./components/TypeSelection/TypeSelection";
 
 class RegisterPage extends React.Component {
   constructor(props) {

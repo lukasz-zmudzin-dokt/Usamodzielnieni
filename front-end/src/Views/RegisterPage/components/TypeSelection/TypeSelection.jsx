@@ -11,13 +11,13 @@ const TypeSelection = ({isAdmin, selectType}) => (
             as="select"
             onChange={selectType}
         >
-            {isAdmin ? adminGroup.map((type, idx) => (
-                    <option key={idx} value={type.name}>
+            {isAdmin ? adminGroup.map((type) => (
+                    <option key={type.name} value={type.name}>
                         {type.placeholder}
                     </option>
                 )) :
-                commonGroup.map((type, idx) => (
-                    <option key={idx} value={type.name}>
+                commonGroup.map((type) => (
+                    <option key={type.name} value={type.name}>
                         {type.name}
                     </option>
                 ))

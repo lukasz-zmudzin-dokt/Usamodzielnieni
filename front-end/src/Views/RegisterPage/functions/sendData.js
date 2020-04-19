@@ -24,6 +24,7 @@ const adjustObject = (account_type, home, company)  => {
 export const sendData = async (source) => {
     const account_type = source.account_type;
     let url;
+    let wants_data = true;
     switch (account_type) {
         case "Podopiecznym":
             url = "https://usamo-back.herokuapp.com/account/register/";
@@ -33,6 +34,7 @@ export const sendData = async (source) => {
             break;
         case "staff_verification" || "staff_cv" || "staff_jobs" || "staff_blog_creator" || "staff_blog_moderator":
             url = "https://usamo-back.herokuapp.com/account/register/staff/";
+            wants_data = false;
             break;
         default: throw new Error();
     }
@@ -53,17 +55,19 @@ export const sendData = async (source) => {
 
     if (res.status === 201) {
         const data = await res.json().then(data => mapData(data));
-        let response = {};
-        const dataRes = await fetch("https://usamo-back.herokuapp.com/account/data", {
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: "Token " + data.token
+        let response = {data: {}};
+        if (wants_data) {
+            const dataRes = await fetch("https://usamo-back.herokuapp.com/account/data", {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "Token " + data.token
+                }
+            });
+            if (dataRes.status === 200) {
+                response = await dataRes.json().then(res => {return res});
+            } else {
+                throw dataRes.status;
             }
-        });
-        if (dataRes.status === 200) {
-            response = await dataRes.json().then(res => {return res});
-        } else {
-            throw dataRes.status;
         }
         return {
             status: res.status,
