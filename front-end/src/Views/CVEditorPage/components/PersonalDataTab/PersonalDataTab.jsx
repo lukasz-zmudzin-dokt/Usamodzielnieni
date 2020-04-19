@@ -53,8 +53,8 @@ class PersonalDataTab extends React.Component {
                                 name="firstName"
                                 type="text"
                                 required
-                                minlength="1"
-                                maxlength="30"
+                                minLength="1"
+                                maxLength="30"
                                 defaultValue={data.firstName}
                                 placeholder="Jan"
                                 onChange={this.onChange}
@@ -71,8 +71,8 @@ class PersonalDataTab extends React.Component {
                                 name="lastName"
                                 type="text"
                                 required
-                                minlength="1"
-                                maxlength="50"
+                                minLength="1"
+                                maxLength="50"
                                 defaultValue={data.lastName}
                                 placeholder="Przykładowy"
                                 onChange={this.onChange}
@@ -115,8 +115,8 @@ class PersonalDataTab extends React.Component {
                                 name="phoneNumber"
                                 type="text"
                                 required
-                                minlength="1"
-                                maxlength="12"
+                                minLength="1"
+                                maxLength="12"
                                 defaultValue={data.phoneNumber}
                                 placeholder="+48123456789"
                                 onChange={this.onChange}
@@ -135,8 +135,8 @@ class PersonalDataTab extends React.Component {
                                 name="email"
                                 type="email"
                                 required
-                                minlength="1"
-                                maxlength="254"
+                                minLength="1"
+                                maxLength="254"
                                 defaultValue={data.email}
                                 placeholder="example@domain.com"
                                 onChange={this.onChange}
