@@ -115,8 +115,10 @@ class RegisterPage extends React.Component {
         });
         const { status } = contextData;
         if (status === 201) {
-          const { token, type, data } = contextData;
-          this.context.login(token, type, data);
+          if (this.props.match.params.role !== 'staff') {
+            const { token, type, data } = contextData;
+            this.context.login(token, type, data);
+          }
           this.setRedirect();
         }
       } catch (error) {
