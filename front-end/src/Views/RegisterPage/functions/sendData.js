@@ -64,7 +64,7 @@ export const sendData = async (source) => {
                 }
             });
             if (dataRes.status === 200) {
-                response = await dataRes.json().then(res => {return res});
+                response = await dataRes.json();
             } else {
                 throw dataRes.status;
             }
