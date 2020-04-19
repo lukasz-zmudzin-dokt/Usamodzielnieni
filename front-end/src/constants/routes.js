@@ -21,7 +21,8 @@ const paths = {
   DASHBOARD: "/",
   CV_CREATOR: "/cvEditor",
   CV_EDITOR: "/cvEditor/:id",
-  REGISTER: "/newAccount",
+  REGISTER: "/newAccount/",
+  REGISTER_ADMIN: "/newAccount/:role(staff)",
   FOOTER: "/footer",
   LOGIN: "/login",
   USER: "/user",
@@ -76,6 +77,13 @@ export default [
     path: paths.REGISTER,
     component: RegisterPage,
     exact: true
+  },
+  {
+    path: paths.REGISTER_ADMIN,
+    component: RegisterPage,
+    exact: true,
+    isPrivate: true,
+    type: userTypes.STAFF
   },
   {
     path: paths.FOOTER,

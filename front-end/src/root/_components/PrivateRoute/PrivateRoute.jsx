@@ -9,7 +9,7 @@ const PrivateRoute = ({ redirect, type, authenticated, group, ...rest }) => {
       if (!type) return <Route {...rest} />;
       else if (type === authenticated.type) {
         if (type === userTypes.STAFF) {
-          if (authenticated.data.group_type === group) {
+          if (authenticated.data.group_type === group || group === undefined) {
             return <Route {...rest} />;
           }
         } else return <Route {...rest} />;
