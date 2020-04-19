@@ -20,7 +20,7 @@ class RegisterPage extends React.Component {
       companyData: null,
       accountData: null,
 
-      account_type: this.props.match.params.role !== 'staff' ? "Podopiecznym" : "Weryfikacja użytkowników",
+      account_type: this.props.match.params.role !== 'staff' ? "Podopiecznym" : "staff_verification",
       validated: false,
       redirect: false,
       fail_message: "",
@@ -115,16 +115,8 @@ class RegisterPage extends React.Component {
         });
         const { status } = contextData;
         if (status === 201) {
-          const { token, type } = contextData;
-          this.context.login(token, type, {
-            email: this.state.email,
-            username: this.state.username,
-            last_name: this.state.last_name,
-            first_name: this.state.first_name,
-            phone_number: this.state.phone_number,
-            facility_name: this.state.name_of_place,
-            facility_address: this.getFacilityAddress(this.state.city, this.state.street, this.state.city_code)
-          });
+          const { token, type, data } = contextData;
+          this.context.login(token, type, data);
           this.setRedirect();
         }
       } catch (error) {

@@ -1,4 +1,3 @@
-
 const adjustObject = (account_type, home, company)  => {
     let source;
     let type;
@@ -32,12 +31,11 @@ export const sendData = async (source) => {
         case "Pracodawcą":
             url = "https://usamo-back.herokuapp.com/account/register/employer/";
             break;
-        default:
+        case "staff_verification" || "staff_cv" || "staff_jobs" || "staff_blog_creator" || "staff_blog_moderator":
             url = "https://usamo-back.herokuapp.com/account/register/staff/";
             break;
         default: throw new Error();
     }
-
     const object = {
         ...source.personalData,
         ...source.accountData,
@@ -55,9 +53,22 @@ export const sendData = async (source) => {
 
     if (res.status === 201) {
         const data = await res.json().then(data => mapData(data));
+        let response = {};
+        const dataRes = await fetch("https://usamo-back.herokuapp.com/account/data", {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: "Token " + data.token
+            }
+        });
+        if (dataRes.status === 200) {
+            response = await dataRes.json().then(res => {return res});
+        } else {
+            throw dataRes.status;
+        }
         return {
             status: res.status,
-            ...data
+            ...data,
+            data: response.data
         }
     } else {
         throw res.status;
