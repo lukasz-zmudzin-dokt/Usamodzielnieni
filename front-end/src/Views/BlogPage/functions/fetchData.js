@@ -8,7 +8,7 @@ const getPosts = async (token, filters) => {
   const url = `https://usamo-back.herokuapp.com/blog/blogposts/${categoryQ}${tagQ}`;
   const headers = {
     Authorization: "Token " + token,
-    "Content-Type": "application/json"
+    "Content-Type": "application/json",
   };
 
   const response = await fetch(url, { method: "GET", headers });
@@ -19,12 +19,12 @@ const getPosts = async (token, filters) => {
   }
 };
 
-const getFilters = async token => {
+const getFilters = async (token) => {
   const urlC = "https://usamo-back.herokuapp.com/blog/categories/";
   const urlT = "https://usamo-back.herokuapp.com/blog/tags/";
   const headers = {
     Authorization: "Token " + token,
-    "Content-Type": "application/json"
+    "Content-Type": "application/json",
   };
 
   const responseC = await fetch(urlC, { method: "GET", headers });
@@ -35,11 +35,11 @@ const getFilters = async token => {
     const categories = await responseC.json();
     const filters = {
       tags,
-      categories
+      categories,
     };
     return filters;
   } else {
-    throw responseT.status;
+    throw new Error({ tagRes: responseT.status, catRes: responseC.status });
   }
 };
 

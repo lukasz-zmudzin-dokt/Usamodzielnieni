@@ -5,17 +5,6 @@ const url = {
 }
 const getHeaders = (token) => ({ Authorization: "Token " + token, "Content-Type": "application/json" });
 
-const deleteCv = async (token) => {
-  const headers = getHeaders(token);
-  const res = await fetch(url.generate(), { method: "DELETE", headers });
-
-  if (res.status === 200 || res.status === 404) {
-    return;
-  } else {
-    throw res.status;
-  }
-}
-
 const generateCv = async (token, object) => {
   const headers = getHeaders(token);
   const res = await fetch(url.generate(), { method: "POST", body: JSON.stringify(object), headers });
@@ -54,11 +43,8 @@ const addPhoto = async (token, photo, cvId) => {
 }
 
 const sendData = async (object, photo, token) => {
-  console.log(JSON.stringify(object));
-
   let file;
   try {
-    await deleteCv(token);
     let cvRes = await generateCv(token, object);
     if (photo) {
       await addPhoto(token, photo, cvRes.cv_id);
@@ -70,21 +56,6 @@ const sendData = async (object, photo, token) => {
   const cvUrl = `${domain}${file.substring(1)}`;
   window.open(cvUrl, "_blank");
 };
-
-const getCvId = async (token, cvNumber) => {
-  const url = `${domain}cv/user/list`;
-  const headers = getHeaders(token);
-  const response = await fetch(url, {method: "GET", headers});
-  
-  if(response.status === 200) {
-    const cvList = await response.json();
-    const cv = cvList[cvNumber];
-    const cvId = cv.cv_id;
-    return cvId;
-  } else {
-    throw response.status;
-  }
-}
 
 const getFeedback = async (token, id) => {
   try {

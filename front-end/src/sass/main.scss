@@ -6,6 +6,7 @@
 @import "pages/menu";
 @import "pages/headerLayout";
 @import "pages/CVEditorPage";
+@import "pages/blogPage";
 
 @import "bootstrap/custom";
 
@@ -15,6 +16,6 @@
 @import "components/filter";
 @import "components/notifications";
 @import "components/notificationItemContainer";
-
+@import "components/smallBlogPost";
 // Import Bootstrap and its default variables
 @import "~bootstrap/scss/bootstrap.scss";
