@@ -1,5 +1,4 @@
 const sendData = async (offer, token) => {
-  console.log(offer);
   const url = "https://usamo-back.herokuapp.com/job/job-offer/";
   const res = await fetch(url, {
     method: "POST",
@@ -10,7 +9,6 @@ const sendData = async (offer, token) => {
       Authorization: `Token ${token}`
     }
   }).then(res => {
-    console.log(res);
     if (res.status === 200) {
       return res.status;
     } else return Promise.reject();
