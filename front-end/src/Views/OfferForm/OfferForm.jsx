@@ -25,38 +25,39 @@ const OfferForm = () => {
     description: "",
     expiration_date: "",
     category: "",
-    type: ""
+    type: "",
   });
 
   const context = useContext(UserContext);
 
   useEffect(() => {
     setDisabled(true);
-    const loadSelects = async token => {
+    const loadSelects = async (token) => {
       let res;
       try {
         res = await getSelects(token);
       } catch (e) {
         console.log(e);
+        setFail(true);
         res = { categories: [], types: [] };
       }
       setArrays(res);
       setOffer({
         offer_name: "",
-        company_name: "",
-        company_address: "",
+        company_name: context.data.company_name,
+        company_address: context.data.company_address,
         voivodeship: voivodeships[0],
         description: "",
         expiration_date: "",
         category: res.categories[0],
-        type: res.types[0]
+        type: res.types[0],
       });
       setDisabled(false);
     };
     loadSelects(context.token);
-  }, [context.token]);
+  }, [context.data.company_address, context.data.company_name, context.token]);
 
-  const submit = event => {
+  const submit = (event) => {
     const form = event.currentTarget;
     event.preventDefault();
     if (form.checkValidity() === false) {
@@ -75,7 +76,6 @@ const OfferForm = () => {
       const newDate = `${year}-${month}-${day}`;
       sendData({ ...offer, expiration_date: newDate }, context.token)
         .then(() => {
-          clearState();
           history.push("/myOffers");
         })
         .catch(() => {
@@ -86,20 +86,6 @@ const OfferForm = () => {
     setValidated(true);
   };
 
-  const clearState = () => {
-    setOffer({
-      offer_name: "",
-      company_name: "",
-      company_address: "",
-      voivodeship: voivodeships[0],
-      description: "",
-      expiration_date: "",
-      category: "",
-      type: ""
-    });
-    setValidated(false);
-  };
-
   const {
     offer_name,
     company_address,
@@ -108,7 +94,7 @@ const OfferForm = () => {
     expiration_date,
     voivodeship,
     category,
-    type
+    type,
   } = offer;
 
   return (
@@ -119,7 +105,6 @@ const OfferForm = () => {
         </Card.Header>
         <Card.Body>
           <Form
-            data-testid="form"
             onSubmit={submit}
             noValidate
             validated={validated}
@@ -128,7 +113,7 @@ const OfferForm = () => {
             <div className="offerForm__wrapper">
               <FormGroup
                 header="Nazwa stanowiska"
-                setVal={val => setOffer({ ...offer, offer_name: val })}
+                setVal={(val) => setOffer({ ...offer, offer_name: val })}
                 val={offer_name}
                 incorrect="Podaj nazwę stanowiska"
                 length={{ min: 1, max: 50 }}
@@ -138,34 +123,36 @@ const OfferForm = () => {
               <FormGroup
                 header="Nazwa firmy"
                 id="company_name"
-                setVal={val => setOffer({ ...offer, company_name: val })}
+                setVal={(val) => setOffer({ ...offer, company_name: val })}
                 val={company_name}
                 incorrect="Podaj nazwę firmy"
                 length={{ min: 1, max: 70 }}
                 required
+                disabled
               />
               <FormGroup
                 header="Adres firmy"
                 id="company_address"
-                setVal={val => setOffer({ ...offer, company_address: val })}
+                setVal={(val) => setOffer({ ...offer, company_address: val })}
                 val={company_address}
                 incorrect="Podaj lokalizację"
                 length={{ min: 1, max: 200 }}
                 required
+                disabled
               />
               <FormGroup
                 header="Województwo"
                 id="voivodeship"
                 array={voivodeships}
                 type="select"
-                setVal={val => setOffer({ ...offer, voivodeship: val })}
+                setVal={(val) => setOffer({ ...offer, voivodeship: val })}
                 val={voivodeship}
                 required
               />
               <FormGroup
                 header="Wymiar pracy"
                 id="type"
-                setVal={val => setOffer({ ...offer, type: val })}
+                setVal={(val) => setOffer({ ...offer, type: val })}
                 val={type}
                 type="select"
                 array={arrays.types}
@@ -178,7 +165,7 @@ const OfferForm = () => {
                 header="Opis stanowiska"
                 id="description"
                 type="textarea"
-                setVal={val => setOffer({ ...offer, description: val })}
+                setVal={(val) => setOffer({ ...offer, description: val })}
                 val={description}
                 incorrect="Podaj opis"
                 length={{ min: 1, max: 1000 }}
@@ -187,7 +174,7 @@ const OfferForm = () => {
               <FormGroup
                 header="Branża"
                 id="category"
-                setVal={val => setOffer({ ...offer, category: val })}
+                setVal={(val) => setOffer({ ...offer, category: val })}
                 val={category}
                 type="select"
                 array={arrays.categories}
@@ -198,14 +185,14 @@ const OfferForm = () => {
                 header="Ważne do:"
                 id="expiration_date"
                 type="date"
-                setVal={val => setOffer({ ...offer, expiration_date: val })}
+                setVal={(val) => setOffer({ ...offer, expiration_date: val })}
                 val={expiration_date}
                 required
               />
             </div>
             {fail === true ? (
               <Row className="w-100 justify-content-center align-items-center m-0">
-                <Alert data-testid="fail" variant="danger">
+                <Alert variant="danger">
                   Coś poszło nie tak. Spróbuj ponownie póżniej.
                 </Alert>
               </Row>
@@ -215,7 +202,6 @@ const OfferForm = () => {
                 variant="primary"
                 type="submit"
                 className=""
-                data-testid="submitBtn"
                 disabled={disabled}
               >
                 {disabled ? "Ładowanie..." : "Dodaj"}

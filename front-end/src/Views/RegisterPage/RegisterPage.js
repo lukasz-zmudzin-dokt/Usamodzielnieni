@@ -1,11 +1,12 @@
 import React from "react";
 import { Container, Card, Form, Button, Alert } from "react-bootstrap";
-import { Link, Redirect } from "react-router-dom";
+import {Link, Redirect, withRouter} from "react-router-dom";
 import {
   HomeDataForm,
   PersonalDataForm,
   CompanyDataForm,
-  AccountForm
+  AccountForm,
+  TypeSelection
 } from "./components";
 import { UserContext } from "context";
 import { sendData } from "./functions/sendData";
@@ -19,7 +20,7 @@ class RegisterPage extends React.Component {
       companyData: null,
       accountData: null,
 
-      account_type: "Podopiecznym",
+      account_type: this.props.match.params.role !== 'staff' ? "Podopiecznym" : "staff_verification",
       validated: false,
       redirect: false,
       fail_message: "",
@@ -58,30 +59,21 @@ class RegisterPage extends React.Component {
   };
 
   renderSection = () => {
-    switch (this.state.account_type) {
-      case "Podopiecznym": {
+      if (this.state.account_type === "Podopiecznym") {
         return (
-          <HomeDataForm
-            data={this.state.homeData}
-            onBlur={homeData => this.setState({ homeData })}
-          />
+            <HomeDataForm
+                data={this.state.homeData}
+                onBlur={homeData => this.setState({ homeData })}
+            />
+        );
+      } else if (this.state.account_type === "Pracodawcą") {
+        return (
+            <CompanyDataForm
+                data={this.state.companyData}
+                onBlur={companyData => this.setState({ companyData })}
+            />
         );
       }
-      case "Pracodawcą": {
-        return (
-          <CompanyDataForm
-            data={this.state.companyData}
-            onBlur={companyData => this.setState({ companyData })}
-          />
-        );
-      }
-      case "Administratorem": {
-        return null;
-      }
-      default: {
-        return null;
-      }
-    }
   };
 
   setRedirect = () => {
@@ -123,16 +115,10 @@ class RegisterPage extends React.Component {
         });
         const { status } = contextData;
         if (status === 201) {
-          const { token, type } = contextData;
-          this.context.login(token, type, {
-            email: this.state.email,
-            username: this.state.username,
-            last_name: this.state.last_name,
-            first_name: this.state.first_name,
-            phone_number: this.state.phone_number,
-            facility_name: this.state.name_of_place,
-            facility_address: this.getFacilityAddress(this.state.city, this.state.street, this.state.city_code)
-          });
+          if (this.props.match.params.role !== 'staff') {
+            const { token, type, data } = contextData;
+            this.context.login(token, type, data);
+          }
           this.setRedirect();
         }
       } catch (error) {
@@ -157,8 +143,7 @@ class RegisterPage extends React.Component {
       redirect,
       disabled
     } = this.state;
-    const { selectType, renderSection, handleResponse, renderRedirect } = this;
-    const types = this.props.accountTypes || ["Podopiecznym", "Pracodawcą"];
+    const { renderSection, handleResponse, renderRedirect } = this;
     return (
       <Container className="loginPage loginPage__register">
         <Card className="loginPage__card">
@@ -166,21 +151,7 @@ class RegisterPage extends React.Component {
             Rejestracja
           </Card.Header>
           <Card.Body className="registerPage__body">
-            <Form.Group className="register_account_type">
-              <Form.Label>Jestem:</Form.Label>
-              <Form.Control
-                data-testid="typeSelector"
-                className="register_radio_type"
-                as="select"
-                onChange={e => selectType(e)}
-              >
-                {types.map(type => (
-                  <option key={type} value={type}>
-                    {type}
-                  </option>
-                ))}
-              </Form.Control>
-            </Form.Group>
+            <TypeSelection isAdmin={this.props.match.params.role === 'staff'} selectType={this.selectType}/>
             <Form
               noValidate
               validated={validated}
@@ -232,4 +203,4 @@ class RegisterPage extends React.Component {
 
 RegisterPage.contextType = UserContext;
 
-export default RegisterPage;
+export default withRouter(RegisterPage);

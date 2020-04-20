@@ -3,7 +3,7 @@
 exports[`JobOffersPage main component tests should render without crashing 1`] = `
 <div>
   <div
-    class="jobOffersPage container"
+    class="container"
   >
     <div
       class="card"
@@ -174,6 +174,12 @@ exports[`JobOffersPage main component tests should render without crashing 1`] =
               >
                 -- Wybierz --
               </option>
+              <option>
+                abc
+              </option>
+              <option>
+                xd
+              </option>
             </select>
           </div>
           <div
@@ -181,18 +187,24 @@ exports[`JobOffersPage main component tests should render without crashing 1`] =
           >
             <label
               class="form-label"
-              for="category"
+              for="type"
             >
               Typ stanowiska
             </label>
             <select
               class="form-control"
-              id="category"
+              id="type"
             >
               <option
                 disabled=""
               >
                 -- Wybierz --
+              </option>
+              <option>
+                xd
+              </option>
+              <option>
+                abc
               </option>
             </select>
           </div>
@@ -212,9 +224,7 @@ exports[`JobOffersPage main component tests should render without crashing 1`] =
         <small
           class="search__countText"
         >
-          Znaleziono 
-          1
-           ofert
+          Ilość znalezionych ofert: 1
         </small>
       </form>
       <div
@@ -292,7 +302,7 @@ exports[`JobOffersPage main component tests should render without crashing 1`] =
         class="card-body"
       >
         <ul
-          class="offersPagination pagination"
+          class="offersPagination mb-0 justify-content-center pagination"
         >
           <li
             class="page-item disabled"
