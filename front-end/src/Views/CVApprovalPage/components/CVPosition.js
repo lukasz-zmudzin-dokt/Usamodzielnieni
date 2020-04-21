@@ -2,17 +2,20 @@ import React from "react";
 import { UserContext } from "context/UserContext";
 import {Alert, Button, Col, Row} from "react-bootstrap";
 import { Link } from "react-router-dom";
-import {acceptCV} from "../functions/acceptCV";
-import {getCVUrl} from "../functions/getCVUrl";
+import {acceptCV} from "Views/CVApprovalPage/functions/acceptCV";
+import {getCVUrl} from "Views/CVApprovalPage/functions/getCVUrl";
 
-const showCV = (token, cvId) => {
-    return getCVUrl(token, cvId).then(function (response) {
-        if(response.status === "200:OK") {
-            let url = "https://usamo-back.herokuapp.com" + response.result;
+const showCV = async (token, cvId) => {
+    try {
+        const response = await getCVUrl(token, cvId);
+        if(response.status === 200) {
+            let url = "https://usamo-back.herokuapp.com" + response.cvUrl;
             window.open(url, '_blank');
         }
-        return response.status;
-    })
+        return 200;
+    } catch (response) {
+        return response;
+    }
 };
 
 class CVPosition extends React.Component {
@@ -43,7 +46,7 @@ class CVPosition extends React.Component {
                         variant="primary m-1 p-1"
                         className="btnDownload"
                         onClick={e => showCV(this.context.token, cv.cv_id)
-                            .then(resp => resp !== "200:OK" ?
+                            .then(resp => resp !== 200 ?
                             this.setState({ error:true, errorMsg: resp }) :
                             null
                         )}>

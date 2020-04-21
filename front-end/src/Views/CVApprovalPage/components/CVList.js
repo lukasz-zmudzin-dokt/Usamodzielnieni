@@ -1,6 +1,7 @@
 import React from "react";
 import {Alert, Col, ListGroup, Row} from "react-bootstrap";
 import CVPosition from "./CVPosition";
+import "Views/CVApprovalPage/style.css"
 
 class CVList extends React.Component {
     constructor(props) {
@@ -14,7 +15,7 @@ class CVList extends React.Component {
         return (
             cvs.length > 0 ? (
                 <ListGroup variant="flush">
-                    <ListGroup.Item>
+                    <ListGroup.Item className="hide-on-mobile">
                         <Row>
                             <Col md={3} xs={12}><b>Imię i nazwisko</b></Col>
                             <Col md={4} xs={12}><b>Email</b></Col>

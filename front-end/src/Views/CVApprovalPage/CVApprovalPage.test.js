@@ -4,8 +4,8 @@ import CVApprovalPage from "./CVApprovalPage";
 
 describe("CVApproval", () => {
   test("should match with snapshot", () => {
-      const { profile } = render ( <CVApprovalPage /> );
-      expect(profile).toMatchSnapshot();
+      const { container } = render ( <CVApprovalPage /> );
+      expect(container).toMatchSnapshot();
   });
 
 });
