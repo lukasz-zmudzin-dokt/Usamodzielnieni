@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { getFilters } from "Views/BlogPage/functions/fetchData";
-import { Form, Col, Button } from "react-bootstrap";
+import { Form, Col, Button, Alert } from "react-bootstrap";
 import { DEFAULT_INPUT } from "constants/other.js";
 import FormGroup from "components/FormGroup";
 import { UserContext } from "context";
@@ -10,30 +10,32 @@ const Filter = ({ token, setFilter, count }) => {
   const [filters, setFilters] = useState({ categories: [], tags: [] });
   const [category, setCategory] = useState(DEFAULT_INPUT);
   const [tag, setTag] = useState(DEFAULT_INPUT);
+  const [err, setErr] = useState(false);
 
   const user = useContext(UserContext);
 
   useEffect(() => {
-    const loadOffers = async token => {
+    const loadOffers = async (token) => {
       let res;
       try {
         res = await getFilters(token);
       } catch (e) {
         console.log(e);
         res = { categories: [], tags: [] };
+        setErr(true);
       }
       setFilters(res);
     };
     loadOffers(token);
   }, [token]);
 
-  const filter = event => {
+  const filter = (event) => {
     event.preventDefault();
     const categoryV = category !== DEFAULT_INPUT ? category : undefined;
     const tagV = tag !== DEFAULT_INPUT ? tag : undefined;
     setFilter({
       category: categoryV,
-      tag: tagV
+      tag: tagV,
     });
   };
 
@@ -42,9 +44,16 @@ const Filter = ({ token, setFilter, count }) => {
     setTag(DEFAULT_INPUT);
     setFilter({
       category: undefined,
-      tag: undefined
+      tag: undefined,
     });
   };
+
+  const msg = err ? (
+    <Alert variant="danger" className="mt-3">
+      Wystąpił błąd podczas ładowania filtrów.
+    </Alert>
+  ) : null;
+
   return (
     <Form className="ml-3 mr-3 mb-3" onSubmit={filter}>
       <Form.Row>
@@ -82,19 +91,21 @@ const Filter = ({ token, setFilter, count }) => {
         >
           Wyczyść filtry
         </Button>
-        {count !== 0 && (
-          <small className="blog__countText">{`Znaleziono ${count} ${
-            count >= 5 || count === 0 ? "postów" : "posty"
-          }`}</small>
-        )}
       </div>
-      {user.type === "Staff" ? (
+      {user.type === "Staff" &&
+      user.data.group_type === "staff_blog_creator" ? (
         <IndexLinkContainer as={Button} to="/blog/newPost">
           <Button variant="success" className="mt-2">
             Stwórz nowy post
           </Button>
         </IndexLinkContainer>
       ) : null}
+      <div>
+        {count !== 0 && (
+          <small className="blog__countText">{`Ilość znalezionych postów: ${count}`}</small>
+        )}
+      </div>
+      {msg}
     </Form>
   );
 };
