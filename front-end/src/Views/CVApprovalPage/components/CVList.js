@@ -1,7 +1,6 @@
 import React from "react";
-import {Alert, ListGroup} from "react-bootstrap";
+import {Alert, Col, ListGroup, Row} from "react-bootstrap";
 import CVPosition from "./CVPosition";
-import CVLegend from "./CVLegend";
 
 class CVList extends React.Component {
     constructor(props) {
@@ -16,7 +15,11 @@ class CVList extends React.Component {
             cvs.length > 0 ? (
                 <ListGroup variant="flush">
                     <ListGroup.Item>
-                        <CVLegend />
+                        <Row>
+                            <Col md={3} xs={12}><b>Imię i nazwisko</b></Col>
+                            <Col md={4} xs={12}><b>Email</b></Col>
+                            <Col md={5} xs={12}/>
+                        </Row>
                     </ListGroup.Item>
                     {cvs.map((cv) => {
                         return (

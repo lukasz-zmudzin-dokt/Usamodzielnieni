@@ -1,3 +1,25 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`CVApproval should match with snapshot 1`] = `undefined`;
+exports[`CVApproval should match with snapshot 1`] = `
+<div>
+  <div
+    class="pt-4 container"
+  >
+    <div
+      class="card"
+    >
+      <h2
+        class="card-header"
+      >
+        CV do akceptacji
+      </h2>
+      <div
+        class="fade m-3 alert alert-info show"
+        role="alert"
+      >
+        Ładuję...
+      </div>
+    </div>
+  </div>
+</div>
+`;

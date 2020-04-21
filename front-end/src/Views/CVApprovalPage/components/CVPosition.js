@@ -2,8 +2,18 @@ import React from "react";
 import { UserContext } from "context/UserContext";
 import {Alert, Button, Col, Row} from "react-bootstrap";
 import { Link } from "react-router-dom";
-import {showCV} from "../functions/showCV";
 import {acceptCV} from "../functions/acceptCV";
+import {getCVUrl} from "../functions/getCVUrl";
+
+const showCV = (token, cvId) => {
+    return getCVUrl(token, cvId).then(function (response) {
+        if(response.status === "200:OK") {
+            let url = "https://usamo-back.herokuapp.com" + response.result;
+            window.open(url, '_blank');
+        }
+        return response.status;
+    })
+};
 
 class CVPosition extends React.Component {
     constructor(props) {

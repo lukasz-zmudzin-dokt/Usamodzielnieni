@@ -1,5 +1,6 @@
 export const getCVUrl = async (token, cv_id) => {
-    return await fetch("http://usamo-back.herokuapp.com/cv/generator/" + cv_id + "/", {
+    const url = "http://usamo-back.herokuapp.com/cv/generator/" + cv_id + "/";
+    return await fetch(url, {
         method: "GET",
         headers: {
             "Authorization": "token " + token,
