@@ -66,11 +66,12 @@ class HomeDataForm extends React.Component {
                             name="city_code"
                             type="text"
                             placeholder="Kod pocztowy"
+                            pattern="[0-9]{2}[-][0-9]{3}"
                             onChange={e => onChange(onBlur, data, e)}
                             required
                         />
                         <Form.Control.Feedback type="invalid">
-                            Podaj kod pocztowy
+                            Podaj kod pocztowy w formacie 00-000
                         </Form.Control.Feedback>
                     </Form.Group>
                 </Card.Body>
