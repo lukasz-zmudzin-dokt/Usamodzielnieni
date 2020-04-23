@@ -1,27 +1,15 @@
 export const getCVs = async (token) => {
-    return await fetch("http://usamo-back.herokuapp.com/cv/admin/list/unverified/", {
-        method: "GET",
-        headers: {
-            "Authorization": "token " + token,
-            "Content-Type": "application/json"
-        }})
-        .then(function(result) {
-            if(result.status === 200)
-                return result.json();
-            else {
-                return {
-                    status: [result.status, result.statusText].join(":")
-                };
-            }
-        }).then(function(res) {
-            if(Array.isArray(res))  // jeżeli jest to tablica z wynikami to zwróć "200:OK" i tablicę z wynikami
-                return {
-                    status: "200:OK",
-                    result: res
-                };
-            else    // jeżeli jest to obiekt z kodem błędu i opisem to zwróć "kod:opis_błędu"
-                return {
-                    status: res
-                };
-        });
+
+    let url = "http://usamo-back.herokuapp.com/cv/admin/list/unverified/";
+    const headers = {
+        "Authorization": "token " + token,
+        "Content-Type": "application/json"
+    };
+
+    const response = await fetch(url, {method: "GET", headers});
+    if (response.status === 200) {
+        return await response.json();
+    } else {
+        throw response.status;
+    }
 };

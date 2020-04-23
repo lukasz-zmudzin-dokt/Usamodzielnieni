@@ -1,85 +1,84 @@
-import React from "react";
-import { UserContext } from "context/UserContext";
+import React, {useContext, useState} from "react";
+import { UserContext } from "context";
 import {Alert, Button, Col, Row} from "react-bootstrap";
-import { Link } from "react-router-dom";
+import {Redirect} from "react-router-dom";
 import {acceptCV} from "Views/CVApprovalPage/functions/acceptCV";
 import {getCVUrl} from "Views/CVApprovalPage/functions/getCVUrl";
+import { DetailsItem } from 'components';
 
-const showCV = async (token, cvId) => {
+const showCV = async (e, token, cvId, setError) => {
+    e.preventDefault();
     try {
         const response = await getCVUrl(token, cvId);
         if(response.status === 200) {
             let url = "https://usamo-back.herokuapp.com" + response.cvUrl;
             window.open(url, '_blank');
         }
-        return 200;
     } catch (response) {
-        return response;
+        setError(true);
     }
 };
 
-class CVPosition extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            error: false,
-            errorMsg: ""
-        };
+const handleAcceptCV = async (e, token, cvId, setError, setAccepted) => {
+    e.preventDefault();
+    try {
+        const response = await acceptCV(token, cvId);
+        console.log(response);
+        if(response.status === 200) {
+            setAccepted(true);
+        }
+    } catch (response) {
+        setError(true);
     }
+};
 
-    render() {
-        const {
-            cv
-        } = this.props;
-        const {
-            error,
-            errorMsg,
-        } = this.state;
-        return (
-            <Row className="d-flex align-items-center">
-                <Col xs={12} md={3}>{cv.basic_info.first_name} {cv.basic_info.last_name}</Col>
-                <Col xs={12} md={4}>
-                    {cv.basic_info.email}
-                </Col>
-                <Col xs={12} md={5} className="d-flex justify-content-end">
-                    <Button
-                        variant="primary m-1 p-1"
-                        className="btnDownload"
-                        onClick={e => showCV(this.context.token, cv.cv_id)
-                            .then(resp => resp !== 200 ?
-                            this.setState({ error:true, errorMsg: resp }) :
-                            null
-                        )}>
-                            Pokaż CV
-                    </Button>
-                    <Button
-                        variant="success m-1 p-1"
-                        className="btnAccept"
-                        onClick={e => acceptCV(this.context.token, cv.cv_id)
-                            .then(resp => resp !== "OK" ?
-                            this.setState({ error:true, errorMsg: resp }) :
-                            window.location.reload()
-                        )}>
-                            Akceptuj
-                    </Button>
-                    <Link to={"/cvEditor/" + cv.cv_id} >
-                        <Button variant="warning m-1 p-1" className="btnImprove">
-                            Popraw
-                        </Button>
-                    </Link>
-                </Col>
-                {error ? (
-                    <Col>
-                        <Alert variant="danger" className="mt-3">
-                            Ups, coś poszło nie tak. Kod błędu - {errorMsg}
-                        </Alert>
-                    </Col>
-                ) : null}
-            </Row>
-        );
-    }
-}
+const improveCV = (e, setRedirect) => {
+    e.preventDefault();
+    setRedirect(true);
+};
 
-CVPosition.contextType = UserContext;
+const CVPosition = (props) => {
+    const context = useContext(UserContext);
+    const cv = props.cv;
+    const [error, setError] = useState(false);
+    const [redirect, setRedirect] = useState(false);
+    const [accepted, setAccepted] = useState(false);
+
+    const message = error ? (
+        <Alert variant="danger" className="p-1 m-1">Wystąpił błąd.</Alert>
+    ) : accepted ? (
+        <Alert variant="success" className="p-1 m-1">Pomyślnie zaakceptowano CV.</Alert>
+    ) : null;
+
+    return (
+        <Row>
+            <DetailsItem md={4} xl={3} label={"Imię"}>{cv.basic_info.first_name}</DetailsItem>
+            <DetailsItem md={4} xl={3} label={"Nazwisko"}>{cv.basic_info.last_name}</DetailsItem>
+            <DetailsItem md={4} xl={3} label={"Email"}>{cv.basic_info.email}</DetailsItem>
+            <Button
+                variant="primary m-1 p-1"
+                className="btnDownload"
+                onClick={e => showCV(e, context.token, cv.cv_id, setError)}>
+                    Pokaż CV
+            </Button>
+            <Button
+                variant="success m-1 p-1"
+                className="btnAccept"
+                onClick={e => handleAcceptCV(e, context.token, cv.cv_id, setError, setAccepted)}>
+                Akceptuj
+            </Button>
+            <Button
+                variant="warning m-1 p-1"
+                className="btnImprove"
+                onClick={e => improveCV(e, setRedirect)}>
+                    Zgłoś poprawki
+            </Button>
+            {message ? ( message ) : null}
+            {redirect ? (
+                <Redirect to={"/cvEditor/" + cv.cv_id} />
+            ) : null }
+        </Row>
+    );
+};
 
 export default CVPosition;

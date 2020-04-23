@@ -1,57 +1,54 @@
-import React from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {Alert, Card, Container} from "react-bootstrap";
 import { getCVs } from "./functions/getCVs";
-import {UserContext} from "context/UserContext";
+import {UserContext} from "context";
 import CVList from "./components/CVList";
+const CVApprovalPage = () => {
+    const context = useContext(UserContext);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(false);
+    const [cvs, setCvs] = useState([]);
 
-class CVApprovalPage extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            cvs: [],
-            error: false,
-            errorMsg: "",
-            loading: true
+    useEffect(() => {
+        const loadCVs = async(token, setCvs, setLoading, setError) => {
+            setLoading(true);
+            let res;
+            try {
+                res = await getCVs(token);
+                setCvs(res);
+                setLoading(false);
+            } catch (e) {
+                setCvs([]);
+                setLoading(false);
+                setError(true);
+            }
         };
-    }
 
-    componentDidMount() {
-        getCVs(this.context.token)
-        .then(response => response.status === "200:OK" ?
-            this.setState({ loading: false, cvs: response.result}) :
-            this.setState({loading: false, error: true, errorMsg: response.status}));
-    }
+        loadCVs(context.token, setCvs, setLoading, setError);
+    }, [context.token]);
 
-    render() {
-        const {
-            cvs,
-            error,
-            errorMsg,
-            loading
-        } = this.state;
-        return (
-            <Container className="pt-4">
-                    <Card>
-                        <Card.Header as="h2">CV do akceptacji</Card.Header>
-                        {loading ? (
-                            <Alert variant="info" className="m-3">Ładuję...</Alert>
-                        ): (
-                            <Card.Body className="p-0">
-                                {error ? (
-                                    <Alert variant="danger">
-                                        Ups, coś poszło nie tak. Kod błędu - {errorMsg}
-                                    </Alert>
-                                ) : (
-                                    <CVList cvs={cvs} />
-                                )}
-                            </Card.Body>
+    const message = loading ? (
+        <Alert variant="info" className="m-3">Ładuję...</Alert>
+    ) : error ? (
+        <Alert variant="danger" className="m-3">Ups, wystąpił błąd.</Alert>
+    ) : cvs.length === 0 ? (
+        <Alert variant="info" className="m-3">Brak CV do akceptacji.</Alert>
+    ) : null;
+
+    return (
+        <Container className="pt-4">
+            <Card>
+                <Card.Header as="h2">CV do akceptacji</Card.Header>
+                    <Card.Body className="p-0">
+                        {message ? (
+                            message
+                        ) : (
+                            <CVList cvs={cvs} />
                         )}
-                    </Card>
-            </Container>
-        )
-    };
-}
-
-CVApprovalPage.contextType = UserContext;
+                    </Card.Body>
+            </Card>
+        </Container>
+    );
+};
 
 export default CVApprovalPage;
