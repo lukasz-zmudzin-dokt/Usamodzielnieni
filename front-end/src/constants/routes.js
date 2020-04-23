@@ -21,7 +21,8 @@ const paths = {
   DASHBOARD: "/",
   CV_CREATOR: "/cvEditor",
   CV_EDITOR: "/cvEditor/:id",
-  REGISTER: "/newAccount",
+  REGISTER: "/newAccount/",
+  REGISTER_ADMIN: "/newAccount/:role(staff)",
   FOOTER: "/footer",
   LOGIN: "/login",
   USER: "/user",
@@ -42,6 +43,14 @@ export const userTypes = {
   STANDARD: "Standard",
   STAFF: "Staff",
   EMPLOYER: "Employer"
+};
+
+export const staffTypes = {
+  VERIFICATION: 'staff_verification',
+  CV: 'staff_cv',
+  JOBS: 'staff_jobs',
+  BLOG_CREATOR: 'staff_blog_creator',
+  BLOG_MODERATOR: 'staff_blog_moderator'
 };
 
 export default [
@@ -68,6 +77,13 @@ export default [
     path: paths.REGISTER,
     component: RegisterPage,
     exact: true
+  },
+  {
+    path: paths.REGISTER_ADMIN,
+    component: RegisterPage,
+    exact: true,
+    isPrivate: true,
+    type: userTypes.STAFF
   },
   {
     path: paths.FOOTER,
@@ -109,7 +125,8 @@ export default [
     path: paths.CV_APPROVAL,
     component: UserProfilePage, // tu trzeba zmienić komponent
     isPrivate: true,
-    type: userTypes.STAFF
+    type: userTypes.STAFF,
+    group: staffTypes.CV
   },
   {
     path: paths.MY_OFFERS,
@@ -140,6 +157,7 @@ export default [
     component: BlogPostForm,
     isPrivate: true,
     type: userTypes.STAFF,
+    group: staffTypes.BLOG_CREATOR,
     exact: true
   },
   {
@@ -147,6 +165,7 @@ export default [
     component: BlogPostForm,
     isPrivate: true,
     type: userTypes.STAFF,
+    group: staffTypes.VERIFICATION,
     exact: true
   }, {
     path: paths.MY_CVS,

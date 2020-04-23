@@ -74,10 +74,12 @@ exports[`Filter should match snapshot 1`] = `
       >
         Wyczyść filtry
       </button>
+    </div>
+    <div>
       <small
         class="blog__countText"
       >
-        Znaleziono 2 posty
+        Ilość znalezionych postów: 2
       </small>
     </div>
   </form>
