@@ -30,8 +30,6 @@ const handleDeletion = async (event, id, token, errorFlag, successFlag) => {
 };
 
 const renderButtons = (id, user, author, errorFlag, successFlag, editionFlag, flag) => {
-    console.log(author.email)
-    console.log(user.data.email)
     if ( (user.type === 'Staff' || user.data.email === author.email) && !flag) {
         return (
             <ButtonToolbar className="btn_toolbar text-center">
@@ -45,7 +43,7 @@ const renderButtons = (id, user, author, errorFlag, successFlag, editionFlag, fl
 const renderRedirect = (flag, id) => {
     const path = `/blog/newPost/${id}`;
     if (flag)
-        return <Redirect to={path}/>;
+        return <Redirect data-testId="blog-redirect" to={path}/>;
 };
 
 const BlogContent = ({ post , user }) => {
