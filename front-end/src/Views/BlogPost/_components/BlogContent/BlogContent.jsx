@@ -1,4 +1,5 @@
-import React, {useState} from 'react'
+import React, {useState} from 'react';
+import DeletionModal from '../../../../components/DeletionModal/DeletionModal';
 import {Alert, Badge, Button, ButtonToolbar, Card, Col, Row, Modal} from "react-bootstrap";
 import mediumDraftImporter from 'medium-draft/lib/importer';
 import {convertToHTML} from "draft-convert";
@@ -18,9 +19,21 @@ const renderTags = tagList => {
     });
 };
 
-const handleDeletion = async (event, showModal, id, token, errorFlag, successFlag) => {
+/*const handleDeletion = async (event, showModal, id, token, errorFlag, successFlag) => {
     event.preventDefault();
     showModal(false);
+    try {
+        await deletePost(id, token);
+        successFlag(true);
+    } catch(e) {
+        console.log(e);
+        errorFlag(true);
+    }
+};*/
+
+const handleDeletion = async (showModal, wantsDelete, id, token, errorFlag, successFlag) => {
+    showModal(false);
+    wantsDelete(false);
     try {
         await deletePost(id, token);
         successFlag(true);
@@ -49,13 +62,17 @@ const renderRedirect = (flag, id) => {
         return <Redirect to={path}/>;
 };
 
-const handleOnClick = (e, setShow) => {
+const handleOnClick = (e, setShow, wantsDelete) => {
     if(e.target.id === "delete")
         setShow(true);
-    else if(e.target.id === "no")
+    else if(e.target.id === "cancel")
         setShow(false);
+    else if(e.target.id === "confirm") {
+        setShow(false);
+        wantsDelete(true);
+    }
 }
-
+/*
 const renderModal = (show, setShow, id, user, errorFlag, successFlag) => {
     return (
         <Modal show={show}>
@@ -70,16 +87,19 @@ const renderModal = (show, setShow, id, user, errorFlag, successFlag) => {
             </Modal.Footer>
         </Modal>
     )
-}
+}*/
 
 const BlogContent = ({ post , user }) => {
     const [delError, setDelError] = useState(false);
     const [success, setSuccess] = useState(false);
     const [wantsEdition, setWantsEdition] = useState(false);
     const [showModal, setShowModal] = useState(false);
+    const [wantsDelete, setWantsDelete] = useState(false);
 
     if (post === undefined)
         return <Alert variant="danger" className="d-lg-block">Wystąpił błąd podczas ładowania zawartości bloga.</Alert>;
+    if(wantsDelete)
+        handleDeletion(setShowModal, setWantsDelete, post.id, user.token, setDelError, setSuccess);
     const {firstName, lastName, email} = post.author;
     const content = convertToHTML(mediumDraftImporter(post.content));
     return (
@@ -87,7 +107,7 @@ const BlogContent = ({ post , user }) => {
             {post.header !== null && post.header !== "" ?
                 <Card.Img variant="top" src={`https://usamo-back.herokuapp.com${post.header}`}/> : <Card.Header/>
             }
-            {renderModal(showModal, setShowModal, post.id, user, setDelError, setSuccess)}
+            {DeletionModal(showModal, setShowModal, handleOnClick, setWantsDelete)}
             <Card.Body className="post_content mx-4">
                 {
                     delError ? <Alert variant="danger">Wystąpił błąd podczas usuwania posta.</Alert> :
