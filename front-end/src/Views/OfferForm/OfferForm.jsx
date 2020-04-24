@@ -26,6 +26,11 @@ const OfferForm = () => {
     expiration_date: "",
     category: "",
     type: "",
+    pay_from: 12,
+    pay_to: 12,
+    pay_period: "",
+    currency: "",
+    pay_valid: true
   });
 
   const context = useContext(UserContext);
@@ -86,6 +91,19 @@ const OfferForm = () => {
     setValidated(true);
   };
 
+  // const checkPayRangeValidity = () => {
+  //   if (pay_from > pay_to) {
+  //     setOffer({
+  //       pay_valid: false
+  //     });
+  //     console.log("ŹLE");
+  //   } else {
+  //     setOffer({
+  //       pay_valid: true
+  //     });
+  //   }
+  // };
+
   const {
     offer_name,
     company_address,
@@ -95,6 +113,11 @@ const OfferForm = () => {
     voivodeship,
     category,
     type,
+    pay_from,
+    pay_to,
+    currency,
+    pay_period,
+    pay_valid
   } = offer;
 
   return (
@@ -159,6 +182,25 @@ const OfferForm = () => {
                 required
                 incorrect="Podaj wymiar pracy np. staż,praca"
               />
+              <FormGroup
+                header="Wynagrodzenie od:"
+                id="pay_from"
+                type="text"
+                setVal={(val) => setOffer({ ...offer, pay_from: val })}
+                val={pay_from}
+                required
+                // onChange={checkPayRangeValidity()}
+                // setCustomValidity={`${pay_valid} ? 'Dobrze' : 'Źle'`}
+              />
+              <FormGroup
+                header="Okres wypłaty wynagrodznia"
+                id="pay_period"
+                type="select"
+                array={["za godzinę", "za dzień", "za miesiąc", "za rok", "jednokrotnie"]}
+                setVal={(val) => setOffer({ ...offer, pay_period: val })}
+                val={pay_period}
+                required
+              />
             </div>
             <div className="offerForm__wrapper">
               <FormGroup
@@ -189,6 +231,24 @@ const OfferForm = () => {
                 val={expiration_date}
                 required
               />
+              <FormGroup
+                header="Wynagrodzenie do:"
+                id="pay_to"
+                type="text"
+                setVal={(val) => setOffer({ ...offer, pay_to: val })}
+                val={pay_to}
+                //onChange={checkPayRangeValidity()}
+                required
+              />
+              <FormGroup
+                header="Waluta wynagrodzenia:"
+                id="currency"
+                type="select"
+                array={["PLN", "EUR", "USD"]}
+                setVal={(val) => setOffer({ ...offer, currency: val })}
+                val={currency}
+                required
+              />
             </div>
             {fail === true ? (
               <Row className="w-100 justify-content-center align-items-center m-0">
@@ -210,7 +270,7 @@ const OfferForm = () => {
           </Form>
         </Card.Body>
       </Card>
-    </Container>
+    </Container >
   );
 };
 
