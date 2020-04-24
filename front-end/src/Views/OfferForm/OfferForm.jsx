@@ -38,6 +38,7 @@ const OfferForm = () => {
   const context = useContext(UserContext);
 
   useEffect(() => {
+    let mounted = true;
     setDisabled(true);
     const loadOffer = async (token) => {
       let res;
@@ -53,45 +54,46 @@ const OfferForm = () => {
           category: res.category,
           type: res.type,
         });
+        console.log(res);
       } catch (e) {
         console.log(e);
-        setFail(true);
-        setMessage(
-          "Nie udało się załadować oferty pracy o danym identyfikatorze. Nastąpi przekierowanie do formularza oferty pracy"
-        );
-        res = { categories: [], types: [] };
-        setTimeout(() => history.push("/offerForm"), 3000);
+        history.push("/offerForm");
       }
+      if (mounted) setDisabled(false);
     };
     const loadSelects = async (token) => {
       let res;
       try {
         res = await getSelects(token);
-        if (!id) {
-          setOffer({
-            offer_name: "",
-            company_name: context.data.company_name,
-            company_address: context.data.company_address,
-            voivodeship: voivodeships[0],
-            description: "",
-            expiration_date: "",
-            category: res.categories[0],
-            type: res.types[0],
-          });
+        if (mounted) {
+          if (!id) {
+            setOffer({
+              offer_name: "",
+              company_name: context.data.company_name,
+              company_address: context.data.company_address,
+              voivodeship: voivodeships[0],
+              description: "",
+              expiration_date: "",
+              category: res.categories[0],
+              type: res.types[0],
+            });
+          }
+          setArrays(res);
         }
-        setArrays(res);
-        setDisabled(false);
       } catch (e) {
         console.log(e);
+        console.log("xd");
         setFail(true);
         setMessage("Nie udało się załadować danych");
         res = { categories: [], types: [] };
       }
+      if (mounted) setDisabled(false);
     };
     loadSelects(context.token);
     if (id) {
       loadOffer(context.token);
     }
+    return () => (mounted = false);
   }, [
     context.data.company_address,
     context.data.company_name,
@@ -123,9 +125,10 @@ const OfferForm = () => {
         })
         .catch(() => {
           setFail(true);
-          setDisabled(false);
+          setMessage("Nie udało się wysłać oferty. Błąd serwera.");
         });
     }
+    setDisabled(false);
     setValidated(true);
   };
 

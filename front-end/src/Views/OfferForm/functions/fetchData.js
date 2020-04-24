@@ -1,4 +1,5 @@
 const sendData = async (offer, token, id) => {
+  console.log("jestem tutaj? ");
   const url = `https://usamo-back.herokuapp.com/job/job-offer/${
     id ? `${id}/` : ""
   }`;
@@ -32,7 +33,9 @@ const getSelects = async (token) => {
   }).then((res) => {
     if (res.status === 200) {
       return res.json();
-    } else return Promise.reject();
+    } else {
+      return Promise.reject();
+    }
   });
   const resTypes = await fetch(urlTypes, {
     method: "GET",
@@ -44,7 +47,9 @@ const getSelects = async (token) => {
   }).then((res) => {
     if (res.status === 200) {
       return res.json().then((res) => res);
-    } else return Promise.reject();
+    } else {
+      return Promise.reject();
+    }
   });
 
   return { categories: resCategories.categories, types: resTypes.offer_types };
