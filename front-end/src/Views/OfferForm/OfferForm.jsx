@@ -57,16 +57,16 @@ const OfferForm = () => {
         console.log(e);
         setFail(true);
         setMessage(
-          "Nie udało się załadować oferty pracy o danym identyfikatorze"
+          "Nie udało się załadować oferty pracy o danym identyfikatorze. Nastąpi przekierowanie do formularza oferty pracy"
         );
         res = { categories: [], types: [] };
+        setTimeout(() => history.push("/offerForm"), 3000);
       }
     };
     const loadSelects = async (token) => {
       let res;
       try {
         res = await getSelects(token);
-        console.log(res);
         if (!id) {
           setOffer({
             offer_name: "",
@@ -80,14 +80,13 @@ const OfferForm = () => {
           });
         }
         setArrays(res);
+        setDisabled(false);
       } catch (e) {
         console.log(e);
         setFail(true);
         setMessage("Nie udało się załadować danych");
         res = { categories: [], types: [] };
       }
-
-      setDisabled(false);
     };
     loadSelects(context.token);
     if (id) {
@@ -98,6 +97,7 @@ const OfferForm = () => {
     context.data.company_name,
     context.token,
     id,
+    history,
   ]);
 
   const submit = (event) => {
