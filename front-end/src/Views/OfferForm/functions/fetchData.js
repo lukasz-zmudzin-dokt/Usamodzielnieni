@@ -1,5 +1,7 @@
-const sendData = async (offer, token) => {
-  const url = "https://usamo-back.herokuapp.com/job/job-offer/";
+const sendData = async (offer, token, id) => {
+  const url = `https://usamo-back.herokuapp.com/job/job-offer/${
+    id ? `${id}/` : ""
+  }`;
   const res = await fetch(url, {
     method: "POST",
     body: JSON.stringify(offer),
@@ -48,4 +50,22 @@ const getSelects = async (token) => {
   return { categories: resCategories.categories, types: resTypes.offer_types };
 };
 
-export { sendData, getSelects };
+const getOffer = async (token, id) => {
+  const url = `https://usamo-back.herokuapp.com/job/job-offer/${id}/`;
+
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Origin: null,
+      Authorization: `Token ${token}`,
+    },
+  }).then((res) => {
+    if (res.status === 200) {
+      return res.json().then((res) => res);
+    } else return Promise.reject();
+  });
+  return res;
+};
+
+export { sendData, getSelects, getOffer };

@@ -3,10 +3,14 @@ import { registerLocale } from "react-datepicker";
 import { Form, Container, Card, Button, Row, Alert } from "react-bootstrap";
 import { voivodeships } from "constants/voivodeships";
 import FormGroup from "components/FormGroup";
-import { sendData, getSelects } from "Views/OfferForm/functions/fetchData";
+import {
+  sendData,
+  getSelects,
+  getOffer,
+} from "Views/OfferForm/functions/fetchData";
 import { UserContext } from "context";
 import polish from "date-fns/locale/pl";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
 registerLocale("pl", polish);
 
@@ -16,6 +20,8 @@ const OfferForm = () => {
   const [fail, setFail] = useState(false);
   const [arrays, setArrays] = useState({});
   const [disabled, setDisabled] = useState(false);
+  const [message, setMessage] = useState("");
+  let { id } = useParams();
 
   const [offer, setOffer] = useState({
     offer_name: "",
@@ -28,34 +34,71 @@ const OfferForm = () => {
     type: "",
   });
 
+  //47991e86-4b42-4507-b154-1548bf8a3bd3
   const context = useContext(UserContext);
 
   useEffect(() => {
     setDisabled(true);
+    const loadOffer = async (token) => {
+      let res;
+      try {
+        res = await getOffer(token, id);
+        setOffer({
+          offer_name: res.offer_name,
+          company_name: res.company_name,
+          company_address: res.company_address,
+          voivodeship: res.voivodeship,
+          description: res.description,
+          expiration_date: new Date(res.expiration_date),
+          category: res.category,
+          type: res.type,
+        });
+      } catch (e) {
+        console.log(e);
+        setFail(true);
+        setMessage(
+          "Nie udało się załadować oferty pracy o danym identyfikatorze"
+        );
+        res = { categories: [], types: [] };
+      }
+    };
     const loadSelects = async (token) => {
       let res;
       try {
         res = await getSelects(token);
+        console.log(res);
+        if (!id) {
+          setOffer({
+            offer_name: "",
+            company_name: context.data.company_name,
+            company_address: context.data.company_address,
+            voivodeship: voivodeships[0],
+            description: "",
+            expiration_date: "",
+            category: res.categories[0],
+            type: res.types[0],
+          });
+        }
+        setArrays(res);
       } catch (e) {
         console.log(e);
         setFail(true);
+        setMessage("Nie udało się załadować danych");
         res = { categories: [], types: [] };
       }
-      setArrays(res);
-      setOffer({
-        offer_name: "",
-        company_name: context.data.company_name,
-        company_address: context.data.company_address,
-        voivodeship: voivodeships[0],
-        description: "",
-        expiration_date: "",
-        category: res.categories[0],
-        type: res.types[0],
-      });
+
       setDisabled(false);
     };
     loadSelects(context.token);
-  }, [context.data.company_address, context.data.company_name, context.token]);
+    if (id) {
+      loadOffer(context.token);
+    }
+  }, [
+    context.data.company_address,
+    context.data.company_name,
+    context.token,
+    id,
+  ]);
 
   const submit = (event) => {
     const form = event.currentTarget;
@@ -74,7 +117,7 @@ const OfferForm = () => {
           ? `0${expiration_date.getDate()}`
           : expiration_date.getDate();
       const newDate = `${year}-${month}-${day}`;
-      sendData({ ...offer, expiration_date: newDate }, context.token)
+      sendData({ ...offer, expiration_date: newDate }, context.token, id)
         .then(() => {
           history.push("/myOffers");
         })
@@ -192,9 +235,7 @@ const OfferForm = () => {
             </div>
             {fail === true ? (
               <Row className="w-100 justify-content-center align-items-center m-0">
-                <Alert variant="danger">
-                  Coś poszło nie tak. Spróbuj ponownie póżniej.
-                </Alert>
+                <Alert variant="danger">{message}</Alert>
               </Row>
             ) : null}
             <Row className="w-100 justify-content-center align-items-center m-0">
