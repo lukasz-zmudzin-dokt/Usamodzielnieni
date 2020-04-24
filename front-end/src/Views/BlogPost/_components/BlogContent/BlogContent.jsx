@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {Alert, Badge, Button, ButtonToolbar, Card, Col, Row} from "react-bootstrap";
+import {Alert, Badge, Button, ButtonToolbar, Card, Col, Row, Modal} from "react-bootstrap";
 import mediumDraftImporter from 'medium-draft/lib/importer';
 import {convertToHTML} from "draft-convert";
 import {deletePost} from "../../functions/apiCalls";
@@ -18,8 +18,9 @@ const renderTags = tagList => {
     });
 };
 
-const handleDeletion = async (event, id, token, errorFlag, successFlag) => {
+const handleDeletion = async (event, showModal, id, token, errorFlag, successFlag) => {
     event.preventDefault();
+    showModal(false);
     try {
         await deletePost(id, token);
         successFlag(true);
@@ -29,16 +30,16 @@ const handleDeletion = async (event, id, token, errorFlag, successFlag) => {
     }
 };
 
-const renderButtons = (id, user, author, errorFlag, successFlag, editionFlag, flag) => {
+const renderButtons = (id, user, author, errorFlag, successFlag, editionFlag, flag, setShowModal) => {
     console.log(author.email)
     console.log(user.data.email)
     if ( (user.type === 'Staff' || user.data.email === author.email) && !flag) {
         return (
             <ButtonToolbar className="btn_toolbar text-center">
                 <Button variant="warning" className="button-edit mx-3" onClick={e => editionFlag(true)}>Edytuj 🖉</Button>
-                <Button variant="danger" className="button-delete mx-3" onClick={e => handleDeletion(e, id, user.token, errorFlag, successFlag)}>Usuń ✗</Button>
+                <Button id="delete" variant="danger" className="button-delete mx-3" onClick={e => handleOnClick(e, setShowModal)}>Usuń ✗</Button>
             </ButtonToolbar>
-        )
+        )//onClick={e => handleDeletion(e, id, user.token, errorFlag, successFlag)}
     }
 };
 
@@ -48,10 +49,35 @@ const renderRedirect = (flag, id) => {
         return <Redirect to={path}/>;
 };
 
+const handleOnClick = (e, setShow) => {
+    if(e.target.id === "delete")
+        setShow(true);
+    else if(e.target.id === "no")
+        setShow(false);
+}
+
+const renderModal = (show, setShow, id, user, errorFlag, successFlag) => {
+    return (
+        <Modal show={show}>
+            <Modal.Body>Czy na pewno chcesz usunąć ten post?</Modal.Body>
+            <Modal.Footer>
+                <Button id="no" variant="secondary" onClick={e => handleOnClick(e, setShow)}>
+                    Nie
+                </Button>
+                <Button id="yes" variant="primary" onClick={e => handleDeletion(e, setShow, id, user.token, errorFlag, successFlag)}>
+                    Tak
+                </Button>
+            </Modal.Footer>
+        </Modal>
+    )
+}
+
 const BlogContent = ({ post , user }) => {
     const [delError, setDelError] = useState(false);
     const [success, setSuccess] = useState(false);
     const [wantsEdition, setWantsEdition] = useState(false);
+    const [showModal, setShowModal] = useState(false);
+
     if (post === undefined)
         return <Alert variant="danger" className="d-lg-block">Wystąpił błąd podczas ładowania zawartości bloga.</Alert>;
     const {firstName, lastName, email} = post.author;
@@ -61,6 +87,7 @@ const BlogContent = ({ post , user }) => {
             {post.header !== null && post.header !== "" ?
                 <Card.Img variant="top" src={`https://usamo-back.herokuapp.com${post.header}`}/> : <Card.Header/>
             }
+            {renderModal(showModal, setShowModal, post.id, user, setDelError, setSuccess)}
             <Card.Body className="post_content mx-4">
                 {
                     delError ? <Alert variant="danger">Wystąpił błąd podczas usuwania posta.</Alert> :
@@ -69,7 +96,7 @@ const BlogContent = ({ post , user }) => {
                 <Card.Title as="h1" className="post_title">
                     <Row>
                         {post.title === "" ? "Tytuł posta" : post.title}
-                        {renderButtons(post.id, user, post.author, setDelError, setSuccess, setWantsEdition, success)}
+                        {renderButtons(post.id, user, post.author, setDelError, setSuccess, setWantsEdition, success, setShowModal)}
                     </Row>
                 </Card.Title>
                 <Card.Subtitle as="h6" className="text-muted mb-4 mt-2">Kategoria: {post.category}</Card.Subtitle>
