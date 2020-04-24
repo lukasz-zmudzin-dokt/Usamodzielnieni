@@ -1,6 +1,6 @@
 export const getCVs = async (token) => {
 
-    let url = "http://usamo-back.herokuapp.com/cv/admin/list/unverified/";
+    let url = "https://usamo-back.herokuapp.com/cv/admin/list/unverified/";
     const headers = {
         "Authorization": "token " + token,
         "Content-Type": "application/json"

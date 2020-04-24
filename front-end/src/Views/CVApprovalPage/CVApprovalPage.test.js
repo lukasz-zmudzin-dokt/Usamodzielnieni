@@ -8,7 +8,6 @@ describe("CVApproval", () => {
     let apiCVs;
 
     beforeAll(() => {
-        global.open = jest.fn();
         global.fetch = jest.fn().mockImplementation((input, init) => {
             return new Promise(((resolve, reject) => {
                 if (failFetch) {

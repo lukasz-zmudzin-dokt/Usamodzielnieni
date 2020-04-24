@@ -9,11 +9,7 @@ export const getCVUrl = async (token, cv_id) => {
     });
 
     if (response.status === 200) {
-        const data = await response.json().then(data => data);
-        return {
-            status: response.status,
-            cvUrl: data
-        }
+        return await response.json().then(data => data);
     } else {
         throw response.status;
     }

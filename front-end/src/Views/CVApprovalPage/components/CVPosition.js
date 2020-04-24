@@ -10,10 +10,10 @@ const showCV = async (e, token, cvId, setError) => {
     e.preventDefault();
     try {
         const response = await getCVUrl(token, cvId);
-        if(response.status === 200) {
-            let url = "https://usamo-back.herokuapp.com" + response.cvUrl;
+
+            let url = "https://usamo-back.herokuapp.com" + response;
             window.open(url, '_blank');
-        }
+
     } catch (response) {
         setError(true);
     }
