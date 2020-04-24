@@ -23,8 +23,7 @@ const handleAcceptCV = async (e, token, cvId, setError, setAccepted) => {
     e.preventDefault();
     try {
         const response = await acceptCV(token, cvId);
-        console.log(response);
-        if(response.status === 200) {
+        if(response === "CV successfully verified.") {
             setAccepted(true);
         }
     } catch (response) {

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`CVApproval should match with snapshot 1`] = `
+exports[`CVApproval should match snapshot 1`] = `
 <div>
   <div
     class="pt-4 container"
@@ -14,10 +14,148 @@ exports[`CVApproval should match with snapshot 1`] = `
         CV do akceptacji
       </h2>
       <div
-        class="fade m-3 alert alert-info show"
-        role="alert"
+        class="p-0 card-body"
       >
-        Ładuję...
+        <div
+          class="list-group"
+        >
+          <div
+            class="list-group-item"
+          >
+            <div
+              class="row"
+            >
+              <div
+                class="detailsItem col-xl-3 col-md-4"
+              >
+                <div
+                  class="detailsItem__label"
+                >
+                  Imię
+                </div>
+                <div
+                  class="detailsItem__value"
+                >
+                  Jarek
+                </div>
+              </div>
+              <div
+                class="detailsItem col-xl-3 col-md-4"
+              >
+                <div
+                  class="detailsItem__label"
+                >
+                  Nazwisko
+                </div>
+                <div
+                  class="detailsItem__value"
+                >
+                  Arek
+                </div>
+              </div>
+              <div
+                class="detailsItem col-xl-3 col-md-4"
+              >
+                <div
+                  class="detailsItem__label"
+                >
+                  Email
+                </div>
+                <div
+                  class="detailsItem__value"
+                >
+                  jamjestjarek@arek.pp
+                </div>
+              </div>
+              <button
+                class="btnDownload btn btn-primary m-1 p-1"
+                type="button"
+              >
+                Pokaż CV
+              </button>
+              <button
+                class="btnAccept btn btn-success m-1 p-1"
+                type="button"
+              >
+                Akceptuj
+              </button>
+              <button
+                class="btnImprove btn btn-warning m-1 p-1"
+                type="button"
+              >
+                Zgłoś poprawki
+              </button>
+            </div>
+          </div>
+          <div
+            class="list-group-item"
+          >
+            <div
+              class="row"
+            >
+              <div
+                class="detailsItem col-xl-3 col-md-4"
+              >
+                <div
+                  class="detailsItem__label"
+                >
+                  Imię
+                </div>
+                <div
+                  class="detailsItem__value"
+                >
+                  Ala
+                </div>
+              </div>
+              <div
+                class="detailsItem col-xl-3 col-md-4"
+              >
+                <div
+                  class="detailsItem__label"
+                >
+                  Nazwisko
+                </div>
+                <div
+                  class="detailsItem__value"
+                >
+                  Mala
+                </div>
+              </div>
+              <div
+                class="detailsItem col-xl-3 col-md-4"
+              >
+                <div
+                  class="detailsItem__label"
+                >
+                  Email
+                </div>
+                <div
+                  class="detailsItem__value"
+                >
+                  malaala@lala.la
+                </div>
+              </div>
+              <button
+                class="btnDownload btn btn-primary m-1 p-1"
+                type="button"
+              >
+                Pokaż CV
+              </button>
+              <button
+                class="btnAccept btn btn-success m-1 p-1"
+                type="button"
+              >
+                Akceptuj
+              </button>
+              <button
+                class="btnImprove btn btn-warning m-1 p-1"
+                type="button"
+              >
+                Zgłoś poprawki
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
