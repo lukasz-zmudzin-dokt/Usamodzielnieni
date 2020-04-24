@@ -19,18 +19,6 @@ const renderTags = tagList => {
     });
 };
 
-/*const handleDeletion = async (event, showModal, id, token, errorFlag, successFlag) => {
-    event.preventDefault();
-    showModal(false);
-    try {
-        await deletePost(id, token);
-        successFlag(true);
-    } catch(e) {
-        console.log(e);
-        errorFlag(true);
-    }
-};*/
-
 const handleDeletion = async (showModal, wantsDelete, id, token, errorFlag, successFlag) => {
     showModal(false);
     wantsDelete(false);
@@ -52,7 +40,7 @@ const renderButtons = (id, user, author, errorFlag, successFlag, editionFlag, fl
                 <Button variant="warning" className="button-edit mx-3" onClick={e => editionFlag(true)}>Edytuj 🖉</Button>
                 <Button id="delete" variant="danger" className="button-delete mx-3" onClick={e => handleOnClick(e, setShowModal)}>Usuń ✗</Button>
             </ButtonToolbar>
-        )//onClick={e => handleDeletion(e, id, user.token, errorFlag, successFlag)}
+        )
     }
 };
 
@@ -72,22 +60,6 @@ const handleOnClick = (e, setShow, wantsDelete) => {
         wantsDelete(true);
     }
 }
-/*
-const renderModal = (show, setShow, id, user, errorFlag, successFlag) => {
-    return (
-        <Modal show={show}>
-            <Modal.Body>Czy na pewno chcesz usunąć ten post?</Modal.Body>
-            <Modal.Footer>
-                <Button id="no" variant="secondary" onClick={e => handleOnClick(e, setShow)}>
-                    Nie
-                </Button>
-                <Button id="yes" variant="primary" onClick={e => handleDeletion(e, setShow, id, user.token, errorFlag, successFlag)}>
-                    Tak
-                </Button>
-            </Modal.Footer>
-        </Modal>
-    )
-}*/
 
 const BlogContent = ({ post , user }) => {
     const [delError, setDelError] = useState(false);
