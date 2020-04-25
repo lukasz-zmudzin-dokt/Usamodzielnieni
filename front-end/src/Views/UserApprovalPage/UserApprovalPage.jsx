@@ -31,7 +31,7 @@ const UserApprovalPage = () => {
     ) : error ? (
         <Alert variant="danger" className="m-3">Ups, wystąpił błąd.</Alert>
     ) : users.length === 0 ? (
-        <Alert variant="info" className="m-3">Nie istnieją nowe konta wnioskujące o zatwierdzenie.</Alert>
+        <Alert variant="info" className="m-3">Brak kont do zatwierdzenia</Alert>
     ) : null;
 
     return (

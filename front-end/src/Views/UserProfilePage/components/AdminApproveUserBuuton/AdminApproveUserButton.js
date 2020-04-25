@@ -6,7 +6,7 @@ const AdminApproveUserButton = ({ userType }) => (
     userType === "Staff" ? (
         <LinkContainer to="/userApproval">
             <Button variant="primary"  className="ml-3">
-                Zaakceptuj rejestrację nowych kont
+                Akceptuj nowych użytkowników
             </Button>
         </LinkContainer>
     ) : null

@@ -7,6 +7,7 @@ import {DetailsItem} from "components";
 const UserToApprove = ({ user }) => {
     const context = useContext(UserContext);
     const [userDetails, setUserDetails] = useState([]);
+    const [userDetailsFacilityAddress, setUserDetailsFacilityAddress] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
     const [approved, setApproved] = useState(false);
@@ -14,11 +15,13 @@ const UserToApprove = ({ user }) => {
 
     const loadUserDetails = async (e, token, userId) => {
         e.preventDefault();
-        if(userDetails.length === 0) {  // nie pobieraj danych jeżeli już je wcześniej ładowałeś
+        if(userDetails.length === 0) {
             setLoading(true);
             try {
                 let res = await getUserDetails(token, userId);
+                console.log(res);
                 setUserDetails(res);
+                setUserDetailsFacilityAddress(res.facility_address);
             } catch (err) {
                 setError(true);
             }
@@ -84,8 +87,11 @@ const UserToApprove = ({ user }) => {
                             </ListGroup.Item>
                             <ListGroup.Item>
                                 <Row>
-                                    <DetailsItem label="Ośrodek">{userDetails.facility_name}</DetailsItem>
-                                    <DetailsItem label="Adres">{userDetails.facility_address}</DetailsItem>
+                                    <DetailsItem label="Adres">
+                                        <p>{userDetails.facility_name}</p>
+                                        <p>ul. {userDetailsFacilityAddress.street} {userDetailsFacilityAddress.street_number}</p>
+                                        <p>{userDetailsFacilityAddress.postal_code} {userDetailsFacilityAddress.city}</p>
+                                    </DetailsItem>
                                 </Row>
                             </ListGroup.Item>
                             <ListGroup.Item>
