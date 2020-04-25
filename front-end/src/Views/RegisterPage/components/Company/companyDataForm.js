@@ -55,6 +55,8 @@ class CompanyDataForm extends React.Component {
                             placeholder="Numer budynku"
                             onChange={e => onChange(onBlur, data, e)}
                             required
+                            minLength="1"
+                            maxLength="40"
                         />
                         <Form.Control.Feedback type="invalid">
                             Podaj numer budynku, przy którym znajduje się firma
