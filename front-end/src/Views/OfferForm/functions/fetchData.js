@@ -52,13 +52,9 @@ const getTypes = async (token) => {
 };
 
 const getSelects = async (token) => {
-  try {
-    const categories = await getCategories(token);
-    const types = await getTypes(token);
-    return { categories, types };
-  } catch(e) {
-    throw e;
-  }
+  const categories = await getCategories(token);
+  const types = await getTypes(token);
+  return { categories, types };
 }
 
 const getOffer = async (token, id) => {
