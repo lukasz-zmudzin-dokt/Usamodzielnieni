@@ -1,5 +1,5 @@
 import React from "react";
-import {waitForElement, render} from '@testing-library/react';
+import {waitForElement, render, fireEvent} from '@testing-library/react';
 import {MemoryRouter, Router} from 'react-router-dom';
 import {UserContext} from "context/UserContext";
 import {createMemoryHistory} from 'history';
@@ -8,7 +8,7 @@ import MyCVsPage from "./MyCVsPage";
 const renderWithRouter = (
     ui,
     {
-        route = "/cvApproval",
+        route = "/myCVs",
         history = createMemoryHistory({ initialEntries: [route] }),
     } = {}
 ) => {
@@ -30,6 +30,7 @@ describe('MyCVsPage', () => {
     let user;
 
     beforeAll(() => {
+        global.open = jest.fn();
         global.fetch = jest.fn().mockImplementation((input, init) => {
             return new Promise(((resolve, reject) => {
                 if (failFetch) {
@@ -84,7 +85,7 @@ describe('MyCVsPage', () => {
             </UserContext.Provider>
         );
 
-        await waitForElement(() => getAllByText('czeka', {exact: false}));
+        await waitForElement(() => getAllByText('Zobacz CV', {exact: false}));
         expect(container).toMatchSnapshot();
     });
 
@@ -105,16 +106,28 @@ describe('MyCVsPage', () => {
         expect(queryByText('Ładuję', {exact: false})).not.toBeInTheDocument();
     });
 
-    // it('should render no cv alert', async () => {
-    //     myCVs = [];
-    //     const {getByText, queryByText} = render(
-    //         <UserContext.Provider value={user}>
-    //             <MemoryRouter>
-    //                 <MyCVsPage />
-    //             </MemoryRouter>
-    //         </UserContext.Provider>
-    //     );
-    //     await waitForElement(() => getByText('Brak CV', {exact: false}));
-    //
-    // });
+    it('should render no cv alert', async () => {
+        myCVs = [];
+        const {getByText} = render(
+            <UserContext.Provider value={user}>
+                <MemoryRouter>
+                    <MyCVsPage />
+                </MemoryRouter>
+            </UserContext.Provider>
+        );
+        await waitForElement(() => getByText('Nie masz', {exact: false}));
+        expect(getByText('Nie masz', {exact: false})).toBeInTheDocument();
+    });
+
+    it('should redirect to cveditor', async () => {
+        myCVs = [ myCVs[0] ];
+        const {history, getByText} = renderWithRouter(
+            <MyCVsPage />
+        );
+
+        await waitForElement(() => getByText('Edytuj', {exact: false}));
+        fireEvent.click(getByText('Edytuj'));
+
+        expect(history.location.pathname).toEqual('/cvEditor/0', {exact: false});
+    });
 });

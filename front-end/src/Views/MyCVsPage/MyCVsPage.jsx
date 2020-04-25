@@ -1,11 +1,10 @@
 import React from "react";
-import {Container, Card, Row, Col, Button, ListGroup, Alert} from "react-bootstrap";
+import {Container, Card, Row, Col, ListGroup, Alert} from "react-bootstrap";
 import { UserContext } from "context/UserContext";
-import { IndexLinkContainer } from "react-router-bootstrap";
 
-import CVStatus from "./components/CVStatus";
 import { getUserCVs } from "./functions/getUserCVs";
-import { showCV } from "./functions/showCV";
+import {getCVUrl} from "./functions/getCVUrl";
+import CVSection from "./components/cvSection";
 
 class MyCVsPage extends React.Component {
     constructor(props) {
@@ -36,7 +35,19 @@ class MyCVsPage extends React.Component {
                     errorMessages: { big: response.status },
                     loading: false
                 }));
-    }
+    };
+
+    showCV = async (cvId) => {
+        let r;
+        try {
+            r = await getCVUrl(this.context.token, cvId);
+            this.setState({errors: {small: false}});
+            let url = "https://usamo-back.herokuapp.com" + r;
+            window.open(url, '_blank');
+        } catch(r) {
+            this.setState({errors: {small: true}, errorMessages: {small: r}});
+        }
+    };
 
     render() {
         const {
@@ -77,20 +88,9 @@ class MyCVsPage extends React.Component {
                                     </Alert>
                                 ) : null
                                 }
-                                {cvs.map((cv) =>
-                                    <ListGroup.Item key={cv.cv_id}>
-                                        <Row className="d-flex align-items-center">
-                                            <Col xs={12} md={5}>{cv.cv_id}</Col>
-                                            <Col xs={4} md={3}><CVStatus wants_verification={cv.wants_verification} is_verified={cv.is_verified} /></Col>
-                                            <Col xs={8} md={4} className="text-right">
-                                                <IndexLinkContainer to={"/cvEditor/" + cv.cv_id}>
-                                                    <Button variant="info">Edytuj</Button>
-                                                </IndexLinkContainer>
-                                                <Button className="ml-2" variant="primary" onClick={e => showCV(this.context.token, cv.cv_id, this)}>Zobacz CV</Button>
-                                            </Col>
-                                        </Row>
-                                    </ListGroup.Item>
-                                )}
+                                {cvs.length > 0 ? cvs.map((cv) =>
+                                    <CVSection cv={cv} showCV={this.showCV}/>
+                                ) : <Alert variant="info">Nie masz jeszcze żadnych CV. Utwórz nowe w zakładce "Kreator CV"!</Alert> }
                             </ListGroup>
                         }
                     </Card>
