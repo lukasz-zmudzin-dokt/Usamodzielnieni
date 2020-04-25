@@ -5,8 +5,9 @@ import React from "react";
 
 const CVSection = ({cv, showCV}) => (
     <ListGroup.Item key={cv.cv_id}>
+        {console.log(cv)}
         <Row className="d-flex align-items-center">
-            <Col xs={12} md={5}>{cv.cv_id}</Col>
+            <Col xs={12} md={5}>{cv.name}</Col>
             <Col xs={4} md={3}><CVStatus was_reviewed={cv.was_reviewed} is_verified={cv.is_verified} /></Col>
             <Col xs={8} md={4} className="text-right">
                 <IndexLinkContainer to={"/cvEditor/" + cv.cv_id}>

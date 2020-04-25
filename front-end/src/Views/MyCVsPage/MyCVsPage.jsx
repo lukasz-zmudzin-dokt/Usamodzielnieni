@@ -76,7 +76,7 @@ class MyCVsPage extends React.Component {
                                 {!loading ? (
                                     <ListGroup.Item>
                                         <Row>
-                                            <Col xs={12} md={5}><h6>Identyfikator CV</h6></Col>
+                                            <Col xs={12} md={5}><h6>Nazwa pliku</h6></Col>
                                             <Col xs={4} md={3}><h6>Status</h6></Col>
                                             <Col xs={8} md={4} className="text-right"><h6>Akcje</h6></Col>
                                         </Row>

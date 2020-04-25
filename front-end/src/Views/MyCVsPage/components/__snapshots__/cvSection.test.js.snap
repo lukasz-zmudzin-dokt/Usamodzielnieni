@@ -10,9 +10,7 @@ exports[`CVSection should match snapshot 1`] = `
     >
       <div
         class="col-md-5 col-12"
-      >
-        0
-      </div>
+      />
       <div
         class="col-md-3 col-4"
       >

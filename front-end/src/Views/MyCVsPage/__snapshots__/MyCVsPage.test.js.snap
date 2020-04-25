@@ -26,7 +26,7 @@ exports[`MyCVsPage should match snapshot 1`] = `
               class="col-md-5 col-12"
             >
               <h6>
-                Identyfikator CV
+                Nazwa pliku
               </h6>
             </div>
             <div
@@ -53,9 +53,7 @@ exports[`MyCVsPage should match snapshot 1`] = `
           >
             <div
               class="col-md-5 col-12"
-            >
-              0
-            </div>
+            />
             <div
               class="col-md-3 col-4"
             >
@@ -87,9 +85,7 @@ exports[`MyCVsPage should match snapshot 1`] = `
           >
             <div
               class="col-md-5 col-12"
-            >
-              1
-            </div>
+            />
             <div
               class="col-md-3 col-4"
             >
