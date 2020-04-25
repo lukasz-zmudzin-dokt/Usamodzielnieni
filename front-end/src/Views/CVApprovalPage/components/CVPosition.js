@@ -1,6 +1,6 @@
 import React, {useContext, useState} from "react";
 import { UserContext } from "context";
-import {Alert, Button, Col, Row} from "react-bootstrap";
+import {Alert, Button, Row} from "react-bootstrap";
 import {Redirect} from "react-router-dom";
 import {acceptCV} from "Views/CVApprovalPage/functions/acceptCV";
 import {getCVUrl} from "Views/CVApprovalPage/functions/getCVUrl";
