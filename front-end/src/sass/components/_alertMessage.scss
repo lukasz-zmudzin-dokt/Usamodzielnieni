@@ -1,0 +1,39 @@
+.alertMsg__alert.alert {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding-right: 20px;
+}
+
+.alertMsg {
+  transition: 0.15s linear;
+  position: fixed;
+  top: 1.75rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  opacity: 0;
+  width: 100%;
+  padding: 0 0.5rem;
+  z-index: 1100;
+}
+
+.alertMsg--visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0%);
+}
+
+.alertMsg__close {
+  position: absolute;
+  z-index: 1000;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: transparent;
+  border: none;
+  right: 10px;
+}
+
+@media (min-width: 576px) {
+  .alertMsg {
+    max-width: 500px;
+  }
+}
