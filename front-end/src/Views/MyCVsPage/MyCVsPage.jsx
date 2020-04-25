@@ -25,7 +25,17 @@ class MyCVsPage extends React.Component {
     }
 
     componentDidMount() {
-        getUserCVs(this.context.token).then(response => response.status === "200:OK" ? this.setState({cvs: response.result, loading: false}) : this.setState({showModal: false, errors: {big: true}, errorMessages: {big: response.status}, loading: false}));
+        getUserCVs(this.context.token).then(response =>
+            response.status === "200:OK" ? this.setState({
+                    cvs: response.result,
+                    loading: false
+            }) :
+                this.setState({
+                    showModal: false,
+                    errors: { big: true },
+                    errorMessages: { big: response.status },
+                    loading: false
+                }));
     }
 
     render() {

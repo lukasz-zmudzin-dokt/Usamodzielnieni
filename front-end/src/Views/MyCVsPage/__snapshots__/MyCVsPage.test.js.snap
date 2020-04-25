@@ -1,0 +1,120 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MyCVsPage should match snapshot 1`] = `
+<div>
+  <div
+    class="mt-4 container"
+  >
+    <div
+      class="card"
+    >
+      <h2
+        class="card-header"
+      >
+        Moje CV
+      </h2>
+      <div
+        class="list-group list-group-flush"
+      >
+        <div
+          class="list-group-item"
+        >
+          <div
+            class="row"
+          >
+            <div
+              class="col-md-5 col-12"
+            >
+              <h6>
+                Identyfikator CV
+              </h6>
+            </div>
+            <div
+              class="col-md-3 col-4"
+            >
+              <h6>
+                Status
+              </h6>
+            </div>
+            <div
+              class="text-right col-md-4 col-8"
+            >
+              <h6>
+                Akcje
+              </h6>
+            </div>
+          </div>
+        </div>
+        <div
+          class="list-group-item"
+        >
+          <div
+            class="d-flex align-items-center row"
+          >
+            <div
+              class="col-md-5 col-12"
+            >
+              0
+            </div>
+            <div
+              class="col-md-3 col-4"
+            >
+              nie czeka na weryfikację
+            </div>
+            <div
+              class="text-right col-md-4 col-8"
+            >
+              <a
+                class="btn btn-info"
+                href="/cvEditor/0"
+              >
+                Edytuj
+              </a>
+              <button
+                class="ml-2 btn btn-primary"
+                type="button"
+              >
+                Zobacz CV
+              </button>
+            </div>
+          </div>
+        </div>
+        <div
+          class="list-group-item"
+        >
+          <div
+            class="d-flex align-items-center row"
+          >
+            <div
+              class="col-md-5 col-12"
+            >
+              1
+            </div>
+            <div
+              class="col-md-3 col-4"
+            >
+              nie czeka na weryfikację
+            </div>
+            <div
+              class="text-right col-md-4 col-8"
+            >
+              <a
+                class="btn btn-info"
+                href="/cvEditor/1"
+              >
+                Edytuj
+              </a>
+              <button
+                class="ml-2 btn btn-primary"
+                type="button"
+              >
+                Zobacz CV
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

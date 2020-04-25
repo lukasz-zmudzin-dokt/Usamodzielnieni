@@ -14,12 +14,12 @@ export const getCVUrl = async (token, cv_id) => {
                 };
             }
         }).then(function (res) {
-            if(typeof res === 'string' || res instanceof String)  // jeżeli jest to string z urlem to zwróć "200:OK" i urla
+            if(typeof res === 'string' || res instanceof String)
                 return {
                     status: "200:OK",
                     result: res
                 };
-            else    // jeżeli jest to obiekt z kodem błędu i opisem to zwróć "kod:opis_błędu"
+            else
                 return {
                     status: res
                 };
