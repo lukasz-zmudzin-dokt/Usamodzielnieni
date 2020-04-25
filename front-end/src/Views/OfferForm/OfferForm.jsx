@@ -39,22 +39,20 @@ const OfferForm = () => {
 
   useEffect(() => {
     setDisabled(true);
-    let mounted = true;
     const loadData = async (token) => {
-      const fetchSelects = await getSelects(token).catch((err) => {
-        setFail(true);
-        setMessage("Nie udało się załadować danych.");
-        return { categories: [], types: [] };
+      const fetchSelects = new Promise((resolve, reject) => {
+        getSelects(token)
+          .then(res => resolve(res))
+          .catch(err => reject(err));
       });
-      let fetchOffer;
-      if (id) {
-        fetchOffer = await getOffer(token, id).catch((err) =>
-          history.push("/offerForm")
-        );
-      }
-      console.log(fetchSelects);
-      if (mounted) {
-        await Promise.all([fetchSelects, id && fetchOffer]).then((values) => {
+      const fetchOffer = id && new Promise((resolve, reject) => {
+        getOffer(token, id)
+          .then(res => resolve(res))
+          .catch(err => reject(err));
+      });
+      Promise.all([fetchSelects, fetchOffer])
+        .then((values) => {
+          console.log(values)
           setArrays(values[0]);
           setOffer({
             offer_name: values[1] ? values[1].offer_name : "",
@@ -68,12 +66,22 @@ const OfferForm = () => {
             category: values[1] ? values[1].category : values[0].categories[0],
             type: values[1] ? values[1].type : values[0].types[0],
           });
+          setDisabled(false);
+        })
+        .catch((err) => {
+          console.log(err)
+          switch (err.message) {
+            case 'getOffer':
+              history.push("/offerForm");
+              return;
+            default:
+              setFail(true);
+              setMessage("Nie udało się załadować danych.");
+              return { categories: [], types: [] };
+          }
         });
-      }
-      setDisabled(false);
     };
     loadData(context.token);
-    return () => (mounted = false);
   }, [
     context.data.company_address,
     context.data.company_name,
