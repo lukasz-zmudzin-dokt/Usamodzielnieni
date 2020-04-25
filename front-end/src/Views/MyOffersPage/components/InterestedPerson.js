@@ -1,6 +1,10 @@
 import React from "react";
 import { Button, Col, Row } from "react-bootstrap";
-import { showCV } from "Views/MyOffersPage/functions/showCV";
+
+const showCV = (cvUrl) => {
+    let url = "http://usamo-back.herokuapp.com" + cvUrl;
+    window.open(url, '_blank');
+};
 
 const InterestedPerson = ({ person })  => {
     return (
