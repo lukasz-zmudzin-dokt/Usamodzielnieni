@@ -52,8 +52,10 @@ const getTypes = async (token) => {
 };
 
 const getSelects = async (token) => {
-  const categories = await getCategories(token);
-  const types = await getTypes(token);
+  const [categories, types] = await Promise.all([
+    getCategories(token),
+    getTypes(token)
+  ]);
   return { categories, types };
 }
 
@@ -71,7 +73,7 @@ const getOffer = async (token, id) => {
   if (res.status !== 200) {
     throw Error('getOffer');
   }
-  return res.json();
+  return res.json().then(res => ({...res, expiration_date: new Date(res.expiration_date) }));
 };
 
-export { sendData, getSelects, getOffer };
+export { sendData, getSelects, getCategories, getTypes, getOffer };

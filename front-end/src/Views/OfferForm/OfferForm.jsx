@@ -5,7 +5,8 @@ import { voivodeships } from "constants/voivodeships";
 import FormGroup from "components/FormGroup";
 import {
   sendData,
-  getSelects,
+  getCategories,
+  getTypes,
   getOffer,
 } from "Views/OfferForm/functions/fetchData";
 import { UserContext } from "context";
@@ -42,8 +43,12 @@ const OfferForm = () => {
     const loadData = async (token) => {
       let values;
       try {
-        values = await Promise.all([getSelects(token), id && getOffer(token, id)])
-      } catch(err) {
+        values = await Promise.all([
+          getCategories(token),
+          getTypes(token),
+          id && getOffer(token, id)
+        ])
+      } catch (err) {
         if (err.message === 'getOffer') {
           history.push("/offerForm");
         } else {
@@ -52,19 +57,14 @@ const OfferForm = () => {
         }
         return;
       }
-      setArrays(values[0]);
-      setOffer({
-        offer_name: values[1] ? values[1].offer_name : "",
-        company_name: context.data.company_name,
-        company_address: context.data.company_address,
-        voivodeship: values[1] ? values[1].voivodeship : voivodeships[0],
-        description: values[1] ? values[1].description : "",
-        expiration_date: values[1]
-          ? new Date(values[1].expiration_date)
-          : "",
-        category: values[1] ? values[1].category : values[0].categories[0],
-        type: values[1] ? values[1].type : values[0].types[0],
-      });
+      const [categories, types, loadedOffer] = values;
+      setArrays({ categories, types });
+      setOffer(prev => ({
+        ...prev,
+        category: categories[0],
+        type: types[0],
+        ...loadedOffer
+      }));
       setDisabled(false);
     };
     loadData(context.token);
@@ -76,21 +76,25 @@ const OfferForm = () => {
     id,
   ]);
 
-  const submit = (event) => {
+  const submit = async (event) => {
     const form = event.currentTarget;
     event.preventDefault();
     if (form.checkValidity() === false) {
       event.stopPropagation();
     } else {
       setDisabled(true);
-      sendData({ ...offer, expiration_date: expiration_date.toISOString().substr(0, 10) }, context.token, id)
-        .then(() => {
-          history.push("/myOffers");
-        })
-        .catch(() => {
-          setFail(true);
-          setMessage("Nie udało się wysłać oferty. Błąd serwera.");
-        });
+      try {
+        await sendData(
+          { ...offer, expiration_date: expiration_date.toISOString().substr(0, 10) },
+          context.token,
+          id
+        )
+        history.push("/myOffers");
+        return;
+      } catch (e) {
+        setFail(true);
+        setMessage("Nie udało się wysłać oferty. Błąd serwera.");
+      }
     }
     setDisabled(false);
     setValidated(true);
