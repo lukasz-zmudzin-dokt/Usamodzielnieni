@@ -48,6 +48,18 @@ class HomeDataForm extends React.Component {
                             Podaj ulicę na której znajduje się placówka
                         </Form.Control.Feedback>
                     </Form.Group>
+                    <Form.Group controlId="formGroupNumbah">
+                        <Form.Control
+                            name="number"
+                            type="text"
+                            placeholder="Numer budynku"
+                            onChange={e => onChange(onBlur, data, e)}
+                            required
+                        />
+                        <Form.Control.Feedback type="invalid">
+                            Podaj numer budynku, przy którym znajduje się placówka
+                        </Form.Control.Feedback>
+                    </Form.Group>
                     <Form.Group controlId="formGroupCity" className="">
                         <Form.Control
                             name="city"
