@@ -19,7 +19,6 @@ const UserToApprove = ({ user }) => {
             setLoading(true);
             try {
                 let res = await getUserDetails(token, userId);
-                console.log(res);
                 setUserDetails(res);
                 setUserDetailsFacilityAddress(res.facility_address);
             } catch (err) {
