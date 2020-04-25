@@ -360,8 +360,8 @@ describe("OfferForm", () => {
     );
 
     expect(getByPlaceholderText("Nazwa stanowiska").value).toBe("abc");
-    expect(getByPlaceholderText("Nazwa firmy").value).toBe("xd");
-    expect(getByPlaceholderText("Adres firmy").value).toBe("nowy");
+    expect(getByPlaceholderText("Nazwa firmy").value).toBe("abc");
+    expect(getByPlaceholderText("Adres firmy").value).toBe("xd");
     expect(getByLabelText("Województwo").value).toBe("lubelskie");
     expect(getByLabelText("Opis stanowiska").value).toBe("res.description");
     expect(getByLabelText("Branża").value).toBe("xd");

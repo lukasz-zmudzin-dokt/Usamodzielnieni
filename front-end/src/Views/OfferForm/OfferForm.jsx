@@ -18,7 +18,7 @@ const OfferForm = () => {
   const history = useHistory();
   const [validated, setValidated] = useState(false);
   const [fail, setFail] = useState(false);
-  const [arrays, setArrays] = useState({});
+  const [arrays, setArrays] = useState({ types: [], categories: [] });
   const [disabled, setDisabled] = useState(false);
   const [message, setMessage] = useState("");
   let { id } = useParams();
@@ -38,68 +38,48 @@ const OfferForm = () => {
   const context = useContext(UserContext);
 
   useEffect(() => {
-    let mounted = true;
     setDisabled(true);
-    const loadOffer = async (token) => {
-      let res;
-      try {
-        res = await getOffer(token, id);
-        setOffer({
-          offer_name: res.offer_name,
-          company_name: res.company_name,
-          company_address: res.company_address,
-          voivodeship: res.voivodeship,
-          description: res.description,
-          expiration_date: new Date(res.expiration_date),
-          category: res.category,
-          type: res.type,
-        });
-        console.log(res);
-      } catch (e) {
-        console.log(e);
-        history.push("/offerForm");
-      }
-      if (mounted) setDisabled(false);
-    };
-    const loadSelects = async (token) => {
-      let res;
-      try {
-        res = await getSelects(token);
-        if (mounted) {
-          if (!id) {
-            setOffer({
-              offer_name: "",
-              company_name: context.data.company_name,
-              company_address: context.data.company_address,
-              voivodeship: voivodeships[0],
-              description: "",
-              expiration_date: "",
-              category: res.categories[0],
-              type: res.types[0],
-            });
-          }
-          setArrays(res);
-        }
-      } catch (e) {
-        console.log(e);
-        console.log("xd");
+    let mounted = true;
+    const loadData = async (token) => {
+      const fetchSelects = await getSelects(token).catch((err) => {
         setFail(true);
-        setMessage("Nie udało się załadować danych");
-        res = { categories: [], types: [] };
+        setMessage("Nie udało się załadować danych.");
+        return { categories: [], types: [] };
+      });
+      let fetchOffer;
+      if (id) {
+        fetchOffer = await getOffer(token, id).catch((err) =>
+          history.push("/offerForm")
+        );
       }
-      if (mounted) setDisabled(false);
+      console.log(fetchSelects);
+      if (mounted) {
+        await Promise.all([fetchSelects, id && fetchOffer]).then((values) => {
+          setArrays(values[0]);
+          setOffer({
+            offer_name: values[1] ? values[1].offer_name : "",
+            company_name: context.data.company_name,
+            company_address: context.data.company_address,
+            voivodeship: values[1] ? values[1].voivodeship : voivodeships[0],
+            description: values[1] ? values[1].description : "",
+            expiration_date: values[1]
+              ? new Date(values[1].expiration_date)
+              : "",
+            category: values[1] ? values[1].category : values[0].categories[0],
+            type: values[1] ? values[1].type : values[0].types[0],
+          });
+        });
+      }
+      setDisabled(false);
     };
-    loadSelects(context.token);
-    if (id) {
-      loadOffer(context.token);
-    }
+    loadData(context.token);
     return () => (mounted = false);
   }, [
     context.data.company_address,
     context.data.company_name,
     context.token,
-    id,
     history,
+    id,
   ]);
 
   const submit = (event) => {
