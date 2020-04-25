@@ -86,7 +86,6 @@ class CVEditorPage extends React.Component {
         this.state.tabs.skills.data,
         this.state.tabs.languages.data
       );
-      console.log(JSON.stringify(cv));
       try {
         await sendData(cv, this.state.tabs.photo.data, this.context.token).then(() =>
           this.setState({ disabled: false })

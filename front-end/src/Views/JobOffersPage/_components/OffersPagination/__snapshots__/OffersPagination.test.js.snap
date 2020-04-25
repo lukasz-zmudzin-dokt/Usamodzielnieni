@@ -3,7 +3,7 @@
 exports[`OffersPagination should render without crashing 1`] = `
 <div>
   <ul
-    class="offersPagination pagination"
+    class="offersPagination mb-0 justify-content-center pagination"
   >
     <li
       class="page-item"

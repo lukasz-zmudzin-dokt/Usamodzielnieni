@@ -60,7 +60,6 @@ const OfferForm = () => {
   const submit = (event) => {
     const form = event.currentTarget;
     event.preventDefault();
-    console.log(offer);
     if (form.checkValidity() === false) {
       event.stopPropagation();
     } else {

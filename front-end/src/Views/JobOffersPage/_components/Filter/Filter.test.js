@@ -2,6 +2,7 @@ import React from "react";
 import { MemoryRouter } from "react-router-dom";
 import { render, fireEvent } from "@testing-library/react";
 import Filter from "Views/JobOffersPage/_components/Filter";
+import { UserContext } from "context";
 
 describe("Filter(JobOffers)", () => {
   it("renders correctly", () => {
@@ -21,13 +22,13 @@ describe("Filter(JobOffers)", () => {
       </MemoryRouter>
     );
     fireEvent.change(getByLabelText("Województwo"), {
-      target: { value: "dolnośląskie" }
+      target: { value: "dolnośląskie" },
     });
     fireEvent.change(getByLabelText("Okres ważności"), {
-      target: { value: new Date("October 13, 2020 00:00:00") }
+      target: { value: new Date("October 13, 2020 00:00:00") },
     });
     fireEvent.change(getByLabelText("Ilość ofert na stronie"), {
-      target: { value: "80" }
+      target: { value: "80" },
     });
 
     fireEvent.click(getByText("Wyczyść filtry"));
@@ -40,10 +41,22 @@ describe("Filter(JobOffers)", () => {
   it("should not render offers count when offers count is 0", () => {
     const { queryByText } = render(
       <MemoryRouter initialEntries={["/"]}>
-        <Filter setFilters={jest.fn()} count={0}/>
+        <Filter setFilters={jest.fn()} count={0} />
       </MemoryRouter>
     );
 
     expect(queryByText("Znaleziono", { exact: false })).not.toBeInTheDocument();
-  })
+  });
+
+  it("should show add offer button if account type is Employer", () => {
+    const { getByText } = render(
+      <UserContext.Provider value={{ type: "Employer" }}>
+        <MemoryRouter initialEntries={["/"]}>
+          <Filter setFilters={jest.fn()} count={0} />
+        </MemoryRouter>
+      </UserContext.Provider>
+    );
+
+    expect(getByText("Dodaj ofertę", { exact: false })).toBeInTheDocument();
+  });
 });

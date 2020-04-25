@@ -4,7 +4,6 @@ import { Container, Card, Alert, CardColumns } from "react-bootstrap";
 import { getPosts } from "Views/BlogPage/functions/fetchData";
 import BlogPost from "Views/BlogPage/components/SmallBlogPost";
 import Filter from "Views/BlogPage/components/Filter";
-import "./style.css";
 
 const BlogPage = () => {
   const [posts, setPosts] = useState([]);
@@ -15,7 +14,7 @@ const BlogPage = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const loadOffers = async token => {
+    const loadOffers = async (token) => {
       setIsLoading(true);
       let res;
       try {
@@ -52,7 +51,7 @@ const BlogPage = () => {
           msg
         ) : (
           <CardColumns className="ml-3 mr-3">
-            {posts.map(data => (
+            {posts.map((data) => (
               <BlogPost key={data.id} {...data} />
             ))}
           </CardColumns>

@@ -17,28 +17,24 @@ class HeaderTemplate extends React.Component {
           <IndexLinkContainer to={!this.context.token ? "/login" : "/cvEditor"}>
             <Nav.Link id="cvEditor">Kreator CV</Nav.Link>
           </IndexLinkContainer>
-            <IndexLinkContainer to={"/myCVs"}>
-                <Nav.Link id="myCVs">
-                    Moje CV
+          <IndexLinkContainer to={"/myCVs"}>
+            <Nav.Link id="myCVs">
+              Moje CV
                 </Nav.Link>
-            </IndexLinkContainer>
-            <IndexLinkContainer to="/myOffers">
-                <Nav.Link id="myOffers">Moje oferty</Nav.Link>
-            </IndexLinkContainer>
+          </IndexLinkContainer>
           <Nav.Link id="learningTheRopes">Jak zacząć?</Nav.Link>
           <IndexLinkContainer to="/jobOffers">
             <Nav.Link id="jobOffers">Oferty pracy</Nav.Link>
           </IndexLinkContainer>
-            <IndexLinkContainer to="/blog">
-                <Nav.Link id="blogs">Blogi</Nav.Link>
-            </IndexLinkContainer>
+          <IndexLinkContainer to="/blog">
+            <Nav.Link id="blogs">Blogi</Nav.Link>
+          </IndexLinkContainer>
           {/* <Nav.Link id="personalityTests">Testy</Nav.Link> */}
           <Nav.Link id="stories">Historia</Nav.Link>
           {/* <Nav.Link id="moneyMgmt">Zarządzanie budżetem</Nav.Link> */}
           <IndexLinkContainer to="/contact">
             <Nav.Link id="contactPhones">Telefony</Nav.Link>
           </IndexLinkContainer>
-
         </Nav>
       );
   }
@@ -89,11 +85,9 @@ class HeaderTemplate extends React.Component {
       },
       body: {}
     }).then(res => {
-      console.log(res);
       if (res.status === 200 || res.status === 401) {
         res.json().then(responseValue => {
           console.log(responseValue);
-          console.log("Wylogowano");
           this.context.logout();
           return <Redirect to="/" />;
         });
@@ -102,8 +96,6 @@ class HeaderTemplate extends React.Component {
   };
 
   render() {
-    // const { match, location, history } = this.props;
-    // console.log(match, location, history, this.props);
     return (
       <Navbar id="navbar_menu" variant="dark" fixed="top" expand="xl">
         <Navbar.Brand id="navbar_logo">
