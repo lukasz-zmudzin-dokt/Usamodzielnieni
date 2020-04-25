@@ -5,6 +5,7 @@ import UserBasicInfo from "Views/UserProfilePage/components/UserBasicInfo";
 import { UserContext } from "context";
 import { getUserData } from "Views/UserProfilePage/functions/getUserData.js";
 import AdminRegisterButton from "./components/AdminRegisterButton/AdminRegisterButton";
+import AdminApproveUserButton from "./components/AdminApproveUserBuuton/AdminApproveUserButton";
 
 const names = {
   role: {
@@ -66,6 +67,7 @@ class UserProfilePage extends React.Component {
           <UserDetails user={this.state.user} names={names} />
           <Card.Body className="text-center">
             <AdminRegisterButton userType={this.context.type} />
+            <AdminApproveUserButton userType={this.context.type} />
           </Card.Body>
         </Card>
       </Container>

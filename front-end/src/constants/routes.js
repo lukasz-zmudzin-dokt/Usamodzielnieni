@@ -14,6 +14,7 @@ import {
   JobOfferDetails,
   ContactPage,
   MyCVsPage,
+  UserApprovalPage
 } from "Views";
 
 
@@ -36,7 +37,8 @@ const paths = {
   BLOG_FORM: "/blog/newPost",
   BLOG_EDIT: "/blog/newPost/:id",
   JOB_OFFER_DETAILS: "/jobOffers/:id",
-  MY_CVS: "/myCVs"
+  MY_CVS: "/myCVs",
+  USER_APPROVAL: "/userApproval"
 };
 
 export const userTypes = {
@@ -172,6 +174,12 @@ export default [
     component: MyCVsPage,
     isPrivate: true,
     type: userTypes.STANDARD
+  }, {
+    path: paths.USER_APPROVAL,
+    component: UserApprovalPage,
+    isPrivate: true,
+    type: userTypes.STAFF,
+    group: staffTypes.VERIFICATION
   }
 ];
 
