@@ -31,6 +31,8 @@ class CompanyDataForm extends React.Component {
                             placeholder="Nazwa firmy"
                             onChange={e => onChange(onBlur, data, e)}
                             required
+                            minLength="1"
+                            maxLength="128"
                         />
                         <Form.Control.Feedback type="invalid">
                             Podaj nazwę firmy
@@ -43,6 +45,8 @@ class CompanyDataForm extends React.Component {
                             placeholder="Ulica"
                             onChange={e => onChange(onBlur, data, e)}
                             required
+                            minLength="1"
+                            maxLength="128"
                         />
                         <Form.Control.Feedback type="invalid">
                             Podaj ulicę na której znajduje się firma
@@ -69,6 +73,8 @@ class CompanyDataForm extends React.Component {
                             placeholder="Nazwa miasta"
                             onChange={e => onChange(onBlur, data, e)}
                             required
+                            minLength="1"
+                            maxLength="128"
                         />
                         <Form.Control.Feedback type="invalid">
                             Podaj nazwę miasta
@@ -95,6 +101,8 @@ class CompanyDataForm extends React.Component {
                             placeholder="NIP"
                             onChange={e => onChange(onBlur, data, e)}
                             required
+                            minLength="1"
+                            maxLength="128"
                         />
                         <Form.Control.Feedback type="invalid">
                             Podaj NIP
