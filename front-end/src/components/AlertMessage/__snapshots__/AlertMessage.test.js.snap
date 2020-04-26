@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AlertMessage should match snapshot 1`] = `
+<div>
+  <div
+    class="alertMsg alertMsg--visible"
+  >
+    <button
+      class="alertMsg__close"
+    >
+      x
+    </button>
+    <div
+      class="fade alertMsg__alert alert alert-danger show"
+      role="alert"
+    >
+      abc
+    </div>
+  </div>
+</div>
+`;
