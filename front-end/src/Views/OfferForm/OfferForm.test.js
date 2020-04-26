@@ -103,6 +103,8 @@ describe("OfferForm", () => {
       </UserContext.Provider>
     );
 
+    const component = render(<OfferForm />)
+
     await waitForElement(() => getByText("Dodaj"));
 
     failFetch = true;
@@ -133,8 +135,19 @@ describe("OfferForm", () => {
         value: new Date(),
       },
     });
+    fireEvent.change(getByPlaceholderText("12.00"), {
+      target: { value: 42 },
+    });
+    fireEvent.change(getByPlaceholderText("13.00"), {
+      target: { value: 997 },
+    });
+    fireEvent.change(getByLabelText("Okres wypłaty wynagrodzenia"), {
+      target: { value: "Nigdy" },
+    });
 
     fireEvent.click(getByText("Dodaj"));
+
+    component.setFail(false);
 
     await waitForElement(() =>
       getByText("Coś poszło nie tak.", { exact: false })
@@ -182,6 +195,67 @@ describe("OfferForm", () => {
         value: new Date(),
       },
     });
+    fireEvent.change(getByPlaceholderText("12.00"), {
+      target: { value: 42 },
+    });
+    fireEvent.change(getByPlaceholderText("13.00"), {
+      target: { value: 997 },
+    });
+    fireEvent.change(getByLabelText("Okres wypłaty wynagrodzenia"), {
+      target: { value: "Nigdy" },
+    });
+
+    fireEvent.click(getByText("Dodaj"));
+
+    expect(fetch).toHaveBeenCalledTimes(2);
+  });
+
+  it("should not use fetch and show messege if pay_from is higher than pay_to", async () => {
+    const { getByPlaceholderText, getByText, getByLabelText } = render(
+      <UserContext.Provider value={context}>
+        <MemoryRouter>
+          <OfferForm />
+        </MemoryRouter>
+      </UserContext.Provider>
+    );
+
+    await waitForElement(() => getByText("Dodaj"));
+
+    fireEvent.change(getByPlaceholderText("Nazwa stanowiska"), {
+      target: { value: "abcd" },
+    });
+    fireEvent.change(getByPlaceholderText("Nazwa firmy"), {
+      target: { value: "abcd" },
+    });
+    fireEvent.change(getByPlaceholderText("Adres firmy"), {
+      target: { value: "abcd" },
+    });
+    fireEvent.change(getByLabelText("Województwo"), {
+      target: { value: "lubelskie" },
+    });
+    fireEvent.change(getByLabelText("Opis stanowiska"), {
+      target: { value: "" },
+    });
+    fireEvent.change(getByLabelText("Branża"), {
+      target: { value: "xd" },
+    });
+    fireEvent.change(getByLabelText("Wymiar pracy"), {
+      target: { value: "IT" },
+    });
+    fireEvent.change(getByLabelText("Ważne do:"), {
+      target: {
+        value: new Date(),
+      },
+    });
+    fireEvent.change(getByPlaceholderText("12.00"), {
+      target: { value: 997 },
+    });
+    fireEvent.change(getByPlaceholderText("13.00"), {
+      target: { value: 42 },
+    });
+    fireEvent.change(getByLabelText("Okres wypłaty wynagrodzenia"), {
+      target: { value: "Nigdy" },
+    });
 
     fireEvent.click(getByText("Dodaj"));
 
@@ -225,8 +299,18 @@ describe("OfferForm", () => {
           "Wed Dec 04 2020 00:00:00 GMT+0100 (czas środkowoeuropejski standardowy)",
       },
     });
+    fireEvent.change(getByPlaceholderText("12.00"), {
+      target: { value: 42 },
+    });
+    fireEvent.change(getByPlaceholderText("13.00"), {
+      target: { value: 997 },
+    });
+    fireEvent.change(getByLabelText("Okres wypłaty wynagrodzenia"), {
+      target: { value: "Nigdy" },
+    });
 
     fireEvent.click(getByText("Dodaj"));
+    history.push("/myOffers")
 
     await wait(() => {
       expect(fetch).toHaveBeenCalled();

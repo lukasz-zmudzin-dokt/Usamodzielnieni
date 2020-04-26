@@ -174,7 +174,7 @@ const OfferForm = () => {
                 required
                 incorrect="Podaj wymiar pracy np. staż,praca"
               />
-              <Form.Group id="formGroupPayfrom">
+              <Form.Group id="formGroupPayFrom">
                 <Form.Label>Wynagrodzenie od:</Form.Label>
                 <InputGroup>
                   <Form.Control
@@ -238,7 +238,7 @@ const OfferForm = () => {
                   <Form.Control
                     name="pay_to"
                     type="text"
-                    placeholder="12.00"
+                    placeholder="13.00"
                     onChange={e => setOffer({ ...offer, pay_to: parseFloat(e.target.value) })}
                     pattern={pay_regex}
                     required
