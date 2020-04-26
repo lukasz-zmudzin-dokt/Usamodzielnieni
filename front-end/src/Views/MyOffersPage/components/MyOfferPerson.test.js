@@ -19,13 +19,14 @@ describe("MyOffersPerson", () => {
     });
 
     it("should match snapshot", async () => {
-        const { getByText } = render (
+        const { container, getByText } = render (
             <MemoryRouter>
                 <MyOfferPerson person={testPerson} />
             </MemoryRouter>
         );
-        await waitForElement(() => getByText("standard1@standard1.com"));
-        expect(getByText).toMatchSnapshot();
+        await waitForElement(() => getByText("standard1 standard1"));
+        //console.log(getByText);
+        expect(container).toMatchSnapshot();
     });
 
     it("should display a person", async () => {
