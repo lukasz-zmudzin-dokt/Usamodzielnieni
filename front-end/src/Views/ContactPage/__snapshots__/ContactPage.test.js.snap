@@ -8,15 +8,11 @@ exports[`ContactPage should match snapshot 1`] = `
     <div
       class="contact_page_card card"
     >
-      <div
+      <h2
         class="contact_page_title card-header"
       >
-        <h3
-          align="left"
-        >
-          Lista przydatnych telefonów
-        </h3>
-      </div>
+        Lista przydatnych telefonów
+      </h2>
       <div
         class="bg_card card-body"
       >
@@ -24,11 +20,10 @@ exports[`ContactPage should match snapshot 1`] = `
           class="card-columns"
         >
           <div
-            class="card"
-            style="width: 18rem;"
+            class="my-3 card bg-primary text-light"
           >
             <div
-              class="custom_card card-body"
+              class="card-body"
             >
               <div
                 class="card-title h5"
@@ -45,7 +40,7 @@ exports[`ContactPage should match snapshot 1`] = `
               class="card-footer"
             >
               <button
-                class="btn btn-light btn-sm"
+                class="btn btn-light btn-block btn-sm"
                 type="button"
               >
                 Skopiuj ten numer
@@ -53,11 +48,10 @@ exports[`ContactPage should match snapshot 1`] = `
             </div>
           </div>
           <div
-            class="card"
-            style="width: 18rem;"
+            class="my-3 card bg-primary text-light"
           >
             <div
-              class="custom_card card-body"
+              class="card-body"
             >
               <div
                 class="card-title h5"
@@ -74,7 +68,7 @@ exports[`ContactPage should match snapshot 1`] = `
               class="card-footer"
             >
               <button
-                class="btn btn-light btn-sm"
+                class="btn btn-light btn-block btn-sm"
                 type="button"
               >
                 Skopiuj ten numer
@@ -82,16 +76,15 @@ exports[`ContactPage should match snapshot 1`] = `
             </div>
           </div>
           <div
-            class="card"
-            style="width: 18rem;"
+            class="my-3 card bg-primary text-light"
           >
             <div
-              class="custom_card card-body"
+              class="card-body"
             >
               <div
                 class="card-title h5"
               >
-                Ogólnopolski Telefon Zaufania „Narkotyki – Narkomania”
+                Ogólnopolski Telefon Zaufania "Narkotyki – Narkomania"
               </div>
               <p
                 class="card-text"
@@ -103,7 +96,7 @@ exports[`ContactPage should match snapshot 1`] = `
               class="card-footer"
             >
               <button
-                class="btn btn-light btn-sm"
+                class="btn btn-light btn-block btn-sm"
                 type="button"
               >
                 Skopiuj ten numer
@@ -111,11 +104,10 @@ exports[`ContactPage should match snapshot 1`] = `
             </div>
           </div>
           <div
-            class="card"
-            style="width: 18rem;"
+            class="my-3 card bg-primary text-light"
           >
             <div
-              class="custom_card card-body"
+              class="card-body"
             >
               <div
                 class="card-title h5"
@@ -132,7 +124,7 @@ exports[`ContactPage should match snapshot 1`] = `
               class="card-footer"
             >
               <button
-                class="btn btn-light btn-sm"
+                class="btn btn-light btn-block btn-sm"
                 type="button"
               >
                 Skopiuj ten numer
@@ -140,11 +132,10 @@ exports[`ContactPage should match snapshot 1`] = `
             </div>
           </div>
           <div
-            class="card"
-            style="width: 18rem;"
+            class="my-3 card bg-primary text-light"
           >
             <div
-              class="custom_card card-body"
+              class="card-body"
             >
               <div
                 class="card-title h5"
@@ -161,7 +152,7 @@ exports[`ContactPage should match snapshot 1`] = `
               class="card-footer"
             >
               <button
-                class="btn btn-light btn-sm"
+                class="btn btn-light btn-block btn-sm"
                 type="button"
               >
                 Skopiuj ten numer
