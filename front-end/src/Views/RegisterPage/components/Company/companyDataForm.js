@@ -22,7 +22,7 @@ class CompanyDataForm extends React.Component {
     };
 
     render () {
-        let {data, onBlur, nipWrong} = this.props;
+        let {data, onBlur} = this.props;
         let {onChange} = this;
         return (
             <Card

@@ -26,23 +26,9 @@ class RegisterPage extends React.Component {
       fail_message: "",
       error_flag: false,
       incorrect_input: false,
-      disabled: false,
-      nip_incorrect: null
+      disabled: false
     };
   }
-
-  checkNIP = (nip) => {
-    if (nip.match(/^[0-9]{10}$/) === false)
-      return false;
-    const weights = [6, 5, 7, 2, 3, 4, 5, 6, 7];
-    let sum = 0;
-    let controlNum = parseInt(nip.substr(9, 10));
-    let weightCount = weights.length;
-    for (let i = 0; i < weightCount; i++) {
-      sum += (parseInt(nip.substr(i, 1)) * weights[i]);
-    }
-    return sum % 11 === controlNum;
-  };
 
   handleIncorrectResponse = status => {
     switch (status) {
@@ -60,22 +46,11 @@ class RegisterPage extends React.Component {
     event.preventDefault();
     const { password, passwordR } = data.accountData || {};
 
-    if (data.companyData !== null && !this.checkNIP(data.companyData.company_nip)) {
-      this.setState({
-        nip_incorrect: true
-      });
-      event.stopPropagation();
-      return false;
-    } else if (form.checkValidity() === false || password !== passwordR) {
+    if (form.checkValidity() === false || password !== passwordR) {
       event.stopPropagation();
       return false;
     }
-    else {
-      this.setState({
-        nip_incorrect: false
-      });
-      return true;
-    }
+    else return true;
   };
 
   selectType = e => {
@@ -97,7 +72,6 @@ class RegisterPage extends React.Component {
             <CompanyDataForm
                 data={this.state.companyData}
                 onBlur={companyData => this.setState({ companyData })}
-                nipWrong={this.state.nip_incorrect}
             />
         );
       }
