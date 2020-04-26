@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import {Container, Card, Alert, Row, Button} from "react-bootstrap";
 import { withRouter } from "react-router-dom";
-import { UserContext } from "context";
+import { UserContext,AlertContext } from "context";
 import { DetailsItem } from 'components';
 import { AddCvForm } from "./_components";
 import { deleteOffer } from "./functions/deleteOffer";
@@ -34,26 +34,27 @@ const mapOffer = (offer) => ({
   description: offer.description
 })
 
-const handleDeleteOffer = async (e, id, token, setDeleted, setDeletionError) => {
+const handleDeleteOffer = async (e, id, token, setDeleted, contextA) => {
   e.preventDefault();
   try {
     await deleteOffer(id, token);
     setDeleted(true);
+    contextA.changeMessage("Ta oferta została usunięta.","info")
+    contextA.changeVisibility(); 
   } catch(err) {
     setDeleted(true);
-    setDeletionError(true);
+    contextA.changeMessage("Wystąpił błąd przy usuwaniu oferty.")
+    contextA.changeVisibility();
   }
 };
 
 const JobOfferDetails = props => {
   const [offer, setOffer] = useState({});
   const [isOfferLoading, setIsOfferLoading] = useState(false);
-  const [error, setError] = useState(false);
   const [confirmDeletion, setConfirmDeletion] = useState(false);
   const [deleted, setDeleted] = useState(false);
-  const [deletionError, setDeletionError] = useState(false);
   const user = useContext(UserContext);
-
+  const contextA = useContext(AlertContext);
   useEffect(
     () => {
       const loadOffer = async (id, token) => {
@@ -64,7 +65,8 @@ const JobOfferDetails = props => {
         } catch (e) {
           console.log(e);
           loadedOffer = {};
-          setError(true);
+          contextA.changeMessage("Wystąpił błąd podczas ładowania oferty.")
+          contextA.changeVisibility();
         }
         setOffer(loadedOffer);
         setIsOfferLoading(false);
@@ -74,8 +76,7 @@ const JobOfferDetails = props => {
     [props.match.params.id, user.token]
   );
 
-  const msg = isOfferLoading ? <Alert variant="info">Ładowanie oferty...</Alert> :
-              error && <Alert variant="danger">Wystąpił błąd podczas ładowania oferty.</Alert>
+  const msg = isOfferLoading && <Alert variant="info">Ładowanie oferty...</Alert>;
 
   return (
     <Container className="jobOfferDetails">
@@ -106,21 +107,9 @@ const JobOfferDetails = props => {
         { confirmDeletion && !deleted ?
             <Alert variant="warning mt-3" className="d-flex justify-content-center align-items-center">
               Czy na pewno chcesz usunąć tę ofertę?
-              <Button variant="warning" className="ml-3" onClick={e => handleDeleteOffer(e, offer.id, user.token, setDeleted, setDeletionError)}>
+              <Button variant="warning" className="ml-3" onClick={e => handleDeleteOffer(e, offer.id, user.token, setDeleted,contextA)}>
                 Tak
               </Button>
-            </Alert>
-            : null
-        }
-        { deleted && !deletionError ?
-          <Alert variant="info" className="d-flex justify-content-center">
-            Ta oferta została usunięta.
-          </Alert>
-          : null
-        }
-        { deleted && deletionError ?
-            <Alert variant="danger" className="d-flex justify-content-center">
-              Wystąpił błąd przy usuwaniu oferty.
             </Alert>
             : null
         }

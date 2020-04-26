@@ -44,7 +44,7 @@ const getTypes = async (token) => {
       Authorization: `Token ${token}`,
     },
   });
-  if (res.status !== 201) {
+  if (res.status !== 200) {
     throw Error("getTypes");
   }
   return res.json().then((res) => res.offer_types);

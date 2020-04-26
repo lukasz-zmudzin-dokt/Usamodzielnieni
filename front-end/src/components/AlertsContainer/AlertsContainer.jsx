@@ -11,6 +11,7 @@ const AlertsContainer = () => {
         <AlertMessage
           message={context.message}
           handleClose={context.changeVisibility}
+          variant={context.variant}
         />
       )}
     </>
