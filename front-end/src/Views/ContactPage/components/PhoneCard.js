@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {Button, Card} from "react-bootstrap";
 
-const copyToClipboard = (text, setCopied) => {
+export const copyToClipboard = (text, setCopied) => {
     setCopied(true);
     let dummy = document.createElement("textarea");
     document.body.appendChild(dummy);

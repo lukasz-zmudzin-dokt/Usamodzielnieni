@@ -1,6 +1,7 @@
-import React from "react";
+import React, {useState} from "react";
 import { render } from "@testing-library/react";
 import PhoneCard from "./PhoneCard";
+import {copyToClipboard} from "./PhoneCard"
 
 describe("PhoneCard", () => {
 
@@ -22,5 +23,25 @@ describe("PhoneCard", () => {
             <PhoneCard />
         );
         expect(container).toMatchSnapshot();
+    });
+});
+
+describe("copyToClipboard", () => {
+    beforeAll(() => {
+        global.document.execCommand = function execCommandMock() { };
+      });
+
+    const test_text = "testowytekst";
+    
+    let copied = true;
+    const setCopied = (val) =>{
+        copied = val;
+    } 
+
+    it("should copy given text", () => {
+        document.execCommand = jest.fn()
+        copyToClipboard(test_text, setCopied);
+        expect(document.execCommand).toHaveBeenCalledWith("copy");
+        //expect(navigator.clipboard.readText()).toBe("testowytekst");
     });
 });
