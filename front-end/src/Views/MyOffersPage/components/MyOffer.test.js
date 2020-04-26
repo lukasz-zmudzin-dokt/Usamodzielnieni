@@ -65,43 +65,6 @@ describe("MyOffers", () => {
 
     });
 
-/*
-    it("should load offers", async () => {
-        const { container, getByText } = render (
-            <MemoryRouter>
-                <MyOffer offer={testOffer} />
-            </MemoryRouter>
-        );
-        await waitForElement(() => getByText("offer2"));
-        fireEvent.click(getByText("offer2"));
-        expect(fetch).toHaveBeenCalledTimes(1);
-    });
-
-    it("should view alert at api fail", async () => {
-        fetchCheck = "fail";
-        const { getByText } = render (
-            <MemoryRouter>
-                <MyOffer />
-            </MemoryRouter>
-        );
-
-        await waitForElement(() => getByText("Ups, wystąpił błąd."));
-        expect(getByText("Ups, wystąpił błąd.")).toBeInTheDocument();
-    });
-
-    it("should view alert at api returning no cvs", async () => {
-        fetchCheck = "empty";
-        const { getByText } = render (
-            <MemoryRouter>
-                <MyOffer />
-            </MemoryRouter>
-        );
-
-        await waitForElement(() => getByText("Brak ofert"));
-        expect(getByText("Brak ofert")).toBeInTheDocument();
-    })
-*/
-
 });
 
 
