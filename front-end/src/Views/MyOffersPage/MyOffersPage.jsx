@@ -1,55 +1,58 @@
-import React from "react";
-import "./style.css";
-import {Alert, Card, Container} from "react-bootstrap";
-import MyOffers from "./components/MyOffers";
-import { getOffers } from "./functions/getOffers";
+import React, {useContext, useEffect, useState} from "react";
+import {Accordion, Alert, Card, Container} from "react-bootstrap";
 import { UserContext } from "context/UserContext";
+import { getMyOffers } from "./functions/apiCalls";
+import MyOffer from "./components/MyOffer";
 
-class MyOffersPage extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            offers: [],
-            error: false,
-            errorMessage: "",
-            loading: true
+const MyOffersPage = () => {
+
+    const context = useContext(UserContext);
+    const [offers, setOffers] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(false);
+
+    useEffect(() => {
+        const loadOffers = async(token, setOffers) => {
+            setLoading(true);
+            try {
+                let res = await getMyOffers(token);
+                console.log(res);
+                if(res.count > 0) {
+                    setOffers(res.results);
+                }
+            } catch (err) {
+                console.log(err);
+                setError(true);
+            }
+            setLoading(false);
         };
-    }
+        loadOffers(context.token, setOffers);
+    }, [context.token]);
 
-    componentDidMount() {
-        getOffers(this.context.token)
-        .then(response => response.status === "200:OK" ?
-            this.setState({ offers: response.result, loading: false }) :
-            this.setState({ error: true, errorMessage: response.status, loading: false}));
-    }
+    const message = loading ? (
+        <Alert variant="info" className="m-3">Ładuję...</Alert>
+    ) : error ? (
+        <Alert variant="danger" className="m-3">Ups, wystąpił błąd.</Alert>
+    ) : offers.length === 0 ? (
+        <Alert variant="info" className="m-3">Brak ofert</Alert>
+    ) : null;
 
-    render() {
-        const {
-            offers,
-            error,
-            errorMessage,
-            loading
-        } = this.state;
-        return (
-            <Container className="pt-4">
-                    <Card>
-                        <Card.Header><h3>Moje oferty</h3></Card.Header>
-                        <Card.Body className="p-0">
-                            {loading === true ? (
-                                <Alert variant="info" className="mb-0">Ładuję...</Alert>
-                            ) : null}
-                            {error ? (
-                                <Alert variant="danger">Ups, coś poszło nie tak. Kod błędu - {errorMessage}</Alert>
-                            ) : (
-                                <MyOffers offers={offers}/>
-                            )}
-                        </Card.Body>
-                    </Card>
-            </Container>
-        );
-    }
-}
+    return (
+        <Container>
+            <Card>
+                <Card.Header as={"h2"}>
+                    Moje Oferty
+                </Card.Header>
+                <Card.Body className="p-0">
+                    { message ? message : null }
+                    <Accordion>
+                        { offers.map((offer) => <MyOffer offer={offer} key={offer.id} />) }
+                    </Accordion>
+                </Card.Body>
+            </Card>
+        </Container>
+    );
 
-MyOffersPage.contextType = UserContext;
+};
 
 export default MyOffersPage;

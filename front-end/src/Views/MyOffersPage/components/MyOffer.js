@@ -1,56 +1,57 @@
-import React from "react";
-import {Accordion, Card, Alert} from "react-bootstrap";
-import InterestedPerson from "./InterestedPerson";
-import MyOffersLegend from "./MyOffersLegend";
-import { getInterestedPeople } from "Views/MyOffersPage/functions/getInterestedPeople";
+import React, {useContext, useState} from "react";
+import {Accordion, Card, Alert, ListGroup} from "react-bootstrap";
 import "Views/MyOffersPage/style.css";
 import { UserContext } from "context/UserContext";
+import { getOfferPeople } from "../functions/apiCalls";
+import MyOfferPerson from "./MyOfferPerson";
 
-class MyOffer extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            offer: {},
-            answers: [],
-            loading: true
-        };
-    }
+const MyOffer = ({ offer }) => {
 
-    render() {
-        const {
-            offer
-        } = this.props;
-        const {
-            answers,
-            loading
-        } = this.state;
-        return (
-            <Card className="no-lrborder">
-                <Accordion.Toggle className="mouse-hand-pointer" as={Card.Header} eventKey={offer.id} onClick={e => getInterestedPeople(this.context.token, offer.id).then(resp => resp.status === "200:OK" ? this.setState({loading: false, answers: resp.result}) : this.setState({ loading: true }))}>
-                    {offer.offer_name} -
-                    <Alert.Link href={"/jobOffers/" + offer.id}> strona oferty</Alert.Link>
-                </Accordion.Toggle>
-                <Accordion.Collapse eventKey={offer.id}>
-                    <Card.Body>
-                        {loading === true ? (
-                            <Alert variant="info" className="mb-0">Ładuję...</Alert>
-                        ) : null}
-                        {answers.length === 0 && loading === false ? (
-                            <Alert variant="info" className="mb-0">Do tej oferty nie zgłosiła się jeszcze żadna osoba.</Alert>
-                        ) : null}
-                        <MyOffersLegend answers={answers} />
-                        {answers.map((value) => {
-                            return (
-                                <InterestedPerson person={value} key={value.user_id}/>
-                            )
-                        })}
-                    </Card.Body>
-                </Accordion.Collapse>
-            </Card>
-        );
-    }
-}
+    const context = useContext(UserContext);
+    const [people, setPeople] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(false);
 
-MyOffer.contextType = UserContext;
+    const loadOfferPeople = async (e, token, offerId) => {
+        e.preventDefault();
+        if(people.length === 0) {
+            setLoading(true);
+            try {
+                let res = await getOfferPeople(token, offerId);
+                if(res.length > 0) {
+                    setPeople(res);
+                }
+            } catch (err) {
+                setError(true);
+            }
+            setLoading(false);
+        }
+    };
+
+    const message = loading ? (
+        <Alert variant="info">Ładuję...</Alert>
+    ) : error ? (
+        <Alert variant="danger">Ups, wystąpił błąd...</Alert>
+    ) : people.length === 0 ? (
+        <Alert className="mb-0" variant="info">Brak zgłoszeń.</Alert>
+    ) : null;
+
+    return (
+        <Card className="border-left-0 border-right-0 border-bottom-0">
+            <Accordion.Toggle as={Card.Header} eventKey={offer.id} onClick={e => loadOfferPeople(e, context.token, offer.id)}>
+                {offer.offer_name}
+            </Accordion.Toggle>
+            <Accordion.Collapse eventKey={offer.id}>
+                <Card.Body className="p-0">
+                    { message ? message : null }
+                    <ListGroup>
+                        { people.map((value) => (<MyOfferPerson person={value} key={value.user_id} />)) }
+                    </ListGroup>
+                </Card.Body>
+            </Accordion.Collapse>
+        </Card>
+    );
+
+};
 
 export default MyOffer;
