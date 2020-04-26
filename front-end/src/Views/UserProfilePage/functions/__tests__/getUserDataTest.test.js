@@ -1,6 +1,4 @@
-jest.mock('fetch');
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { getUserData } from 'Views/UserProfilePage/functions/getUserData.js';
 
 describe("getUserData", () => {
@@ -45,14 +43,14 @@ describe("getUserData", () => {
   it("should fetch the data if server response successful", async () => {
     await getUserData(token);
     expect(fetch).toHaveBeenCalledWith(
-      "http://usamo-back.herokuapp.com/account/data",
-      {
-        headers: {
-          Authorization: "Token 123",
-          "Content-Type": "application/json"
-        },
-        method: "GET"
-      }
+        "https://usamo-back.herokuapp.com/account/data",
+        {
+          headers: {
+            Authorization: "Token 123",
+            "Content-Type": "application/json"
+          },
+          method: "GET"
+        }
     );
   });
 });

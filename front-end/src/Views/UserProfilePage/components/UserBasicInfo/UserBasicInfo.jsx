@@ -1,23 +1,23 @@
 import React from "react";
-import { Row, Col } from "react-bootstrap";
+import {Row, Col, Alert} from "react-bootstrap";
 import UserIcon from "Views/UserProfilePage/components/UserIcon";
 
-const UserBasicInfo = props => {
-  const { firstName, lastName } = props.user;
-  const { role } = props.names;
-  return (
-    <Row className="text-center text-sm-left">
-      <Col xs="12" sm="auto">
-        <UserIcon />
-      </Col>
-      <Col>
-        <div>
-          <h5>{`${firstName} ${lastName}`}</h5>
-        </div>
-        <div>{role[role]}</div>
-      </Col>
-    </Row>
-  );
+const UserBasicInfo = ({user, names, error}) => {
+    const { firstName, lastName } = user;
+    const { role } = names;
+    return (
+        <Row className="text-center text-sm-left">
+            <Col xs="12" sm="auto">
+                <UserIcon />
+            </Col>
+            <Col>
+                <div>
+                    {error ? <Alert variant="danger">Wystąpił błąd podcas pobierania danych</Alert> : <h5>{`${firstName} ${lastName}`}</h5>}
+                </div>
+                <div>{role[role]}</div>
+            </Col>
+        </Row>
+    );
 };
 
 export default UserBasicInfo;
