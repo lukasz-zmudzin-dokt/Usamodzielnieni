@@ -2,14 +2,23 @@ import React from 'react';
 import {Card, Form} from "react-bootstrap";
 
 class CompanyDataForm extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
     onChange = (onBlur, data, e) => {
         const name = e.target.name;
         const value = e.target.value;
         onBlur({ ...data, [name]: value})
+    };
+
+    getNipControlNum = () => {
+        const nip = this.props.data.company_nip;
+        if (nip.length < 9) {
+            return '0';
+        }
+        const weights = [6, 5, 7, 2, 3, 4, 5, 6, 7];
+        let sum = 0;
+        for (let i = 0; i < weights.length; i++) {
+          sum += (parseInt(nip.substr(i, 1)) * weights[i]);
+        }
+        return `${sum % 11}`;
     };
 
     render () {
@@ -101,8 +110,7 @@ class CompanyDataForm extends React.Component {
                         <Form.Control
                             name="company_nip"
                             type="text"
-                            isInvalid={nipWrong}
-                            pattern="[0-9]{10}"
+                            pattern={'[0-9]{9}' + this.getNipControlNum()}
                             placeholder="NIP"
                             onChange={e => onChange(onBlur, data, e)}
                             required
