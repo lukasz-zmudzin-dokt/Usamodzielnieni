@@ -1,5 +1,5 @@
 import React from "react";
-import { render, fireEvent } from "@testing-library/react";
+import { render, fireEvent, waitForElement } from "@testing-library/react";
 import PhoneCard from "./PhoneCard";
 
 describe("PhoneCard", () => {
@@ -7,7 +7,9 @@ describe("PhoneCard", () => {
     const contact = {
         name: "abc_name",
         number: "123456789"
-    }
+    };
+
+    global.document.execCommand = jest.fn();
 
     it("should render without crashing", () => {
         const { getByText } = render(
@@ -23,24 +25,15 @@ describe("PhoneCard", () => {
         );
         expect(container).toMatchSnapshot();
     });
-});
-
-describe("copyToClipboard", () => {
-    beforeAll(() => {
-        global.document.execCommand = jest.fn().execCommandMock(() => { });
-    });
-
-    const contact = {
-        name: "abc_name",
-        number: "123456789"
-    }
 
     it("should copy text on click", async () => {
-        const { container, getByText } = render(
+        const {getByText } = render(
             <PhoneCard name={contact.name} number={contact.number} />
-        );;
-        container.copyToClipboard = jest.fn();
+        );
         fireEvent.click(getByText('Skopiuj ten numer'));
-        expect(container.copyToClipboard).toHaveBeenCalled();
+        expect(getByText('Skopiowano')).toBeInTheDocument();
+
+        await waitForElement(() => getByText('Skopiuj ten numer'));
+        expect(document.execCommand).toHaveBeenCalledWith('copy');
     });
 });
