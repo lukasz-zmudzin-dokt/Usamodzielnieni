@@ -21,7 +21,7 @@ class HeaderTemplate extends React.Component {
       return (
         <Nav className="mr-auto ">
           {menuPositions.map(pos => (
-            (pos.allowed === undefined || pos.allowed.includes(type) || (adminGroup && pos.allowed.includes(adminGroup)))? (
+            (pos.allowed === undefined || pos.allowed.includes(type) || (adminGroup && pos.allowed.some(type => adminGroup.includes(type))))? (
               <IndexLinkContainer to={pos.path} key={pos.name}>
                 <Nav.Link>{pos.name}</Nav.Link>
               </IndexLinkContainer>

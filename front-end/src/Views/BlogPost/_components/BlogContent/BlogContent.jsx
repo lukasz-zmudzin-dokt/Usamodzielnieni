@@ -7,7 +7,7 @@ import {Redirect} from "react-router-dom";
 import {staffTypes} from "constants/staffTypes";
 
 const getDateString = dateString => {
-    return dateString.substring(0,2) + "." + dateString.substring(3, 5) + "." + dateString.substring(6, 10);
+    return dateString.substring(8,10) + "." + dateString.substring(5, 7) + "." + dateString.substring(0, 4);
 };
 
 const renderTags = tagList => {
@@ -31,7 +31,7 @@ const handleDeletion = async (event, id, token, errorFlag, successFlag) => {
 };
 
 const renderButtons = (id, user, author, errorFlag, successFlag, editionFlag, flag) => {
-    if ( ((user.type === 'Staff' && user.data.group_type === staffTypes.BLOG_CREATOR) || user.data.email === author.email) && !flag) {
+    if ( ((user.type === 'Staff' && user.data.group_type.includes(staffTypes.BLOG_CREATOR)) || user.data.email === author.email) && !flag) {
         return (
             <ButtonToolbar className="btn_toolbar text-center">
                 <Button variant="warning" className="button-edit mx-3" onClick={e => editionFlag(true)}>Edytuj 🖉</Button>

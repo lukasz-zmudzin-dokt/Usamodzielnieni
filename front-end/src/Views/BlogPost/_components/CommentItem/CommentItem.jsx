@@ -1,10 +1,11 @@
 import React from 'react';
 import { ButtonGroup, Button } from "react-bootstrap";
 import "./CommentItem.css";
+import {staffTypes} from "constants/staffTypes";
 
 const CommentItem = ({ comment, onDeleteClick, user, ...rest }) => {
     const canModifyComment = (user) => (comment.author.email === user.data.email) 
-                                    || (user.type === 'Staff' && user.data.group_type === 'staff_blog_moderator');
+                                    || (user.type === 'Staff' && user.data.group_type.includes(staffTypes.BLOG_MODERATOR));
 
     return (
         <div className="commentItem" {...rest}>

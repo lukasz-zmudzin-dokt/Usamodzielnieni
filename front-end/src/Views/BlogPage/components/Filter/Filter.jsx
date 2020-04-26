@@ -94,7 +94,7 @@ const Filter = ({ token, setFilter, count }) => {
         </Button>
       </div>
       {user.type === "Staff" &&
-      user.data.group_type === staffTypes.BLOG_CREATOR ? (
+      user.data.group_type.includes(staffTypes.BLOG_CREATOR) ? (
         <IndexLinkContainer as={Button} to="/blog/newPost">
           <Button variant="success" className="mt-2">
             Stwórz nowy post

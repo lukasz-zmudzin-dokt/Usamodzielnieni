@@ -98,7 +98,7 @@ const JobOfferDetails = props => {
           </div>
         )}
         { user.type === 'Standard' && <AddCvForm id={props.match.params.id} user={user}/> }
-        { user.type === 'Staff' && user.data.group_type === staffTypes.JOBS && !confirmDeletion ?
+        { user.type === 'Staff' && user.data.group_type.includes(staffTypes.JOBS) && !confirmDeletion ?
             <Row className="d-flex justify-content-center">
               <Button variant="danger" onClick={e => setConfirmDeletion(true)}>Usuń ofertę</Button>
             </Row>

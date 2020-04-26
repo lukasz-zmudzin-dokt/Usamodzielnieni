@@ -4,7 +4,7 @@ import {Button} from "react-bootstrap";
 import {staffTypes} from "constants/staffTypes";
 
 const CVApprovalButton = ({user}) => (
-    user.type === "Staff" && user.data.group_type === staffTypes.CV ? (
+    user.type === "Staff" && user.data.group_type.includes(staffTypes.CV) ? (
         <LinkContainer to="/cvApproval">
             <Button variant="primary" className="ml-3">
                 Zobacz CV do akceptacji
