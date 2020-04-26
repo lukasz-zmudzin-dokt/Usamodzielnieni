@@ -21,13 +21,17 @@ describe('JobOfferDetails', () => {
                             json: () => Promise.resolve(offer)
                         });
                         break;
+                    case"DELETE":
+                        resolve({ status: 200 });
+                        break;
                     default:
                         reject({});
                         break;
                 }
             });
         });
-    })
+    });
+
     beforeEach(() => {
         apiStatus = 200;
         offer = {

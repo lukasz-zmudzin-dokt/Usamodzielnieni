@@ -6,7 +6,6 @@ export const deleteOffer = async (id, token) => {
     };
 
     const response = await fetch(url, {method: "DELETE", headers});
-    await fetch(url, {method: "DELETE", headers});
     if (response.status === 200) {
         return response.status;
     } else {
