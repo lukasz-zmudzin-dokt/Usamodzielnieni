@@ -1,7 +1,7 @@
 import React from "react";
 import BlogPost from "./BlogPost";
 import {render, waitForElement} from "@testing-library/react";
-import {UserContext} from "context/UserContext";
+import {UserContext,AlertContext} from "context";
 
 
 describe('BlogPost', () => {
@@ -9,7 +9,12 @@ describe('BlogPost', () => {
     let apiStatus;
     let id;
     let user;
-
+    let contextA = {
+        open: true,
+        changeVisibility: jest.fn(),
+        message: "abc",
+        changeMessage: jest.fn(),
+    };
     beforeAll(() => {
         id = 123;
         global.fetch = jest.fn().mockImplementation( (input, init) => {
@@ -86,12 +91,18 @@ describe('BlogPost', () => {
         apiStatus = 500;
         const {getByText, queryByText} = render(
             <UserContext.Provider value={user}>
-                <BlogPost/>
+                <AlertContext.Provider value={contextA}>
+                    <BlogPost/>
+                </AlertContext.Provider>
             </UserContext.Provider>
         );
 
-        await waitForElement(() => getByText("Wystąpił błąd", {exact: false}));
-        expect(getByText("Wystąpił błąd", {exact: false})).toBeInTheDocument();
+        await waitForElement(() => getByText("null", {exact: false}));
+
+        expect(contextA.changeMessage).toHaveBeenCalledWith(
+          "Wystąpił błąd podczas wczytywania zawartości bloga."
+        );
+
         expect(queryByText("Lorem ipsum dolor", {exact: false})).not.toBeInTheDocument();
     });
 
