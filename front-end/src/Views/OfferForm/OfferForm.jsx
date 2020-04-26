@@ -95,6 +95,9 @@ const OfferForm = () => {
     setValidated(true);
   };
 
+
+  const pay_regex = "[0-9]{1,}[.]{1}[0-9]{2}";
+
   const {
     offer_name,
     company_address,
@@ -171,7 +174,6 @@ const OfferForm = () => {
                 required
                 incorrect="Podaj wymiar pracy np. staż,praca"
               />
-
               <Form.Group id="formGroupPayfrom">
                 <Form.Label>Wynagrodzenie od:</Form.Label>
                 <InputGroup>
@@ -180,7 +182,7 @@ const OfferForm = () => {
                     type="text"
                     placeholder="12.00"
                     onChange={e => setOffer({ ...offer, pay_from: parseFloat(e.target.value) })}
-                    pattern="[0-9]{1,}[.]{1}[0-9]{2}"
+                    pattern={pay_regex}
                     required
                   />
                   <InputGroup.Append>
@@ -238,7 +240,7 @@ const OfferForm = () => {
                     type="text"
                     placeholder="12.00"
                     onChange={e => setOffer({ ...offer, pay_to: parseFloat(e.target.value) })}
-                    pattern="[0-9]{1,}[.]{1}[0-9]{2}"
+                    pattern={pay_regex}
                     required
                   />
                   <InputGroup.Append>
