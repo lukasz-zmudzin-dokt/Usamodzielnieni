@@ -17,7 +17,7 @@ class RegisterPage extends React.Component {
     this.state = {
       personalData: null,
       homeData: null,
-      companyData: null,
+      companyData: {company_nip: ""},
       accountData: null,
 
       account_type: this.props.match.params.role !== 'staff' ? "Podopiecznym" : "staff_verification",
@@ -49,7 +49,8 @@ class RegisterPage extends React.Component {
     if (form.checkValidity() === false || password !== passwordR) {
       event.stopPropagation();
       return false;
-    } else return !(form.checkValidity() === true && password !== passwordR);
+    }
+    else return true;
   };
 
   selectType = e => {
@@ -93,8 +94,6 @@ class RegisterPage extends React.Component {
       return <Redirect to="/user" />;
     }
   };
-
-  getFacilityAddress = (city, street, cityCode) => `${city} ${street} ${cityCode}`;
 
   handleResponse = async e => {
     this.setState({ disabled: true });

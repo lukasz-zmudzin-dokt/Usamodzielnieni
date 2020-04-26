@@ -58,7 +58,7 @@ class Menu extends React.Component {
                 <Row>
                     <Col/>
                     <Col xs={7}>
-                        <img src={logo} className="menu-logo" alt=""/>
+                        <img src={logo} className="menu-logo" alt="Menu logo"/>
                     </Col>
                     <Col />
                 </Row>

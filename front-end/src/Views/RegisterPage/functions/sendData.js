@@ -5,13 +5,23 @@ const adjustObject = (account_type, home, company)  => {
             source = home;
             return({
                 facility_name: source.name_of_place,
-                facility_address: `${source.city} ${source.street} ${source.city_code}`
+                facility_address: {
+                    city: source.city,
+                    street: source.street,
+                    street_number: source.number,
+                    postal_code: source.city_code
+                }
             })}
         case "Pracodawcą": {
             source = company;
             return({
                 company_name: source.name_of_place,
-                company_address: `${source.city} ${source.street} ${source.city_code}`,
+                company_address: {
+                    city: source.city,
+                    street: source.street,
+                    street_number: source.number,
+                    postal_code: source.city_code
+                },
                 nip: source.company_nip
             })}
         default:
