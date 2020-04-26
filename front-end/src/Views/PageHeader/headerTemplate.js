@@ -8,8 +8,8 @@ import { IndexLinkContainer } from "react-router-bootstrap";
 import { Redirect, withRouter } from "react-router-dom";
 import { UserContext } from "context";
 import Notifications from "./components/Notifications";
-import menuPositions from "../../constants/menuPositions";
-import {userTypes} from "../../constants/routes";
+import menuPositions from "constants/menuPositions";
+import {userTypes} from "constants/routes";
 
 class HeaderTemplate extends React.Component {
   displayMenu() {

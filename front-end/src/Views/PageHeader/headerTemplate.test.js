@@ -1,11 +1,11 @@
-import HeaderTemplate from './headerTemplate';
+//import HeaderTemplate from './headerTemplate';
+import HeaderTemplate from 'Views/PageHeader';
 import React from 'react';
 import { render, queries, queryByTestId, cleanup } from '@testing-library/react';
 import { BrowserRouter as Router, MemoryRouter } from 'react-router-dom';
 import {UserContext} from "context/UserContext";
-import { WorkExperienceTab } from 'Views/CVEditorPage/components';
-import menuPositions from "../../constants/menuPositions";
-import { userTypes, staffTypes } from "../../constants/routes";
+import menuPositions from "constants/menuPositions";
+import { userTypes, staffTypes } from "constants/routes";
 
 
 describe('navbar tests', () => {
