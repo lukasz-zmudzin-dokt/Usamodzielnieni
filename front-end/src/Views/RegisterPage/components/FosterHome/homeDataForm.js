@@ -32,7 +32,7 @@ class HomeDataForm extends React.Component {
                             onChange={e => onChange(onBlur, data, e)}
                             required
                             minLength="1"
-                            maxLength="128"
+                            maxLength="120"
                         />
                         <Form.Control.Feedback type="invalid">
                             Podaj nazwę placówki
@@ -46,7 +46,7 @@ class HomeDataForm extends React.Component {
                             onChange={e => onChange(onBlur, data, e)}
                             required
                             minLength="1"
-                            maxLength="128"
+                            maxLength="120"
                         />
                         <Form.Control.Feedback type="invalid">
                             Podaj ulicę na której znajduje się placówka
@@ -60,7 +60,7 @@ class HomeDataForm extends React.Component {
                             onChange={e => onChange(onBlur, data, e)}
                             required
                             minLength="1"
-                            maxLength="40"
+                            maxLength="20"
                         />
                         <Form.Control.Feedback type="invalid">
                             Podaj numer budynku, przy którym znajduje się placówka
@@ -74,7 +74,7 @@ class HomeDataForm extends React.Component {
                             onChange={e => onChange(onBlur, data, e)}
                             required
                             minLength="1"
-                            maxLength="128"
+                            maxLength="120"
                         />
                         <Form.Control.Feedback type="invalid">
                             Podaj nazwę miasta
