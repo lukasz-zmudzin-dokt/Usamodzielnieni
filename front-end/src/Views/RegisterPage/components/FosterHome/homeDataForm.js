@@ -31,6 +31,8 @@ class HomeDataForm extends React.Component {
                             placeholder="Nazwa placówki"
                             onChange={e => onChange(onBlur, data, e)}
                             required
+                            minLength="1"
+                            maxLength="60"
                         />
                         <Form.Control.Feedback type="invalid">
                             Podaj nazwę placówki
@@ -43,9 +45,26 @@ class HomeDataForm extends React.Component {
                             placeholder="Ulica"
                             onChange={e => onChange(onBlur, data, e)}
                             required
+                            minLength="1"
+                            maxLength="120"
                         />
                         <Form.Control.Feedback type="invalid">
                             Podaj ulicę na której znajduje się placówka
+                        </Form.Control.Feedback>
+                    </Form.Group>
+                    <Form.Group controlId="formGroupNumbah">
+                        <Form.Control
+                            name="number"
+                            type="text"
+                            placeholder="Numer budynku"
+                            onChange={e => onChange(onBlur, data, e)}
+                            required
+                            pattern="^([0-9]{1})[\s\S]*"
+                            minLength="1"
+                            maxLength="20"
+                        />
+                        <Form.Control.Feedback type="invalid">
+                            Podaj numer budynku, przy którym znajduje się placówka
                         </Form.Control.Feedback>
                     </Form.Group>
                     <Form.Group controlId="formGroupCity" className="">
@@ -55,6 +74,8 @@ class HomeDataForm extends React.Component {
                             placeholder="Nazwa miasta"
                             onChange={e => onChange(onBlur, data, e)}
                             required
+                            minLength="1"
+                            maxLength="40"
                         />
                         <Form.Control.Feedback type="invalid">
                             Podaj nazwę miasta
@@ -69,6 +90,8 @@ class HomeDataForm extends React.Component {
                             pattern="[0-9]{2}[-][0-9]{3}"
                             onChange={e => onChange(onBlur, data, e)}
                             required
+                            minLength="1"
+                            maxLength="6"
                         />
                         <Form.Control.Feedback type="invalid">
                             Podaj kod pocztowy w formacie 00-000
