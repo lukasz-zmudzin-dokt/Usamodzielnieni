@@ -1,6 +1,6 @@
 import React, {useContext, useState} from "react";
 import { UserContext } from "context";
-import {Alert, Button, Row} from "react-bootstrap";
+import {Alert, Button, Col, Row} from "react-bootstrap";
 import {Redirect} from "react-router-dom";
 import {acceptCV} from "Views/CVApprovalPage/functions/acceptCV";
 import {getCVUrl} from "Views/CVApprovalPage/functions/getCVUrl";
@@ -51,27 +51,29 @@ const CVPosition = (props) => {
 
     return (
         <Row>
-            <DetailsItem md={4} xl={3} label={"Imię"}>{cv.basic_info.first_name}</DetailsItem>
+            <DetailsItem md={4} xl={2} label={"Imię"}>{cv.basic_info.first_name}</DetailsItem>
             <DetailsItem md={4} xl={3} label={"Nazwisko"}>{cv.basic_info.last_name}</DetailsItem>
             <DetailsItem md={4} xl={3} label={"Email"}>{cv.basic_info.email}</DetailsItem>
-            <Button
-                variant="primary m-1 p-1"
-                className="btnDownload"
-                onClick={e => showCV(e, context.token, cv.cv_id, setError)}>
+            <Col className="align-self-center d-flex justify-content-end">
+                <Button
+                    variant="primary m-1 p-1"
+                    className="btnDownload"
+                    onClick={e => showCV(e, context.token, cv.cv_id, setError)}>
                     Pokaż CV
-            </Button>
-            <Button
-                variant="success m-1 p-1"
-                className="btnAccept"
-                onClick={e => handleAcceptCV(e, context.token, cv.cv_id, setError, setAccepted)}>
-                Akceptuj
-            </Button>
-            <Button
-                variant="warning m-1 p-1"
-                className="btnImprove"
-                onClick={e => improveCV(e, setRedirect)}>
+                </Button>
+                <Button
+                    variant="success m-1 p-1"
+                    className="btnAccept"
+                    onClick={e => handleAcceptCV(e, context.token, cv.cv_id, setError, setAccepted)}>
+                    Akceptuj
+                </Button>
+                <Button
+                    variant="warning m-1 p-1"
+                    className="btnImprove"
+                    onClick={e => improveCV(e, setRedirect)}>
                     Zgłoś poprawki
-            </Button>
+                </Button>
+            </Col>
             {message ? ( message ) : null}
             {redirect ? (
                 <Redirect to={"/cvEditor/" + cv.cv_id} />
