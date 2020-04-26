@@ -103,8 +103,6 @@ describe("OfferForm", () => {
       </UserContext.Provider>
     );
 
-    const component = render(<OfferForm />)
-
     await waitForElement(() => getByText("Dodaj"));
 
     failFetch = true;
@@ -146,8 +144,6 @@ describe("OfferForm", () => {
     });
 
     fireEvent.click(getByText("Dodaj"));
-
-    component.setFail(false);
 
     await waitForElement(() =>
       getByText("Coś poszło nie tak.", { exact: false })
