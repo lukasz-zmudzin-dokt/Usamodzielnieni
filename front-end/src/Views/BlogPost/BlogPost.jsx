@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Container, Card, Alert } from "react-bootstrap";
-import { UserContext } from "context";
+import { UserContext,AlertContext } from "context";
 
 import {
   CommentForm,
@@ -8,7 +8,6 @@ import {
   BlogContent
 } from './_components';
 import {getPost} from "./functions/apiCalls";
-
 
 
 const mapPost = (res) => ({
@@ -37,9 +36,8 @@ const mapAuthor = (author) => ({
 const BlogPost = () => {
   const [post, setPost] = useState(null);
   const [isPostLoading, setIsPostLoading] = useState(false);
-  const [error, setError] = useState(false);
   const user = useContext(UserContext);
-
+  const contextA = useContext(AlertContext);
   const post_Id = window.location.pathname.replace(/\/blog\/blogpost\//, '');
 
   const setComments = (comments) => setPost({...post, comments});
@@ -54,7 +52,8 @@ const BlogPost = () => {
         } catch (e) {
           console.log(e);
           loadedPost = null;
-          setError(true);
+          contextA.changeMessage("Wystąpił błąd podczas wczytywania zawartości bloga.")
+          contextA.changeVisibility(true);
         }
         setPost(loadedPost);
         setIsPostLoading(false);
@@ -64,9 +63,7 @@ const BlogPost = () => {
     [post_Id, user.token]
   );
 
-  const msg = error ? (<Alert variant="danger">Wystąpił błąd podczas wczytywania zawartości bloga.</Alert>) :
-              isPostLoading ? (<Alert variant="info">Ładowanie zawartości bloga...</Alert>) :
-              !post && (<Alert>null</Alert>);
+  const msg = isPostLoading ? (<Alert variant="info">Ładowanie zawartości bloga...</Alert>) : !post && (<Alert>null</Alert>);
 
   return msg || (
     <Container className="blogpost_container">

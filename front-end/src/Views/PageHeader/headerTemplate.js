@@ -8,6 +8,8 @@ import { IndexLinkContainer } from "react-router-bootstrap";
 import { Redirect, withRouter } from "react-router-dom";
 import { UserContext } from "context";
 import Notifications from "./components/Notifications";
+import { AlertContext } from "context";
+import { AlertMessage } from "components";
 
 class HeaderTemplate extends React.Component {
   displayMenu() {
@@ -17,18 +19,16 @@ class HeaderTemplate extends React.Component {
           <IndexLinkContainer to={!this.context.token ? "/login" : "/cvEditor"}>
             <Nav.Link id="cvEditor">Kreator CV</Nav.Link>
           </IndexLinkContainer>
-            <IndexLinkContainer to={"/myCVs"}>
-                <Nav.Link id="myCVs">
-                    Moje CV
-                </Nav.Link>
-            </IndexLinkContainer>
+          <IndexLinkContainer to={"/myCVs"}>
+            <Nav.Link id="myCVs">Moje CV</Nav.Link>
+          </IndexLinkContainer>
           <Nav.Link id="learningTheRopes">Jak zacząć?</Nav.Link>
           <IndexLinkContainer to="/jobOffers">
             <Nav.Link id="jobOffers">Oferty pracy</Nav.Link>
           </IndexLinkContainer>
-            <IndexLinkContainer to="/blog">
-                <Nav.Link id="blogs">Blogi</Nav.Link>
-            </IndexLinkContainer>
+          <IndexLinkContainer to="/blog">
+            <Nav.Link id="blogs">Blogi</Nav.Link>
+          </IndexLinkContainer>
           {/* <Nav.Link id="personalityTests">Testy</Nav.Link> */}
           <Nav.Link id="stories">Historia</Nav.Link>
           {/* <Nav.Link id="moneyMgmt">Zarządzanie budżetem</Nav.Link> */}
@@ -57,7 +57,7 @@ class HeaderTemplate extends React.Component {
             <Button
               className="menu_action_button_2"
               variant="outline-light"
-              onClick={e => this.userLogout(e)}
+              onClick={(e) => this.userLogout(e)}
             >
               Wyloguj
             </Button>
@@ -76,18 +76,18 @@ class HeaderTemplate extends React.Component {
       );
   }
 
-  userLogout = e => {
+  userLogout = (e) => {
     const url = "https://usamo-back.herokuapp.com/account/logout/";
     fetch(url, {
       method: "POST",
       headers: {
-        Authorization: "token " + this.context.token
+        Authorization: "token " + this.context.token,
       },
-      body: {}
-    }).then(res => {
+      body: {},
+    }).then((res) => {
       console.log(res);
       if (res.status === 200 || res.status === 401) {
-        res.json().then(responseValue => {
+        res.json().then((responseValue) => {
           console.log(responseValue);
           console.log("Wylogowano");
           this.context.logout();

@@ -1,3 +1,38 @@
+@keyframes AlertAnimation {
+  0% {
+    opacity: 0;
+    transform: translateY(-50%);
+  }
+
+  25% {
+    opacity: 1;
+    transform: translateY(0%);
+  }
+  75% {
+    opacity: 1;
+    transform: translateY(0%);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-50%);
+  }
+}
+
+@keyframes ConAnimation {
+  0% {
+    transform: translateX(-50%) scale(0);
+  }
+  1% {
+    transform: translateX(-50%) scale(1);
+  }
+  99% {
+    transform: translateX(-50%) scale(1);
+  }
+  100% {
+    transform: translateX(-50%) scale(0);
+  }
+}
+
 .alertMsg__alert.alert {
   height: 100%;
   width: 100%;
@@ -7,19 +42,23 @@
 
 .alertMsg {
   transition: 0.15s linear;
+  opacity: 0;
+  transform: translateY(-50%);
+  animation: AlertAnimation 6s forwards;
+}
+
+.alertMsg--scale {
   position: fixed;
   top: 1.75rem;
   left: 50%;
-  transform: translateX(-50%) translateY(-50%);
-  opacity: 0;
+  z-index: 1100;
   width: 100%;
   padding: 0 0.5rem;
-  z-index: 1100;
+  animation: ConAnimation 6s forwards;
 }
 
-.alertMsg--visible {
-  opacity: 1;
-  transform: translateX(-50%) translateY(0%);
+.alertMsg--scale--visible {
+  transform: scale(1) translateX(-50%);
 }
 
 .alertMsg__close {
@@ -33,7 +72,7 @@
 }
 
 @media (min-width: 576px) {
-  .alertMsg {
+  .alertMsg--scale {
     max-width: 500px;
   }
 }

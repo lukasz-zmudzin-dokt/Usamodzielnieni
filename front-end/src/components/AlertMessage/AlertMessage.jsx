@@ -1,16 +1,17 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Alert } from "react-bootstrap";
 
-const AlertMessage = ({ message, open, handleClose }) => {
-  setTimeout(() => handleClose(false), 3000);
+const AlertMessage = ({ message, handleClose }) => {
   return (
-    <div className={`alertMsg ${open ? "alertMsg--visible" : ""}`}>
-      <button className="alertMsg__close" onClick={() => handleClose(false)}>
-        x
-      </button>
-      <Alert className="alertMsg__alert" variant="danger">
-        {message}
-      </Alert>
+    <div className={`alertMsg--scale `}>
+      <div className={`alertMsg `}>
+        <button className="alertMsg__close" onClick={() => handleClose(false)}>
+          x
+        </button>
+        <Alert className="alertMsg__alert" variant="danger">
+          {message}
+        </Alert>
+      </div>
     </div>
   );
 };

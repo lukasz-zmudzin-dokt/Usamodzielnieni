@@ -14,7 +14,10 @@ export const AlertProvider = (props) => {
     open,
     message,
     changeVisibility: (newOpen) => setOpen(newOpen),
-    changeMessage: (newMessage) => setMessage(newMessage),
+    changeMessage: (newMessage) => {
+      setOpen(false);
+      setMessage(newMessage);
+    },
   };
   return <AlertContext.Provider value={data} {...props} />;
 };
