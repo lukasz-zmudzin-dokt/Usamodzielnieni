@@ -1,7 +1,8 @@
 import React from "react";
-import { render, waitForElement } from "@testing-library/react";
+import {fireEvent, render, waitForElement} from "@testing-library/react";
 import JobOfferDetails from "./JobOfferDetails";
 import { MemoryRouter } from 'react-router-dom';
+import {UserContext} from "../../context/UserContext";
 
 jest.mock('./_components', () => ({ AddCvForm: (props) => (<div></div>) }));
 
@@ -9,6 +10,9 @@ describe('JobOfferDetails', () => {
     let offer;
     let apiStatus;
     let match;
+    let user = {
+        type: "Staff"
+    };
 
     beforeAll(() => {
         match = { params: { id: "123" }};
@@ -21,13 +25,17 @@ describe('JobOfferDetails', () => {
                             json: () => Promise.resolve(offer)
                         });
                         break;
+                    case"DELETE":
+                        resolve({ status: 200 });
+                        break;
                     default:
                         reject({});
                         break;
                 }
             });
         });
-    })
+    });
+
     beforeEach(() => {
         apiStatus = 200;
         offer = {
@@ -78,4 +86,46 @@ describe('JobOfferDetails', () => {
         expect(getByText('Wystąpił błąd', { exact: false })).toBeInTheDocument();
         expect(queryByText('Jakaś nazwa oferty')).not.toBeInTheDocument();
     });
+
+    it('should render delete button for specific admin', async () => {
+        const { getByText, queryByText } = render(
+            <UserContext.Provider value={user}>
+                <MemoryRouter>
+                    <JobOfferDetails match={match}/>
+                </MemoryRouter>
+            </UserContext.Provider>
+        );
+
+        await waitForElement(() => getByText('Usuń ofertę'));
+        expect(getByText('Usuń ofertę')).toBeInTheDocument();
+    });
+
+    it('should call api deleting offer', async () => {
+        const { getByText, queryByText } = render(
+            <UserContext.Provider value={user}>
+                <MemoryRouter>
+                    <JobOfferDetails match={match}/>
+                </MemoryRouter>
+            </UserContext.Provider>
+        );
+
+        await waitForElement(() => getByText('Usuń ofertę'));
+        expect(getByText('Usuń ofertę')).toBeInTheDocument();
+        fireEvent.click(getByText('Usuń ofertę'));
+
+        expect(getByText('Tak')).toBeInTheDocument();
+        fireEvent.click(getByText('Tak'));
+
+        expect(fetch).toHaveBeenCalledWith(
+            "https://usamo-back.herokuapp.com/job/job-offer/123/",
+            {
+                headers: {
+                    Authorization: "Token undefined",
+                    "Content-Type": "application/json",
+                },
+                method: "DELETE"
+            }
+        );
+    });
+
 });
