@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { registerLocale } from "react-datepicker";
-import { Form, Container, Card, Button, Row, Alert } from "react-bootstrap";
+import { Form, Container, Card, Button, Row } from "react-bootstrap";
 import { voivodeships } from "constants/voivodeships";
 import FormGroup from "components/FormGroup";
 import {
@@ -52,7 +52,7 @@ const OfferForm = () => {
         } else {
           setDisabled(false);
           contextA.changeMessage("Nie udało się załadować danych.")
-          contextA.changeVisibility(true);
+          contextA.changeVisibility();
         }
         return;
       }

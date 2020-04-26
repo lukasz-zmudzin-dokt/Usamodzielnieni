@@ -1,11 +1,18 @@
 import React from "react";
-import { render, waitForElement, fireEvent } from "@testing-library/react";
+import { render, waitForElement, wait} from "@testing-library/react";
 import CVApprovalPage from "./CVApprovalPage";
 import { MemoryRouter } from "react-router-dom";
+import {AlertContext} from 'context';
 
 describe("CVApproval", () => {
     let failFetch;
     let apiCVs;
+    let contextA = {
+        open: true,
+        changeVisibility: jest.fn(),
+        message: "abc",
+        changeMessage: jest.fn(),
+    };
 
     beforeAll(() => {
         global.fetch = jest.fn().mockImplementation((input, init) => {
@@ -73,14 +80,19 @@ describe("CVApproval", () => {
 
     it("should view alert at api fail", async () => {
         failFetch = true;
-        const { getByText } = render (
-            <MemoryRouter>
-                <CVApprovalPage />
-            </MemoryRouter>
+        render (
+            <AlertContext.Provider value={contextA}>
+                <MemoryRouter>
+                    <CVApprovalPage />
+                </MemoryRouter>
+            </AlertContext.Provider>
         );
 
-        await waitForElement(() => getByText("Ups, wystąpił błąd."));
-        expect(getByText("Ups, wystąpił błąd.")).toBeInTheDocument();
+        await wait(() => expect(contextA.changeMessage).toHaveBeenCalled());
+
+        expect(contextA.changeMessage).toHaveBeenCalledWith(
+            "Nie udało się załadować CV."
+        );
     });
 
     it("should view alert at api returning no cvs", async () => {

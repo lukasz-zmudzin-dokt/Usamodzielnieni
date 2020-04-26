@@ -53,7 +53,7 @@ const BlogPost = () => {
           console.log(e);
           loadedPost = null;
           contextA.changeMessage("Wystąpił błąd podczas wczytywania zawartości bloga.")
-          contextA.changeVisibility(true);
+          contextA.changeVisibility();
         }
         setPost(loadedPost);
         setIsPostLoading(false);

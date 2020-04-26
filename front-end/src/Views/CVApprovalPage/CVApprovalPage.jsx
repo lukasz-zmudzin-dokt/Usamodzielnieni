@@ -1,16 +1,17 @@
 import React, {useContext, useEffect, useState} from "react";
 import {Alert, Card, Container} from "react-bootstrap";
 import { getCVs } from "./functions/getCVs";
-import {UserContext} from "context";
-import CVList from "./components/CVList";
+import {UserContext,AlertContext} from "context";
+import CVList from "./_components/CVList";
+
 const CVApprovalPage = () => {
     const context = useContext(UserContext);
+    const contextA = useContext(AlertContext);
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(false);
     const [cvs, setCvs] = useState([]);
 
     useEffect(() => {
-        const loadCVs = async(token, setCvs, setLoading, setError) => {
+        const loadCVs = async(token) => {
             setLoading(true);
             let res;
             try {
@@ -20,17 +21,16 @@ const CVApprovalPage = () => {
             } catch (e) {
                 setCvs([]);
                 setLoading(false);
-                setError(true);
+                contextA.changeMessage("Nie udało się załadować CV.")
+                contextA.changeVisibility();
             }
         };
 
-        loadCVs(context.token, setCvs, setLoading, setError);
+        loadCVs(context.token);
     }, [context.token]);
 
     const message = loading ? (
         <Alert variant="info" className="m-3">Ładuję...</Alert>
-    ) : error ? (
-        <Alert variant="danger" className="m-3">Ups, wystąpił błąd.</Alert>
     ) : cvs.length === 0 ? (
         <Alert variant="info" className="m-3">Brak CV do akceptacji.</Alert>
     ) : null;

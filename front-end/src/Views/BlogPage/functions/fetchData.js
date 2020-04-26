@@ -12,7 +12,7 @@ const getPosts = async (token, filters) => {
   };
 
   const response = await fetch(url, { method: "GET", headers });
-  if (response.status === 200) {
+  if (response.status === 201) {
     return response.json();
   } else {
     throw response.status;

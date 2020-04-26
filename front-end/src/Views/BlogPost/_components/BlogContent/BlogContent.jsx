@@ -50,8 +50,6 @@ const BlogContent = ({ post , user }) => {
     const [delError, setDelError] = useState(false);
     const [success, setSuccess] = useState(false);
     const [wantsEdition, setWantsEdition] = useState(false);
-    if (post === undefined)
-        return <Alert variant="danger" className="d-lg-block">Wystąpił błąd podczas ładowania zawartości bloga.</Alert>;
     const {firstName, lastName, email} = post.author;
     const content = convertToHTML(mediumDraftImporter(post.content));
     return (

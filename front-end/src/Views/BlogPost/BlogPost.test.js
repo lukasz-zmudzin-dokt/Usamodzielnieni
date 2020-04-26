@@ -7,7 +7,6 @@ import {UserContext,AlertContext} from "context";
 describe('BlogPost', () => {
     let post;
     let apiStatus;
-    let id;
     let user;
     let contextA = {
         open: true,
@@ -16,7 +15,6 @@ describe('BlogPost', () => {
         changeMessage: jest.fn(),
     };
     beforeAll(() => {
-        id = 123;
         global.fetch = jest.fn().mockImplementation( (input, init) => {
             return new Promise((resolve, reject) => {
                 switch (init.method) {

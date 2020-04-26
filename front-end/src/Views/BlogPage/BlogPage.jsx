@@ -24,7 +24,7 @@ const BlogPage = () => {
         console.log(e);
         res = [];
         contextA.changeMessage("Nie udało się załadować postów");
-        contextA.changeVisibility(true);
+        contextA.changeVisibility();
       }
       setIsLoading(false);
       setCount(res.length);

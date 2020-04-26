@@ -9,7 +9,7 @@ import {
   SkillsTab,
   PhotoTab
 } from "./components";
-import { UserContext } from "context";
+import { UserContext,AlertContext } from "context";
 
 import { sendData, getFeedback } from "Views/CVEditorPage/functions/other.js";
 import { createCVObject } from "Views/CVEditorPage/functions/createCVObject.js";
@@ -20,7 +20,6 @@ class CVEditorPage extends React.Component {
     super(props);
     this.state = {
       formTab: "personalData",
-      error: false,
       tabs: {
         personalData: { data: null, refValue: React.createRef(), comments: undefined },
         education: { data: null, comments: undefined },
@@ -37,6 +36,8 @@ class CVEditorPage extends React.Component {
     };
     this.tabs = [];
   }
+
+  static contextA = AlertContext;
 
   onPrevClick = () => {
     const { formTab } = this.state;
@@ -91,7 +92,9 @@ class CVEditorPage extends React.Component {
           this.setState({ disabled: false })
         );
       } catch (e) {
-        this.setState({ error: true, disabled: false });
+        this.setState({ disabled: false });
+        this.contextA.changeMessage("Nie udało się wysłać CV");
+        this.contextA.changeVisibility();
       }
     }
   };
@@ -184,8 +187,9 @@ class CVEditorPage extends React.Component {
           console.log(err);
           this.setState({
             loading: false,
-            commentsError: true
           });
+          this.contextA.changeMessage("Nie udało się załadować uwag.");
+          this.contextA.changeVisibility();
         });
     } else {
       this.setState({ showComments: false });

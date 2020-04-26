@@ -5,7 +5,7 @@ import {getFilters, getPost, postBlogPost, uploadPhoto} from "./functions/apiCal
 import "medium-draft/lib/index.css";
 import {customizeToolbar} from "./functions/editorConfig";
 import SelectionRow from "./components/SelectionRow";
-import {UserContext} from "context/UserContext";
+import {UserContext,AlertContext} from "context";
 import mediumDraftExporter from "medium-draft/lib/exporter";
 import mediumDraftImporter from 'medium-draft/lib/importer';
 import {convertToRaw} from 'draft-js';
@@ -25,8 +25,6 @@ class BlogPostForm extends React.Component {
               categories: [],
               tags: []
           },
-
-          error: "",
           redirect: false,
           post_id: -1,
           method: "POST",
@@ -34,6 +32,9 @@ class BlogPostForm extends React.Component {
       };
       this.refsEditor = React.createRef();
   }
+
+    static contextA = AlertContext
+
 
   componentDidMount() {
       if (window.location.pathname.toLowerCase() !== "/blog/newpost") {
@@ -70,6 +71,8 @@ class BlogPostForm extends React.Component {
       } catch(e) {
           console.log(e);
           res = null;
+          this.contextA.changeMessage("Wystąpił błąd podczas pobierania treści posta.")
+          this.contextA.changeVisibility();
       }
       return res;
   };
@@ -81,6 +84,8 @@ class BlogPostForm extends React.Component {
       } catch(e) {
           console.log(e);
           res = {categories: [], tags: []}
+          this.contextA.changeMessage("Nie udało się załadować tagów i kategorii.")
+          this.contextA.changeVisibility();
       }
       return res;
   };
@@ -145,17 +150,15 @@ class BlogPostForm extends React.Component {
                   await uploadPhoto(this.state.post_id, this.state.photo, this.context.token);
               } catch(e) {
                   console.log(e);
-                  this.setState({
-                      error: "photo"
-                  });
+                  this.contextA.changeMessage("Wystąpił błąd podczas dodawania zdjęcia.")
+                  this.contextA.changeVisibility();
               }
           }
           this.setRedirect();
       } catch(e) {
           console.log(e);
-          this.setState({
-              error: "send"
-          })
+          this.contextA.changeMessage("Wystąpił błąd podczas dodawania posta.")
+          this.contextA.changeVisibility();
       }
   };
 
@@ -207,12 +210,6 @@ class BlogPostForm extends React.Component {
                       <SelectionRow className="mt-4" name="tags" arrayType={this.state.filters.tags} onChange={this.onArrayChange} current={this.state.tags} onCut={this.cutFromArray}/>
                   </Card.Body>
                   <Card.Footer className="">
-                      {
-                          this.state.error === "send" ? <Alert variant="danger">Wystąpił błąd podczas dodawania posta.</Alert> :
-                          this.state.error === "get" ? <Alert variant="danger">Wystąpił błąd podczas pobierania treści posta.</Alert> :
-                          this.state.error === "photo" ? <Alert variant="danger">Wystąpił błąd podczas dodawania zdjęcia.</Alert> :
-                          null
-                      }
                       <Button variant="primary" size="lg" onClick={this.submitPost} block>Opublikuj</Button>
                   </Card.Footer>
               </Card>
