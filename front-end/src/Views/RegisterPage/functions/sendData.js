@@ -1,6 +1,5 @@
 const adjustObject = (account_type, home, company)  => {
     let source;
-    let type;
     switch(account_type) {
         case "Podopiecznym": {
             source = home;
