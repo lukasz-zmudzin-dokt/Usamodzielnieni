@@ -165,7 +165,7 @@ export default [
     component: BlogPostForm,
     isPrivate: true,
     type: userTypes.STAFF,
-    group: staffTypes.VERIFICATION,
+    group: staffTypes.BLOG_CREATOR,
     exact: true,
   },
   {
