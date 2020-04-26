@@ -5,6 +5,7 @@ import UserBasicInfo from "Views/UserProfilePage/components/UserBasicInfo";
 import { UserContext } from "context";
 import { getUserData } from "Views/UserProfilePage/functions/getUserData.js";
 import AdminRegisterButton from "./components/AdminRegisterButton/AdminRegisterButton";
+import CVApprovalButton from "./components/CVApprovalButton/CVApprovalButton";
 
 const names = {
   role: {
@@ -61,20 +62,21 @@ class UserProfilePage extends React.Component {
 
   render() {
     return (
-        <Container>
-          <Card className="user_profile_card">
-            <Card.Header className="user_card_title">
-              <h3>Mój profil</h3>
-            </Card.Header>
-            <Card.Body>
-              <UserBasicInfo error={this.state.error} user={this.state.user} names={names} />
-            </Card.Body>
-            <UserDetails user={this.state.user} names={names} />
-            <Card.Body className="text-center">
-              <AdminRegisterButton userType={this.context.type} />
-            </Card.Body>
-          </Card>
-        </Container>
+      <Container>
+        <Card className="user_profile_card">
+          <Card.Header className="user_card_title">
+            <h3>Mój profil</h3>
+          </Card.Header>
+          <Card.Body>
+            <UserBasicInfo error={this.state.error} user={this.state.user} names={names} />
+          </Card.Body>
+          <UserDetails user={this.state.user} names={names} />
+          <Card.Body className="text-center">
+            <AdminRegisterButton userType={this.context.type} />
+            <CVApprovalButton userType={this.context.type} />
+          </Card.Body>
+        </Card>
+      </Container>
     );
   }
 }
