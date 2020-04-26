@@ -5,7 +5,7 @@ import { UserContext } from "context";
 import { DetailsItem } from 'components';
 import { AddCvForm } from "./_components";
 import { deleteOffer } from "./functions/deleteOffer";
-import {staffTypes} from "constants/routes";
+import {staffTypes} from "constants/staffTypes";
 
 const getOfferDetails = async (id, token) => {
   let url = `https://usamo-back.herokuapp.com/job/job-offer/${id}`;

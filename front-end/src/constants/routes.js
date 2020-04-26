@@ -1,57 +1,24 @@
 import {
-  UserProfilePage,
-  LoginPage,
-  RegisterPage,
-  Footer,
-  CVEditorPage,
-  Menu,
-  OfferForm,
-  MyOffersPage,
-  BlogPost,
   BlogPage,
+  BlogPost,
   BlogPostForm,
-  JobOffersPage,
-  JobOfferDetails,
   ContactPage,
-  MyCVsPage,
   CVApprovalPage,
+  CVEditorPage,
+  Footer,
+  JobOfferDetails,
+  JobOffersPage,
+  LoginPage,
+  Menu,
+  MyCVsPage,
+  MyOffersPage,
+  OfferForm,
+  RegisterPage,
+  UserProfilePage,
 } from "Views";
-
-const paths = {
-  DASHBOARD: "/",
-  CV_CREATOR: "/cvEditor",
-  CV_EDITOR: "/cvEditor/:id",
-  REGISTER: "/newAccount/",
-  REGISTER_ADMIN: "/newAccount/:role(staff)",
-  FOOTER: "/footer",
-  LOGIN: "/login",
-  USER: "/user",
-  OFFER_FORM: "/offerForm/:id?",
-  JOB_OFFERS: "/jobOffers",
-  CV_APPROVAL: "/cvApproval",
-  MY_OFFERS: "/myOffers",
-  CONTACT_PAGE: "/contact",
-  BLOG_POST: "/blog/blogpost/:id",
-  BLOG_PAGE: "/blog",
-  BLOG_FORM: "/blog/newPost",
-  BLOG_EDIT: "/blog/newPost/:id",
-  JOB_OFFER_DETAILS: "/jobOffers/:id",
-  MY_CVS: "/myCVs",
-};
-
-export const userTypes = {
-  STANDARD: "Standard",
-  STAFF: "Staff",
-  EMPLOYER: "Employer",
-};
-
-export const staffTypes = {
-  VERIFICATION: "staff_verification",
-  CV: "staff_cv",
-  JOBS: "staff_jobs",
-  BLOG_CREATOR: "staff_blog_creator",
-  BLOG_MODERATOR: "staff_blog_moderator",
-};
+import {userTypes} from "./userTypes";
+import {staffTypes} from "./staffTypes";
+import {paths} from "./paths";
 
 export default [
   {
@@ -176,4 +143,3 @@ export default [
   },
 ];
 
-export { paths };

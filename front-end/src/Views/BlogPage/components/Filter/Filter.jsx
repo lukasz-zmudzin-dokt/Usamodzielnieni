@@ -5,7 +5,7 @@ import { DEFAULT_INPUT } from "constants/other.js";
 import FormGroup from "components/FormGroup";
 import { UserContext } from "context";
 import { IndexLinkContainer } from "react-router-bootstrap";
-import {staffTypes} from "constants/routes";
+import {staffTypes} from "constants/staffTypes";
 
 const Filter = ({ token, setFilter, count }) => {
   const [filters, setFilters] = useState({ categories: [], tags: [] });

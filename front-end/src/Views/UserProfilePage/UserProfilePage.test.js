@@ -4,15 +4,17 @@ import UserProfile from "Views/UserProfilePage/index.js";
 import {MemoryRouter, Router} from "react-router-dom";
 import {createMemoryHistory} from 'history';
 import {UserContext} from "context/UserContext";
+import {staffTypes} from "constants/staffTypes";
 
 const renderWithRouter = (
+    type,
     ui,
     {
       route = "/user",
       history = createMemoryHistory({ initialEntries: [route] }),
     } = {}
 ) => {
-  let context = { type: 'Staff', token: 123 };
+  let context = { type: 'Staff', data: {group_type: type}, token: 123 };
   return {
     ...render(
         <UserContext.Provider value={context}>
@@ -79,8 +81,8 @@ describe("UserProfile", () => {
     expect(getByText("Wystąpił błąd", {exact: false})).toBeInTheDocument();
   });
 
-  it('should render register button for staff', () => {
-    const {history, getByText} = renderWithRouter(
+  it('should render register button for staff reg', () => {
+    const {history, getByText} = renderWithRouter( staffTypes.VERIFICATION,
         <UserProfile/>
     );
 
@@ -90,4 +92,17 @@ describe("UserProfile", () => {
 
     expect(history.location.pathname).toBe("/newAccount/staff", {exact: false})
   });
+
+  it('should render cv button for staff cv', () => {
+    const {history, getByText} = renderWithRouter( staffTypes.CV,
+        <UserProfile/>
+    );
+
+    expect(getByText('Zobacz CV do akceptacji')).toBeInTheDocument();
+
+    fireEvent.click(getByText('Zobacz CV do akceptacji'));
+
+    expect(history.location.pathname).toBe("/cvApproval", {exact: false})
+  });
+
 });

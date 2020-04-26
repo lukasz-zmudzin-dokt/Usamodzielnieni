@@ -4,7 +4,7 @@ import mediumDraftImporter from 'medium-draft/lib/importer';
 import {convertToHTML} from "draft-convert";
 import {deletePost} from "Views/BlogPost/functions/apiCalls";
 import {Redirect} from "react-router-dom";
-import {staffTypes} from "constants/routes";
+import {staffTypes} from "constants/staffTypes";
 
 const getDateString = dateString => {
     return dateString.substring(0,2) + "." + dateString.substring(3, 5) + "." + dateString.substring(6, 10);
