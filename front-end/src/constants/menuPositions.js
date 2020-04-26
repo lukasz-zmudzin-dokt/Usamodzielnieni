@@ -14,14 +14,12 @@ export default [
     {
         name: "Akceptacja CV",
         path: paths.CV_APPROVAL,
-        allowed: [userTypes.STAFF],
-        group: [staffTypes.CV]
+        allowed: [staffTypes.CV]
     },
     {
         name: "Oferty pracy",
         path: paths.JOB_OFFERS,
-        allowed: [userTypes.STANDARD, userTypes.STAFF, userTypes.EMPLOYER],
-        group: undefined
+        allowed: [userTypes.STANDARD, userTypes.STAFF, userTypes.EMPLOYER]
     },
     {
         name: "Dodaj ofertę",
@@ -36,14 +34,12 @@ export default [
     {
         name: "Blogi",
         path: paths.BLOG_PAGE,
-        allowed: [userTypes.STANDARD, userTypes.STAFF, userTypes.EMPLOYER],
-        group: undefined
+        allowed: [userTypes.STANDARD, userTypes.STAFF, userTypes.EMPLOYER]
     },
     {
         name: "Dodaj post",
         path: paths.BLOG_FORM,
-        allowed: [userTypes.STAFF],
-        group: [staffTypes.BLOG_CREATOR]
+        allowed: [staffTypes.BLOG_CREATOR]
     },
     {
         name: "Telefony",
