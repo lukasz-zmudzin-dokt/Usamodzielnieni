@@ -16,7 +16,6 @@ const MyOffersPage = () => {
             setLoading(true);
             try {
                 let res = await getMyOffers(token);
-                console.log(res);
                 if(res.count > 0) {
                     setOffers(res.results);
                 }

@@ -19,7 +19,6 @@ const MyOffer = ({ offer }) => {
             setLoading(true);
             try {
                 let res = await getOfferPeople(token, offerId);
-                console.log(res);
                 if(res.length > 0) {
                     setPeople(res);
                 }

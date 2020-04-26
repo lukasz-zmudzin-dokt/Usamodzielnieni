@@ -9,7 +9,6 @@ const MyOfferPerson = ({ person }) => {
         let url = "http://usamo-back.herokuapp.com" + cvUrl;
         window.open(url, '_blank');
     };
-    console.log(person);
 
     return (
         <ListGroup.Item>
