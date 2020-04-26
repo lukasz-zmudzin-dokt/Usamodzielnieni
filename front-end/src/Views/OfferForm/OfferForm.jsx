@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { registerLocale } from "react-datepicker";
-import { Form, Container, Card, Button, Row, Alert } from "react-bootstrap";
+import { Form, Container, Card, Button, Row, Alert, InputGroup } from "react-bootstrap";
 import { voivodeships } from "constants/voivodeships";
 import FormGroup from "components/FormGroup";
 import { sendData, getSelects } from "Views/OfferForm/functions/fetchData";
@@ -16,6 +16,7 @@ const OfferForm = () => {
   const [fail, setFail] = useState(false);
   const [arrays, setArrays] = useState({});
   const [disabled, setDisabled] = useState(false);
+  const [isPayValid, setIsPayValid] = useState(true)
 
   const [offer, setOffer] = useState({
     offer_name: "",
@@ -26,11 +27,9 @@ const OfferForm = () => {
     expiration_date: "",
     category: "",
     type: "",
-    pay_from: 12,
-    pay_to: 12,
-    pay_period: "",
-    currency: "",
-    pay_valid: true
+    pay_from: 0,
+    pay_to: 0,
+    pay_period: ""
   });
 
   const context = useContext(UserContext);
@@ -65,9 +64,14 @@ const OfferForm = () => {
   const submit = (event) => {
     const form = event.currentTarget;
     event.preventDefault();
-    if (form.checkValidity() === false) {
+
+    if (pay_from > pay_to) {
+      setIsPayValid(false);
+      event.stopPropagation();
+    } else if (form.checkValidity() === false) {
       event.stopPropagation();
     } else {
+      setIsPayValid(true);
       setDisabled(true);
       const year = expiration_date.getFullYear();
       const month =
@@ -91,19 +95,6 @@ const OfferForm = () => {
     setValidated(true);
   };
 
-  // const checkPayRangeValidity = () => {
-  //   if (pay_from > pay_to) {
-  //     setOffer({
-  //       pay_valid: false
-  //     });
-  //     console.log("ŹLE");
-  //   } else {
-  //     setOffer({
-  //       pay_valid: true
-  //     });
-  //   }
-  // };
-
   const {
     offer_name,
     company_address,
@@ -115,9 +106,7 @@ const OfferForm = () => {
     type,
     pay_from,
     pay_to,
-    currency,
     pay_period,
-    pay_valid
   } = offer;
 
   return (
@@ -182,25 +171,26 @@ const OfferForm = () => {
                 required
                 incorrect="Podaj wymiar pracy np. staż,praca"
               />
-              <FormGroup
-                header="Wynagrodzenie od:"
-                id="pay_from"
-                type="text"
-                setVal={(val) => setOffer({ ...offer, pay_from: val })}
-                val={pay_from}
-                required
-                // onChange={checkPayRangeValidity()}
-                // setCustomValidity={`${pay_valid} ? 'Dobrze' : 'Źle'`}
-              />
-              <FormGroup
-                header="Okres wypłaty wynagrodznia"
-                id="pay_period"
-                type="select"
-                array={["za godzinę", "za dzień", "za miesiąc", "za rok", "jednokrotnie"]}
-                setVal={(val) => setOffer({ ...offer, pay_period: val })}
-                val={pay_period}
-                required
-              />
+
+              <Form.Group id="formGroupPayfrom">
+                <Form.Label>Wynagrodzenie od:</Form.Label>
+                <InputGroup>
+                  <Form.Control
+                    name="pay_from"
+                    type="text"
+                    placeholder="12.00"
+                    onChange={e => setOffer({ ...offer, pay_from: parseFloat(e.target.value) })}
+                    pattern="[0-9]{1,}[.]{1}[0-9]{2}"
+                    required
+                  />
+                  <InputGroup.Append>
+                    <InputGroup.Text>zł</InputGroup.Text>
+                  </InputGroup.Append>
+                </InputGroup>
+                <Form.Control.Feedback type="invalid">
+                  Podaj wynagrodzenie w formacie *.00
+                </Form.Control.Feedback>
+              </Form.Group>
             </div>
             <div className="offerForm__wrapper">
               <FormGroup
@@ -232,28 +222,45 @@ const OfferForm = () => {
                 required
               />
               <FormGroup
-                header="Wynagrodzenie do:"
-                id="pay_to"
-                type="text"
-                setVal={(val) => setOffer({ ...offer, pay_to: val })}
-                val={pay_to}
-                //onChange={checkPayRangeValidity()}
-                required
-              />
-              <FormGroup
-                header="Waluta wynagrodzenia:"
-                id="currency"
+                header="Okres wypłaty wynagrodzenia"
+                id="pay_period"
                 type="select"
-                array={["PLN", "EUR", "USD"]}
-                setVal={(val) => setOffer({ ...offer, currency: val })}
-                val={currency}
+                array={["za godzinę", "za dzień", "za miesiąc", "za rok", "jednokrotnie"]}
+                setVal={(val) => setOffer({ ...offer, pay_period: val })}
+                val={pay_period}
                 required
               />
+              <Form.Group id="formGroupPayTo">
+                <Form.Label>Wynagrodzenie do:</Form.Label>
+                <InputGroup>
+                  <Form.Control
+                    name="pay_to"
+                    type="text"
+                    placeholder="12.00"
+                    onChange={e => setOffer({ ...offer, pay_to: parseFloat(e.target.value) })}
+                    pattern="[0-9]{1,}[.]{1}[0-9]{2}"
+                    required
+                  />
+                  <InputGroup.Append>
+                    <InputGroup.Text>zł</InputGroup.Text>
+                  </InputGroup.Append>
+                </InputGroup>
+                <Form.Control.Feedback type="invalid">
+                  Podaj wynagrodzenie w formacie *.00
+                </Form.Control.Feedback>
+              </Form.Group>
             </div>
             {fail === true ? (
               <Row className="w-100 justify-content-center align-items-center m-0">
                 <Alert variant="danger">
                   Coś poszło nie tak. Spróbuj ponownie póżniej.
+                </Alert>
+              </Row>
+            ) : null}
+            {isPayValid === false ? (
+              <Row className="w-100 justify-content-center align-items-center m-0">
+                <Alert variant="danger">
+                  Wartość 'Wynagrodzenie od:' musi być mniejsza bądź równa wartości 'Wynagrodzenie do:'
                 </Alert>
               </Row>
             ) : null}
