@@ -1,19 +1,18 @@
 const sendData = async (offer, token, id) => {
-  console.log("jestem tutaj? ");
   const url = `https://usamo-back.herokuapp.com/job/job-offer/${
     id ? `${id}/` : ""
   }`;
   const res = await fetch(url, {
-    method: "POST",
+    method: id ? "PUT" : "POST",
     body: JSON.stringify(offer),
     headers: {
       "Content-Type": "application/json",
       Origin: null,
       Authorization: `Token ${token}`,
     },
-  })
+  });
   if (res.status !== 200) {
-    throw Error('getSelects');
+    throw Error("getSelects");
   }
   return res.status;
 };
@@ -27,12 +26,12 @@ const getCategories = async (token) => {
       Origin: null,
       Authorization: `Token ${token}`,
     },
-  })
+  });
   if (res.status !== 200) {
-    throw Error('getCategories');
+    throw Error("getCategories");
   }
-  return res.json().then(res => res.categories);
-}
+  return res.json().then((res) => res.categories);
+};
 
 const getTypes = async (token) => {
   const urlTypes = "https://usamo-back.herokuapp.com/job/enums/types";
@@ -44,20 +43,20 @@ const getTypes = async (token) => {
       Origin: null,
       Authorization: `Token ${token}`,
     },
-  })
+  });
   if (res.status !== 200) {
-    throw Error('getTypes');
+    throw Error("getTypes");
   }
-  return res.json().then(res => res.offer_types);
+  return res.json().then((res) => res.offer_types);
 };
 
 const getSelects = async (token) => {
   const [categories, types] = await Promise.all([
     getCategories(token),
-    getTypes(token)
+    getTypes(token),
   ]);
   return { categories, types };
-}
+};
 
 const getOffer = async (token, id) => {
   const url = `https://usamo-back.herokuapp.com/job/job-offer/${id}/`;
@@ -69,11 +68,14 @@ const getOffer = async (token, id) => {
       Origin: null,
       Authorization: `Token ${token}`,
     },
-  })
+  });
   if (res.status !== 200) {
-    throw Error('getOffer');
+    throw Error("getOffer");
   }
-  return res.json().then(res => ({...res, expiration_date: new Date(res.expiration_date) }));
+  return res.json().then((res) => ({
+    ...res,
+    expiration_date: new Date(res.expiration_date),
+  }));
 };
 
 export { sendData, getSelects, getCategories, getTypes, getOffer };

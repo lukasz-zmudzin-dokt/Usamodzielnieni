@@ -27,7 +27,12 @@ const renderWithRouter = (
     history = createMemoryHistory({ initialEntries: [route] }),
   } = {}
 ) => {
-  let context = { data: { company_name: "abc", company_address: "xd" } };
+  let context = {
+    data: {
+      company_name: "abc",
+      company_address: { street: "def", street_number: "1", city: "abc" },
+    },
+  };
   return {
     ...render(
       <UserContext.Provider value={context}>
@@ -48,10 +53,11 @@ describe("OfferForm", () => {
   let apiOffer = {
     offer_name: "abc",
     company_name: "xd",
-    company_address: "nowy",
+    company_address: "abc, def 1",
     voivodeship: "lubelskie",
     description: "res.description",
-    expiration_date: "2024-12-30",
+    expiration_date:
+      "Wed May 17 2023 00:00:00 GMT+0100 (czas środkowoeuropejski standardowy)",
     category: "xd",
     type: "IT",
   };
@@ -62,6 +68,9 @@ describe("OfferForm", () => {
           resolve({ status: 500 });
         }
         switch (init.method) {
+          case "PUT":
+            resolve({ status: 200 });
+            break;
           case "POST":
             if (failPost) resolve({ status: 500 });
             else resolve({ status: 200 });
@@ -103,7 +112,12 @@ describe("OfferForm", () => {
       id: "",
     });
     jest.clearAllMocks();
-    context = { data: { company_name: "abc", company_address: "xd" } };
+    context = {
+      data: {
+        company_name: "abc",
+        company_address: { street: "def", street_number: "1", city: "abc" },
+      },
+    };
   });
 
   it("renders correctly", async () => {
@@ -174,12 +188,6 @@ describe("OfferForm", () => {
     fireEvent.change(getByPlaceholderText("Nazwa stanowiska"), {
       target: { value: "abcd" },
     });
-    fireEvent.change(getByPlaceholderText("Nazwa firmy"), {
-      target: { value: "abcd" },
-    });
-    fireEvent.change(getByPlaceholderText("Adres firmy"), {
-      target: { value: "abcd" },
-    });
     fireEvent.change(getByLabelText("Województwo"), {
       target: { value: "lubelskie" },
     });
@@ -205,7 +213,7 @@ describe("OfferForm", () => {
   });
 
   it("should redirect when offer is send", async () => {
-    jest.resetModules();
+    // jest.resetModules();
 
     const {
       history,
@@ -217,12 +225,6 @@ describe("OfferForm", () => {
     await waitForElement(() => getByText("Dodaj"));
 
     fireEvent.change(getByPlaceholderText("Nazwa stanowiska"), {
-      target: { value: "abcd" },
-    });
-    fireEvent.change(getByPlaceholderText("Nazwa firmy"), {
-      target: { value: "abcd" },
-    });
-    fireEvent.change(getByPlaceholderText("Adres firmy"), {
       target: { value: "abcd" },
     });
     fireEvent.change(getByLabelText("Województwo"), {
@@ -264,7 +266,7 @@ describe("OfferForm", () => {
 
     expect(history.location.pathname).toEqual("/offerForm/abc");
 
-    await waitForElement(() => getByText("Dodaj"));
+    await waitForElement(() => getByText("Dodaj ofertę"));
 
     expect(history.location.pathname).toEqual("/offerForm");
   });
@@ -284,12 +286,7 @@ describe("OfferForm", () => {
     fireEvent.change(getByPlaceholderText("Nazwa stanowiska"), {
       target: { value: "abcd" },
     });
-    fireEvent.change(getByPlaceholderText("Nazwa firmy"), {
-      target: { value: "abcd" },
-    });
-    fireEvent.change(getByPlaceholderText("Adres firmy"), {
-      target: { value: "abcd" },
-    });
+
     fireEvent.change(getByLabelText("Województwo"), {
       target: { value: "lubelskie" },
     });
@@ -310,21 +307,7 @@ describe("OfferForm", () => {
 
     fireEvent.click(getByText("Dodaj"));
 
-    await wait(() => {
-      expect(fetch).toHaveBeenCalledWith(
-        "https://usamo-back.herokuapp.com/job/job-offer/",
-        {
-          body:
-            '{"offer_name":"abcd","company_name":"abcd","company_address":"abcd","voivodeship":"lubelskie","description":"abcd","expiration_date":"2024-09-20","category":"xd","type":"IT"}',
-          headers: {
-            Authorization: "Token undefined",
-            "Content-Type": "application/json",
-            Origin: null,
-          },
-          method: "POST",
-        }
-      );
-    });
+    await waitForElement(() => getByText("Dodaj"));
 
     expect(
       getByText("Nie udało się wysłać oferty. Błąd serwera.")
@@ -360,13 +343,13 @@ describe("OfferForm", () => {
     );
 
     expect(getByPlaceholderText("Nazwa stanowiska").value).toBe("abc");
-    expect(getByPlaceholderText("Nazwa firmy").value).toBe("abc");
-    expect(getByPlaceholderText("Adres firmy").value).toBe("xd");
+    expect(getByPlaceholderText("Nazwa firmy").value).toBe("xd");
+    expect(getByPlaceholderText("Adres firmy").value).toBe("abc, def 1");
     expect(getByLabelText("Województwo").value).toBe("lubelskie");
     expect(getByLabelText("Opis stanowiska").value).toBe("res.description");
     expect(getByLabelText("Branża").value).toBe("xd");
     expect(getByLabelText("Wymiar pracy").value).toBe("IT");
-    expect(getByLabelText("Ważne do:").value).toBe("30.12.2024");
+    expect(getByLabelText("Ważne do:").value).toBe("17.05.2023");
   });
 
   it("should send edited offer", async () => {

@@ -46,24 +46,30 @@ const OfferForm = () => {
         values = await Promise.all([
           getCategories(token),
           getTypes(token),
-          id && getOffer(token, id)
-        ])
+          id && getOffer(token, id),
+        ]);
       } catch (err) {
-        if (err.message === 'getOffer') {
+        if (err.message === "getOffer") {
           history.push("/offerForm");
         } else {
           setFail(true);
+          setDisabled(false);
           setMessage("Nie udało się załadować danych.");
         }
         return;
       }
       const [categories, types, loadedOffer] = values;
+      const { city, street, street_number } = context.data.company_address;
+
+      const company_address = `${city}, ${street} ${street_number}`;
       setArrays({ categories, types });
-      setOffer(prev => ({
+      setOffer((prev) => ({
         ...prev,
+        company_address,
+        company_name: context.data.company_name,
         category: categories[0],
         type: types[0],
-        ...loadedOffer
+        ...loadedOffer,
       }));
       setDisabled(false);
     };
@@ -85,10 +91,13 @@ const OfferForm = () => {
       setDisabled(true);
       try {
         await sendData(
-          { ...offer, expiration_date: expiration_date.toISOString().substr(0, 10) },
+          {
+            ...offer,
+            expiration_date: expiration_date.toISOString().substr(0, 10),
+          },
           context.token,
           id
-        )
+        );
         history.push("/myOffers");
         return;
       } catch (e) {
