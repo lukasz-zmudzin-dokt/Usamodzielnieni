@@ -59,6 +59,7 @@ class HomeDataForm extends React.Component {
                             placeholder="Numer budynku"
                             onChange={e => onChange(onBlur, data, e)}
                             required
+                            pattern="^([0-9]{1})[\s\S]*"
                             minLength="1"
                             maxLength="20"
                         />

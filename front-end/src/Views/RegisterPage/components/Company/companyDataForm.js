@@ -59,6 +59,7 @@ class CompanyDataForm extends React.Component {
                             placeholder="Numer budynku"
                             onChange={e => onChange(onBlur, data, e)}
                             required
+                            pattern="^([0-9]{1})[\s\S]*"
                             minLength="1"
                             maxLength="20"
                         />
@@ -103,11 +104,11 @@ class CompanyDataForm extends React.Component {
                             placeholder="NIP"
                             onChange={e => onChange(onBlur, data, e)}
                             required
-                            minLength="1"
+                            minLength="10"
                             maxLength="10"
                         />
                         <Form.Control.Feedback type="invalid">
-                            Podaj NIP
+                            Podaj prawidłowy NIP
                         </Form.Control.Feedback>
                     </Form.Group>
                 </Card.Body>

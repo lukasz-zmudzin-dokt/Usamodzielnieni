@@ -30,6 +30,17 @@ class RegisterPage extends React.Component {
     };
   }
 
+  checkNIP = (nip) => {
+    const weights = [6, 5, 7, 2, 3, 4, 5, 6, 7];
+    let sum = 0;
+    let controlNum = parseInt(nip.substr(9, 10));
+    let weightCount = weights.length;
+    for (let i = 0; i < weightCount; i++) {
+      sum += (parseInt(nip.substr(i, 1)) * weights[i]);
+    }
+    return sum % 11 === controlNum;
+  };
+
   handleIncorrectResponse = status => {
     switch (status) {
       case 400:
@@ -46,7 +57,9 @@ class RegisterPage extends React.Component {
     event.preventDefault();
     const { password, passwordR } = data.accountData || {};
 
-    if (form.checkValidity() === false || password !== passwordR) {
+    if (form.checkValidity() === false || password !== passwordR ||
+        (data.companyData !== null && !this.checkNIP(data.companyData.company_nip))
+    ) {
       event.stopPropagation();
       return false;
     } else return !(form.checkValidity() === true && password !== passwordR);
