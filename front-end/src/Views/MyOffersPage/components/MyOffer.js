@@ -1,9 +1,10 @@
 import React, {useContext, useState} from "react";
-import {Accordion, Card, Alert, ListGroup} from "react-bootstrap";
+import {Accordion, Card, Alert, ListGroup, Row, Button} from "react-bootstrap";
 import "Views/MyOffersPage/style.css";
 import { UserContext } from "context/UserContext";
 import { getOfferPeople } from "../functions/apiCalls";
 import MyOfferPerson from "./MyOfferPerson";
+import {Link} from "react-router-dom";
 
 const MyOffer = ({ offer }) => {
 
@@ -18,6 +19,7 @@ const MyOffer = ({ offer }) => {
             setLoading(true);
             try {
                 let res = await getOfferPeople(token, offerId);
+                console.log(res);
                 if(res.length > 0) {
                     setPeople(res);
                 }
@@ -46,6 +48,16 @@ const MyOffer = ({ offer }) => {
                     { message ? message : null }
                     <ListGroup>
                         { people.map((value) => (<MyOfferPerson person={value} key={value.user_id} />)) }
+                        <ListGroup.Item>
+                            <Row className="justify-content-center">
+                                <Link to={"/jobOffers/" + offer.id}>
+                                    <Button>Pokaż ofertę</Button>
+                                </Link>
+                                <Link to={"/offerForm/" + offer.id}>
+                                    <Button className="ml-3">Edytuj ofertę</Button>
+                                </Link>
+                            </Row>
+                        </ListGroup.Item>
                     </ListGroup>
                 </Card.Body>
             </Accordion.Collapse>

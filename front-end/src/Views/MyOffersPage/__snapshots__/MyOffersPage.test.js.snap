@@ -1,3 +1,192 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`MyOffers should look like snapshot 1`] = `undefined`;
+exports[`MyOffers should match snapshot 1`] = `
+<div>
+  <div
+    class="container"
+  >
+    <div
+      class="card"
+    >
+      <h2
+        class="card-header"
+      >
+        Moje Oferty
+      </h2>
+      <div
+        class="p-0 card-body"
+      >
+        <div
+          class="accordion"
+        >
+          <div
+            class="border-left-0 border-right-0 border-bottom-0 card"
+          >
+            <div
+              class="card-header"
+            >
+              sadsadas
+            </div>
+            <div
+              class="collapse"
+            >
+              <div
+                class="p-0 card-body"
+              >
+                <div
+                  class="fade mb-0 alert alert-info show"
+                  role="alert"
+                >
+                  Brak zgłoszeń.
+                </div>
+                <div
+                  class="list-group"
+                >
+                  <div
+                    class="list-group-item"
+                  >
+                    <div
+                      class="justify-content-center row"
+                    >
+                      <a
+                        href="/jobOffers/0cbd646a-c51f-46ad-afee-753a68e20614"
+                      >
+                        <button
+                          class="btn btn-primary"
+                          type="button"
+                        >
+                          Pokaż ofertę
+                        </button>
+                      </a>
+                      <a
+                        href="/offerForm/0cbd646a-c51f-46ad-afee-753a68e20614"
+                      >
+                        <button
+                          class="ml-3 btn btn-primary"
+                          type="button"
+                        >
+                          Edytuj ofertę
+                        </button>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="border-left-0 border-right-0 border-bottom-0 card"
+          >
+            <div
+              class="card-header"
+            >
+              sdas
+            </div>
+            <div
+              class="collapse"
+            >
+              <div
+                class="p-0 card-body"
+              >
+                <div
+                  class="fade mb-0 alert alert-info show"
+                  role="alert"
+                >
+                  Brak zgłoszeń.
+                </div>
+                <div
+                  class="list-group"
+                >
+                  <div
+                    class="list-group-item"
+                  >
+                    <div
+                      class="justify-content-center row"
+                    >
+                      <a
+                        href="/jobOffers/a39d260a-f085-4106-966a-f561e6e06301"
+                      >
+                        <button
+                          class="btn btn-primary"
+                          type="button"
+                        >
+                          Pokaż ofertę
+                        </button>
+                      </a>
+                      <a
+                        href="/offerForm/a39d260a-f085-4106-966a-f561e6e06301"
+                      >
+                        <button
+                          class="ml-3 btn btn-primary"
+                          type="button"
+                        >
+                          Edytuj ofertę
+                        </button>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="border-left-0 border-right-0 border-bottom-0 card"
+          >
+            <div
+              class="card-header"
+            >
+              offer2
+            </div>
+            <div
+              class="collapse"
+            >
+              <div
+                class="p-0 card-body"
+              >
+                <div
+                  class="fade mb-0 alert alert-info show"
+                  role="alert"
+                >
+                  Brak zgłoszeń.
+                </div>
+                <div
+                  class="list-group"
+                >
+                  <div
+                    class="list-group-item"
+                  >
+                    <div
+                      class="justify-content-center row"
+                    >
+                      <a
+                        href="/jobOffers/47991e86-4b42-4507-b154-1548bf8a3bd3"
+                      >
+                        <button
+                          class="btn btn-primary"
+                          type="button"
+                        >
+                          Pokaż ofertę
+                        </button>
+                      </a>
+                      <a
+                        href="/offerForm/47991e86-4b42-4507-b154-1548bf8a3bd3"
+                      >
+                        <button
+                          class="ml-3 btn btn-primary"
+                          type="button"
+                        >
+                          Edytuj ofertę
+                        </button>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
