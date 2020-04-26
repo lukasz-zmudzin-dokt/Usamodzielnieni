@@ -20,7 +20,11 @@ const UserToApprove = ({ user }) => {
             try {
                 let res = await getUserDetails(token, userId);
                 setUserDetails(res);
-                setUserDetailsFacilityAddress(res.facility_address);
+                if(user.type === "Standard") {
+                    setUserDetailsFacilityAddress(res.facility_address);
+                } else {
+                    setUserDetailsFacilityAddress(res.company_address);
+                }
             } catch (err) {
                 setError(true);
             }
@@ -30,6 +34,9 @@ const UserToApprove = ({ user }) => {
 
     const approveUser = async (e, token, userId) => {
         e.preventDefault();
+        console.log(user);
+        console.log(userDetails);
+        return;
         try {
             let res = await setUserApproved(token, userId);
             if(res === "User successfully verified.") {
@@ -51,6 +58,25 @@ const UserToApprove = ({ user }) => {
             setError(true);
         }
     };
+
+    const address = user.type === "Standard" ? (
+        <DetailsItem label="Adres">
+            <p>{userDetails.facility_name}</p>
+            <p>{userDetailsFacilityAddress.street} {userDetailsFacilityAddress.street_number}</p>
+            <p>{userDetailsFacilityAddress.postal_code} {userDetailsFacilityAddress.city}</p>
+        </DetailsItem>
+    ) : (
+        <>
+            <DetailsItem label="Adres">
+                <p>{userDetails.company_name}</p>
+                <p>{userDetailsFacilityAddress.street} {userDetailsFacilityAddress.street_number}</p>
+                <p>{userDetailsFacilityAddress.postal_code} {userDetailsFacilityAddress.city}</p>
+            </DetailsItem>
+            <DetailsItem label="NIP">
+                {userDetails.nip}
+            </DetailsItem>
+        </>
+    );
 
     const message = loading ? (
         <Alert variant="info">Ładuję...</Alert>
@@ -86,11 +112,7 @@ const UserToApprove = ({ user }) => {
                             </ListGroup.Item>
                             <ListGroup.Item>
                                 <Row>
-                                    <DetailsItem label="Adres">
-                                        <p>{userDetails.facility_name}</p>
-                                        <p>ul. {userDetailsFacilityAddress.street} {userDetailsFacilityAddress.street_number}</p>
-                                        <p>{userDetailsFacilityAddress.postal_code} {userDetailsFacilityAddress.city}</p>
-                                    </DetailsItem>
+                                    {address}
                                 </Row>
                             </ListGroup.Item>
                             <ListGroup.Item>

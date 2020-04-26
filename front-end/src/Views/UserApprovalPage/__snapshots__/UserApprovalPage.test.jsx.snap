@@ -134,7 +134,6 @@ exports[`UserApproval should match snapshot 1`] = `
                         >
                           <p />
                           <p>
-                            ul. 
                              
                           </p>
                           <p>
@@ -283,13 +282,24 @@ exports[`UserApproval should match snapshot 1`] = `
                         >
                           <p />
                           <p>
-                            ul. 
                              
                           </p>
                           <p>
                              
                           </p>
                         </div>
+                      </div>
+                      <div
+                        class="detailsItem col"
+                      >
+                        <div
+                          class="detailsItem__label"
+                        >
+                          NIP
+                        </div>
+                        <div
+                          class="detailsItem__value"
+                        />
                       </div>
                     </div>
                   </div>
