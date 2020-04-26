@@ -72,8 +72,8 @@ class UserProfilePage extends React.Component {
           </Card.Body>
           <UserDetails user={this.state.user} names={names} />
           <Card.Body className="text-center">
-            <AdminRegisterButton userType={this.context.type} />
-            <CVApprovalButton userType={this.context.type} />
+            <AdminRegisterButton userType={this.context} />
+            <CVApprovalButton userType={this.context} />
           </Card.Body>
         </Card>
       </Container>

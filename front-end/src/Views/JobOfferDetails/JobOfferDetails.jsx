@@ -5,6 +5,7 @@ import { UserContext } from "context";
 import { DetailsItem } from 'components';
 import { AddCvForm } from "./_components";
 import { deleteOffer } from "./functions/deleteOffer";
+import {staffTypes} from "constants/routes";
 
 const getOfferDetails = async (id, token) => {
   let url = `https://usamo-back.herokuapp.com/job/job-offer/${id}`;
@@ -97,7 +98,7 @@ const JobOfferDetails = props => {
           </div>
         )}
         { user.type === 'Standard' && <AddCvForm id={props.match.params.id} user={user}/> }
-        { user.type === 'Staff' && !confirmDeletion ?
+        { user.type === 'Staff' && user.data.group_type === staffTypes.JOBS && !confirmDeletion ?
             <Row className="d-flex justify-content-center">
               <Button variant="danger" onClick={e => setConfirmDeletion(true)}>Usuń ofertę</Button>
             </Row>
@@ -128,6 +129,6 @@ const JobOfferDetails = props => {
       </Card>
     </Container>
   )
-}
+};
 
 export default withRouter(JobOfferDetails);
