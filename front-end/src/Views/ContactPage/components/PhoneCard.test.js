@@ -1,7 +1,6 @@
-import React, {useState} from "react";
-import { render } from "@testing-library/react";
+import React from "react";
+import { render, fireEvent } from "@testing-library/react";
 import PhoneCard from "./PhoneCard";
-import {copyToClipboard} from "./PhoneCard"
 
 describe("PhoneCard", () => {
 
@@ -28,20 +27,20 @@ describe("PhoneCard", () => {
 
 describe("copyToClipboard", () => {
     beforeAll(() => {
-        global.document.execCommand = function execCommandMock() { };
-      });
+        global.document.execCommand = jest.fn().execCommandMock(() => { });
+    });
 
-    const test_text = "testowytekst";
-    
-    let copied = true;
-    const setCopied = (val) =>{
-        copied = val;
-    } 
+    const contact = {
+        name: "abc_name",
+        number: "123456789"
+    }
 
-    it("should copy given text", () => {
-        document.execCommand = jest.fn()
-        copyToClipboard(test_text, setCopied);
-        expect(document.execCommand).toHaveBeenCalledWith("copy");
-        //expect(navigator.clipboard.readText()).toBe("testowytekst");
+    it("should copy text on click", async () => {
+        const { container, getByText } = render(
+            <PhoneCard name={contact.name} number={contact.number} />
+        );;
+        container.copyToClipboard = jest.fn();
+        fireEvent.click(getByText('Skopiuj ten numer'));
+        expect(container.copyToClipboard).toHaveBeenCalled();
     });
 });
