@@ -1,0 +1,70 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CVPosition should match snapshot 1`] = `
+<div>
+  <div
+    class="row"
+  >
+    <div
+      class="detailsItem col-xl-3 col-md-4"
+    >
+      <div
+        class="detailsItem__label"
+      >
+        Imię
+      </div>
+      <div
+        class="detailsItem__value"
+      >
+        Jarek
+      </div>
+    </div>
+    <div
+      class="detailsItem col-xl-3 col-md-4"
+    >
+      <div
+        class="detailsItem__label"
+      >
+        Nazwisko
+      </div>
+      <div
+        class="detailsItem__value"
+      >
+        Arek
+      </div>
+    </div>
+    <div
+      class="detailsItem col-xl-3 col-md-4"
+    >
+      <div
+        class="detailsItem__label"
+      >
+        Email
+      </div>
+      <div
+        class="detailsItem__value"
+      >
+        jamjestjarek@arek.pp
+      </div>
+    </div>
+    <button
+      class="btnDownload btn btn-primary m-1 p-1"
+      type="button"
+    >
+      Pokaż CV
+    </button>
+    <button
+      class="btnAccept btn btn-success m-1 p-1"
+      type="button"
+    >
+      Akceptuj
+    </button>
+    <button
+      class="btnImprove btn btn-warning m-1 p-1"
+      type="button"
+    >
+      Zgłoś poprawki
+    </button>
+  </div>
+</div>
+`;

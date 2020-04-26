@@ -14,6 +14,7 @@ import {
   JobOfferDetails,
   ContactPage,
   MyCVsPage,
+  CVApprovalPage,
 } from "Views";
 
 
@@ -123,7 +124,7 @@ export default [
   },
   {
     path: paths.CV_APPROVAL,
-    component: UserProfilePage, // tu trzeba zmienić komponent
+    component: CVApprovalPage,
     isPrivate: true,
     type: userTypes.STAFF,
     group: staffTypes.CV
