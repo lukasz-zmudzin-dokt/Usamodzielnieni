@@ -13,14 +13,31 @@ import menuPositions from "../../constants/menuPositions";
 class HeaderTemplate extends React.Component {
   displayMenu() {
     let type = (this.context.token)? this.context.type : undefined;
+    let adminGroup = (this.context.data && type==='Staff')? this.context.data.group_type : undefined;
+    console.log(adminGroup);
+    
     if (this.props.location.pathname !== "/")
       return (
         <Nav className="mr-auto ">
           {menuPositions.map(pos => (
             (pos.allowed === undefined || pos.allowed.includes(type))? (
-              <IndexLinkContainer to={pos.path} key={pos.name}>
-                <Nav.Link>{pos.name}</Nav.Link>
-              </IndexLinkContainer>
+              (type !== 'Staff')? (
+                <IndexLinkContainer to={pos.path} key={pos.name}>
+                  <Nav.Link>{pos.name}</Nav.Link>
+                </IndexLinkContainer>
+              ) : (
+                (pos.group === undefined)? (
+                  <IndexLinkContainer to={pos.path} key={pos.name}>
+                    <Nav.Link>{pos.name}</Nav.Link>
+                  </IndexLinkContainer>
+                ) : (
+                  (pos.group.includes(adminGroup))? (
+                    <IndexLinkContainer to={pos.path} key={pos.name}>
+                      <Nav.Link>{pos.name}</Nav.Link>
+                    </IndexLinkContainer>
+                  ) : null
+                )
+              )
             ) : null
           ))}
         </Nav>

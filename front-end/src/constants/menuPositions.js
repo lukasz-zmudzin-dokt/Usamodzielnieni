@@ -1,4 +1,4 @@
-import {paths, userTypes} from "./routes.js";
+import {paths, userTypes, staffTypes} from "./routes.js";
 
 export default [       
     {
@@ -14,12 +14,14 @@ export default [
     {
         name: "Akceptacja CV",
         path: paths.CV_APPROVAL,
-        allowed: [userTypes.STAFF]
+        allowed: [userTypes.STAFF],
+        group: [staffTypes.CV]
     },
     {
         name: "Oferty pracy",
         path: paths.JOB_OFFERS,
-        allowed: [userTypes.STANDARD, userTypes.STAFF, userTypes.EMPLOYER]
+        allowed: [userTypes.STANDARD, userTypes.STAFF, userTypes.EMPLOYER],
+        group: undefined
     },
     {
         name: "Dodaj ofertę",
@@ -34,16 +36,18 @@ export default [
     {
         name: "Blogi",
         path: paths.BLOG_PAGE,
-        allowed: [userTypes.STANDARD, userTypes.STAFF, userTypes.EMPLOYER]
+        allowed: [userTypes.STANDARD, userTypes.STAFF, userTypes.EMPLOYER],
+        group: undefined
     },
     {
         name: "Dodaj post",
         path: paths.BLOG_FORM,
-        allowed: [userTypes.STAFF]
+        allowed: [userTypes.STAFF],
+        group: [staffTypes.BLOG_CREATOR]
     },
     {
         name: "Telefony",
         path: paths.CONTACT_PAGE,
-        allowed: undefined //wszyscy są upoważnieni
+        allowed: undefined //wszyscy są upoważnieni - zalogowani i niezalogowani
     }
 ];
