@@ -25,7 +25,6 @@ describe("MyOffersPerson", () => {
             </MemoryRouter>
         );
         await waitForElement(() => getByText("standard1 standard1"));
-        //console.log(getByText);
         expect(container).toMatchSnapshot();
     });
 
