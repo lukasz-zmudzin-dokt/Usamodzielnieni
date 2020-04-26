@@ -17,7 +17,7 @@ class RegisterPage extends React.Component {
     this.state = {
       personalData: null,
       homeData: null,
-      companyData: null,
+      companyData: {company_nip: ""},
       accountData: null,
 
       account_type: this.props.match.params.role !== 'staff' ? "Podopiecznym" : "staff_verification",
@@ -26,11 +26,14 @@ class RegisterPage extends React.Component {
       fail_message: "",
       error_flag: false,
       incorrect_input: false,
-      disabled: false
+      disabled: false,
+      nip_incorrect: null
     };
   }
 
   checkNIP = (nip) => {
+    if (nip.match(/^[0-9]{10}$/) === false)
+      return false;
     const weights = [6, 5, 7, 2, 3, 4, 5, 6, 7];
     let sum = 0;
     let controlNum = parseInt(nip.substr(9, 10));
@@ -57,12 +60,22 @@ class RegisterPage extends React.Component {
     event.preventDefault();
     const { password, passwordR } = data.accountData || {};
 
-    if (form.checkValidity() === false || password !== passwordR ||
-        (data.companyData !== null && !this.checkNIP(data.companyData.company_nip))
-    ) {
+    if (data.companyData !== null && !this.checkNIP(data.companyData.company_nip)) {
+      this.setState({
+        nip_incorrect: true
+      });
       event.stopPropagation();
       return false;
-    } else return !(form.checkValidity() === true && password !== passwordR);
+    } else if (form.checkValidity() === false || password !== passwordR) {
+      event.stopPropagation();
+      return false;
+    }
+    else {
+      this.setState({
+        nip_incorrect: false
+      });
+      return true;
+    }
   };
 
   selectType = e => {
@@ -84,6 +97,7 @@ class RegisterPage extends React.Component {
             <CompanyDataForm
                 data={this.state.companyData}
                 onBlur={companyData => this.setState({ companyData })}
+                nipWrong={this.state.nip_incorrect}
             />
         );
       }
@@ -106,8 +120,6 @@ class RegisterPage extends React.Component {
       return <Redirect to="/user" />;
     }
   };
-
-  getFacilityAddress = (city, street, cityCode) => `${city} ${street} ${cityCode}`;
 
   handleResponse = async e => {
     this.setState({ disabled: true });

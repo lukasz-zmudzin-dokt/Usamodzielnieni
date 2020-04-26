@@ -13,7 +13,7 @@ class CompanyDataForm extends React.Component {
     };
 
     render () {
-        let {data, onBlur} = this.props;
+        let {data, onBlur, nipWrong} = this.props;
         let {onChange} = this;
         return (
             <Card
@@ -101,6 +101,8 @@ class CompanyDataForm extends React.Component {
                         <Form.Control
                             name="company_nip"
                             type="text"
+                            isInvalid={nipWrong}
+                            pattern="[0-9]{10}"
                             placeholder="NIP"
                             onChange={e => onChange(onBlur, data, e)}
                             required
