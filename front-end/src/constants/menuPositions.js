@@ -1,4 +1,6 @@
-import {paths, userTypes, staffTypes} from "./routes.js";
+import {userTypes} from "./userTypes";
+import {staffTypes} from "./staffTypes";
+import {paths} from "./paths";
 
 export default [       
     {

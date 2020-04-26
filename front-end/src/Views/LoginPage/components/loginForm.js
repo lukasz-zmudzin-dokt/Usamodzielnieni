@@ -2,6 +2,7 @@ import React from 'react';
 import { Form } from 'react-bootstrap';
 
 class LoginForm extends React.Component {
+
     onChange = (e) => {
         let {onBlur, data} = this.props;
         const type = e.target.name;

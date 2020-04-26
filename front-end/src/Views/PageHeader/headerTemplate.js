@@ -1,7 +1,7 @@
 import React from "react";
 import { Navbar, Nav, Button, Form } from "react-bootstrap";
 
-import logo from "../../assets/logo.png";
+import logo from "assets/logo.png";
 
 // https://github.com/ReactTraining/react-router/issues/83#issuecomment-214794477
 import { IndexLinkContainer } from "react-router-bootstrap";
@@ -9,7 +9,7 @@ import { Redirect, withRouter } from "react-router-dom";
 import { UserContext } from "context";
 import Notifications from "./components/Notifications";
 import menuPositions from "constants/menuPositions";
-import {userTypes} from "constants/routes";
+import {userTypes} from "constants/userTypes";
 
 class HeaderTemplate extends React.Component {
   displayMenu() {
