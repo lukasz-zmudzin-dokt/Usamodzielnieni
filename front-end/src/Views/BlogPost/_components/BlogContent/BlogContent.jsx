@@ -44,7 +44,7 @@ const renderButtons = (id, user, author, errorFlag, successFlag, editionFlag, fl
 const renderRedirect = (flag, id) => {
     const path = `/blog/newPost/${id}`;
     if (flag)
-        return <Redirect to={path}/>;
+        return <Redirect data-testId="blog-redirect" to={path}/>;
 };
 
 const BlogContent = ({ post , user }) => {
