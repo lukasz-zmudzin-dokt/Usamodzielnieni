@@ -1,10 +1,11 @@
 import HeaderTemplate from './headerTemplate';
 import React from 'react';
-import { render, queries, queryByTestId } from '@testing-library/react';
+import { render, queries, queryByTestId, cleanup } from '@testing-library/react';
 import { BrowserRouter as Router, MemoryRouter } from 'react-router-dom';
 import {UserContext} from "context/UserContext";
 import { WorkExperienceTab } from 'Views/CVEditorPage/components';
 import menuPositions from "../../constants/menuPositions";
+import { userTypes, staffTypes } from "../../constants/routes";
 
 
 describe('navbar tests', () => {
@@ -14,7 +15,8 @@ describe('navbar tests', () => {
     beforeAll(() => {
         user={
             token: undefined,
-            type: undefined
+            type: undefined, 
+            data: undefined
         };
         location = {
             pathname: "/login"
@@ -39,7 +41,7 @@ describe('navbar tests', () => {
     });
     it('should render standard positions', () => {
         user.token = "123";
-        user.type = "Standard";
+        user.type = userTypes.STANDARD;
         const { container, queryByText } = render(
             <UserContext.Provider value={user}>
                 <MemoryRouter initialEntries={["/test"]}>
@@ -48,7 +50,7 @@ describe('navbar tests', () => {
             </UserContext.Provider>
         );
         menuPositions.forEach((pos) => {
-            if(pos.allowed === undefined || pos.allowed.includes("Standard")) {
+            if(pos.allowed === undefined || pos.allowed.includes(userTypes.STANDARD)) {
                 expect(queryByText(pos.name)).toBeInTheDocument();
             } else {
                 expect(queryByText(pos.name)).not.toBeInTheDocument();
@@ -59,25 +61,47 @@ describe('navbar tests', () => {
     it('should render staff positions', () => {
         user.token = "123";
         user.type = "Staff";
-        const { container, queryByText } = render(
+        //user.data = {group_type: staffTypes.CV};
+        /*const { container, queryByText } = render(
             <UserContext.Provider value={user}>
                 <MemoryRouter initialEntries={["/test"]}>
                     <HeaderTemplate />
                 </MemoryRouter>
             </UserContext.Provider>
-        );
-        menuPositions.forEach((pos) => {
-            if(pos.allowed === undefined || pos.allowed.includes("Staff")) {
+        );*/
+        //let container, queryByText;
+
+        for (const type in staffTypes) {
+            user.data = {group_type: staffTypes[type]};
+            cleanup();
+            let { container, queryByText } = render(
+                <UserContext.Provider value={user}>
+                    <MemoryRouter initialEntries={["/test"]}>
+                        <HeaderTemplate />
+                    </MemoryRouter>
+                </UserContext.Provider>
+            );
+
+            menuPositions.forEach((pos) => {
+                if(pos.allowed === undefined || pos.allowed.includes(staffTypes[type]) || pos.allowed.includes(userTypes.STAFF)) {
+                    expect(queryByText(pos.name)).toBeInTheDocument();
+                } else {
+                    expect(queryByText(pos.name)).not.toBeInTheDocument();
+                }
+            });
+        }
+        /*menuPositions.forEach((pos) => {
+            if(pos.allowed === undefined || pos.allowed.includes(staffTypes.CV) || pos.allowed.includes(userTypes.STAFF)) {
                 expect(queryByText(pos.name)).toBeInTheDocument();
             } else {
                 expect(queryByText(pos.name)).not.toBeInTheDocument();
             }
-        });
+        });*/
     });
 
     it('should render employer positions', () => {
         user.token = "123";
-        user.type = "Employer";
+        user.type = userTypes.EMPLOYER;
         const { container, queryByText } = render(
             <UserContext.Provider value={user}>
                 <MemoryRouter initialEntries={["/test"]}>
@@ -86,7 +110,7 @@ describe('navbar tests', () => {
             </UserContext.Provider>
         );
         menuPositions.forEach((pos) => {
-            if(pos.allowed === undefined || pos.allowed.includes("Employer")) {
+            if(pos.allowed === undefined || pos.allowed.includes(userTypes.EMPLOYER)) {
                 expect(queryByText(pos.name)).toBeInTheDocument();
             } else {
                 expect(queryByText(pos.name)).not.toBeInTheDocument();

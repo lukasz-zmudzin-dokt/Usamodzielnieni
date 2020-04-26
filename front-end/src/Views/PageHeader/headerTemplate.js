@@ -9,11 +9,12 @@ import { Redirect, withRouter } from "react-router-dom";
 import { UserContext } from "context";
 import Notifications from "./components/Notifications";
 import menuPositions from "../../constants/menuPositions";
+import {userTypes} from "../../constants/routes";
 
 class HeaderTemplate extends React.Component {
   displayMenu() {
     let type = (this.context.token)? this.context.type : undefined;
-    let adminGroup = (this.context.data && type==='Staff')? this.context.data.group_type : undefined;
+    let adminGroup = (this.context.data && type===userTypes.STAFF)? this.context.data.group_type : undefined;
     //console.log(adminGroup);
     
     if (this.props.location.pathname !== "/")
