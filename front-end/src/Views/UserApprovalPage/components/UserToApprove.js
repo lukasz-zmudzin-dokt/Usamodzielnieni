@@ -34,9 +34,6 @@ const UserToApprove = ({ user }) => {
 
     const approveUser = async (e, token, userId) => {
         e.preventDefault();
-        console.log(user);
-        console.log(userDetails);
-        return;
         try {
             let res = await setUserApproved(token, userId);
             if(res === "User successfully verified.") {
