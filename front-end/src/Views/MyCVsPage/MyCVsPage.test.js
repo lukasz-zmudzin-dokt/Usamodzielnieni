@@ -125,9 +125,9 @@ describe('MyCVsPage', () => {
             <MyCVsPage />
         );
 
-        await waitForElement(() => getByText('Edytuj', {exact: false}));
+        await waitForElement(() => getByText('Edytuj'));
         fireEvent.click(getByText('Edytuj'));
 
-        expect(history.location.pathname).toEqual('/cvEditor/0', {exact: false});
+        expect(history.location.pathname).toEqual('/cvEditor/0');
     });
 });

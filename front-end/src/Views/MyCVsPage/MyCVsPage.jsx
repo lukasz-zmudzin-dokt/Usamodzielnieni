@@ -81,7 +81,7 @@ class MyCVsPage extends React.Component {
                                 ) : null
                                 }
                                 {cvs.length > 0 ? cvs.map((cv) =>
-                                    <CVSection cv={cv} handleShowing={this.handleShowing} token={this.context.token}/>
+                                    <CVSection key={cv.cv_id} cv={cv} handleShowing={this.handleShowing} token={this.context.token}/>
                                 ) : <Alert variant="info">Nie masz jeszcze żadnych CV. Utwórz nowe w zakładce "Kreator CV"!</Alert> }
                             </ListGroup>
                         }
