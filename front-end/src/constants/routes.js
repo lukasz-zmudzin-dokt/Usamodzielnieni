@@ -51,6 +51,7 @@ export default [
     exact: true,
     isPrivate: true,
     type: userTypes.STAFF,
+    group: staffTypes.VERIFICATION
   },
   {
     path: paths.FOOTER,
