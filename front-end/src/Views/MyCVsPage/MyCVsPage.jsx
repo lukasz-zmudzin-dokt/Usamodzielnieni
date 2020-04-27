@@ -3,7 +3,6 @@ import {Container, Card, Row, Col, ListGroup, Alert} from "react-bootstrap";
 import { UserContext } from "context/UserContext";
 
 import { getUserCVs } from "./functions/getUserCVs";
-import {getCVUrl} from "./functions/getCVUrl";
 import CVSection from "./components/cvSection";
 
 class MyCVsPage extends React.Component {
@@ -30,23 +29,16 @@ class MyCVsPage extends React.Component {
                     loading: false
             }) :
                 this.setState({
-                    showModal: false,
                     errors: { big: true },
                     errorMessages: { big: response.status },
                     loading: false
                 }));
     };
 
-    showCV = async (cvId) => {
-        let r;
-        try {
-            r = await getCVUrl(this.context.token, cvId);
-            this.setState({errors: {small: false}});
-            let url = "https://usamo-back.herokuapp.com" + r;
-            window.open(url, '_blank');
-        } catch(r) {
-            this.setState({errors: {small: true}, errorMessages: {small: r}});
-        }
+    handleShowing = (object) => {
+        this.setState(
+            object
+        );
     };
 
     render() {
@@ -89,7 +81,7 @@ class MyCVsPage extends React.Component {
                                 ) : null
                                 }
                                 {cvs.length > 0 ? cvs.map((cv) =>
-                                    <CVSection cv={cv} showCV={this.showCV}/>
+                                    <CVSection cv={cv} handleShowing={this.handleShowing} token={this.context.token}/>
                                 ) : <Alert variant="info">Nie masz jeszcze żadnych CV. Utwórz nowe w zakładce "Kreator CV"!</Alert> }
                             </ListGroup>
                         }

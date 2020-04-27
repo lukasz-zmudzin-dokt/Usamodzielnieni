@@ -7,7 +7,8 @@ describe('CVSection', () => {
     let failFetch;
     let myCV;
     let user;
-    let showCV = jest.fn();
+    let handleShowing = jest.fn();
+    let token = 123;
 
     beforeAll(() => {
         global.open = jest.fn();
@@ -49,7 +50,7 @@ describe('CVSection', () => {
     it('should match snapshot', () => {
         const {container} = render(
             <MemoryRouter>
-                <CVSection cv={myCV} showCV={showCV} />
+                <CVSection cv={myCV} handleShowing={handleShowing} token={token} />
             </MemoryRouter>
         );
 
@@ -60,7 +61,7 @@ describe('CVSection', () => {
         myCV = {...myCV, is_verified: true};
         const {getByText} = render(
             <MemoryRouter>
-                <CVSection cv={myCV} showCV={showCV} />
+                <CVSection cv={myCV} handleShowing={handleShowing} token={token}  />
             </MemoryRouter>
         );
 
@@ -71,7 +72,7 @@ describe('CVSection', () => {
         myCV = {...myCV, was_reviewed: true};
         const {getByText} = render(
             <MemoryRouter>
-                <CVSection cv={myCV} showCV={showCV} />
+                <CVSection cv={myCV} handleShowing={handleShowing} token={token}  />
             </MemoryRouter>
         );
 
@@ -81,23 +82,31 @@ describe('CVSection', () => {
     it('should call fetch with right params', async () => {
         const {getByText} = render(
             <MemoryRouter>
-                <CVSection cv={myCV} showCV={showCV} />
+                <CVSection cv={myCV} handleShowing={handleShowing} token={token}  />
             </MemoryRouter>
         );
 
         fireEvent.click(getByText('Zobacz CV'));
-        await waitForElement(() => fetch);
-        expect(fetch).toHaveBeenCalledWith("https://usamo-back.herokuapp.com/cv/generator/0/", {method: "GET"});
+        await expect(fetch).toHaveBeenCalledWith("https://usamo-back.herokuapp.com/cv/generator/0/", {
+            method: "GET",
+            headers: {
+                "Authorization": "token " + token,
+                "Content-Type": "application/json"
+            }
+        });
     });
 
     it('should open cv url', async () => {
        const {getByText} = render(
            <MemoryRouter>
-               <CVSection cv={myCV} showCV={showCV} />
+               <CVSection cv={myCV} handleShowing={handleShowing} token={token}  />
            </MemoryRouter>
        );
 
        fireEvent.click(getByText('Zobacz CV'));
-       await expect(open).toHaveBeenCalledWith("https://usamo-back.herokuapp.com/media/cv/0", "_blank");
+       await waitForElement(() => fetch("https://usamo-back.herokuapp.com/cv/generator/" + myCV.cv_id + "/", {
+           method: "GET"
+       }));
+       expect(open).toHaveBeenCalledWith("https://usamo-back.herokuapp.com/media/cv/0", "_blank");
     });
 });
