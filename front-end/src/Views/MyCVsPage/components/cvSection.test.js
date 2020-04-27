@@ -9,6 +9,7 @@ describe('CVSection', () => {
     let user;
     let handleShowing = jest.fn();
     let token = 123;
+    let error = false;
 
     beforeAll(() => {
         global.open = jest.fn();
@@ -108,5 +109,19 @@ describe('CVSection', () => {
            method: "GET"
        }));
        expect(open).toHaveBeenCalledWith("https://usamo-back.herokuapp.com/media/cv/0", "_blank");
+    });
+
+    it('should render error on api fail', async () => {
+        failFetch = true;
+        const {getByText} = render(
+            <MemoryRouter>
+                <CVSection cv={myCV} handleShowing={handleShowing} token={token}  error={false}/>
+            </MemoryRouter>
+        );
+
+        fireEvent.click(getByText('Zobacz CV'));
+        await waitForElement(() => getByText('Ups, coś poszło nie tak.', {exact: false}));
+
+        expect(getByText('Ups, coś poszło nie tak.', {exact: false})).toBeInTheDocument();
     });
 });

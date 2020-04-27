@@ -10,14 +10,7 @@ class MyCVsPage extends React.Component {
         super(props);
         this.state = {
             cvs: [],
-            errors: {
-                big: false,
-                small: false
-            },
-            errorMessages: {
-                big: "",
-                small: ""
-            },
+            errors: false,
             loading: true
         };
     }
@@ -29,22 +22,14 @@ class MyCVsPage extends React.Component {
                     loading: false
             }) :
                 this.setState({
-                    errors: { big: true },
-                    errorMessages: { big: response.status },
+                    errors: true,
                     loading: false
                 }));
-    };
-
-    handleShowing = (object) => {
-        this.setState(
-            object
-        );
     };
 
     render() {
         const {
             errors,
-            errorMessages,
             cvs,
             loading
         } = this.state;
@@ -59,32 +44,24 @@ class MyCVsPage extends React.Component {
                                 Ładuję...
                             </Alert>
                         ) : null}
-                        {errors.big ? (
-                            <Alert variant="danger" className="m-3">
-                                Ups, coś poszło nie tak. Kod błędu - {errorMessages.big.status}
-                            </Alert>
-                        ) :
-                            <ListGroup variant="flush">
-                                {!loading ? (
-                                    <ListGroup.Item>
-                                        <Row>
-                                            <Col xs={12} md={5}><h6>Nazwa pliku</h6></Col>
-                                            <Col xs={4} md={3}><h6>Status</h6></Col>
-                                            <Col xs={8} md={4} className="text-right"><h6>Akcje</h6></Col>
-                                        </Row>
-                                    </ListGroup.Item>
-                                ) : null}
-                                {errors.small ? (
-                                    <Alert variant="danger" className="m-3">
-                                        Ups, coś poszło nie tak. Kod błędu - {errorMessages.small.status}
-                                    </Alert>
-                                ) : null
-                                }
-                                {cvs.length > 0 ? cvs.map((cv) =>
-                                    <CVSection key={cv.cv_id} cv={cv} handleShowing={this.handleShowing} token={this.context.token}/>
-                                ) : <Alert variant="info">Nie masz jeszcze żadnych CV. Utwórz nowe w zakładce "Kreator CV"!</Alert> }
-                            </ListGroup>
-                        }
+                        <ListGroup variant="flush">
+                            {!loading ? (
+                                <ListGroup.Item>
+                                    <Row>
+                                        <Col xs={12} md={5}><h6>Nazwa pliku</h6></Col>
+                                        <Col xs={4} md={3}><h6>Status</h6></Col>
+                                        <Col xs={8} md={4} className="text-right"><h6>Akcje</h6></Col>
+                                    </Row>
+                                </ListGroup.Item>
+                            ) : null}
+                            {errors ? (
+                                <Alert variant="danger" className="m-3">
+                                    Ups, coś poszło nie tak. Nie można pobrać listy CV.
+                                </Alert>
+                            ) : cvs.length > 0 ? cvs.map((cv) =>
+                                <CVSection key={cv.cv_id} cv={cv} token={this.context.token}/>
+                            ) : <Alert variant="info">Nie masz jeszcze żadnych CV. Utwórz nowe w zakładce "Kreator CV"!</Alert> }
+                        </ListGroup>
                     </Card>
             </Container>
         )

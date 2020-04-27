@@ -4,6 +4,7 @@ import {MemoryRouter, Router} from 'react-router-dom';
 import {UserContext} from "context/UserContext";
 import {createMemoryHistory} from 'history';
 import MyCVsPage from "./MyCVsPage";
+import CVSection from "./components/cvSection";
 
 const renderWithRouter = (
     ui,
