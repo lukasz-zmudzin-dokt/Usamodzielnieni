@@ -20,7 +20,7 @@ class RegisterPage extends React.Component {
       companyData: {company_nip: ""},
       accountData: null,
 
-      account_type: this.props.match.params.role !== 'staff' ? "Podopiecznym" : "staff_verification",
+      account_type: this.props.match.params.role !== 'staff' ? "Podopiecznym" : ["staff_verification"],
       validated: false,
       redirect: false,
       fail_message: "",
@@ -53,10 +53,30 @@ class RegisterPage extends React.Component {
     else return true;
   };
 
+  cutType = e => {
+    let permissions = this.state.account_type;
+    let itemIdx = permissions.indexOf(e.target.name);
+    if (itemIdx > -1) {
+      permissions.splice(itemIdx, 1);
+      this.setState({
+        account_types: permissions
+      });
+    }
+
+  };
+
   selectType = e => {
-    this.setState({
-      account_type: e.target.value
-    });
+    if (this.props.match.params.role === 'staff') {
+      let permissions = this.state.account_type;
+      permissions = permissions.push(e.target.name);
+      this.setState({
+        account_types: permissions
+      });
+    } else {
+      this.setState({
+        account_type: e.target.value
+      });
+    }
   };
 
   renderSection = () => {
@@ -150,7 +170,7 @@ class RegisterPage extends React.Component {
             Rejestracja
           </Card.Header>
           <Card.Body className="registerPage__body">
-            <TypeSelection isAdmin={this.props.match.params.role === 'staff'} selectType={this.selectType}/>
+            <TypeSelection isAdmin={this.props.match.params.role === 'staff'} selectType={this.selectType} cutType={this.cutType} current={this.state.account_type}/>
             <Form
               noValidate
               validated={validated}
