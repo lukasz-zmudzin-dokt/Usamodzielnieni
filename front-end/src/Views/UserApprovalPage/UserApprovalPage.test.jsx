@@ -75,7 +75,7 @@ describe("UserApproval", () => {
         expect(getByText("Ups, wystąpił błąd.")).toBeInTheDocument();
     });
 
-    it("should view alert at api returning no cvs", async () => {
+    it("should view alert at api returning no users", async () => {
         apiUsers = [];
         const { getByText } = render (
             <MemoryRouter>

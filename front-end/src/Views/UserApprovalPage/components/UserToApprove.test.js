@@ -5,7 +5,6 @@ import UserToApprove from "./UserToApprove";
 import {act} from "react-dom/test-utils";
 
 describe("UserApproval", () => {
-    let failFetch;
     let fetchUserType;
 
     let user = {
@@ -97,9 +96,20 @@ describe("UserApproval", () => {
     });
 
     beforeEach(() => {
-        failFetch = false;
         jest.clearAllMocks();
     });
 
+   /* it('should fetch user data', async () => {
+        fetchUserType = "standard";
+        const { getByText } = render (
+            <MemoryRouter>
+                <UserToApprove user={user.standard} />
+            </MemoryRouter>
+        );
+
+        await waitForElement(() => getByText("standard0 (Standard)"));
+        fireEvent.click(getByText("standard0 (Standard)"));
+
+    });*/
 
 });
