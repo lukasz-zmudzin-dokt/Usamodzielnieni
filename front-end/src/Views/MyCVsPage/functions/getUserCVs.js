@@ -14,12 +14,12 @@ export const getUserCVs = async (token) => {
                 };
             }
         }).then(function(res) {
-            if(Array.isArray(res))  // jeżeli jest to tablica z wynikami to zwróć "200:OK" i tablicę z wynikami
+            if(Array.isArray(res))
                 return {
                     status: "200:OK",
                     result: res
                 };
-            else    // jeżeli jest to obiekt z kodem błędu i opisem to zwróć "kod:opis_błędu"
+            else
                 return {
                     status: res
                 };

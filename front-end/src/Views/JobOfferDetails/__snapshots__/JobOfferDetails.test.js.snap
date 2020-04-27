@@ -85,7 +85,7 @@ exports[`JobOfferDetails should render without crashing 1`] = `
               <div
                 class="detailsItem__label"
               >
-                Kategoria
+                Branża
               </div>
               <div
                 class="detailsItem__value"
@@ -109,7 +109,6 @@ exports[`JobOfferDetails should render without crashing 1`] = `
 123 asdasd
           </p>
         </div>
-        <div />
       </div>
     </div>
   </div>

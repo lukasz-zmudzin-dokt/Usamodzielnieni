@@ -1,18 +1,29 @@
+import {staffTypes} from "constants/staffTypes";
+
 const adjustObject = (account_type, home, company)  => {
     let source;
-    let type;
     switch(account_type) {
         case "Podopiecznym": {
             source = home;
             return({
                 facility_name: source.name_of_place,
-                facility_address: `${source.city} ${source.street} ${source.city_code}`
+                facility_address: {
+                    city: source.city,
+                    street: source.street,
+                    street_number: source.number,
+                    postal_code: source.city_code
+                }
             })}
         case "Pracodawcą": {
             source = company;
             return({
                 company_name: source.name_of_place,
-                company_address: `${source.city} ${source.street} ${source.city_code}`,
+                company_address: {
+                    city: source.city,
+                    street: source.street,
+                    street_number: source.number,
+                    postal_code: source.city_code
+                },
                 nip: source.company_nip
             })}
         default:
@@ -20,24 +31,31 @@ const adjustObject = (account_type, home, company)  => {
     }
 };
 
+const checkIfArrayIncludes = (src, target) => {
+    for (let i = 0; i < src.length; i++) {
+        if (target.includes(src[i])) {
+            return true;
+        }
+    }
+    return false;
+};
 
-export const sendData = async (source) => {
+
+export const sendData = async (token, source) => {
     const account_type = source.account_type;
     let url;
+    const staff_types = Object.values(staffTypes);
     let wants_data = true;
-    switch (account_type) {
-        case "Podopiecznym":
-            url = "https://usamo-back.herokuapp.com/account/register/";
-            break;
-        case "Pracodawcą":
-            url = "https://usamo-back.herokuapp.com/account/register/employer/";
-            break;
-        case "staff_verification" || "staff_cv" || "staff_jobs" || "staff_blog_creator" || "staff_blog_moderator":
-            url = "https://usamo-back.herokuapp.com/account/register/staff/";
-            wants_data = false;
-            break;
-        default: throw new Error();
+    if (account_type === "Podopiecznym") {
+        url = "https://usamo-back.herokuapp.com/account/register/";
+    } else if (account_type === "Pracodawcą") {
+        url = "https://usamo-back.herokuapp.com/account/register/employer/";
+    } else if (checkIfArrayIncludes(account_type, staff_types)) {
+        url = "https://usamo-back.herokuapp.com/account/register/staff/";
+    } else {
+        throw new Error();
     }
+
     const object = {
         ...source.personalData,
         ...source.accountData,
@@ -48,6 +66,7 @@ export const sendData = async (source) => {
         method: "POST",
         body: JSON.stringify(object),
         headers: {
+            "Authorization": "Token " + token,
             "Content-Type": "application/json",
             Origin: null
         }

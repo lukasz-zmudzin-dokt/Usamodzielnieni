@@ -2,9 +2,7 @@ import {Card, Form} from "react-bootstrap";
 import React from "react";
 
 class AccountForm extends React.Component {
-    constructor(props) {
-        super(props);
-    }
+  
     onChange = (onBlur, data, e) => {
         const name = e.target.name;
         const value = e.target.value;

@@ -14,6 +14,7 @@ import BlogPost from "Views/BlogPost";
 import BlogPage from "Views/BlogPage";
 import BlogPostForm from "Views/BlogPostForm";
 import MyCVsPage from "Views/MyCVsPage";
+import CVApprovalPage from "Views/CVApprovalPage";
 import UserApprovalPage from "Views/UserApprovalPage";
 
 export {
@@ -33,5 +34,6 @@ export {
   JobOffersPage,
   JobOfferDetails,
   MyCVsPage,
+  CVApprovalPage,
   UserApprovalPage
 };
