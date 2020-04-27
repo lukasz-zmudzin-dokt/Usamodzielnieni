@@ -79,7 +79,6 @@ class HeaderTemplate extends React.Component {
     }).then(res => {
       if (res.status === 200 || res.status === 401) {
         res.json().then(responseValue => {
-          console.log(responseValue);
           this.context.logout();
           return <Redirect to="/" />;
         });
