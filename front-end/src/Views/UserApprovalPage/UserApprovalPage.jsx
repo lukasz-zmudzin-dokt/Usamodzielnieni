@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext} from "react";
 import { UserContext } from "context";
-import {Accordion, Alert, Card, Container} from "react-bootstrap";
-import UserToApprove from "./components/UserToApprove";
+import {Alert, Card, Container} from "react-bootstrap";
 import { getUsersToApprove } from "./functions/apiCalls";
+import UserDetails from "./components/UserDetails";
 
 const UserApprovalPage = () => {
 
@@ -36,17 +36,16 @@ const UserApprovalPage = () => {
 
     return (
         <Container>
-            <Accordion>
                 <Card>
                     <Card.Header as={"h2"}>
                         Konta do zatwierdzenia
                     </Card.Header>
                     <Card.Body className="p-0">
                         { message ? message : null }
-                        { users.map((user) => <UserToApprove user={user} key={user.id} />) }
+                        <UserDetails users={users} />
                     </Card.Body>
                 </Card>
-            </Accordion>
+
         </Container>
     );
 };
