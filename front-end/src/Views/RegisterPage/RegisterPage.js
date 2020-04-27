@@ -129,7 +129,7 @@ class RegisterPage extends React.Component {
     this.setValidated();
     if (isOK) {
       try {
-        const contextData = await sendData(data).then(response => {
+        const contextData = await sendData(this.context.token, data).then(response => {
           return response;
         });
         const { status } = contextData;
