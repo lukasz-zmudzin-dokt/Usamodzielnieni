@@ -1,3 +1,5 @@
+import {staffTypes} from "constants/staffTypes";
+
 const adjustObject = (account_type, home, company)  => {
     let source;
     switch(account_type) {
@@ -42,7 +44,7 @@ const checkIfArrayIncludes = (src, target) => {
 export const sendData = async (token, source) => {
     const account_type = source.account_type;
     let url;
-    const staff_types = ["staff_verification", "staff_cv", "staff_jobs", "staff_blog_creator", "staff_blog_moderator"]
+    const staff_types = Object.values(staffTypes);
     let wants_data = true;
     if (account_type === "Podopiecznym") {
         url = "https://usamo-back.herokuapp.com/account/register/";
