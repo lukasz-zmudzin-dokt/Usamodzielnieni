@@ -94,7 +94,7 @@ exports[`OfferForm renders correctly 1`] = `
               placeholder="Adres firmy"
               required=""
               type="text"
-              value="xd"
+              value="abc, def 1"
             />
             <div
               class="invalid-feedback"

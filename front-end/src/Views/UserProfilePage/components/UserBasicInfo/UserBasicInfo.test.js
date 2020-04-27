@@ -28,14 +28,19 @@ const names = {
 };
 
 describe("UserBasicInfo ", () => {
-  it("should render without crashing", () => {
-    render(<UserBasicInfo user={user} names={names} />);
-  });
-});
 
-it("should render correctly", () => {
-  const { container } = render(
-    <UserBasicInfo user={user} names={names} />
-  );
-  expect(container).toMatchSnapshot();
+  it("should render correctly", () => {
+    const { container } = render(
+        <UserBasicInfo error={false} user={user} names={names} />
+    );
+    expect(container).toMatchSnapshot();
+  });
+
+  it('should render alert when api failed', () => {
+    const {getByText} = render(
+        <UserBasicInfo error={true} user={user} names={names} />
+    );
+
+    expect(getByText('Wystąpił błąd', {exact: false})).toBeInTheDocument();
+  });
 });

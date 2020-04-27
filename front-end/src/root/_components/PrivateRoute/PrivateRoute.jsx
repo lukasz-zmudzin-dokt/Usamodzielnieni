@@ -1,7 +1,8 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
 
-import { paths, userTypes } from "constants/routes";
+import { paths } from "constants/paths";
+import { userTypes } from "constants/userTypes";
 
 const PrivateRoute = ({ redirect, type, authenticated, group, ...rest }) => {
   const checkAuth = () => {
