@@ -15,11 +15,9 @@ class Menu extends React.Component {
       },
       body: {}
     }).then(res => {
-      console.log(res);
       if (res.status === 200 || res.status === 401) {
         res.json().then(responseValue => {
           console.log(responseValue);
-          console.log("Wylogowano");
           this.context.logout();
           return <Redirect to="/" />;
         });
@@ -60,7 +58,7 @@ class Menu extends React.Component {
                 <Row>
                     <Col/>
                     <Col xs={7}>
-                        <img src={logo} className="menu-logo"/>
+                        <img src={logo} className="menu-logo" alt="Menu logo"/>
                     </Col>
                     <Col />
                 </Row>

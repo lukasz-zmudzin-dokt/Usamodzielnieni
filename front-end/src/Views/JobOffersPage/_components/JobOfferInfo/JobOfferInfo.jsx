@@ -1,9 +1,9 @@
 import React from 'react';
-import { Row, Col, Button } from 'react-bootstrap';
+import {Row, Col, Button} from 'react-bootstrap';
 import { IndexLinkContainer } from 'react-router-bootstrap';
 import { DetailsItem } from 'components';
 
-const JobOfferInfo = ({ offer, ...rest }) => {
+const JobOfferInfo = ({ context, offer, ...rest }) => {
     return (
       <Row {...rest}>
         <Col>
@@ -19,6 +19,6 @@ const JobOfferInfo = ({ offer, ...rest }) => {
         </Col>
       </Row>
     )
-}
+};
 
 export default JobOfferInfo;

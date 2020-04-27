@@ -1,13 +1,20 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
 
-import { paths } from "constants/routes";
+import { paths } from "constants/paths";
+import { userTypes } from "constants/userTypes";
 
-const PrivateRoute = ({ redirect, type, authenticated, ...rest }) => {
+const PrivateRoute = ({ redirect, type, authenticated, group, ...rest }) => {
   const checkAuth = () => {
     if (authenticated.token) {
       if (!type) return <Route {...rest} />;
-      else if (type === authenticated.type) return <Route {...rest} />;
+      else if (type === authenticated.type) {
+        if (type === userTypes.STAFF) {
+          if (authenticated.data.group_type.includes(group) || group === undefined) {
+            return <Route {...rest} />;
+          }
+        } else return <Route {...rest} />;
+      }
     }
     return <Redirect to={redirect} />;
   };
@@ -16,7 +23,7 @@ const PrivateRoute = ({ redirect, type, authenticated, ...rest }) => {
 };
 
 PrivateRoute.defaultProps = {
-  redirect: paths.HOME
+  redirect: paths.DASHBOARD,
 };
 
 export default PrivateRoute;

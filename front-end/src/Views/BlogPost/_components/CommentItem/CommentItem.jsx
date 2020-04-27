@@ -1,10 +1,11 @@
 import React from 'react';
 import { ButtonGroup, Button } from "react-bootstrap";
 import "./CommentItem.css";
+import {staffTypes} from "constants/staffTypes";
 
-const CommentItem = ({ comment, onEditClick, onDeleteClick, user, ...rest }) => {
+const CommentItem = ({ comment, onDeleteClick, user, ...rest }) => {
     const canModifyComment = (user) => (comment.author.email === user.data.email) 
-                                    || (user.type === 'Staff' && user.data.group_type === 'staff_blog_moderator');
+                                    || (user.type === 'Staff' && user.data.group_type.includes(staffTypes.BLOG_MODERATOR));
 
     return (
         <div className="commentItem" {...rest}>
@@ -13,7 +14,6 @@ const CommentItem = ({ comment, onEditClick, onDeleteClick, user, ...rest }) => 
             <p className="commentItem__content">{comment.content}</p>
             {canModifyComment(user) && (
                 <ButtonGroup className="commentItem__actions" size="sm">
-                    <Button onClick={(e) => onEditClick(comment.id)}>Edytuj</Button>
                     <Button onClick={(e) => onDeleteClick(comment.id)}>Usuń</Button>
                 </ButtonGroup>
             )}

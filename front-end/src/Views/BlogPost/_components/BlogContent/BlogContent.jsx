@@ -2,11 +2,12 @@ import React, {useState} from 'react'
 import {Alert, Badge, Button, ButtonToolbar, Card, Col, Row} from "react-bootstrap";
 import mediumDraftImporter from 'medium-draft/lib/importer';
 import {convertToHTML} from "draft-convert";
-import {deletePost} from "../../functions/apiCalls";
+import {deletePost} from "Views/BlogPost/functions/apiCalls";
 import {Redirect} from "react-router-dom";
+import {staffTypes} from "constants/staffTypes";
 
 const getDateString = dateString => {
-    return dateString.substring(0,2) + "." + dateString.substring(3, 5) + "." + dateString.substring(6, 10);
+    return dateString.substring(8,10) + "." + dateString.substring(5, 7) + "." + dateString.substring(0, 4);
 };
 
 const renderTags = tagList => {
@@ -30,9 +31,7 @@ const handleDeletion = async (event, id, token, errorFlag, successFlag) => {
 };
 
 const renderButtons = (id, user, author, errorFlag, successFlag, editionFlag, flag) => {
-    console.log(author.email)
-    console.log(user.data.email)
-    if ( (user.type === 'Staff' || user.data.email === author.email) && !flag) {
+    if ( ((user.type === 'Staff' && user.data.group_type.includes(staffTypes.BLOG_CREATOR)) || user.data.email === author.email) && !flag) {
         return (
             <ButtonToolbar className="btn_toolbar text-center">
                 <Button variant="warning" className="button-edit mx-3" onClick={e => editionFlag(true)}>Edytuj 🖉</Button>
@@ -45,7 +44,7 @@ const renderButtons = (id, user, author, errorFlag, successFlag, editionFlag, fl
 const renderRedirect = (flag, id) => {
     const path = `/blog/newPost/${id}`;
     if (flag)
-        return <Redirect to={path}/>;
+        return <Redirect data-testId="blog-redirect" to={path}/>;
 };
 
 const BlogContent = ({ post , user }) => {
