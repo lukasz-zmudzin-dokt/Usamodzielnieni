@@ -5,18 +5,19 @@ const url = {
 }
 const getHeaders = (token) => ({ Authorization: "Token " + token, "Content-Type": "application/json" });
 
-const generateCv = async (token, object) => {
+const generateCv = async (token, object, method, id) => {
   const headers = getHeaders(token);
-  const res = await fetch(url.generate(), { method: "POST", body: JSON.stringify(object), headers });
-
-  if (res.status === 201) {
+  const link = id !== undefined ? domain + 'cv/data/' + id + '/' : url.generate();
+  const res = await fetch(link, { method: method, body: JSON.stringify(object), headers });
+  const status = id !== undefined ? 200 : 201;
+  if (res.status === status) {
     return res.json();
   } else {
     throw res.status;
   }
 }
 
-const assembleCv = async (token, id) => {
+const fetchDocument = async (token, id) => {
   const headers = getHeaders(token);
   const res = await fetch(url.generate(id), { method: "GET", headers })
 
@@ -42,14 +43,15 @@ const addPhoto = async (token, photo, cvId) => {
   }
 }
 
-const sendData = async (object, photo, token) => {
+const sendData = async (object, photo, token, method, id) => {
   let file;
   try {
-    let cvRes = await generateCv(token, object);
+    let cvRes = await generateCv(token, object, method, id);
     if (photo) {
       await addPhoto(token, photo, cvRes.cv_id);
     }
-    file = await assembleCv(token, cvRes.cv_id);
+    const cvId = id !== undefined ? id : cvRes.cv_id;
+    file = await fetchDocument(token, cvId);
   } catch (e) {
     throw new Error('api error');
   }
@@ -92,7 +94,7 @@ const getPhoto = async (token, id) => {
   const res = await fetch(url, {method: "GET", headers});
 
   if (res.status === 200) {
-    return await res.blob();
+    return await res.json();
   } else {
     return null;
   }

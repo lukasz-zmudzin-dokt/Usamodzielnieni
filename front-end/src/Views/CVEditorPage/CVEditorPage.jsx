@@ -36,7 +36,9 @@ class CVEditorPage extends React.Component {
       showComments: true,
       disabled: false,
       validated: false,
-      fetchError: false
+      fetchError: false,
+      method: "POST",
+      cv_id: undefined
     };
     this.tabs = [];
   }
@@ -90,7 +92,7 @@ class CVEditorPage extends React.Component {
         this.state.tabs.languages.data
       );
       try {
-        await sendData(cv, this.state.tabs.photo.data, this.context.token).then(() =>
+        await sendData(cv, this.state.tabs.photo.data, this.context.token, this.state.method, this.state.cv_id).then(() =>
           this.setState({ disabled: false })
         );
       } catch (e) {
@@ -161,8 +163,14 @@ class CVEditorPage extends React.Component {
   autofillEditor = async(id) => {
     let feedbackRes, cvRes, photoRes, feedback, data;
     try {
+      this.setState({
+        cv_id: id,
+        method: "PUT"
+      });
       cvRes = await getCVdata(this.context.token, id);
+      console.log("here");
       photoRes = await getPhoto(this.context.token, id);
+      console.log("dupa");
       if (cvRes.was_reviewed) {
         try {
           feedbackRes = await getFeedback(this.context.token, id);
@@ -179,12 +187,16 @@ class CVEditorPage extends React.Component {
           });
         }
       }
+      console.log("dupa0");
       data = mapData(cvRes);
+      console.log("dupa1");
       Object.keys(data).forEach(item => {
         this.setState(prevState => ({
           tabs: {...prevState.tabs, [item]: {...prevState.tabs[item], data: data[item]}}
         }))
       });
+      console.log("dupa2");
+      console.log(photoRes);
       if (photoRes !== null) {
         const photo = await objectifyPhoto(photoRes);
         this.setState( prevState => ({
