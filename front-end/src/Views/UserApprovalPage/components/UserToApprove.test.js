@@ -10,27 +10,20 @@ describe("UserApproval", () => {
 
     let user = {
         standard: {
-            date_joined: "2020-04-26T00:49:14.890182+02:00",
             email: "abc@gmail.com",
             id: "2949ad29-27da-49a0-aba2-1aa7b5bfa20b",
-            last_login: "2020-04-26T00:49:14.890166+02:00",
-            status: "Waiting for verification",
             type: "Standard",
             username: "standard0"
         },
         employer: {
-            date_joined: "2020-04-26T00:40:08.514725+02:00",
             email: "string@aaa.aaa",
             id: "e8ac8431-cc60-423d-a044-9d048285f2ee",
-            last_login: "2020-04-26T00:40:08.514717+02:00",
-            status: "Waiting for verification",
             type: "Employer",
             username: "string"
         }
     };
     let apiUserDetails = {
         standard: {
-            date_joined: "2020-04-26T00:49:14.890182+02:00",
             email: "abc@gmail.com",
             facility_address: {
                 city: "Warszawa",
@@ -41,10 +34,8 @@ describe("UserApproval", () => {
             facility_name: "facility",
             first_name: "Jan",
             id: "2949ad29-27da-49a0-aba2-1aa7b5bfa20b",
-            last_login: "2020-04-26T00:49:14.890166+02:00",
             last_name: "Kowalski",
             phone_number: "+48123123123",
-            status: "Waiting for verification",
             username: "standard0"
         },
         employer: {
@@ -55,15 +46,12 @@ describe("UserApproval", () => {
                 street_number: "693"
             },
             company_name: "string",
-            date_joined: "2020-04-26T00:40:08.514725+02:00",
             email: "string@aaa.aaa",
             first_name: "string",
             id: "e8ac8431-cc60-423d-a044-9d048285f2ee",
-            last_login: "2020-04-26T00:40:08.514717+02:00",
             last_name: "string",
             nip: "5555555555",
             phone_number: "+48123456789",
-            status: "Waiting for verification",
             username: "string"
         }
     };
@@ -100,6 +88,10 @@ describe("UserApproval", () => {
                                 reject({});
                                 break;
                         }
+                        break;
+                    default:
+                        reject({});
+                        break;
                 }
             });
         });
