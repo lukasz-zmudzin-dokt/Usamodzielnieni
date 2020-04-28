@@ -68,6 +68,7 @@ const CVPosition = (props) => {
                     Akceptuj
                 </Button>
                 <Button
+                    disabled
                     variant="warning m-1 p-1"
                     className="btnImprove"
                     onClick={e => improveCV(e, setRedirect)}>
