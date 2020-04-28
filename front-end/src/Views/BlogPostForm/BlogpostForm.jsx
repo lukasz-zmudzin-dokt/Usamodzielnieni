@@ -201,7 +201,7 @@ class BlogPostForm extends React.Component {
                               onChange={this.onEditorChange}
                               inlineButtons={config.inline}
                               blockButtons={config.block}
-                              sideButtons={[]}
+                              sideButtons={config.side}
                           />
                       </div>
                       <SelectionRow className="mt-4" name="tags" arrayType={this.state.filters.tags} onChange={this.onArrayChange} current={this.state.tags} onCut={this.cutFromArray}/>

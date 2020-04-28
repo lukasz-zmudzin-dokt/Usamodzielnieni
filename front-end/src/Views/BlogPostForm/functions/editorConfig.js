@@ -1,3 +1,5 @@
+import ImgSideButton from "Views/BlogPostForm/components/ImgSideButton";
+
 export const customizeToolbar = () => {
     const blockButtons = [
         {
@@ -47,8 +49,20 @@ export const customizeToolbar = () => {
         }
     ];
 
+    const sideButtons = [
+        {
+            title: "Dodaj zdjęcie",
+            component: ImgSideButton
+        }
+    ];
+
     return {
         block: blockButtons,
-        inline: inlineButtons
+        inline: inlineButtons,
+        side: sideButtons
     }
 };
+
+export const sideButtons = [
+
+];
