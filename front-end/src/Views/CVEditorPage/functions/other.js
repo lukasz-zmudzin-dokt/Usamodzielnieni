@@ -92,7 +92,7 @@ const getPhoto = async (token, id) => {
   const res = await fetch(url, {method: "GET", headers});
 
   if (res.status === 200) {
-    return await res.json();
+    return await res.blob();
   } else {
     return null;
   }

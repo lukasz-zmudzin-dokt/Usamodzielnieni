@@ -15,7 +15,7 @@ import { sendData, getFeedback } from "Views/CVEditorPage/functions/other.js";
 import { createCVObject } from "Views/CVEditorPage/functions/createCVObject.js";
 import { withRouter } from "react-router-dom";
 import {getCVdata, getPhoto} from "./functions/other";
-import {mapData, mapFeedback} from "./functions/mapData";
+import {mapData, mapFeedback, objectifyPhoto} from "./functions/mapData";
 
 class CVEditorPage extends React.Component {
   constructor(props) {
@@ -159,32 +159,38 @@ class CVEditorPage extends React.Component {
   };
 
   autofillEditor = async(id) => {
-    let feedbackRes, cvRes, photoRes;
+    let feedbackRes, cvRes, photoRes, feedback, data;
     try {
       cvRes = await getCVdata(this.context.token, id);
       photoRes = await getPhoto(this.context.token, id);
-      try {
-        feedbackRes = await getFeedback(this.context.token, id);
-      } catch (e) {
-        this.setState({
-          loading: false,
-          commentsError: true
-        });
+      if (cvRes.was_reviewed) {
+        try {
+          feedbackRes = await getFeedback(this.context.token, id);
+          feedback = mapFeedback(feedbackRes);
+          Object.keys(feedback).forEach(item => {
+            this.setState(prevState => ({
+              tabs: {...prevState.tabs, [item]: {...prevState.tabs[item], comments: feedback[item]}}
+            }));
+          });
+        } catch (e) {
+          this.setState({
+            loading: false,
+            commentsError: true
+          });
+        }
       }
-
-      const data = mapData(cvRes);
-      const feedback = mapFeedback(feedbackRes);
-      console.log(data);
+      data = mapData(cvRes);
       Object.keys(data).forEach(item => {
         this.setState(prevState => ({
-          tabs: {...prevState.tabs, [item]: {data: data[item], comments: feedback[item]}}
+          tabs: {...prevState.tabs, [item]: {...prevState.tabs[item], data: data[item]}}
         }))
-      })
-      // if (photoRes !== null) {
-      //   this.setState({
-      //
-      //   })
-      // }
+      });
+      if (photoRes !== null) {
+        const photo = await objectifyPhoto(photoRes);
+        this.setState( prevState => ({
+          tabs: {...prevState.tabs, photo: {...prevState.tabs.photo, data: photo}}
+        }));
+      }
     } catch(e) {
       this.setState({
         loading: false,
@@ -210,7 +216,6 @@ class CVEditorPage extends React.Component {
         <Card>
           <Card.Header as="h2">Kreator CV</Card.Header>
           <Card.Body>
-            {console.log(this.state)}
             {this.state.fetchError ? <Alert variant="danger">Wystąpił błąd podczas pobierania danych CV</Alert> : null}
               <Tabs
                 transition={false}

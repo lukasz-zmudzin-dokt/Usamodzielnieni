@@ -57,3 +57,9 @@ export const mapFeedback = (data) => ({
     skills: data.skills,
     languages: data.languages
 });
+
+export const objectifyPhoto = (data) => {
+    return new File([data], "cv_foto", {
+        type: "image/jpeg"
+    });
+};
