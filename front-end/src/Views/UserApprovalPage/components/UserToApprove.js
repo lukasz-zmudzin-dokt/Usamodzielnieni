@@ -31,7 +31,7 @@ const UserToApprove = ({ user }) => {
 
         };
         loadUserDetails(context.token, user.id);
-    }, [context.token]);
+    }, [context.token, user.id, user.type]);
 
     const approveUser = async (e, token, userId) => {
         e.preventDefault();
