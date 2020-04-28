@@ -14,6 +14,8 @@ import { UserContext } from "context";
 import { sendData, getFeedback } from "Views/CVEditorPage/functions/other.js";
 import { createCVObject } from "Views/CVEditorPage/functions/createCVObject.js";
 import { withRouter } from "react-router-dom";
+import {getCVdata, getPhoto} from "./functions/other";
+import {mapData, mapFeedback} from "./functions/mapData";
 
 class CVEditorPage extends React.Component {
   constructor(props) {
@@ -33,7 +35,8 @@ class CVEditorPage extends React.Component {
       commentsError: false,
       showComments: true,
       disabled: false,
-      validated: false
+      validated: false,
+      fetchError: false
     };
     this.tabs = [];
   }
@@ -155,38 +158,45 @@ class CVEditorPage extends React.Component {
     ];
   };
 
+  autofillEditor = async(id) => {
+    let feedbackRes, cvRes, photoRes;
+    try {
+      cvRes = await getCVdata(this.context.token, id);
+      photoRes = await getPhoto(this.context.token, id);
+      try {
+        feedbackRes = await getFeedback(this.context.token, id);
+      } catch (e) {
+        this.setState({
+          loading: false,
+          commentsError: true
+        });
+      }
+
+      const data = mapData(cvRes);
+      const feedback = mapFeedback(feedbackRes);
+      console.log(data);
+      Object.keys(data).forEach(item => {
+        this.setState(prevState => ({
+          tabs: {...prevState.tabs, [item]: {data: data[item], comments: feedback[item]}}
+        }))
+      })
+      // if (photoRes !== null) {
+      //   this.setState({
+      //
+      //   })
+      // }
+    } catch(e) {
+      this.setState({
+        loading: false,
+        fetchError: true
+      })
+    }
+  };
+
   componentDidMount() {
     let cvId = this.props.match.params.id;
     if (cvId) {
-      this.setState({ loading: true });
-      getFeedback(this.context.token, this.props.match.params.id)
-        .then(res => {
-          const setTabComments = (key, comments) => {
-            this.setState(prevState => ({
-              tabs: {
-                ...prevState.tabs,
-                [key]: { ...prevState.tabs[key], comments }
-              }
-            }))
-          }
-          setTabComments('personalData', res.basic_info);
-          setTabComments('education', res.schools);
-          setTabComments('workExperience', res.experiences);
-          setTabComments('skills', res.skills);
-          setTabComments('languages', res.languages);
-          setTabComments('photo', res.additional_info);
-          this.setState({
-            loading: false,
-            commentsError: false
-          });
-        })
-        .catch(err => {
-          console.log(err);
-          this.setState({
-            loading: false,
-            commentsError: true
-          });
-        });
+      this.autofillEditor(cvId);
     } else {
       this.setState({ showComments: false });
     }
@@ -200,6 +210,8 @@ class CVEditorPage extends React.Component {
         <Card>
           <Card.Header as="h2">Kreator CV</Card.Header>
           <Card.Body>
+            {console.log(this.state)}
+            {this.state.fetchError ? <Alert variant="danger">Wystąpił błąd podczas pobierania danych CV</Alert> : null}
               <Tabs
                 transition={false}
                 activeKey={this.state.formTab}

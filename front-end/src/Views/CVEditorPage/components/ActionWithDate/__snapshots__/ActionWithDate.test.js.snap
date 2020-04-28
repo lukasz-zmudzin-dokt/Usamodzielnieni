@@ -6,7 +6,7 @@ exports[`ActionWithDate - integration should add action item to list 1`] = `
   id="Warszawa_Jakiś opis"
   type="button"
 >
-  Jakiś opis od: 02/2020 do: 12/2020 (Warszawa)
+  Warszawa od: 02/2020 do: 12/2020 (Jakiś opis)
    x
 </button>
 `;
@@ -17,14 +17,17 @@ exports[`ActionWithDate - integration should add action item to list when endTim
   id="Warszawa_Jakiś opis"
   type="button"
 >
-  Jakiś opis od: 02/2020 do: teraz (Warszawa)
+  Warszawa od: 02/2020  (Jakiś opis)
    x
 </button>
 `;
 
 exports[`ActionWithDate should render without crashing 1`] = `
 <div>
-  <div>
+  <form
+    class=""
+    novalidate=""
+  >
     <div
       class="row"
     >
@@ -95,6 +98,11 @@ exports[`ActionWithDate should render without crashing 1`] = `
         type="text"
         value=""
       />
+      <div
+        class="invalid-feedback"
+      >
+        Miejsce jest wymagane.
+      </div>
     </div>
     <div
       class="form-group"
@@ -112,13 +120,18 @@ exports[`ActionWithDate should render without crashing 1`] = `
         type="text"
         value=""
       />
+      <div
+        class="invalid-feedback"
+      >
+        Opis jest wymagany.
+      </div>
     </div>
     <button
-      class="itemsList__addButton btn btn-success"
-      type="button"
+      class="mb-3 btn btn-success"
+      type="submit"
     >
       + Dodaj
     </button>
-  </div>
+  </form>
 </div>
 `;

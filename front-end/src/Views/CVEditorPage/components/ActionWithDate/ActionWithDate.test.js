@@ -105,7 +105,7 @@ describe('ActionWithDate - integration', () => {
             <ActionWithDate {...props} />
         );
 
-        expect(getByText('Jakiś opis od:', { exact: false })).toMatchSnapshot();
+        expect(getByText('Jakiś opis', { exact: false })).toMatchSnapshot();
     })
 
     it('should add action item to list when endTime is undefined', () => {
@@ -115,6 +115,6 @@ describe('ActionWithDate - integration', () => {
             <ActionWithDate {...props} />
         );
 
-        expect(getByText('Jakiś opis od:', { exact: false })).toMatchSnapshot();
+        expect(getByText('Jakiś opis', { exact: false })).toMatchSnapshot();
     })
 });

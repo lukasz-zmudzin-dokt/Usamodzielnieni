@@ -48,7 +48,7 @@ class ActionWithDate extends React.Component {
                 description: ''
             }
         });
-    }
+    };
 
     render() {
         return (
@@ -68,7 +68,7 @@ class ActionWithDate extends React.Component {
                             selected={this.state.newAction.startTime}
                             onChange={startTime => this.setState(prevState => ({ newAction: { ...prevState.newAction, startTime } }))}
                             showMonthYearPicker
-                            maxDate={this.state.newAction.endTime}
+                            maxDate={Date.now()}
                         />
                     </Form.Group>
                     <Form.Group as={Col} xs={12} md={6}>

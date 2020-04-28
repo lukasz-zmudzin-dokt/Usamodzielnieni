@@ -16,7 +16,7 @@ const generateCv = async (token, object) => {
   }
 }
 
-const getCv = async (token, id) => {
+const assembleCv = async (token, id) => {
   const headers = getHeaders(token);
   const res = await fetch(url.generate(id), { method: "GET", headers })
 
@@ -49,7 +49,7 @@ const sendData = async (object, photo, token) => {
     if (photo) {
       await addPhoto(token, photo, cvRes.cv_id);
     }
-    file = await getCv(token, cvRes.cv_id);
+    file = await assembleCv(token, cvRes.cv_id);
   } catch (e) {
     throw new Error('api error');
   }
@@ -74,4 +74,28 @@ const getFeedback = async (token, id) => {
   }
 };
 
-export {sendData, getFeedback};
+const getCVdata = async (token, id) => {
+  const url = `${domain}cv/data/${id}/`;
+  const headers = getHeaders(token);
+  const res = await fetch(url, {method: "GET", headers});
+
+  if (res.status === 200) {
+    return await res.json();
+  } else {
+    throw res.status;
+  }
+};
+
+const getPhoto = async (token, id) => {
+  const url = `${domain}cv/picture/${id}/`;
+  const headers = getHeaders(token);
+  const res = await fetch(url, {method: "GET", headers});
+
+  if (res.status === 200) {
+    return await res.json();
+  } else {
+    return null;
+  }
+};
+
+export {sendData, getFeedback, getCVdata, getPhoto};
