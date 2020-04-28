@@ -1,5 +1,7 @@
+import proxy from "config/api";
+
 export const getPost = async (id, token) => {
-    let url = `https://usamo-back.herokuapp.com/blog/blogpost/${id}`;
+    let url = `${proxy.blog}blogpost/${id}`;
     const headers = {
         Authorization: "Token " + token,
         "Content-Type": "application/json"
@@ -15,8 +17,8 @@ export const getPost = async (id, token) => {
 };
 
 export const getFilters = async token => {
-    const urlC = "https://usamo-back.herokuapp.com/blog/categories/";
-    const urlT = "https://usamo-back.herokuapp.com/blog/tags/";
+    const urlC = proxy.blog + "categories/";
+    const urlT = proxy.blog + "tags/";
     const headers = {
         Authorization: "Token " + token,
         "Content-Type": "application/json"
@@ -39,7 +41,7 @@ export const getFilters = async token => {
 };
 
 export const postBlogPost = async (data, token, method, id) => {
-    let url = "https://usamo-back.herokuapp.com/blog/blogpost/";
+    let url = proxy.blog + "blogpost/";
     if (id !== -1)
         url = `${url}${id}`;
     const headers = {
@@ -62,7 +64,7 @@ export const postBlogPost = async (data, token, method, id) => {
 export const uploadPhoto = async (id, photo, token) => {
     const formData = new FormData();
     formData.append('file', photo, photo.name);
-    const url = `https://usamo-back.herokuapp.com/blog/blogpost/${id}/header`;
+    const url = `${proxy.blog}blogpost/${id}/header`;
     const headers = {
         Authorization: "Token " + token
     };

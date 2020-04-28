@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import { Alert } from "react-bootstrap";
 import { CommentItem } from "../";
+import proxy from "config/api";
 
 const deleteComment = async (token, commentId) => {
-    let url = `https://usamo-back.herokuapp.com/blog/comment/${commentId}`;
+    let url = `${proxy.blog}comment/${commentId}`;
     const headers = {
         Authorization: "Token " + token,
         "Content-Type": "application/json"

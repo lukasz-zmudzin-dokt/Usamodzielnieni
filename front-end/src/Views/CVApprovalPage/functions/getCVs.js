@@ -1,6 +1,8 @@
+import proxy from "config/api";
+
 export const getCVs = async (token) => {
 
-    let url = "https://usamo-back.herokuapp.com/cv/admin/list/unverified/";
+    let url = proxy.cv +  "admin/list/unverified/";
     const headers = {
         "Authorization": "token " + token,
         "Content-Type": "application/json"

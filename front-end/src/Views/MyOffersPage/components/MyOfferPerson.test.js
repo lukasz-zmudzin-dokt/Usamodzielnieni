@@ -2,6 +2,7 @@ import React from "react";
 import { render, waitForElement, fireEvent } from "@testing-library/react";
 import MyOfferPerson from "./MyOfferPerson";
 import { MemoryRouter } from "react-router-dom";
+import proxy from "config/api";
 
 describe("MyOffersPerson", () => {
     let testPerson = {
@@ -57,6 +58,6 @@ describe("MyOffersPerson", () => {
         );
         await waitForElement(() => getByText("Pokaż CV"));
         fireEvent.click(getByText("Pokaż CV"));
-        expect(open).toHaveBeenCalledWith("http://usamo-back.herokuapp.com/media/blank_test_cv", "_blank");
+        expect(open).toHaveBeenCalledWith(proxy.cv + "media/blank_test_cv", "_blank");
     });
 });

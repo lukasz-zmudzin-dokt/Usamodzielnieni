@@ -1,5 +1,6 @@
 
 import { sendData, getFeedback } from './other.js';
+import proxy from "config/api";
 
 describe('ActionWithDate', () => {
     let failFetch;
@@ -42,7 +43,7 @@ describe('ActionWithDate', () => {
         global.open = jest.fn();
         await sendData(cv, null, token);
         await expect(global.open).toHaveBeenCalledWith(
-            "https://usamo-back.herokuapp.com/CV_Jan_Kowalski",
+            proxy.plain + "CV_Jan_Kowalski",
             "_blank"
         );
     });
@@ -51,32 +52,32 @@ describe('ActionWithDate', () => {
         global.open = jest.fn();
         await sendData(cv, file, token);
         await expect(global.open).toHaveBeenCalledWith(
-            "https://usamo-back.herokuapp.com/CV_Jan_Kowalski",
+            proxy.plain + "CV_Jan_Kowalski",
             "_blank"
         );
     });
 
     it('should throw an error when delete api return wrong status', async () => {
         failFetch = 'DELETE';
-        failFetchUrl = 'https://usamo-back.herokuapp.com/cv/generator/'
+        failFetchUrl = proxy.cv + 'generator/'
         await expect(sendData(cv, file, token)).rejects.toThrow('api error');
     })
 
     it('should throw an error when get api return wrong status', async () => {
         failFetch = 'GET';
-        failFetchUrl = 'https://usamo-back.herokuapp.com/cv/generator/1/'
+        failFetchUrl = proxy.cv + 'generator/1/'
         await expect(sendData(cv, file, token)).rejects.toThrow('api error');
     })
 
     it('should throw an error when post cv api return wrong status', async () => {
         failFetch = 'POST';
-        failFetchUrl = 'https://usamo-back.herokuapp.com/cv/generator/'
+        failFetchUrl = proxy.cv + 'generator/'
         await expect(sendData(cv, file, token)).rejects.toThrow('api error');
     })
 
     it('should throw an error when post photo api return wrong status', async () => {
         failFetch = 'POST';
-        failFetchUrl = 'https://usamo-back.herokuapp.com/cv/picture/1/'
+        failFetchUrl = proxy.cv + 'picture/1/'
         await expect(sendData(cv, file, token)).rejects.toThrow('api error');
     })
 });

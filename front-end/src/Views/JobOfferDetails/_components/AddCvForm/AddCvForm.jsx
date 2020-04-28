@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Col, Button, Alert, Form } from 'react-bootstrap';
 import { IndexLinkContainer } from 'react-router-bootstrap';
+import proxy from "config/api";
 
 const getCvList = async (token) => {
-  let url = "https://usamo-back.herokuapp.com/cv/user/list/";
+  let url = proxy.cv + "user/list/";
   const headers = {
     Authorization: "Token " + token,
     "Content-Type": "application/json"
@@ -24,7 +25,7 @@ const mapCvList = (res) => res.map(cv => ({
 }));
 
 const sendCv = async (offerId, cvId, token) => {
-  let url = `https://usamo-back.herokuapp.com/job/offer-interested/${offerId}/${cvId}/`;
+  let url = `${proxy.job}offer-interested/${offerId}/${cvId}/`;
   const headers = {
     Authorization: "Token " + token,
     "Content-Type": "application/json"

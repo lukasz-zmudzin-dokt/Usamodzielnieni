@@ -1,7 +1,9 @@
-const domain = "https://usamo-back.herokuapp.com/";
+import proxy from "config/api";
+
+const domain = proxy.cv;
 const url = {
-  generate: id => `${domain}cv/generator/${ id ? id + '/' : '' }`,
-  picture: id => `${domain}cv/picture/${id}/`
+  generate: id => `${domain}generator/${ id ? id + '/' : '' }`,
+  picture: id => `${domain}picture/${id}/`
 }
 const getHeaders = (token) => ({ Authorization: "Token " + token, "Content-Type": "application/json" });
 
@@ -60,7 +62,7 @@ const sendData = async (object, photo, token) => {
 const getFeedback = async (token, id) => {
   try {
     //const id = await getCvId(token, 0);
-    const url = `${domain}cv/feedback/${id}`;
+    const url = `${domain}feedback/${id}`;
     const headers = getHeaders(token);
     const response = await fetch(url, { method: "GET", headers });
 

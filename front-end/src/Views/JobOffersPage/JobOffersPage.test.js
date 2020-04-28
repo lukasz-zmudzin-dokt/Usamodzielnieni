@@ -7,6 +7,7 @@ import {
   wait,
 } from "@testing-library/react";
 import JobOffersPage from "Views/JobOffersPage";
+import proxy from "config/api";
 
 describe("JobOffersPage", () => {
   let failFetch = false;
@@ -23,8 +24,8 @@ describe("JobOffersPage", () => {
             case "GET":
               if (
                 input ===
-                  "https://usamo-back.herokuapp.com/job/enums/categories" ||
-                input === "https://usamo-back.herokuapp.com/job/enums/types"
+                  proxy.job + "enums/categories" ||
+                input === proxy.job + "enums/types"
               ) {
                 resolve({
                   status: 200,
@@ -136,7 +137,7 @@ describe("JobOffersPage", () => {
       await waitForElement(() => getAllByText("Pokaż szczegóły"));
 
       expect(fetch).toHaveBeenCalledWith(
-        "https://usamo-back.herokuapp.com/job/job-offers/?page=1&page_size=10&voivodeship=lubelskie",
+        proxy.job + "job-offers/?page=1&page_size=10&voivodeship=lubelskie",
         {
           headers: {
             Authorization: "Token undefined",
@@ -179,7 +180,7 @@ describe("JobOffersPage", () => {
       await waitForElement(() => getAllByText("Pokaż szczegóły"));
 
       expect(fetch).toHaveBeenCalledWith(
-        "https://usamo-back.herokuapp.com/job/job-offers/?page=1&page_size=10&min_expiration_date=2020-05-05",
+        proxy.job + "job-offers/?page=1&page_size=10&min_expiration_date=2020-05-05",
         {
           headers: {
             Authorization: "Token undefined",
@@ -241,7 +242,7 @@ describe("JobOffersPage", () => {
       });
 
       expect(fetch).toHaveBeenCalledWith(
-        "https://usamo-back.herokuapp.com/job/job-offers/?page=1&page_size=21&voivodeship=lubelskie&min_expiration_date=2020-12-31&categories=abc&types=xd",
+        proxy.job + "job-offers/?page=1&page_size=21&voivodeship=lubelskie&min_expiration_date=2020-12-31&categories=abc&types=xd",
         {
           headers: {
             Authorization: "Token undefined",

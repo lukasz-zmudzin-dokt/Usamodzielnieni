@@ -1,6 +1,8 @@
+import proxy from "config/api";
+
 export const getUserData = async (token) => {
 
-    const url = "https://usamo-back.herokuapp.com/account/data";
+    const url = proxy.account + "data";
     const response = await fetch(url, {
         method: 'GET',
         headers: {

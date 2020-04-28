@@ -1,4 +1,5 @@
 import {staffTypes} from "constants/staffTypes";
+import proxy from "config/api";
 
 const adjustObject = (account_type, home, company)  => {
     let source;
@@ -47,11 +48,11 @@ export const sendData = async (token, source) => {
     const staff_types = Object.values(staffTypes);
     let wants_data = true;
     if (account_type === "Podopiecznym") {
-        url = "https://usamo-back.herokuapp.com/account/register/";
+        url = proxy.account + "register/";
     } else if (account_type === "Pracodawcą") {
-        url = "https://usamo-back.herokuapp.com/account/register/employer/";
+        url = proxy.account + "register/employer/";
     } else if (checkIfArrayIncludes(account_type, staff_types)) {
-        url = "https://usamo-back.herokuapp.com/account/register/staff/";
+        url = proxy.account + "register/staff/";
     } else {
         throw new Error();
     }
@@ -76,7 +77,7 @@ export const sendData = async (token, source) => {
         const data = await res.json().then(data => mapData(data));
         let response = {data: {}};
         if (wants_data) {
-            const dataRes = await fetch("https://usamo-back.herokuapp.com/account/data", {
+            const dataRes = await fetch(proxy.account + "data", {
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: "Token " + data.token
