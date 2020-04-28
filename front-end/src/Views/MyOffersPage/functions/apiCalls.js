@@ -1,5 +1,5 @@
 export const getMyOffers = async (token) => {
-    let url = "http://usamo-back.herokuapp.com/job/employer/job-offers/";
+    let url = "https://usamo-back.herokuapp.com/job/employer/job-offers/";
     const headers = {
         "Authorization": "token " + token,
         "Content-Type": "application/json"
@@ -14,7 +14,7 @@ export const getMyOffers = async (token) => {
 };
 
 export const getOfferPeople = async (token, offerId) => {
-    let url = "http://usamo-back.herokuapp.com/job/employer/application_list/" + offerId + "/";
+    let url = "https://usamo-back.herokuapp.com/job/employer/application_list/" + offerId + "/";
     const headers = {
         "Authorization": "token " + token,
         "Content-Type": "application/json"
