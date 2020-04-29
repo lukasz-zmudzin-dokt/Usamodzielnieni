@@ -11,31 +11,9 @@ exports[`UserDetails should match snapshot 1`] = `
       <div
         class="card-header"
       >
-        testowyuser123
+        standard0
          (
         Standard
-        )
-      </div>
-      <div
-        class="collapse"
-      >
-        <div
-          class="fade alert alert-info show"
-          role="alert"
-        >
-          Ładuję...
-        </div>
-      </div>
-    </div>
-    <div
-      class="border-left-0 border-right-0 border-bottom-0 card"
-    >
-      <div
-        class="card-header"
-      >
-        testowyuser1232
-         (
-        Employer
         )
       </div>
       <div
@@ -148,18 +126,6 @@ exports[`UserDetails should match snapshot 1`] = `
                        
                     </p>
                   </div>
-                </div>
-                <div
-                  class="detailsItem col"
-                >
-                  <div
-                    class="detailsItem__label"
-                  >
-                    NIP
-                  </div>
-                  <div
-                    class="detailsItem__value"
-                  />
                 </div>
               </div>
             </div>
