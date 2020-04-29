@@ -43,7 +43,7 @@ describe('ActionWithDate', () => {
         global.open = jest.fn();
         await sendData(cv, null, token);
         await expect(global.open).toHaveBeenCalledWith(
-            proxy.plain + "CV_Jan_Kowalski",
+            proxy.plain + "/CV_Jan_Kowalski",
             "_blank"
         );
     });
@@ -52,7 +52,7 @@ describe('ActionWithDate', () => {
         global.open = jest.fn();
         await sendData(cv, file, token);
         await expect(global.open).toHaveBeenCalledWith(
-            proxy.plain + "CV_Jan_Kowalski",
+            proxy.plain + "/CV_Jan_Kowalski",
             "_blank"
         );
     });
