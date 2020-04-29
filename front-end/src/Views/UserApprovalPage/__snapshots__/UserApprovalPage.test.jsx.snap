@@ -1,0 +1,335 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserApproval should match snapshot 1`] = `
+<div>
+  <div
+    class="container"
+  >
+    <div
+      class="card"
+    >
+      <h2
+        class="card-header"
+      >
+        Konta do zatwierdzenia
+      </h2>
+      <div
+        class="p-0 card-body"
+      >
+        <div
+          class="accordion"
+        >
+          <div
+            class="border-left-0 border-right-0 border-bottom-0 card"
+          >
+            <div
+              class="card-header"
+            >
+              testowyuser123
+               (
+              Standard
+              )
+            </div>
+            <div
+              class="collapse"
+            >
+              <div
+                class="card-body"
+              >
+                <div
+                  class="list-group list-group-flush"
+                >
+                  <div
+                    class="list-group-item"
+                  >
+                    <div
+                      class="row"
+                    >
+                      <div
+                        class="detailsItem col-md-4"
+                      >
+                        <div
+                          class="detailsItem__label"
+                        >
+                          Nazwa użytkownika
+                        </div>
+                        <div
+                          class="detailsItem__value"
+                        />
+                      </div>
+                      <div
+                        class="detailsItem col"
+                      >
+                        <div
+                          class="detailsItem__label"
+                        >
+                          Imię
+                        </div>
+                        <div
+                          class="detailsItem__value"
+                        />
+                      </div>
+                      <div
+                        class="detailsItem col"
+                      >
+                        <div
+                          class="detailsItem__label"
+                        >
+                          Nazwisko
+                        </div>
+                        <div
+                          class="detailsItem__value"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="list-group-item"
+                  >
+                    <div
+                      class="row"
+                    >
+                      <div
+                        class="detailsItem col"
+                      >
+                        <div
+                          class="detailsItem__label"
+                        >
+                          Email
+                        </div>
+                        <div
+                          class="detailsItem__value"
+                        />
+                      </div>
+                      <div
+                        class="detailsItem col"
+                      >
+                        <div
+                          class="detailsItem__label"
+                        >
+                          Telefon
+                        </div>
+                        <div
+                          class="detailsItem__value"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="list-group-item"
+                  >
+                    <div
+                      class="row"
+                    >
+                      <div
+                        class="detailsItem col"
+                      >
+                        <div
+                          class="detailsItem__label"
+                        >
+                          Adres
+                        </div>
+                        <div
+                          class="detailsItem__value"
+                        >
+                          <p />
+                          <p>
+                             
+                          </p>
+                          <p>
+                             
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="list-group-item"
+                  >
+                    <div
+                      class="justify-content-center row"
+                    >
+                      <button
+                        class="btn btn-success"
+                        type="button"
+                      >
+                        Akceptuj
+                      </button>
+                      <button
+                        class="ml-3 btn btn-danger"
+                        type="button"
+                      >
+                        Odrzuć
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="border-left-0 border-right-0 border-bottom-0 card"
+          >
+            <div
+              class="card-header"
+            >
+              testowyuser1232
+               (
+              Employer
+              )
+            </div>
+            <div
+              class="collapse"
+            >
+              <div
+                class="card-body"
+              >
+                <div
+                  class="list-group list-group-flush"
+                >
+                  <div
+                    class="list-group-item"
+                  >
+                    <div
+                      class="row"
+                    >
+                      <div
+                        class="detailsItem col-md-4"
+                      >
+                        <div
+                          class="detailsItem__label"
+                        >
+                          Nazwa użytkownika
+                        </div>
+                        <div
+                          class="detailsItem__value"
+                        />
+                      </div>
+                      <div
+                        class="detailsItem col"
+                      >
+                        <div
+                          class="detailsItem__label"
+                        >
+                          Imię
+                        </div>
+                        <div
+                          class="detailsItem__value"
+                        />
+                      </div>
+                      <div
+                        class="detailsItem col"
+                      >
+                        <div
+                          class="detailsItem__label"
+                        >
+                          Nazwisko
+                        </div>
+                        <div
+                          class="detailsItem__value"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="list-group-item"
+                  >
+                    <div
+                      class="row"
+                    >
+                      <div
+                        class="detailsItem col"
+                      >
+                        <div
+                          class="detailsItem__label"
+                        >
+                          Email
+                        </div>
+                        <div
+                          class="detailsItem__value"
+                        />
+                      </div>
+                      <div
+                        class="detailsItem col"
+                      >
+                        <div
+                          class="detailsItem__label"
+                        >
+                          Telefon
+                        </div>
+                        <div
+                          class="detailsItem__value"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="list-group-item"
+                  >
+                    <div
+                      class="row"
+                    >
+                      <div
+                        class="detailsItem col"
+                      >
+                        <div
+                          class="detailsItem__label"
+                        >
+                          Adres
+                        </div>
+                        <div
+                          class="detailsItem__value"
+                        >
+                          <p />
+                          <p>
+                             
+                          </p>
+                          <p>
+                             
+                          </p>
+                        </div>
+                      </div>
+                      <div
+                        class="detailsItem col"
+                      >
+                        <div
+                          class="detailsItem__label"
+                        >
+                          NIP
+                        </div>
+                        <div
+                          class="detailsItem__value"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="list-group-item"
+                  >
+                    <div
+                      class="justify-content-center row"
+                    >
+                      <button
+                        class="btn btn-success"
+                        type="button"
+                      >
+                        Akceptuj
+                      </button>
+                      <button
+                        class="ml-3 btn btn-danger"
+                        type="button"
+                      >
+                        Odrzuć
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
