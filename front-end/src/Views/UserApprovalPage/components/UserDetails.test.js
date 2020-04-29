@@ -82,7 +82,7 @@ describe("UserDetails", () => {
         failFetch = false;
     });
 
-    it("should match snapshot", async () => {
+    it("should match snapshot - no one", async () => {
         fetchUserType = "Standard";
         const { container, getByText } = render (
             <MemoryRouter>
@@ -90,6 +90,28 @@ describe("UserDetails", () => {
             </MemoryRouter>
         );
         await waitForElement(() => getByText("standard0 (Standard)"));
+        expect(container).toMatchSnapshot();
+    });
+
+    it("should match snapshot - standard", async () => {
+        fetchUserType = "Standard";
+        const { container, getByText } = render (
+            <MemoryRouter>
+                <UserDetails users={[user.standard]} activeUser={user.standard.id} />
+            </MemoryRouter>
+        );
+        await waitForElement(() => getByText("Jan"));
+        expect(container).toMatchSnapshot();
+    });
+
+    it("should match snapshot - employer", async () => {
+        fetchUserType = "Employer";
+        const { container, getByText } = render (
+            <MemoryRouter>
+                <UserDetails users={[user.employer]} activeUser={user.employer.id} />
+            </MemoryRouter>
+        );
+        await waitForElement(() => getByText("string@aaa.aaa"));
         expect(container).toMatchSnapshot();
     });
 
