@@ -8,7 +8,6 @@ const App = () => (
   <UserProvider>
     <BrowserRouter>
       <HeaderTemplate />
-        {console.log(process.env.REACT_APP_BACKEND_PATH)}
       <div className="center-container">
         <Router />
       </div>

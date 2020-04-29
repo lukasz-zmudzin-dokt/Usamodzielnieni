@@ -62,17 +62,19 @@ export const sendData = async (token, source) => {
         ...source.accountData,
         ...adjustObject(account_type, source.homeData, source.companyData)
     };
-
+    const header = token !== undefined ? {
+        "Authorization": "Token " + token,
+        "Content-Type": "application/json",
+        Origin: null
+    } : {
+        "Content-Type": "application/json",
+        Origin: null
+    }
     const res = await fetch(url, {
         method: "POST",
         body: JSON.stringify(object),
-        headers: {
-            "Authorization": "Token " + token,
-            "Content-Type": "application/json",
-            Origin: null
-        }
+        headers: header
     });
-
     if (res.status === 201) {
         const data = await res.json().then(data => mapData(data));
         let response = {data: {}};
