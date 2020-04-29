@@ -1,5 +1,5 @@
-import React from "react";
-import { render, waitForElement } from "@testing-library/react";
+import React, {useState} from "react";
+import {fireEvent, render, waitForElement} from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import UserDetails from "./UserDetails";
 
@@ -75,6 +75,7 @@ describe("UserDetails", () => {
                 }
             });
         });
+        global.check = jest.fn();
     });
 
     beforeEach(() => {
@@ -136,5 +137,17 @@ describe("UserDetails", () => {
         await waitForElement(() => getByText("69-123 wololoo"));
         expect(getByText("69-123 wololoo")).toBeInTheDocument();
     });
+
+    it('should click on employer', async () => {
+        fetchUserType = "Employer";
+        const { getByText } = render (
+            <MemoryRouter>
+                <UserDetails users={[user.employer]} activeUser={""} setActiveUser={e => {check()}} />
+            </MemoryRouter>
+        );
+        await waitForElement(() => getByText("string (Employer)"));
+        fireEvent.click(getByText("string (Employer)"));
+        expect(check).toHaveBeenCalledTimes(1);
+    })
 
 });

@@ -1,5 +1,7 @@
+import proxy from "config/api";
+
 export const getUsersToApprove = async (token) => {
-    let url = "https://usamo-back.herokuapp.com/account/admin/user_list/all/?status=2";
+    let url = proxy.account + "admin/user_list/all/?status=2";
     const headers = {
         "Authorization": "token " + token,
         "Content-Type": "application/json"
@@ -14,7 +16,7 @@ export const getUsersToApprove = async (token) => {
 };
 
 export const getUserDetails = async (token, userId) => {
-    let url = "https://usamo-back.herokuapp.com/account/admin/user_details/" + userId + "/";
+    let url = proxy.account + "admin/user_details/" + userId + "/";
     const headers = {
         "Authorization": "token " + token,
         "Content-Type": "application/json"
@@ -29,7 +31,7 @@ export const getUserDetails = async (token, userId) => {
 };
 
 export const setUserApproved = async (token, userId) => {
-    let url = "https://usamo-back.herokuapp.com/account/admin/user_admission/" + userId + "/";
+    let url = proxy.account + "admin/user_admission/" + userId + "/";
     const headers = {
         "Authorization": "token " + token,
         "Content-Type": "application/json"
@@ -44,7 +46,7 @@ export const setUserApproved = async (token, userId) => {
 };
 
 export const setUserRejected = async (token, userId) => {
-    let url = "https://usamo-back.herokuapp.com/account/admin/user_rejection/" + userId + "/";
+    let url = proxy.account + "admin/user_rejection/" + userId + "/";
     const headers = {
         "Authorization": "token " + token,
         "Content-Type": "application/json"
