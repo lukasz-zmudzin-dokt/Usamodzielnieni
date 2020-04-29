@@ -3,10 +3,11 @@ import { Nav, Dropdown, Col } from "react-bootstrap";
 import NotificationItemContainer from './NotificationItemContainer';
 import NotificationItem from './NotificationItem';
 import NotificationToggle from './NotificationToggle';
+import proxy from "config/api";
 
 
 const getNotifications = async (token) => {
-    let url = "https://usamo-back.herokuapp.com/notifications/.../"; // TODO
+    let url = proxy.notifications + ".../"; // TODO
     const headers = {
         Authorization: "Token " + token,
         "Content-Type": "application/json"
@@ -38,7 +39,7 @@ const getPath = (type) => {
 }
 
 const deleteNotification = async (id, token) => {
-    let url = "https://usamo-back.herokuapp.com/notifications/.../"; // TODO
+    let url = proxy.notifications + ".../"; // TODO
     const headers = {
         Authorization: "Token " + token,
         "Content-Type": "application/json"
