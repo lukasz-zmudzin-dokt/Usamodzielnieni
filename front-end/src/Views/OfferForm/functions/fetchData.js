@@ -1,5 +1,7 @@
+import proxy from "config/api";
+
 const sendData = async (offer, token, id) => {
-  const url = `https://usamo-back.herokuapp.com/job/job-offer/${
+  const url = `${proxy.job}job-offer/${
     id ? `${id}/` : ""
   }`;
   const res = await fetch(url, {
@@ -18,7 +20,7 @@ const sendData = async (offer, token, id) => {
 };
 
 const getCategories = async (token) => {
-  const urlCategories = "https://usamo-back.herokuapp.com/job/enums/categories";
+  const urlCategories = proxy.job + "enums/categories";
   const res = await fetch(urlCategories, {
     method: "GET",
     headers: {
@@ -34,7 +36,7 @@ const getCategories = async (token) => {
 };
 
 const getTypes = async (token) => {
-  const urlTypes = "https://usamo-back.herokuapp.com/job/enums/types";
+  const urlTypes = proxy.job + "enums/types";
 
   const res = await fetch(urlTypes, {
     method: "GET",
@@ -59,7 +61,7 @@ const getSelects = async (token) => {
 };
 
 const getOffer = async (token, id) => {
-  const url = `https://usamo-back.herokuapp.com/job/job-offer/${id}/`;
+  const url = `${proxy.job}job-offer/${id}/`;
 
   const res = await fetch(url, {
     method: "GET",

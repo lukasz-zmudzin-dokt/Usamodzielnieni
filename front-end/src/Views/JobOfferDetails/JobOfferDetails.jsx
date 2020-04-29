@@ -6,9 +6,10 @@ import { DetailsItem } from 'components';
 import { AddCvForm } from "./_components";
 import { deleteOffer } from "./functions/deleteOffer";
 import {staffTypes} from "constants/staffTypes";
+import proxy from "config/api";
 
 const getOfferDetails = async (id, token) => {
-  let url = `https://usamo-back.herokuapp.com/job/job-offer/${id}`;
+  let url = `${proxy.job}job-offer/${id}`;
   const headers = {
     Authorization: "Token " + token,
     "Content-Type": "application/json"

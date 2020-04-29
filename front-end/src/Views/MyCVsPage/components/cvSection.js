@@ -3,12 +3,13 @@ import CVStatus from "./CVStatus";
 import {IndexLinkContainer} from "react-router-bootstrap";
 import React, {useState} from "react";
 import {getCVUrl} from "../functions/getCVUrl";
+import proxy from "config/api";
 
 const showCV = async (cvId, handleShowing, token) => {
     let r;
     try {
         r = await getCVUrl(token, cvId);
-        let url = "https://usamo-back.herokuapp.com" + r;
+        let url = proxy.plain + r;
         window.open(url, '_blank');
     } catch(r) {
         handleShowing(true);

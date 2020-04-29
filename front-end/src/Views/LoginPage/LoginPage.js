@@ -4,6 +4,7 @@ import { Link, Redirect } from "react-router-dom";
 import LoginForm from "./components/loginForm";
 import { UserContext } from "context";
 import { sendData } from "./functions/sendData";
+import proxy from "config/api";
 
 class LoginPage extends React.Component {
   state = {
@@ -55,7 +56,7 @@ class LoginPage extends React.Component {
         const { status } = response;
         if (status === 201) {
           const { token, type } = response; //do poprawy
-          fetch("https://usamo-back.herokuapp.com/account/data/", {
+          fetch(proxy.account + "data/", {
             headers: {
               "Content-Type": "application/json",
               Authorization: "Token " + token
