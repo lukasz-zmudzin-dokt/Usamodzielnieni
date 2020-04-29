@@ -20,21 +20,29 @@ const getCvList = async (token) => {
 }
 
 const mapCvList = (res) => res.map(cv => ({
+  name: cv.name,
   id: cv.cv_id,
   status: cv.is_verified ? 'VERIFIED' : 'NOT_VERIFIED'
 }));
 
 const sendCv = async (offerId, cvId, token) => {
-  let url = `${proxy.job}offer-interested/${offerId}/${cvId}/`;
+  let url = `${proxy.job}job-offers/application/`;
   const headers = {
     Authorization: "Token " + token,
     "Content-Type": "application/json"
   };
 
-  const response = await fetch(url, { method: "POST", headers });
+  const body = {
+    cv: cvId,
+    job_offer: offerId
+  };
+  const response = await fetch(url, { method: "POST",
+    headers,
+    body: JSON.stringify(body)
+  });
 
-  if (response.status === 200 || response.status === 400) {
-    return response.status === 200;
+  if (response.status === 201 || response.status === 403) {
+    return response.status === 201;
   } else {
     throw response.status;
   }
@@ -44,7 +52,7 @@ const AddCvForm = ({ id, user, ...props }) => {
   const [cvList, setCvList] = useState([]);
   const [isCvListLoading, setIsCvListLoading] = useState(false);
   const [selectedCv, setSelectedCv] = useState(null);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const loadCvList = async (token) => {
@@ -55,7 +63,7 @@ const AddCvForm = ({ id, user, ...props }) => {
       } catch (e) {
         console.log(e);
         loadedCvList = [];
-        setError(true);
+        setError("load");
       }
       setCvList(loadedCvList);
       if (loadedCvList.length > 0) {
@@ -78,7 +86,7 @@ const AddCvForm = ({ id, user, ...props }) => {
       response = await sendCv(id, selectedCv, user.token);
     } catch (e) {
       console.log(e);
-      setError(true);
+      setError("application");
     }
     const newStatus = response ? 'ADDED' : 'ALREADY_ADDED';
     setCvList(cvList.map(cv => {
@@ -91,7 +99,8 @@ const AddCvForm = ({ id, user, ...props }) => {
 
   const getVerifiedCvs = (cvs) => cvs.filter(cv => cv.status === 'VERIFIED')
 
-  const msg = error ? { variant: "danger", value: "Wystąpił błąd podczas ładowania listy zweryfikowanych CV." } :
+  const msg = error === "load" ? { variant: "danger", value: "Wystąpił błąd podczas ładowania listy zweryfikowanych CV." } :
+              error === "application" ? { variant: "danger", value: "Wystąpił błąd podczas składania aplikacji na ofertę." } :
               isCvListLoading ? { variant: "info", value: "Ładowanie listy zweryfikowanych CV..." } :
               cvList.find(cv => cv.status === 'ADDED') ? { variant: "success", value: "Pomyślnie zaaplikowano do ogłoszenia." } :
               cvList.find(cv => cv.status === 'ALREADY_ADDED') ? { variant: "danger", value: "Już zaaplikowano do danego ogłoszenia." } :
@@ -112,7 +121,7 @@ const AddCvForm = ({ id, user, ...props }) => {
               value={selectedCv}
               onChange={onChange}
               required>
-              {getVerifiedCvs(cvList).map((cv, i) => <option key={cv.id} value={cv.id}>Wersja {i+1}</option>)}
+              {getVerifiedCvs(cvList).map((cv) => <option key={cv.id} value={cv.id}>{cv.name}</option>)}
             </Form.Control>
           </Form.Group>
           <Row className="mb-0 justify-content-center" >

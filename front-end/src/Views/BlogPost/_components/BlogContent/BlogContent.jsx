@@ -59,7 +59,7 @@ const BlogContent = ({ post , user }) => {
     return (
         <Card>
             {post.header !== null && post.header !== "" ?
-                <Card.Img variant="top" src={`${proxy.blog}${post.header}`}/> : <Card.Header/>
+                <Card.Img variant="top" src={`${proxy.plain}${post.header}`}/> : <Card.Header/>
             }
             <Card.Body className="post_content mx-4">
                 {
