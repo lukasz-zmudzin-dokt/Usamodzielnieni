@@ -6,21 +6,21 @@ exports[`UserApproval should match snapshot 1`] = `
     class="container"
   >
     <div
-      class="accordion"
+      class="card"
     >
-      <div
-        class="card"
+      <h2
+        class="card-header"
       >
-        <h2
-          class="card-header"
-        >
-          Konta do zatwierdzenia
-        </h2>
+        Konta do zatwierdzenia
+      </h2>
+      <div
+        class="p-0 card-body"
+      >
         <div
-          class="p-0 card-body"
+          class="accordion"
         >
           <div
-            class="border-left-0 border-right-0 border-bottom-0  card"
+            class="border-left-0 border-right-0 border-bottom-0 card"
           >
             <div
               class="card-header"
@@ -168,7 +168,7 @@ exports[`UserApproval should match snapshot 1`] = `
             </div>
           </div>
           <div
-            class="border-left-0 border-right-0 border-bottom-0  card"
+            class="border-left-0 border-right-0 border-bottom-0 card"
           >
             <div
               class="card-header"

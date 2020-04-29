@@ -107,7 +107,7 @@ describe("UserApproval", () => {
 
        const { container, getByText } = render (
            <MemoryRouter>
-               <UserToApprove user={user.standard} />
+               <UserToApprove user={user.standard} activeUser={user.standard.id} />
            </MemoryRouter>
        );
        await waitForElement(() => getByText("11-123 Warszawa"));
@@ -120,7 +120,7 @@ describe("UserApproval", () => {
 
         const { container, getByText } = render (
             <MemoryRouter>
-                <UserToApprove user={user.employer} />
+                <UserToApprove user={user.employer} activeUser={user.employer.id} />
             </MemoryRouter>
         );
         await waitForElement(() => getByText("69-123 Ten test i tak nie przejdzie"));
@@ -131,7 +131,7 @@ describe("UserApproval", () => {
         failFetch = true;
         const { getByText } = render (
             <MemoryRouter>
-                <UserToApprove user={user.standard} />
+                <UserToApprove user={user.standard} activeUser={user.standard.id} />
             </MemoryRouter>
         );
 
@@ -145,7 +145,7 @@ describe("UserApproval", () => {
         postType = "Approve";
         const { getByText } = render (
             <MemoryRouter>
-                <UserToApprove user={user.standard} />
+                <UserToApprove user={user.standard} activeUser={user.standard.id} />
             </MemoryRouter>
         );
         await expect(fetch).toHaveBeenCalledWith(
@@ -180,7 +180,7 @@ describe("UserApproval", () => {
         postType = "Reject";
         const { getByText } = render (
             <MemoryRouter>
-                <UserToApprove user={user.standard} />
+                <UserToApprove user={user.standard} activeUser={user.standard.id} />
             </MemoryRouter>
         );
         await expect(fetch).toHaveBeenCalledWith(

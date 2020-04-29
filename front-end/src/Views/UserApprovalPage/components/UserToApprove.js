@@ -4,7 +4,7 @@ import {UserContext} from "context";
 import {getUserDetails, setUserApproved, setUserRejected} from "Views/UserApprovalPage/functions/apiCalls";
 import {DetailsItem} from "components";
 
-const UserToApprove = ({ user }) => {
+const UserToApprove = ({ user, activeUser }) => {
     const context = useContext(UserContext);
     const [userDetails, setUserDetails] = useState([]);
     const [userDetailsFacilityAddress, setUserDetailsFacilityAddress] = useState([]);
@@ -30,8 +30,10 @@ const UserToApprove = ({ user }) => {
                 setLoading(false);
 
         };
-        loadUserDetails(context.token, user.id);
-    }, [context.token, user.id, user.type]);
+        if(user.id === activeUser) {
+            loadUserDetails(context.token, user.id);
+        }
+    }, [context.token, user.id, user.type, activeUser]);
 
     const approveUser = async (e, token, userId) => {
         e.preventDefault();

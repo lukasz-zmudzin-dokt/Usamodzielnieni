@@ -10,6 +10,7 @@ const UserApprovalPage = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
     const [users, setUsers] = useState([]);
+    const[activeUser, setActiveUser] = useState("");
 
     useEffect(() => {
         const loadUsers = async(token, setUsers) => {
@@ -42,7 +43,7 @@ const UserApprovalPage = () => {
                     </Card.Header>
                     <Card.Body className="p-0">
                         { message ? message : null }
-                        <UserDetails users={users} />
+                        <UserDetails users={users} activeUser={activeUser} setActiveUser={setActiveUser} />
                     </Card.Body>
                 </Card>
 

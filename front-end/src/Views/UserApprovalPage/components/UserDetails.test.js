@@ -23,7 +23,7 @@ describe("UserDetails", () => {
     it("should match snapshot", async () => {
         const { container, getByText } = render (
             <MemoryRouter>
-                <UserDetails users={testUsers} />
+                <UserDetails users={testUsers} activeUser={testUsers[0].id} />
             </MemoryRouter>
         );
         await waitForElement(() => getByText("testowyuser123 (Standard)"));
