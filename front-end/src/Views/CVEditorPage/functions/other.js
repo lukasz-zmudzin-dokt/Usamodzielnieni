@@ -68,6 +68,8 @@ const getFeedback = async (token, id) => {
 
     if (response.status === 200) {
       return await response.json();
+    } else if (response.status === 404) {
+      return {};
     } else {
       throw response.status;
     }
