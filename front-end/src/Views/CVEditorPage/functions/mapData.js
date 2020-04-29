@@ -60,8 +60,9 @@ export const mapFeedback = (data) => ({
 });
 
 export const objectifyPhoto = (data) => {
+    console.log(data);
     const blob = b64toBlob(data.file);
-    const file =  new File([blob], "cv_foto", {
+    const file =  new File([blob], "cv_foto.jpg", {
         type: "image/jpeg"
     });
 

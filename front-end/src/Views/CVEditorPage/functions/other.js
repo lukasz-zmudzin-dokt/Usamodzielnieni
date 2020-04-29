@@ -35,6 +35,7 @@ const addPhoto = async (token, photo, cvId) => {
     url.picture(cvId), 
     { method: "POST", body: formData, headers: { Authorization: "Token " + token } }
   )
+  console.log(await photoRes.json())
 
   if (photoRes.status === 201) {
     return;
@@ -47,10 +48,10 @@ const sendData = async (object, photo, token, method, id) => {
   let file;
   try {
     let cvRes = await generateCv(token, object, method, id);
-    if (photo) {
-      await addPhoto(token, photo, cvRes.cv_id);
-    }
     const cvId = id !== undefined ? id : cvRes.cv_id;
+    if (photo) {
+      await addPhoto(token, photo, cvId);
+    }
     file = await fetchDocument(token, cvId);
   } catch (e) {
     throw new Error('api error');
