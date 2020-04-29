@@ -55,7 +55,7 @@ const sendData = async (object, photo, token) => {
   } catch (e) {
     throw new Error('api error');
   }
-  const cvUrl = `${domain}${file.substring(1)}`;
+  const cvUrl = `${proxy.plain}${file.substring(1)}`;
   window.open(cvUrl, "_blank");
 };
 

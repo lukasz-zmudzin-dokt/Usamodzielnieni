@@ -58,6 +58,6 @@ describe("MyOffersPerson", () => {
         );
         await waitForElement(() => getByText("Pokaż CV"));
         fireEvent.click(getByText("Pokaż CV"));
-        expect(open).toHaveBeenCalledWith(proxy.cv + "media/blank_test_cv", "_blank");
+        expect(open).toHaveBeenCalledWith(proxy.plain + "/media/blank_test_cv", "_blank");
     });
 });
