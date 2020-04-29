@@ -1,9 +1,10 @@
 import React, { useState, useContext } from 'react'
 import { Form, Button, Alert } from "react-bootstrap";
 import { UserContext } from "context";
+import proxy from "config/api";
 
 const addComment = async (token, content, blogId) => {
-    let url = `https://usamo-back.herokuapp.com/blog/${blogId}/comment/`;
+    let url = `${proxy.blog}${blogId}/comment/`;
     const headers = {
         Authorization: "Token " + token,
         "Content-Type": "application/json"

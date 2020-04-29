@@ -31,7 +31,7 @@ const renderAdmin = (selectType, cutType, current) => (
                 type="checkbox"
                 label={item.placeholder}
                 checked={current.includes(item.name)}
-                onClick={current.includes(item.name) ? cutType : selectType}
+                onChange={current.includes(item.name) ? cutType : selectType}
                 key={item.name}
                 name={item.name}
             />

@@ -1,12 +1,13 @@
 import React from "react";
 import {Button, ListGroup, Row} from "react-bootstrap";
 import {DetailsItem} from "components";
+import proxy from "config/api";
 
 const MyOfferPerson = ({ person }) => {
 
     const showCV = async (e, cvUrl) => {
         e.preventDefault();
-        let url = "http://usamo-back.herokuapp.com" + cvUrl;
+        let url = proxy.plain + cvUrl;
         window.open(url, '_blank');
     };
 

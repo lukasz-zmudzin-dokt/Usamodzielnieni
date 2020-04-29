@@ -10,6 +10,7 @@ import { MemoryRouter } from "react-router-dom";
 import OfferForm from "Views/OfferForm";
 import { createMemoryHistory } from "history";
 import { UserContext } from "context";
+import proxy from "config/api";
 
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
@@ -77,17 +78,17 @@ describe("OfferForm", () => {
             break;
           case "GET":
             if (
-              "https://usamo-back.herokuapp.com/job/job-offer/abc/" === input &&
+              proxy.job + "job-offer/abc/" === input &&
               failOffer
             ) {
               resolve({ status: 500 });
             } else if (
-              "https://usamo-back.herokuapp.com/job/job-offer/abc/" === input
+              proxy.job + "job-offer/abc/" === input
             ) {
               resolve({ status: 200, json: () => Promise.resolve(apiOffer) });
             } else if (
               failTypes &&
-              input === "https://usamo-back.herokuapp.com/job/enums/types"
+              input === proxy.job + "enums/types"
             ) {
               resolve({ status: 500 });
             } else {
@@ -330,7 +331,7 @@ describe("OfferForm", () => {
 
     await wait(() =>
       expect(fetch).toHaveBeenCalledWith(
-        "https://usamo-back.herokuapp.com/job/job-offer/abc/",
+        proxy.job + "job-offer/abc/",
         {
           headers: {
             Authorization: "Token undefined",
@@ -367,7 +368,7 @@ describe("OfferForm", () => {
 
     await wait(() =>
       expect(fetch).toHaveBeenCalledWith(
-        "https://usamo-back.herokuapp.com/job/job-offer/abc/",
+        proxy.job + "job-offer/abc/",
         {
           headers: {
             Authorization: "Token undefined",
