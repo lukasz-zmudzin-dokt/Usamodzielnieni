@@ -79,13 +79,13 @@ const UserToApprove = ({ user, activeUser }) => {
     );
 
     const message = loading ? (
-        <Alert variant="info">Ładuję...</Alert>
+        <Alert className="mb-0" variant="info">Ładuję...</Alert>
     ) : error ? (
-        <Alert variant="danger">Ups, wystąpił błąd...</Alert>
+        <Alert className="mb-0" variant="danger">Ups, wystąpił błąd...</Alert>
     ) : approved ? (
-        <Alert variant="success">Konto zatwierdzone pomyślnie.</Alert>
+        <Alert className="mb-0" variant="success">Konto zatwierdzone pomyślnie.</Alert>
     ) : rejected ? (
-        <Alert variant="success">Konto odrzucone pomyślnie.</Alert>
+        <Alert className="mb-0" variant="success">Konto odrzucone pomyślnie.</Alert>
     ) : null;
 
     if(message) {
