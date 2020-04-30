@@ -1,19 +1,26 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useRef, useState } from "react";
 import { Container, Card } from "react-bootstrap";
-import { FormGroup } from "components";
 import { useParams } from "react-router-dom";
 import { getCV } from "Views/CVCorrection/functions";
 import { UserContext } from "context";
-import { Document, Page, pdfjs } from "react-pdf";
-
-pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
+import { CVRender } from "./components";
 
 const CVCorrection = () => {
+  const [width, setWidth] = useState(0);
   const { id } = useParams();
   const { token } = useContext(UserContext);
-  console.log(token);
-  console.log(id);
+  const cardEl = useRef(null);
+
+  const setCardSize = () => {
+    let width;
+    if (window.innerWidth >= 768) {
+      width = cardEl.current.getBoundingClientRect().width / 2;
+    } else width = cardEl.current.getBoundingClientRect().width;
+    setWidth(width);
+  };
+
   useEffect(() => {
+    setCardSize();
     const loadCV = async () => {
       let res;
       try {
@@ -23,22 +30,15 @@ const CVCorrection = () => {
     };
     loadCV();
   }, [id, token]);
+
   return (
     <Container>
-      <Card>
+      <Card ref={cardEl}>
         <Card.Header as="h2" className="offerForm__header">
           Sprawdź CV
         </Card.Header>
         <Card.Body>
-          <Document
-            className="CVCorrection__pdf"
-            file={{
-              url:
-                "https://cors-anywhere.herokuapp.com/http://www.africau.edu/images/default/sample.pdf?fbclid=IwAR0q89FFuOH13trzKpQ8OSwOc_A0ANF0QKRwe7L4zrJfCKZi__F8UpgTCNQ",
-            }}
-          >
-            <Page className="pdf_doc_container" pageNumber={1} />
-          </Document>
+          <CVRender width={width} />
         </Card.Body>
       </Card>
     </Container>
