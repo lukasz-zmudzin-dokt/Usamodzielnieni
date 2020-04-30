@@ -16,11 +16,11 @@ import {
   RegisterPage,
   UserProfilePage,
   UserApprovalPage,
-  CVCorrection
+  CVCorrection,
 } from "Views";
-import {userTypes} from "./userTypes";
-import {staffTypes} from "./staffTypes";
-import {paths} from "./paths";
+import { userTypes } from "./userTypes";
+import { staffTypes } from "./staffTypes";
+import { paths } from "./paths";
 
 export default [
   {
@@ -53,7 +53,7 @@ export default [
     exact: true,
     isPrivate: true,
     type: userTypes.STAFF,
-    group: staffTypes.VERIFICATION
+    group: staffTypes.VERIFICATION,
   },
   {
     path: paths.FOOTER,
@@ -149,14 +149,13 @@ export default [
     component: UserApprovalPage,
     isPrivate: true,
     type: userTypes.STAFF,
-    group: staffTypes.VERIFICATION
+    group: staffTypes.VERIFICATION,
   },
   {
     path: paths.CV_CORRECTION,
     component: CVCorrection,
-    isPrivate: true,
-    type: userTypes.STAFF,
-    group: staffTypes.CV
-  }
+    // isPrivate: true,
+    // type: userTypes.STAFF,
+    // group: staffTypes.CV
+  },
 ];
-
