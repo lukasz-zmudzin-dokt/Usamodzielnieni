@@ -33,6 +33,7 @@ export default [
     isPrivate: true,
     type: userTypes.STANDARD,
     exact: true,
+    userVerified: true
   },
   {
     path: paths.CV_EDITOR,
@@ -40,6 +41,7 @@ export default [
     isPrivate: true,
     type: userTypes.STANDARD,
     exact: true,
+    userVerified: true
   },
   {
     path: paths.REGISTER,
@@ -52,7 +54,8 @@ export default [
     exact: true,
     isPrivate: true,
     type: userTypes.STAFF,
-    group: staffTypes.VERIFICATION
+    group: staffTypes.VERIFICATION,
+    userVerified: true
   },
   {
     path: paths.FOOTER,
@@ -75,20 +78,21 @@ export default [
     component: JobOffersPage,
     exact: true,
     isPrivate: true,
-    type: undefined,
+    type: undefined
   },
   {
     path: paths.JOB_OFFER_DETAILS,
     component: JobOfferDetails,
     exact: true,
     isPrivate: true,
-    type: undefined,
+    type: undefined
   },
   {
     path: paths.OFFER_FORM,
     component: OfferForm,
     isPrivate: true,
     type: userTypes.EMPLOYER,
+    userVerified: true
   },
   {
     path: paths.CV_APPROVAL,
@@ -96,12 +100,14 @@ export default [
     isPrivate: true,
     type: userTypes.STAFF,
     group: staffTypes.CV,
+    userVerified: true
   },
   {
     path: paths.MY_OFFERS,
     component: MyOffersPage,
     isPrivate: true,
     type: userTypes.EMPLOYER,
+    userVerified: true
   },
   {
     path: paths.CONTACT_PAGE,
@@ -128,6 +134,7 @@ export default [
     type: userTypes.STAFF,
     group: staffTypes.BLOG_CREATOR,
     exact: true,
+    userVerified: true
   },
   {
     path: paths.BLOG_EDIT,
@@ -136,19 +143,22 @@ export default [
     type: userTypes.STAFF,
     group: staffTypes.BLOG_CREATOR,
     exact: true,
+    userVerified: true
   },
   {
     path: paths.MY_CVS,
     component: MyCVsPage,
     isPrivate: true,
     type: userTypes.STANDARD,
+    userVerified: true
   },
   {
     path: paths.USER_APPROVAL,
     component: UserApprovalPage,
     isPrivate: true,
     type: userTypes.STAFF,
-    group: staffTypes.VERIFICATION
+    group: staffTypes.VERIFICATION,
+    userVerified: true
   }
 ];
 

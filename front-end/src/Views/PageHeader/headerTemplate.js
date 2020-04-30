@@ -17,12 +17,16 @@ class HeaderTemplate extends React.Component {
     let type = (this.context.token)? this.context.type : undefined;
     let adminGroup = (this.context.data && type===userTypes.STAFF)? this.context.data.group_type : undefined;
     //console.log(adminGroup);
-    
+
     if (this.props.location.pathname !== "/")
       return (
         <Nav className="mr-auto ">
           {menuPositions.map(pos => (
-            (pos.allowed === undefined || pos.allowed.includes(type) || (adminGroup && pos.allowed.some(type => adminGroup.includes(type))))? (
+              (!this.context.token && !pos.allowed) ||
+              (this.context.token && (!pos.allowed || pos.allowed.includes(this.context.type)) &&
+                  (!pos.verified || (pos.verified === true && this.context.data && this.context.data.status === 'Verified'))
+              )
+              ? (
               <IndexLinkContainer to={pos.path} key={pos.name}>
                 <Nav.Link>{pos.name}</Nav.Link>
               </IndexLinkContainer>
