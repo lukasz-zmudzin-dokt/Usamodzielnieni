@@ -207,11 +207,13 @@ class RegisterPage extends React.Component {
                 {fail_message}
               </Alert>
             ) : null}
-            <div className="loginPage__links">
-              <Link to="/login" className="loginPage__link">
-                Masz już konto? Zaloguj się!
-              </Link>
-            </div>
+            {this.props.match.params.role !== 'staff' ? (
+                <div className="loginPage__links">
+                  <Link to="/login" className="loginPage__link">
+                    Masz już konto? Zaloguj się!
+                  </Link>
+                </div>
+            ) : null}
           </Card.Body>
         </Card>
         {renderRedirect(redirect)}
