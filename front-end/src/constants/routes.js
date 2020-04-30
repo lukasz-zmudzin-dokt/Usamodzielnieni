@@ -15,7 +15,8 @@ import {
   OfferForm,
   RegisterPage,
   UserProfilePage,
-  UserApprovalPage
+  UserApprovalPage,
+  CVCorrection
 } from "Views";
 import {userTypes} from "./userTypes";
 import {staffTypes} from "./staffTypes";
@@ -149,6 +150,13 @@ export default [
     isPrivate: true,
     type: userTypes.STAFF,
     group: staffTypes.VERIFICATION
+  },
+  {
+    path: paths.CV_CORRECTION,
+    component: CVCorrection,
+    isPrivate: true,
+    type: userTypes.STAFF,
+    group: staffTypes.CV
   }
 ];
 
