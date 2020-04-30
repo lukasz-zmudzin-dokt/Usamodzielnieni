@@ -6,7 +6,8 @@ const proxy = {
     cv: domain + "/cv/",
     job: domain + "/job/",
     blog: domain + "/blog/",
-    notifications: domain + "/notifications/"
+    notifications: domain + "/notifications/",
+    chat: domain + "/chat/"
 };
 
 export default proxy;
