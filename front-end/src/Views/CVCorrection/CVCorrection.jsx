@@ -1,9 +1,9 @@
 import React, { useEffect, useContext, useRef, useState } from "react";
-import { Container, Card } from "react-bootstrap";
+import { Container, Card, Row } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { getCV } from "Views/CVCorrection/functions";
 import { UserContext } from "context";
-import { CVRender } from "./components";
+import { CVRender, CorrectionForm } from "./components";
 
 const CVCorrection = () => {
   const [width, setWidth] = useState(0);
@@ -14,8 +14,8 @@ const CVCorrection = () => {
   const setCardSize = () => {
     let width;
     if (window.innerWidth >= 768) {
-      width = cardEl.current.getBoundingClientRect().width / 2;
-    } else width = cardEl.current.getBoundingClientRect().width;
+      width = cardEl.current.getBoundingClientRect().width / 1.8;
+    } else width = cardEl.current.getBoundingClientRect().width - 15;
     setWidth(width);
   };
 
@@ -38,7 +38,10 @@ const CVCorrection = () => {
           Sprawdź CV
         </Card.Header>
         <Card.Body>
-          <CVRender width={width} />
+          <Row className="align-center">
+            <CVRender width={width} />
+            <CorrectionForm />
+          </Row>
         </Card.Body>
       </Card>
     </Container>

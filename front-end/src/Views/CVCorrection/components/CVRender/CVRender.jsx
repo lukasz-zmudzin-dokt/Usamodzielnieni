@@ -13,7 +13,12 @@ const CVRender = ({ width }) => {
             "https://cors-anywhere.herokuapp.com/http://www.africau.edu/images/default/sample.pdf?fbclid=IwAR0q89FFuOH13trzKpQ8OSwOc_A0ANF0QKRwe7L4zrJfCKZi__F8UpgTCNQ",
         }}
       >
-        <Page className="pdf_doc_container" pageNumber={1} width={width} />
+        <Page
+          className="pdf_doc_container"
+          size="A4"
+          pageNumber={1}
+          width={width}
+        />
       </Document>
     </>
   );

@@ -2,3 +2,12 @@
 //   width: 50%;
 //   position: relative;
 // }
+.react-pdf__Document.CVCorrection__pdf {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.CVCorrection__form {
+  flex-grow: 1;
+}
