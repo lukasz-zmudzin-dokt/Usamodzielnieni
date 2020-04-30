@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import FormGroup from "components/FormGroup";
-import { Col, Form, Button } from "react-bootstrap";
+import { Form, Button } from "react-bootstrap";
+import { sendFeedback } from "Views/CVCorrection/functions";
 
-const CorrectionForm = () => {
+const CorrectionForm = ({ data }) => {
   const [validated, setValidated] = useState(false);
   const [disabled, setDisabled] = useState(false);
   const [feedback, setFeedback] = useState({
@@ -13,24 +14,33 @@ const CorrectionForm = () => {
     languages: "",
     additionalInfo: "",
   });
+
   const submit = async (event) => {
     setDisabled(true);
     const form = event.currentTarget;
-    console.log(feedback);
+
     event.preventDefault();
-    if (form.checkValidity() === false) {
-      event.stopPropagation();
-    }
+
+    console.log("xd");
+    event.stopPropagation();
+    let res;
+    try {
+      res = sendFeedback(data.id, data.token, feedback);
+      setFeedback({
+        basicInfo: "",
+        schools: "",
+        experiences: "",
+        skills: "",
+        languages: "",
+        additionalInfo: "",
+      });
+    } catch (err) {}
+
     setDisabled(false);
     setValidated(true);
   };
   return (
-    <Form
-      onSubmit={submit}
-      noValidate
-      validated={validated}
-      className="CVCorrection__form"
-    >
+    <Form onSubmit={submit} className="CVCorrection__form">
       <FormGroup
         header="Dane osobowe"
         id="basic_info"

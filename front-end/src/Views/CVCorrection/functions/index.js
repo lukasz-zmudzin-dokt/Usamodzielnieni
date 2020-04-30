@@ -16,4 +16,31 @@ const getCV = async (id, token) => {
   }
 };
 
-export { getCV };
+const sendFeedback = async (id, token, feedback) => {
+  const { schools, skills, languages, experiences } = feedback;
+  const body = {
+    cv_id: id,
+    schools,
+    skills,
+    languages,
+    experiences,
+    additional_info: feedback.additionalInfo,
+    basic_info: feedback.basicInfo,
+  };
+  console.log(body);
+  const res = await fetch(`${proxy.cv}admin/feedback/`, {
+    method: "POST",
+    body: JSON.stringify(body),
+    headers: {
+      "Content-Type": "application/json",
+      Origin: null,
+      Authorization: `Token ${token}`,
+    },
+  });
+  if (res.status !== 201) {
+    throw Error("coś poszło nie tak");
+  }
+  return res.status;
+};
+
+export { getCV, sendFeedback };

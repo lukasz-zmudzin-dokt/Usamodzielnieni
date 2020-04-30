@@ -40,7 +40,7 @@ const CVCorrection = () => {
         <Card.Body>
           <Row className="align-center">
             <CVRender width={width} />
-            <CorrectionForm />
+            <CorrectionForm data={{ id, token }} />
           </Row>
         </Card.Body>
       </Card>
