@@ -1,25 +1,10 @@
 import React, { useState, useContext } from 'react'
 import { Form, Button, Alert } from "react-bootstrap";
 import { UserContext } from "context";
-
-const updateComment = async (token, content, commentId) => {
-    let url = `https://usamo-back.herokuapp.com/blog/comment/${commentId}`;
-    const headers = {
-        Authorization: "Token " + token,
-        "Content-Type": "application/json"
-    };
-
-    const response = await fetch(url, { method: "PUT", body: JSON.stringify({content}), headers });
-
-    if (response.status === 200) {
-        return response.json();
-    } else {
-        throw response.status;
-    }
-}
+import proxy from "config/api";
 
 const addComment = async (token, content, blogId) => {
-    let url = `https://usamo-back.herokuapp.com/blog/${blogId}/comment/`;
+    let url = `${proxy.blog}${blogId}/comment/`;
     const headers = {
         Authorization: "Token " + token,
         "Content-Type": "application/json"
@@ -34,8 +19,8 @@ const addComment = async (token, content, blogId) => {
     }
 }
 
-const CommentForm = ({ blogId, comment, afterSubmit, ...rest }) => {
-    const [commentContent, setCommentContent] = useState(comment ? comment.content : "");
+const CommentForm = ({ blogId, afterSubmit, ...rest }) => {
+    const [commentContent, setCommentContent] = useState("");
     const [submitted, setSubmitted] = useState(false);
     const [error, setError] = useState(false);
     const [validated, setValidated] = useState(false);
@@ -54,44 +39,27 @@ const CommentForm = ({ blogId, comment, afterSubmit, ...rest }) => {
             e.stopPropagation();
         } else {
             try {
-                if (comment) {
-                    await updateComment(
-                        user.token,
-                        commentContent,
-                        comment.id
-                    );
-                    afterSubmit({
-                        ...comment,
-                        content: commentContent,
-                        creationDate: new Date(Date.now())
-                    })
-                } else {
-                    const id = await addComment(
-                        user.token,
-                        commentContent,
-                        blogId
-                    );
-                    afterSubmit({
-                        id: id,
-                        author: {
-                            firstName: user.data.first_name,
-                            lastName: user.data.last_name,
-                            email: user.data.email
-                        },
-                        content: commentContent,
-                        creationDate: new Date(Date.now())
-                    })
-                    setCommentContent('');
-                    setSubmitted(true);
-                }
+                const id = await addComment(
+                    user.token,
+                    commentContent,
+                    blogId
+                );
+                afterSubmit({
+                    id: id,
+                    author: {
+                        firstName: user.data.first_name,
+                        lastName: user.data.last_name,
+                        email: user.data.email
+                    },
+                    content: commentContent,
+                    creationDate: new Date(Date.now())
+                })
+                setCommentContent('');
+                setSubmitted(true);
             } catch (e) {
                 setError(true);
             }
         }
-    }
-
-    const onCancelClick = () => {
-        afterSubmit(comment);
     }
 
     const msg = error ? (<Alert variant="danger">Wystąpił błąd podczas przesyłania komentarza.</Alert>) :
@@ -99,7 +67,7 @@ const CommentForm = ({ blogId, comment, afterSubmit, ...rest }) => {
 
     return (
         <div {...rest}>
-            <h5>{comment ? 'Edytuj komentarz' : 'Dodaj komentarz'}</h5>
+            <h5>Dodaj komentarz</h5>
             <Form 
                 noValidate
                 validated={validated}
@@ -119,15 +87,6 @@ const CommentForm = ({ blogId, comment, afterSubmit, ...rest }) => {
                 {msg}
                 <Form.Group className="CommentForm__submitGroup mb-0">
                     <Button type="submit">Prześlij</Button>
-                    {comment && (
-                        <Button 
-                            type="button"
-                            variant="secondary"
-                            className="ml-2"
-                            onClick={onCancelClick}>
-                            Anuluj
-                        </Button>
-                    )}
                 </Form.Group>
             </Form>
         </div>

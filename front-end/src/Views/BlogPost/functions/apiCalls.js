@@ -1,5 +1,7 @@
+import proxy from "config/api";
+
 export const getPost = async (id, token) => {
-    let url = `https://usamo-back.herokuapp.com/blog/blogpost/${id}`;
+    let url = `${proxy.blog}blogpost/${id}`;
     const headers = {
         Authorization: "Token " + token,
         "Content-Type": "application/json"
@@ -15,7 +17,7 @@ export const getPost = async (id, token) => {
 };
 
 export const deletePost = async(id, token) => {
-    let url = `https://usamo-back.herokuapp.com/blog/blogpost/${id}`;
+    let url = `${proxy.blog}blogpost/${id}`;
     const headers = {
         Authorization: "Token " + token,
         "Content-Type": "application/json"

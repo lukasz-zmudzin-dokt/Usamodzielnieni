@@ -3,10 +3,15 @@ import { registerLocale } from "react-datepicker";
 import { Form, Container, Card, Button, Row, Alert, InputGroup } from "react-bootstrap";
 import { voivodeships } from "constants/voivodeships";
 import FormGroup from "components/FormGroup";
-import { sendData, getSelects } from "Views/OfferForm/functions/fetchData";
+import {
+  sendData,
+  getCategories,
+  getTypes,
+  getOffer,
+} from "Views/OfferForm/functions/fetchData";
 import { UserContext } from "context";
 import polish from "date-fns/locale/pl";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
 registerLocale("pl", polish);
 
@@ -14,9 +19,14 @@ const OfferForm = () => {
   const history = useHistory();
   const [validated, setValidated] = useState(false);
   const [fail, setFail] = useState(false);
-  const [arrays, setArrays] = useState({});
+  const [arrays, setArrays] = useState({ types: [], categories: [] });
   const [disabled, setDisabled] = useState(false);
+<<<<<<< HEAD
   const [isPayValid, setIsPayValid] = useState(true);
+=======
+  const [message, setMessage] = useState("");
+  let { id } = useParams();
+>>>>>>> master
 
   const [offer, setOffer] = useState({
     offer_name: "",
@@ -32,34 +42,52 @@ const OfferForm = () => {
     pay_period: ""
   });
 
+  //47991e86-4b42-4507-b154-1548bf8a3bd3
   const context = useContext(UserContext);
 
   useEffect(() => {
     setDisabled(true);
-    const loadSelects = async (token) => {
-      let res;
+    const loadData = async (token) => {
+      let values;
       try {
-        res = await getSelects(token);
-      } catch (e) {
-        console.log(e);
-        setFail(true);
-        res = { categories: [], types: [] };
+        values = await Promise.all([
+          getCategories(token),
+          getTypes(token),
+          id && getOffer(token, id),
+        ]);
+      } catch (err) {
+        if (err.message === "getOffer") {
+          history.push("/offerForm");
+        } else {
+          setFail(true);
+          setDisabled(false);
+          setMessage("Nie udało się załadować danych.");
+        }
+        return;
       }
-      setArrays(res);
-      setOffer({
-        offer_name: "",
+      const [categories, types, loadedOffer] = values;
+      const { city, street, street_number } = context.data.company_address;
+
+      const company_address = `${city}, ${street} ${street_number}`;
+      setArrays({ categories, types });
+      setOffer((prev) => ({
+        ...prev,
+        company_address,
         company_name: context.data.company_name,
-        company_address: context.data.company_address,
-        voivodeship: voivodeships[0],
-        description: "",
-        expiration_date: "",
-        category: res.categories[0],
-        type: res.types[0],
-      });
+        category: categories[0],
+        type: types[0],
+        ...loadedOffer,
+      }));
       setDisabled(false);
     };
-    loadSelects(context.token);
-  }, [context.data.company_address, context.data.company_name, context.token]);
+    loadData(context.token);
+  }, [
+    context.data.company_address,
+    context.data.company_name,
+    context.token,
+    history,
+    id,
+  ]);
 
   const submit = (event) => {
     const pay_from_dot = unifyPayFormat(pay_from);
@@ -93,6 +121,7 @@ const OfferForm = () => {
           setDisabled(false);
         });
     }
+    setDisabled(false);
     setValidated(true);
   };
 
@@ -254,9 +283,7 @@ const OfferForm = () => {
             </div>
             {fail === true ? (
               <Row className="w-100 justify-content-center align-items-center m-0">
-                <Alert variant="danger">
-                  Coś poszło nie tak. Spróbuj ponownie póżniej.
-                </Alert>
+                <Alert variant="danger">{message}</Alert>
               </Row>
             ) : null}
             {isPayValid === false ? (

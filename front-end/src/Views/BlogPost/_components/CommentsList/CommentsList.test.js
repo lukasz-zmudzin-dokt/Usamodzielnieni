@@ -64,19 +64,6 @@ describe('CommentsList', () => {
         expect(getByText('Brak komentarzy', { exact: false })).toBeInTheDocument();
     });
 
-    it('should render list with edit form when onEditClick is called', () => {
-        CommentItem.mockImplementation(({ comment, onEditClick }) => {
-            if (comment.id === 'b2') {
-                onEditClick('b2');
-            }
-            return <div>CommentItem</div>;
-        });
-
-        const { container } = render(<CommentsList {...props} />);
-
-        expect(container).toMatchSnapshot();
-    });
-
     it('should remove comment from list when onDeleteClick is called', async () => {
         CommentItem.mockImplementation(({ comment, onDeleteClick }) => {
             if (comment.id === 'b2') {
@@ -108,36 +95,5 @@ describe('CommentsList', () => {
         const errorMsg = 'Wystąpił błąd podczas usuwania komentarza.';
         await waitForElement(() => getByText(errorMsg));
         expect(getByText(errorMsg)).toBeInTheDocument();
-    });
-
-    it('should replace comment when afterSubmit is called', async () => {
-        let editCalled = false;
-        props.comments = [
-            { id: 'b1', content: 'c1' },
-            { id: 'b2', content: 'c2' },
-            { id: 'b3', content: 'c3' }
-        ]
-        CommentItem.mockImplementation(({ comment, onEditClick }) => {
-            if (comment.id === 'b2' && !editCalled) {
-                editCalled = true;
-                onEditClick('b2');
-            }
-            return <div>CommentItem</div>;
-        });
-        CommentForm.mockImplementation(({ comment, afterSubmit }) => {
-            if (comment.id === 'b2') {
-                afterSubmit({ id: 'b2', content: 'new' });
-            }
-            return <div>CommentForm</div>;
-        });
-
-        render(<CommentsList {...props} />);
-
-        await wait(() => expect(props.setComments).toHaveBeenCalledTimes(1));
-        expect(props.setComments).toHaveBeenNthCalledWith(1, [
-            { id: 'b1', content: 'c1' },
-            { id: 'b2', content: 'new' },
-            { id: 'b3', content: 'c3' }
-        ]);
     });
 });

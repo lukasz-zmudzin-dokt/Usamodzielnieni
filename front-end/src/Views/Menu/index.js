@@ -4,10 +4,11 @@ import { LinkContainer } from "react-router-bootstrap";
 import logo from "assets/logo.png";
 import { Redirect } from "react-router-dom";
 import { UserContext } from "context/UserContext";
+import proxy from "config/api";
 
 class Menu extends React.Component {
   userLogout = e => {
-    const url = "https://usamo-back.herokuapp.com/account/logout/";
+    const url = proxy.account + "logout/";
     fetch(url, {
       method: "POST",
       headers: {
@@ -58,7 +59,7 @@ class Menu extends React.Component {
                 <Row>
                     <Col/>
                     <Col xs={7}>
-                        <img src={logo} className="menu-logo"/>
+                        <img src={logo} className="menu-logo" alt="Menu logo"/>
                     </Col>
                     <Col />
                 </Row>

@@ -29,12 +29,6 @@ exports[`CommentItem should render without crashing 1`] = `
         class="btn btn-primary"
         type="button"
       >
-        Edytuj
-      </button>
-      <button
-        class="btn btn-primary"
-        type="button"
-      >
         Usuń
       </button>
     </div>

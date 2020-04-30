@@ -1,40 +1,33 @@
 import React from "react";
 import { Navbar, Nav, Button, Form } from "react-bootstrap";
 
-import logo from "../../assets/logo.png";
+import logo from "assets/logo.png";
 
 // https://github.com/ReactTraining/react-router/issues/83#issuecomment-214794477
 import { IndexLinkContainer } from "react-router-bootstrap";
 import { Redirect, withRouter } from "react-router-dom";
 import { UserContext } from "context";
 import Notifications from "./components/Notifications";
+import menuPositions from "constants/menuPositions";
+import {userTypes} from "constants/userTypes";
+import proxy from "config/api";
 
 class HeaderTemplate extends React.Component {
   displayMenu() {
+    let type = (this.context.token)? this.context.type : undefined;
+    let adminGroup = (this.context.data && type===userTypes.STAFF)? this.context.data.group_type : undefined;
+    //console.log(adminGroup);
+    
     if (this.props.location.pathname !== "/")
       return (
         <Nav className="mr-auto ">
-          <IndexLinkContainer to={!this.context.token ? "/login" : "/cvEditor"}>
-            <Nav.Link id="cvEditor">Kreator CV</Nav.Link>
-          </IndexLinkContainer>
-          <IndexLinkContainer to={"/myCVs"}>
-            <Nav.Link id="myCVs">
-              Moje CV
-                </Nav.Link>
-          </IndexLinkContainer>
-          <Nav.Link id="learningTheRopes">Jak zacząć?</Nav.Link>
-          <IndexLinkContainer to="/jobOffers">
-            <Nav.Link id="jobOffers">Oferty pracy</Nav.Link>
-          </IndexLinkContainer>
-          <IndexLinkContainer to="/blog">
-            <Nav.Link id="blogs">Blogi</Nav.Link>
-          </IndexLinkContainer>
-          {/* <Nav.Link id="personalityTests">Testy</Nav.Link> */}
-          <Nav.Link id="stories">Historia</Nav.Link>
-          {/* <Nav.Link id="moneyMgmt">Zarządzanie budżetem</Nav.Link> */}
-          <IndexLinkContainer to="/contact">
-            <Nav.Link id="contactPhones">Telefony</Nav.Link>
-          </IndexLinkContainer>
+          {menuPositions.map(pos => (
+            (pos.allowed === undefined || pos.allowed.includes(type) || (adminGroup && pos.allowed.some(type => adminGroup.includes(type))))? (
+              <IndexLinkContainer to={pos.path} key={pos.name}>
+                <Nav.Link>{pos.name}</Nav.Link>
+              </IndexLinkContainer>
+            ) : null
+          ))}
         </Nav>
       );
   }
@@ -77,7 +70,7 @@ class HeaderTemplate extends React.Component {
   }
 
   userLogout = e => {
-    const url = "https://usamo-back.herokuapp.com/account/logout/";
+    const url = proxy.account + "logout/";
     fetch(url, {
       method: "POST",
       headers: {
@@ -87,7 +80,6 @@ class HeaderTemplate extends React.Component {
     }).then(res => {
       if (res.status === 200 || res.status === 401) {
         res.json().then(responseValue => {
-          console.log(responseValue);
           this.context.logout();
           return <Redirect to="/" />;
         });

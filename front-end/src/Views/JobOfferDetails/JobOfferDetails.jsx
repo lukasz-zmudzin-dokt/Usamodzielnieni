@@ -1,12 +1,15 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Container, Card, Alert, Row } from "react-bootstrap";
+import {Container, Card, Alert, Row, Button} from "react-bootstrap";
 import { withRouter } from "react-router-dom";
 import { UserContext } from "context";
 import { DetailsItem } from 'components';
 import { AddCvForm } from "./_components";
+import { deleteOffer } from "./functions/deleteOffer";
+import {staffTypes} from "constants/staffTypes";
+import proxy from "config/api";
 
 const getOfferDetails = async (id, token) => {
-  let url = `https://usamo-back.herokuapp.com/job/job-offer/${id}`;
+  let url = `${proxy.job}job-offer/${id}`;
   const headers = {
     Authorization: "Token " + token,
     "Content-Type": "application/json"
@@ -33,10 +36,24 @@ const mapOffer = (offer) => ({
   description: offer.description
 })
 
+const handleDeleteOffer = async (e, id, token, setDeleted, setDeletionError) => {
+  e.preventDefault();
+  try {
+    await deleteOffer(id, token);
+    setDeleted(true);
+  } catch(err) {
+    setDeleted(true);
+    setDeletionError(true);
+  }
+};
+
 const JobOfferDetails = props => {
   const [offer, setOffer] = useState({});
   const [isOfferLoading, setIsOfferLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [confirmDeletion, setConfirmDeletion] = useState(false);
+  const [deleted, setDeleted] = useState(false);
+  const [deletionError, setDeletionError] = useState(false);
   const user = useContext(UserContext);
 
   useEffect(
@@ -82,10 +99,37 @@ const JobOfferDetails = props => {
           </div>
         )}
         { user.type === 'Standard' && <AddCvForm id={props.match.params.id} user={user}/> }
+        { user.type === 'Staff' && user.data.group_type.includes(staffTypes.JOBS) && !confirmDeletion ?
+            <Row className="d-flex justify-content-center">
+              <Button variant="danger" onClick={e => setConfirmDeletion(true)}>Usuń ofertę</Button>
+            </Row>
+            : null
+        }
+        { confirmDeletion && !deleted ?
+            <Alert variant="warning mt-3" className="d-flex justify-content-center align-items-center">
+              Czy na pewno chcesz usunąć tę ofertę?
+              <Button variant="warning" className="ml-3" onClick={e => handleDeleteOffer(e, offer.id, user.token, setDeleted, setDeletionError)}>
+                Tak
+              </Button>
+            </Alert>
+            : null
+        }
+        { deleted && !deletionError ?
+          <Alert variant="info" className="d-flex justify-content-center">
+            Ta oferta została usunięta.
+          </Alert>
+          : null
+        }
+        { deleted && deletionError ?
+            <Alert variant="danger" className="d-flex justify-content-center">
+              Wystąpił błąd przy usuwaniu oferty.
+            </Alert>
+            : null
+        }
       </Card.Body>
       </Card>
     </Container>
   )
-}
+};
 
 export default withRouter(JobOfferDetails);
