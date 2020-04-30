@@ -16,7 +16,7 @@ const OfferForm = () => {
   const [fail, setFail] = useState(false);
   const [arrays, setArrays] = useState({});
   const [disabled, setDisabled] = useState(false);
-  const [isPayValid, setIsPayValid] = useState(true)
+  const [isPayValid, setIsPayValid] = useState(true);
 
   const [offer, setOffer] = useState({
     offer_name: "",
@@ -27,8 +27,8 @@ const OfferForm = () => {
     expiration_date: "",
     category: "",
     type: "",
-    pay_from: 0,
-    pay_to: 0,
+    pay_from: "",
+    pay_to: "",
     pay_period: ""
   });
 
@@ -64,8 +64,8 @@ const OfferForm = () => {
   const submit = (event) => {
     const form = event.currentTarget;
     event.preventDefault();
-
-    if (pay_from > pay_to) {
+    console.log("po submicie", pay_from);
+    if (checkPayValidity() === false) {
       setIsPayValid(false);
       event.stopPropagation();
     } else if (form.checkValidity() === false) {
@@ -95,8 +95,33 @@ const OfferForm = () => {
     setValidated(true);
   };
 
+  const unifyPayFormat = (input) => {
+    if (input.match(/^\d{1,}[,\\.]{1}(\d{2})?$/) !== null) {
+      var value = input.replace(",", ".");
+      console.log("value: ", value);
+      input.replace(/^0+(?=\d)/, ''); //jesli ciąg 0 na początku to usuwamy, jeśli same 0 to zostawiamy jedno
+    } else if (input.match(/^\d{1,}$/) !== null) {
+      input.concat(".00");
+      input.replace(/^0+(?=\d)/, '');
+    } else {
+      input.replace(/^$/, '');
+      return null;
+    }
+    return;
+  };
 
-  const pay_regex = "[0-9]{1,}[.]{1}[0-9]{2}";
+  const checkPayValidity = () => {
+    if (pay_to !== undefined && pay_from !== undefined) {
+      unifyPayFormat(pay_from);
+      unifyPayFormat(pay_to);
+      if (parseFloat(pay_from) <= parseFloat(pay_to) && pay_from !== '' && pay_to !== '') {
+        setIsPayValid(true);
+        return true;
+      }
+    }
+    setIsPayValid(false);
+    return false;
+  };
 
   const {
     offer_name,
@@ -165,34 +190,33 @@ const OfferForm = () => {
                 required
               />
               <FormGroup
-                header="Wymiar pracy"
-                id="type"
-                setVal={(val) => setOffer({ ...offer, type: val })}
-                val={type}
+                header="Okres wypłaty wynagrodzenia"
+                id="pay_period"
                 type="select"
-                array={arrays.types}
+                array={["za godzinę", "za dzień", "za miesiąc", "za rok", "jednokrotnie"]}
+                setVal={(val) => setOffer({ ...offer, pay_period: val })}
+                val={pay_period}
                 required
-                incorrect="Podaj wymiar pracy np. staż,praca"
               />
-              <Form.Group id="formGroupPayFrom">
-                <Form.Label>Wynagrodzenie od:</Form.Label>
-                <InputGroup>
-                  <Form.Control
-                    name="pay_from"
-                    type="text"
-                    placeholder="12.00"
-                    onChange={e => setOffer({ ...offer, pay_from: parseFloat(e.target.value) })}
-                    pattern={pay_regex}
-                    required
-                  />
-                  <InputGroup.Append>
-                    <InputGroup.Text>zł</InputGroup.Text>
-                  </InputGroup.Append>
-                </InputGroup>
-                <Form.Control.Feedback type="invalid">
-                  Podaj wynagrodzenie w formacie *.00
-                </Form.Control.Feedback>
-              </Form.Group>
+              <FormGroup
+                header="Wynagrodzenie od (w PLN)"
+                id="pay_from"
+                setVal={(val) => {
+                  let value = unifyPayFormat(val);
+                  setOffer({ ...offer, pay_from: value });
+                  console.log("val przy wpisywaniu",value, "pay_from przy wpisywaniu", pay_from);
+                }
+                }
+                val={pay_from}
+                required
+              />
+              <FormGroup
+                header="Wynagrodzenie do (w PLN)"
+                id="pay_to"
+                setVal={(val) => setOffer({ ...offer, pay_to: val })}
+                val={pay_to}
+                required
+              />
             </div>
             <div className="offerForm__wrapper">
               <FormGroup
@@ -216,6 +240,16 @@ const OfferForm = () => {
                 incorrect="Podaj branżę np. IT, marketing"
               />
               <FormGroup
+                header="Wymiar pracy"
+                id="type"
+                setVal={(val) => setOffer({ ...offer, type: val })}
+                val={type}
+                type="select"
+                array={arrays.types}
+                required
+                incorrect="Podaj wymiar pracy np. staż,praca"
+              />
+              <FormGroup
                 header="Ważne do:"
                 id="expiration_date"
                 type="date"
@@ -223,34 +257,6 @@ const OfferForm = () => {
                 val={expiration_date}
                 required
               />
-              <FormGroup
-                header="Okres wypłaty wynagrodzenia"
-                id="pay_period"
-                type="select"
-                array={["za godzinę", "za dzień", "za miesiąc", "za rok", "jednokrotnie"]}
-                setVal={(val) => setOffer({ ...offer, pay_period: val })}
-                val={pay_period}
-                required
-              />
-              <Form.Group id="formGroupPayTo">
-                <Form.Label>Wynagrodzenie do:</Form.Label>
-                <InputGroup>
-                  <Form.Control
-                    name="pay_to"
-                    type="text"
-                    placeholder="13.00"
-                    onChange={e => setOffer({ ...offer, pay_to: parseFloat(e.target.value) })}
-                    pattern={pay_regex}
-                    required
-                  />
-                  <InputGroup.Append>
-                    <InputGroup.Text>zł</InputGroup.Text>
-                  </InputGroup.Append>
-                </InputGroup>
-                <Form.Control.Feedback type="invalid">
-                  Podaj wynagrodzenie w formacie *.00
-                </Form.Control.Feedback>
-              </Form.Group>
             </div>
             {fail === true ? (
               <Row className="w-100 justify-content-center align-items-center m-0">
