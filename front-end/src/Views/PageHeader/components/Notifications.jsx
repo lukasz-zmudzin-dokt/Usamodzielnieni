@@ -75,22 +75,22 @@ const Notifications = ({ location, token, ...rest }) => {
 
     useEffect(
         () => { 
-            loadNotifications(token);
+            const loadNotifications = async (token) => {
+                setIsLoading(true);
+                let loadedNotifications;
+                try {
+                    loadedNotifications = await getNotifications(token);
+                } catch {
+                    loadedNotifications = [];
+                }
+                setNotifications(loadedNotifications);
+                setIsLoading(false);
+            }
+            // loadNotifications(token);
         },
         [token]
     );
 
-    const loadNotifications = async (token) => {
-        setIsLoading(true);
-        let loadedNotifications;
-        try {
-            loadedNotifications = await getNotifications(token);
-        } catch {
-            loadedNotifications = [];
-        }
-        setNotifications(loadedNotifications);
-        setIsLoading(false);
-    }
 
     const toRemove = notifications.filter(not => not.path === location.pathname);
     if (toRemove.length) {
