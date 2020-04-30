@@ -27,7 +27,8 @@ class HeaderTemplate extends React.Component {
               return (
                   (!this.context.token && !pos.allowed) ||
                   (this.context.token && (!pos.allowed || pos.allowed.includes(this.context.type)) &&
-                    (!pos.verified || (pos.verified === true && this.context.data && this.context.data.status === 'Verified'))
+                    (!pos.verified || (pos.verified === true && this.context.data && this.context.data.status === 'Verified'))) ||
+                  (adminGroup && pos.allowed.some(type => adminGroup.includes(type))))
                   ? (
                       <IndexLinkContainer to={path({})} key={pos.name}>
                           <Nav.Link>{pos.name}</Nav.Link>
