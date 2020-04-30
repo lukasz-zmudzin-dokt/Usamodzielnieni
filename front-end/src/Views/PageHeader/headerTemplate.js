@@ -1,5 +1,6 @@
 import React from "react";
 import { Navbar, Nav, Button, Form } from "react-bootstrap";
+import {compile} from 'path-to-regexp';
 
 import logo from "assets/logo.png";
 
@@ -21,13 +22,16 @@ class HeaderTemplate extends React.Component {
     if (this.props.location.pathname !== "/")
       return (
         <Nav className="mr-auto ">
-          {menuPositions.map(pos => (
-            (pos.allowed === undefined || pos.allowed.includes(type) || (adminGroup && pos.allowed.some(type => adminGroup.includes(type))))? (
-              <IndexLinkContainer to={pos.path} key={pos.name}>
-                <Nav.Link>{pos.name}</Nav.Link>
-              </IndexLinkContainer>
-            ) : null
-          ))}
+          {menuPositions.map(pos => {
+              const path = compile(pos.path);
+              return (
+                  pos.allowed === undefined || pos.allowed.includes(type) || (adminGroup && pos.allowed.some(type => adminGroup.includes(type))))? (
+                      <IndexLinkContainer to={path({})} key={pos.name}>
+                          <Nav.Link>{pos.name}</Nav.Link>
+                      </IndexLinkContainer>
+              ) : null
+          }
+          )}
         </Nav>
       );
   }
