@@ -62,11 +62,11 @@ const OfferForm = () => {
   }, [context.data.company_address, context.data.company_name, context.token]);
 
   const submit = (event) => {
-    const pay_from_formatted = unifyPayFormat(pay_from);
-    const pay_to_formatted = unifyPayFormat(pay_to);
+    const pay_from_dot = unifyPayFormat(pay_from);
+    const pay_to_dot = unifyPayFormat(pay_to);
     const form = event.currentTarget;
     event.preventDefault();
-    if (checkPayValidity(pay_from_formatted, pay_to_formatted) === false) {
+    if (checkPayValidity(pay_from_dot, pay_to_dot) === false) {
       setIsPayValid(false);
       event.stopPropagation();
     } else if (form.checkValidity() === false) {
@@ -84,7 +84,7 @@ const OfferForm = () => {
           ? `0${expiration_date.getDate()}`
           : expiration_date.getDate();
       const newDate = `${year}-${month}-${day}`;
-      sendData({ ...offer, expiration_date: newDate, pay_from: pay_from_formatted, pay_to: pay_to_formatted }, context.token)
+      sendData({ ...offer, expiration_date: newDate, pay_from: pay_from_dot.replace(".", ","), pay_to: pay_to_dot.replace(".", ",") }, context.token)
         .then(() => {
           history.push("/myOffers");
         })
@@ -104,6 +104,7 @@ const OfferForm = () => {
     } else if (input.match(/^\d{1,}$/) !== null) {            //jeśli input jest liczbą całkowitą
       let value = input.concat(".00");
       value = value.replace(/^0+(?=\d)/, '');
+      return value;
     } else {
       let value = input.replace(/[^]*/, "");
       return value;
