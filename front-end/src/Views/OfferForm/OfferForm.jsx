@@ -62,10 +62,11 @@ const OfferForm = () => {
   }, [context.data.company_address, context.data.company_name, context.token]);
 
   const submit = (event) => {
+    const pay_from_formatted = unifyPayFormat(pay_from);
+    const pay_to_formatted = unifyPayFormat(pay_to);
     const form = event.currentTarget;
     event.preventDefault();
-    console.log("po submicie", pay_from);
-    if (checkPayValidity() === false) {
+    if (checkPayValidity(pay_from_formatted, pay_to_formatted) === false) {
       setIsPayValid(false);
       event.stopPropagation();
     } else if (form.checkValidity() === false) {
@@ -83,7 +84,7 @@ const OfferForm = () => {
           ? `0${expiration_date.getDate()}`
           : expiration_date.getDate();
       const newDate = `${year}-${month}-${day}`;
-      sendData({ ...offer, expiration_date: newDate }, context.token)
+      sendData({ ...offer, expiration_date: newDate, pay_from: pay_from_formatted, pay_to: pay_to_formatted }, context.token)
         .then(() => {
           history.push("/myOffers");
         })
@@ -96,25 +97,22 @@ const OfferForm = () => {
   };
 
   const unifyPayFormat = (input) => {
-    if (input.match(/^\d{1,}[,\\.]{1}(\d{2})?$/) !== null) {
-      var value = input.replace(",", ".");
-      console.log("value: ", value);
-      input.replace(/^0+(?=\d)/, ''); //jesli ciąg 0 na początku to usuwamy, jeśli same 0 to zostawiamy jedno
-    } else if (input.match(/^\d{1,}$/) !== null) {
-      input.concat(".00");
-      input.replace(/^0+(?=\d)/, '');
+    if (input.match(/^\d{1,}[,\\.]{1}(\d{2})?$/) !== null) {  //jeśli input jest w formacie *.??
+      let value = input.replace(",", ".");                    //zamieniemy , na . żeby zadziałało parseToFloat()
+      value = value.replace(/^0+(?=\d)/, '');                 //jesli ciąg 0 na początku to usuwamy, jeśli same 0 to zostawiamy jedno
+      return value;
+    } else if (input.match(/^\d{1,}$/) !== null) {            //jeśli input jest liczbą całkowitą
+      let value = input.concat(".00");
+      value = value.replace(/^0+(?=\d)/, '');
     } else {
-      input.replace(/^$/, '');
-      return null;
+      let value = input.replace(/[^]*/, "");
+      return value;
     }
-    return;
   };
 
-  const checkPayValidity = () => {
-    if (pay_to !== undefined && pay_from !== undefined) {
-      unifyPayFormat(pay_from);
-      unifyPayFormat(pay_to);
-      if (parseFloat(pay_from) <= parseFloat(pay_to) && pay_from !== '' && pay_to !== '') {
+  const checkPayValidity = (input_from, input_to) => {
+    if (input_from !== undefined && input_to !== undefined) {
+      if (parseFloat(input_from) <= parseFloat(input_to) && input_from !== '' && input_to !== '') {
         setIsPayValid(true);
         return true;
       }
@@ -201,12 +199,7 @@ const OfferForm = () => {
               <FormGroup
                 header="Wynagrodzenie od (w PLN)"
                 id="pay_from"
-                setVal={(val) => {
-                  let value = unifyPayFormat(val);
-                  setOffer({ ...offer, pay_from: value });
-                  console.log("val przy wpisywaniu",value, "pay_from przy wpisywaniu", pay_from);
-                }
-                }
+                setVal={(val) => setOffer({ ...offer, pay_from: val })}
                 val={pay_from}
                 required
               />
@@ -269,6 +262,9 @@ const OfferForm = () => {
               <Row className="w-100 justify-content-center align-items-center m-0">
                 <Alert variant="danger">
                   Wartość 'Wynagrodzenie od:' musi być mniejsza bądź równa wartości 'Wynagrodzenie do:'
+                </Alert>
+                <Alert variant="danger">
+                  Wynagrodzenie musi być liczbą całkowitą, bądź z częścią setną
                 </Alert>
               </Row>
             ) : null}
