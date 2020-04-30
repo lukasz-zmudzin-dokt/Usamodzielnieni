@@ -16,7 +16,7 @@ describe("CVApproval", () => {
 
     beforeAll(() => {
         global.fetch = jest.fn().mockImplementation((input, init) => {
-            return new Promise(((resolve, reject) => {
+            return new Promise((resolve, reject) => {
                 if (failFetch) {
                     resolve({ status: 500 });
                 }
@@ -31,7 +31,7 @@ describe("CVApproval", () => {
                         reject({});
                         break;
                 }
-            }));
+            });
         });
     });
 
@@ -105,5 +105,5 @@ describe("CVApproval", () => {
 
         await waitForElement(() => getByText("Brak CV do akceptacji."));
         expect(getByText("Brak CV do akceptacji.")).toBeInTheDocument();
-    })
+    });
 });

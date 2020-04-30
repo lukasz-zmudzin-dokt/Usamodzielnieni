@@ -5,6 +5,7 @@ import Filter from "./_components/Filter";
 import qs from "query-string";
 import { UserContext } from "context";
 import { JobOfferInfo, OffersPagination } from "./_components";
+import proxy from "config/api";
 
 const getOffers = async (token, filters) => {
   const {
@@ -23,7 +24,7 @@ const getOffers = async (token, filters) => {
     ? `&min_expiration_date=${minExpirationDate}`
     : "";
   const query = `?page=${page}&page_size=${pageSize}${voivodeshipQ}${expirationDateQ}${categoryQ}${typeQ}`;
-  const url = "https://usamo-back.herokuapp.com/job/job-offers/" + query;
+  const url = proxy.job + "job-offers/" + query;
   const headers = {
     Authorization: "Token " + token,
     "Content-Type": "application/json"

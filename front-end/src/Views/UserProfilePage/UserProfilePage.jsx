@@ -6,6 +6,8 @@ import { UserContext } from "context";
 import { getUserData } from "Views/UserProfilePage/functions/getUserData.js";
 import AdminRegisterButton from "./components/AdminRegisterButton/AdminRegisterButton";
 import CVApprovalButton from "./components/CVApprovalButton/CVApprovalButton";
+import EmployerMyOffersButton from "./components/EmployerMyOffersButton/EmployerMyOffersButton";
+import AdminApproveUserButton from "./components/AdminApproveUserBuuton/AdminApproveUserButton";
 
 const names = {
   role: {
@@ -72,8 +74,10 @@ class UserProfilePage extends React.Component {
           </Card.Body>
           <UserDetails user={this.state.user} names={names} />
           <Card.Body className="text-center">
-            <AdminRegisterButton userType={this.context.type} />
-            <CVApprovalButton userType={this.context.type} />
+            <CVApprovalButton user={this.context} />
+            <EmployerMyOffersButton user={this.context} />
+            <AdminRegisterButton user={this.context} />
+            <AdminApproveUserButton user={this.context} />
           </Card.Body>
         </Card>
       </Container>

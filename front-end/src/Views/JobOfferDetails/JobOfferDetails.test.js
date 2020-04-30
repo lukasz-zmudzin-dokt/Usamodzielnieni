@@ -2,7 +2,8 @@ import React from "react";
 import {fireEvent, render, waitForElement} from "@testing-library/react";
 import JobOfferDetails from "./JobOfferDetails";
 import { MemoryRouter } from 'react-router-dom';
-import {UserContext} from "../../context/UserContext";
+import {UserContext} from "context/UserContext";
+import proxy from "config/api";
 
 jest.mock('./_components', () => ({ AddCvForm: (props) => (<div></div>) }));
 
@@ -117,7 +118,7 @@ describe('JobOfferDetails', () => {
         fireEvent.click(getByText('Tak'));
 
         expect(fetch).toHaveBeenCalledWith(
-            "https://usamo-back.herokuapp.com/job/job-offer/123/",
+            proxy.job + "job-offer/123/",
             {
                 headers: {
                     Authorization: "Token undefined",

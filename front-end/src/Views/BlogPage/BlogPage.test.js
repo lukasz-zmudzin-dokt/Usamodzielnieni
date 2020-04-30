@@ -3,6 +3,7 @@ import { render, waitForElement, fireEvent } from "@testing-library/react";
 import BlogPage from "Views/BlogPage";
 import { MemoryRouter } from "react-router-dom";
 import { AlertContext } from "context";
+import proxy from "config/api";
 
 describe("BlogPage", () => {
   let contextA = {
@@ -40,9 +41,7 @@ describe("BlogPage", () => {
             resolve({ status: 200 });
             break;
           case "GET":
-            if (
-              input.includes("https://usamo-back.herokuapp.com/blog/blogposts/")
-            ) {
+            if (input.includes(proxy.blog + "blogposts/")) {
               resolve({ status: 200, json: () => Promise.resolve(apiPosts) });
             } else {
               resolve({ status: 200, json: () => Promise.resolve(apiFilters) });
@@ -135,7 +134,7 @@ describe("BlogPage", () => {
       await waitForElement(() => getAllByText("abcd"));
 
       await expect(fetch).toHaveBeenCalledWith(
-        `https://usamo-back.herokuapp.com/blog/blogposts/?category=abcd&tag=abcd`,
+        `${proxy.blog}blogposts/?category=abcd&tag=abcd`,
         {
           headers: {
             Authorization: "Token undefined",
@@ -164,7 +163,7 @@ describe("BlogPage", () => {
       await waitForElement(() => getAllByText("abcd"));
 
       await expect(fetch).toHaveBeenCalledWith(
-        `https://usamo-back.herokuapp.com/blog/blogposts/?tag=abcd`,
+        `${proxy.blog}blogposts/?tag=abcd`,
         {
           headers: {
             Authorization: "Token undefined",
@@ -193,7 +192,7 @@ describe("BlogPage", () => {
       await waitForElement(() => getAllByText("abcd"));
 
       await expect(fetch).toHaveBeenCalledWith(
-        `https://usamo-back.herokuapp.com/blog/blogposts/?category=abcd`,
+        `${proxy.blog}blogposts/?category=abcd`,
         {
           headers: {
             Authorization: "Token undefined",

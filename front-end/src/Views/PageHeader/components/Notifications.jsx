@@ -3,10 +3,11 @@ import { Nav, Dropdown, Col } from "react-bootstrap";
 import NotificationItemContainer from './NotificationItemContainer';
 import NotificationItem from './NotificationItem';
 import NotificationToggle from './NotificationToggle';
+import proxy from "config/api";
 
 
 const getNotifications = async (token) => {
-    let url = "https://usamo-back.herokuapp.com/notifications/.../"; // TODO
+    let url = proxy.notifications + ".../"; // TODO
     const headers = {
         Authorization: "Token " + token,
         "Content-Type": "application/json"
@@ -38,7 +39,7 @@ const getPath = (type) => {
 }
 
 const deleteNotification = async (id, token) => {
-    let url = "https://usamo-back.herokuapp.com/notifications/.../"; // TODO
+    let url = proxy.notifications + ".../"; // TODO
     const headers = {
         Authorization: "Token " + token,
         "Content-Type": "application/json"
@@ -74,22 +75,22 @@ const Notifications = ({ location, token, ...rest }) => {
 
     useEffect(
         () => { 
-            loadNotifications(token);
+            const loadNotifications = async (token) => {
+                setIsLoading(true);
+                let loadedNotifications;
+                try {
+                    loadedNotifications = await getNotifications(token);
+                } catch {
+                    loadedNotifications = [];
+                }
+                setNotifications(loadedNotifications);
+                setIsLoading(false);
+            }
+            // loadNotifications(token);
         },
         [token]
     );
 
-    const loadNotifications = async (token) => {
-        setIsLoading(true);
-        let loadedNotifications;
-        try {
-            loadedNotifications = await getNotifications(token);
-        } catch {
-            loadedNotifications = [];
-        }
-        setNotifications(loadedNotifications);
-        setIsLoading(false);
-    }
 
     const toRemove = notifications.filter(not => not.path === location.pathname);
     if (toRemove.length) {
