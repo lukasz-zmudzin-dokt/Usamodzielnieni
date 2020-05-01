@@ -168,10 +168,7 @@ class CVEditorPage extends React.Component {
         method: "PUT"
       });
       cvRes = await getCVdata(this.context.token, id);
-      console.log("here");
-      photoRes = await getPhoto(this.context.token, id);
-      console.log("dupa");
-      if (cvRes.was_reviewed) {
+      if (cvRes.was_reviewed && !cvRes.is_verified) {
         try {
           feedbackRes = await getFeedback(this.context.token, id);
           feedback = mapFeedback(feedbackRes);
@@ -186,17 +183,18 @@ class CVEditorPage extends React.Component {
             commentsError: true
           });
         }
+      } else {
+        this.setState({
+          showComments: false
+        })
       }
-      console.log("dupa0");
       data = mapData(cvRes);
-      console.log("dupa1");
       Object.keys(data).forEach(item => {
         this.setState(prevState => ({
           tabs: {...prevState.tabs, [item]: {...prevState.tabs[item], data: data[item]}}
         }))
       });
-      console.log("dupa2");
-      console.log(photoRes);
+      photoRes = await getPhoto(this.context.token, id);
       if (photoRes !== null) {
         const photo = await objectifyPhoto(photoRes);
         this.setState( prevState => ({
@@ -228,6 +226,7 @@ class CVEditorPage extends React.Component {
         <Card>
           <Card.Header as="h2">Kreator CV</Card.Header>
           <Card.Body>
+            {console.log(this.state)}
             {this.state.fetchError ? <Alert variant="danger">Wystąpił błąd podczas pobierania danych CV</Alert> : null}
               <Tabs
                 transition={false}
