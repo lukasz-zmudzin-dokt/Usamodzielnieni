@@ -6,17 +6,20 @@ export default [
     {
         name: "Kreator CV",
         path: paths.CV_CREATOR,
-        allowed: [userTypes.STANDARD]
+        allowed: [userTypes.STANDARD],
+        verified: true
     },
     {
         name: "Moje CV",
         path: paths.MY_CVS,
-        allowed: [userTypes.STANDARD]
+        allowed: [userTypes.STANDARD],
+        verified: true
     },
     {
         name: "Akceptacja CV",
         path: paths.CV_APPROVAL,
-        allowed: [staffTypes.CV]
+        allowed: [staffTypes.CV],
+        verified: true
     },
     {
         name: "Oferty pracy",
@@ -26,12 +29,14 @@ export default [
     {
         name: "Dodaj ofertę",
         path: paths.OFFER_FORM,
-        allowed: [userTypes.EMPLOYER]
+        allowed: [userTypes.EMPLOYER],
+        verified: true
     },
     {
         name: "Moje oferty",
         path: paths.MY_OFFERS,
-        allowed: [userTypes.EMPLOYER]
+        allowed: [userTypes.EMPLOYER],
+        verified: true
     },
     {
         name: "Blogi",
@@ -41,7 +46,8 @@ export default [
     {
         name: "Dodaj post",
         path: paths.BLOG_FORM,
-        allowed: [staffTypes.BLOG_CREATOR]
+        allowed: [staffTypes.BLOG_CREATOR],
+        verified: true
     },
     {
         name: "Telefony",
@@ -51,6 +57,7 @@ export default [
     {
         name: "Chat",
         path: paths.CHATS,
-        allowed: [userTypes.STANDARD, userTypes.STAFF, userTypes.EMPLOYER]
+        allowed: [userTypes.STANDARD, userTypes.STAFF, userTypes.EMPLOYER],
+        verified: true
     }
 ];
