@@ -15,7 +15,8 @@ import {
   OfferForm,
   RegisterPage,
   UserProfilePage,
-  UserApprovalPage
+  UserApprovalPage,
+  Steps
 } from "Views";
 import {userTypes} from "./userTypes";
 import {staffTypes} from "./staffTypes";
@@ -159,6 +160,11 @@ export default [
     type: userTypes.STAFF,
     group: staffTypes.VERIFICATION,
     userVerified: true
+  },
+  {
+    path: paths.STEPS,
+    component: Steps,
+    isPrivate: true
   }
 ];
 

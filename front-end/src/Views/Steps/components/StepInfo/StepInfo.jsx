@@ -1,10 +1,14 @@
-import React from 'react'
+import React from 'react';
+import { Card, Button } from 'react-bootstrap';
 
-const StepInfo = () => {
+const StepInfo = ({ step }) => {
     return (
-        <div>
-            
-        </div>
+        <Card>
+            <Card.Body>
+                <p>{step.value}</p>
+                {step.next.map(nextStep => <Button variant="primary">{nextStep}</Button>)}
+            </Card.Body>
+        </Card>
     )
 }
 

@@ -53,5 +53,10 @@ export default [
         name: "Telefony",
         path: paths.CONTACT_PAGE,
         allowed: undefined, //wszyscy są upoważnieni - zalogowani i niezalogowani
+    },
+    {
+        name: "Kroki",
+        path: paths.STEPS,
+        allowed: undefined
     }
 ];
