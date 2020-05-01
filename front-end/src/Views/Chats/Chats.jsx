@@ -58,7 +58,7 @@ const Chats = () => {
     <Container>
       <Card>
         <Card.Header as="h2">Najnowsze wiadomości</Card.Header>
-        {msg ? <Card.Body>{msg}</Card.Body> : (
+        {msg ? <Card.Body className="chats__body">{msg}</Card.Body> : (
           <ListGroup variant="flush">
             {chats.map((chat) => (
               <ListGroup.Item key={chat.id}>
