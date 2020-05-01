@@ -1,0 +1,167 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Chats should render without crashing 1`] = `
+<div>
+  <div
+    class="container"
+  >
+    <div
+      class="card"
+    >
+      <h2
+        class="card-header"
+      >
+        Najnowsze wiadomości
+      </h2>
+      <div
+        class="list-group list-group-flush"
+      >
+        <div
+          class="list-group-item"
+        >
+          <div
+            class="row"
+          >
+            <div
+              class="col-auto"
+            >
+              <svg
+                height="80"
+                width="80"
+              >
+                <circle
+                  cx="40"
+                  cy="40"
+                  fill="white"
+                  r="37"
+                  stroke="black"
+                  stroke-width="3"
+                />
+                <circle
+                  cx="40"
+                  cy="30"
+                  fill="black"
+                  r="10"
+                />
+                <path
+                  d="M 20 60 q 20 -30 40 0"
+                  fill="black"
+                />
+              </svg>
+            </div>
+            <div
+              class="col"
+            >
+              <h5>
+                Wiadomość 1
+              </h5>
+              <a
+                class="btn btn-primary"
+                href="/chats/1"
+              >
+                Pokaż szczegóły
+              </a>
+            </div>
+          </div>
+        </div>
+        <div
+          class="list-group-item"
+        >
+          <div
+            class="row"
+          >
+            <div
+              class="col-auto"
+            >
+              <svg
+                height="80"
+                width="80"
+              >
+                <circle
+                  cx="40"
+                  cy="40"
+                  fill="white"
+                  r="37"
+                  stroke="black"
+                  stroke-width="3"
+                />
+                <circle
+                  cx="40"
+                  cy="30"
+                  fill="black"
+                  r="10"
+                />
+                <path
+                  d="M 20 60 q 20 -30 40 0"
+                  fill="black"
+                />
+              </svg>
+            </div>
+            <div
+              class="col"
+            >
+              <h5>
+                Wiadomość 2
+              </h5>
+              <a
+                class="btn btn-primary"
+                href="/chats/2"
+              >
+                Pokaż szczegóły
+              </a>
+            </div>
+          </div>
+        </div>
+        <div
+          class="list-group-item"
+        >
+          <div
+            class="row"
+          >
+            <div
+              class="col-auto"
+            >
+              <svg
+                height="80"
+                width="80"
+              >
+                <circle
+                  cx="40"
+                  cy="40"
+                  fill="white"
+                  r="37"
+                  stroke="black"
+                  stroke-width="3"
+                />
+                <circle
+                  cx="40"
+                  cy="30"
+                  fill="black"
+                  r="10"
+                />
+                <path
+                  d="M 20 60 q 20 -30 40 0"
+                  fill="black"
+                />
+              </svg>
+            </div>
+            <div
+              class="col"
+            >
+              <h5>
+                Wiadomość 3
+              </h5>
+              <a
+                class="btn btn-primary"
+                href="/chats/3"
+              >
+                Pokaż szczegóły
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

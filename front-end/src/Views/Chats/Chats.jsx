@@ -16,12 +16,7 @@ const getChats = async (token) => {
   if (response.status === 200) {
     return response.json().then(chats => mapChats(chats));
   } else {
-    return [
-      { id: 1, title: "Wiadmość 1" },
-      { id: 2, title: "Wiadmość 2" },
-      { id: 3, title: "Wiadmość 3" }
-    ]
-    // throw response.status;
+    throw response.status;
   }
 }
 

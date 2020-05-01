@@ -7,7 +7,7 @@ describe('ChatInfo', () => {
     it('should render without crashing', () => {
         const chat = {
             id: "123",
-            title: "Tytuł chatu"
+            name: "Nazwa chatu"
         };
 
         const { container } = render(

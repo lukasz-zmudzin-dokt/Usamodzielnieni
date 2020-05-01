@@ -10,7 +10,7 @@ const ChatInfo = ({ chat, ...rest }) => {
                 <UserIcon />
             </Col>
             <Col >
-                <h5>{chat.title}</h5>
+                <h5>{chat.name}</h5>
                 <IndexLinkContainer to={`/chats/${chat.id}`}>
                     <Button>Pokaż szczegóły</Button>
                 </IndexLinkContainer>

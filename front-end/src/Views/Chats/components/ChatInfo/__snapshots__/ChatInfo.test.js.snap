@@ -36,7 +36,7 @@ exports[`ChatInfo should render without crashing 1`] = `
       class="col"
     >
       <h5>
-        Tytuł chatu
+        Nazwa chatu
       </h5>
       <a
         class="btn btn-primary"
