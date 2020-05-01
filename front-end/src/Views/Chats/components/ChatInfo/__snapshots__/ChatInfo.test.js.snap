@@ -1,0 +1,50 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ChatInfo should render without crashing 1`] = `
+<div>
+  <div
+    class="row"
+  >
+    <div
+      class="col-auto"
+    >
+      <svg
+        height="80"
+        width="80"
+      >
+        <circle
+          cx="40"
+          cy="40"
+          fill="white"
+          r="37"
+          stroke="black"
+          stroke-width="3"
+        />
+        <circle
+          cx="40"
+          cy="30"
+          fill="black"
+          r="10"
+        />
+        <path
+          d="M 20 60 q 20 -30 40 0"
+          fill="black"
+        />
+      </svg>
+    </div>
+    <div
+      class="col"
+    >
+      <h5>
+        Tytuł chatu
+      </h5>
+      <a
+        class="btn btn-primary"
+        href="/chats/123"
+      >
+        Pokaż szczegóły
+      </a>
+    </div>
+  </div>
+</div>
+`;
