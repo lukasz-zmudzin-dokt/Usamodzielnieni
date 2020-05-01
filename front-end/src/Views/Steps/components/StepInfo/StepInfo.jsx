@@ -3,7 +3,7 @@ import { Card, Button } from 'react-bootstrap';
 
 const StepInfo = ({ step }) => {
     return (
-        <Card>
+        <Card className="stepInfo">
             <Card.Body>
                 <p>{step.value}</p>
                 {step.next.map(nextStep => <Button variant="primary">{nextStep}</Button>)}

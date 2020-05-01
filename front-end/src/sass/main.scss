@@ -1,4 +1,7 @@
 @import "utilities/variables";
+@import "bootstrap/custom";
+// Import Bootstrap and its default variables
+@import "~bootstrap/scss/bootstrap.scss";
 
 @import "pages/loginRegisterPage.scss";
 @import "pages/offerForm.scss";
@@ -7,8 +10,8 @@
 @import "pages/headerLayout";
 @import "pages/CVEditorPage";
 @import "pages/blogPage";
+@import "pages/steps";
 
-@import "bootstrap/custom";
 
 @import "components/detailsItem";
 @import "components/CVEditorTab";
@@ -17,5 +20,3 @@
 @import "components/notifications";
 @import "components/notificationItemContainer";
 @import "components/smallBlogPost";
-// Import Bootstrap and its default variables
-@import "~bootstrap/scss/bootstrap.scss";

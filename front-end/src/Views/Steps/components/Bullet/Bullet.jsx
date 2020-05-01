@@ -2,9 +2,12 @@ import React from 'react';
 
 const Bullet = ({ step }) => {
     return (
-        <div className={`${step.type}Bullet`}>
-            {step.title}
-        </div>
+        <>
+            <div className={`bullet bullet--${step.type}`}>
+                {step.type === 'main' && step.title}
+            </div>
+            {step.type === 'sub' && <div className="bullet__title">{step.title}</div>}
+        </>
     )
 }
 

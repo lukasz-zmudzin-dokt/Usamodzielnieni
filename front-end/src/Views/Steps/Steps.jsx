@@ -18,6 +18,7 @@ const Steps = () => {
 
     return (
         <Container>
+            <h1>Kroki usamodzielnienia</h1>
             <ProgressBar steps={steps} path={path}>
                 <StepInfo step={steps.find(step => step.id === path[path.length - 1])} />
             </ProgressBar>

@@ -6,8 +6,9 @@ const ProgressBarFragment = ({ step, children }) => {
                 step ? 'visited' : 'next';
 
     return (
-        <div className={`${type}ProgressBarFragment`}>
+        <div className="progressBarFragment__container">
             {step && <Bullet step={step}/>}
+            <div className={`progressBarFragment progressBarFragment--${type}`}></div>
             {children}
         </div>
     )
