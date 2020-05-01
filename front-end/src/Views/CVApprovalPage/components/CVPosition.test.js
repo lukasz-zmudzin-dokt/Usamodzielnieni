@@ -5,6 +5,7 @@ import CVPosition from "./CVPosition";
 import {UserContext} from "context/UserContext";
 import {createMemoryHistory} from 'history';
 import {staffTypes} from "constants/routes";
+import proxy from "config/api";
 
 const renderWithRouter = (
     ui,
@@ -78,7 +79,7 @@ describe("CVPosition", () => {
         fireEvent.click(getByText("Pokaż CV"));
 
         await expect(fetch).toHaveBeenCalledWith(
-            "https://usamo-back.herokuapp.com/cv/generator/0/",
+            proxy.cv + "generator/0/",
             {
                 headers: {
                     Authorization: "token undefined",
@@ -100,7 +101,7 @@ describe("CVPosition", () => {
         fireEvent.click(getByText("Akceptuj"));
 
         await expect(fetch).toHaveBeenCalledWith(
-            "https://usamo-back.herokuapp.com/cv/admin/verification/0/",
+            proxy.cv + "admin/verification/0/",
             {
                 headers: {
                     Authorization: "token undefined",
@@ -133,11 +134,11 @@ describe("CVPosition", () => {
         fireEvent.click(getByText("Pokaż CV", {exact: false}));
 
         await waitForElement(() => fetch(
-            "https://usamo-back.herokuapp.com/cv/generator/" + apiCV.cv_id + "/", {
+            proxy.cv + "generator/" + apiCV.cv_id + "/", {
                 method: "GET"
             }
         ));
-        expect(open).toHaveBeenCalledWith('https://usamo-back.herokuapp.com/media/cv/0', "_blank")
+        expect(open).toHaveBeenCalledWith(proxy.plain + '/media/cv/0', "_blank")
     });
 
     it('should render danger alert on api fail', async () => {
@@ -166,7 +167,7 @@ describe("CVPosition", () => {
         failFetch = true;
         fireEvent.click(getByText("Pokaż CV", {exact: false}));
         await waitForElement(() => fetch(
-            "https://usamo-back.herokuapp.com/cv/generator/" + apiCV.cv_id + "/", {
+            proxy.cv + "generator/" + apiCV.cv_id + "/", {
                 method: "GET"
             }
         ));

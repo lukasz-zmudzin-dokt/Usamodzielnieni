@@ -1,5 +1,5 @@
 import React from "react";
-import {Card, Container} from "react-bootstrap";
+import {Alert, Card, Container} from "react-bootstrap";
 import UserDetails from "Views/UserProfilePage/components/UserDetails";
 import UserBasicInfo from "Views/UserProfilePage/components/UserBasicInfo";
 import { UserContext } from "context";
@@ -7,6 +7,7 @@ import { getUserData } from "Views/UserProfilePage/functions/getUserData.js";
 import AdminRegisterButton from "./components/AdminRegisterButton/AdminRegisterButton";
 import CVApprovalButton from "./components/CVApprovalButton/CVApprovalButton";
 import EmployerMyOffersButton from "./components/EmployerMyOffersButton/EmployerMyOffersButton";
+import AdminApproveUserButton from "./components/AdminApproveUserBuuton/AdminApproveUserButton";
 
 const names = {
   role: {
@@ -73,9 +74,14 @@ class UserProfilePage extends React.Component {
           </Card.Body>
           <UserDetails user={this.state.user} names={names} />
           <Card.Body className="text-center">
-            <AdminRegisterButton user={this.context} />
             <CVApprovalButton user={this.context} />
-            <EmployerMyOffersButton userType={this.context.type} />
+            <EmployerMyOffersButton user={this.context} />
+            <AdminRegisterButton user={this.context} />
+            <AdminApproveUserButton user={this.context} />
+            {this.context.type !== 'Staff' && this.context.data && this.context.data.status !== 'Verified' ?
+              <Alert variant="info">Nie masz jeszcze dostępu do wszystkich funkcji aplikacji. Poczekaj na weryfikację swojego konta.</Alert> :
+                null
+            }
           </Card.Body>
         </Card>
       </Container>

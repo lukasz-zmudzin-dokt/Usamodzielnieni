@@ -1,5 +1,7 @@
+import proxy from "config/api";
+
 export const getUserCVs = async (token) => {
-    return await fetch("https://usamo-back.herokuapp.com/cv/user/list/", {
+    return await fetch(proxy.cv + "user/list/", {
         method: "GET",
         headers: {
             "Authorization": "token " + token,

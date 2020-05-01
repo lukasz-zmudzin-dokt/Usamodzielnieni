@@ -5,13 +5,14 @@ import {Redirect} from "react-router-dom";
 import {acceptCV} from "Views/CVApprovalPage/functions/acceptCV";
 import {getCVUrl} from "Views/CVApprovalPage/functions/getCVUrl";
 import { DetailsItem } from 'components';
+import proxy from "config/api";
 
 const showCV = async (e, token, cvId, setError) => {
     e.preventDefault();
     try {
         const response = await getCVUrl(token, cvId);
 
-            let url = "https://usamo-back.herokuapp.com" + response;
+            let url = proxy.plain + response;
             window.open(url, '_blank');
 
     } catch (response) {
@@ -68,6 +69,7 @@ const CVPosition = (props) => {
                     Akceptuj
                 </Button>
                 <Button
+                    disabled
                     variant="warning m-1 p-1"
                     className="btnImprove"
                     onClick={e => improveCV(e, setRedirect)}>

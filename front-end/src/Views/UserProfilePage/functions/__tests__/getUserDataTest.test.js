@@ -1,5 +1,6 @@
 import React from 'react';
 import { getUserData } from 'Views/UserProfilePage/functions/getUserData.js';
+import proxy from "config/api";
 
 describe("getUserData", () => {
   let failFetch;
@@ -43,7 +44,7 @@ describe("getUserData", () => {
   it("should fetch the data if server response successful", async () => {
     await getUserData(token);
     expect(fetch).toHaveBeenCalledWith(
-        "https://usamo-back.herokuapp.com/account/data",
+        proxy.account + "data",
         {
           headers: {
             Authorization: "Token 123",

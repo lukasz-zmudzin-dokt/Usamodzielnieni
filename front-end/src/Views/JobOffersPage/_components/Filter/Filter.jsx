@@ -163,7 +163,7 @@ const Filter = ({ setFilters, count, disabled }) => {
       {count !== 0 && (
         <small className="search__countText">{`Ilość znalezionych ofert: ${count}`}</small>
       )}
-      {user.type === "Employer" ? (
+      {user.type === "Employer" && user.data && user.data.status === 'Verified' ? (
         <IndexLinkContainer as={Button} to="/offerForm">
           <Button variant="success" className="mt-2">
             Dodaj ofertę

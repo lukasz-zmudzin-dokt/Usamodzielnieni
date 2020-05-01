@@ -2,6 +2,7 @@ import CVSection from "./cvSection";
 import React from "react";
 import {fireEvent, render, waitForElement} from '@testing-library/react';
 import {MemoryRouter} from "react-router-dom";
+import proxy from "config/api";
 
 describe('CVSection', () => {
     let failFetch;
@@ -88,7 +89,7 @@ describe('CVSection', () => {
         );
 
         fireEvent.click(getByText('Zobacz CV'));
-        await expect(fetch).toHaveBeenCalledWith("https://usamo-back.herokuapp.com/cv/generator/0/", {
+        await expect(fetch).toHaveBeenCalledWith(proxy.cv + "generator/0/", {
             method: "GET",
             headers: {
                 "Authorization": "token " + token,
@@ -105,10 +106,10 @@ describe('CVSection', () => {
        );
 
        fireEvent.click(getByText('Zobacz CV'));
-       await waitForElement(() => fetch("https://usamo-back.herokuapp.com/cv/generator/" + myCV.cv_id + "/", {
+       await waitForElement(() => fetch(proxy.cv + "generator/" + myCV.cv_id + "/", {
            method: "GET"
        }));
-       expect(open).toHaveBeenCalledWith("https://usamo-back.herokuapp.com/media/cv/0", "_blank");
+       expect(open).toHaveBeenCalledWith(proxy.plain + "/media/cv/0", "_blank");
     });
 
     it('should render error on api fail', async () => {

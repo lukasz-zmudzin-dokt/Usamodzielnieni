@@ -1,5 +1,7 @@
+import proxy from "config/api";
+
 export const sendData = async (credentials) => {
-  const url = "https://usamo-back.herokuapp.com/account/login/";
+  const url = proxy.account + "login/";
   const response =  await fetch(url, {
     method: "POST",
     body: JSON.stringify(credentials),
