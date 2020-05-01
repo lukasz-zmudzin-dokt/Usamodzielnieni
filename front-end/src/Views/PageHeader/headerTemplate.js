@@ -17,22 +17,25 @@ class HeaderTemplate extends React.Component {
   displayMenu() {
     let type = (this.context.token)? this.context.type : undefined;
     let adminGroup = (this.context.data && type===userTypes.STAFF)? this.context.data.group_type : undefined;
-    //console.log(adminGroup);
-
+    let loggedOut, userIncluded, adminIncluded, userVerified;
     if (this.props.location.pathname !== "/")
       return (
         <Nav className="mr-auto ">
           {menuPositions.map(pos => {
               const path = compile(pos.path);
+              loggedOut = !this.context.token && !pos.allowed;
+              userIncluded = !pos.allowed || pos.allowed.includes(this.context.type);
+              adminIncluded = adminGroup && (!pos.allowed || pos.allowed.some(type => adminGroup.includes(type)));
+              userVerified = pos.verified === true && this.context.data && this.context.data.status === 'Verified';
               return (
-                  (!this.context.token && !pos.allowed) ||
-                  (this.context.token && (!pos.allowed || pos.allowed.includes(this.context.type)) &&
-                    (!pos.verified || (pos.verified === true && this.context.data && this.context.data.status === 'Verified'))) ||
-                  (adminGroup && pos.allowed.some(type => adminGroup.includes(type))))
-                  ? (
-                      <IndexLinkContainer to={path({})} key={pos.name}>
-                          <Nav.Link>{pos.name}</Nav.Link>
-                      </IndexLinkContainer>
+              (loggedOut) ||
+              (this.context.token && (userIncluded) &&
+                (!pos.verified || (userVerified))) ||
+              (adminIncluded))
+              ? (
+                  <IndexLinkContainer to={path({})} key={pos.name}>
+                      <Nav.Link>{pos.name}</Nav.Link>
+                  </IndexLinkContainer>
               ) : null
           }
           )}

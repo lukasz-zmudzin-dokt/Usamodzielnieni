@@ -1,5 +1,5 @@
 import React from "react";
-import {Card, Container} from "react-bootstrap";
+import {Alert, Card, Container} from "react-bootstrap";
 import UserDetails from "Views/UserProfilePage/components/UserDetails";
 import UserBasicInfo from "Views/UserProfilePage/components/UserBasicInfo";
 import { UserContext } from "context";
@@ -78,6 +78,10 @@ class UserProfilePage extends React.Component {
             <EmployerMyOffersButton user={this.context} />
             <AdminRegisterButton user={this.context} />
             <AdminApproveUserButton user={this.context} />
+            {this.context.type !== 'Staff' && this.context.data && this.context.data.status !== 'Verified' ?
+              <Alert variant="info">Nie masz jeszcze dostępu do wszystkich funkcji aplikacji. Poczekaj na weryfikację swojego konta.</Alert> :
+                null
+            }
           </Card.Body>
         </Card>
       </Container>
