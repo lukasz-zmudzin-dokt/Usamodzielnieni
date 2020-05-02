@@ -10,7 +10,7 @@ const getCV = async (id, token) => {
     },
   });
   if (res.status !== 200) {
-    throw Error("getTypes");
+    throw Error("getCV");
   } else {
     return res.json();
   }
@@ -27,7 +27,6 @@ const sendFeedback = async (id, token, feedback) => {
     additional_info: feedback.additionalInfo,
     basic_info: feedback.basicInfo,
   };
-  console.log(body);
   const res = await fetch(`${proxy.cv}admin/feedback/`, {
     method: "POST",
     body: JSON.stringify(body),

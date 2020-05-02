@@ -32,7 +32,7 @@ const CorrectionForm = ({ data }) => {
     if (checkIfNotEmpty()) {
       setDisabled(true);
       try {
-        sendFeedback(data.id, data.token, feedback);
+        await sendFeedback(data.id, data.token, feedback);
         setFeedback({
           basicInfo: "",
           schools: "",

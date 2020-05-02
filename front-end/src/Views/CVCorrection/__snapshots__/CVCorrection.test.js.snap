@@ -36,7 +36,7 @@ exports[`CVCorrection should match snapshot 1`] = `
             class="CVCorrection__form"
           >
             <div
-              class="offerForm__textContainer form-group"
+              class="textContainer form-group"
             >
               <label
                 class="form-label"
@@ -52,7 +52,7 @@ exports[`CVCorrection should match snapshot 1`] = `
               />
             </div>
             <div
-              class="offerForm__textContainer form-group"
+              class="textContainer form-group"
             >
               <label
                 class="form-label"
@@ -68,7 +68,7 @@ exports[`CVCorrection should match snapshot 1`] = `
               />
             </div>
             <div
-              class="offerForm__textContainer form-group"
+              class="textContainer form-group"
             >
               <label
                 class="form-label"
@@ -84,7 +84,7 @@ exports[`CVCorrection should match snapshot 1`] = `
               />
             </div>
             <div
-              class="offerForm__textContainer form-group"
+              class="textContainer form-group"
             >
               <label
                 class="form-label"
@@ -100,7 +100,7 @@ exports[`CVCorrection should match snapshot 1`] = `
               />
             </div>
             <div
-              class="offerForm__textContainer form-group"
+              class="textContainer form-group"
             >
               <label
                 class="form-label"
@@ -116,7 +116,7 @@ exports[`CVCorrection should match snapshot 1`] = `
               />
             </div>
             <div
-              class="offerForm__textContainer form-group"
+              class="textContainer form-group"
             >
               <label
                 class="form-label"

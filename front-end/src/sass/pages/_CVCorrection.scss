@@ -10,8 +10,21 @@
 
 .CVCorrection__form {
   flex-grow: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .cvCorrection__pdfContainer {
-  width: 57%;
+  width: 100%;
+}
+
+.react-pdf__Page__canvas {
+  width: 100% !important;
+  height: auto !important;
+}
+
+@media (min-width: 768px) {
+  .cvCorrection__pdfContainer {
+    width: 60%;
+  }
 }

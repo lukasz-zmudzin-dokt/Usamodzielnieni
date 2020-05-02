@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  render,
-  fireEvent,
-  waitForElement,
-  wait,
-} from "@testing-library/react";
+import { render } from "@testing-library/react";
 import CorrectionForm from "./CorrectionForm";
 
 describe("CorrectionForm", () => {

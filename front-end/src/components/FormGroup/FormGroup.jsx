@@ -103,7 +103,7 @@ const FormGroup = ({
   return (
     <Form.Group
       controlId={id}
-      className={type === "textarea" ? "offerForm__textContainer" : ""}
+      className={type === "textarea" ? "textContainer" : ""}
       {...rest}
     >
       <Form.Label>{header}</Form.Label>
