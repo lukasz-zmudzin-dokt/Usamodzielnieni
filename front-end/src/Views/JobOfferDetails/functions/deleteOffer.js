@@ -11,6 +11,6 @@ export const deleteOffer = async (id, token) => {
     if (response.status === 200) {
         return response.status;
     } else {
-        throw response.status;
+        throw Error(response.status.toString());
     }
 };
