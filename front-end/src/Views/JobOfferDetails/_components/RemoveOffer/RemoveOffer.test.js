@@ -1,5 +1,5 @@
 import React from "react";
-import { render, waitForElement } from "@testing-library/react";
+import { render, fireEvent, waitForElement } from "@testing-library/react";
 import RemoveOffer from "./RemoveOffer";
 
 let mock_apiError = false;
@@ -32,4 +32,26 @@ describe('RemoveOffer', () => {
         expect(container).toMatchSnapshot();
     });
 
+    it('should render success alert when api returns success', async () => {
+        const { getByText } = render(<RemoveOffer {...props}/>);
+
+        fireEvent.click(getByText("Usuń ofertę"));
+        fireEvent.click(getByText("Tak"));
+
+        await waitForElement(() => getByText('Pomyślnie usunięto ofertę', { exact: false }));
+
+        expect(getByText('Pomyślnie usunięto ofertę', { exact: false })).toBeInTheDocument();
+    });
+
+    it('should render error alert when api throws error', async () => {
+        mock_apiError = true;
+        const { getByText } = render(<RemoveOffer {...props}/>);
+
+        fireEvent.click(getByText("Usuń ofertę"));
+        fireEvent.click(getByText("Tak"));
+
+        await waitForElement(() => getByText('Wystąpił błąd przy usuwaniu oferty', { exact: false }));
+
+        expect(getByText('Wystąpił błąd przy usuwaniu oferty', { exact: false })).toBeInTheDocument();
+    });
 });
