@@ -5,7 +5,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/$
 
 const CVRender = ({ width }) => {
   return (
-    <>
+    <div className="cvCorrection__pdfContainer">
       <Document
         className="CVCorrection__pdf"
         file={{
@@ -20,7 +20,7 @@ const CVRender = ({ width }) => {
           width={width}
         />
       </Document>
-    </>
+    </div>
   );
 };
 

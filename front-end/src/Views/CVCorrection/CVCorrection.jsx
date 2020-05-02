@@ -35,7 +35,7 @@ const CVCorrection = () => {
     <Container>
       <Card ref={cardEl}>
         <Card.Header as="h2" className="offerForm__header">
-          Sprawdź CV
+          Uwagi do CV:
         </Card.Header>
         <Card.Body>
           <Row className="align-center">

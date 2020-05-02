@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import FormGroup from "components/FormGroup";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Row, Alert } from "react-bootstrap";
 import { sendFeedback } from "Views/CVCorrection/functions";
 
 const CorrectionForm = ({ data }) => {
-  const [validated, setValidated] = useState(false);
+  const [fail, setFail] = useState(false);
+  const [msg, setMsg] = useState("");
   const [disabled, setDisabled] = useState(false);
   const [feedback, setFeedback] = useState({
     basicInfo: "",
@@ -15,30 +16,53 @@ const CorrectionForm = ({ data }) => {
     additionalInfo: "",
   });
 
-  const submit = async (event) => {
-    setDisabled(true);
-    const form = event.currentTarget;
-
-    event.preventDefault();
-
-    console.log("xd");
-    event.stopPropagation();
-    let res;
-    try {
-      res = sendFeedback(data.id, data.token, feedback);
-      setFeedback({
-        basicInfo: "",
-        schools: "",
-        experiences: "",
-        skills: "",
-        languages: "",
-        additionalInfo: "",
-      });
-    } catch (err) {}
-
-    setDisabled(false);
-    setValidated(true);
+  const checkIfNotEmpty = () => {
+    for (let key in feedback) {
+      if (feedback[key] !== "") {
+        return true;
+      }
+    }
+    return false;
   };
+
+  const submit = async (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (checkIfNotEmpty()) {
+      setDisabled(true);
+      let res;
+      try {
+        res = sendFeedback(data.id, data.token, feedback);
+        setFeedback({
+          basicInfo: "",
+          schools: "",
+          experiences: "",
+          skills: "",
+          languages: "",
+          additionalInfo: "",
+        });
+        setFail(false);
+        setMsg("Pomyślnie przesłano uwagi.");
+      } catch (err) {
+        setFail(true);
+        setMsg("Błąd serwera.");
+      }
+    } else {
+      setFail(true);
+      setMsg("Dodaj minimalnie jedną uwagę.");
+    }
+    setDisabled(false);
+  };
+
+  const message = msg ? (
+    fail ? (
+      <Alert variant="danger">{msg}</Alert>
+    ) : (
+      <Alert variant="success">{msg}</Alert>
+    )
+  ) : null;
+
   return (
     <Form onSubmit={submit} className="CVCorrection__form">
       <FormGroup
@@ -83,9 +107,17 @@ const CorrectionForm = ({ data }) => {
         setVal={(val) => setFeedback({ ...feedback, additionalInfo: val })}
         val={feedback.additionalInfo}
       />
-      <Button variant="primary" type="submit" className="" disabled={disabled}>
-        {disabled ? "Ładowanie..." : "Dodaj"}
-      </Button>
+      {message}
+      <Row className="justify-content-end m-0">
+        <Button
+          variant="primary"
+          type="submit"
+          className=""
+          disabled={disabled}
+        >
+          {disabled ? "Ładowanie..." : "Wyślij uwagi"}
+        </Button>
+      </Row>
     </Form>
   );
 };
