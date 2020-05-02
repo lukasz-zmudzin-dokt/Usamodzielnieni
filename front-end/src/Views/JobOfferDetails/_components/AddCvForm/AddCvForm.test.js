@@ -16,12 +16,14 @@ describe('AddCvForm', () => {
             return new Promise((resolve, reject) => {
                 switch (init.method) {
                     case "POST":
-                        resolve({ status: apiStatus });
+                        resolve({ status: apiStatus || 201 });
                         break;
                     case "GET":
-                        resolve( apiStatus !== 200 ? { status: apiStatus } : { 
+                        resolve( apiStatus ? { status: apiStatus } : { 
                             status: 200,
-                            json: () => Promise.resolve([ { cv_id: '1', is_verified: isVerified } ])
+                            json: () => Promise.resolve([
+                                { cv_id: '1', name: 'nazwa cv', is_verified: isVerified }
+                            ])
                         });
                         break;
                     default:
@@ -32,8 +34,8 @@ describe('AddCvForm', () => {
         });
     })
     beforeEach(() => {
-        apiStatus = 200;
-        isVerified = false;
+        apiStatus = undefined;
+        isVerified = true;
         jest.clearAllMocks();
     });
 
@@ -44,7 +46,7 @@ describe('AddCvForm', () => {
             </MemoryRouter>
         );
 
-        await waitForElement(() => getByText('utwórz nowe CV'));
+        await waitForElement(() => getByText('Aplikuj do oferty'));
 
         expect(container).toMatchSnapshot();
     });
@@ -116,7 +118,7 @@ describe('AddCvForm', () => {
         );
 
         await waitForElement(() => getByText('Aplikuj do oferty'));
-        apiStatus = 400;
+        apiStatus = 403;
         fireEvent.click(getByText('Aplikuj do oferty'));
 
         await waitForElement(() => getByText('Już zaaplikowano', { exact: false }));
@@ -153,6 +155,6 @@ describe('AddCvForm', () => {
         expect(queryByText('Aplikuj do oferty')).not.toBeInTheDocument();
         expect(queryByText('utwórz nowe CV')).not.toBeInTheDocument();
 
-        await waitForElement(() => getByText('utwórz nowe CV'));
+        await waitForElement(() => getByText('Aplikuj do oferty'));
     });
 });
