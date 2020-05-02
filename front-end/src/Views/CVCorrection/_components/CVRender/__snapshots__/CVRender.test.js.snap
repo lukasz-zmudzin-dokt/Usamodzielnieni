@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CVRender should match snapshot 1`] = `
+<div>
+  <div
+    class="cvCorrection__pdfContainer"
+  >
+    <div
+      class="react-pdf__Document CVCorrection__pdf"
+    >
+      <div
+        class="react-pdf__message react-pdf__message--loading"
+      >
+        Loading PDF…
+      </div>
+    </div>
+  </div>
+</div>
+`;

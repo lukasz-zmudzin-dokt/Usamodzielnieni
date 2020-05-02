@@ -18,6 +18,7 @@ const CVRender = ({ width }) => {
           size="A4"
           pageNumber={1}
           width={width}
+          data-testid="pdf"
         />
       </Document>
     </div>

@@ -38,7 +38,7 @@ const sendFeedback = async (id, token, feedback) => {
     },
   });
   if (res.status !== 201) {
-    throw Error("coś poszło nie tak");
+    throw res.status;
   }
   return res.status;
 };

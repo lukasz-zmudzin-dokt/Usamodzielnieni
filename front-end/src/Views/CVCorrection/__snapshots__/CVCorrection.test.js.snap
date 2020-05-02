@@ -1,0 +1,150 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CVCorrection should match snapshot 1`] = `
+<div>
+  <div
+    class="container"
+  >
+    <div
+      class="card"
+    >
+      <h2
+        class="offerForm__header card-header"
+      >
+        Uwagi do CV:
+      </h2>
+      <div
+        class="card-body"
+      >
+        <div
+          class="align-center row"
+        >
+          <div
+            class="cvCorrection__pdfContainer"
+          >
+            <div
+              class="react-pdf__Document CVCorrection__pdf"
+            >
+              <div
+                class="react-pdf__message react-pdf__message--loading"
+              >
+                Loading PDF…
+              </div>
+            </div>
+          </div>
+          <form
+            class="CVCorrection__form"
+          >
+            <div
+              class="offerForm__textContainer form-group"
+            >
+              <label
+                class="form-label"
+                for="basic_info"
+              >
+                Dane osobowe
+              </label>
+              <textarea
+                class="offerForm__textarea form-control"
+                id="basic_info"
+                maxlength="50"
+                minlength="1"
+              />
+            </div>
+            <div
+              class="offerForm__textContainer form-group"
+            >
+              <label
+                class="form-label"
+                for="schools"
+              >
+                Edukacja
+              </label>
+              <textarea
+                class="offerForm__textarea form-control"
+                id="schools"
+                maxlength="50"
+                minlength="1"
+              />
+            </div>
+            <div
+              class="offerForm__textContainer form-group"
+            >
+              <label
+                class="form-label"
+                for="experiences"
+              >
+                Doświadczenie zawodowe
+              </label>
+              <textarea
+                class="offerForm__textarea form-control"
+                id="experiences"
+                maxlength="50"
+                minlength="1"
+              />
+            </div>
+            <div
+              class="offerForm__textContainer form-group"
+            >
+              <label
+                class="form-label"
+                for="skills"
+              >
+                Umiejętności
+              </label>
+              <textarea
+                class="offerForm__textarea form-control"
+                id="skills"
+                maxlength="50"
+                minlength="1"
+              />
+            </div>
+            <div
+              class="offerForm__textContainer form-group"
+            >
+              <label
+                class="form-label"
+                for="languages"
+              >
+                Języki obce
+              </label>
+              <textarea
+                class="offerForm__textarea form-control"
+                id="languages"
+                maxlength="50"
+                minlength="1"
+              />
+            </div>
+            <div
+              class="offerForm__textContainer form-group"
+            >
+              <label
+                class="form-label"
+                for="additional_info"
+              >
+                Dodatkowe uwagi
+              </label>
+              <textarea
+                class="offerForm__textarea form-control"
+                id="additional_info"
+                maxlength="50"
+                minlength="1"
+              />
+            </div>
+            <div
+              class="justify-content-end m-0 row"
+            >
+              <button
+                class="btn btn-primary"
+                type="submit"
+              >
+                Wyślij uwagi
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

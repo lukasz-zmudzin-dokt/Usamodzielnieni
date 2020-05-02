@@ -3,7 +3,7 @@ import { Container, Card, Row } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { getCV } from "Views/CVCorrection/functions";
 import { UserContext } from "context";
-import { CVRender, CorrectionForm } from "./components";
+import { CVRender, CorrectionForm } from "./_components";
 
 const CVCorrection = () => {
   const [width, setWidth] = useState(0);
@@ -26,7 +26,6 @@ const CVCorrection = () => {
       try {
         res = await getCV(id, token);
       } catch (err) {}
-      console.log(res);
     };
     loadCV();
   }, [id, token]);
