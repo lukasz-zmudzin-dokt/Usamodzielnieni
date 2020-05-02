@@ -65,7 +65,7 @@ const CommentForm = ({ blogId, afterSubmit, ...rest }) => {
     const msg = error ? (<Alert variant="danger">Wystąpił błąd podczas przesyłania komentarza.</Alert>) :
         submitted && (<Alert variant="success">Pomyślnie przesłano komentarz.</Alert>);
 
-    return (
+    return user.data && user.data.status === 'Verified' ? (
         <div {...rest}>
             <h5>Dodaj komentarz</h5>
             <Form 
@@ -90,7 +90,7 @@ const CommentForm = ({ blogId, afterSubmit, ...rest }) => {
                 </Form.Group>
             </Form>
         </div>
-    )
+    ) : null
 }
 
 export default CommentForm

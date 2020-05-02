@@ -99,7 +99,7 @@ const JobOfferDetails = props => {
             <p>{offer.description}</p>
           </div>
         )}
-        { user.type === 'Standard' && <AddCvForm id={props.match.params.id} user={user}/> }
+        { user.type === 'Standard' && user.data && user.data.status === 'Verified' && <AddCvForm id={props.match.params.id} user={user}/> }
         { user.type === 'Staff' && user.data.group_type.includes(staffTypes.JOBS) && !confirmDeletion ?
             <Row className="d-flex justify-content-center">
               <Button variant="danger" onClick={e => setConfirmDeletion(true)}>Usuń ofertę</Button>

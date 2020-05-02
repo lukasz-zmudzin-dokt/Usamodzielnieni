@@ -1,5 +1,6 @@
 import React from "react";
 import { Navbar, Nav, Button, Form } from "react-bootstrap";
+import {compile} from 'path-to-regexp';
 
 import logo from "assets/logo.png";
 
@@ -9,30 +10,34 @@ import { Redirect, withRouter } from "react-router-dom";
 import { UserContext } from "context";
 import Notifications from "./components/Notifications";
 import menuPositions from "constants/menuPositions";
-import { userTypes } from "constants/userTypes";
+import {userTypes} from "constants/userTypes";
 import proxy from "config/api";
 
 class HeaderTemplate extends React.Component {
   displayMenu() {
-    let type = this.context.token ? this.context.type : undefined;
-    let adminGroup =
-      this.context.data && type === userTypes.STAFF
-        ? this.context.data.group_type
-        : undefined;
-    //console.log(adminGroup);
-
+    let type = (this.context.token)? this.context.type : undefined;
+    let adminGroup = (this.context.data && type===userTypes.STAFF)? this.context.data.group_type : undefined;
+    let loggedOut, userIncluded, adminIncluded, userVerified;
     if (this.props.location.pathname !== "/")
       return (
         <Nav className="mr-auto ">
-          {menuPositions.map((pos) =>
-            pos.allowed === undefined ||
-            pos.allowed.includes(type) ||
-            (adminGroup &&
-              pos.allowed.some((type) => adminGroup.includes(type))) ? (
-              <IndexLinkContainer to={pos.path} key={pos.name}>
-                <Nav.Link>{pos.name}</Nav.Link>
-              </IndexLinkContainer>
-            ) : null
+          {menuPositions.map(pos => {
+              const path = compile(pos.path);
+              loggedOut = !this.context.token && !pos.allowed;
+              userIncluded = !pos.allowed || pos.allowed.includes(this.context.type);
+              adminIncluded = adminGroup && (!pos.allowed || pos.allowed.some(type => adminGroup.includes(type)));
+              userVerified = pos.verified === true && this.context.data && this.context.data.status === 'Verified';
+              return (
+              (loggedOut) ||
+              (this.context.token && (userIncluded) &&
+                (!pos.verified || (userVerified))) ||
+              (adminIncluded))
+              ? (
+                  <IndexLinkContainer to={path({})} key={pos.name}>
+                      <Nav.Link>{pos.name}</Nav.Link>
+                  </IndexLinkContainer>
+              ) : null
+          }
           )}
         </Nav>
       );
@@ -56,7 +61,7 @@ class HeaderTemplate extends React.Component {
             <Button
               className="menu_action_button_2"
               variant="outline-light"
-              onClick={(e) => this.userLogout(e)}
+              onClick={e => this.userLogout(e)}
             >
               Wyloguj
             </Button>
@@ -75,17 +80,17 @@ class HeaderTemplate extends React.Component {
       );
   }
 
-  userLogout = (e) => {
+  userLogout = e => {
     const url = proxy.account + "logout/";
     fetch(url, {
       method: "POST",
       headers: {
-        Authorization: "token " + this.context.token,
+        Authorization: "token " + this.context.token
       },
-      body: {},
-    }).then((res) => {
+      body: {}
+    }).then(res => {
       if (res.status === 200 || res.status === 401) {
-        res.json().then((responseValue) => {
+        res.json().then(responseValue => {
           this.context.logout();
           return <Redirect to="/" />;
         });
