@@ -30,6 +30,11 @@ exports[`AddCvForm should render without crashing 1`] = `
             >
               nazwa cv
             </option>
+            <option
+              value="2"
+            >
+              nazwa cv 2
+            </option>
           </select>
         </div>
         <div

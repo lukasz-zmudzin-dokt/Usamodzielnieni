@@ -4,7 +4,7 @@ import AddCvForm from "./AddCvForm";
 import { MemoryRouter } from 'react-router-dom';
 
 describe('AddCvForm', () => {
-    let isVerified;
+    let isCvVerified;
     let apiStatus;
     let user;
     let id;
@@ -22,7 +22,8 @@ describe('AddCvForm', () => {
                         resolve( apiStatus ? { status: apiStatus } : { 
                             status: 200,
                             json: () => Promise.resolve([
-                                { cv_id: '1', name: 'nazwa cv', is_verified: isVerified }
+                                { cv_id: '1', name: 'nazwa cv', is_verified: isCvVerified },
+                                { cv_id: '2', name: 'nazwa cv 2', is_verified: isCvVerified }
                             ])
                         });
                         break;
@@ -35,7 +36,7 @@ describe('AddCvForm', () => {
     })
     beforeEach(() => {
         apiStatus = undefined;
-        isVerified = true;
+        isCvVerified = true;
         jest.clearAllMocks();
     });
 
@@ -65,8 +66,8 @@ describe('AddCvForm', () => {
         expect(queryByText('Utwórz CV')).not.toBeInTheDocument();
     });
 
-    it('should render button with link to cvEditor when user is not verified', async () => {
-        isVerified = false;
+    it('should render button with link to cvEditor when user has no verified CV', async () => {
+        isCvVerified = false;
         const { getByText, queryByText } = render(
             <MemoryRouter>
                 <AddCvForm id={id} user={user} />
@@ -79,7 +80,6 @@ describe('AddCvForm', () => {
     });
 
     it('should render apply button when user is verified', async () => {
-        isVerified = true;
         const { getByText, queryByText } = render(
             <MemoryRouter>
                 <AddCvForm id={id} user={user} />
@@ -92,7 +92,6 @@ describe('AddCvForm', () => {
     });
 
     it('should render error alert when api returns error after click', async () => {
-        isVerified = true;
         const { getByText, queryByText } = render(
             <MemoryRouter>
                 <AddCvForm id={id} user={user} />
@@ -110,7 +109,6 @@ describe('AddCvForm', () => {
     });
 
     it('should render fail alert when api returns already added status after click', async () => {
-        isVerified = true;
         const { getByText, queryByText } = render(
             <MemoryRouter>
                 <AddCvForm id={id} user={user} />
@@ -128,14 +126,16 @@ describe('AddCvForm', () => {
     });
 
     it('should render success alert when api returns success after click', async () => {
-        isVerified = true;
-        const { getByText, queryByText } = render(
+        const { getByText, queryByText, getByLabelText } = render(
             <MemoryRouter>
                 <AddCvForm id={id} user={user} />
             </MemoryRouter>
         );
 
         await waitForElement(() => getByText('Aplikuj do oferty'));
+        fireEvent.change(getByLabelText("Wybierz CV", { exact: false }), {
+            target: { value: "2" },
+        });
         fireEvent.click(getByText('Aplikuj do oferty'));
 
         await waitForElement(() => getByText('Pomyślnie zaaplikowano', { exact: false }));
