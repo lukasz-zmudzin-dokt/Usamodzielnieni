@@ -1,16 +1,17 @@
 import React from 'react'
 import { ProgressBarFragment } from '../';
 
-const ProgressBar = ({ steps, path, children }) => {
+const ProgressBar = ({ steps, path, setCurrent }) => {
     return (
         <div>
             {path.map((stepId, i) => (
                 <ProgressBarFragment
-                    step={steps.find(step => step.id === stepId)}>
-                    {(path.length - 1 === i) && children}
-                </ProgressBarFragment>
+                    key={stepId}
+                    step={steps.find(step => step.id === stepId)}
+                    current={path.length - 1 === i}
+                    setCurrent={setCurrent} />
             ))}
-            <ProgressBarFragment />
+            { steps.find(step => step.id === path[path.length - 1])?.next && <ProgressBarFragment />}
         </div>
     )
 }

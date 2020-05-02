@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import { Container } from 'react-bootstrap';
-import {
-    ProgressBar,
-    StepInfo
-} from './components';
+import { ProgressBar } from './components';
 
 const Steps = () => {
     const [steps, setSteps] = useState([
@@ -14,14 +11,23 @@ const Steps = () => {
         { id: '5', type: 'main', title: '324', value: 'asdas d1', next: ['6'] },
         { id: '6', type: 'sub', title: 'tsx', value: 's d1w 1' },
     ]);
-    const [path, setPath] = useState(['1', '2', '3', '4']);
+    const [path, setPath] = useState(['1']);
+
+    const setCurrent = (id) => {
+        console.log(id)
+        const index = path.indexOf(id);
+
+        if (index >= 0) {
+            setPath(path.slice(0, index + 1));
+        } else {
+            setPath([...path, id]);
+        }
+    }
 
     return (
         <Container>
             <h1>Kroki usamodzielnienia</h1>
-            <ProgressBar steps={steps} path={path}>
-                <StepInfo step={steps.find(step => step.id === path[path.length - 1])} />
-            </ProgressBar>
+            <ProgressBar steps={steps} path={path} setCurrent={setCurrent} />
         </Container>
     )
 }
