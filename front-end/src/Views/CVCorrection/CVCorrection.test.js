@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  render,
-  fireEvent,
-  waitForElement,
-  wait,
-} from "@testing-library/react";
+import { render, fireEvent, waitForElement } from "@testing-library/react";
 import CVCorrection from "./CVCorrection";
 import { createMemoryHistory } from "history";
 import { Router } from "react-router-dom";
