@@ -37,7 +37,6 @@ const addPhoto = async (token, photo, cvId) => {
     url.picture(cvId), 
     { method: "POST", body: formData, headers: { Authorization: "Token " + token } }
   )
-  console.log(await photoRes.json())
 
   if (photoRes.status === 201) {
     return;

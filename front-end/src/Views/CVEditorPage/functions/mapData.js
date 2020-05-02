@@ -1,5 +1,4 @@
 export const mapData = (data) => {
-    console.log(data);
     return {
         personalData: mapBasicInfo(data.basic_info),
         education: mapSchools(data.schools),
@@ -60,15 +59,10 @@ export const mapFeedback = (data) => ({
 });
 
 export const objectifyPhoto = (data) => {
-    console.log(data);
     const blob = b64toBlob(data.file);
-    const file =  new File([blob], "cv_foto.jpg", {
+    return new File([blob], "cv_foto.jpg", {
         type: "image/jpeg"
     });
-
-    console.log(file);
-
-    return file;
 };
 
 const b64toBlob = (b64Data, contentType='image/jpeg', sliceSize=512) => {
