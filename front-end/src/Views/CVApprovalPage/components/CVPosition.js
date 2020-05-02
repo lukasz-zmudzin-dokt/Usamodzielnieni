@@ -77,7 +77,7 @@ const CVPosition = (props) => {
       </Col>
       {message ? (message) : null}
       {redirect ? (
-        <Redirect to={"/cvEditor/" + cv.cv_id} />
+        <Redirect to={"/cvCorrection/" + cv.cv_id} />
       ) : null}
     </Row>
   );
