@@ -1,7 +1,7 @@
 import AddCvForm from './AddCvForm/AddCvForm';
-import RemoveCv from './RemoveCv/RemoveCv';
+import RemoveOffer from './RemoveOffer/RemoveOffer';
 
 export {
     AddCvForm,
-    RemoveCv
+    RemoveOffer
 };

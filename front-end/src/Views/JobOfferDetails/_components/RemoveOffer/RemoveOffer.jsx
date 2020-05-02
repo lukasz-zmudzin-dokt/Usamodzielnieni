@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Alert, Button } from 'react-bootstrap';
 import { deleteOffer } from '../../functions/deleteOffer';
 
-const RemoveCv = ({ id, user }) => {
+const RemoveOffer = ({ id, user }) => {
     const [confirmDeletion, setConfirmDeletion] = useState(false);
     const [deleted, setDeleted] = useState(false);
     const [deletionError, setDeletionError] = useState(false);
@@ -29,10 +29,10 @@ const RemoveCv = ({ id, user }) => {
         (deleted && !deletionError) && <Alert variant="success">Pomyślnie usunięto ofertę.</Alert>
 
     return (
-        <div className="removeCv">
+        <div className="removeOffer">
             {msg || <Button variant="danger" onClick={e => setConfirmDeletion(true)}>Usuń ofertę</Button>}
         </div>
     )
 }
 
-export default RemoveCv;
+export default RemoveOffer;

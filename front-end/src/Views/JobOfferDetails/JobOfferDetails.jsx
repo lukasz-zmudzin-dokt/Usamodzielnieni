@@ -3,7 +3,7 @@ import { Container, Card, Alert, Row } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
 import { UserContext } from "context";
 import { DetailsItem } from 'components';
-import { AddCvForm, RemoveCv } from "./_components";
+import { AddCvForm, RemoveOffer } from "./_components";
 import { staffTypes } from "constants/staffTypes";
 import proxy from "config/api";
 
@@ -85,7 +85,7 @@ const JobOfferDetails = props => {
           </div>
         )}
         { user.type === 'Standard' && user.data?.status === 'Verified' && <AddCvForm id={props.match.params.id} user={user} /> }
-        { user.type === 'Staff' && user.data?.group_type.includes(staffTypes.JOBS) && <RemoveCv id={props.match.params.id} user={user} /> }
+        { user.type === 'Staff' && user.data?.group_type.includes(staffTypes.JOBS) && <RemoveOffer id={props.match.params.id} user={user} /> }
       </Card.Body>
       </Card>
     </Container>

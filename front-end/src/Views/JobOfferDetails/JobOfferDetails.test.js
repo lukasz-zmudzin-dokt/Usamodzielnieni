@@ -6,7 +6,7 @@ import { UserContext } from "context/UserContext";
 
 jest.mock('./_components', () => ({ 
     AddCvForm: () => <div>AddCvForm</div>,
-    RemoveCv: () => <div>RemoveCv</div>,
+    RemoveOffer: () => <div>RemoveOffer</div>,
 }));
 jest.mock('constants/staffTypes', () => ({
     staffTypes: {
@@ -99,7 +99,7 @@ describe('JobOfferDetails', () => {
         expect(queryByText('Jakaś nazwa oferty')).not.toBeInTheDocument();
     });
 
-    it('should render RemoveCv component when staff user group is jobs', async () => {
+    it('should render RemoveOffer component when staff user group is jobs', async () => {
         user.type = 'Staff';
         user.data.group_type = 'jobs';
 
@@ -113,7 +113,7 @@ describe('JobOfferDetails', () => {
 
         await waitForElement(() => getByText('Jakaś nazwa oferty'));
         expect(queryByText('AddCvForm')).not.toBeInTheDocument();
-        expect(getByText('RemoveCv')).toBeInTheDocument();
+        expect(getByText('RemoveOffer')).toBeInTheDocument();
     });
 
     it('should render AddCvForm component when standard user is verified', async () => {
@@ -126,11 +126,11 @@ describe('JobOfferDetails', () => {
         );
 
         await waitForElement(() => getByText('Jakaś nazwa oferty'));
-        expect(queryByText('RemoveCv')).not.toBeInTheDocument();
+        expect(queryByText('RemoveOffer')).not.toBeInTheDocument();
         expect(getByText('AddCvForm')).toBeInTheDocument();
     });
 
-    it('should not render AddCvForm and RemoveCv component when user is not verified and is not a jobs staff', async () => {
+    it('should not render AddCvForm and RemoveOffer component when user is not verified and is not a jobs staff', async () => {
         user.data.status = 'Unverified'
         const { getByText, queryByText } = render(
             <UserContext.Provider value={user}>
@@ -141,7 +141,7 @@ describe('JobOfferDetails', () => {
         );
 
         await waitForElement(() => getByText('Jakaś nazwa oferty'));
-        expect(queryByText('RemoveCv')).not.toBeInTheDocument();
+        expect(queryByText('RemoveOffer')).not.toBeInTheDocument();
         expect(queryByText('AddCvForm')).not.toBeInTheDocument();
     });
 });
