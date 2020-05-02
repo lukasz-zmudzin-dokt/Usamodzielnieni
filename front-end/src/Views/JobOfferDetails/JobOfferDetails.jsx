@@ -3,10 +3,9 @@ import { Container, Card, Alert, Row } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
 import { UserContext } from "context";
 import { DetailsItem } from 'components';
-import { AddCvForm } from "./_components";
+import { AddCvForm, RemoveCv } from "./_components";
 import { staffTypes } from "constants/staffTypes";
 import proxy from "config/api";
-import RemoveCv from './_components/RemoveCv/RemoveCv';
 
 const getOfferDetails = async (id, token) => {
   let url = `${proxy.job}job-offer/${id}`;
