@@ -1,23 +1,25 @@
 import React from "react";
 import { Document, Page, pdfjs } from "react-pdf";
+import proxy from 'config/api';
+import {Alert} from 'react-bootstrap'
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
-const CVRender = ({ width }) => {
+const CVRender = ({ url }) => {
   return (
     <div className="cvCorrection__pdfContainer">
       <Document
         className="CVCorrection__pdf"
         file={{
-          url:
-            "https://cors-anywhere.herokuapp.com/http://www.africau.edu/images/default/sample.pdf?fbclid=IwAR0q89FFuOH13trzKpQ8OSwOc_A0ANF0QKRwe7L4zrJfCKZi__F8UpgTCNQ",
+          url: `${proxy.plain}${url}`,
         }}
+        error={<Alert variant="danger">Nie udało się załadować CV.</Alert>}
+        loading={<Alert variant="info">Ładowanie...</Alert>}
       >
         <Page
           className="pdf_doc_container"
           size="A4"
           pageNumber={1}
-          width={width}
           data-testid="pdf"
         />
       </Document>

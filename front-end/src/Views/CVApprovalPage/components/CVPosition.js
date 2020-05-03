@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { UserContext } from "context";
 import { Alert, Button, Col, Row } from "react-bootstrap";
-import { Redirect } from "react-router-dom";
+import {IndexLinkContainer} from "react-router-bootstrap";
 import { acceptCV } from "Views/CVApprovalPage/functions/acceptCV";
 import { getCVUrl } from "Views/CVApprovalPage/functions/getCVUrl";
 import { DetailsItem } from 'components';
@@ -32,16 +32,11 @@ const handleAcceptCV = async (e, token, cvId, setError, setAccepted) => {
   }
 };
 
-const improveCV = (e, setRedirect) => {
-  e.preventDefault();
-  setRedirect(true);
-};
 
 const CVPosition = (props) => {
   const context = useContext(UserContext);
   const cv = props.cv;
   const [error, setError] = useState(false);
-  const [redirect, setRedirect] = useState(false);
   const [accepted, setAccepted] = useState(false);
 
   const message = error ? (
@@ -52,33 +47,41 @@ const CVPosition = (props) => {
 
   return (
     <Row>
-      <DetailsItem md={4} xl={2} label={"Imię"}>{cv.basic_info.first_name}</DetailsItem>
-      <DetailsItem md={4} xl={3} label={"Nazwisko"}>{cv.basic_info.last_name}</DetailsItem>
-      <DetailsItem md={4} xl={3} label={"Email"}>{cv.basic_info.email}</DetailsItem>
+      <DetailsItem md={4} xl={2} label={"Imię"}>
+        {cv.basic_info.first_name}
+      </DetailsItem>
+      <DetailsItem md={4} xl={3} label={"Nazwisko"}>
+        {cv.basic_info.last_name}
+      </DetailsItem>
+      <DetailsItem md={4} xl={3} label={"Email"}>
+        {cv.basic_info.email}
+      </DetailsItem>
       <Col className="align-self-center d-flex justify-content-end">
         <Button
-          variant="primary m-1 p-1"
+          variant="primary m-1"
+          size="sm"
           className="btnDownload"
-          onClick={e => showCV(e, context.token, cv.cv_id, setError)}>
+          onClick={(e) => showCV(e, context.token, cv.cv_id, setError)}
+        >
           Pokaż CV
-                </Button>
+        </Button>
         <Button
-          variant="success m-1 p-1"
+          variant="success m-1"
           className="btnAccept"
-          onClick={e => handleAcceptCV(e, context.token, cv.cv_id, setError, setAccepted)}>
+          size="sm"
+          onClick={(e) =>
+            handleAcceptCV(e, context.token, cv.cv_id, setError, setAccepted)
+          }
+        >
           Akceptuj
-                </Button>
-        <Button
-          variant="warning m-1 p-1"
-          className="btnImprove"
-          onClick={e => improveCV(e, setRedirect)}>
-          Zgłoś poprawki
-                </Button>
+        </Button>
+        <IndexLinkContainer to={"/cvCorrection/" + cv.cv_id}>
+          <Button variant="warning m-1" className="btnImprove" size="sm">
+            Zgłoś poprawki
+          </Button>
+        </IndexLinkContainer>
       </Col>
-      {message ? (message) : null}
-      {redirect ? (
-        <Redirect to={"/cvCorrection/" + cv.cv_id} />
-      ) : null}
+      {message ? message : null}
     </Row>
   );
 };

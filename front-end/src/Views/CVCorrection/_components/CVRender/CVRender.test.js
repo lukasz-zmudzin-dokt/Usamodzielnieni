@@ -4,7 +4,7 @@ import CVRender from "./CVRender";
 
 describe("CVRender", () => {
   it("should match snapshot", () => {
-    const { container } = render(<CVRender width="600" />);
+    const { container } = render(<CVRender />);
     expect(container).toMatchSnapshot();
   });
 });

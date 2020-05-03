@@ -11,7 +11,12 @@ exports[`CVRender should match snapshot 1`] = `
       <div
         class="react-pdf__message react-pdf__message--loading"
       >
-        Loading PDF…
+        <div
+          class="fade alert alert-info show"
+          role="alert"
+        >
+          Ładowanie...
+        </div>
       </div>
     </div>
   </div>

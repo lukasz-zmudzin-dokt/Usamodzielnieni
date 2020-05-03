@@ -29,12 +29,12 @@ const CVCorrection = () => {
     <Container>
       <Card>
         <Card.Header as="h2" className="offerForm__header">
-          Uwagi do CV:
+          Uwagi do CV
         </Card.Header>
         <Card.Body>
-          <Row className="align-center">
-            <CVRender />
-            <CorrectionForm data={{ id, token }} />
+          <Row className="m-0">
+            <CVRender url={url} />
+            <CorrectionForm id={id} token={token} />
           </Row>
           {msg ? <Alert variant="danger">{msg}</Alert> : null}
         </Card.Body>

@@ -1,7 +1,3 @@
-// .CVCorrection__pdf {
-//   width: 50%;
-//   position: relative;
-// }
 .react-pdf__Document.CVCorrection__pdf {
   display: flex;
   flex-direction: row;
@@ -23,7 +19,7 @@
   height: auto !important;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1280px) {
   .cvCorrection__pdfContainer {
     width: 60%;
   }

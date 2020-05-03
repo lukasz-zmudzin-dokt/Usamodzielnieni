@@ -3,7 +3,7 @@ import FormGroup from "components/FormGroup";
 import { Form, Button, Row, Alert } from "react-bootstrap";
 import { sendFeedback } from "Views/CVCorrection/functions";
 
-const CorrectionForm = ({ data }) => {
+const CorrectionForm = ({ id, token }) => {
   const [fail, setFail] = useState(false);
   const [msg, setMsg] = useState("");
   const [disabled, setDisabled] = useState(false);
@@ -32,7 +32,7 @@ const CorrectionForm = ({ data }) => {
     if (checkIfNotEmpty()) {
       setDisabled(true);
       try {
-        await sendFeedback(data.id, data.token, feedback);
+        await sendFeedback(id, token, feedback);
         setFeedback({
           basicInfo: "",
           schools: "",
@@ -70,6 +70,7 @@ const CorrectionForm = ({ data }) => {
         type="textarea"
         setVal={(val) => setFeedback({ ...feedback, basicInfo: val })}
         val={feedback.basicInfo}
+        length={{ min: 1, max: 1000 }}
       />
       <FormGroup
         header="Edukacja"
@@ -77,6 +78,7 @@ const CorrectionForm = ({ data }) => {
         type="textarea"
         setVal={(val) => setFeedback({ ...feedback, schools: val })}
         val={feedback.schools}
+        length={{ min: 1, max: 1000 }}
       />
       <FormGroup
         header="Doświadczenie zawodowe"
@@ -84,6 +86,7 @@ const CorrectionForm = ({ data }) => {
         type="textarea"
         setVal={(val) => setFeedback({ ...feedback, experiences: val })}
         val={feedback.experiences}
+        length={{ min: 1, max: 1000 }}
       />
       <FormGroup
         header="Umiejętności"
@@ -91,6 +94,7 @@ const CorrectionForm = ({ data }) => {
         type="textarea"
         setVal={(val) => setFeedback({ ...feedback, skills: val })}
         val={feedback.skills}
+        length={{ min: 1, max: 1000 }}
       />
       <FormGroup
         header="Języki obce"
@@ -98,6 +102,7 @@ const CorrectionForm = ({ data }) => {
         type="textarea"
         setVal={(val) => setFeedback({ ...feedback, languages: val })}
         val={feedback.languages}
+        length={{ min: 1, max: 1000 }}
       />
       <FormGroup
         header="Dodatkowe uwagi"
@@ -105,15 +110,11 @@ const CorrectionForm = ({ data }) => {
         type="textarea"
         setVal={(val) => setFeedback({ ...feedback, additionalInfo: val })}
         val={feedback.additionalInfo}
+        length={{ min: 1, max: 1000 }}
       />
       {message}
       <Row className="justify-content-end m-0">
-        <Button
-          variant="primary"
-          type="submit"
-          className=""
-          disabled={disabled}
-        >
+        <Button variant="primary" type="submit" disabled={disabled}>
           {disabled ? "Ładowanie..." : "Wyślij uwagi"}
         </Button>
       </Row>
