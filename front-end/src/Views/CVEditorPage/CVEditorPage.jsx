@@ -14,6 +14,7 @@ import { UserContext,AlertContext } from "context";
 import { sendData, getFeedback } from "Views/CVEditorPage/functions/other.js";
 import { createCVObject } from "Views/CVEditorPage/functions/createCVObject.js";
 import { withRouter } from "react-router-dom";
+import {WithAlertContext} from 'components'
 
 class CVEditorPage extends React.Component {
   constructor(props) {
@@ -36,8 +37,6 @@ class CVEditorPage extends React.Component {
     };
     this.tabs = [];
   }
-
-  static contextA = AlertContext;
 
   onPrevClick = () => {
     const { formTab } = this.state;
@@ -93,8 +92,8 @@ class CVEditorPage extends React.Component {
         );
       } catch (e) {
         this.setState({ disabled: false });
-        this.contextA.changeMessage("Nie udało się wysłać CV");
-        this.contextA.changeVisibility();
+        this.context.changeMessage("Nie udało się wysłać CV");
+        this.context.changeVisibility();
       }
     }
   };
@@ -230,4 +229,4 @@ class CVEditorPage extends React.Component {
 
 CVEditorPage.contextType = UserContext;
 
-export default withRouter(CVEditorPage);
+export default withRouter(WithAlertContext(CVEditorPage));
