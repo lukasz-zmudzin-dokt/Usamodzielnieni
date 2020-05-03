@@ -12,7 +12,8 @@ class MyCVsPage extends React.Component {
         this.state = {
             cvs: [],
             errors: false,
-            loading: true
+            loading: true,
+            delError: false
         };
     }
 
@@ -23,7 +24,7 @@ class MyCVsPage extends React.Component {
                     loading: false
             }) :
                 this.setState({
-                    errors: "load",
+                    errors: true,
                     loading: false
                 }));
     };
@@ -35,7 +36,7 @@ class MyCVsPage extends React.Component {
         } catch(e) {
             console.log(e);
             this.setState({
-                errors: "delete"
+                delError: true
             });
         }
         if (deleted) {
@@ -45,10 +46,6 @@ class MyCVsPage extends React.Component {
             this.setState({
                 cvs: cvList
             });
-        } else {
-            this.setState({
-                errors: "not found"
-            });
         }
     };
 
@@ -56,7 +53,8 @@ class MyCVsPage extends React.Component {
         const {
             errors,
             cvs,
-            loading
+            loading,
+            delError
         } = this.state;
         return (
             <Container className="mt-4">
@@ -79,13 +77,14 @@ class MyCVsPage extends React.Component {
                                     </Row>
                                 </ListGroup.Item>
                             ) : null}
-                            {errors !== false ? (
+                            {errors ? (
                                 <Alert variant="danger" className="m-3">
                                     Ups, coś poszło nie tak. Nie można pobrać listy CV.
                                 </Alert>
                             ) : cvs.length > 0 ? cvs.map((cv) =>
                                     <CVSection key={cv.cv_id} cv={cv} token={this.context.token} cutCV={this.cutItem}/>
                             ) : <Alert variant="info">Nie masz jeszcze żadnych CV. Utwórz nowe w zakładce "Kreator CV"!</Alert> }
+                            {delError ? <Alert variant="danger">Wystąpił błąd podczas usuwania cv.</Alert> : null}
                         </ListGroup>
                     </Card>
             </Container>
