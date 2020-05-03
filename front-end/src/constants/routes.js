@@ -131,8 +131,8 @@ export default [
     path: paths.BLOG_FORM,
     component: BlogPostForm,
     isPrivate: true,
-    // type: userTypes.STAFF,
-    // group: staffTypes.BLOG_CREATOR,
+    type: userTypes.STAFF,
+    group: staffTypes.BLOG_CREATOR,
     exact: true,
     userVerified: true
   },

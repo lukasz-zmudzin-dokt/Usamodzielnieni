@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
 import { getFilters } from "Views/BlogPage/functions/fetchData";
-import { Form, Col, Button, Alert } from "react-bootstrap";
+import { Form, Col, Button} from "react-bootstrap";
 import { DEFAULT_INPUT } from "constants/other.js";
 import FormGroup from "components/FormGroup";
-import { UserContext } from "context";
+import { UserContext,AlertContext } from "context";
 import { IndexLinkContainer } from "react-router-bootstrap";
 import {staffTypes} from "constants/staffTypes";
 
@@ -11,9 +11,9 @@ const Filter = ({ token, setFilter, count }) => {
   const [filters, setFilters] = useState({ categories: [], tags: [] });
   const [category, setCategory] = useState(DEFAULT_INPUT);
   const [tag, setTag] = useState(DEFAULT_INPUT);
-  const [err, setErr] = useState(false);
 
   const user = useContext(UserContext);
+  const contextA = useContext(AlertContext);
 
   useEffect(() => {
     const loadOffers = async (token) => {
@@ -21,9 +21,10 @@ const Filter = ({ token, setFilter, count }) => {
       try {
         res = await getFilters(token);
       } catch (e) {
-        console.log(e);
+        contextA.changeMessage("Wystąpił błąd podczas ładowania filtrów.")
+        contextA.changeVisibility(true);
         res = { categories: [], tags: [] };
-        setErr(true);
+     
       }
       setFilters(res);
     };
@@ -48,12 +49,6 @@ const Filter = ({ token, setFilter, count }) => {
       tag: undefined,
     });
   };
-
-  const msg = err ? (
-    <Alert variant="danger" className="mt-3">
-      Wystąpił błąd podczas ładowania filtrów.
-    </Alert>
-  ) : null;
 
   return (
     <Form className="ml-3 mr-3 mb-3" onSubmit={filter}>
@@ -106,7 +101,6 @@ const Filter = ({ token, setFilter, count }) => {
           <small className="blog__countText">{`Ilość znalezionych postów: ${count}`}</small>
         )}
       </div>
-      {msg}
     </Form>
   );
 };

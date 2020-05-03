@@ -2,7 +2,9 @@ import {Accordion, Card} from "react-bootstrap";
 import React from "react";
 import UserToApprove from "./UserToApprove";
 
-const UserDetails = ({ users, activeUser, setActiveUser }) => {
+const UserDetails = ({ users, activeUser, setActiveUser,sliceUser }) => {
+
+     
 
     return(
         <Accordion>
@@ -12,7 +14,7 @@ const UserDetails = ({ users, activeUser, setActiveUser }) => {
                         {user.username} ({user.type})
                     </Accordion.Toggle>
                     <Accordion.Collapse eventKey={user.id}>
-                        <UserToApprove user={user} key={user.id} activeUser={activeUser} />
+                        <UserToApprove user={user} key={user.id} activeUser={activeUser} sliceUser={sliceUser}/>
                     </Accordion.Collapse>
                 </Card>
             )}

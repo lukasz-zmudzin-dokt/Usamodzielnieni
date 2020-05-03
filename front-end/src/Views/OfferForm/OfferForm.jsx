@@ -52,7 +52,7 @@ const OfferForm = () => {
         } else {
           setDisabled(false);
           contextA.changeMessage("Nie udało się załadować danych.")
-          contextA.changeVisibility();
+          contextA.changeVisibility(true);
         }
         return;
       }

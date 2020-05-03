@@ -2,7 +2,7 @@ import React from "react";
 import {Alert, Card, Container} from "react-bootstrap";
 import UserDetails from "Views/UserProfilePage/components/UserDetails";
 import UserBasicInfo from "Views/UserProfilePage/components/UserBasicInfo";
-import { UserContext } from "context";
+import { UserContext,AlertContext } from "context";
 import { getUserData } from "Views/UserProfilePage/functions/getUserData.js";
 import AdminRegisterButton from "./components/AdminRegisterButton/AdminRegisterButton";
 import CVApprovalButton from "./components/CVApprovalButton/CVApprovalButton";
@@ -25,6 +25,16 @@ const names = {
   }
 };
 
+
+const withAlertContext = Component => (
+  props => (
+    <AlertContext.Consumer>
+      {context => <Component alertContext={context} {...props}/>}
+    </AlertContext.Consumer>
+  )
+)
+
+
 class UserProfilePage extends React.Component {
   constructor(props) {
     super(props);
@@ -34,15 +44,18 @@ class UserProfilePage extends React.Component {
         role: "",
         firstName: "",
         lastName: "",
-        email: ""
+        email: "",
       },
-      error: false
+      error: false,
     };
   }
 
+
   componentDidMount() {
     this.getData();
-  };
+  }
+
+
 
   getData = async () => {
     try {
@@ -53,14 +66,14 @@ class UserProfilePage extends React.Component {
           firstName: res.data.first_name,
           lastName: res.data.last_name,
           email: res.data.email,
-          role: res.type
-        }
+          role: res.type,
+        },
       });
     } catch (res) {
-      this.setState({error: true})
+      this.props.alertContext.changeMessage("Wystąpił błąd podczas pobierania");
+      this.props.alertContext.changeVisibility(true);
     }
   };
-
 
   render() {
     return (
@@ -70,7 +83,11 @@ class UserProfilePage extends React.Component {
             <h3>Mój profil</h3>
           </Card.Header>
           <Card.Body>
-            <UserBasicInfo error={this.state.error} user={this.state.user} names={names} />
+            <UserBasicInfo
+              error={this.state.error}
+              user={this.state.user}
+              names={names}
+            />
           </Card.Body>
           <UserDetails user={this.state.user} names={names} />
           <Card.Body className="text-center">
@@ -78,10 +95,14 @@ class UserProfilePage extends React.Component {
             <EmployerMyOffersButton user={this.context} />
             <AdminRegisterButton user={this.context} />
             <AdminApproveUserButton user={this.context} />
-            {this.context.type !== 'Staff' && this.context.data && this.context.data.status !== 'Verified' ?
-              <Alert variant="info">Nie masz jeszcze dostępu do wszystkich funkcji aplikacji. Poczekaj na weryfikację swojego konta.</Alert> :
-                null
-            }
+            {this.context.type !== "Staff" &&
+            this.context.data &&
+            this.context.data.status !== "Verified" ? (
+              <Alert variant="info">
+                Nie masz jeszcze dostępu do wszystkich funkcji aplikacji.
+                Poczekaj na weryfikację swojego konta.
+              </Alert>
+            ) : null}
           </Card.Body>
         </Card>
       </Container>
@@ -91,4 +112,4 @@ class UserProfilePage extends React.Component {
 
 UserProfilePage.contextType = UserContext;
 
-export default UserProfilePage;
+export default withAlertContext(UserProfilePage);

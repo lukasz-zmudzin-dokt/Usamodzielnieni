@@ -1,10 +1,17 @@
 import React from "react";
-import { render, waitForElement, fireEvent } from "@testing-library/react";
+import { render, waitForElement } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import UserApprovalPage from "./UserApprovalPage";
+import {AlertContext} from 'context';
 
 describe("UserApproval", () => {
     let failFetch;
+    let contextA = {
+        open: true,
+        changeVisibility: jest.fn(),
+        message: "abc",
+        changeMessage: jest.fn(),
+    };
     let apiUsers = [
         {
             date_joined: "2020-04-25T23:31:59.239639+02:00",
@@ -45,9 +52,11 @@ describe("UserApproval", () => {
 
     it("should match snapshot", async () => {
         const { container, getByText } = render (
-            <MemoryRouter>
-                <UserApprovalPage />
-            </MemoryRouter>
+            <AlertContext.Provider value={contextA}>
+                <MemoryRouter>
+                    <UserApprovalPage />
+                </MemoryRouter>
+            </AlertContext.Provider>
         );
         await waitForElement(() => getByText("testowyuser123 (Standard)"));
         expect(container).toMatchSnapshot();
@@ -55,9 +64,11 @@ describe("UserApproval", () => {
 
     it("should load users", async () => {
         const { getByText } = render (
+            <AlertContext.Provider value={contextA}>
             <MemoryRouter>
                 <UserApprovalPage />
             </MemoryRouter>
+            </AlertContext.Provider>
         );
         await waitForElement(() => getByText("testowyuser123 (Standard)"));
         expect(getByText("testowyuser123 (Standard)")).toBeInTheDocument();
@@ -66,21 +77,25 @@ describe("UserApproval", () => {
     it("should view alert at api fail", async () => {
         failFetch = true;
         const { getByText } = render (
-            <MemoryRouter>
-                <UserApprovalPage />
-            </MemoryRouter>
+            <AlertContext.Provider value={contextA}>
+                <MemoryRouter>
+                    <UserApprovalPage />
+                </MemoryRouter>
+            </AlertContext.Provider>
         );
 
-        await waitForElement(() => getByText("Ups, wystąpił błąd."));
-        expect(getByText("Ups, wystąpił błąd.")).toBeInTheDocument();
+        await waitForElement(() => getByText("Brak kont do zatwierdzenia"));
+        expect(getByText("Brak kont do zatwierdzenia")).toBeInTheDocument();
     });
 
     it("should view alert at api returning no users", async () => {
         apiUsers = [];
         const { getByText } = render (
-            <MemoryRouter>
-                <UserApprovalPage />
-            </MemoryRouter>
+            <AlertContext.Provider value={contextA}>
+                <MemoryRouter>
+                    <UserApprovalPage />
+                </MemoryRouter>
+            </AlertContext.Provider>
         );
         await waitForElement(() => getByText("Brak kont do zatwierdzenia"));
         expect(getByText("Brak kont do zatwierdzenia")).toBeInTheDocument();

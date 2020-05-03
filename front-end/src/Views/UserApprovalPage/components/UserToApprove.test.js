@@ -2,11 +2,18 @@ import React from "react";
 import {render, waitForElement, fireEvent} from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import UserToApprove from "./UserToApprove";
+import {AlertContext} from 'context';
 
 describe("UserApproval", () => {
     let failFetch;
     let fetchUserType;
     let postType;
+    let contextA = {
+        open: true,
+        changeVisibility: jest.fn(),
+        message: "abc",
+        changeMessage: jest.fn(),
+    };
 
     let user = {
         standard: {
@@ -129,14 +136,16 @@ describe("UserApproval", () => {
 
     it("should view alert at api fail", async () => {
         failFetch = true;
-        const { getByText } = render (
+        const { getByText,queryByText } = render (
+            <AlertContext.Provider value={contextA}>
             <MemoryRouter>
                 <UserToApprove user={user.standard} activeUser={user.standard.id} />
             </MemoryRouter>
+            </AlertContext.Provider>
         );
 
-        await waitForElement(() => getByText("Ups, wystąpił błąd..."));
-        expect(getByText("Ups, wystąpił błąd...")).toBeInTheDocument();
+        await waitForElement(() => getByText("Nazwa użytkownika"));
+        expect(queryByText("Jan")).not.toBeInTheDocument();
     });
 
     it('should accept user', async () => {
@@ -144,9 +153,11 @@ describe("UserApproval", () => {
         fetchUserType = "Standard";
         postType = "Approve";
         const { getByText } = render (
+            <AlertContext.Provider value={contextA}>
             <MemoryRouter>
                 <UserToApprove user={user.standard} activeUser={user.standard.id} />
             </MemoryRouter>
+            </AlertContext.Provider>
         );
         await expect(fetch).toHaveBeenCalledWith(
             "https://usamo-back.herokuapp.com/account/admin/user_details/2949ad29-27da-49a0-aba2-1aa7b5bfa20b/",
@@ -170,8 +181,6 @@ describe("UserApproval", () => {
                 method: "POST",
             }
         );
-        await waitForElement(() => getByText("Konto zatwierdzone pomyślnie."));
-        expect(getByText("Konto zatwierdzone pomyślnie.")).toBeInTheDocument();
     });
 
     it('should reject user', async () => {
@@ -179,9 +188,11 @@ describe("UserApproval", () => {
         fetchUserType = "Standard";
         postType = "Reject";
         const { getByText } = render (
+            <AlertContext.Provider value={contextA}>
             <MemoryRouter>
                 <UserToApprove user={user.standard} activeUser={user.standard.id} />
             </MemoryRouter>
+            </AlertContext.Provider>
         );
         await expect(fetch).toHaveBeenCalledWith(
             "https://usamo-back.herokuapp.com/account/admin/user_details/2949ad29-27da-49a0-aba2-1aa7b5bfa20b/",
@@ -205,8 +216,6 @@ describe("UserApproval", () => {
                 method: "POST",
             }
         );
-        await waitForElement(() => getByText("Konto odrzucone pomyślnie."));
-        expect(getByText("Konto odrzucone pomyślnie.")).toBeInTheDocument();
     });
 
 });

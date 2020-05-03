@@ -14,7 +14,7 @@ export const AlertProvider = (props) => {
     open,
     message,
     variant,
-    changeVisibility: () => setOpen(true),
+    changeVisibility: (newOpen) => setOpen(newOpen),
     changeMessage: (newMessage,newVariant = variant) => {
       setOpen(false);
       setMessage(newMessage);

@@ -3,7 +3,7 @@ import {fireEvent, render, waitForElement} from "@testing-library/react";
 import UserProfile from "Views/UserProfilePage/index.js";
 import {MemoryRouter, Router} from "react-router-dom";
 import {createMemoryHistory} from 'history';
-import {UserContext} from "context/UserContext";
+import {UserContext,AlertContext} from "context";
 import {staffTypes} from "constants/staffTypes";
 
 const renderWithRouter = (
@@ -15,10 +15,18 @@ const renderWithRouter = (
     } = {}
 ) => {
   let context = { type: 'Staff', data: {group_type: type}, token: 123 };
+  let contextA = {
+    open: true,
+    changeVisibility: jest.fn(),
+    message: "abc",
+    changeMessage: jest.fn(),
+  };
   return {
     ...render(
         <UserContext.Provider value={context}>
+        <AlertContext.Provider value={contextA}>
           <Router history={history}>{ui}</Router>
+          </AlertContext.Provider>
         </UserContext.Provider>
     ),
     history,
@@ -34,6 +42,7 @@ describe("UserProfile", () => {
     email: "hello@world.com"
   };
   let apiFail;
+  let contextA;
 
   beforeAll(() => {
     global.fetch = jest.fn().mockImplementation((input, init) => {
@@ -56,29 +65,39 @@ describe("UserProfile", () => {
 
   beforeEach(() => {
     apiFail = false;
+    contextA = {
+      open: true,
+      changeVisibility: jest.fn(),
+      message: "abc",
+      changeMessage: jest.fn(),
+    };
     jest.clearAllMocks();
   });
 
   it("should render correctly", () => {
-    const {container} = render(
+    const { container } = render(
+      <AlertContext.Provider value={contextA}>
         <MemoryRouter>
-          <UserProfile/>
+          <UserProfile />
         </MemoryRouter>
+      </AlertContext.Provider>
     );
     expect(container).toMatchSnapshot();
   });
 
-  it('should render alert on api fail', async () => {
+  it('should render empty fields on api fail', async () => {
     apiFail = true;
-    const {getByText} = render(
+    const { queryByText,getByText } = render(
+      <AlertContext.Provider value={contextA}>
         <MemoryRouter>
-          <UserProfile/>
+          <UserProfile />
         </MemoryRouter>
+      </AlertContext.Provider>
     );
 
-    await waitForElement(() => getByText("Wystąpił błąd", {exact: false}));
+    await waitForElement(() => getByText("Nazwa użytkownika", {exact: false}));
 
-    expect(getByText("Wystąpił błąd", {exact: false})).toBeInTheDocument();
+    expect(queryByText("Jan", {exact: false})).not.toBeInTheDocument();
   });
 
   it('should render register button for staff reg', () => {
