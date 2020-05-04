@@ -172,4 +172,16 @@ describe('MyCVsPage', () => {
         expect(getByText("jeden")).toBeInTheDocument();
         expect(getByText("Wystąpił błąd", {exact: false})).toBeInTheDocument();
     });
+
+    it('should render alert on max cvs reached', async () => {
+        myCVs = [myCVs[0], myCVs[1], myCVs[0], myCVs[1], myCVs[0]];
+        const {getByText, getAllByText} = render(
+            <MemoryRouter>
+                <MyCVsPage />
+            </MemoryRouter>
+        );
+
+        await waitForElement(() => getAllByText('Usuń CV'));
+        expect(getByText("Osiągnięto maksymalną liczbę CV", {exact: false})).toBeInTheDocument();
+    })
 });

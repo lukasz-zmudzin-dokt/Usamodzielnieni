@@ -5,6 +5,7 @@ import { UserContext } from "context/UserContext";
 import { getUserCVs } from "./functions/getUserCVs";
 import CVSection from "./components/cvSection";
 import {deleteCV} from "./functions/deleteCV";
+import {IndexLinkContainer} from "react-router-bootstrap";
 
 class MyCVsPage extends React.Component {
     constructor(props) {
@@ -40,11 +41,8 @@ class MyCVsPage extends React.Component {
             });
         }
         if (deleted) {
-            let cvList = this.state.cvs;
-            const indexToCut = cvList.findIndex(cv => cv.cv_id = cvId);
-            cvList.splice(indexToCut, 1);
             this.setState({
-                cvs: cvList
+                cvs: this.state.cvs.filter(cv => cv.cv_id !== cvId)
             });
         }
     };
@@ -83,10 +81,15 @@ class MyCVsPage extends React.Component {
                                 </Alert>
                             ) : cvs.length > 0 ? cvs.map((cv) =>
                                     <CVSection key={cv.cv_id} cv={cv} token={this.context.token} cutCV={this.cutItem}/>
-                            ) : <Alert variant="info">Nie masz jeszcze żadnych CV. Utwórz nowe w zakładce "Kreator CV"!</Alert> }
-                            {delError ? <Alert variant="danger">Wystąpił błąd podczas usuwania cv.</Alert> : null}
-                            {cvs.length === 5 ? <Alert variant="info">Osiągnięto maksymalną liczbę CV. Jeżeli chcesz dodać nowe, usuń CV z listy powyżej.</Alert> : null}
+                            ) : null }
                         </ListGroup>
+                        {delError ? <Alert variant="danger">Wystąpił błąd podczas usuwania cv.</Alert> : null}
+                        {
+                            cvs.length === 5 ? <Alert variant="info">Osiągnięto maksymalną liczbę CV. Jeżeli chcesz dodać nowe, usuń CV z listy powyżej.</Alert> :
+                                cvs.length === 0 ? <Alert variant="info">Nie masz jeszcze żadnych CV. Utwórz nowe w zakładce "
+                                        <IndexLinkContainer to="/cvEditor"><Alert.Link>Kreator CV</Alert.Link></IndexLinkContainer>"!</Alert> :
+                                    null
+                        }
                     </Card>
             </Container>
         )
