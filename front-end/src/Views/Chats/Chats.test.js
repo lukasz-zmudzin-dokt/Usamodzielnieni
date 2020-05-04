@@ -5,7 +5,10 @@ import {
     waitForElement,
 } from '@testing-library/react';
 import Chats from 'Views/Chats';
-import proxy from 'config/api';
+
+jest.mock('./components', () => ({
+    ChatInfo: ({ chat }) => <div>{chat.name}</div>
+}));
 
 describe('Chats', () => {
     let failFetch = false;
@@ -30,9 +33,9 @@ describe('Chats', () => {
     beforeEach(() => {
         failFetch = false;
         apiChats = [
-            { id: 1, name: "Wiadomość 1" },
-            { id: 2, name: "Wiadomość 2" },
-            { id: 3, name: "Wiadomość 3" }
+            { id: 1, name: "Wiadomość 1", user: {} },
+            { id: 2, name: "Wiadomość 2", user: {} },
+            { id: 3, name: "Wiadomość 3", user: {} }
         ];
         jest.clearAllMocks();
     });
@@ -57,7 +60,7 @@ describe('Chats', () => {
             </MemoryRouter>
         );
 
-        expect(getByText('Ładowanie wiadomości...', { exact: false })).toBeInTheDocument();
+        expect(getByText('Ładowanie wiadomości', { exact: false })).toBeInTheDocument();
         expect(queryByText('Wiadomość 1')).not.toBeInTheDocument();
         await waitForElement(() => getByText('Wiadomość 1'));
     });

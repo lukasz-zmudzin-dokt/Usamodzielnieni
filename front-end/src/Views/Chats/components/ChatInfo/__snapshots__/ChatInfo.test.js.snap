@@ -3,34 +3,14 @@
 exports[`ChatInfo should render without crashing 1`] = `
 <div>
   <div
-    class="row"
+    class="chatInfo row"
   >
     <div
-      class="col-auto"
+      class="chatInfo__picture col-auto"
     >
-      <svg
-        height="80"
-        width="80"
-      >
-        <circle
-          cx="40"
-          cy="40"
-          fill="white"
-          r="37"
-          stroke="black"
-          stroke-width="3"
-        />
-        <circle
-          cx="40"
-          cy="30"
-          fill="black"
-          r="10"
-        />
-        <path
-          d="M 20 60 q 20 -30 40 0"
-          fill="black"
-        />
-      </svg>
+      <div>
+        UserPicture
+      </div>
     </div>
     <div
       class="col"
