@@ -60,7 +60,7 @@ class MyCVsPage extends React.Component {
             <Container className="mt-4">
                     <Card>
                         <Card.Header as="h2">
-                            Moje CV
+                            Moje CV ({cvs.length} / 5)
                         </Card.Header>
                         {loading ? (
                             <Alert variant="primary" className="m-3">
@@ -85,6 +85,7 @@ class MyCVsPage extends React.Component {
                                     <CVSection key={cv.cv_id} cv={cv} token={this.context.token} cutCV={this.cutItem}/>
                             ) : <Alert variant="info">Nie masz jeszcze żadnych CV. Utwórz nowe w zakładce "Kreator CV"!</Alert> }
                             {delError ? <Alert variant="danger">Wystąpił błąd podczas usuwania cv.</Alert> : null}
+                            {cvs.length === 5 ? <Alert variant="info">Osiągnięto maksymalną liczbę CV. Jeżeli chcesz dodać nowe, usuń CV z listy powyżej.</Alert> : null}
                         </ListGroup>
                     </Card>
             </Container>

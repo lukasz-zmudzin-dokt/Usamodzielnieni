@@ -4,7 +4,6 @@ import {MemoryRouter, Router} from 'react-router-dom';
 import {UserContext} from "context/UserContext";
 import {createMemoryHistory} from 'history';
 import MyCVsPage from "./MyCVsPage";
-import CVSection from "./components/cvSection";
 
 const renderWithRouter = (
     ui,
@@ -41,6 +40,9 @@ describe('MyCVsPage', () => {
                     case "GET":
                         resolve({ status: 200, json: () => Promise.resolve(myCVs) });
                         break;
+                    case "DELETE":
+                        resolve({status: 200});
+                        break;
                     default:
                         reject({});
                         break;
@@ -58,6 +60,7 @@ describe('MyCVsPage', () => {
         myCVs = [
             {
                 cv_id: 0,
+                name: "jeden",
                 basic_info: {
                     first_name: "Jarek",
                     last_name: "Arek",
@@ -66,6 +69,7 @@ describe('MyCVsPage', () => {
             },
             {
                 cv_id: 1,
+                name: "dwa",
                 basic_info: {
                     first_name: "Ala",
                     last_name: "Mala",
@@ -130,5 +134,42 @@ describe('MyCVsPage', () => {
         fireEvent.click(getByText('Edytuj'));
 
         expect(history.location.pathname).toEqual('/cvEditor/0');
+    });
+
+    it('should delete cv on button click', async () => {
+        myCVs = [ myCVs[0] ];
+        const {getByText, queryByText} = render(
+            <MemoryRouter>
+                <MyCVsPage />
+            </MemoryRouter>
+        );
+
+        await waitForElement(() => getByText('Usuń CV'));
+        expect(getByText("jeden")).toBeInTheDocument();
+
+        fireEvent.click(getByText("Usuń CV"));
+
+        const res = await waitForElement(() => fetch("", {method: "DELETE"}));
+        expect(res.status).toBe(200);
+        await expect(queryByText("jeden")).not.toBeInTheDocument();
+    });
+
+    it('should render error on delete fail', async () => {
+        myCVs = [ myCVs[0] ];
+        const {getByText} = render(
+            <MemoryRouter>
+                <MyCVsPage />
+            </MemoryRouter>
+        );
+
+        await waitForElement(() => getByText('Usuń CV'));
+        expect(getByText("jeden")).toBeInTheDocument();
+        failFetch = true;
+        fireEvent.click(getByText("Usuń CV"));
+
+        const res = await waitForElement(() => fetch("", {method: "DELETE"}));
+        expect(res.status).not.toBe(200);
+        expect(getByText("jeden")).toBeInTheDocument();
+        expect(getByText("Wystąpił błąd", {exact: false})).toBeInTheDocument();
     });
 });
