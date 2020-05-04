@@ -113,7 +113,7 @@ const CorrectionForm = ({ id, token }) => {
         length={{ min: 1, max: 1000 }}
       />
       {message}
-      <Row className="justify-content-end m-0">
+      <Row className="justify-content-center m-0">
         <Button variant="primary" type="submit" disabled={disabled}>
           {disabled ? "Ładowanie..." : "Wyślij uwagi"}
         </Button>
