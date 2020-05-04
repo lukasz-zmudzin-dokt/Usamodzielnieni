@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Container, Card, ListGroup, Alert } from 'react-bootstrap';
 import { UserContext } from 'context';
 import proxy from 'config/api';
-import { ChatInfo } from './components';
+import { ChatInfo, ChatForm } from './components';
 
 const getChats = async (token) => {
   let url = `${proxy.chat}/list`; // TODO
@@ -67,6 +67,7 @@ const Chats = () => {
             ))}
           </ListGroup>
         )}
+        <ChatForm />
       </Card>
     </Container>
   );
