@@ -26,6 +26,10 @@ const mapChats = (chats) => chats.map(chat => ({
   // TODO
 }))
 
+const printMsg = (msg) => {
+  console.log(msg);
+}
+
 const Chats = () => {
   const [chats, setChats] = useState([]);
   const [isChatsLoading, setIsChatsLoading] = useState(false);
@@ -67,7 +71,7 @@ const Chats = () => {
             ))}
           </ListGroup>
         )}
-        <ChatForm />
+        <ChatForm sendMessage={msg=>console.log(msg)}/>
       </Card>
     </Container>
   );
