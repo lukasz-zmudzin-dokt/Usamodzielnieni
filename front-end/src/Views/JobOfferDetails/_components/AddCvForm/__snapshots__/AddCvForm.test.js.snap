@@ -3,17 +3,52 @@
 exports[`AddCvForm should render without crashing 1`] = `
 <div>
   <div
-    class="fade mb-0 alert alert-info show"
-    role="alert"
+    class="row"
   >
-    Poczekaj na pozytywną weryfikację CV lub 
-    <a
-      class="alert-link"
-      href="/cvEditor"
+    <div
+      class="col-lg-4 offset-lg-4"
     >
-      utwórz nowe CV
-    </a>
-    .
+      <form
+        class=""
+      >
+        <div
+          class="form-group"
+        >
+          <label
+            class="form-label"
+            for="selectCv"
+          >
+            Wybierz CV:
+          </label>
+          <select
+            class="form-control"
+            id="selectCv"
+            required=""
+          >
+            <option
+              value="1"
+            >
+              nazwa cv
+            </option>
+            <option
+              value="2"
+            >
+              nazwa cv 2
+            </option>
+          </select>
+        </div>
+        <div
+          class="mb-0 justify-content-center row"
+        >
+          <button
+            class="addCvForm__applyButton  btn btn-primary"
+            type="submit"
+          >
+            Aplikuj do oferty
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
 </div>
 `;
