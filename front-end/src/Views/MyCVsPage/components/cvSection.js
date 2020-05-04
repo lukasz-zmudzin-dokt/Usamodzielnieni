@@ -18,6 +18,13 @@ const showCV = async (cvId, handleShowing, token) => {
 
 const CVSection = ({cv, token, cutCV}) => {
     const [error, setError] = useState(false);
+    const [disabled, setDisabled] = useState(false);
+
+    const handleDeletion = () => {
+        setDisabled(true);
+        cutCV(cv.cv_id);
+        setDisabled(false);
+    };
 
     return (
         <ListGroup.Item key={cv.cv_id}>
@@ -32,7 +39,7 @@ const CVSection = ({cv, token, cutCV}) => {
                     <IndexLinkContainer to={"/cvEditor/" + cv.cv_id}>
                         <Button variant="info" className="mx-2">Edytuj</Button>
                     </IndexLinkContainer>
-                    <Button variant="danger" onClick={e => cutCV(cv.cv_id)}>Usuń CV</Button>
+                    <Button variant="danger" disabled={disabled} onClick={handleDeletion}>{disabled ? "..." : "Usuń CV"}</Button>
                 </Col>
             </Row>
         </ListGroup.Item>
