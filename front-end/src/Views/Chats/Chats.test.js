@@ -4,7 +4,7 @@ import {
     render,
     waitForElement,
 } from '@testing-library/react';
-import Chats from 'Views/Chats';
+import Chats from './Chats';
 
 jest.mock('./components', () => ({
     ChatInfo: ({ chat }) => <div>{chat.name}</div>

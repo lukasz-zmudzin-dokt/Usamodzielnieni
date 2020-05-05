@@ -19,109 +19,22 @@ exports[`Chats should render without crashing 1`] = `
         <div
           class="list-group-item"
         >
-          <div
-            class="chatInfo row"
-          >
-            <div
-              class="chatInfo__picture col-auto"
-            >
-              <div
-                class="userPicture__container"
-              >
-                <div
-                  class="userPicture userPicture--standard"
-                >
-                  <span>
-                    ?
-                  </span>
-                </div>
-              </div>
-            </div>
-            <div
-              class="col"
-            >
-              <h5>
-                Wiadomość 1
-              </h5>
-              <a
-                class="btn btn-primary"
-                href="/chats/1"
-              >
-                Pokaż szczegóły
-              </a>
-            </div>
+          <div>
+            Wiadomość 1
           </div>
         </div>
         <div
           class="list-group-item"
         >
-          <div
-            class="chatInfo row"
-          >
-            <div
-              class="chatInfo__picture col-auto"
-            >
-              <div
-                class="userPicture__container"
-              >
-                <div
-                  class="userPicture userPicture--standard"
-                >
-                  <span>
-                    ?
-                  </span>
-                </div>
-              </div>
-            </div>
-            <div
-              class="col"
-            >
-              <h5>
-                Wiadomość 2
-              </h5>
-              <a
-                class="btn btn-primary"
-                href="/chats/2"
-              >
-                Pokaż szczegóły
-              </a>
-            </div>
+          <div>
+            Wiadomość 2
           </div>
         </div>
         <div
           class="list-group-item"
         >
-          <div
-            class="chatInfo row"
-          >
-            <div
-              class="chatInfo__picture col-auto"
-            >
-              <div
-                class="userPicture__container"
-              >
-                <div
-                  class="userPicture userPicture--standard"
-                >
-                  <span>
-                    ?
-                  </span>
-                </div>
-              </div>
-            </div>
-            <div
-              class="col"
-            >
-              <h5>
-                Wiadomość 3
-              </h5>
-              <a
-                class="btn btn-primary"
-                href="/chats/3"
-              >
-                Pokaż szczegóły
-              </a>
-            </div>
+          <div>
+            Wiadomość 3
           </div>
         </div>
       </div>
