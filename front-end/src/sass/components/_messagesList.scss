@@ -1,0 +1,22 @@
+.list-group-item.messagesList__item{
+    max-width: 80%;
+    border-radius: 1rem !important;
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    text-align: justify;
+}
+
+.messagesList__item--left{
+    align-self: flex-start;
+}
+
+.messagesList__item--right{
+    align-self: flex-end;
+}
+
+@media(min-width: 768px){
+    .list-group-item.messagesList__item{
+        max-width: 60%;
+    }
+}
