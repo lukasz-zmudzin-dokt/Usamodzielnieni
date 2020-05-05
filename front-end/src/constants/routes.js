@@ -18,9 +18,9 @@ import {
   UserApprovalPage,
   MessagesList
 } from "Views";
-import {userTypes} from "./userTypes";
-import {staffTypes} from "./staffTypes";
-import {paths} from "./paths";
+import { userTypes } from "./userTypes";
+import { staffTypes } from "./staffTypes";
+import { paths } from "./paths";
 
 export default [
   {
@@ -163,11 +163,10 @@ export default [
   },
   {
     path: paths.CHAT_DETAILS,
-    component: MessagesList, // zmienić na komponent z listą wiadomości w czacie
+    component: MessagesList,
     isPrivate: true,
     type: undefined,
     exact: true,
     userVerified: true,
   },
 ];
-
