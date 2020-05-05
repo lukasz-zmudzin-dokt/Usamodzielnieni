@@ -20,10 +20,12 @@ const CVSection = ({cv, token, cutCV}) => {
     const [error, setError] = useState(false);
     const [disabled, setDisabled] = useState(false);
 
-    const handleDeletion = () => {
+    const handleDeletion = async () => {
         setDisabled(true);
-        cutCV(cv.cv_id);
-        setDisabled(false);
+        const res = await cutCV(cv.cv_id);
+        if (res === false) {
+            setDisabled(false);
+        };
     };
 
     return (

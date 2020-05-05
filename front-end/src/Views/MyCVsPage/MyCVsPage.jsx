@@ -39,6 +39,7 @@ class MyCVsPage extends React.Component {
             this.setState({
                 delError: true
             });
+            return false;
         }
         if (deleted) {
             this.setState({
@@ -66,7 +67,7 @@ class MyCVsPage extends React.Component {
                             </Alert>
                         ) : null}
                         <ListGroup variant="flush">
-                            {!loading ? (
+                            {!loading && cvs.length > 0 ? (
                                 <ListGroup.Item>
                                     <Row>
                                         <Col xs={12} md={5}><h6>Nazwa pliku</h6></Col>
@@ -84,12 +85,14 @@ class MyCVsPage extends React.Component {
                             ) : null }
                         </ListGroup>
                         {delError ? <Alert variant="danger">Wystąpił błąd podczas usuwania cv.</Alert> : null}
-                        {
-                            cvs.length === 5 ? <Alert variant="info">Osiągnięto maksymalną liczbę CV. Jeżeli chcesz dodać nowe, usuń CV z listy powyżej.</Alert> :
-                                cvs.length === 0 ? <Alert variant="info">Nie masz jeszcze żadnych CV. Utwórz nowe w zakładce "
-                                        <IndexLinkContainer to="/cvEditor"><Alert.Link>Kreator CV</Alert.Link></IndexLinkContainer>"!</Alert> :
-                                    null
-                        }
+                        <Card.Body>
+                            {
+                                cvs.length === 5 ? <Alert variant="info" className="mb-0">Osiągnięto maksymalną liczbę CV. Jeżeli chcesz dodać nowe, usuń CV z listy powyżej.</Alert> :
+                                    cvs.length === 0 ? <Alert variant="info" className="mb-0">Nie masz jeszcze żadnych CV. Utwórz nowe w zakładce "
+                                            <IndexLinkContainer to="/cvEditor"><Alert.Link>Kreator CV</Alert.Link></IndexLinkContainer>"!</Alert> :
+                                        null
+                            }
+                        </Card.Body>
                     </Card>
             </Container>
         )
