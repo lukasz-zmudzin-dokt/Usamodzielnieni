@@ -1,5 +1,5 @@
 import React from "react";
-import {waitForElement, render, fireEvent} from '@testing-library/react';
+import {waitForElement, render, fireEvent, waitForElementToBeRemoved, waitFor} from '@testing-library/react';
 import {MemoryRouter, Router} from 'react-router-dom';
 import {UserContext} from "context/UserContext";
 import {createMemoryHistory} from 'history';
@@ -149,14 +149,13 @@ describe('MyCVsPage', () => {
 
         fireEvent.click(getByText("Usuń CV"));
 
-        const res = await waitForElement(() => fetch("", {method: "DELETE"}));
-        expect(res.status).toBe(200);
+        await waitForElementToBeRemoved(() => getByText("jeden"));
         await expect(queryByText("jeden")).not.toBeInTheDocument();
     });
 
     it('should render error on delete fail', async () => {
         myCVs = [ myCVs[0] ];
-        const {getByText} = render(
+        const {getByText, queryByText} = render(
             <MemoryRouter>
                 <MyCVsPage />
             </MemoryRouter>
@@ -167,8 +166,8 @@ describe('MyCVsPage', () => {
         failFetch = true;
         fireEvent.click(getByText("Usuń CV"));
 
-        const res = await waitForElement(() => fetch("", {method: "DELETE"}));
-        expect(res.status).not.toBe(200);
+        const cv = await waitForElement(() => queryByText('jeden'));
+        expect(cv).not.toBeNull();
         expect(getByText("jeden")).toBeInTheDocument();
         expect(getByText("Wystąpił błąd", {exact: false})).toBeInTheDocument();
     });
