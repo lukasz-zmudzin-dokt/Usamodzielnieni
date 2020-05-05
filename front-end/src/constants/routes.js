@@ -15,7 +15,8 @@ import {
   OfferForm,
   RegisterPage,
   UserProfilePage,
-  UserApprovalPage
+  UserApprovalPage,
+  Chats
 } from "Views";
 import {userTypes} from "./userTypes";
 import {staffTypes} from "./staffTypes";
@@ -158,6 +159,22 @@ export default [
     isPrivate: true,
     type: userTypes.STAFF,
     group: staffTypes.VERIFICATION,
+    userVerified: true
+  },
+  {
+    path: paths.CHATS,
+    component: Chats,
+    isPrivate: true,
+    type: undefined,
+    exact: true,
+    userVerified: true
+  },
+  {
+    path: paths.CHAT_DETAILS,
+    component: Chats, // zmienić na komponent z listą wiadomości w czacie
+    isPrivate: true,
+    type: undefined,
+    exact: true,
     userVerified: true
   }
 ];
