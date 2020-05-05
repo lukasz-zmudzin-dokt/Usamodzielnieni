@@ -13,7 +13,6 @@ const UserPicture = ({ user, ...rest }) => {
     }
     
     const getFirstLetters = () => {
-        console.log(user.data)
         if (user.data?.first_name?.length && user.data?.last_name?.length) {
             return user.data.first_name[0] + user.data.last_name[0];
         }
