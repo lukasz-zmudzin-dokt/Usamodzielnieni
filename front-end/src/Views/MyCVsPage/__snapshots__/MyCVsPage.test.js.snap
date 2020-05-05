@@ -12,7 +12,7 @@ exports[`MyCVsPage should match snapshot 1`] = `
         class="card-header"
       >
         Moje CV (
-        2
+        5
          / 5)
       </h2>
       <div
@@ -127,6 +127,132 @@ exports[`MyCVsPage should match snapshot 1`] = `
             </div>
           </div>
         </div>
+        <div
+          class="list-group-item"
+        >
+          <div
+            class="d-flex align-items-center row"
+          >
+            <div
+              class="col-md-5 col-12"
+            >
+              trzy
+            </div>
+            <div
+              class="col-md-3 col-4"
+            >
+              Oczekuje na weryfikację
+            </div>
+            <div
+              class="text-right col-md-4 col-8"
+            >
+              <button
+                class="btn btn-primary"
+                type="button"
+              >
+                Zobacz CV
+              </button>
+              <a
+                class="mx-2 btn btn-info"
+                href="/cvEditor/3"
+              >
+                Edytuj
+              </a>
+              <button
+                class="btn btn-danger"
+                type="button"
+              >
+                Usuń CV
+              </button>
+            </div>
+          </div>
+        </div>
+        <div
+          class="list-group-item"
+        >
+          <div
+            class="d-flex align-items-center row"
+          >
+            <div
+              class="col-md-5 col-12"
+            >
+              cztery
+            </div>
+            <div
+              class="col-md-3 col-4"
+            >
+              Oczekuje na weryfikację
+            </div>
+            <div
+              class="text-right col-md-4 col-8"
+            >
+              <button
+                class="btn btn-primary"
+                type="button"
+              >
+                Zobacz CV
+              </button>
+              <a
+                class="mx-2 btn btn-info"
+                href="/cvEditor/4"
+              >
+                Edytuj
+              </a>
+              <button
+                class="btn btn-danger"
+                type="button"
+              >
+                Usuń CV
+              </button>
+            </div>
+          </div>
+        </div>
+        <div
+          class="list-group-item"
+        >
+          <div
+            class="d-flex align-items-center row"
+          >
+            <div
+              class="col-md-5 col-12"
+            >
+              pięć
+            </div>
+            <div
+              class="col-md-3 col-4"
+            >
+              Oczekuje na weryfikację
+            </div>
+            <div
+              class="text-right col-md-4 col-8"
+            >
+              <button
+                class="btn btn-primary"
+                type="button"
+              >
+                Zobacz CV
+              </button>
+              <a
+                class="mx-2 btn btn-info"
+                href="/cvEditor/5"
+              >
+                Edytuj
+              </a>
+              <button
+                class="btn btn-danger"
+                type="button"
+              >
+                Usuń CV
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="fade alert alert-info show"
+        role="alert"
+      >
+        Osiągnięto maksymalną liczbę CV. Jeżeli chcesz dodać nowe, usuń CV z listy powyżej.
       </div>
     </div>
   </div>

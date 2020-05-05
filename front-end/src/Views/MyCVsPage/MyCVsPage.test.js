@@ -75,6 +75,18 @@ describe('MyCVsPage', () => {
                     last_name: "Mala",
                     email: "malaala@lala.la"
                 }
+            },
+            {
+                cv_id: 3,
+                name: "trzy"
+            },
+            {
+                cv_id: 4,
+                name: "cztery"
+            },
+            {
+                cv_id: 5,
+                name: "pięć"
             }
         ];
         failFetch = false;
@@ -173,7 +185,6 @@ describe('MyCVsPage', () => {
     });
 
     it('should render alert on max cvs reached', async () => {
-        myCVs = [myCVs[0], myCVs[1], myCVs[0], myCVs[1], myCVs[0]];
         const {getByText, getAllByText} = render(
             <MemoryRouter>
                 <MyCVsPage />
