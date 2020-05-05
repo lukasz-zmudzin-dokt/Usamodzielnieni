@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { ListGroup, Container, Card, Button } from "react-bootstrap";
-import MessageItem from "./_components/MessageItem";
+import MessageItem from "./components/MessageItem";
 import proxy from "config/api";
 import { UserContext } from "context";
 import { useParams, useHistory } from "react-router-dom";

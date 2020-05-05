@@ -24,7 +24,7 @@ const renderWithRouter = (
   };
 };
 
-describe("MessageList", () => {
+describe("MessagesList", () => {
   let failFetch = false;
   let apiMessages = [
     {
@@ -63,7 +63,7 @@ describe("MessageList", () => {
     failFetch = false;
     jest.clearAllMocks();
   });
-  it("should renders correctly", async () => {
+  it("should match snapshot", async () => {
     const { container } = renderWithRouter(<MessagesList />);
 
     await wait(() => expect(fetch).toHaveBeenCalled());
