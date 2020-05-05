@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`OfferForm should renders correctly 1`] = `
+exports[`MessageList should renders correctly 1`] = `
 <div>
   <div
     class="container"
@@ -8,11 +8,17 @@ exports[`OfferForm should renders correctly 1`] = `
     <div
       class="card"
     >
-      <div
-        class="card-header"
+      <h3
+        class="messagesList__header card-header"
       >
-        Rozmowa z X
-      </div>
+        <button
+          class="messagesList__close btn btn-outline-danger"
+          type="button"
+        >
+          x
+        </button>
+        Piotr Kowalski
+      </h3>
       <div
         class="card-body"
       >

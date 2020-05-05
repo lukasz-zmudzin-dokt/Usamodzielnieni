@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
-import { ListGroup, Container, Card } from "react-bootstrap";
+import { ListGroup, Container, Card, Button } from "react-bootstrap";
 import MessageItem from "./_components/MessageItem";
 import proxy from "config/api";
 import { UserContext } from "context";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 
 const getMessages = async (token, id) => {
   const headers = {
@@ -52,7 +52,12 @@ const dataD = [
 const MessagesList = () => {
   const [data, setData] = useState([]);
   const user = useContext(UserContext);
+  const history = useHistory();
   const { id } = useParams();
+
+  const backToChats = () => {
+    history.push("/chats");
+  };
 
   useEffect(() => {
     const loadMessages = async (token, id) => {
@@ -71,7 +76,16 @@ const MessagesList = () => {
   return (
     <Container>
       <Card>
-        <Card.Header>Rozmowa z X</Card.Header>
+        <Card.Header as="h3" className="messagesList__header">
+          <Button
+            variant="outline-danger"
+            onClick={backToChats}
+            className="messagesList__close"
+          >
+            {"x"}
+          </Button>
+          Piotr Kowalski
+        </Card.Header>
         <Card.Body>
           <ListGroup>
             {data.map(({ content, send, side, id }) => (

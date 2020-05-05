@@ -1,0 +1,34 @@
+.list-group-item.messagesList__item {
+  max-width: 80%;
+  border-radius: 1rem !important;
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  text-align: justify;
+}
+
+.messagesList__item--left {
+  align-self: flex-start;
+}
+
+.messagesList__item--right {
+  align-self: flex-end;
+}
+
+.btn.messagesList__close {
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.card-header.messagesList__header {
+  position: relative;
+  padding: 0.75rem 40px;
+}
+
+@media (min-width: 768px) {
+  .list-group-item.messagesList__item {
+    max-width: 60%;
+  }
+}

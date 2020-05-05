@@ -1,6 +1,8 @@
 import React from "react";
-import { render, wait } from "@testing-library/react";
+import { render, wait, fireEvent } from "@testing-library/react";
 import MessagesList from "Views/MessagesList";
+import { createMemoryHistory } from "history";
+import { Router } from "react-router-dom";
 
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
@@ -9,7 +11,20 @@ jest.mock("react-router-dom", () => ({
   }),
 }));
 
-describe("OfferForm", () => {
+const renderWithRouter = (
+  ui,
+  {
+    route = "/chats/12",
+    history = createMemoryHistory({ initialEntries: [route] }),
+  } = {}
+) => {
+  return {
+    ...render(<Router history={history}>{ui}</Router>),
+    history,
+  };
+};
+
+describe("MessageList", () => {
   let failFetch = false;
   let apiMessages = [
     {
@@ -49,7 +64,7 @@ describe("OfferForm", () => {
     jest.clearAllMocks();
   });
   it("should renders correctly", async () => {
-    const { container } = render(<MessagesList />);
+    const { container } = renderWithRouter(<MessagesList />);
 
     await wait(() => expect(fetch).toHaveBeenCalled());
 
@@ -58,10 +73,18 @@ describe("OfferForm", () => {
 
   it("should renders [] if api fails", async () => {
     failFetch = true;
-    const { queryByText } = render(<MessagesList />);
+    const { queryByText } = renderWithRouter(<MessagesList />);
 
     await wait(() => expect(fetch).toHaveBeenCalled());
 
     expect(queryByText("b")).not.toBeInTheDocument();
+  });
+
+  it("should redirect to /chats if you click close button", async () => {
+    const { getByText, history } = renderWithRouter(<MessagesList />);
+    expect(history.location.pathname).toEqual("/chats/12");
+    fireEvent.click(getByText("x"));
+    await wait(() => expect(fetch).toHaveBeenCalled());
+    expect(history.location.pathname).toEqual("/chats");
   });
 });
