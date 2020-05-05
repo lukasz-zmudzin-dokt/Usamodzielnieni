@@ -92,16 +92,4 @@ const getCVdata = async (token, id) => {
   }
 };
 
-const getPhoto = async (token, id) => {
-  const url = `${domain}picture/${id}/`;
-  const headers = getHeaders(token);
-  const res = await fetch(url, {method: "GET", headers});
-
-  if (res.status === 200) {
-    return await res.json();
-  } else {
-    return null;
-  }
-};
-
-export {sendData, getFeedback, getCVdata, getPhoto};
+export {sendData, getFeedback, getCVdata};

@@ -1,15 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`map Photo base64 to object object should match snapshot 1`] = `File {}`;
-
 exports[`map mapData should map data 1`] = `
 Object {
   "education": Array [
     Object {
-      "description": undefined,
-      "endTime": Date { NaN },
+      "description": "klasa1",
+      "endTime": 2018-12-30T23:00:00.000Z,
       "place": "szkoła1",
-      "startTime": Date { NaN },
+      "startTime": 2015-12-30T23:00:00.000Z,
     },
   ],
   "languages": Array [
@@ -40,9 +38,9 @@ Object {
   "workExperience": Array [
     Object {
       "description": "stanowisko1",
-      "endTime": Date { NaN },
+      "endTime": undefined,
       "place": "praca1",
-      "startTime": Date { NaN },
+      "startTime": 2019-12-30T23:00:00.000Z,
     },
   ],
 }
@@ -52,10 +50,10 @@ exports[`map mapData should map data with empty experience array 1`] = `
 Object {
   "education": Array [
     Object {
-      "description": undefined,
-      "endTime": Date { NaN },
+      "description": "klasa1",
+      "endTime": 2018-12-30T23:00:00.000Z,
       "place": "szkoła1",
-      "startTime": Date { NaN },
+      "startTime": 2015-12-30T23:00:00.000Z,
     },
   ],
   "languages": Array [

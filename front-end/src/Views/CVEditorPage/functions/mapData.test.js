@@ -1,4 +1,4 @@
-import {mapData, mapFeedback, objectifyPhoto} from "./mapData";
+import {mapData, mapFeedback} from "./mapData";
 
 describe('map', () => {
     describe('mapData', () => {
@@ -16,17 +16,17 @@ describe('map', () => {
                 schools: [
                     {
                         name: 'szkoła1',
-                        description: 'klasa1',
-                        startTime: '2016',
-                        endTime: '2019'
+                        additional_info: 'klasa1',
+                        year_start: '2016',
+                        year_end: '2019'
                     }
                 ],
                 experiences: [
                     {
                         title: "praca1",
                         description: "stanowisko1",
-                        startTime: '2020',
-                        endTime: null
+                        year_start: '2020',
+                        year_end: null
                     }
                 ],
                 skills: [
@@ -58,6 +58,11 @@ describe('map', () => {
 
             expect(mappedData).toMatchSnapshot();
         });
+
+        it('should map data but leave null time undefined', () => {
+            const mappedData = mapData(data);
+            expect(mappedData.workExperience[0].endTime).toEqual(undefined);
+        });
     });
 
     describe('mapFeedback', () => {
@@ -79,28 +84,11 @@ describe('map', () => {
             expect(feed).toMatchSnapshot();
         });
 
+        it('should set no comments if comments are null', () => {
+           feedback.experiences = null;
+           const feed = mapFeedback(feedback);
+
+           expect(feed.workExperience).toBeNull();
+        });
     });
-
-    describe('Photo base64 to object object', () => {
-        let data;
-
-        beforeEach(() => {
-            data = {
-                file: "1234567812345678123456781234567812345678123456781234567812345678" +
-                    "1234567812345678123456781234567812345678123456781234567812345678" ///128 chars
-            }
-        });
-
-        it('should match snapshot', () => {
-            const photo = objectifyPhoto(data);
-
-            expect(photo).toMatchSnapshot();
-        });
-
-        it('should return file of given size', () => {
-            const photo = objectifyPhoto(data);
-            expect(typeof photo).toEqual(typeof {});
-            expect(photo.size).toBe(data.file.length * 0.75);
-        });
-    })
 });

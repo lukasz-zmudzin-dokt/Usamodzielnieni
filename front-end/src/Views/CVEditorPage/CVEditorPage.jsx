@@ -14,8 +14,8 @@ import { UserContext } from "context";
 import { sendData, getFeedback } from "Views/CVEditorPage/functions/other.js";
 import { createCVObject } from "Views/CVEditorPage/functions/createCVObject.js";
 import { withRouter } from "react-router-dom";
-import {getCVdata, getPhoto} from "./functions/other";
-import {mapData, mapFeedback, objectifyPhoto} from "./functions/mapData";
+import {getCVdata} from "./functions/other";
+import {mapData, mapFeedback} from "./functions/mapData";
 
 class CVEditorPage extends React.Component {
   constructor(props) {
@@ -38,7 +38,8 @@ class CVEditorPage extends React.Component {
       validated: false,
       fetchError: false,
       method: "POST",
-      cv_id: undefined
+      cv_id: undefined,
+      has_photo: false
     };
     this.tabs = [];
   }
@@ -154,6 +155,7 @@ class CVEditorPage extends React.Component {
             onNextClick={undefined}
             onSubmit={this.handleCVSubmit}
             disabled={this.state.disabled}
+            hasPhoto={this.state.has_photo}
           />
         )
       }
@@ -161,13 +163,14 @@ class CVEditorPage extends React.Component {
   };
 
   autofillEditor = async(id) => {
-    let feedbackRes, cvRes, photoRes, feedback, data;
+    let feedbackRes, cvRes, feedback, data;
     try {
       this.setState({
         cv_id: id,
         method: "PUT"
       });
       cvRes = await getCVdata(this.context.token, id);
+      console.log(cvRes);
       if (cvRes.was_reviewed && !cvRes.is_verified) {
         try {
           feedbackRes = await getFeedback(this.context.token, id);
@@ -194,13 +197,9 @@ class CVEditorPage extends React.Component {
           tabs: {...prevState.tabs, [item]: {...prevState.tabs[item], data: data[item]}}
         }))
       });
-      photoRes = await getPhoto(this.context.token, id);
-      if (photoRes !== null) {
-        const photo = await objectifyPhoto(photoRes);
-        this.setState( prevState => ({
-          tabs: {...prevState.tabs, photo: {...prevState.tabs.photo, data: photo}}
-        }));
-      }
+      this.setState({
+        has_photo: cvRes.has_picture
+      })
     } catch(e) {
       this.setState({
         loading: false,
@@ -226,7 +225,6 @@ class CVEditorPage extends React.Component {
         <Card>
           <Card.Header as="h2">Kreator CV</Card.Header>
           <Card.Body>
-            {console.log(this.state)}
             {this.state.fetchError ? <Alert variant="danger">Wystąpił błąd podczas pobierania danych CV</Alert> : null}
               <Tabs
                 transition={false}

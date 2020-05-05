@@ -1,277 +1,166 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`CVEditorPage  - submit should submit form when submit button is clicked 1`] = `
-Array [
-  Object {
-    "basic_info": Object {
-      "date_of_birth": "4-11-2000",
-      "email": "jan.kowalski@mail.com",
-      "first_name": "Jan",
-      "last_name": "Kowalski",
-      "phone_number": "+48123123123",
-    },
-    "experiences": Array [
-      Object {
-        "description": "Jakiś opis",
-        "title": "Warszawa",
-        "year_end": 2003,
-        "year_start": 2002,
-      },
-    ],
-    "languages": Array [
-      Object {
-        "level": "podstawowy",
-        "name": "angielski",
-      },
-    ],
-    "schools": Array [
-      Object {
-        "additional_info": "Jakiś opis",
-        "name": "Warszawa",
-        "year_end": 2003,
-        "year_start": 2002,
-      },
-    ],
-    "skills": Array [
-      Object {
-        "description": "Jakaś umiejętność",
-      },
-    ],
-    "wants_verification": true,
-  },
-  Object {},
-  undefined,
-]
-`;
+exports[`CVEditor CVEditorPage  - submit should submit form when submit button is clicked 1`] = `undefined`;
 
-exports[`CVEditorPage should change tab when tab button is clicked 1`] = `
+exports[`CVEditor CVEditorPage should change tab when tab button is clicked 1`] = `
 <div
   aria-hidden="false"
   class="tab-pane active"
   role="tabpanel"
 >
   <div>
-    <span>
-      EducationTabMock
-    </span>
-    <button
-      type="button"
+    <h3>
+      Edukacja
+    </h3>
+    <img
+      alt=""
+      class="CVEditorTab__img"
+      src="movie_2.png"
+    />
+    <form
+      class=""
+      novalidate=""
     >
-      Wstecz
-    </button>
-  </div>
-</div>
-`;
-
-exports[`CVEditorPage should change tab when the active card calls onNextClick and onPrevClick function 1`] = `
-<div
-  aria-hidden="false"
-  class="tab-pane active"
-  role="tabpanel"
->
-  <div>
-    <span>
-      EducationTabMock
-    </span>
-    <button
-      type="button"
-    >
-      Wstecz
-    </button>
-  </div>
-</div>
-`;
-
-exports[`CVEditorPage should change tab when the active card calls onNextClick and onPrevClick function 2`] = `
-<div
-  aria-hidden="false"
-  class="tab-pane active"
-  role="tabpanel"
->
-  <div>
-    <span>
-      PersonalDataTabMock
-    </span>
-    <button
-      type="button"
-    >
-      Dalej
-    </button>
-  </div>
-</div>
-`;
-
-exports[`CVEditorPage should render without crashing 1`] = `
-<div>
-  <div
-    class="container"
-  >
-    <div
-      class="card"
-    >
-      <h2
-        class="card-header"
-      >
-        Kreator CV
-      </h2>
       <div
-        class="card-body"
+        class="row"
       >
-        <form
-          class=""
-          id="cv_data"
+        <div
+          class="form-group col-md-6 col-12"
         >
-          <nav
-            class="CVEditorPage_tabs nav card-header-tabs nav-tabs"
-            role="tablist"
+          <label
+            class="form-label"
+            for="startTime"
           >
-            <a
-              aria-selected="true"
-              class="nav-item nav-link active"
-              data-rb-event-key="personalData"
-              href="#"
-              role="tab"
-            >
-              Dane osobowe
-            </a>
-            <a
-              aria-selected="false"
-              class="nav-item nav-link"
-              data-rb-event-key="education"
-              href="#"
-              role="tab"
-              tabindex="-1"
-            >
-              Edukacja
-            </a>
-            <a
-              aria-selected="false"
-              class="nav-item nav-link"
-              data-rb-event-key="workExperience"
-              href="#"
-              role="tab"
-              tabindex="-1"
-            >
-              Doświadczenie zawodowe
-            </a>
-            <a
-              aria-selected="false"
-              class="nav-item nav-link"
-              data-rb-event-key="skills"
-              href="#"
-              role="tab"
-              tabindex="-1"
-            >
-              Umiejętności
-            </a>
-            <a
-              aria-selected="false"
-              class="nav-item nav-link"
-              data-rb-event-key="languages"
-              href="#"
-              role="tab"
-              tabindex="-1"
-            >
-              Języki obce
-            </a>
-            <a
-              aria-selected="false"
-              class="nav-item nav-link"
-              data-rb-event-key="photo"
-              href="#"
-              role="tab"
-              tabindex="-1"
-            >
-              Zdjęcie
-            </a>
-          </nav>
+            Od:
+          </label>
           <div
-            class="tab-content"
+            class="react-datepicker-wrapper"
           >
             <div
-              aria-hidden="false"
-              class="tab-pane active"
-              role="tabpanel"
+              class="react-datepicker__input-container"
             >
-              <div>
-                <span>
-                  PersonalDataTabMock
-                </span>
-                <button
-                  type="button"
-                >
-                  Dalej
-                </button>
-              </div>
-            </div>
-            <div
-              aria-hidden="true"
-              class="tab-pane"
-              role="tabpanel"
-            >
-              <div>
-                <span>
-                  EducationTabMock
-                </span>
-                <button
-                  type="button"
-                >
-                  Wstecz
-                </button>
-              </div>
-            </div>
-            <div
-              aria-hidden="true"
-              class="tab-pane"
-              role="tabpanel"
-            >
-              <div>
-                WorkExperienceTabMock
-              </div>
-            </div>
-            <div
-              aria-hidden="true"
-              class="tab-pane"
-              role="tabpanel"
-            >
-              <div>
-                SkillsTabMock
-              </div>
-            </div>
-            <div
-              aria-hidden="true"
-              class="tab-pane"
-              role="tabpanel"
-            >
-              <div>
-                LanguagesTabMock
-              </div>
-            </div>
-            <div
-              aria-hidden="true"
-              class="tab-pane"
-              role="tabpanel"
-            >
-              <div>
-                <span>
-                  PhotoTabMock
-                </span>
-                <button
-                  type="submit"
-                >
-                  Prześlij
-                </button>
-              </div>
+              <input
+                class="form-control"
+                id="startTime"
+                placeholder="Data rozpoczęcia"
+                type="text"
+                value=""
+              />
             </div>
           </div>
-        </form>
+        </div>
+        <div
+          class="form-group col-md-6 col-12"
+        >
+          <label
+            class="form-label"
+            for="endTime"
+          >
+            Do:
+          </label>
+          <div
+            class="react-datepicker-wrapper"
+          >
+            <div
+              class="react-datepicker__input-container"
+            >
+              <input
+                class="form-control"
+                id="endTime"
+                placeholder="Data zakończenia"
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="form-group"
+      >
+        <label
+          class="form-label"
+          for="actionPlace"
+        >
+          Miejsce:
+        </label>
+        <input
+          class="form-control"
+          id="actionPlace"
+          maxlength="200"
+          minlength="1"
+          placeholder="Nazwa szkoły/miejsca pracy"
+          required=""
+          type="text"
+          value=""
+        />
+        <div
+          class="invalid-feedback"
+        >
+          Miejsce jest wymagane.
+        </div>
+      </div>
+      <div
+        class="form-group"
+      >
+        <label
+          class="form-label"
+          for="actionDescription"
+        >
+          Opis:
+        </label>
+        <input
+          class="form-control"
+          id="actionDescription"
+          maxlength="150"
+          minlength="1"
+          placeholder="Profil/stanowisko ..."
+          required=""
+          type="text"
+          value=""
+        />
+        <div
+          class="invalid-feedback"
+        >
+          Opis jest wymagany.
+        </div>
+      </div>
+      <button
+        class="mb-3 btn btn-success"
+        type="submit"
+      >
+        + Dodaj
+      </button>
+    </form>
+    <div
+      class="row"
+    >
+      <div
+        class="col-md-6 col-12"
+      >
+        <button
+          class="form_navigation_prev btn btn-primary btn-block"
+          type="button"
+        >
+          ← Wstecz
+        </button>
+      </div>
+      <div
+        class="col-md-6 col-12"
+      >
+        <button
+          class="form_navigation_next btn btn-primary btn-block"
+          type="button"
+        >
+          Dalej →
+        </button>
       </div>
     </div>
   </div>
 </div>
 `;
 
-exports[`CVEditorPage should render without crashing when api fails 1`] = `
+exports[`CVEditor CVEditorPage should render without crashing 1`] = `
 <div>
   <div
     class="container"
@@ -287,154 +176,1692 @@ exports[`CVEditorPage should render without crashing when api fails 1`] = `
       <div
         class="card-body"
       >
-        <form
-          class=""
-          id="cv_data"
+        <nav
+          class="CVEditorPage_tabs mb-1 nav card-header-tabs nav-tabs"
+          role="tablist"
         >
-          <nav
-            class="CVEditorPage_tabs nav card-header-tabs nav-tabs"
-            role="tablist"
+          <a
+            aria-selected="true"
+            class="nav-item nav-link active"
+            data-rb-event-key="personalData"
+            href="#"
+            role="tab"
           >
-            <a
-              aria-selected="true"
-              class="nav-item nav-link active"
-              data-rb-event-key="personalData"
-              href="#"
-              role="tab"
-            >
-              Dane osobowe
-            </a>
-            <a
-              aria-selected="false"
-              class="nav-item nav-link"
-              data-rb-event-key="education"
-              href="#"
-              role="tab"
-              tabindex="-1"
-            >
-              Edukacja
-            </a>
-            <a
-              aria-selected="false"
-              class="nav-item nav-link"
-              data-rb-event-key="workExperience"
-              href="#"
-              role="tab"
-              tabindex="-1"
-            >
-              Doświadczenie zawodowe
-            </a>
-            <a
-              aria-selected="false"
-              class="nav-item nav-link"
-              data-rb-event-key="skills"
-              href="#"
-              role="tab"
-              tabindex="-1"
-            >
-              Umiejętności
-            </a>
-            <a
-              aria-selected="false"
-              class="nav-item nav-link"
-              data-rb-event-key="languages"
-              href="#"
-              role="tab"
-              tabindex="-1"
-            >
-              Języki obce
-            </a>
-            <a
-              aria-selected="false"
-              class="nav-item nav-link"
-              data-rb-event-key="photo"
-              href="#"
-              role="tab"
-              tabindex="-1"
-            >
-              Zdjęcie
-            </a>
-          </nav>
+            Dane osobowe
+          </a>
+          <a
+            aria-selected="false"
+            class="nav-item nav-link"
+            data-rb-event-key="education"
+            href="#"
+            role="tab"
+            tabindex="-1"
+          >
+            Edukacja
+          </a>
+          <a
+            aria-selected="false"
+            class="nav-item nav-link"
+            data-rb-event-key="workExperience"
+            href="#"
+            role="tab"
+            tabindex="-1"
+          >
+            Doświadczenie zawodowe
+          </a>
+          <a
+            aria-selected="false"
+            class="nav-item nav-link"
+            data-rb-event-key="skills"
+            href="#"
+            role="tab"
+            tabindex="-1"
+          >
+            Umiejętności
+          </a>
+          <a
+            aria-selected="false"
+            class="nav-item nav-link"
+            data-rb-event-key="languages"
+            href="#"
+            role="tab"
+            tabindex="-1"
+          >
+            Języki obce
+          </a>
+          <a
+            aria-selected="false"
+            class="nav-item nav-link"
+            data-rb-event-key="photo"
+            href="#"
+            role="tab"
+            tabindex="-1"
+          >
+            Zdjęcie
+          </a>
+        </nav>
+        <div
+          class="tab-content"
+        >
           <div
-            class="tab-content"
+            aria-hidden="false"
+            class="tab-pane active"
+            role="tabpanel"
           >
-            <div
-              aria-hidden="false"
-              class="tab-pane active"
-              role="tabpanel"
-            >
-              <div>
-                <span>
-                  PersonalDataTabMock
-                </span>
-                <button
-                  type="button"
+            <div>
+              <h3>
+                Dane osobowe
+              </h3>
+              <img
+                alt=""
+                class="CVEditorTab__img"
+                src="movie_1.png"
+              />
+              <form
+                class=""
+                novalidate=""
+              >
+                <div
+                  class="row"
                 >
-                  Dalej
-                </button>
-              </div>
-            </div>
-            <div
-              aria-hidden="true"
-              class="tab-pane"
-              role="tabpanel"
-            >
-              <div>
-                <span>
-                  EducationTabMock
-                </span>
-                <button
-                  type="button"
+                  <div
+                    class="form-group col-md-6 col-12"
+                  >
+                    <label
+                      class="form-label"
+                      for="firstName"
+                    >
+                      Imię:
+                    </label>
+                    <input
+                      class="form-control"
+                      id="firstName"
+                      maxlength="30"
+                      minlength="1"
+                      name="firstName"
+                      placeholder="Jan"
+                      required=""
+                      type="text"
+                      value=""
+                    />
+                    <div
+                      class="invalid-feedback"
+                    >
+                      Imię jest wymagane.
+                    </div>
+                  </div>
+                  <div
+                    class="form-group col-md-6 col-12"
+                  >
+                    <label
+                      class="form-label"
+                      for="lastName"
+                    >
+                      Nazwisko:
+                    </label>
+                    <input
+                      class="form-control"
+                      id="lastName"
+                      maxlength="50"
+                      minlength="1"
+                      name="lastName"
+                      placeholder="Przykładowy"
+                      required=""
+                      type="text"
+                      value=""
+                    />
+                    <div
+                      class="invalid-feedback"
+                    >
+                      Nazwisko jest wymagane.
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="row"
                 >
-                  Wstecz
-                </button>
-              </div>
-            </div>
-            <div
-              aria-hidden="true"
-              class="tab-pane"
-              role="tabpanel"
-            >
-              <div>
-                WorkExperienceTabMock
-              </div>
-            </div>
-            <div
-              aria-hidden="true"
-              class="tab-pane"
-              role="tabpanel"
-            >
-              <div>
-                SkillsTabMock
-              </div>
-            </div>
-            <div
-              aria-hidden="true"
-              class="tab-pane"
-              role="tabpanel"
-            >
-              <div>
-                LanguagesTabMock
-              </div>
-            </div>
-            <div
-              aria-hidden="true"
-              class="tab-pane"
-              role="tabpanel"
-            >
-              <div>
-                <span>
-                  PhotoTabMock
-                </span>
-                <button
-                  type="submit"
+                  <div
+                    class="form-group col-md-6 col-12"
+                  >
+                    <label
+                      class="form-label"
+                      for="birthDate"
+                    >
+                      Data urodzenia:
+                    </label>
+                    <div>
+                      <div
+                        class="react-datepicker__input-container"
+                      >
+                        <input
+                          class="form-control"
+                          id="birthDate"
+                          placeholder="Data urodzenia"
+                          required=""
+                          type="text"
+                          value=""
+                        />
+                      </div>
+                    </div>
+                    <div
+                      class="invalid-feedback"
+                    >
+                      Data urodzenia jest wymagana.
+                    </div>
+                  </div>
+                  <div
+                    class="form-group col-md-6 col-12"
+                  >
+                    <label
+                      class="form-label"
+                      for="phoneNumber"
+                    >
+                      Numer telefonu:
+                    </label>
+                    <input
+                      class="form-control"
+                      id="phoneNumber"
+                      maxlength="12"
+                      minlength="1"
+                      name="phoneNumber"
+                      placeholder="+48123456789"
+                      required=""
+                      type="text"
+                      value=""
+                    />
+                    <div
+                      class="invalid-feedback"
+                    >
+                      Numer telefonu jest wymagany.
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="row"
                 >
-                  Prześlij
-                </button>
+                  <div
+                    class="form-group col-md-6 col-12"
+                  >
+                    <label
+                      class="form-label"
+                      for="email"
+                    >
+                      Adres email:
+                    </label>
+                    <input
+                      class="form-control"
+                      id="email"
+                      maxlength="254"
+                      minlength="1"
+                      name="email"
+                      placeholder="example@domain.com"
+                      required=""
+                      type="email"
+                      value=""
+                    />
+                    <div
+                      class="invalid-feedback"
+                    >
+                      Adres email jest wymagany.
+                    </div>
+                  </div>
+                </div>
+              </form>
+              <div
+                class="row"
+              >
+                <div
+                  class="col-md-6 col-12"
+                >
+                  <button
+                    class="form_navigation_prev btn btn-primary btn-block"
+                    disabled=""
+                    type="button"
+                  >
+                    ← Wstecz
+                  </button>
+                </div>
+                <div
+                  class="col-md-6 col-12"
+                >
+                  <button
+                    class="form_navigation_next btn btn-primary btn-block"
+                    type="button"
+                  >
+                    Dalej →
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </form>
+          <div
+            aria-hidden="true"
+            class="tab-pane"
+            role="tabpanel"
+          >
+            <div>
+              <h3>
+                Edukacja
+              </h3>
+              <img
+                alt=""
+                class="CVEditorTab__img"
+                src="movie_2.png"
+              />
+              <form
+                class=""
+                novalidate=""
+              >
+                <div
+                  class="row"
+                >
+                  <div
+                    class="form-group col-md-6 col-12"
+                  >
+                    <label
+                      class="form-label"
+                      for="startTime"
+                    >
+                      Od:
+                    </label>
+                    <div
+                      class="react-datepicker-wrapper"
+                    >
+                      <div
+                        class="react-datepicker__input-container"
+                      >
+                        <input
+                          class="form-control"
+                          id="startTime"
+                          placeholder="Data rozpoczęcia"
+                          type="text"
+                          value=""
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="form-group col-md-6 col-12"
+                  >
+                    <label
+                      class="form-label"
+                      for="endTime"
+                    >
+                      Do:
+                    </label>
+                    <div
+                      class="react-datepicker-wrapper"
+                    >
+                      <div
+                        class="react-datepicker__input-container"
+                      >
+                        <input
+                          class="form-control"
+                          id="endTime"
+                          placeholder="Data zakończenia"
+                          type="text"
+                          value=""
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="form-group"
+                >
+                  <label
+                    class="form-label"
+                    for="actionPlace"
+                  >
+                    Miejsce:
+                  </label>
+                  <input
+                    class="form-control"
+                    id="actionPlace"
+                    maxlength="200"
+                    minlength="1"
+                    placeholder="Nazwa szkoły/miejsca pracy"
+                    required=""
+                    type="text"
+                    value=""
+                  />
+                  <div
+                    class="invalid-feedback"
+                  >
+                    Miejsce jest wymagane.
+                  </div>
+                </div>
+                <div
+                  class="form-group"
+                >
+                  <label
+                    class="form-label"
+                    for="actionDescription"
+                  >
+                    Opis:
+                  </label>
+                  <input
+                    class="form-control"
+                    id="actionDescription"
+                    maxlength="150"
+                    minlength="1"
+                    placeholder="Profil/stanowisko ..."
+                    required=""
+                    type="text"
+                    value=""
+                  />
+                  <div
+                    class="invalid-feedback"
+                  >
+                    Opis jest wymagany.
+                  </div>
+                </div>
+                <button
+                  class="mb-3 btn btn-success"
+                  type="submit"
+                >
+                  + Dodaj
+                </button>
+              </form>
+              <div
+                class="row"
+              >
+                <div
+                  class="col-md-6 col-12"
+                >
+                  <button
+                    class="form_navigation_prev btn btn-primary btn-block"
+                    type="button"
+                  >
+                    ← Wstecz
+                  </button>
+                </div>
+                <div
+                  class="col-md-6 col-12"
+                >
+                  <button
+                    class="form_navigation_next btn btn-primary btn-block"
+                    type="button"
+                  >
+                    Dalej →
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            aria-hidden="true"
+            class="tab-pane"
+            role="tabpanel"
+          >
+            <div>
+              <h3>
+                Doświadczenie zawodowe
+              </h3>
+              <img
+                alt=""
+                class="CVEditorTab__img"
+                src="movie_3.png"
+              />
+              <form
+                class=""
+                novalidate=""
+              >
+                <div
+                  class="row"
+                >
+                  <div
+                    class="form-group col-md-6 col-12"
+                  >
+                    <label
+                      class="form-label"
+                      for="startTime"
+                    >
+                      Od:
+                    </label>
+                    <div
+                      class="react-datepicker-wrapper"
+                    >
+                      <div
+                        class="react-datepicker__input-container"
+                      >
+                        <input
+                          class="form-control"
+                          id="startTime"
+                          placeholder="Data rozpoczęcia"
+                          type="text"
+                          value=""
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="form-group col-md-6 col-12"
+                  >
+                    <label
+                      class="form-label"
+                      for="endTime"
+                    >
+                      Do:
+                    </label>
+                    <div
+                      class="react-datepicker-wrapper"
+                    >
+                      <div
+                        class="react-datepicker__input-container"
+                      >
+                        <input
+                          class="form-control"
+                          id="endTime"
+                          placeholder="Data zakończenia"
+                          type="text"
+                          value=""
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="form-group"
+                >
+                  <label
+                    class="form-label"
+                    for="actionPlace"
+                  >
+                    Miejsce:
+                  </label>
+                  <input
+                    class="form-control"
+                    id="actionPlace"
+                    maxlength="50"
+                    minlength="1"
+                    placeholder="Nazwa szkoły/miejsca pracy"
+                    required=""
+                    type="text"
+                    value=""
+                  />
+                  <div
+                    class="invalid-feedback"
+                  >
+                    Miejsce jest wymagane.
+                  </div>
+                </div>
+                <div
+                  class="form-group"
+                >
+                  <label
+                    class="form-label"
+                    for="actionDescription"
+                  >
+                    Opis:
+                  </label>
+                  <input
+                    class="form-control"
+                    id="actionDescription"
+                    maxlength="400"
+                    minlength="1"
+                    placeholder="Profil/stanowisko ..."
+                    required=""
+                    type="text"
+                    value=""
+                  />
+                  <div
+                    class="invalid-feedback"
+                  >
+                    Opis jest wymagany.
+                  </div>
+                </div>
+                <button
+                  class="mb-3 btn btn-success"
+                  type="submit"
+                >
+                  + Dodaj
+                </button>
+              </form>
+              <div
+                class="row"
+              >
+                <div
+                  class="col-md-6 col-12"
+                >
+                  <button
+                    class="form_navigation_prev btn btn-primary btn-block"
+                    type="button"
+                  >
+                    ← Wstecz
+                  </button>
+                </div>
+                <div
+                  class="col-md-6 col-12"
+                >
+                  <button
+                    class="form_navigation_next btn btn-primary btn-block"
+                    type="button"
+                  >
+                    Dalej →
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            aria-hidden="true"
+            class="tab-pane"
+            role="tabpanel"
+          >
+            <div>
+              <h3>
+                Umiejętności
+              </h3>
+              <img
+                alt=""
+                class="CVEditorTab__img"
+                src="movie_4.png"
+              />
+              <form
+                class=""
+                novalidate=""
+              >
+                <div
+                  class="form-group"
+                >
+                  <label
+                    class="form-label"
+                    for="skillName"
+                  >
+                    Umiejętność:
+                  </label>
+                  <input
+                    class="form-control"
+                    id="skillName"
+                    maxlength="50"
+                    minlength="1"
+                    placeholder="Wpisz umiejętność"
+                    required=""
+                    type="text"
+                    value=""
+                  />
+                  <div
+                    class="invalid-feedback"
+                  >
+                    Pole jest wymagane.
+                  </div>
+                </div>
+                <button
+                  class="mb-3 btn btn-success"
+                  type="submit"
+                >
+                  + Dodaj
+                </button>
+              </form>
+              <div
+                class="row"
+              >
+                <div
+                  class="col-md-6 col-12"
+                >
+                  <button
+                    class="form_navigation_prev btn btn-primary btn-block"
+                    type="button"
+                  >
+                    ← Wstecz
+                  </button>
+                </div>
+                <div
+                  class="col-md-6 col-12"
+                >
+                  <button
+                    class="form_navigation_next btn btn-primary btn-block"
+                    type="button"
+                  >
+                    Dalej →
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            aria-hidden="true"
+            class="tab-pane"
+            role="tabpanel"
+          >
+            <div>
+              <h3>
+                Języki obce
+              </h3>
+              <img
+                alt=""
+                class="CVEditorTab__img"
+                src="movie_5.png"
+              />
+              <form
+                class=""
+                novalidate=""
+              >
+                <div
+                  class="row"
+                >
+                  <div
+                    class="form-group col-md-6 col-12"
+                  >
+                    <label
+                      class="form-label"
+                      for="languageName"
+                    >
+                      Język:
+                    </label>
+                    <input
+                      class="form-control"
+                      id="languageName"
+                      maxlength="20"
+                      minlength="1"
+                      placeholder="Język"
+                      required=""
+                      type="text"
+                      value=""
+                    />
+                    <div
+                      class="invalid-feedback"
+                    >
+                      Nazwa języka jest wymagana.
+                    </div>
+                  </div>
+                  <div
+                    class="form-group col-md-6 col-12"
+                  >
+                    <label
+                      class="form-label"
+                      for="languageLevel"
+                    >
+                      Poziom:
+                    </label>
+                    <select
+                      class="form-control"
+                      id="languageLevel"
+                      required=""
+                    >
+                      <option
+                        value="podstawowy"
+                      >
+                        podstawowy
+                      </option>
+                      <option
+                        value="komunikatywny"
+                      >
+                        komunikatywny
+                      </option>
+                      <option
+                        value="biegły"
+                      >
+                        biegły
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <button
+                  class="mb-3 btn btn-success"
+                  type="submit"
+                >
+                  + Dodaj
+                </button>
+              </form>
+              <div
+                class="row"
+              >
+                <div
+                  class="col-md-6 col-12"
+                >
+                  <button
+                    class="form_navigation_prev btn btn-primary btn-block"
+                    type="button"
+                  >
+                    ← Wstecz
+                  </button>
+                </div>
+                <div
+                  class="col-md-6 col-12"
+                >
+                  <button
+                    class="form_navigation_next btn btn-primary btn-block"
+                    type="button"
+                  >
+                    Dalej →
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            aria-hidden="true"
+            class="tab-pane"
+            role="tabpanel"
+          >
+            <div>
+              <h3>
+                Zdjęcie
+              </h3>
+              <img
+                alt=""
+                class="CVEditorTab__img"
+                src="movie_1.png"
+              />
+              <form
+                class=""
+              >
+                <div
+                  class="form-group"
+                >
+                  <label
+                    class="form-label"
+                    for="custom-file"
+                  >
+                    Zdjęcie:
+                  </label>
+                  <div
+                    class="custom custom-file"
+                  >
+                    <input
+                      accept="image/*"
+                      class="custom-file-input"
+                      id="custom-file"
+                      type="file"
+                    />
+                    <label
+                      class="custom-file-label"
+                      data-browse="Dodaj"
+                      for="custom-file"
+                    >
+                      Wybierz zdjęcie
+                    </label>
+                  </div>
+                </div>
+              </form>
+              <div
+                class="row"
+              >
+                <div
+                  class="col-md-6 col-12"
+                >
+                  <button
+                    class="form_navigation_prev btn btn-primary btn-block"
+                    type="button"
+                  >
+                    ← Wstecz
+                  </button>
+                </div>
+                <div
+                  class="col-md-6 col-12"
+                >
+                  <form
+                    class=""
+                  >
+                    <button
+                      class="btn btn-success btn-block"
+                      id="saveButton"
+                      type="submit"
+                    >
+                      Generuj CV
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`CVEditor CVEditorPage should render without crashing when api fails 1`] = `
+<div>
+  <div
+    class="container"
+  >
+    <div
+      class="card"
+    >
+      <h2
+        class="card-header"
+      >
+        Kreator CV
+      </h2>
+      <div
+        class="card-body"
+      >
+        <nav
+          class="CVEditorPage_tabs mb-1 nav card-header-tabs nav-tabs"
+          role="tablist"
+        >
+          <a
+            aria-selected="true"
+            class="nav-item nav-link active"
+            data-rb-event-key="personalData"
+            href="#"
+            role="tab"
+          >
+            Dane osobowe
+          </a>
+          <a
+            aria-selected="false"
+            class="nav-item nav-link"
+            data-rb-event-key="education"
+            href="#"
+            role="tab"
+            tabindex="-1"
+          >
+            Edukacja
+          </a>
+          <a
+            aria-selected="false"
+            class="nav-item nav-link"
+            data-rb-event-key="workExperience"
+            href="#"
+            role="tab"
+            tabindex="-1"
+          >
+            Doświadczenie zawodowe
+          </a>
+          <a
+            aria-selected="false"
+            class="nav-item nav-link"
+            data-rb-event-key="skills"
+            href="#"
+            role="tab"
+            tabindex="-1"
+          >
+            Umiejętności
+          </a>
+          <a
+            aria-selected="false"
+            class="nav-item nav-link"
+            data-rb-event-key="languages"
+            href="#"
+            role="tab"
+            tabindex="-1"
+          >
+            Języki obce
+          </a>
+          <a
+            aria-selected="false"
+            class="nav-item nav-link"
+            data-rb-event-key="photo"
+            href="#"
+            role="tab"
+            tabindex="-1"
+          >
+            Zdjęcie
+          </a>
+        </nav>
+        <div
+          class="tab-content"
+        >
+          <div
+            aria-hidden="false"
+            class="tab-pane active"
+            role="tabpanel"
+          >
+            <div>
+              <h3>
+                Dane osobowe
+              </h3>
+              <img
+                alt=""
+                class="CVEditorTab__img"
+                src="movie_1.png"
+              />
+              <form
+                class=""
+                novalidate=""
+              >
+                <div
+                  class="row"
+                >
+                  <div
+                    class="form-group col-md-6 col-12"
+                  >
+                    <label
+                      class="form-label"
+                      for="firstName"
+                    >
+                      Imię:
+                    </label>
+                    <input
+                      class="form-control"
+                      id="firstName"
+                      maxlength="30"
+                      minlength="1"
+                      name="firstName"
+                      placeholder="Jan"
+                      required=""
+                      type="text"
+                      value=""
+                    />
+                    <div
+                      class="invalid-feedback"
+                    >
+                      Imię jest wymagane.
+                    </div>
+                  </div>
+                  <div
+                    class="form-group col-md-6 col-12"
+                  >
+                    <label
+                      class="form-label"
+                      for="lastName"
+                    >
+                      Nazwisko:
+                    </label>
+                    <input
+                      class="form-control"
+                      id="lastName"
+                      maxlength="50"
+                      minlength="1"
+                      name="lastName"
+                      placeholder="Przykładowy"
+                      required=""
+                      type="text"
+                      value=""
+                    />
+                    <div
+                      class="invalid-feedback"
+                    >
+                      Nazwisko jest wymagane.
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="row"
+                >
+                  <div
+                    class="form-group col-md-6 col-12"
+                  >
+                    <label
+                      class="form-label"
+                      for="birthDate"
+                    >
+                      Data urodzenia:
+                    </label>
+                    <div>
+                      <div
+                        class="react-datepicker__input-container"
+                      >
+                        <input
+                          class="form-control"
+                          id="birthDate"
+                          placeholder="Data urodzenia"
+                          required=""
+                          type="text"
+                          value=""
+                        />
+                      </div>
+                    </div>
+                    <div
+                      class="invalid-feedback"
+                    >
+                      Data urodzenia jest wymagana.
+                    </div>
+                  </div>
+                  <div
+                    class="form-group col-md-6 col-12"
+                  >
+                    <label
+                      class="form-label"
+                      for="phoneNumber"
+                    >
+                      Numer telefonu:
+                    </label>
+                    <input
+                      class="form-control"
+                      id="phoneNumber"
+                      maxlength="12"
+                      minlength="1"
+                      name="phoneNumber"
+                      placeholder="+48123456789"
+                      required=""
+                      type="text"
+                      value=""
+                    />
+                    <div
+                      class="invalid-feedback"
+                    >
+                      Numer telefonu jest wymagany.
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="row"
+                >
+                  <div
+                    class="form-group col-md-6 col-12"
+                  >
+                    <label
+                      class="form-label"
+                      for="email"
+                    >
+                      Adres email:
+                    </label>
+                    <input
+                      class="form-control"
+                      id="email"
+                      maxlength="254"
+                      minlength="1"
+                      name="email"
+                      placeholder="example@domain.com"
+                      required=""
+                      type="email"
+                      value=""
+                    />
+                    <div
+                      class="invalid-feedback"
+                    >
+                      Adres email jest wymagany.
+                    </div>
+                  </div>
+                </div>
+              </form>
+              <div
+                class="row"
+              >
+                <div
+                  class="col-md-6 col-12"
+                >
+                  <button
+                    class="form_navigation_prev btn btn-primary btn-block"
+                    disabled=""
+                    type="button"
+                  >
+                    ← Wstecz
+                  </button>
+                </div>
+                <div
+                  class="col-md-6 col-12"
+                >
+                  <button
+                    class="form_navigation_next btn btn-primary btn-block"
+                    type="button"
+                  >
+                    Dalej →
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            aria-hidden="true"
+            class="tab-pane"
+            role="tabpanel"
+          >
+            <div>
+              <h3>
+                Edukacja
+              </h3>
+              <img
+                alt=""
+                class="CVEditorTab__img"
+                src="movie_2.png"
+              />
+              <form
+                class=""
+                novalidate=""
+              >
+                <div
+                  class="row"
+                >
+                  <div
+                    class="form-group col-md-6 col-12"
+                  >
+                    <label
+                      class="form-label"
+                      for="startTime"
+                    >
+                      Od:
+                    </label>
+                    <div
+                      class="react-datepicker-wrapper"
+                    >
+                      <div
+                        class="react-datepicker__input-container"
+                      >
+                        <input
+                          class="form-control"
+                          id="startTime"
+                          placeholder="Data rozpoczęcia"
+                          type="text"
+                          value=""
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="form-group col-md-6 col-12"
+                  >
+                    <label
+                      class="form-label"
+                      for="endTime"
+                    >
+                      Do:
+                    </label>
+                    <div
+                      class="react-datepicker-wrapper"
+                    >
+                      <div
+                        class="react-datepicker__input-container"
+                      >
+                        <input
+                          class="form-control"
+                          id="endTime"
+                          placeholder="Data zakończenia"
+                          type="text"
+                          value=""
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="form-group"
+                >
+                  <label
+                    class="form-label"
+                    for="actionPlace"
+                  >
+                    Miejsce:
+                  </label>
+                  <input
+                    class="form-control"
+                    id="actionPlace"
+                    maxlength="200"
+                    minlength="1"
+                    placeholder="Nazwa szkoły/miejsca pracy"
+                    required=""
+                    type="text"
+                    value=""
+                  />
+                  <div
+                    class="invalid-feedback"
+                  >
+                    Miejsce jest wymagane.
+                  </div>
+                </div>
+                <div
+                  class="form-group"
+                >
+                  <label
+                    class="form-label"
+                    for="actionDescription"
+                  >
+                    Opis:
+                  </label>
+                  <input
+                    class="form-control"
+                    id="actionDescription"
+                    maxlength="150"
+                    minlength="1"
+                    placeholder="Profil/stanowisko ..."
+                    required=""
+                    type="text"
+                    value=""
+                  />
+                  <div
+                    class="invalid-feedback"
+                  >
+                    Opis jest wymagany.
+                  </div>
+                </div>
+                <button
+                  class="mb-3 btn btn-success"
+                  type="submit"
+                >
+                  + Dodaj
+                </button>
+              </form>
+              <div
+                class="row"
+              >
+                <div
+                  class="col-md-6 col-12"
+                >
+                  <button
+                    class="form_navigation_prev btn btn-primary btn-block"
+                    type="button"
+                  >
+                    ← Wstecz
+                  </button>
+                </div>
+                <div
+                  class="col-md-6 col-12"
+                >
+                  <button
+                    class="form_navigation_next btn btn-primary btn-block"
+                    type="button"
+                  >
+                    Dalej →
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            aria-hidden="true"
+            class="tab-pane"
+            role="tabpanel"
+          >
+            <div>
+              <h3>
+                Doświadczenie zawodowe
+              </h3>
+              <img
+                alt=""
+                class="CVEditorTab__img"
+                src="movie_3.png"
+              />
+              <form
+                class=""
+                novalidate=""
+              >
+                <div
+                  class="row"
+                >
+                  <div
+                    class="form-group col-md-6 col-12"
+                  >
+                    <label
+                      class="form-label"
+                      for="startTime"
+                    >
+                      Od:
+                    </label>
+                    <div
+                      class="react-datepicker-wrapper"
+                    >
+                      <div
+                        class="react-datepicker__input-container"
+                      >
+                        <input
+                          class="form-control"
+                          id="startTime"
+                          placeholder="Data rozpoczęcia"
+                          type="text"
+                          value=""
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="form-group col-md-6 col-12"
+                  >
+                    <label
+                      class="form-label"
+                      for="endTime"
+                    >
+                      Do:
+                    </label>
+                    <div
+                      class="react-datepicker-wrapper"
+                    >
+                      <div
+                        class="react-datepicker__input-container"
+                      >
+                        <input
+                          class="form-control"
+                          id="endTime"
+                          placeholder="Data zakończenia"
+                          type="text"
+                          value=""
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="form-group"
+                >
+                  <label
+                    class="form-label"
+                    for="actionPlace"
+                  >
+                    Miejsce:
+                  </label>
+                  <input
+                    class="form-control"
+                    id="actionPlace"
+                    maxlength="50"
+                    minlength="1"
+                    placeholder="Nazwa szkoły/miejsca pracy"
+                    required=""
+                    type="text"
+                    value=""
+                  />
+                  <div
+                    class="invalid-feedback"
+                  >
+                    Miejsce jest wymagane.
+                  </div>
+                </div>
+                <div
+                  class="form-group"
+                >
+                  <label
+                    class="form-label"
+                    for="actionDescription"
+                  >
+                    Opis:
+                  </label>
+                  <input
+                    class="form-control"
+                    id="actionDescription"
+                    maxlength="400"
+                    minlength="1"
+                    placeholder="Profil/stanowisko ..."
+                    required=""
+                    type="text"
+                    value=""
+                  />
+                  <div
+                    class="invalid-feedback"
+                  >
+                    Opis jest wymagany.
+                  </div>
+                </div>
+                <button
+                  class="mb-3 btn btn-success"
+                  type="submit"
+                >
+                  + Dodaj
+                </button>
+              </form>
+              <div
+                class="row"
+              >
+                <div
+                  class="col-md-6 col-12"
+                >
+                  <button
+                    class="form_navigation_prev btn btn-primary btn-block"
+                    type="button"
+                  >
+                    ← Wstecz
+                  </button>
+                </div>
+                <div
+                  class="col-md-6 col-12"
+                >
+                  <button
+                    class="form_navigation_next btn btn-primary btn-block"
+                    type="button"
+                  >
+                    Dalej →
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            aria-hidden="true"
+            class="tab-pane"
+            role="tabpanel"
+          >
+            <div>
+              <h3>
+                Umiejętności
+              </h3>
+              <img
+                alt=""
+                class="CVEditorTab__img"
+                src="movie_4.png"
+              />
+              <form
+                class=""
+                novalidate=""
+              >
+                <div
+                  class="form-group"
+                >
+                  <label
+                    class="form-label"
+                    for="skillName"
+                  >
+                    Umiejętność:
+                  </label>
+                  <input
+                    class="form-control"
+                    id="skillName"
+                    maxlength="50"
+                    minlength="1"
+                    placeholder="Wpisz umiejętność"
+                    required=""
+                    type="text"
+                    value=""
+                  />
+                  <div
+                    class="invalid-feedback"
+                  >
+                    Pole jest wymagane.
+                  </div>
+                </div>
+                <button
+                  class="mb-3 btn btn-success"
+                  type="submit"
+                >
+                  + Dodaj
+                </button>
+              </form>
+              <div
+                class="row"
+              >
+                <div
+                  class="col-md-6 col-12"
+                >
+                  <button
+                    class="form_navigation_prev btn btn-primary btn-block"
+                    type="button"
+                  >
+                    ← Wstecz
+                  </button>
+                </div>
+                <div
+                  class="col-md-6 col-12"
+                >
+                  <button
+                    class="form_navigation_next btn btn-primary btn-block"
+                    type="button"
+                  >
+                    Dalej →
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            aria-hidden="true"
+            class="tab-pane"
+            role="tabpanel"
+          >
+            <div>
+              <h3>
+                Języki obce
+              </h3>
+              <img
+                alt=""
+                class="CVEditorTab__img"
+                src="movie_5.png"
+              />
+              <form
+                class=""
+                novalidate=""
+              >
+                <div
+                  class="row"
+                >
+                  <div
+                    class="form-group col-md-6 col-12"
+                  >
+                    <label
+                      class="form-label"
+                      for="languageName"
+                    >
+                      Język:
+                    </label>
+                    <input
+                      class="form-control"
+                      id="languageName"
+                      maxlength="20"
+                      minlength="1"
+                      placeholder="Język"
+                      required=""
+                      type="text"
+                      value=""
+                    />
+                    <div
+                      class="invalid-feedback"
+                    >
+                      Nazwa języka jest wymagana.
+                    </div>
+                  </div>
+                  <div
+                    class="form-group col-md-6 col-12"
+                  >
+                    <label
+                      class="form-label"
+                      for="languageLevel"
+                    >
+                      Poziom:
+                    </label>
+                    <select
+                      class="form-control"
+                      id="languageLevel"
+                      required=""
+                    >
+                      <option
+                        value="podstawowy"
+                      >
+                        podstawowy
+                      </option>
+                      <option
+                        value="komunikatywny"
+                      >
+                        komunikatywny
+                      </option>
+                      <option
+                        value="biegły"
+                      >
+                        biegły
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <button
+                  class="mb-3 btn btn-success"
+                  type="submit"
+                >
+                  + Dodaj
+                </button>
+              </form>
+              <div
+                class="row"
+              >
+                <div
+                  class="col-md-6 col-12"
+                >
+                  <button
+                    class="form_navigation_prev btn btn-primary btn-block"
+                    type="button"
+                  >
+                    ← Wstecz
+                  </button>
+                </div>
+                <div
+                  class="col-md-6 col-12"
+                >
+                  <button
+                    class="form_navigation_next btn btn-primary btn-block"
+                    type="button"
+                  >
+                    Dalej →
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            aria-hidden="true"
+            class="tab-pane"
+            role="tabpanel"
+          >
+            <div>
+              <h3>
+                Zdjęcie
+              </h3>
+              <img
+                alt=""
+                class="CVEditorTab__img"
+                src="movie_1.png"
+              />
+              <form
+                class=""
+              >
+                <div
+                  class="form-group"
+                >
+                  <label
+                    class="form-label"
+                    for="custom-file"
+                  >
+                    Zdjęcie:
+                  </label>
+                  <div
+                    class="custom custom-file"
+                  >
+                    <input
+                      accept="image/*"
+                      class="custom-file-input"
+                      id="custom-file"
+                      type="file"
+                    />
+                    <label
+                      class="custom-file-label"
+                      data-browse="Dodaj"
+                      for="custom-file"
+                    >
+                      Wybierz zdjęcie
+                    </label>
+                  </div>
+                </div>
+              </form>
+              <div
+                class="row"
+              >
+                <div
+                  class="col-md-6 col-12"
+                >
+                  <button
+                    class="form_navigation_prev btn btn-primary btn-block"
+                    type="button"
+                  >
+                    ← Wstecz
+                  </button>
+                </div>
+                <div
+                  class="col-md-6 col-12"
+                >
+                  <form
+                    class=""
+                  >
+                    <button
+                      class="btn btn-success btn-block"
+                      id="saveButton"
+                      type="submit"
+                    >
+                      Generuj CV
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

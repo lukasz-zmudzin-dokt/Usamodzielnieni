@@ -12,7 +12,8 @@ describe('CVEditorTab', () => {
             onPrevClick: () => {},
             onNextClick: () => {},
             comments: "",
-            loading: false
+            loading: false,
+            showComments: true
         }
     });
 
