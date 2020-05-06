@@ -62,7 +62,3 @@ export const customizeToolbar = () => {
         side: sideButtons
     }
 };
-
-export const sideButtons = [
-
-];

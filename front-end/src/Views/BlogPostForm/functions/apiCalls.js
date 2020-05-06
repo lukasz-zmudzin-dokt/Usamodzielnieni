@@ -62,10 +62,10 @@ export const postBlogPost = async (data, token, method, id) => {
         throw response.status;
 };
 
-export const uploadPhoto = async (id, photo, token) => {
+export const uploadPhoto = async (id, photo, token, mode) => {
     const formData = new FormData();
     formData.append('file', photo, photo.name);
-    const url = `${proxy.blog}blogpost/${id}/header/`;
+    const url = mode === "header" ? `${proxy.blog}blogpost/${id}/header/` : `${proxy.blog}blogpost/id/attachment-upload/`;
     const headers = {
         Authorization: "Token " + token
     };

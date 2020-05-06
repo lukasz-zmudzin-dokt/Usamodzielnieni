@@ -143,7 +143,7 @@ class BlogPostForm extends React.Component {
           });
           if (this.state.photo !== null) {
               try {
-                  await uploadPhoto(this.state.post_id, this.state.photo, this.context.token);
+                  await uploadPhoto(this.state.post_id, this.state.photo, this.context.token, "header");
               } catch(e) {
                   console.log(e);
                   this.setState({
