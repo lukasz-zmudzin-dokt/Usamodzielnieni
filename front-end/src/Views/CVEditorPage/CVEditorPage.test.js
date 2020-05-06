@@ -225,5 +225,5 @@ describe('CVEditorPage  - submit', () => {
         fireEvent.click(submitButton);
 
         expect(getByText('Wystąpił błąd', { exact: false })).toBeInTheDocument();
-    })
+    });
 });
