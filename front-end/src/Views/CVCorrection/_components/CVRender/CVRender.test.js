@@ -16,11 +16,6 @@ describe("CVRender", () => {
     const { container } = render(<CVRender />);
     expect(container).toMatchSnapshot();
   });
-
-  it("should match snapshot", () => {
-    const { container } = render(<CVRender />);
-    expect(container).toMatchSnapshot();
-  });
   describe("PaginationCV", () => {
     it("should change active page after click(1->2)", async () => {
       const { getByText } = render(<CVRender />);
