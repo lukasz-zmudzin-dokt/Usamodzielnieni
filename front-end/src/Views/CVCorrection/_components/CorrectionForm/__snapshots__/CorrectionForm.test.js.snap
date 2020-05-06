@@ -19,6 +19,7 @@ exports[`CorrectionForm should match snapshot 1`] = `
         id="basic_info"
         maxlength="1000"
         minlength="1"
+        placeholder="Wpisz treść... "
       />
     </div>
     <div
@@ -35,6 +36,7 @@ exports[`CorrectionForm should match snapshot 1`] = `
         id="schools"
         maxlength="1000"
         minlength="1"
+        placeholder="Wpisz treść... "
       />
     </div>
     <div
@@ -51,6 +53,7 @@ exports[`CorrectionForm should match snapshot 1`] = `
         id="experiences"
         maxlength="1000"
         minlength="1"
+        placeholder="Wpisz treść... "
       />
     </div>
     <div
@@ -67,6 +70,7 @@ exports[`CorrectionForm should match snapshot 1`] = `
         id="skills"
         maxlength="1000"
         minlength="1"
+        placeholder="Wpisz treść... "
       />
     </div>
     <div
@@ -83,6 +87,7 @@ exports[`CorrectionForm should match snapshot 1`] = `
         id="languages"
         maxlength="1000"
         minlength="1"
+        placeholder="Wpisz treść... "
       />
     </div>
     <div
@@ -99,10 +104,11 @@ exports[`CorrectionForm should match snapshot 1`] = `
         id="additional_info"
         maxlength="1000"
         minlength="1"
+        placeholder="Wpisz treść... "
       />
     </div>
     <div
-      class="justify-content-end m-0 row"
+      class="justify-content-center m-0 row"
     >
       <button
         class="btn btn-primary"

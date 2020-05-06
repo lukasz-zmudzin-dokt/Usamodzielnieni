@@ -44,6 +44,7 @@ const FormGroup = ({
         return (
           <Form.Control
             as={type}
+            placeholder="Wpisz treść... "
             onChange={setInput}
             value={val}
             required={required}
