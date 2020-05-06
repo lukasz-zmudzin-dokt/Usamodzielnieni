@@ -7,7 +7,17 @@
 }
 
 .card-body.messagesList__body {
+  position: relative;
+  padding: 0 1.25rem 1.25rem 1.25rem;
+}
+
+.list-group.messagesList__list {
   overflow: auto;
+  height: 100%;
+}
+
+.list-group.messagesList__list::-webkit-scrollbar {
+  display: none;
 }
 
 .list-group-item.messagesList__item {

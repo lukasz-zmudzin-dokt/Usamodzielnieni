@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { ListGroup, Container, Card, Button } from "react-bootstrap";
 import MessageItem from "./components/MessageItem";
 import proxy from "config/api";
 import { UserContext } from "context";
 import { useParams, useHistory } from "react-router-dom";
+import {UserPicture} from 'components';
 
 const getMessages = async (token, id) => {
   const headers = {
@@ -80,6 +81,8 @@ const MessagesList = () => {
   const user = useContext(UserContext);
   const history = useHistory();
   const { id } = useParams();
+  const messagesEl = useRef(null);
+
 
   const backToChats = () => {
     history.push("/chats");
@@ -97,6 +100,7 @@ const MessagesList = () => {
       setData(res);
     };
     loadMessages(user.token, id);
+    messagesEl.current.scrollTop = messagesEl.current.scrollHeight;
   }, [id, user.token]);
 
   return (
@@ -110,11 +114,11 @@ const MessagesList = () => {
           >
             {"<"}
           </Button>
-          Piotr Kowalski
+          <UserPicture user={user}/>Piotr Kowalski
         </Card.Header>
         <Card.Body className="messagesList__body">
-          <ListGroup>
-            {data.map(({ content, send, side, id }) => (
+          <ListGroup ref={messagesEl} className="messagesList__list">
+            {dataD.map(({ content, send, side, id }) => (
               <MessageItem key={id} content={content} send={send} side={side} />
             ))}
           </ListGroup>
