@@ -1,5 +1,5 @@
 import React from "react";
-import {waitForElement, render, fireEvent, waitForElementToBeRemoved, waitFor} from '@testing-library/react';
+import {waitForElement, render, fireEvent, waitForElementToBeRemoved} from '@testing-library/react';
 import {MemoryRouter, Router} from 'react-router-dom';
 import {UserContext} from "context/UserContext";
 import {createMemoryHistory} from 'history';
@@ -76,18 +76,6 @@ describe('MyCVsPage', () => {
                     email: "malaala@lala.la"
                 }
             },
-            {
-                cv_id: 3,
-                name: "trzy"
-            },
-            {
-                cv_id: 4,
-                name: "cztery"
-            },
-            {
-                cv_id: 5,
-                name: "pięć"
-            }
         ];
         failFetch = false;
         jest.clearAllMocks();
@@ -185,6 +173,22 @@ describe('MyCVsPage', () => {
     });
 
     it('should render alert on max cvs reached', async () => {
+        const maxCVs = [
+            {
+                cv_id: 3,
+                name: "trzy"
+            },
+            {
+                cv_id: 4,
+                name: "cztery"
+            },
+            {
+                cv_id: 5,
+                name: "pięć"
+            }
+        ];
+        myCVs = [...myCVs, ...maxCVs];
+
         const {getByText, getAllByText} = render(
             <MemoryRouter>
                 <MyCVsPage />
