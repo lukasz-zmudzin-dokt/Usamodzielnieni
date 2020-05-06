@@ -1,3 +1,5 @@
+import proxy from "config/api";
+
 const getPosts = async (token, filters) => {
   const enTags = encodeURIComponent(filters.tag);
   const enCategories = encodeURIComponent(filters.category);
@@ -5,7 +7,7 @@ const getPosts = async (token, filters) => {
   const tagQ = filters.tag
     ? `${categoryQ ? `&tag=${enTags}` : `?tag=${enTags}`}`
     : "";
-  const url = `https://usamo-back.herokuapp.com/blog/blogposts/${categoryQ}${tagQ}`;
+  const url = `${proxy.blog}blogposts/${categoryQ}${tagQ}`;
   const headers = {
     Authorization: "Token " + token,
     "Content-Type": "application/json",
@@ -20,8 +22,8 @@ const getPosts = async (token, filters) => {
 };
 
 const getFilters = async (token) => {
-  const urlC = "https://usamo-back.herokuapp.com/blog/categories/";
-  const urlT = "https://usamo-back.herokuapp.com/blog/tags/";
+  const urlC = proxy.blog + "categories/";
+  const urlT = proxy.blog + "tags/";
   const headers = {
     Authorization: "Token " + token,
     "Content-Type": "application/json",

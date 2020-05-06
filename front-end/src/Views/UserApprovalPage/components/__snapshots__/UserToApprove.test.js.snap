@@ -1,0 +1,321 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserApproval should match snapshot (Employer type user)  1`] = `
+<div>
+  <div
+    class="card-body"
+  >
+    <div
+      class="list-group list-group-flush"
+    >
+      <div
+        class="list-group-item"
+      >
+        <div
+          class="row"
+        >
+          <div
+            class="detailsItem col-md-4"
+          >
+            <div
+              class="detailsItem__label"
+            >
+              Nazwa użytkownika
+            </div>
+            <div
+              class="detailsItem__value"
+            >
+              string
+            </div>
+          </div>
+          <div
+            class="detailsItem col"
+          >
+            <div
+              class="detailsItem__label"
+            >
+              Imię
+            </div>
+            <div
+              class="detailsItem__value"
+            >
+              string
+            </div>
+          </div>
+          <div
+            class="detailsItem col"
+          >
+            <div
+              class="detailsItem__label"
+            >
+              Nazwisko
+            </div>
+            <div
+              class="detailsItem__value"
+            >
+              string
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="list-group-item"
+      >
+        <div
+          class="row"
+        >
+          <div
+            class="detailsItem col"
+          >
+            <div
+              class="detailsItem__label"
+            >
+              Email
+            </div>
+            <div
+              class="detailsItem__value"
+            >
+              string@aaa.aaa
+            </div>
+          </div>
+          <div
+            class="detailsItem col"
+          >
+            <div
+              class="detailsItem__label"
+            >
+              Telefon
+            </div>
+            <div
+              class="detailsItem__value"
+            >
+              +48123456789
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="list-group-item"
+      >
+        <div
+          class="row"
+        >
+          <div
+            class="detailsItem col"
+          >
+            <div
+              class="detailsItem__label"
+            >
+              Adres
+            </div>
+            <div
+              class="detailsItem__value"
+            >
+              <p>
+                string
+              </p>
+              <p>
+                string
+                 
+                693
+              </p>
+              <p>
+                69-123
+                 
+                Ten test i tak nie przejdzie
+              </p>
+            </div>
+          </div>
+          <div
+            class="detailsItem col"
+          >
+            <div
+              class="detailsItem__label"
+            >
+              NIP
+            </div>
+            <div
+              class="detailsItem__value"
+            >
+              5555555555
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="list-group-item"
+      >
+        <div
+          class="justify-content-center row"
+        >
+          <button
+            class="btn btn-success"
+            type="button"
+          >
+            Akceptuj
+          </button>
+          <button
+            class="ml-3 btn btn-danger"
+            type="button"
+          >
+            Odrzuć
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`UserApproval should match snapshot (Standard type user)  1`] = `
+<div>
+  <div
+    class="card-body"
+  >
+    <div
+      class="list-group list-group-flush"
+    >
+      <div
+        class="list-group-item"
+      >
+        <div
+          class="row"
+        >
+          <div
+            class="detailsItem col-md-4"
+          >
+            <div
+              class="detailsItem__label"
+            >
+              Nazwa użytkownika
+            </div>
+            <div
+              class="detailsItem__value"
+            >
+              standard0
+            </div>
+          </div>
+          <div
+            class="detailsItem col"
+          >
+            <div
+              class="detailsItem__label"
+            >
+              Imię
+            </div>
+            <div
+              class="detailsItem__value"
+            >
+              Jan
+            </div>
+          </div>
+          <div
+            class="detailsItem col"
+          >
+            <div
+              class="detailsItem__label"
+            >
+              Nazwisko
+            </div>
+            <div
+              class="detailsItem__value"
+            >
+              Kowalski
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="list-group-item"
+      >
+        <div
+          class="row"
+        >
+          <div
+            class="detailsItem col"
+          >
+            <div
+              class="detailsItem__label"
+            >
+              Email
+            </div>
+            <div
+              class="detailsItem__value"
+            >
+              abc@gmail.com
+            </div>
+          </div>
+          <div
+            class="detailsItem col"
+          >
+            <div
+              class="detailsItem__label"
+            >
+              Telefon
+            </div>
+            <div
+              class="detailsItem__value"
+            >
+              +48123123123
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="list-group-item"
+      >
+        <div
+          class="row"
+        >
+          <div
+            class="detailsItem col"
+          >
+            <div
+              class="detailsItem__label"
+            >
+              Adres
+            </div>
+            <div
+              class="detailsItem__value"
+            >
+              <p>
+                facility
+              </p>
+              <p>
+                Aleja Niepodległości
+                 
+                20
+              </p>
+              <p>
+                11-123
+                 
+                Warszawa
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="list-group-item"
+      >
+        <div
+          class="justify-content-center row"
+        >
+          <button
+            class="btn btn-success"
+            type="button"
+          >
+            Akceptuj
+          </button>
+          <button
+            class="ml-3 btn btn-danger"
+            type="button"
+          >
+            Odrzuć
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

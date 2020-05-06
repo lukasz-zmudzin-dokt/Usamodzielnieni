@@ -109,6 +109,9 @@ exports[`JobOfferDetails should render without crashing 1`] = `
 123 asdasd
           </p>
         </div>
+        <div>
+          AddCvForm
+        </div>
       </div>
     </div>
   </div>

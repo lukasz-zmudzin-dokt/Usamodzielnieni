@@ -1,5 +1,7 @@
+import proxy from "config/api";
+
 export const deleteOffer = async (id, token) => {
-    let url = `https://usamo-back.herokuapp.com/job/job-offer/${id}/`;
+    let url = `${proxy.job}job-offer/${id}/`;
     const headers = {
         Authorization: "Token " + token,
         "Content-Type": "application/json"
@@ -9,6 +11,6 @@ export const deleteOffer = async (id, token) => {
     if (response.status === 200) {
         return response.status;
     } else {
-        throw response.status;
+        throw Error(response.status.toString());
     }
 };
