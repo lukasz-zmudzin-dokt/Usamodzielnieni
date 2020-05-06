@@ -67,6 +67,7 @@ class BlogPostForm extends React.Component {
       let res;
       try {
           res = await getPost(id, this.context.token);
+          console.log(res);
       } catch(e) {
           console.log(e);
           res = null;

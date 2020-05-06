@@ -35,8 +35,8 @@ const renderButtons = (id, user, author, errorFlag, successFlag, editionFlag, fl
     if ( ((user.type === 'Staff' && user.data.group_type.includes(staffTypes.BLOG_CREATOR)) || user.data.email === author.email) && !flag) {
         return (
             <ButtonToolbar className="btn_toolbar text-center">
-                <Button variant="warning" className="button-edit mx-3" onClick={e => editionFlag(true)}>Edytuj 🖉</Button>
-                <Button variant="danger" className="button-delete mx-3" onClick={e => handleDeletion(e, id, user.token, errorFlag, successFlag)}>Usuń ✗</Button>
+                <Button key="edit" variant="warning" className="button-edit mx-3" onClick={e => editionFlag(true)}>Edytuj 🖉</Button>
+                <Button key="delete" variant="danger" className="button-delete mx-3" onClick={e => handleDeletion(e, id, user.token, errorFlag, successFlag)}>Usuń ✗</Button>
             </ButtonToolbar>
         )
     }
@@ -73,9 +73,9 @@ const BlogContent = ({ post , user }) => {
                     </Row>
                 </Card.Title>
                 <Card.Subtitle as="h6" className="text-muted mb-4 mt-2">Kategoria: {post.category}</Card.Subtitle>
-                <Card.Text className="blog_content_text text-justify">
+                <div className="blog_content_text text-justify">
                     <div dangerouslySetInnerHTML={{__html: content}}/>
-                </Card.Text>
+                </div>
                 <p className="post_taglist mt-5">
                     <em>tagi: {renderTags(post.tags)}</em>
                 </p>

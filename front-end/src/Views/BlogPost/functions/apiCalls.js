@@ -8,7 +8,6 @@ export const getPost = async (id, token) => {
     };
 
     const response = await fetch(url, { method: "GET", headers });
-
     if (response.status === 200) {
         return await response.json();
     } else {
@@ -17,15 +16,16 @@ export const getPost = async (id, token) => {
 };
 
 export const deletePost = async(id, token) => {
-    let url = `${proxy.blog}blogpost/${id}`;
+    let url = `${proxy.blog}blogpost/${id}/`;
     const headers = {
         Authorization: "Token " + token,
         "Content-Type": "application/json"
     };
+    // const urlPhoto = url + "header/";
+    // await fetch(urlPhoto, {method: "DELETE", headers});
 
     const response = await fetch(url, {method: "DELETE", headers});
-    url = url + "/header";
-    await fetch(url, {method: "DELETE", headers});
+
     if (response.status === 200) {
         return response.status;
     } else {

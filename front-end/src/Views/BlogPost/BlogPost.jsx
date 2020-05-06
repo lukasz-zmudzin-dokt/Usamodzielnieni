@@ -51,6 +51,7 @@ const BlogPost = () => {
         let loadedPost;
         try {
           loadedPost = mapPost(await getPost(postId, token));
+          console.log(loadedPost)
         } catch (e) {
           console.log(e);
           loadedPost = null;

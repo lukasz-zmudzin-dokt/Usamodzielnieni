@@ -43,7 +43,7 @@ export const getFilters = async token => {
 export const postBlogPost = async (data, token, method, id) => {
     let url = proxy.blog + "blogpost/";
     if (id !== -1)
-        url = `${url}${id}`;
+        url = `${url}${id}/`;
     const headers = {
         Authorization: "Token " + token,
         "Content-Type": "application/json"
@@ -58,13 +58,14 @@ export const postBlogPost = async (data, token, method, id) => {
     if (response.status === 200) {
         return await response.json().then(res => res);
     } else
+        console.log(await response.json())
         throw response.status;
 };
 
 export const uploadPhoto = async (id, photo, token) => {
     const formData = new FormData();
     formData.append('file', photo, photo.name);
-    const url = `${proxy.blog}blogpost/${id}/header`;
+    const url = `${proxy.blog}blogpost/${id}/header/`;
     const headers = {
         Authorization: "Token " + token
     };
