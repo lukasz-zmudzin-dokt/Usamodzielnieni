@@ -17,6 +17,7 @@ import {
   UserProfilePage,
   UserApprovalPage,
   MessagesList
+  Chats
 } from "Views";
 import {userTypes} from "./userTypes";
 import {staffTypes} from "./staffTypes";
@@ -164,6 +165,8 @@ export default [
   {
     path: paths.CHAT_DETAILS,
     component: MessagesList,
+    path: paths.CHATS,
+    component: Chats,
     isPrivate: true,
     type: undefined,
     exact: true,

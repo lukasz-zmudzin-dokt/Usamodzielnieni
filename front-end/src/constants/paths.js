@@ -19,6 +19,7 @@ const paths = {
     JOB_OFFER_DETAILS: "/jobOffers/:id",
     MY_CVS: "/myCVs",
     USER_APPROVAL: "/userApproval",
+    CHATS: '/chats',
     CHAT_DETAILS: "/chats/:id"
 };
 export { paths };
