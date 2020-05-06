@@ -2,8 +2,14 @@ import React, { useState } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 import proxy from "config/api";
 import { Alert } from "react-bootstrap";
-import pdfjsWorker from "pdfjs-dist/build/pdf.worker.entry";
 import { PaginationCV } from "Views/CVCorrection/_components";
+
+const asyncPDFJS = async () => {
+  const pdfjsWorker = await import("pdfjs-dist/build/pdf.worker.entry");
+  return pdfjsWorker;
+};
+
+const pdfjsWorker = asyncPDFJS();
 
 pdfjs.GlobalWorkerOptions.workerSrc = pdfjsWorker;
 
