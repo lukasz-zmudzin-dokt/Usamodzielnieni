@@ -1,13 +1,14 @@
 import React, {useState} from "react";
-import {Form, Button, Col, Row} from "react-bootstrap";
+import {Form, Button} from "react-bootstrap";
 import FormGroup from "components/FormGroup";
 
 const ChatForm = ({sendMessage}) => {
     const handleSubmit = (e) => {
         e.preventDefault();
-        //console.log(message);
-        sendMessage(message);
-        setMessage("");
+        if(message !== "") {
+            sendMessage(message);
+            setMessage("");
+        }
     };
 
     const [message, setMessage] = useState("");
