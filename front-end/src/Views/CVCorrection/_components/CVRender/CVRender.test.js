@@ -16,25 +16,15 @@ describe("CVRender", () => {
     const { container } = render(<CVRender />);
     expect(container).toMatchSnapshot();
   });
+
   describe("PaginationCV", () => {
     it("should change active page after click(1->2)", async () => {
       const { getByText } = render(<CVRender />);
-
-      // [
-      //   getByText("Next"),
-      //   getByText("Last"),
-      //   getByText("2"),
-      //   getByText("3"),
-      //   getByText("4"),
-      // ].forEach((btn) => {
-      //   expect(btn).toBeInTheDocument();
-      //   expect(btn.closest("a")).toBeInTheDocument();
-      // });
-
       expect(getByText("1").textContent).toBe("1(current)");
       fireEvent.click(getByText("2"));
       expect(getByText("2").textContent).toBe("2(current)");
     });
+
     it("should change active page after click(3->first)", () => {
       const { getByText } = render(<CVRender />);
       fireEvent.click(getByText("3"));
@@ -42,11 +32,13 @@ describe("CVRender", () => {
       fireEvent.click(getByText("First"));
       expect(getByText("1").textContent).toBe("1(current)");
     });
+
     it("should change active page after click(1->Last)", async () => {
       const { getByText } = render(<CVRender />);
       fireEvent.click(getByText("Last"));
       expect(getByText("4").textContent).toBe("4(current)");
     });
+
     it("should change active page after click(1->Next->Previous)", async () => {
       const { getByText } = render(<CVRender />);
       expect(getByText("1").textContent).toBe("1(current)");
@@ -54,6 +46,20 @@ describe("CVRender", () => {
       expect(getByText("2").textContent).toBe("2(current)");
       fireEvent.click(getByText("Previous"));
       expect(getByText("1").textContent).toBe("1(current)");
+    });
+
+    it("should render redirect link if url is passed", async () => {
+      const { getByText } = render(<CVRender url="abc" />);
+
+      expect(getByText("Lub pobierz CV z tego linku")).toBeInTheDocument();
+    });
+
+    it("should not render redirect link if url isn't passed", async () => {
+      const { queryByText } = render(<CVRender url="" />);
+
+      expect(
+        queryByText("Lub pobierz CV z tego linku")
+      ).not.toBeInTheDocument();
     });
   });
 });

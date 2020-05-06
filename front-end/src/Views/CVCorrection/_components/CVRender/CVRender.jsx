@@ -1,17 +1,17 @@
 import React, { useState, useMemo } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 import proxy from "config/api";
-import { Alert } from "react-bootstrap";
+import { Alert, Row } from "react-bootstrap";
 import { PaginationCV } from "Views/CVCorrection/_components";
 
-const asyncPDFJS = async () => {
-  const pdfjsWorker = await import("pdfjs-dist/build/pdf.worker.entry");
-  return pdfjsWorker;
-};
+// const asyncPDFJS = async () => {
+//   const pdfjsWorker = await import("pdfjs-dist/build/pdf.worker.entry");
+//   return pdfjsWorker;
+// };
 
-const pdfjsWorker = asyncPDFJS();
+// const pdfjsWorker = asyncPDFJS();
 
-pdfjs.GlobalWorkerOptions.workerSrc = pdfjsWorker;
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 const CVRender = ({ url }) => {
   const [pages, setPages] = useState(1);
@@ -35,6 +35,17 @@ const CVRender = ({ url }) => {
           data-testid="pdf"
         />
       </Document>
+      {url !== "" ? (
+        <Row className="mr-0 ml-0 mt-3 justify-content-center">
+          <a
+            href={`${proxy.plain}${url}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Lub pobierz CV z tego linku
+          </a>
+        </Row>
+      ) : null}
       {pages !== 1 ? (
         <PaginationCV
           pages={pages}

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import FormGroup from "components/FormGroup";
 import { Form, Button, Row, Alert } from "react-bootstrap";
 import { sendFeedback } from "Views/CVCorrection/functions";
+import { useHistory } from "react-router-dom";
 
 const CorrectionForm = ({ id, token }) => {
   const [fail, setFail] = useState(false);
@@ -15,6 +16,7 @@ const CorrectionForm = ({ id, token }) => {
     languages: "",
     additionalInfo: "",
   });
+  const history = useHistory();
 
   const checkIfNotEmpty = () => {
     for (let key in feedback) {
@@ -43,6 +45,7 @@ const CorrectionForm = ({ id, token }) => {
         });
         setFail(false);
         setMsg("Pomyślnie przesłano uwagi.");
+        history.push("/cvApproval");
       } catch (err) {
         setFail(true);
         setMsg("Błąd serwera.");

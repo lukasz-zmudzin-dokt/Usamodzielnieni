@@ -7,6 +7,17 @@ exports[`CVRender should match snapshot 1`] = `
   >
     <div />
     <div
+      class="mr-0 ml-0 mt-3 justify-content-center row"
+    >
+      <a
+        href="https://usamo-back.herokuapp.comundefined"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        Lub pobierz CV z tego linku
+      </a>
+    </div>
+    <div
       class="justify-content-center align-items-end ml-0 mr-0  row"
     >
       <ul

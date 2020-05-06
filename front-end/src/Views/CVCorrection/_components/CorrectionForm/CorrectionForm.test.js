@@ -1,6 +1,21 @@
 import React from "react";
 import { render, fireEvent, waitForElement } from "@testing-library/react";
 import CorrectionForm from "./CorrectionForm";
+import { createMemoryHistory } from "history";
+import { Router } from "react-router-dom";
+
+const renderWithRouter = (
+  ui,
+  {
+    route = "/cvApproval",
+    history = createMemoryHistory({ initialEntries: [route] }),
+  } = {}
+) => {
+  return {
+    ...render(<Router history={history}>{ui}</Router>),
+    history,
+  };
+};
 
 describe("CorrectionForm", () => {
   let data = { id: "abc", token: "abc" };
@@ -30,12 +45,12 @@ describe("CorrectionForm", () => {
   });
 
   it("should match snapshot", () => {
-    const { container } = render(<CorrectionForm data={data} />);
+    const { container } = renderWithRouter(<CorrectionForm data={data} />);
     expect(container).toMatchSnapshot();
   });
 
   it("should not send anythhing if fields are empty", async () => {
-    const { getByText } = render(<CorrectionForm />);
+    const { getByText } = renderWithRouter(<CorrectionForm />);
     fireEvent.click(getByText("Wyślij uwagi"));
     await waitForElement(() => getByText("Dodaj minimalnie jedną uwagę."));
     expect(getByText("Dodaj minimalnie jedną uwagę.")).toBeInTheDocument();
@@ -43,7 +58,7 @@ describe("CorrectionForm", () => {
   });
 
   it("should send if at least one field is not empty", async () => {
-    const { getByText, getByLabelText } = render(<CorrectionForm />);
+    const { getByText, getByLabelText } = renderWithRouter(<CorrectionForm />);
     fireEvent.change(getByLabelText("Dane osobowe"), {
       target: { value: "abcd" },
     });
@@ -54,7 +69,9 @@ describe("CorrectionForm", () => {
   });
 
   it("should send if every field is not empty", async () => {
-    const { getByText, getByLabelText } = render(<CorrectionForm />);
+    const { getByText, getByLabelText, history } = renderWithRouter(
+      <CorrectionForm />
+    );
     fireEvent.change(getByLabelText("Dane osobowe"), {
       target: { value: "abcd" },
     });
@@ -77,11 +94,12 @@ describe("CorrectionForm", () => {
     await waitForElement(() => getByText("Pomyślnie przesłano uwagi."));
     expect(getByText("Pomyślnie przesłano uwagi.")).toBeInTheDocument();
     expect(fetch).toHaveBeenCalledTimes(1);
+    expect(history.location.pathname).toEqual("/cvApproval");
   });
 
   it("should not send if api fails", async () => {
     failFetch = true;
-    const { getByText, getByLabelText } = render(<CorrectionForm />);
+    const { getByText, getByLabelText } = renderWithRouter(<CorrectionForm />);
     fireEvent.change(getByLabelText("Dane osobowe"), {
       target: { value: "abcd" },
     });
