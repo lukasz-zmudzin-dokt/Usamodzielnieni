@@ -83,7 +83,7 @@ describe("MessagesList", () => {
   it("should redirect to /chats if you click close button", async () => {
     const { getByText, history } = renderWithRouter(<MessagesList />);
     expect(history.location.pathname).toEqual("/chats/12");
-    fireEvent.click(getByText("x"));
+    fireEvent.click(getByText("<"));
     await wait(() => expect(fetch).toHaveBeenCalled());
     expect(history.location.pathname).toEqual("/chats");
   });

@@ -118,7 +118,7 @@ const MessagesList = () => {
         </Card.Header>
         <Card.Body className="messagesList__body">
           <ListGroup ref={messagesEl} className="messagesList__list">
-            {dataD.map(({ content, send, side, id }) => (
+            {data.map(({ content, send, side, id }) => (
               <MessageItem key={id} content={content} send={send} side={side} />
             ))}
           </ListGroup>

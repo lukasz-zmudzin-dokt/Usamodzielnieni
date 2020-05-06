@@ -3,27 +3,38 @@
 exports[`MessagesList should match snapshot 1`] = `
 <div>
   <div
-    class="container"
+    class="messagesList container"
   >
     <div
-      class="card"
+      class="messagesList__card card"
     >
       <h3
         class="messagesList__header card-header"
       >
         <button
-          class="messagesList__close btn btn-outline-danger"
+          class="messagesList__close btn btn-outline-warning"
           type="button"
         >
-          x
+          &lt;
         </button>
+        <div
+          class="userPicture__container"
+        >
+          <div
+            class="userPicture userPicture--standard"
+          >
+            <span>
+              ?
+            </span>
+          </div>
+        </div>
         Piotr Kowalski
       </h3>
       <div
-        class="card-body"
+        class="messagesList__body card-body"
       >
         <div
-          class="list-group"
+          class="messagesList__list list-group"
         >
           <div
             class="messagesList__item messagesList__item--left list-group-item list-group-item-primary"
