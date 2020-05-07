@@ -48,7 +48,7 @@ exports[`JobOfferDetails should render without crashing 1`] = `
               <div
                 class="detailsItem__value"
               >
-                Jakiś adres
+                ul. undefined undefined, undefined undefined
               </div>
             </div>
             <div
