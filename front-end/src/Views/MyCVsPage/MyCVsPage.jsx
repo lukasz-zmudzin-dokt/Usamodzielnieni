@@ -1,11 +1,11 @@
 import React from "react";
 import {Container, Card, Row, Col, ListGroup, Alert} from "react-bootstrap";
 import { UserContext } from "context/UserContext";
-
 import { getUserCVs } from "./functions/getUserCVs";
 import CVSection from "./components/cvSection";
 import {deleteCV} from "./functions/deleteCV";
 import {IndexLinkContainer} from "react-router-bootstrap";
+import {WithAlertContext} from 'components';
 
 class MyCVsPage extends React.Component {
     constructor(props) {
@@ -19,16 +19,23 @@ class MyCVsPage extends React.Component {
     }
 
     componentDidMount() {
-        getUserCVs(this.context.token).then(response =>
-            response.status === "200:OK" ? this.setState({
+        getUserCVs(this.context.token).then(response =>{
+            if (response.status === "200:OK"){
+                this.setState({
                     cvs: response.result,
                     loading: false
-            }) :
+                });
+            }
+            else{
+                this.props.alertContext.showAlert("Ups, coś poszło nie tak.Nie można pobrać listy CV.");
                 this.setState({
-                    errors: true,
                     loading: false
-                }));
+                });
+            }
+        })
     };
+
+    
 
     cutItem = async (cvId) => {
         let deleted;
@@ -36,9 +43,7 @@ class MyCVsPage extends React.Component {
             deleted = await deleteCV(this.context.token, cvId);
         } catch(e) {
             console.log(e);
-            this.setState({
-                delError: true
-            });
+            this.props.alertContext.showAlert("Wystąpił błąd podczas usuwania CV.");
             return false;
         }
         if (deleted) {
@@ -51,8 +56,6 @@ class MyCVsPage extends React.Component {
     showAlert = (show) => {
         return show ? <Card.Body>
             {
-                this.state.errors ? <Alert variant="danger" className="mb-0">Ups, coś poszło nie tak. Nie można pobrać listy CV.</Alert> :
-                this.state.delError ? <Alert variant="danger" className="mb-0">Wystąpił błąd podczas usuwania CV.</Alert> :
                 this.state.loading ? <Alert variant="primary" className="mb-0">Ładuję...</Alert> :
                 this.state.cvs.length === 5 ? <Alert variant="info" className="mb-0">Osiągnięto maksymalną liczbę CV. Jeżeli chcesz dodać nowe, usuń CV z listy powyżej.</Alert> :
                 this.state.cvs.length === 0 ? <Alert variant="info" className="mb-0">Nie masz jeszcze żadnych CV. Utwórz nowe w zakładce "
@@ -99,4 +102,4 @@ class MyCVsPage extends React.Component {
 
 MyCVsPage.contextType = UserContext;
 
-export default MyCVsPage;
+export default WithAlertContext(MyCVsPage);

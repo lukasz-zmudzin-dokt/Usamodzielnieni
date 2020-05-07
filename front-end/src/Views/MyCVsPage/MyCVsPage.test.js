@@ -1,7 +1,7 @@
 import React from "react";
-import {waitForElement, render, fireEvent, waitForElementToBeRemoved} from '@testing-library/react';
+import {waitForElement, render, fireEvent, waitForElementToBeRemoved,wait} from '@testing-library/react';
 import {MemoryRouter, Router} from 'react-router-dom';
-import {UserContext} from "context/UserContext";
+import {UserContext,AlertContext} from "context";
 import {createMemoryHistory} from 'history';
 import MyCVsPage from "./MyCVsPage";
 
@@ -28,7 +28,9 @@ describe('MyCVsPage', () => {
     let failFetch;
     let myCVs;
     let user;
-
+    const alertC = {
+        showAlert: jest.fn()
+    }
     beforeAll(() => {
         global.open = jest.fn();
         global.fetch = jest.fn().mockImplementation((input, init) => {
@@ -97,17 +99,20 @@ describe('MyCVsPage', () => {
     it('should render alert on api fail', async () => {
         failFetch = true;
         const {getByText, queryByText} = render(
+            
             <UserContext.Provider value={user}>
+                <AlertContext.Provider value={alertC}>
                 <MemoryRouter>
                     <MyCVsPage />
                 </MemoryRouter>
+                </AlertContext.Provider>
             </UserContext.Provider>
         );
 
         expect(getByText('Ładuję', {exact: false})).toBeInTheDocument();
 
-        await waitForElement(() => getByText('Ups, coś poszło nie tak', {exact: false}));
-        expect(getByText('Ups, coś poszło nie tak', {exact: false})).toBeInTheDocument();
+        await wait(() => expect(alertC.showAlert).toHaveBeenCalled());
+        expect(alertC.showAlert).toHaveBeenCalledWith('Ups, coś poszło nie tak.Nie można pobrać listy CV.')
         expect(queryByText('Ładuję', {exact: false})).not.toBeInTheDocument();
     });
 
@@ -156,9 +161,11 @@ describe('MyCVsPage', () => {
     it('should render error on delete fail', async () => {
         myCVs = [ myCVs[0] ];
         const {getByText, queryByText} = render(
-            <MemoryRouter>
-                <MyCVsPage />
-            </MemoryRouter>
+                <AlertContext.Provider value={alertC}>
+                    <MemoryRouter>
+                        <MyCVsPage />
+                    </MemoryRouter>
+                </AlertContext.Provider>
         );
 
         await waitForElement(() => getByText('Usuń CV'));
@@ -169,7 +176,7 @@ describe('MyCVsPage', () => {
         const cv = await waitForElement(() => queryByText('jeden'));
         expect(cv).not.toBeNull();
         expect(getByText("jeden")).toBeInTheDocument();
-        expect(getByText("Wystąpił błąd", {exact: false})).toBeInTheDocument();
+        expect(alertC.showAlert).toHaveBeenCalledWith("Wystąpił błąd podczas usuwania CV.");
     });
 
     it('should render alert on max cvs reached', async () => {

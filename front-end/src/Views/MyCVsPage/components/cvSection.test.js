@@ -1,16 +1,18 @@
 import CVSection from "./cvSection";
 import React from "react";
-import {fireEvent, render, waitForElement} from '@testing-library/react';
+import {fireEvent, render, waitForElement,wait} from '@testing-library/react';
 import {MemoryRouter} from "react-router-dom";
 import proxy from "config/api";
+import {AlertContext} from 'context';
 
 describe('CVSection', () => {
     let failFetch;
     let myCV;
-    let user;
     let handleShowing = jest.fn();
     let token = 123;
-    let error = false;
+    const alertC = {
+        showAlert: jest.fn()
+    }
 
     beforeAll(() => {
         global.open = jest.fn();
@@ -29,11 +31,6 @@ describe('CVSection', () => {
                 }
             }));
         });
-
-        user = {
-            type: 'Standard',
-            token: '123'
-        };
     });
 
     beforeEach(() => {
@@ -115,14 +112,16 @@ describe('CVSection', () => {
     it('should render error on api fail', async () => {
         failFetch = true;
         const {getByText} = render(
-            <MemoryRouter>
-                <CVSection cv={myCV} handleShowing={handleShowing} token={token}  error={false}/>
-            </MemoryRouter>
+            <AlertContext.Provider value={alertC}>
+                <MemoryRouter>
+                   <CVSection cv={myCV} handleShowing={handleShowing} token={token}  error={false}/>
+                </MemoryRouter>
+            </AlertContext.Provider>
         );
 
         fireEvent.click(getByText('Zobacz CV'));
-        await waitForElement(() => getByText('Ups, coś poszło nie tak.', {exact: false}));
+        await wait(() => expect(alertC.showAlert).toHaveBeenCalled());
 
-        expect(getByText('Ups, coś poszło nie tak.', {exact: false})).toBeInTheDocument();
+        expect(alertC.showAlert).toHaveBeenCalledWith("Ups, coś poszło nie tak. Nie można wyświetlić CV.");
     });
 });

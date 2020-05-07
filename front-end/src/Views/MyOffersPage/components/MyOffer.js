@@ -1,7 +1,7 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useState,useRef} from "react";
 import {Accordion, Card, Alert, ListGroup, Row, Button} from "react-bootstrap";
 import "Views/MyOffersPage/style.css";
-import { UserContext } from "context/UserContext";
+import { UserContext,AlertContext } from "context";
 import { getOfferPeople } from "../functions/apiCalls";
 import MyOfferPerson from "./MyOfferPerson";
 import {Link} from "react-router-dom";
@@ -9,9 +9,9 @@ import {Link} from "react-router-dom";
 const MyOffer = ({ offer }) => {
 
     const context = useContext(UserContext);
+    const alertC = useRef(useContext(AlertContext));
     const [people, setPeople] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(false);
 
     const loadOfferPeople = async (e, token, offerId) => {
         e.preventDefault();
@@ -23,7 +23,7 @@ const MyOffer = ({ offer }) => {
                     setPeople(res);
                 }
             } catch (err) {
-                setError(true);
+                alertC.current.showAlert("Ups, wystąpił błąd...")
             }
             setLoading(false);
         }
@@ -31,8 +31,6 @@ const MyOffer = ({ offer }) => {
 
     const message = loading ? (
         <Alert variant="info">Ładuję...</Alert>
-    ) : error ? (
-        <Alert variant="danger">Ups, wystąpił błąd...</Alert>
     ) : people.length === 0 ? (
         <Alert className="mb-0" variant="info">Brak zgłoszeń.</Alert>
     ) : null;
