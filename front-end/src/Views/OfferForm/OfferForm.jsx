@@ -12,7 +12,7 @@ import {
 import { UserContext } from "context";
 import polish from "date-fns/locale/pl";
 import { useHistory, useParams } from "react-router-dom";
-import {addressToString} from "utils/addressObjectToString";
+import {addressToString} from "utils/converters";
 
 registerLocale("pl", polish);
 
@@ -158,7 +158,7 @@ const OfferForm = () => {
                 header="Adres firmy"
                 id="company_address"
                 setVal={(val) => setOffer({ ...offer, company_address: val })}
-                val={company_address}
+                val={addressToString(company_address)}
                 incorrect="Podaj lokalizację"
                 length={{ min: 1, max: 200 }}
                 required

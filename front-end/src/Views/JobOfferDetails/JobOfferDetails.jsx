@@ -6,7 +6,7 @@ import { DetailsItem } from 'components';
 import { AddCvForm, RemoveOffer } from "./_components";
 import { staffTypes } from "constants/staffTypes";
 import proxy from "config/api";
-import {addressToString} from "utils/addressObjectToString";
+import {addressToString} from "utils/converters";
 
 const getOfferDetails = async (id, token) => {
   let url = `${proxy.job}job-offer/${id}`;

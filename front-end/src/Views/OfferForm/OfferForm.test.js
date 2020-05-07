@@ -31,7 +31,7 @@ const renderWithRouter = (
   let context = {
     data: {
       company_name: "abc",
-      company_address: { street: "def", street_number: "1", city: "abc" },
+      company_address: { street: "def", street_number: "1", city: "abc", postal_code: "00-000" },
     },
   };
   return {
@@ -54,12 +54,7 @@ describe("OfferForm", () => {
   let apiOffer = {
     offer_name: "abc",
     company_name: "xd",
-    company_address: {
-      street: "qwe",
-      street_number: "123",
-      postal_code: "00-000",
-      city: "elo"
-    },
+    company_address: { street: "def", street_number: "1", city: "abc", postal_code: "00-000" },
     voivodeship: "lubelskie",
     description: "res.description",
     expiration_date:
@@ -121,7 +116,7 @@ describe("OfferForm", () => {
     context = {
       data: {
         company_name: "abc",
-        company_address: { street: "def", street_number: "1", city: "abc" },
+        company_address: { street: "def", street_number: "1", city: "abc", postal_code: "00-000"},
       },
     };
   });
