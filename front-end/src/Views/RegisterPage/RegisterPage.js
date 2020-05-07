@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Card, Form, Button, Alert } from "react-bootstrap";
+import { Container, Card, Form, Button } from "react-bootstrap";
 import {Link, Redirect, withRouter} from "react-router-dom";
 import {
   HomeDataForm,
@@ -10,6 +10,7 @@ import {
 } from "./components";
 import { UserContext } from "context";
 import { sendData } from "./functions/sendData";
+import {WithAlertContext} from 'components'
 
 class RegisterPage extends React.Component {
   constructor(props) {
@@ -23,9 +24,6 @@ class RegisterPage extends React.Component {
       account_type: this.props.match.params.role !== 'staff' ? "Podopiecznym" : ["staff_verification"],
       validated: false,
       redirect: false,
-      fail_message: "",
-      error_flag: false,
-      incorrect_input: false,
       disabled: false
     };
   }
@@ -33,11 +31,19 @@ class RegisterPage extends React.Component {
   handleIncorrectResponse = status => {
     switch (status) {
       case 400:
-        return "Niepoprawne dane. Spróbuj jeszcze raz.";
+           this.props.alertContext.showAlert(
+             "Niepoprawne dane. Spróbuj jeszcze raz."
+           );
+           break;
       case 500:
-        return "Błąd serwera. Spróbuj ponownie za jakiś czas.";
+           this.props.alertContext.showAlert(
+             "Błąd serwera. Spróbuj ponownie za jakiś czas."
+           );
+           break;
       default:
-        return "Nieznany błąd.";
+         this.props.alertContext.showAlert(
+           "Nieznany błąd"
+         );
     }
   };
 
@@ -141,12 +147,7 @@ class RegisterPage extends React.Component {
           this.setRedirect();
         }
       } catch (error) {
-        const msg = this.handleIncorrectResponse(error.status);
-        this.setState({
-          fail_message: msg,
-          error_flag: true,
-          disabled: false
-        });
+        this.handleIncorrectResponse(error.status);
       }
     }
     this.setState({ disabled: false });
@@ -155,8 +156,6 @@ class RegisterPage extends React.Component {
   render() {
     const {
       validated,
-      error_flag,
-      fail_message,
       accountData,
       personalData,
       redirect,
@@ -198,15 +197,6 @@ class RegisterPage extends React.Component {
                 {disabled ? "Ładowanie..." : "Utwórz konto"}
               </Button>
             </Form>
-            {error_flag ? (
-              <Alert
-                variant="danger"
-                className="loginPage__failure"
-                data-testid="incorrectMsg"
-              >
-                {fail_message}
-              </Alert>
-            ) : null}
             {this.props.match.params.role !== 'staff' ? (
                 <div className="loginPage__links">
                   <Link to="/login" className="loginPage__link">
@@ -224,4 +214,4 @@ class RegisterPage extends React.Component {
 
 RegisterPage.contextType = UserContext;
 
-export default withRouter(RegisterPage);
+export default withRouter(WithAlertContext(RegisterPage));

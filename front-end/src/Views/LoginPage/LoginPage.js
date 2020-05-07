@@ -1,24 +1,23 @@
 import React from "react";
-import { Container, Button, Card, Form, Alert } from "react-bootstrap";
+import { Container, Button, Card, Form } from "react-bootstrap";
 import { Link, Redirect } from "react-router-dom";
 import LoginForm from "./components/loginForm";
 import { UserContext } from "context";
 import { sendData } from "./functions/sendData";
 import proxy from "config/api";
+import { WithAlertContext } from "components";
 
 class LoginPage extends React.Component {
   state = {
     credentials: null,
-    message: "",
     redirect: false,
-    incorrect: false,
     validated: false,
-    disabled: false
+    disabled: false,
   };
 
   setRedirect = () => {
     this.setState({
-      redirect: true
+      redirect: true,
     });
   };
 
@@ -28,19 +27,21 @@ class LoginPage extends React.Component {
     }
   };
 
-  handleIncorrectResponse = status => {
+  handleIncorrectResponse = (status) => {
     const msg =
       status === 400
-        ? "Niepoprawny login lub hasło."
-        : "Błąd serwera. Proszę spróbować później.";
+        ? this.props.alertContext.showAlert("Niepoprawny login lub hasło.")
+        : this.props.alertContext.showAlert(
+            "Błąd serwera. Proszę spróbować później."
+          );
     this.setState({
       message: msg,
       incorrect: true,
-      redirect: false
+      redirect: false,
     });
   };
 
-  handleSubmit = async event => {
+  handleSubmit = async (event) => {
     this.setState({ disabled: true });
     const form = event.currentTarget;
     event.preventDefault();
@@ -48,7 +49,7 @@ class LoginPage extends React.Component {
       event.stopPropagation();
     } else {
       this.setState({
-        validated: true
+        validated: true,
       });
 
       try {
@@ -59,21 +60,20 @@ class LoginPage extends React.Component {
           fetch(proxy.account + "data/", {
             headers: {
               "Content-Type": "application/json",
-              Authorization: "Token " + token
-            }
-          }).then(dataRes => {
+              Authorization: "Token " + token,
+            },
+          }).then((dataRes) => {
             if (dataRes.status === 200) {
-              dataRes.json().then(dataValue => {
-                const {data} = dataValue;
+              dataRes.json().then((dataValue) => {
+                const { data } = dataValue;
                 this.context.login(token, type, data);
                 this.setRedirect();
-              })
+              });
             } else {
               this.setState({
                 validated: false,
-                incorrect: true,
-                message: "Coś poszło nie tak"
               });
+              this.props.alertContext.showAlert("Coś poszło nie tak");
             }
           });
         }
@@ -85,7 +85,7 @@ class LoginPage extends React.Component {
   };
 
   render() {
-    const { validated, incorrect, message, disabled } = this.state;
+    const { validated, disabled } = this.state;
     const { renderRedirect, handleSubmit } = this;
 
     return (
@@ -98,12 +98,12 @@ class LoginPage extends React.Component {
             <Form
               noValidate
               validated={validated}
-              onSubmit={e => handleSubmit(e)}
+              onSubmit={(e) => handleSubmit(e)}
             >
               <LoginForm
                 data-testId="loginForm"
                 data={this.state.credentials}
-                onBlur={credentials => this.setState({ credentials })}
+                onBlur={(credentials) => this.setState({ credentials })}
               />
               <Button
                 data-testid="loginBtn"
@@ -115,11 +115,6 @@ class LoginPage extends React.Component {
                 {disabled ? "Ładowanie..." : "Zaloguj"}
               </Button>
             </Form>
-            {incorrect ? (
-              <Alert variant="danger" className="loginPage__failure">
-                {message}
-              </Alert>
-            ) : null}
             <div className="loginPage__links">
               <Link to="/newAccount">Załóż konto!</Link>
               {renderRedirect()}
@@ -133,4 +128,4 @@ class LoginPage extends React.Component {
 
 LoginPage.contextType = UserContext;
 
-export default LoginPage;
+export default WithAlertContext(LoginPage);
