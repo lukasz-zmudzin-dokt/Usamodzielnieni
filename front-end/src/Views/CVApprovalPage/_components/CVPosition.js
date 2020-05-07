@@ -1,13 +1,13 @@
-import React, {useContext, useState} from "react";
-import { UserContext } from "context";
-import {Alert, Button, Col, Row} from "react-bootstrap";
+import React, {useContext, useState,useRef} from "react";
+import { UserContext,AlertContext } from "context";
+import {Button, Col, Row} from "react-bootstrap";
 import {Redirect} from "react-router-dom";
 import {acceptCV} from "Views/CVApprovalPage/functions/acceptCV";
 import {getCVUrl} from "Views/CVApprovalPage/functions/getCVUrl";
 import { DetailsItem } from 'components';
 import proxy from "config/api";
 
-const showCV = async (e, token, cvId, setError) => {
+const showCV = async (e, token, cvId,alertC) => {
     e.preventDefault();
     try {
         const response = await getCVUrl(token, cvId);
@@ -16,19 +16,19 @@ const showCV = async (e, token, cvId, setError) => {
             window.open(url, '_blank');
 
     } catch (response) {
-        setError(true);
+        alertC.current.showAlert("Wystąpił błąd.");
     }
 };
 
-const handleAcceptCV = async (e, token, cvId, setError, setAccepted) => {
+const handleAcceptCV = async (e, token, cvId, alertC) => {
     e.preventDefault();
     try {
         const response = await acceptCV(token, cvId);
         if(response === "CV successfully verified.") {
-            setAccepted(true);
+            alertC.current.showAlert("Pomyślnie zaakceptowano CV.","success");
         }
     } catch (response) {
-        setError(true);
+        alertC.current.showAlert("Wystąpił błąd.");
     }
 };
 
@@ -39,16 +39,9 @@ const improveCV = (e, setRedirect) => {
 
 const CVPosition = (props) => {
     const context = useContext(UserContext);
+    const alertC = useRef(useContext(AlertContext));
     const cv = props.cv;
-    const [error, setError] = useState(false);
     const [redirect, setRedirect] = useState(false);
-    const [accepted, setAccepted] = useState(false);
-
-    const message = error ? (
-        <Alert variant="danger" className="p-1 m-1">Wystąpił błąd.</Alert>
-    ) : accepted ? (
-        <Alert variant="success" className="p-1 m-1">Pomyślnie zaakceptowano CV.</Alert>
-    ) : null;
 
     return (
         <Row>
@@ -59,26 +52,25 @@ const CVPosition = (props) => {
                 <Button
                     variant="primary m-1 p-1"
                     className="btnDownload"
-                    onClick={e => showCV(e, context.token, cv.cv_id, setError)}>
+                    onClick={e => showCV(e, context.token, cv.cv_id, alertC)}>
                     Pokaż CV
                 </Button>
                 <Button
                     variant="success m-1 p-1"
                     className="btnAccept"
-                    onClick={e => handleAcceptCV(e, context.token, cv.cv_id, setError, setAccepted)}>
+                    onClick={e => handleAcceptCV(e, context.token, cv.cv_id, alertC)}>
                     Akceptuj
                 </Button>
                 <Button
-                    disabled
+    
                     variant="warning m-1 p-1"
                     className="btnImprove"
                     onClick={e => improveCV(e, setRedirect)}>
                     Zgłoś poprawki
                 </Button>
             </Col>
-            {message ? ( message ) : null}
             {redirect ? (
-                <Redirect to={"/cvEditor/" + cv.cv_id} />
+                <Redirect to={"/cvCorrection/" + cv.cv_id} />
             ) : null }
         </Row>
     );

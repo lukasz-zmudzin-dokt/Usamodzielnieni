@@ -6,7 +6,7 @@ import CVList from "./_components/CVList";
 
 const CVApprovalPage = () => {
     const context = useContext(UserContext);
-    const contextA = useRef(useContext(AlertContext));
+    const alertC = useRef(useContext(AlertContext));
     const [loading, setLoading] = useState(false);
     const [cvs, setCvs] = useState([]);
 
@@ -21,8 +21,7 @@ const CVApprovalPage = () => {
             } catch (e) {
                 setCvs([]);
                 setLoading(false);
-                contextA.current.changeMessage("Nie udało się załadować CV.")
-                contextA.current.changeVisibility(true);
+                alertC.current.showAlert("Nie udało się załadować CV.");
             }
         };
 

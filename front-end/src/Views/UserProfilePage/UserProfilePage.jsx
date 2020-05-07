@@ -62,8 +62,7 @@ class UserProfilePage extends React.Component {
         },
       });
     } catch (res) {
-      this.props.alertContext.changeMessage("Wystąpił błąd podczas pobierania");
-      this.props.alertContext.changeVisibility(true);
+      this.props.alertContext.showAlert("Wystąpił błąd podczas pobierania");
     }
   };
 

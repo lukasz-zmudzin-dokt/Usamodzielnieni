@@ -5,11 +5,12 @@ import {getFilters, getPost, postBlogPost, uploadPhoto} from "./functions/apiCal
 import "medium-draft/lib/index.css";
 import {customizeToolbar} from "./functions/editorConfig";
 import SelectionRow from "./components/SelectionRow";
-import {UserContext,AlertContext} from "context";
+import {UserContext} from "context";
 import mediumDraftExporter from "medium-draft/lib/exporter";
 import mediumDraftImporter from 'medium-draft/lib/importer';
 import {convertToRaw} from 'draft-js';
 import {Redirect} from "react-router-dom";
+import {WithAlertContext} from 'components';
 
 class BlogPostForm extends React.Component {
   constructor(props) {
@@ -32,9 +33,6 @@ class BlogPostForm extends React.Component {
       };
       this.refsEditor = React.createRef();
   }
-
-    static contextA = AlertContext
-
 
   componentDidMount() {
       if (window.location.pathname.toLowerCase() !== "/blog/newpost") {
@@ -71,8 +69,9 @@ class BlogPostForm extends React.Component {
       } catch(e) {
           console.log(e);
           res = null;
-          this.contextA.changeMessage("Wystąpił błąd podczas pobierania treści posta.")
-          this.contextA.changeVisibility();
+           this.props.alertContext.showAlert(
+             "Wystąpił błąd podczas pobierania treści posta."
+           );
       }
       return res;
   };
@@ -84,8 +83,9 @@ class BlogPostForm extends React.Component {
       } catch(e) {
           console.log(e);
           res = {categories: [], tags: []}
-          this.contextA.changeMessage("Nie udało się załadować tagów i kategorii.")
-          this.contextA.changeVisibility();
+          this.props.alertContext.showAlert(
+              "Nie udało się załadować tagów i kategorii."
+          );
       }
       return res;
   };
@@ -150,15 +150,17 @@ class BlogPostForm extends React.Component {
                   await uploadPhoto(this.state.post_id, this.state.photo, this.context.token);
               } catch(e) {
                   console.log(e);
-                  this.contextA.changeMessage("Wystąpił błąd podczas dodawania zdjęcia.")
-                  this.contextA.changeVisibility();
+                  this.props.alertContext.showAlert(
+                    "Wystąpił błąd podczas dodawania zdjęcia."
+                  );
               }
           }
           this.setRedirect();
       } catch(e) {
           console.log(e);
-          this.contextA.changeMessage("Wystąpił błąd podczas dodawania posta.")
-          this.contextA.changeVisibility();
+           this.props.alertContext.showAlert(
+             "Wystąpił błąd podczas dodawania posta."
+           );
       }
   };
 
@@ -221,4 +223,4 @@ class BlogPostForm extends React.Component {
 
 BlogPostForm.contextType = UserContext;
 
-export default BlogPostForm;
+export default WithAlertContext(BlogPostForm);

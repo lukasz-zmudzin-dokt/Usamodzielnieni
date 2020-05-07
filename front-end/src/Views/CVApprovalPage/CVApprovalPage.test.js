@@ -12,6 +12,7 @@ describe("CVApproval", () => {
         changeVisibility: jest.fn(),
         message: "abc",
         changeMessage: jest.fn(),
+        showAlert: jest.fn()
     };
 
     beforeAll(() => {
@@ -88,10 +89,10 @@ describe("CVApproval", () => {
             </AlertContext.Provider>
         );
 
-        await wait(() => expect(contextA.changeMessage).toHaveBeenCalled());
+        await wait(() => expect(contextA.showAlert).toHaveBeenCalled());
 
-        expect(contextA.changeMessage).toHaveBeenCalledWith(
-            "Nie udało się załadować CV."
+        expect(contextA.showAlert).toHaveBeenCalledWith(
+          "Nie udało się załadować CV."
         );
     });
 

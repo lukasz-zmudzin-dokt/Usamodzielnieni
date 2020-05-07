@@ -1,11 +1,19 @@
 import React from "react";
-import {fireEvent, render, waitForElement} from "@testing-library/react";
+import {fireEvent, render, waitForElement,wait} from "@testing-library/react";
 import {MemoryRouter, Router} from "react-router-dom";
 import CVPosition from "./CVPosition";
-import {UserContext} from "context/UserContext";
+import {UserContext,AlertContext} from "context";
 import {createMemoryHistory} from 'history';
-import {staffTypes} from "constants/routes";
+import {staffTypes} from "constants/staffTypes";
 import proxy from "config/api";
+
+const alertC = {
+        open: true,
+        changeVisibility: jest.fn(),
+        message: "abc",
+        changeMessage: jest.fn(),
+        showAlert: jest.fn()
+};
 
 const renderWithRouter = (
     ui,
@@ -16,12 +24,14 @@ const renderWithRouter = (
 ) => {
     let context = { type: 'Staff', data: {group_type: staffTypes.CV} };
     return {
-        ...render(
-            <UserContext.Provider value={context}>
-                <Router history={history}>{ui}</Router>
-            </UserContext.Provider>
-        ),
-        history,
+      ...render(
+        <UserContext.Provider value={context}>
+          <AlertContext.Provider value={alertC}>
+            <Router history={history}>{ui}</Router>
+          </AlertContext.Provider>
+        </UserContext.Provider>
+      ),
+      history,
     };
 };
 
@@ -58,6 +68,10 @@ describe("CVPosition", () => {
         });
     });
 
+    beforeEach(()=>{
+        jest.clearAllMocks();
+    })
+
     it("should match snapshot", async () => {
         const { container, getByText } = render (
             <MemoryRouter>
@@ -92,10 +106,12 @@ describe("CVPosition", () => {
 
     it("should call acceptCV when asked to", async () => {
 
-        const { getByText } = render (
+        const { getByText } = render(
+          <AlertContext.Provider value={alertC}>
             <MemoryRouter>
-                <CVPosition cv={apiCV} />
+              <CVPosition cv={apiCV} />
             </MemoryRouter>
+          </AlertContext.Provider>
         );
         await waitForElement(() => getByText("Jarek"));
         fireEvent.click(getByText("Akceptuj"));
@@ -120,8 +136,8 @@ describe("CVPosition", () => {
 
         await waitForElement(() => getByText('Jarek'));
         fireEvent.click(getByText('Zgłoś poprawki', {exact: false}));
-
-        expect(history.location.pathname).toEqual('/cvEditor/0', {exact: false})
+        await waitForElement(() => getByText("Jarek"));
+        expect(history.location.pathname).toEqual('/cvCorrection/0', {exact: false})
     });
 
     it('should return cv url from api', async () => {
@@ -143,23 +159,30 @@ describe("CVPosition", () => {
 
     it('should render danger alert on api fail', async () => {
         failFetch = true;
-        const { getByText } = render (
+        const { getByText } = render(
+          <AlertContext.Provider value={alertC}>
             <MemoryRouter>
-                <CVPosition cv={apiCV} />
+              <CVPosition cv={apiCV} />
             </MemoryRouter>
+          </AlertContext.Provider>
         );
         await waitForElement(() => getByText("Jarek"));
         fireEvent.click(getByText("Akceptuj"));
 
-        await waitForElement(() => getByText('Wystąpił błąd', {exact: false}));
-        expect(getByText('Wystąpił błąd', {exact: false})).toBeInTheDocument();
+        await wait(() => expect(alertC.showAlert).toHaveBeenCalled());
+
+        expect(alertC.showAlert).toHaveBeenCalledWith(
+          "Wystąpił błąd."
+        );
     });
 
     it('should return alert on cv url fetch from failing api', async () => {
-        const { getByText } = render (
+        const { getByText } = render(
+          <AlertContext.Provider value={alertC}>
             <MemoryRouter>
-                <CVPosition cv={apiCV} />
+              <CVPosition cv={apiCV} />
             </MemoryRouter>
+          </AlertContext.Provider>
         );
 
         await waitForElement(() => getByText("Jarek"));
@@ -171,7 +194,8 @@ describe("CVPosition", () => {
                 method: "GET"
             }
         ));
-        expect(getByText('Wystąpił błąd', {exact: false})).toBeInTheDocument();
+    
+        expect(alertC.showAlert).toHaveBeenCalledWith("Wystąpił błąd.");
     });
 
 });
