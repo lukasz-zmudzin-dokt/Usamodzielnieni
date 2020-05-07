@@ -1,19 +1,24 @@
 import React from "react";
-import {fireEvent, render, waitForElement} from "@testing-library/react";
+import { render, waitForElement } from "@testing-library/react";
 import JobOfferDetails from "./JobOfferDetails";
 import { MemoryRouter } from 'react-router-dom';
-import {UserContext} from "context/UserContext";
-import proxy from "config/api";
+import { UserContext } from "context/UserContext";
 
-jest.mock('./_components', () => ({ AddCvForm: (props) => (<div></div>) }));
+jest.mock('./_components', () => ({ 
+    AddCvForm: () => <div>AddCvForm</div>,
+    RemoveOffer: () => <div>RemoveOffer</div>,
+}));
+jest.mock('constants/staffTypes', () => ({
+    staffTypes: {
+        JOBS: 'jobs'
+    }
+}));
 
 describe('JobOfferDetails', () => {
     let offer;
     let apiStatus;
     let match;
-    let user = {
-        type: "Staff"
-    };
+    let user;
 
     beforeAll(() => {
         match = { params: { id: "123" }};
@@ -25,9 +30,6 @@ describe('JobOfferDetails', () => {
                             status: 200,
                             json: () => Promise.resolve(offer)
                         });
-                        break;
-                    case"DELETE":
-                        resolve({ status: 200 });
                         break;
                     default:
                         reject({});
@@ -48,14 +50,23 @@ describe('JobOfferDetails', () => {
             expiration_date: '2020-12-12',
             description: 'Jakiś baaaaaaaaaaaaaaaaaardzo dłuuuuuuuuuuuuuuugi opis oferty pracy\n123 asdasd'
         };
+        user = {
+            type: 'Standard',
+            token: '123',
+            data: {
+                status: 'Verified'
+            }
+        }
         jest.clearAllMocks();
     });
 
     it('should render without crashing', async () => {
         const { container, getByText } = render(
-            <MemoryRouter>
-                <JobOfferDetails match={match}/>
-            </MemoryRouter>
+            <UserContext.Provider value={user}>
+                <MemoryRouter>
+                    <JobOfferDetails match={match}/>
+                </MemoryRouter>
+            </UserContext.Provider>
         );
 
         await waitForElement(() => getByText('Jakaś nazwa oferty'));
@@ -88,7 +99,10 @@ describe('JobOfferDetails', () => {
         expect(queryByText('Jakaś nazwa oferty')).not.toBeInTheDocument();
     });
 
-    it('should render delete button for specific admin', async () => {
+    it('should render RemoveOffer component when staff user group is jobs', async () => {
+        user.type = 'Staff';
+        user.data.group_type = 'jobs';
+
         const { getByText, queryByText } = render(
             <UserContext.Provider value={user}>
                 <MemoryRouter>
@@ -97,11 +111,12 @@ describe('JobOfferDetails', () => {
             </UserContext.Provider>
         );
 
-        await waitForElement(() => getByText('Usuń ofertę'));
-        expect(getByText('Usuń ofertę')).toBeInTheDocument();
+        await waitForElement(() => getByText('Jakaś nazwa oferty'));
+        expect(queryByText('AddCvForm')).not.toBeInTheDocument();
+        expect(getByText('RemoveOffer')).toBeInTheDocument();
     });
 
-    it('should call api deleting offer', async () => {
+    it('should render AddCvForm component when standard user is verified', async () => {
         const { getByText, queryByText } = render(
             <UserContext.Provider value={user}>
                 <MemoryRouter>
@@ -110,23 +125,23 @@ describe('JobOfferDetails', () => {
             </UserContext.Provider>
         );
 
-        await waitForElement(() => getByText('Usuń ofertę'));
-        expect(getByText('Usuń ofertę')).toBeInTheDocument();
-        fireEvent.click(getByText('Usuń ofertę'));
-
-        expect(getByText('Tak')).toBeInTheDocument();
-        fireEvent.click(getByText('Tak'));
-
-        expect(fetch).toHaveBeenCalledWith(
-            proxy.job + "job-offer/123/",
-            {
-                headers: {
-                    Authorization: "Token undefined",
-                    "Content-Type": "application/json",
-                },
-                method: "DELETE"
-            }
-        );
+        await waitForElement(() => getByText('Jakaś nazwa oferty'));
+        expect(queryByText('RemoveOffer')).not.toBeInTheDocument();
+        expect(getByText('AddCvForm')).toBeInTheDocument();
     });
 
+    it('should not render AddCvForm and RemoveOffer component when user is not verified and is not a jobs staff', async () => {
+        user.data.status = 'Unverified'
+        const { getByText, queryByText } = render(
+            <UserContext.Provider value={user}>
+                <MemoryRouter>
+                    <JobOfferDetails match={match}/>
+                </MemoryRouter>
+            </UserContext.Provider>
+        );
+
+        await waitForElement(() => getByText('Jakaś nazwa oferty'));
+        expect(queryByText('RemoveOffer')).not.toBeInTheDocument();
+        expect(queryByText('AddCvForm')).not.toBeInTheDocument();
+    });
 });

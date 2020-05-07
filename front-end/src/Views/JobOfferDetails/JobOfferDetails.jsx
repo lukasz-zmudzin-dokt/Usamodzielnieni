@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useContext,useRef } from 'react';
-import {Container, Card, Alert, Row, Button} from "react-bootstrap";
+import {Container, Card, Alert, Row } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
 import { UserContext,AlertContext } from "context";
 import { DetailsItem } from 'components';
-import { AddCvForm } from "./_components";
-import { deleteOffer } from "./functions/deleteOffer";
-import {staffTypes} from "constants/staffTypes";
+import { AddCvForm, RemoveOffer } from "./_components";
+import { staffTypes } from "constants/staffTypes";
 import proxy from "config/api";
 
 const getOfferDetails = async (id, token) => {
@@ -36,23 +35,11 @@ const mapOffer = (offer) => ({
   description: offer.description
 })
 
-const handleDeleteOffer = async (e, id, token, setDeleted, alertC) => {
-  e.preventDefault();
-  try {
-    await deleteOffer(id, token);
-    setDeleted(true);
-    alertC.current.showAlert("Ta oferta została usunięta.", "info");
-  } catch(err) {
-    setDeleted(true);
-    alertC.current.showAlert("Wystąpił błąd przy usuwaniu oferty.");
-  }
-};
+
 
 const JobOfferDetails = props => {
   const [offer, setOffer] = useState({});
   const [isOfferLoading, setIsOfferLoading] = useState(false);
-  const [confirmDeletion, setConfirmDeletion] = useState(false);
-  const [deleted, setDeleted] = useState(false);
   const user = useContext(UserContext);
   const alertC = useRef(useContext(AlertContext));
   useEffect(
@@ -96,22 +83,8 @@ const JobOfferDetails = props => {
             <p>{offer.description}</p>
           </div>
         )}
-        { user.type === 'Standard' && user.data && user.data.status === 'Verified' && <AddCvForm id={props.match.params.id} user={user}/> }
-        { user.type === 'Staff' && user.data.group_type.includes(staffTypes.JOBS) && !confirmDeletion ?
-            <Row className="d-flex justify-content-center">
-              <Button variant="danger" onClick={e => setConfirmDeletion(true)}>Usuń ofertę</Button>
-            </Row>
-            : null
-        }
-        { confirmDeletion && !deleted ?
-            <Alert variant="warning mt-3" className="d-flex justify-content-center align-items-center">
-              Czy na pewno chcesz usunąć tę ofertę?
-              <Button variant="warning" className="ml-3" onClick={e => handleDeleteOffer(e, offer.id, user.token, setDeleted,alertC)}>
-                Tak
-              </Button>
-            </Alert>
-            : null
-        }
+        { user.type === 'Standard' && user.data?.status === 'Verified' && <AddCvForm id={props.match.params.id} user={user} /> }
+        { user.type === 'Staff' && user.data?.group_type.includes(staffTypes.JOBS) && <RemoveOffer id={props.match.params.id} user={user} /> }
       </Card.Body>
       </Card>
     </Container>

@@ -52,6 +52,12 @@ export default [
     {
         name: "Telefony",
         path: paths.CONTACT_PAGE,
-        allowed: undefined, //wszyscy są upoważnieni - zalogowani i niezalogowani
+        allowed: undefined //wszyscy są upoważnieni - zalogowani i niezalogowani
+    },
+    {
+        name: "Chat",
+        path: paths.CHATS,
+        allowed: [userTypes.STANDARD, userTypes.STAFF, userTypes.EMPLOYER],
+        verified: true
     }
 ];
