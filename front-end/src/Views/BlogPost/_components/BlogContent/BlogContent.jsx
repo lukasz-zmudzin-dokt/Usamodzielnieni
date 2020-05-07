@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import DeletionModal from '../../../../components/DeletionModal/DeletionModal';
+import {DeletionModal} from 'components';
 import {Alert, Badge, Button, ButtonToolbar, Card, Col, Row} from "react-bootstrap";
 import mediumDraftImporter from 'medium-draft/lib/importer';
 import {convertToHTML} from "draft-convert";
@@ -72,7 +72,7 @@ const BlogContent = ({ post , user }) => {
             {post.header !== null && post.header !== "" ?
                 <Card.Img variant="top" src={`${proxy.plain}${post.header}`}/> : <Card.Header/>
             }
-            {DeletionModal(showModal, setShowModal, setWantsDelete)}
+            {DeletionModal(showModal, setShowModal, setWantsDelete, "Czy na pewno chcesz usunąć ten post?")}
             <Card.Body className="post_content mx-4">
                 {
                     delError ? <Alert variant="danger">Wystąpił błąd podczas usuwania posta.</Alert> :
