@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {Accordion, Card, Alert, ListGroup, Row, Button} from "react-bootstrap";
 import "Views/MyOffersPage/style.css";
 import { UserContext } from "context/UserContext";
@@ -6,16 +6,15 @@ import { getOfferPeople } from "../functions/apiCalls";
 import MyOfferPerson from "./MyOfferPerson";
 import {Link} from "react-router-dom";
 
-const MyOffer = ({ offer }) => {
+const MyOffer = ({ offer, activeOffer, setActiveOffer }) => {
 
     const context = useContext(UserContext);
     const [people, setPeople] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
 
-    const loadOfferPeople = async (e, token, offerId) => {
-        e.preventDefault();
-        if(people.length === 0) {
+    useEffect(() => {
+        const loadOfferPeople = async (token, offerId) => {
             setLoading(true);
             try {
                 let res = await getOfferPeople(token, offerId);
@@ -26,8 +25,11 @@ const MyOffer = ({ offer }) => {
                 setError(true);
             }
             setLoading(false);
+        };
+        if(people.length === 0 && offer.id === activeOffer) {
+            loadOfferPeople(context.token, offer.id, activeOffer);
         }
-    };
+    }, [context.token, activeOffer]);
 
     const message = loading ? (
         <Alert variant="info">Ładuję...</Alert>
@@ -39,7 +41,7 @@ const MyOffer = ({ offer }) => {
 
     return (
         <Card className="border-left-0 border-right-0 border-bottom-0">
-            <Accordion.Toggle as={Card.Header} eventKey={offer.id} onClick={e => loadOfferPeople(e, context.token, offer.id)}>
+            <Accordion.Toggle as={Card.Header} eventKey={offer.id} onClick={ e => setActiveOffer(offer.id) }>
                 {offer.offer_name}
             </Accordion.Toggle>
             <Accordion.Collapse eventKey={offer.id}>

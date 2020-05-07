@@ -17,14 +17,52 @@ exports[`MyOffers should match snapshot 1`] = `
         class="p-0 card-body"
       >
         <div
-          class="fade mb-0 alert alert-info show"
-          role="alert"
-        >
-          Brak zgłoszeń.
-        </div>
-        <div
           class="list-group"
         >
+          <div
+            class="list-group-item"
+          >
+            <div
+              class="justify-content-end row"
+            >
+              <div
+                class="detailsItem col"
+              >
+                <div
+                  class="detailsItem__label"
+                >
+                  Imię i nazwisko
+                </div>
+                <div
+                  class="detailsItem__value"
+                >
+                  standard1
+                   
+                  standard1
+                </div>
+              </div>
+              <div
+                class="detailsItem col"
+              >
+                <div
+                  class="detailsItem__label"
+                >
+                  email
+                </div>
+                <div
+                  class="detailsItem__value"
+                >
+                  standard1@standard1.com
+                </div>
+              </div>
+              <button
+                class="mr-2 btn btn-primary"
+                type="button"
+              >
+                Pokaż CV
+              </button>
+            </div>
+          </div>
           <div
             class="list-group-item"
           >
