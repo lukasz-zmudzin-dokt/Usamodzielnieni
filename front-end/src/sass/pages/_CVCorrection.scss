@@ -19,8 +19,13 @@
   height: auto !important;
 }
 
+.react-pdf__message--error {
+  width: 100%;
+}
+
 @media (min-width: 1280px) {
   .cvCorrection__pdfContainer {
     width: 60%;
+    padding-right: 1.25rem;
   }
 }
