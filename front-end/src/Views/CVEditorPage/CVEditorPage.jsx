@@ -187,8 +187,7 @@ class CVEditorPage extends React.Component {
           this.setState({
             loading: false,
           });
-          this.contextA.changeMessage("Nie udało się załadować uwag.");
-          this.contextA.changeVisibility();
+          this.props.alertContext.showAlert("Nie udało się załadować uwag.")
         });
     } else {
       this.setState({ showComments: false });

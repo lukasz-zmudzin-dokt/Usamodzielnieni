@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext,useRef } from "react";
 import { Container, Card, ListGroup, Alert } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
 import Filter from "./_components/Filter";
 import qs from "query-string";
-import { UserContext } from "context";
+import { UserContext,AlertContext } from "context";
 import { JobOfferInfo, OffersPagination } from "./_components";
 import proxy from "config/api";
 
@@ -59,9 +59,10 @@ const JobOffersPage = props => {
     page: 1,
     pageSize: 10
   });
-  const [error, setError] = useState(false);
-  const user = useContext(UserContext);
   const [disabled, setDisabled] = useState(false);
+  const user = useContext(UserContext);
+  const alertC = useRef(useContext(AlertContext));
+
 
   const queryParams = qs.parse(props.location.search, { parseNumbers: true });
   if (
@@ -81,7 +82,7 @@ const JobOffersPage = props => {
       } catch (e) {
         console.log(e);
         res = { offers: [], count: 0 };
-        setError(true);
+        alertC.current.showAlert("Wystąpił błąd podczas ładowania ofert.");
       }
       setOffers(res.offers);
       setCount(res.count);
@@ -91,9 +92,7 @@ const JobOffersPage = props => {
     loadOffers(user.token);
   }, [user.token, filters]);
 
-  const msg = error ? (
-    <Alert variant="danger">Wystąpił błąd podczas ładowania ofert.</Alert>
-  ) : isOffersLoading ? (
+  const msg = isOffersLoading ? (
     <Alert variant="info">Ładowanie ofert...</Alert>
   ) : (
     offers.length === 0 && (

@@ -1,6 +1,7 @@
 import React from "react";
 import { Form, Button, Alert } from "react-bootstrap";
 import { Items } from '../';
+import {WithAlertContext} from 'components';
 
 
 class ItemsList extends React.Component {
@@ -8,7 +9,6 @@ class ItemsList extends React.Component {
         super(props);
         this.state = {
             validated: false,
-            error: false
         }
         if (this.props.data === null) {
             this.props.onChange([]);
@@ -26,9 +26,8 @@ class ItemsList extends React.Component {
             const item = getItem();
 
             if (data.find(dt => getItemId(dt) === getItemId(item))) {
-                this.setState({ error: true });
+                this.props.alertContext.showAlert("Taka sama pozycja znajduje się już na liście.")
             } else {
-                this.setState({ error: false });
                 this.props.onChange([...this.props.data, item])
                 this.props.clear();
             }
@@ -46,8 +45,7 @@ class ItemsList extends React.Component {
 
         if (data === null) return null;
 
-        const msg = this.state.error ? (<Alert variant="danger">Taka sama pozycja znajduje się już na liście.</Alert>) :
-                    (this.props.required && this.props.validated && !data.length) && (<Alert variant="danger">Lista nie może być pusta.</Alert>)
+        const msg = (this.props.required && this.props.validated && !data.length) && (<Alert variant="danger">Lista nie może być pusta.</Alert>);
 
         return (
             <Form onSubmit={this.addItem} noValidate validated={this.state.validated}>
@@ -74,4 +72,4 @@ class ItemsList extends React.Component {
     }
 }
 
-export default ItemsList;
+export default WithAlertContext(ItemsList);
