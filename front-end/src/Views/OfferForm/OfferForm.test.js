@@ -54,7 +54,12 @@ describe("OfferForm", () => {
   let apiOffer = {
     offer_name: "abc",
     company_name: "xd",
-    company_address: "abc, def 1",
+    company_address: {
+      street: "qwe",
+      street_number: "123",
+      postal_code: "00-000",
+      city: "elo"
+    },
     voivodeship: "lubelskie",
     description: "res.description",
     expiration_date:
@@ -345,7 +350,6 @@ describe("OfferForm", () => {
 
     expect(getByPlaceholderText("Nazwa stanowiska").value).toBe("abc");
     expect(getByPlaceholderText("Nazwa firmy").value).toBe("xd");
-    expect(getByPlaceholderText("Adres firmy").value).toBe("abc, def 1");
     expect(getByLabelText("Województwo").value).toBe("lubelskie");
     expect(getByLabelText("Opis stanowiska").value).toBe("res.description");
     expect(getByLabelText("Branża").value).toBe("xd");
