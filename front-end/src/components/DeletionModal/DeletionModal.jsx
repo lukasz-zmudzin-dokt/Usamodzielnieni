@@ -1,7 +1,7 @@
 import React from "react";
 import {Modal, Button} from "react-bootstrap";
 
-const DeletionModal = (show, setShow, delConfirmed, question) => {
+const DeletionModal = (show, setShow, delConfirmed, question, confirmLabel, cancelLabel) => {
     
     const handleOnClick = (e) => {
         if(e.target.id === "cancel")
@@ -17,10 +17,10 @@ const DeletionModal = (show, setShow, delConfirmed, question) => {
             <Modal.Body>{question}</Modal.Body>
             <Modal.Footer>
                 <Button id="cancel" variant="primary" onClick={e => handleOnClick(e)}>
-                    Zostaw
+                    {cancelLabel? cancelLabel : "Zostaw"}
                 </Button>
-                <Button id="confirm" variant="danger" onClick={e => handleOnClick(e)}>
-                    Usuń ✗
+                <Button id="confirm" variant={"danger"} onClick={e => handleOnClick(e)}>
+                    {confirmLabel? confirmLabel : "Usuń ✗"}
                 </Button>
             </Modal.Footer>
         </Modal>
