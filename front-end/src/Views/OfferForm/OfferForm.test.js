@@ -39,6 +39,7 @@ const renderWithRouter = (
     changeVisibility: jest.fn(),
     message: "abc",
     changeMessage: jest.fn(),
+    showAlert: jest.fn()
   };
   return {
     ...render(
@@ -125,6 +126,7 @@ describe("OfferForm", () => {
       changeVisibility: jest.fn(),
       message: "abc",
       changeMessage: jest.fn(),
+      showAlert: jest.fn()
     };
   });
 
@@ -158,7 +160,7 @@ describe("OfferForm", () => {
     );
     await waitForElement(() => getByText("Dodaj"));
 
-    expect(contextA.changeMessage).toHaveBeenCalledWith(
+    expect(contextA.showAlert).toHaveBeenCalledWith(
       "Nie udało się załadować danych."
     );
   });
@@ -177,7 +179,7 @@ describe("OfferForm", () => {
     );
     await waitForElement(() => getByText("Dodaj"));
 
-    expect(contextA.changeMessage).toHaveBeenCalledWith(
+    expect(contextA.showAlert).toHaveBeenCalledWith(
       "Nie udało się załadować danych."
     );
   });
@@ -321,7 +323,7 @@ describe("OfferForm", () => {
 
     await waitForElement(() => getByText("Dodaj"));
 
-    expect(contextA.changeMessage).toHaveBeenCalledWith(
+    expect(contextA.showAlert).toHaveBeenCalledWith(
       "Nie udało się wysłać oferty. Błąd serwera."
     );
   });

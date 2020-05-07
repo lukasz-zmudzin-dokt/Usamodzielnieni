@@ -20,6 +20,7 @@ const renderWithRouter = (
     changeVisibility: jest.fn(),
     message: "abc",
     changeMessage: jest.fn(),
+    showAlert: jest.fn()
   };
   return {
     ...render(
@@ -70,6 +71,7 @@ describe("UserProfile", () => {
       changeVisibility: jest.fn(),
       message: "abc",
       changeMessage: jest.fn(),
+      showAlert: jest.fn()
     };
     jest.clearAllMocks();
   });

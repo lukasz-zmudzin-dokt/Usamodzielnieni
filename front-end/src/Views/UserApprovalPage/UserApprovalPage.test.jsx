@@ -11,6 +11,7 @@ describe("UserApproval", () => {
         changeVisibility: jest.fn(),
         message: "abc",
         changeMessage: jest.fn(),
+        showAlert: jest.fn()
     };
     let apiUsers = [
         {
