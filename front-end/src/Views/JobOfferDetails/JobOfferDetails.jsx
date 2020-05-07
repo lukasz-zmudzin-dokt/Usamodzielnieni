@@ -3,10 +3,12 @@ import { Container, Card, Alert, Row } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
 import { UserContext } from "context";
 import { DetailsItem } from 'components';
-import { AddCvForm } from "./_components";
+import { AddCvForm, RemoveOffer } from "./_components";
+import { staffTypes } from "constants/staffTypes";
+import proxy from "config/api";
 
 const getOfferDetails = async (id, token) => {
-  let url = `https://usamo-back.herokuapp.com/job/job-offer/${id}`;
+  let url = `${proxy.job}job-offer/${id}`;
   const headers = {
     Authorization: "Token " + token,
     "Content-Type": "application/json"
@@ -32,6 +34,7 @@ const mapOffer = (offer) => ({
   expirationDate: offer.expiration_date,
   description: offer.description
 })
+
 
 const JobOfferDetails = props => {
   const [offer, setOffer] = useState({});
@@ -81,11 +84,12 @@ const JobOfferDetails = props => {
             <p>{offer.description}</p>
           </div>
         )}
-        { user.type === 'Standard' && <AddCvForm id={props.match.params.id} user={user}/> }
+        { user.type === 'Standard' && user.data?.status === 'Verified' && <AddCvForm id={props.match.params.id} user={user} /> }
+        { user.type === 'Staff' && user.data?.group_type.includes(staffTypes.JOBS) && <RemoveOffer id={props.match.params.id} user={user} /> }
       </Card.Body>
       </Card>
     </Container>
   )
-}
+};
 
 export default withRouter(JobOfferDetails);

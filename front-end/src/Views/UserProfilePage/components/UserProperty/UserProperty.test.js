@@ -28,14 +28,11 @@ const names = {
 };
 
 describe("UserProperty ", () => {
-  it("should render without crashing", () => {
-    render(<UserProperty names={names} user={user} />);
-  });
-});
 
-it("should render correctly", () => {
-  const { container } = render(
-    <UserProperty user={user} names={names} />
-  );
-  expect(container).toMatchSnapshot();
+  it("should render correctly", () => {
+    const { container } = render(
+        <UserProperty user={user} names={names} />
+    );
+    expect(container).toMatchSnapshot();
+  });
 });

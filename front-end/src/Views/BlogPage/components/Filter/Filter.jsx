@@ -5,6 +5,7 @@ import { DEFAULT_INPUT } from "constants/other.js";
 import FormGroup from "components/FormGroup";
 import { UserContext } from "context";
 import { IndexLinkContainer } from "react-router-bootstrap";
+import {staffTypes} from "constants/staffTypes";
 
 const Filter = ({ token, setFilter, count }) => {
   const [filters, setFilters] = useState({ categories: [], tags: [] });
@@ -93,7 +94,7 @@ const Filter = ({ token, setFilter, count }) => {
         </Button>
       </div>
       {user.type === "Staff" &&
-      user.data.group_type === "staff_blog_creator" ? (
+      user.data.group_type.includes(staffTypes.BLOG_CREATOR) ? (
         <IndexLinkContainer as={Button} to="/blog/newPost">
           <Button variant="success" className="mt-2">
             Stwórz nowy post

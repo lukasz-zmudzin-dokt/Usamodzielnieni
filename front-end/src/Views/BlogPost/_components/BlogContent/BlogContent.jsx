@@ -3,11 +3,13 @@ import DeletionModal from '../../../../components/DeletionModal/DeletionModal';
 import {Alert, Badge, Button, ButtonToolbar, Card, Col, Row, Modal} from "react-bootstrap";
 import mediumDraftImporter from 'medium-draft/lib/importer';
 import {convertToHTML} from "draft-convert";
-import {deletePost} from "../../functions/apiCalls";
+import {deletePost} from "Views/BlogPost/functions/apiCalls";
 import {Redirect} from "react-router-dom";
+import {staffTypes} from "constants/staffTypes";
+import proxy from "config/api";
 
 const getDateString = dateString => {
-    return dateString.substring(0,2) + "." + dateString.substring(3, 5) + "." + dateString.substring(6, 10);
+    return dateString.substring(8,10) + "." + dateString.substring(5, 7) + "." + dateString.substring(0, 4);
 };
 
 const renderTags = tagList => {
@@ -32,9 +34,7 @@ const handleDeletion = async (showModal, wantsDelete, id, token, errorFlag, succ
 };
 
 const renderButtons = (id, user, author, errorFlag, successFlag, editionFlag, flag, setShowModal) => {
-    console.log(author.email)
-    console.log(user.data.email)
-    if ( (user.type === 'Staff' || user.data.email === author.email) && !flag) {
+    if ( ((user.type === 'Staff' && user.data.group_type.includes(staffTypes.BLOG_CREATOR)) || user.data.email === author.email) && !flag) {
         return (
             <ButtonToolbar className="btn_toolbar text-center">
                 <Button variant="warning" className="button-edit mx-3" onClick={e => editionFlag(true)}>Edytuj 🖉</Button>
@@ -47,7 +47,7 @@ const renderButtons = (id, user, author, errorFlag, successFlag, editionFlag, fl
 const renderRedirect = (flag, id) => {
     const path = `/blog/newPost/${id}`;
     if (flag)
-        return <Redirect to={path}/>;
+        return <Redirect data-testId="blog-redirect" to={path}/>;
 };
 
 const handleOnClick = (e, setShow, wantsDelete) => {
@@ -77,7 +77,7 @@ const BlogContent = ({ post , user }) => {
     return (
         <Card>
             {post.header !== null && post.header !== "" ?
-                <Card.Img variant="top" src={`https://usamo-back.herokuapp.com${post.header}`}/> : <Card.Header/>
+                <Card.Img variant="top" src={`${proxy.plain}${post.header}`}/> : <Card.Header/>
             }
             {DeletionModal(showModal, setShowModal, handleOnClick, setWantsDelete)}
             <Card.Body className="post_content mx-4">

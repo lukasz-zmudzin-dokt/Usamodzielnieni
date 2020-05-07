@@ -2,9 +2,6 @@ import React from 'react';
 import { Card, Form } from 'react-bootstrap';
 
 class PersonalDataForm extends React.Component {
-    constructor(props) {
-        super(props);
-    }
 
     onChange = (onBlur, data, e) => {
         const name = e.target.name;

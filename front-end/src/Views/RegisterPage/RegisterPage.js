@@ -17,10 +17,10 @@ class RegisterPage extends React.Component {
     this.state = {
       personalData: null,
       homeData: null,
-      companyData: null,
+      companyData: {company_nip: ""},
       accountData: null,
 
-      account_type: this.props.match.params.role !== 'staff' ? "Podopiecznym" : "staff_verification",
+      account_type: this.props.match.params.role !== 'staff' ? "Podopiecznym" : ["staff_verification"],
       validated: false,
       redirect: false,
       fail_message: "",
@@ -49,13 +49,34 @@ class RegisterPage extends React.Component {
     if (form.checkValidity() === false || password !== passwordR) {
       event.stopPropagation();
       return false;
-    } else return !(form.checkValidity() === true && password !== passwordR);
+    }
+    else return true;
+  };
+
+  cutType = e => {
+    let permissions = this.state.account_type;
+    let itemIdx = permissions.indexOf(e.target.name);
+    if (itemIdx > -1) {
+      permissions.splice(itemIdx, 1);
+      this.setState({
+        account_types: permissions
+      });
+    }
+
   };
 
   selectType = e => {
-    this.setState({
-      account_type: e.target.value
-    });
+    if (this.props.match.params.role === 'staff') {
+      let permissions = this.state.account_type;
+      permissions = permissions.push(e.target.name);
+      this.setState({
+        account_types: permissions
+      });
+    } else {
+      this.setState({
+        account_type: e.target.value
+      });
+    }
   };
 
   renderSection = () => {
@@ -94,8 +115,6 @@ class RegisterPage extends React.Component {
     }
   };
 
-  getFacilityAddress = (city, street, cityCode) => `${city} ${street} ${cityCode}`;
-
   handleResponse = async e => {
     this.setState({ disabled: true });
     const data = {
@@ -110,7 +129,7 @@ class RegisterPage extends React.Component {
     this.setValidated();
     if (isOK) {
       try {
-        const contextData = await sendData(data).then(response => {
+        const contextData = await sendData(this.context.token, data).then(response => {
           return response;
         });
         const { status } = contextData;
@@ -151,7 +170,7 @@ class RegisterPage extends React.Component {
             Rejestracja
           </Card.Header>
           <Card.Body className="registerPage__body">
-            <TypeSelection isAdmin={this.props.match.params.role === 'staff'} selectType={this.selectType}/>
+            <TypeSelection isAdmin={this.props.match.params.role === 'staff'} selectType={this.selectType} cutType={this.cutType} current={this.state.account_type}/>
             <Form
               noValidate
               validated={validated}
@@ -188,11 +207,13 @@ class RegisterPage extends React.Component {
                 {fail_message}
               </Alert>
             ) : null}
-            <div className="loginPage__links">
-              <Link to="/login" className="loginPage__link">
-                Masz już konto? Zaloguj się!
-              </Link>
-            </div>
+            {this.props.match.params.role !== 'staff' ? (
+                <div className="loginPage__links">
+                  <Link to="/login" className="loginPage__link">
+                    Masz już konto? Zaloguj się!
+                  </Link>
+                </div>
+            ) : null}
           </Card.Body>
         </Card>
         {renderRedirect(redirect)}

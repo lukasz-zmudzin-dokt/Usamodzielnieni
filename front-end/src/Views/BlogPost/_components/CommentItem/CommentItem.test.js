@@ -56,22 +56,7 @@ describe('CommentItem', () => {
             <CommentItem {...props} />
         );
 
-        expect(getByText('Edytuj')).toBeInTheDocument();
         expect(getByText('Usuń')).toBeInTheDocument();
-    });
-
-    it('should call onEditClick when edit button is clicked', () => {
-        props.comment.author.email = 'abc@123.com';
-        props.user.type = 'Staff';
-        props.user.data.group_type = 'staff_blog_moderator';
-
-        const { getByText } = render(
-            <CommentItem {...props} />
-        );
-        fireEvent.click(getByText('Edytuj'));
-
-        expect(props.onEditClick).toHaveBeenCalledTimes(1);
-        expect(props.onDeleteClick).toHaveBeenCalledTimes(0);
     });
 
     it('should call onDeleteClick when delete button is clicked', () => {
