@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useRef } from "react";
 import { registerLocale } from "react-datepicker";
 import { Form, Container, Card, Button, Row } from "react-bootstrap";
 import { voivodeships } from "constants/voivodeships";
@@ -9,7 +9,7 @@ import {
   getTypes,
   getOffer,
 } from "Views/OfferForm/functions/fetchData";
-import { UserContext,AlertContext } from "context";
+import { UserContext, AlertContext } from "context";
 import polish from "date-fns/locale/pl";
 import { useHistory, useParams } from "react-router-dom";
 
@@ -35,7 +35,7 @@ const OfferForm = () => {
 
   //47991e86-4b42-4507-b154-1548bf8a3bd3
   const context = useContext(UserContext);
-  const contextA = useContext(AlertContext);
+  const alertC = useRef(useContext(AlertContext));
   useEffect(() => {
     setDisabled(true);
     const loadData = async (token) => {
@@ -51,8 +51,7 @@ const OfferForm = () => {
           history.push("/offerForm");
         } else {
           setDisabled(false);
-          contextA.changeMessage("Nie udało się załadować danych.")
-          contextA.changeVisibility(true);
+          alertC.current.showAlert("Nie udało się załadować danych.");
         }
         return;
       }
@@ -99,8 +98,7 @@ const OfferForm = () => {
         history.push("/myOffers");
         return;
       } catch (e) {
-        contextA.changeMessage("Nie udało się wysłać oferty. Błąd serwera.")
-        contextA.changeVisibility(true);
+        alertC.current.showAlert("Nie udało się wysłać oferty. Błąd serwera.");
       }
     }
     setDisabled(false);

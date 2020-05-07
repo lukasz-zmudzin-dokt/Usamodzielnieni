@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useState,useRef} from "react";
 import {Alert, Card, Container} from "react-bootstrap";
 import { getCVs } from "./functions/getCVs";
 import {UserContext,AlertContext} from "context";
@@ -6,7 +6,7 @@ import CVList from "./_components/CVList";
 
 const CVApprovalPage = () => {
     const context = useContext(UserContext);
-    const contextA = useContext(AlertContext);
+    const contextA = useRef(useContext(AlertContext));
     const [loading, setLoading] = useState(false);
     const [cvs, setCvs] = useState([]);
 
@@ -21,8 +21,8 @@ const CVApprovalPage = () => {
             } catch (e) {
                 setCvs([]);
                 setLoading(false);
-                contextA.changeMessage("Nie udało się załadować CV.")
-                contextA.changeVisibility();
+                contextA.current.changeMessage("Nie udało się załadować CV.")
+                contextA.current.changeVisibility(true);
             }
         };
 

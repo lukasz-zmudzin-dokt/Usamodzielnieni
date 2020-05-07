@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext} from "react";
+import React, { useState, useEffect, useContext,useRef} from "react";
 import { UserContext,AlertContext } from "context";
 import {Alert, Card, Container} from "react-bootstrap";
 import { getUsersToApprove } from "./functions/apiCalls";
@@ -7,7 +7,7 @@ import UserDetails from "./components/UserDetails";
 const UserApprovalPage = () => {
 
     const context = useContext(UserContext);
-    const contextA = useContext(AlertContext);
+    const alertC = useRef(useContext(AlertContext));
     const [loading, setLoading] = useState(false);
     const [users, setUsers] = useState([]);
     const [activeUser, setActiveUser] = useState("");
@@ -19,8 +19,7 @@ const UserApprovalPage = () => {
             setUsers(res);
             setLoading(false);
         } catch (e) {
-            contextA.changeMessage("Ups, wystąpił błąd.");
-            contextA.changeVisibility(true);
+            alertC.current.showAlert("Ups, wystąpił błąd.");
             setLoading(false);
         }
     };

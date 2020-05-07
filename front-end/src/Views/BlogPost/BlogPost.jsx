@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext,useRef } from "react";
 import { Container, Card, Alert } from "react-bootstrap";
 import { UserContext,AlertContext } from "context";
 
@@ -37,7 +37,7 @@ const BlogPost = () => {
   const [post, setPost] = useState(null);
   const [isPostLoading, setIsPostLoading] = useState(false);
   const user = useContext(UserContext);
-  const contextA = useContext(AlertContext);
+  const alertC = useRef(useContext(AlertContext));
   const post_Id = window.location.pathname.replace(/\/blog\/blogpost\//, '');
 
   const setComments = (comments) => setPost({...post, comments});
@@ -52,8 +52,10 @@ const BlogPost = () => {
         } catch (e) {
           console.log(e);
           loadedPost = null;
-          contextA.changeMessage("Wystąpił błąd podczas wczytywania zawartości bloga.")
-          contextA.changeVisibility();
+          alertC.current.showAlert(
+            "Wystąpił błąd podczas wczytywania zawartości bloga."
+          );
+
         }
         setPost(loadedPost);
         setIsPostLoading(false);

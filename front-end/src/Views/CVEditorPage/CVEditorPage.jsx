@@ -9,7 +9,7 @@ import {
   SkillsTab,
   PhotoTab
 } from "./components";
-import { UserContext,AlertContext } from "context";
+import { UserContext} from "context";
 
 import { sendData, getFeedback } from "Views/CVEditorPage/functions/other.js";
 import { createCVObject } from "Views/CVEditorPage/functions/createCVObject.js";

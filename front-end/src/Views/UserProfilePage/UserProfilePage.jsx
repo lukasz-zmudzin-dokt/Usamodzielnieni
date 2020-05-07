@@ -2,7 +2,7 @@ import React from "react";
 import {Alert, Card, Container} from "react-bootstrap";
 import UserDetails from "Views/UserProfilePage/components/UserDetails";
 import UserBasicInfo from "Views/UserProfilePage/components/UserBasicInfo";
-import { UserContext,AlertContext } from "context";
+import { UserContext } from "context";
 import { getUserData } from "Views/UserProfilePage/functions/getUserData.js";
 import AdminRegisterButton from "./components/AdminRegisterButton/AdminRegisterButton";
 import CVApprovalButton from "./components/CVApprovalButton/CVApprovalButton";

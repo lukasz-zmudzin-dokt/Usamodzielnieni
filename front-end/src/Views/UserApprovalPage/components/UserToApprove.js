@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useState,useRef} from "react";
 import {Alert, Button, Card, ListGroup, Row} from "react-bootstrap";
 import {UserContext,AlertContext} from "context";
 import {getUserDetails, setUserApproved, setUserRejected} from "Views/UserApprovalPage/functions/apiCalls";
@@ -6,7 +6,7 @@ import {DetailsItem} from "components";
 
 const UserToApprove = ({ user, activeUser,sliceUser }) => {
     const context = useContext(UserContext);
-    const contextA = useContext(AlertContext);
+    const alertC = useRef(useContext(AlertContext));
     const [userDetails, setUserDetails] = useState([]);
     const [userDetailsFacilityAddress, setUserDetailsFacilityAddress] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -23,8 +23,7 @@ const UserToApprove = ({ user, activeUser,sliceUser }) => {
                         setUserDetailsFacilityAddress(res.company_address);
                     }
                 } catch (err) {
-                    contextA.changeMessage("Ups, wystąpił błąd.");
-                    contextA.changeVisibility(true);
+                    alertC.current.showAlert("Ups, wystąpił błąd.");
                 }
                 setLoading(false);
 
@@ -39,13 +38,11 @@ const UserToApprove = ({ user, activeUser,sliceUser }) => {
         try {
             let res = await setUserApproved(token, userId);
             if(res === "User successfully verified.") {
-                contextA.changeMessage("Konto zatwierdzone pomyślnie","success");
-                contextA.changeVisibility(true);
+                alertC.current.showAlert("Konto zatwierdzone pomyślnie","success");
                 sliceUser();
             }
         } catch (err) {
-            contextA.changeMessage("Ups, wystąpił błąd.");
-            contextA.changeVisibility(true);
+            alertC.current.showAlert("Ups, wystąpił błąd.");
         }
     };
 
@@ -54,17 +51,12 @@ const UserToApprove = ({ user, activeUser,sliceUser }) => {
         try {
             let res = await setUserRejected(token, userId);
             if(res === "User status successfully set to not verified.") {
-                 contextA.changeMessage(
-                   "Konto odrzucone pomyślnie",
-                   "success"
-                 );
-                 contextA.changeVisibility(true);
+                 alertC.current.showAlert("Konto odrzucone pomyślnie", "success");
                  sliceUser();
                  
             }
         } catch (err) {
-          contextA.changeMessage("Ups, wystąpił błąd.");
-          contextA.changeVisibility(true);
+          alertC.current.showAlert("Ups, wystąpił błąd.");
         }
     };
 

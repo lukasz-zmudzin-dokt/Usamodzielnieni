@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext,useRef} from "react";
 import { UserContext, AlertContext } from "context";
 import { Container, Card, Alert, CardColumns } from "react-bootstrap";
 import { getPosts } from "Views/BlogPage/functions/fetchData";
@@ -9,7 +9,7 @@ const BlogPage = () => {
   const [posts, setPosts] = useState([]);
   const [filter, setFilter] = useState({});
   const context = useContext(UserContext);
-  const contextA = useContext(AlertContext);
+  const alertC = useRef(useContext(AlertContext));
   const [count, setCount] = useState(0);
 
   const [isLoading, setIsLoading] = useState(false);
@@ -23,8 +23,7 @@ const BlogPage = () => {
       } catch (e) {
         console.log(e);
         res = [];
-        contextA.changeMessage("Nie udało się załadować postów");
-        contextA.changeVisibility(true);
+        alertC.current.showAlert("Nie udało się załadować postów");
       }
       setIsLoading(false);
       setCount(res.length);

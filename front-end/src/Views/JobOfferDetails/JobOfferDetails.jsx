@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext,useRef } from 'react';
 import {Container, Card, Alert, Row, Button} from "react-bootstrap";
 import { withRouter } from "react-router-dom";
 import { UserContext,AlertContext } from "context";
@@ -36,17 +36,15 @@ const mapOffer = (offer) => ({
   description: offer.description
 })
 
-const handleDeleteOffer = async (e, id, token, setDeleted, contextA) => {
+const handleDeleteOffer = async (e, id, token, setDeleted, alertC) => {
   e.preventDefault();
   try {
     await deleteOffer(id, token);
     setDeleted(true);
-    contextA.changeMessage("Ta oferta została usunięta.","info")
-    contextA.changeVisibility(); 
+    alertC.current.showAlert("Ta oferta została usunięta.", "info");
   } catch(err) {
     setDeleted(true);
-    contextA.changeMessage("Wystąpił błąd przy usuwaniu oferty.")
-    contextA.changeVisibility();
+    alertC.current.showAlert("Wystąpił błąd przy usuwaniu oferty.");
   }
 };
 
@@ -56,7 +54,7 @@ const JobOfferDetails = props => {
   const [confirmDeletion, setConfirmDeletion] = useState(false);
   const [deleted, setDeleted] = useState(false);
   const user = useContext(UserContext);
-  const contextA = useContext(AlertContext);
+  const alertC = useRef(useContext(AlertContext));
   useEffect(
     () => {
       const loadOffer = async (id, token) => {
@@ -67,8 +65,7 @@ const JobOfferDetails = props => {
         } catch (e) {
           console.log(e);
           loadedOffer = {};
-          contextA.changeMessage("Wystąpił błąd podczas ładowania oferty.")
-          contextA.changeVisibility();
+          alertC.current.showAlert("Wystąpił błąd podczas ładowania oferty.");
         }
         setOffer(loadedOffer);
         setIsOfferLoading(false);
@@ -109,7 +106,7 @@ const JobOfferDetails = props => {
         { confirmDeletion && !deleted ?
             <Alert variant="warning mt-3" className="d-flex justify-content-center align-items-center">
               Czy na pewno chcesz usunąć tę ofertę?
-              <Button variant="warning" className="ml-3" onClick={e => handleDeleteOffer(e, offer.id, user.token, setDeleted,contextA)}>
+              <Button variant="warning" className="ml-3" onClick={e => handleDeleteOffer(e, offer.id, user.token, setDeleted,alertC)}>
                 Tak
               </Button>
             </Alert>

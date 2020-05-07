@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext,useRef } from "react";
 import { getFilters } from "Views/BlogPage/functions/fetchData";
 import { Form, Col, Button} from "react-bootstrap";
 import { DEFAULT_INPUT } from "constants/other.js";
@@ -13,7 +13,7 @@ const Filter = ({ token, setFilter, count }) => {
   const [tag, setTag] = useState(DEFAULT_INPUT);
 
   const user = useContext(UserContext);
-  const contextA = useContext(AlertContext);
+  const alertC = useRef(useContext(AlertContext));
 
   useEffect(() => {
     const loadOffers = async (token) => {
@@ -21,8 +21,7 @@ const Filter = ({ token, setFilter, count }) => {
       try {
         res = await getFilters(token);
       } catch (e) {
-        contextA.changeMessage("Wystąpił błąd podczas ładowania filtrów.")
-        contextA.changeVisibility(true);
+        alertC.current.showAlert("Wystąpił błąd podczas ładowania filtrów.")
         res = { categories: [], tags: [] };
      
       }

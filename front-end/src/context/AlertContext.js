@@ -20,6 +20,10 @@ export const AlertProvider = (props) => {
       setMessage(newMessage);
       setVariant(newVariant);
     },
+    showAlert:  (newMessage,newVariant) => {
+      data.changeMessage(newMessage,newVariant);
+      data.changeVisibility(true);
+    }
   };
   return <AlertContext.Provider value={data} {...props} />;
 };
