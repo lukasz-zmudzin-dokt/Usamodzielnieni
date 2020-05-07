@@ -4,11 +4,11 @@
     transform: translateY(-50%);
   }
 
-  25% {
+  12% {
     opacity: 1;
     transform: translateY(0%);
   }
-  75% {
+  88% {
     opacity: 1;
     transform: translateY(0%);
   }
@@ -49,7 +49,7 @@
 
 .alertMsg--scale {
   position: fixed;
-  top: 1.75rem;
+  top: 94px;
   left: 50%;
   z-index: 1100;
   width: 100%;
@@ -74,5 +74,11 @@
 @media (min-width: 576px) {
   .alertMsg--scale {
     max-width: 500px;
+  }
+}
+
+@media (min-width: 768px){
+  .alertMsg--scale {
+    top: 56px;
   }
 }
