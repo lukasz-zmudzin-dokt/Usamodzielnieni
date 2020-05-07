@@ -4,7 +4,7 @@ import MessageItem from "./components/MessageItem";
 import proxy from "config/api";
 import { UserContext } from "context";
 import { useParams, useHistory } from "react-router-dom";
-import {UserPicture} from 'components';
+import { UserPicture } from "components";
 
 const getMessages = async (token, id) => {
   const headers = {
@@ -83,7 +83,6 @@ const MessagesList = () => {
   const { id } = useParams();
   const messagesEl = useRef(null);
 
-
   const backToChats = () => {
     history.push("/chats");
   };
@@ -114,7 +113,8 @@ const MessagesList = () => {
           >
             {"<"}
           </Button>
-          <UserPicture user={user}/>Piotr Kowalski
+          <UserPicture user={user} />
+          <span className="ml-2">Piotr Kowalski</span>
         </Card.Header>
         <Card.Body className="messagesList__body">
           <ListGroup ref={messagesEl} className="messagesList__list">
