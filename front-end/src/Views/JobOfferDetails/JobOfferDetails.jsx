@@ -6,6 +6,7 @@ import { DetailsItem } from 'components';
 import { AddCvForm, RemoveOffer } from "./_components";
 import { staffTypes } from "constants/staffTypes";
 import proxy from "config/api";
+import {addressToString} from "utils/converters";
 
 const getOfferDetails = async (id, token) => {
   let url = `${proxy.job}job-offer/${id}`;
@@ -63,7 +64,7 @@ const JobOfferDetails = props => {
   );
 
   const msg = isOfferLoading ? <Alert variant="info">Ładowanie oferty...</Alert> :
-              error && <Alert variant="danger">Wystąpił błąd podczas ładowania oferty.</Alert>
+              error && <Alert variant="danger">Wystąpił błąd podczas ładowania oferty.</Alert>;
 
   return (
     <Container className="jobOfferDetails">
@@ -75,7 +76,7 @@ const JobOfferDetails = props => {
             <h3>{offer.title}</h3>
             <Row>
               <DetailsItem md="6" xl="4" label="Nazwa firmy">{offer.companyName}</DetailsItem>
-              <DetailsItem md="6" xl="4" label="Adres firmy">{offer.companyAddress}</DetailsItem>
+              <DetailsItem md="6" xl="4" label="Adres firmy">{addressToString(offer.companyAddress)}</DetailsItem>
               <DetailsItem md="6" xl="4" label="Lokalizacja">{offer.voivodeship}</DetailsItem>
               <DetailsItem md="6" xl="4" label="Ważne do">{offer.expirationDate}</DetailsItem>
               <DetailsItem md="6" xl="4" label="Branża">{offer.category}</DetailsItem>

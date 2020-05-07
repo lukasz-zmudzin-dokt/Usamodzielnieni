@@ -45,7 +45,7 @@ describe('JobOfferDetails', () => {
             id: '123',
             offer_name: 'Jakaś nazwa oferty',
             company_name: 'Jakaś nazwa firmy',
-            company_address: 'Jakiś adres',
+            company_address: { street: "def", street_number: "1", city: "abc", postal_code: "00-000" },
             voivodeship: 'Jakieś województwo',
             expiration_date: '2020-12-12',
             description: 'Jakiś baaaaaaaaaaaaaaaaaardzo dłuuuuuuuuuuuuuuugi opis oferty pracy\n123 asdasd'
