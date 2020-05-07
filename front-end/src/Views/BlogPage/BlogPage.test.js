@@ -11,6 +11,7 @@ describe("BlogPage", () => {
     changeVisibility: jest.fn(),
     message: "abc",
     changeMessage: jest.fn(),
+    showAlert: jest.fn(),
   };
   let failFetch;
   let apiFilters = ["abcd"];
@@ -106,7 +107,7 @@ describe("BlogPage", () => {
 
     await waitForElement(() => getByText("Filtruj posty"));
 
-    expect(contextA.changeMessage).toHaveBeenCalledWith(
+    expect(contextA.showAlert).toHaveBeenCalledWith(
       "Nie udało się załadować postów"
     );
   });

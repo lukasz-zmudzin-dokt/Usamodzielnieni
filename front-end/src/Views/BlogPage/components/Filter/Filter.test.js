@@ -12,6 +12,7 @@ describe("Filter", () => {
   let alertContext = {
     changeMessage: jest.fn(),
     changeVisibility: jest.fn(),
+    showAlert: jest.fn()
   }
   global.fetch = jest.fn().mockImplementation((input, init) => {
     return new Promise((resolve, reject) => {

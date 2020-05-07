@@ -3,8 +3,10 @@ import { MemoryRouter } from 'react-router-dom';
 import {
     render,
     waitForElement,
+    wait
 } from '@testing-library/react';
 import Chats from './Chats';
+import {AlertContext} from 'context';
 
 jest.mock('./components', () => ({
     ChatInfo: ({ chat }) => <div>{chat.name}</div>
@@ -13,6 +15,9 @@ jest.mock('./components', () => ({
 describe('Chats', () => {
     let failFetch = false;
     let apiChats = [];
+      let alertC = {
+        showAlert: jest.fn(),
+      };
     beforeAll(() => {
         global.fetch = jest.fn().mockImplementation((input, init) => {
             return new Promise((resolve, reject) => {
@@ -67,14 +72,19 @@ describe('Chats', () => {
 
     it('should render error alert when api returns error', async () => {
         failFetch = true;
-        const { getByText, queryByText } = render(
+        const { queryByText } = render(
+          <AlertContext.Provider value={alertC}>
             <MemoryRouter>
-                <Chats />
+              <Chats />
             </MemoryRouter>
+          </AlertContext.Provider>
         );
 
-        await waitForElement(() => getByText('Wystąpił błąd', { exact: false }));
-        expect(getByText('Wystąpił błąd', { exact: false })).toBeInTheDocument();
+        await wait(() => expect(alertC.showAlert).toHaveBeenCalled());
+
+        expect(alertC.showAlert).toHaveBeenCalledWith(
+          "Wystąpił błąd podczas ładowania wiadomości."
+        );
         expect(queryByText('Wiadomość 1')).not.toBeInTheDocument();
     });
 

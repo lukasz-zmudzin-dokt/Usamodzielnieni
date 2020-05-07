@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext,useRef } from 'react';
 import { Container, Card, ListGroup, Alert } from 'react-bootstrap';
-import { UserContext } from 'context';
+import { UserContext,AlertContext } from 'context';
 import proxy from 'config/api';
 import { ChatInfo } from './components';
 
@@ -30,9 +30,9 @@ const mapChats = (chats) => chats.map(chat => ({
 const Chats = () => {
   const [chats, setChats] = useState([]);
   const [isChatsLoading, setIsChatsLoading] = useState(false);
-  const [error, setError] = useState(false);
 
   const user = useContext(UserContext);
+  const alertC = useRef(useContext(AlertContext));
 
   useEffect(() => {
     const loadChats = async token => {
@@ -43,7 +43,7 @@ const Chats = () => {
       } catch (e) {
         console.log(e);
         loadedChats = [];
-        setError(true);
+        alertC.current.showAlert("Wystąpił błąd podczas ładowania wiadomości.");
       }
       setChats(loadedChats);
       setIsChatsLoading(false);
@@ -51,8 +51,7 @@ const Chats = () => {
     loadChats(user.token);
   }, [user.token]);
 
-  const msg = error ? <Alert variant="danger">Wystąpił błąd podczas ładowania wiadomości.</Alert> :
-              isChatsLoading ? <Alert variant="info">Ładowanie wiadomości...</Alert> :
+  const msg = isChatsLoading ? <Alert variant="info">Ładowanie wiadomości...</Alert> :
               chats.length === 0 && <Alert variant="info">Brak wiadomości.</Alert>;
 
   return (
