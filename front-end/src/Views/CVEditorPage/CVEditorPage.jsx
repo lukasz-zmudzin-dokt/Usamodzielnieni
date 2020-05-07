@@ -170,7 +170,6 @@ class CVEditorPage extends React.Component {
         method: "PUT"
       });
       cvRes = await getCVdata(this.context.token, id);
-      console.log(cvRes);
       if (cvRes.was_reviewed && !cvRes.is_verified) {
         try {
           feedbackRes = await getFeedback(this.context.token, id);
