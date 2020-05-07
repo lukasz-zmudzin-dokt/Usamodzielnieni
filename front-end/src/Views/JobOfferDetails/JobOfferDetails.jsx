@@ -29,7 +29,7 @@ const mapOffer = (offer) => ({
   category: offer.category,
   type: offer.type,
   companyName: offer.company_name,
-  companyAddress: offer.company_address,
+  companyAddress: `ul. ${offer.company_address.street} ${offer.company_address.street_number}, ${offer.company_address.postal_code} ${offer.company_address.city}`,
   voivodeship: offer.voivodeship,
   expirationDate: offer.expiration_date,
   description: offer.description
@@ -64,6 +64,7 @@ const JobOfferDetails = props => {
 
   const msg = isOfferLoading ? <Alert variant="info">Ładowanie oferty...</Alert> :
               error && <Alert variant="danger">Wystąpił błąd podczas ładowania oferty.</Alert>
+  console.log(offer);
 
   return (
     <Container className="jobOfferDetails">
