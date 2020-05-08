@@ -76,12 +76,12 @@
     width: 100%;
     @include media-breakpoint-up(lg) {
         position: fixed;
-        width: 410px;
+        width: 310px;
         justify-self: start;
         top: 11rem;
     }
     @include media-breakpoint-up(xl) {
-        width: 500px;
+        width: 400px;
     }
 }
 
