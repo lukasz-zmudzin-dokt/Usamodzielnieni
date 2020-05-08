@@ -57,6 +57,12 @@ export default [
     {
         name: "Kroki",
         path: paths.STEPS,
-        allowed: undefined
+        allowed: undefined //wszyscy są upoważnieni - zalogowani i niezalogowani
+    },
+    {
+        name: "Chat",
+        path: paths.CHATS,
+        allowed: [userTypes.STANDARD, userTypes.STAFF, userTypes.EMPLOYER],
+        verified: true,
     }
 ];

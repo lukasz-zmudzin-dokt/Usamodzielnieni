@@ -4,7 +4,7 @@ import MyOffer from "./MyOffer";
 import { MemoryRouter } from "react-router-dom";
 
 describe("MyOffers", () => {
-    let fetchCheck;
+    let fetchType;
     let testOffer = {
         category: "IT",
         company_address: "adress1",
@@ -18,7 +18,7 @@ describe("MyOffers", () => {
     };
     let apiPeople = [
         {
-            cv_url: "/media/blank_test_cv",
+            cv_url: "/media/test_cv",
             date_posted: "2020-04-06T01:34:27.899000+02:00",
             email: "standard1@standard1.com",
             first_name: "standard1",
@@ -31,15 +31,18 @@ describe("MyOffers", () => {
     beforeAll(() => {
         global.fetch = jest.fn().mockImplementation((input, init) => {
             return new Promise((resolve, reject) => {
-                switch (fetchCheck) {
+                switch (fetchType) {
                     case "fail":
                         resolve({ status: 500 });
                         break;
                     case "empty":
                         resolve({ status: 200, json: () =>Promise.resolve([]) });
                         break;
-                    case "normal":
+                    case "answers":
                         resolve({ status: 200, json: () =>Promise.resolve(apiPeople) });
+                        break;
+                    case "offer":
+                        resolve({ status: 200, json: () => Promise.resolve(testOffer) });
                         break;
                     default:
                         reject([]);
@@ -49,22 +52,54 @@ describe("MyOffers", () => {
     });
 
     beforeEach(() => {
-        fetchCheck = "normal";
         jest.clearAllMocks();
     });
 
     it('should match snapshot', async () => {
+        fetchType = "answers";
         const { container, getByText } = render (
             <MemoryRouter>
-                <MyOffer offer={testOffer} />
+                <MyOffer offer={testOffer} activeOffer={testOffer.id} setActiveOffer={ e => {}} />
+            </MemoryRouter>
+        );
+        await waitForElement(() => getByText("standard1 standard1"));
+
+        expect(container).toMatchSnapshot();
+    });
+
+    it('should display an error', async () => {
+        fetchType = "fail";
+        const { container, getByText } = render (
+            <MemoryRouter>
+                <MyOffer offer={testOffer} activeOffer={testOffer.id} setActiveOffer={ e => {}} />
+            </MemoryRouter>
+        );
+        await waitForElement(() => getByText("Ups, wystąpił błąd..."));
+
+        expect(getByText("Ups, wystąpił błąd...")).toBeInTheDocument;
+    });
+
+    it('should fetch user data', async () => {
+        fetchType = "answers";
+        const { container, getByText } = render (
+            <MemoryRouter>
+                <MyOffer offer={testOffer} activeOffer={testOffer.id} setActiveOffer={ e => {}} />
+            </MemoryRouter>
+        );
+        await waitForElement(() => getByText("standard1 standard1"));
+        expect(fetch).toHaveBeenCalledTimes(1);
+    });
+
+    it('should display offer tab', async () => {
+        fetchType = "fail";
+        const { container, getByText } = render (
+            <MemoryRouter>
+                <MyOffer offer={testOffer} activeOffer={testOffer.id} setActiveOffer={ e => {}} />
             </MemoryRouter>
         );
         await waitForElement(() => getByText("offer2"));
 
-        expect(container).toMatchSnapshot();
-
+        expect(getByText("offer2")).toBeInTheDocument;
     });
 
 });
-
-
