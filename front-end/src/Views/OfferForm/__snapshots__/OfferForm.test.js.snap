@@ -171,60 +171,73 @@ exports[`OfferForm renders correctly 1`] = `
           >
             <label
               class="form-label"
-              for="type"
+              for="pay_period"
             >
-              Wymiar pracy
+              Okres wypłaty wynagrodzenia
             </label>
             <select
               class="form-control"
-              id="type"
+              id="pay_period"
               required=""
             >
               <option>
-                IT
+                za godzinę
+              </option>
+              <option>
+                za dzień
+              </option>
+              <option>
+                za miesiąc
+              </option>
+              <option>
+                za rok
+              </option>
+              <option>
+                jednokrotnie
               </option>
             </select>
-            <div
-              class="invalid-feedback"
-            >
-              Podaj wymiar pracy np. staż,praca
-            </div>
           </div>
           <div
             class="form-group"
-            id="formGroupPayFrom"
           >
             <label
               class="form-label"
+              for="pay_from"
             >
-              Wynagrodzenie od:
+              Wynagrodzenie od (w PLN)
             </label>
-            <div
-              class="input-group"
+            <input
+              class="form-control"
+              data-testid="default"
+              id="pay_from"
+              maxlength="50"
+              minlength="1"
+              placeholder="Wynagrodzenie od (w PLN)"
+              required=""
+              type="text"
+              value=""
+            />
+          </div>
+          <div
+            class="form-group"
+          >
+            <label
+              class="form-label"
+              for="pay_to"
             >
-              <input
-                class="form-control"
-                name="pay_from"
-                pattern="[0-9]{1,}[.]{1}[0-9]{2}"
-                placeholder="12.00"
-                required=""
-                type="text"
-              />
-              <div
-                class="input-group-append"
-              >
-                <span
-                  class="input-group-text"
-                >
-                  zł
-                </span>
-              </div>
-            </div>
-            <div
-              class="invalid-feedback"
-            >
-              Podaj wynagrodzenie w formacie *.00
-            </div>
+              Wynagrodzenie do (w PLN)
+            </label>
+            <input
+              class="form-control"
+              data-testid="default"
+              id="pay_to"
+              maxlength="50"
+              minlength="1"
+              placeholder="Wynagrodzenie do (w PLN)"
+              required=""
+              type="text"
+              value=""
+            />
           </div>
         </div>
         <div
@@ -281,6 +294,30 @@ exports[`OfferForm renders correctly 1`] = `
           >
             <label
               class="form-label"
+              for="type"
+            >
+              Wymiar pracy
+            </label>
+            <select
+              class="form-control"
+              id="type"
+              required=""
+            >
+              <option>
+                IT
+              </option>
+            </select>
+            <div
+              class="invalid-feedback"
+            >
+              Podaj wymiar pracy np. staż,praca
+            </div>
+          </div>
+          <div
+            class="form-group"
+          >
+            <label
+              class="form-label"
               for="expiration_date"
             >
               Ważne do:
@@ -306,79 +343,13 @@ exports[`OfferForm renders correctly 1`] = `
               </div>
             </div>
           </div>
-          <div
-            class="form-group"
-          >
-            <label
-              class="form-label"
-              for="pay_period"
-            >
-              Okres wypłaty wynagrodzenia
-            </label>
-            <select
-              class="form-control"
-              id="pay_period"
-              required=""
-            >
-              <option>
-                za godzinę
-              </option>
-              <option>
-                za dzień
-              </option>
-              <option>
-                za miesiąc
-              </option>
-              <option>
-                za rok
-              </option>
-              <option>
-                jednokrotnie
-              </option>
-            </select>
-          </div>
-          <div
-            class="form-group"
-            id="formGroupPayTo"
-          >
-            <label
-              class="form-label"
-            >
-              Wynagrodzenie do:
-            </label>
-            <div
-              class="input-group"
-            >
-              <input
-                class="form-control"
-                name="pay_to"
-                pattern="[0-9]{1,}[.]{1}[0-9]{2}"
-                placeholder="13.00"
-                required=""
-                type="text"
-              />
-              <div
-                class="input-group-append"
-              >
-                <span
-                  class="input-group-text"
-                >
-                  zł
-                </span>
-              </div>
-            </div>
-            <div
-              class="invalid-feedback"
-            >
-              Podaj wynagrodzenie w formacie *.00
-            </div>
-          </div>
         </div>
         <div
           class="w-100 justify-content-center align-items-center m-0 row"
         >
           <button
             class="btn btn-primary"
+            data-testid="submitBtn"
             type="submit"
           >
             Dodaj

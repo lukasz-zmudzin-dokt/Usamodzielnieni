@@ -61,6 +61,9 @@ describe("OfferForm", () => {
       "Wed May 17 2023 00:00:00 GMT+0100 (czas środkowoeuropejski standardowy)",
     category: "xd",
     type: "IT",
+    pay_period: "nigdy",
+    pay_from: "0",
+    pay_to: "420"
   };
   beforeAll(() => {
     global.fetch = jest.fn().mockImplementation((input, init) => {
@@ -167,46 +170,6 @@ describe("OfferForm", () => {
     );
     await waitForElement(() => getByText("Dodaj"));
 
-    failFetch = true;
-
-    fireEvent.change(getByPlaceholderText("Nazwa stanowiska"), {
-      target: { value: "abcd" },
-    });
-    fireEvent.change(getByPlaceholderText("Nazwa firmy"), {
-      target: { value: "abcd" },
-    });
-    fireEvent.change(getByPlaceholderText("Adres firmy"), {
-      target: { value: "abcd" },
-    });
-    fireEvent.change(getByLabelText("Województwo"), {
-      target: { value: "lubelskie" },
-    });
-    fireEvent.change(getByLabelText("Opis stanowiska"), {
-      target: { value: "abcd" },
-    });
-    fireEvent.change(getByLabelText("Branża"), {
-      target: { value: "xd" },
-    });
-    fireEvent.change(getByLabelText("Wymiar pracy"), {
-      target: { value: "IT" },
-    });
-    fireEvent.change(getByLabelText("Ważne do:"), {
-      target: {
-        value: new Date(),
-      },
-    });
-    fireEvent.change(getByPlaceholderText("12.00"), {
-      target: { value: 42 },
-    });
-    fireEvent.change(getByPlaceholderText("13.00"), {
-      target: { value: 997 },
-    });
-    fireEvent.change(getByLabelText("Okres wypłaty wynagrodzenia"), {
-      target: { value: "Nigdy" },
-    });
-
-    fireEvent.click(getByText("Dodaj"));
-
     await waitForElement(() =>
       getByText("Nie udało się załadować danych", { exact: false })
     );
@@ -247,67 +210,6 @@ describe("OfferForm", () => {
           "Wed Jan 20 2021 00:00:00 GMT+0100 (czas środkowoeuropejski standardowy)",
       },
     });
-    fireEvent.change(getByPlaceholderText("12.00"), {
-      target: { value: 42 },
-    });
-    fireEvent.change(getByPlaceholderText("13.00"), {
-      target: { value: 997 },
-    });
-    fireEvent.change(getByLabelText("Okres wypłaty wynagrodzenia"), {
-      target: { value: "Nigdy" },
-    });
-
-    fireEvent.click(getByText("Dodaj"));
-
-    expect(fetch).toHaveBeenCalledTimes(2);
-  });
-
-  it("should not use fetch and show messege if pay_from is higher than pay_to", async () => {
-    const { getByPlaceholderText, getByText, getByLabelText } = render(
-      <UserContext.Provider value={context}>
-        <MemoryRouter>
-          <OfferForm />
-        </MemoryRouter>
-      </UserContext.Provider>
-    );
-
-    await waitForElement(() => getByText("Dodaj"));
-
-    fireEvent.change(getByPlaceholderText("Nazwa stanowiska"), {
-      target: { value: "abcd" },
-    });
-    fireEvent.change(getByPlaceholderText("Nazwa firmy"), {
-      target: { value: "abcd" },
-    });
-    fireEvent.change(getByPlaceholderText("Adres firmy"), {
-      target: { value: "abcd" },
-    });
-    fireEvent.change(getByLabelText("Województwo"), {
-      target: { value: "lubelskie" },
-    });
-    fireEvent.change(getByLabelText("Opis stanowiska"), {
-      target: { value: "" },
-    });
-    fireEvent.change(getByLabelText("Branża"), {
-      target: { value: "xd" },
-    });
-    fireEvent.change(getByLabelText("Wymiar pracy"), {
-      target: { value: "IT" },
-    });
-    fireEvent.change(getByLabelText("Ważne do:"), {
-      target: {
-        value: new Date(),
-      },
-    });
-    fireEvent.change(getByPlaceholderText("12.00"), {
-      target: { value: 997 },
-    });
-    fireEvent.change(getByPlaceholderText("13.00"), {
-      target: { value: 42 },
-    });
-    fireEvent.change(getByLabelText("Okres wypłaty wynagrodzenia"), {
-      target: { value: "Nigdy" },
-    });
 
     fireEvent.click(getByText("Dodaj"));
 
@@ -346,6 +248,15 @@ describe("OfferForm", () => {
         value:
           "Wed Dec 04 2020 00:00:00 GMT+0100 (czas środkowoeuropejski standardowy)",
       },
+    });
+    fireEvent.change(getByLabelText("Okres wypłaty wynagrodzenia"), {
+      target: { value: "nigdy" },
+    });
+    fireEvent.change(getByPlaceholderText("Wynagrodzenie od (w PLN)"), {
+      target: { value: "0" },
+    });
+    fireEvent.change(getByPlaceholderText("Wynagrodzenie do (w PLN)"), {
+      target: { value: "420" },
     });
 
     fireEvent.click(getByText("Dodaj"));
@@ -406,18 +317,14 @@ describe("OfferForm", () => {
         value: new Date("2024-9-20"),
       },
     });
-    fireEvent.change(getByPlaceholderText("12.00"), {
-      target: { value: 42 },
+    fireEvent.change(getByLabelText("Wynagrodzenie od (w PLN)"), {
+      target: { value: "1" },
     });
-    fireEvent.change(getByPlaceholderText("13.00"), {
-      target: { value: 997 },
-    });
-    fireEvent.change(getByLabelText("Okres wypłaty wynagrodzenia"), {
-      target: { value: "Nigdy" },
+    fireEvent.change(getByLabelText("Wynagrodzenie do (w PLN)"), {
+      target: { value: "2" },
     });
 
     fireEvent.click(getByText("Dodaj"));
-    history.push("/myOffers")
 
     await waitForElement(() => getByText("Dodaj"));
 
@@ -468,7 +375,7 @@ describe("OfferForm", () => {
     reactRouterDom.useParams = () => ({
       id: "abc",
     });
-    const { getByPlaceholderText, history, getByText } = renderWithRouter(
+    const { getByPlaceholderText, getByLabelText, history, getByText } = renderWithRouter(
       <OfferForm />,
       {
         route: "/offerForm/abc",

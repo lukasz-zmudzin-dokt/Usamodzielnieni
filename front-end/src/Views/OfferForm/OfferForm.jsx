@@ -1,12 +1,17 @@
 import React, { useState, useContext, useEffect } from "react";
 import { registerLocale } from "react-datepicker";
-import { Form, Container, Card, Button, Row, Alert, InputGroup } from "react-bootstrap";
+import { Form, Container, Card, Button, Row, Alert } from "react-bootstrap";
 import { voivodeships } from "constants/voivodeships";
 import FormGroup from "components/FormGroup";
-import { sendData, getSelects } from "Views/OfferForm/functions/fetchData";
+import {
+  sendData,
+  getCategories,
+  getTypes,
+  getOffer,
+} from "Views/OfferForm/functions/fetchData";
 import { UserContext } from "context";
 import polish from "date-fns/locale/pl";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
 registerLocale("pl", polish);
 
@@ -16,7 +21,8 @@ const OfferForm = () => {
   const [fail, setFail] = useState(false);
   const [arrays, setArrays] = useState({ types: [], categories: [] });
   const [disabled, setDisabled] = useState(false);
-  const [isPayValid, setIsPayValid] = useState(true);
+  const [message, setMessage] = useState("");
+  let { id } = useParams();
 
   const [offer, setOffer] = useState({
     offer_name: "",
@@ -32,93 +38,111 @@ const OfferForm = () => {
     pay_period: ""
   });
 
+  //47991e86-4b42-4507-b154-1548bf8a3bd3
   const context = useContext(UserContext);
 
   useEffect(() => {
     setDisabled(true);
-    const loadSelects = async (token) => {
-      let res;
+    const loadData = async (token) => {
+      let values;
       try {
-        res = await getSelects(token);
-      } catch (e) {
-        console.log(e);
-        setFail(true);
-        res = { categories: [], types: [] };
+        values = await Promise.all([
+          getCategories(token),
+          getTypes(token),
+          id && getOffer(token, id),
+        ]);
+      } catch (err) {
+        if (err.message === "getOffer") {
+          history.push("/offerForm");
+        } else {
+          setFail(true);
+          setDisabled(false);
+          setMessage("Nie udało się załadować danych.");
+        }
+        return;
       }
-      setArrays(res);
-      setOffer({
-        offer_name: "",
+      const [categories, types, loadedOffer] = values;
+      const { city, street, street_number } = context.data.company_address;
+
+      const company_address = `${city}, ${street} ${street_number}`;
+      setArrays({ categories, types });
+      setOffer((prev) => ({
+        ...prev,
+        company_address,
         company_name: context.data.company_name,
-        company_address: context.data.company_address,
-        voivodeship: voivodeships[0],
-        description: "",
-        expiration_date: "",
-        category: res.categories[0],
-        type: res.types[0],
-      });
+        category: categories[0],
+        type: types[0],
+        ...loadedOffer,
+      }));
       setDisabled(false);
     };
-    loadSelects(context.token);
-  }, [context.data.company_address, context.data.company_name, context.token]);
+    loadData(context.token);
+  }, [
+    context.data.company_address,
+    context.data.company_name,
+    context.token,
+    history,
+    id,
+  ]);
 
-  const submit = (event) => {
+  const submit = async (event) => {
     const pay_from_dot = unifyPayFormat(pay_from);
     const pay_to_dot = unifyPayFormat(pay_to);
     const form = event.currentTarget;
     event.preventDefault();
     if (checkPayValidity(pay_from_dot, pay_to_dot) === false) {
-      setIsPayValid(false);
+      setFail(true);
+      setMessage('Wartości wynagrodzenia muszą być liczbami całkowitymi lub z częścią setną, a "Wynagrodzenie od" musi być mniejsze bądź równe \n "Wynagrodzenie do:"');
       event.stopPropagation();
     } else if (form.checkValidity() === false) {
+      setFail(false);
       event.stopPropagation();
     } else {
-      setIsPayValid(true);
+      setFail(false);
       setDisabled(true);
-      const year = expiration_date.getFullYear();
-      const month =
-        expiration_date.getMonth() + 1 < 10
-          ? `0${expiration_date.getMonth() + 1}`
-          : expiration_date.getMonth() + 1;
-      const day =
-        expiration_date.getDate() < 10
-          ? `0${expiration_date.getDate()}`
-          : expiration_date.getDate();
-      const newDate = `${year}-${month}-${day}`;
-      sendData({ ...offer, expiration_date: newDate, pay_from: pay_from_dot.replace(".", ","), pay_to: pay_to_dot.replace(".", ",") }, context.token)
-        .then(() => {
-          history.push("/myOffers");
-        })
-        .catch(() => {
-          setFail(true);
-          setDisabled(false);
-        });
+      try {
+        await sendData(
+          {
+            ...offer,
+            expiration_date: expiration_date.toISOString().substr(0, 10),
+            pay_from: pay_from_dot.replace(".", ","),
+            pay_to: pay_to_dot.replace(".", ",")
+          },
+          context.token,
+          id
+        );
+        history.push("/myOffers");
+        return;
+      } catch (e) {
+        setFail(true);
+        setMessage("Nie udało się wysłać oferty. Błąd serwera.");
+      }
     }
+    setDisabled(false);
     setValidated(true);
   };
 
   const unifyPayFormat = (input) => {
-    if (input.match(/^\d{1,}[,\\.]{1}(\d{2})?$/) !== null) {  //jeśli input jest w formacie *.??
+    if (input.match(/^\d{1,}[,\\.]{1}(\d{2})?$/) !== null) {  //jeśli input jest w formacie *[.]??
       let value = input.replace(",", ".");                    //zamieniemy , na . żeby zadziałało parseToFloat()
       value = value.replace(/^0+(?=\d)/, '');                 //jesli ciąg 0 na początku to usuwamy, jeśli same 0 to zostawiamy jedno
       return value;
     } else if (input.match(/^\d{1,}$/) !== null) {            //jeśli input jest liczbą całkowitą
-      let value = input.concat(".00");
+      let value = input.concat(".00");                        //dodajemy .00
       value = value.replace(/^0+(?=\d)/, '');
       return value;
     } else {
-      let value = input.replace(/[^]*/, "");
+      let value = input.replace(/[^]*/, "");                  //jeśli nic nie zły format bądź niedozwolone znaki to usuwamy cały input
       return value;
     }
   };
 
   const checkPayValidity = (input_from, input_to) => {
-    if (input_from !== undefined && input_to !== undefined) {
-      if (parseFloat(input_from) <= parseFloat(input_to) && input_from !== '' && input_to !== '') {
-        setIsPayValid(true);
+    if (input_from !== undefined && input_to !== undefined && input_from !== '' && input_to !== '') {
+      if (parseFloat(input_from) <= parseFloat(input_to)) {
         return true;
       }
     }
-    setIsPayValid(false);
     return false;
   };
 
@@ -254,19 +278,7 @@ const OfferForm = () => {
             </div>
             {fail === true ? (
               <Row className="w-100 justify-content-center align-items-center m-0">
-                <Alert variant="danger">
-                  Coś poszło nie tak. Spróbuj ponownie póżniej.
-                </Alert>
-              </Row>
-            ) : null}
-            {isPayValid === false ? (
-              <Row className="w-100 justify-content-center align-items-center m-0">
-                <Alert variant="danger">
-                  Wartość 'Wynagrodzenie od:' musi być mniejsza bądź równa wartości 'Wynagrodzenie do:'
-                </Alert>
-                <Alert variant="danger">
-                  Wynagrodzenie musi być liczbą całkowitą, bądź z częścią setną
-                </Alert>
+                <Alert variant="danger">{message}</Alert>
               </Row>
             ) : null}
             <Row className="w-100 justify-content-center align-items-center m-0">
@@ -274,6 +286,7 @@ const OfferForm = () => {
                 variant="primary"
                 type="submit"
                 className=""
+                data-testid="submitBtn"
                 disabled={disabled}
               >
                 {disabled ? "Ładowanie..." : "Dodaj"}
