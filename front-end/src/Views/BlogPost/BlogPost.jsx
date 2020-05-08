@@ -65,7 +65,7 @@ const BlogPost = () => {
     [post_Id, user.token]
   );
 
-  const msg = isPostLoading ? (<Alert variant="info">Ładowanie zawartości bloga...</Alert>) : !post && (<Alert>null</Alert>);
+  const msg = isPostLoading ? (<Alert variant="info">Ładowanie zawartości bloga...</Alert>) : !post;
 
   return msg || (
     <Container className="blogpost_container">

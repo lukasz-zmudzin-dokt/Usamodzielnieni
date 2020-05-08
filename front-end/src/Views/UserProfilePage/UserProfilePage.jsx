@@ -8,7 +8,7 @@ import AdminRegisterButton from "./components/AdminRegisterButton/AdminRegisterB
 import CVApprovalButton from "./components/CVApprovalButton/CVApprovalButton";
 import EmployerMyOffersButton from "./components/EmployerMyOffersButton/EmployerMyOffersButton";
 import AdminApproveUserButton from "./components/AdminApproveUserBuuton/AdminApproveUserButton";
-import {WithAlertContext} from 'components';
+import {withAlertContext} from 'components';
 
 const names = {
   role: {
@@ -103,4 +103,4 @@ class UserProfilePage extends React.Component {
 
 UserProfilePage.contextType = UserContext;
 
-export default WithAlertContext(UserProfilePage);
+export default withAlertContext(UserProfilePage);

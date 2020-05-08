@@ -5,7 +5,7 @@ import LoginForm from "./components/loginForm";
 import { UserContext } from "context";
 import { sendData } from "./functions/sendData";
 import proxy from "config/api";
-import { WithAlertContext } from "components";
+import { withAlertContext } from "components";
 
 class LoginPage extends React.Component {
   state = {
@@ -128,4 +128,4 @@ class LoginPage extends React.Component {
 
 LoginPage.contextType = UserContext;
 
-export default WithAlertContext(LoginPage);
+export default withAlertContext(LoginPage);

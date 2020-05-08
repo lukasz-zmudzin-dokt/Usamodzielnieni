@@ -5,7 +5,7 @@ import { getUserCVs } from "./functions/getUserCVs";
 import CVSection from "./components/cvSection";
 import {deleteCV} from "./functions/deleteCV";
 import {IndexLinkContainer} from "react-router-bootstrap";
-import {WithAlertContext} from 'components';
+import {withAlertContext} from 'components';
 
 class MyCVsPage extends React.Component {
     constructor(props) {
@@ -102,4 +102,4 @@ class MyCVsPage extends React.Component {
 
 MyCVsPage.contextType = UserContext;
 
-export default WithAlertContext(MyCVsPage);
+export default withAlertContext(MyCVsPage);

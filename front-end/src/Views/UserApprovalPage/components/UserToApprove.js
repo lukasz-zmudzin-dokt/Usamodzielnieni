@@ -1,34 +1,36 @@
-import React, {useContext, useEffect, useState,useRef} from "react";
-import {Alert, Button, Card, ListGroup, Row} from "react-bootstrap";
-import {UserContext,AlertContext} from "context";
-import {getUserDetails, setUserApproved, setUserRejected} from "Views/UserApprovalPage/functions/apiCalls";
-import {DetailsItem} from "components";
+import React, { useContext, useEffect, useState,useRef } from "react";
+import { Alert, Button, Card, ListGroup, Row } from "react-bootstrap";
+import { UserContext,AlertContext } from "context";
+import { getUserDetails, setUserApproved, setUserRejected } from "Views/UserApprovalPage/functions/apiCalls";
+import { DetailsItem } from "components";
 
-const UserToApprove = ({ user, activeUser,sliceUser }) => {
+const UserToApprove = ({ user, activeUser }) => {
     const context = useContext(UserContext);
-    const alertC = useRef(useContext(AlertContext));
     const [userDetails, setUserDetails] = useState([]);
     const [userDetailsFacilityAddress, setUserDetailsFacilityAddress] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [approved, setApproved] = useState(false);
+    const [rejected, setRejected] = useState(false);
+    const alertC = useRef(useContext(AlertContext));
 
     useEffect(() => {
         const loadUserDetails = async (token, userId) => {
-                setLoading(true);
-                try {
-                    let res = await getUserDetails(token, userId);
-                    setUserDetails(res);
-                    if(user.type === "Standard") {
-                        setUserDetailsFacilityAddress(res.facility_address);
-                    } else {
-                        setUserDetailsFacilityAddress(res.company_address);
-                    }
-                } catch (err) {
-                    alertC.current.showAlert("Ups, wystąpił błąd.");
+            setLoading(true);
+            try {
+                let res = await getUserDetails(token, userId);
+                setUserDetails(res);
+                if (user.type === "Standard") {
+                    setUserDetailsFacilityAddress(res.facility_address);
+                } else {
+                    setUserDetailsFacilityAddress(res.company_address);
                 }
-                setLoading(false);
+            } catch (err) {
+                alertC.current.showAlert("Ups, wystąpił błąd.");
+            }
+            setLoading(false);
 
         };
-        if(user.id === activeUser) {
+        if (user.id === activeUser) {
             loadUserDetails(context.token, user.id);
         }
     }, [context.token, user.id, user.type, activeUser]);
@@ -37,9 +39,9 @@ const UserToApprove = ({ user, activeUser,sliceUser }) => {
         e.preventDefault();
         try {
             let res = await setUserApproved(token, userId);
-            if(res === "User successfully verified.") {
-                alertC.current.showAlert("Konto zatwierdzone pomyślnie","success");
-                sliceUser();
+            if (res === "User successfully verified.") {
+                setApproved(true);
+                alertC.current.showAlert("Konto zatwierdzone pomyślnie", "success");
             }
         } catch (err) {
             alertC.current.showAlert("Ups, wystąpił błąd.");
@@ -50,13 +52,12 @@ const UserToApprove = ({ user, activeUser,sliceUser }) => {
         e.preventDefault();
         try {
             let res = await setUserRejected(token, userId);
-            if(res === "User status successfully set to not verified.") {
-                 alertC.current.showAlert("Konto odrzucone pomyślnie", "success");
-                 sliceUser();
-                 
+            if (res === "User status successfully set to not verified.") {
+                alertC.current.showAlert("Konto odrzucone pomyślnie", "success");
+                setRejected(true);
             }
         } catch (err) {
-          alertC.current.showAlert("Ups, wystąpił błąd.");
+            alertC.current.showAlert("Ups, wystąpił błąd.");
         }
     };
 
@@ -67,23 +68,27 @@ const UserToApprove = ({ user, activeUser,sliceUser }) => {
             <p>{userDetailsFacilityAddress.postal_code} {userDetailsFacilityAddress.city}</p>
         </DetailsItem>
     ) : (
-        <>
-            <DetailsItem label="Adres">
-                <p>{userDetails.company_name}</p>
-                <p>{userDetailsFacilityAddress.street} {userDetailsFacilityAddress.street_number}</p>
-                <p>{userDetailsFacilityAddress.postal_code} {userDetailsFacilityAddress.city}</p>
-            </DetailsItem>
-            <DetailsItem label="NIP">
-                {userDetails.nip}
-            </DetailsItem>
-        </>
-    );
+            <>
+                <DetailsItem label="Adres">
+                    <p>{userDetails.company_name}</p>
+                    <p>{userDetailsFacilityAddress.street} {userDetailsFacilityAddress.street_number}</p>
+                    <p>{userDetailsFacilityAddress.postal_code} {userDetailsFacilityAddress.city}</p>
+                </DetailsItem>
+                <DetailsItem label="NIP">
+                    {userDetails.nip}
+                </DetailsItem>
+            </>
+        );
 
     const message = loading ? (
         <Alert className="mb-0" variant="info">Ładuję...</Alert>
+    ) : approved ? (
+        <Alert className="mb-0" variant="success">Konto zatwierdzone pomyślnie.</Alert>
+    ) : rejected ? (
+        <Alert className="mb-0" variant="success">Konto odrzucone pomyślnie.</Alert>
     ) : null;
 
-    if(message) {
+    if (message) {
         return message;
     } else {
         return (

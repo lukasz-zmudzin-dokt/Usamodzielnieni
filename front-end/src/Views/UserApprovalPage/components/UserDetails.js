@@ -1,12 +1,10 @@
-import {Accordion, Card} from "react-bootstrap";
+import { Accordion, Card } from "react-bootstrap";
 import React from "react";
 import UserToApprove from "./UserToApprove";
 
-const UserDetails = ({ users, activeUser, setActiveUser,sliceUser }) => {
+const UserDetails = ({ users, activeUser, setActiveUser }) => {
 
-     
-
-    return(
+    return (
         <Accordion>
             {users.map((user) =>
                 <Card className="border-left-0 border-right-0 border-bottom-0" key={user.id}>
@@ -14,7 +12,7 @@ const UserDetails = ({ users, activeUser, setActiveUser,sliceUser }) => {
                         {user.username} ({user.type})
                     </Accordion.Toggle>
                     <Accordion.Collapse eventKey={user.id}>
-                        <UserToApprove user={user} key={user.id} activeUser={activeUser} sliceUser={sliceUser}/>
+                        <UserToApprove user={user} key={user.id} activeUser={activeUser} />
                     </Accordion.Collapse>
                 </Card>
             )}

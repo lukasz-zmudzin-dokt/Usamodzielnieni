@@ -55,6 +55,7 @@ describe("Filter", () => {
       getByText("Filtruj posty", { exact: false })
     );
 
+    expect(alertContext.showAlert).toHaveBeenCalledWith("Wystąpił błąd podczas ładowania filtrów.");
     expect(
       queryByText("abcd", { exact: false })
     ).not.toBeInTheDocument();

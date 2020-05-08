@@ -1,7 +1,7 @@
 import React from "react";
 import { Form, Button, Alert } from "react-bootstrap";
 import { Items } from '../';
-import {WithAlertContext} from 'components';
+import {withAlertContext} from 'components';
 
 
 class ItemsList extends React.Component {
@@ -72,4 +72,4 @@ class ItemsList extends React.Component {
     }
 }
 
-export default WithAlertContext(ItemsList);
+export default withAlertContext(ItemsList);

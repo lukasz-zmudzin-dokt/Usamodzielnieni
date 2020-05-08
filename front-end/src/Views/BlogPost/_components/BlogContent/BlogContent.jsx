@@ -54,6 +54,8 @@ const BlogContent = ({ post , user }) => {
     const [wantsEdition, setWantsEdition] = useState(false);
     const {firstName, lastName, email} = post.author;
     const content = convertToHTML(mediumDraftImporter(post.content));
+    if (post === undefined)
+        return <Alert variant="danger" className="d-lg-block">Wystąpił błąd podczas ładowania zawartości bloga.</Alert>;
     return (
         <Card>
             {post.header !== null && post.header !== "" ?

@@ -5,7 +5,6 @@ import {
   fireEvent,
   waitForElement,
   wait,
-  cleanup
 } from "@testing-library/react";
 import JobOffersPage from "Views/JobOffersPage";
 import proxy from "config/api";
@@ -331,8 +330,8 @@ describe("JobOffersPage", () => {
         </MemoryRouter>
       );
 
-      await waitForElement(() => getByText("Brak ofert", { exact: false }));
-      expect(getByText("Brak ofert", { exact: false })).toBeInTheDocument();
+      await waitForElement(() => getByText("Brak ofert spełniających podane wymagania.", { exact: false }));
+      expect(getByText("Brak ofert spełniających podane wymagania.", { exact: false })).toBeInTheDocument();
     });
   });
 });

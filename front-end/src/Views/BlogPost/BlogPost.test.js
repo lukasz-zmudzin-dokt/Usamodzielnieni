@@ -87,7 +87,7 @@ describe('BlogPost', () => {
 
     it('should render error on api fail', async() => {
         apiStatus = 500;
-        const {getByText, queryByText} = render(
+        const { queryByText} = render(
             <UserContext.Provider value={user}>
                 <AlertContext.Provider value={contextA}>
                     <BlogPost/>
@@ -95,7 +95,7 @@ describe('BlogPost', () => {
             </UserContext.Provider>
         );
 
-        await waitForElement(() => getByText("null", {exact: false}));
+        await waitForElement(() => expect(contextA.changeMessage).toHaveBeenCalled());
 
         expect(contextA.changeMessage).toHaveBeenCalledWith(
           "Wystąpił błąd podczas wczytywania zawartości bloga."

@@ -1,1 +1,1 @@
-export {default} from './WithAlertContext';
+export {default} from './withAlertContext';
