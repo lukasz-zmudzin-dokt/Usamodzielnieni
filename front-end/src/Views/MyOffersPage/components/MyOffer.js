@@ -29,7 +29,7 @@ const MyOffer = ({ offer, activeOffer, setActiveOffer }) => {
         if(people.length === 0 && offer.id === activeOffer) {
             loadOfferPeople(context.token, offer.id, activeOffer);
         }
-    }, [context.token, activeOffer]);
+    }, [context.token, activeOffer, offer.id, people.length]);
 
     const message = loading ? (
         <Alert variant="info">Ładuję...</Alert>
