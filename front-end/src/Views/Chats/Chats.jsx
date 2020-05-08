@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Container, Card, ListGroup, Alert } from 'react-bootstrap';
+import { Container, Card, ListGroup, Alert, Modal, Button } from 'react-bootstrap';
 import { UserContext } from 'context';
 import proxy from 'config/api';
-import { ChatInfo} from './components';
+import { ChatInfo, ContactsModalContent } from './components';
 //import { ChatForm } from 'components';
 
 const getChats = async (token) => {
@@ -32,6 +32,12 @@ const Chats = () => {
   const [isChatsLoading, setIsChatsLoading] = useState(false);
   const [error, setError] = useState(false);
 
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+
   const user = useContext(UserContext);
 
   useEffect(() => {
@@ -52,13 +58,18 @@ const Chats = () => {
   }, [user.token]);
 
   const msg = error ? <Alert variant="danger">Wystąpił błąd podczas ładowania wiadomości.</Alert> :
-              isChatsLoading ? <Alert variant="info">Ładowanie wiadomości...</Alert> :
-              chats.length === 0 && <Alert variant="info">Brak wiadomości.</Alert>;
+    isChatsLoading ? <Alert variant="info">Ładowanie wiadomości...</Alert> :
+      chats.length === 0 && <Alert variant="info">Brak wiadomości.</Alert>;
 
   return (
     <Container>
       <Card>
         <Card.Header as="h2">Najnowsze wiadomości</Card.Header>
+        <Card.Body>
+          <Button variant="primary" onClick={handleShow}>
+            Nowa wiadomość
+          </Button>
+        </Card.Body>
         {msg ? <Card.Body className="chats__body">{msg}</Card.Body> : (
           <ListGroup variant="flush">
             {chats.map((chat) => (
@@ -70,6 +81,19 @@ const Chats = () => {
         )}
         {/*<ChatForm sendMessage={msg=>console.log(msg)}/>*/}
       </Card>
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Wybierz osobę</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <ContactsModalContent />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Anuluj
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </Container>
   );
 }
