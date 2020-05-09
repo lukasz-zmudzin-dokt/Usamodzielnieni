@@ -22,7 +22,7 @@ const MyOffersPage = () => {
                 }
             } catch (err) {
                 console.log(err);
-                alertC.current.showAlert("Ups, wystąpił błąd.");
+                alertC.current.showAlert("Nie udało się załadować ofert.");
             }
             setLoading(false);
         };

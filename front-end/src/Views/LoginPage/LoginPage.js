@@ -28,15 +28,12 @@ class LoginPage extends React.Component {
   };
 
   handleIncorrectResponse = (status) => {
-    const msg =
       status === 400
         ? this.props.alertContext.showAlert("Niepoprawny login lub hasło.")
         : this.props.alertContext.showAlert(
             "Błąd serwera. Proszę spróbować później."
           );
     this.setState({
-      message: msg,
-      incorrect: true,
       redirect: false,
     });
   };

@@ -92,7 +92,7 @@ describe("MyOffers", () => {
 
     it("should view alert at api fail", async () => {
         fetchCheck = "fail";
-        const MyOffers = render (
+        render (
             <AlertContext.Provider value={alertC}>
                 <MemoryRouter>
                     <MyOffersPage />
@@ -101,7 +101,7 @@ describe("MyOffers", () => {
         );
 
         await wait(() => expect(alertC.showAlert).toHaveBeenCalled());
-        expect(alertC.showAlert).toHaveBeenCalledWith("Ups, wystąpił błąd.")
+        expect(alertC.showAlert).toHaveBeenCalledWith("Nie udało się załadować ofert.")
     });
 
     it("should view alert at api returning no cvs", async () => {

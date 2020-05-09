@@ -68,12 +68,12 @@ exports[`CVList should match with snapshot with 2 cvs 1`] = `
           >
             Akceptuj
           </button>
-          <button
+          <a
             class="btnImprove btn btn-warning m-1 p-1"
-            type="button"
+            href="/cvCorrection/0"
           >
             Zgłoś poprawki
-          </button>
+          </a>
         </div>
       </div>
     </div>
@@ -140,12 +140,12 @@ exports[`CVList should match with snapshot with 2 cvs 1`] = `
           >
             Akceptuj
           </button>
-          <button
+          <a
             class="btnImprove btn btn-warning m-1 p-1"
-            type="button"
+            href="/cvCorrection/1"
           >
             Zgłoś poprawki
-          </button>
+          </a>
         </div>
       </div>
     </div>

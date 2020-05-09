@@ -112,7 +112,7 @@ describe('MyCVsPage', () => {
         expect(getByText('Ładuję', {exact: false})).toBeInTheDocument();
 
         await wait(() => expect(alertC.showAlert).toHaveBeenCalled());
-        expect(alertC.showAlert).toHaveBeenCalledWith('Ups, coś poszło nie tak.Nie można pobrać listy CV.')
+        expect(alertC.showAlert).toHaveBeenCalledWith('Ups, coś poszło nie tak. Nie można pobrać listy CV.')
         expect(queryByText('Ładuję', {exact: false})).not.toBeInTheDocument();
     });
 
@@ -174,6 +174,7 @@ describe('MyCVsPage', () => {
         fireEvent.click(getByText("Usuń CV"));
 
         const cv = await waitForElement(() => queryByText('jeden'));
+        await wait(() => expect(alertC.showAlert).toHaveBeenCalled());
         expect(cv).not.toBeNull();
         expect(getByText("jeden")).toBeInTheDocument();
         expect(alertC.showAlert).toHaveBeenCalledWith("Wystąpił błąd podczas usuwania CV.");

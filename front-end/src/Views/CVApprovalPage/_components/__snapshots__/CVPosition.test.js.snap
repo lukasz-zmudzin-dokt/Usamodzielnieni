@@ -62,12 +62,12 @@ exports[`CVPosition should match snapshot 1`] = `
       >
         Akceptuj
       </button>
-      <button
+      <a
         class="btnImprove btn btn-warning m-1 p-1"
-        type="button"
+        href="/cvCorrection/0"
       >
         Zgłoś poprawki
-      </button>
+      </a>
     </div>
   </div>
 </div>

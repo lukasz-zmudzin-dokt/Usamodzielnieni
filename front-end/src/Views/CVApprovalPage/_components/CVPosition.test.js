@@ -177,6 +177,7 @@ describe("CVPosition", () => {
     });
 
     it('should return alert on cv url fetch from failing api', async () => {
+        failFetch = true;
         const { getByText } = render(
           <AlertContext.Provider value={alertC}>
             <MemoryRouter>
@@ -186,14 +187,15 @@ describe("CVPosition", () => {
         );
 
         await waitForElement(() => getByText("Jarek"));
-
-        failFetch = true;
         fireEvent.click(getByText("Pokaż CV", {exact: false}));
         await waitForElement(() => fetch(
             proxy.cv + "generator/" + apiCV.cv_id + "/", {
                 method: "GET"
             }
         ));
+
+        await wait(() => expect(alertC.showAlert).toHaveBeenCalled());
+
     
         expect(alertC.showAlert).toHaveBeenCalledWith("Nie udało się pobrać CV.");
     });

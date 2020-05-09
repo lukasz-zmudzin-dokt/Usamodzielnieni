@@ -27,7 +27,7 @@ class MyCVsPage extends React.Component {
                 });
             }
             else{
-                this.props.alertContext.showAlert("Ups, coś poszło nie tak.Nie można pobrać listy CV.");
+                this.props.alertContext.showAlert("Ups, coś poszło nie tak. Nie można pobrać listy CV.");
                 this.setState({
                     loading: false
                 });
@@ -67,12 +67,10 @@ class MyCVsPage extends React.Component {
 
     render() {
         const {
-            errors,
             cvs,
             loading,
-            delError
         } = this.state;
-        let showBody = errors || delError || cvs.length === 0 || cvs.length === 5 || loading;
+        let showBody =  cvs.length === 0 || cvs.length === 5 || loading;
         return (
             <Container className="mt-4">
                     <Card>

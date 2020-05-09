@@ -22,7 +22,7 @@ const MyOffer = ({ offer, activeOffer, setActiveOffer }) => {
                     setPeople(res);
                 }
             } catch (err) {
-                alertC.current.showAlert("Ups, wystąpił błąd...")
+                alertC.current.showAlert("Ups, wystąpił błąd. Nie udało się załadować aplikujących do oferty.")
             }
             setLoading(false);
         };
