@@ -3,12 +3,9 @@ import { Alert } from "react-bootstrap";
 
 const AlertMessage = ({ message, handleClose,variant }) => {
   return (
-    <div className={`alertMsg--scale `}>
-      <div className={`alertMsg `}>
-        <button className="alertMsg__close" onClick={() => handleClose(false)}>
-          x
-        </button>
-        <Alert className="alertMsg__alert" variant={variant}>
+    <div className="alertMsg--scale">
+      <div className="alertMsg">
+        <Alert className="alertMsg__alert" variant={variant} onClick={() => handleClose(false)} dismissible>
           {message}
         </Alert>
       </div>

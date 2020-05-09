@@ -1,17 +1,24 @@
 import React from "react";
-import { render, fireEvent } from "@testing-library/react";
-import { createMemoryHistory } from "history";
+import { render,fireEvent} from "@testing-library/react";
 import { AlertMessage } from "components";
-import { MemoryRouter } from "react-router-dom";
 
 describe("AlertMessage", () => {
   let props = {
     message: "abc",
-    open: true,
+    variant: "danger",
     handleClose: jest.fn().mockImplementation(() => false),
   };
+
   it("should match snapshot", () => {
     const { container } = render(<AlertMessage {...props} />);
     expect(container).toMatchSnapshot();
+  });
+
+  it("should close when close button is clicked", () => {
+    const { getByText } = render(<AlertMessage {...props} />);
+
+    fireEvent.click(getByText("×"));
+    expect(props.handleClose).toHaveBeenCalled();
+    expect(props.handleClose).toHaveBeenCalledWith(false);
   });
 });

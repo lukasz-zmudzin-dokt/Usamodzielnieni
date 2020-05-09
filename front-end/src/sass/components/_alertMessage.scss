@@ -61,16 +61,6 @@
   transform: scale(1) translateX(-50%);
 }
 
-.alertMsg__close {
-  position: absolute;
-  z-index: 1000;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: transparent;
-  border: none;
-  right: 10px;
-}
-
 @media (min-width: 576px) {
   .alertMsg--scale {
     max-width: 500px;

@@ -92,8 +92,7 @@ class CVEditorPage extends React.Component {
         );
       } catch (e) {
         this.setState({ disabled: false });
-        this.context.changeMessage("Nie udało się wysłać CV");
-        this.context.changeVisibility();
+        this.props.alertContext.showAlert("Nie udało się wysłać CV");
       }
     }
   };
