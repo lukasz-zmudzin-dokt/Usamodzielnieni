@@ -52,7 +52,7 @@ const OfferForm = () => {
           history.push("/offerForm");
         } else {
           setDisabled(false);
-          alertC.current.showAlert("Nie udało się załadować danych.");
+          alertC.current.showAlert("Wystąpił błąd w trakcie ładowania formularza.");
         }
         return;
       }

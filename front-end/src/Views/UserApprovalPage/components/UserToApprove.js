@@ -25,7 +25,7 @@ const UserToApprove = ({ user, activeUser }) => {
                     setUserDetailsFacilityAddress(res.company_address);
                 }
             } catch (err) {
-                alertC.current.showAlert("Ups, wystąpił błąd.");
+                alertC.current.showAlert("Błąd. Nie udało się załadować danych użytkownika.");
             }
             setLoading(false);
 
@@ -44,7 +44,7 @@ const UserToApprove = ({ user, activeUser }) => {
                 alertC.current.showAlert("Konto zatwierdzone pomyślnie", "success");
             }
         } catch (err) {
-            alertC.current.showAlert("Ups, wystąpił błąd.");
+            alertC.current.showAlert("Błąd. Nie udało się zatwierdzić użytkownika.");
         }
     };
 
@@ -57,7 +57,7 @@ const UserToApprove = ({ user, activeUser }) => {
                 setRejected(true);
             }
         } catch (err) {
-            alertC.current.showAlert("Ups, wystąpił błąd.");
+            alertC.current.showAlert("Błąd. Nie udało się odrzucić użytkownika.");
         }
     };
 

@@ -1,5 +1,5 @@
 import React from "react";
-import {render, waitForElement, fireEvent} from "@testing-library/react";
+import {render, waitForElement, fireEvent,wait} from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import UserToApprove from "./UserToApprove";
 import {AlertContext} from 'context';
@@ -144,8 +144,12 @@ describe("UserApproval", () => {
             </MemoryRouter>
             </AlertContext.Provider>
         );
-
+        
         await waitForElement(() => getByText("Nazwa użytkownika"));
+        await wait(() => expect(contextA.showAlert).toHaveBeenCalled());
+        expect(contextA.showAlert).toHaveBeenCalledWith(
+            "Błąd. Nie udało się załadować danych użytkownika."
+        );
         expect(queryByText("Jan")).not.toBeInTheDocument();
     });
 
@@ -160,27 +164,12 @@ describe("UserApproval", () => {
             </MemoryRouter>
             </AlertContext.Provider>
         );
-        await expect(fetch).toHaveBeenCalledWith(
-            "https://usamo-back.herokuapp.com/account/admin/user_details/2949ad29-27da-49a0-aba2-1aa7b5bfa20b/",
-            {
-                headers: {
-                    Authorization: "token undefined",
-                    "Content-Type": "application/json",
-                },
-                method: "GET",
-            }
-        );
         await waitForElement(() => getByText("11-123 Warszawa"));
+
         fireEvent.click(getByText("Akceptuj"));
-        await expect(fetch).toHaveBeenCalledWith(
-            "https://usamo-back.herokuapp.com/account/admin/user_admission/2949ad29-27da-49a0-aba2-1aa7b5bfa20b/",
-            {
-                headers: {
-                    Authorization: "token undefined",
-                    "Content-Type": "application/json",
-                },
-                method: "POST",
-            }
+        await wait(() => expect(contextA.showAlert).toHaveBeenCalled());
+        expect(contextA.showAlert).toHaveBeenCalledWith(
+            "Konto zatwierdzone pomyślnie", "success"
         );
     });
 
@@ -195,27 +184,11 @@ describe("UserApproval", () => {
             </MemoryRouter>
             </AlertContext.Provider>
         );
-        await expect(fetch).toHaveBeenCalledWith(
-            "https://usamo-back.herokuapp.com/account/admin/user_details/2949ad29-27da-49a0-aba2-1aa7b5bfa20b/",
-            {
-                headers: {
-                    Authorization: "token undefined",
-                    "Content-Type": "application/json",
-                },
-                method: "GET",
-            }
-        );
         await waitForElement(() => getByText("11-123 Warszawa"));
         fireEvent.click(getByText("Odrzuć"));
-        await expect(fetch).toHaveBeenCalledWith(
-            "https://usamo-back.herokuapp.com/account/admin/user_rejection/2949ad29-27da-49a0-aba2-1aa7b5bfa20b/",
-            {
-                headers: {
-                    Authorization: "token undefined",
-                    "Content-Type": "application/json",
-                },
-                method: "POST",
-            }
+        await wait(() => expect(contextA.showAlert).toHaveBeenCalled());
+        expect(contextA.showAlert).toHaveBeenCalledWith(
+            "Konto odrzucone pomyślnie", "success"
         );
     });
 

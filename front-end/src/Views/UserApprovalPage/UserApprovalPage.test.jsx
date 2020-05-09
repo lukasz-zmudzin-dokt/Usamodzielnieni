@@ -1,5 +1,5 @@
 import React from "react";
-import { render, waitForElement } from "@testing-library/react";
+import { render, waitForElement, wait } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import UserApprovalPage from "./UserApprovalPage";
 import {AlertContext} from 'context';
@@ -86,6 +86,8 @@ describe("UserApproval", () => {
         );
 
         await waitForElement(() => getByText("Brak kont do zatwierdzenia"));
+        await wait(()=> expect(contextA.showAlert).toHaveBeenCalled());
+        expect(contextA.showAlert).toHaveBeenCalledWith("Błąd. Nie udało się załadować użytkowników do zaakceptowania.")
         expect(getByText("Brak kont do zatwierdzenia")).toBeInTheDocument();
     });
 

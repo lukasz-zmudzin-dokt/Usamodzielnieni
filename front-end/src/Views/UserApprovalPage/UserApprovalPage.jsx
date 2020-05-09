@@ -20,7 +20,7 @@ const UserApprovalPage = () => {
                 setUsers(res);
                 setLoading(false);
             } catch (e) {
-                alertC.current.showAlert("Ups, wystąpił błąd.")
+                alertC.current.showAlert("Błąd. Nie udało się załadować użytkowników do zaakceptowania.")
                 setLoading(false);
             }
         };

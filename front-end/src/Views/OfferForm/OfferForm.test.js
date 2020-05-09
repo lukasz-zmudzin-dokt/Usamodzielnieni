@@ -161,7 +161,7 @@ describe("OfferForm", () => {
     await waitForElement(() => getByText("Dodaj"));
 
     expect(contextA.showAlert).toHaveBeenCalledWith(
-      "Nie udało się załadować danych."
+      "Wystąpił błąd w trakcie ładowania formularza."
     );
   });
 
@@ -180,7 +180,7 @@ describe("OfferForm", () => {
     await waitForElement(() => getByText("Dodaj"));
 
     expect(contextA.showAlert).toHaveBeenCalledWith(
-      "Nie udało się załadować danych."
+      "Wystąpił błąd w trakcie ładowania formularza."
     );
   });
 
