@@ -252,6 +252,27 @@ describe("JobOffersPage", () => {
         }
       );
     });
+
+    it("should show alert on api fail", async () => {
+      failFetch = true;
+      const alertC = {
+        showAlert: jest.fn()
+      };
+
+      render(
+        <AlertContext.Provider value={alertC}>
+          <MemoryRouter initialEntries={["/jobOffers"]}>
+            <JobOffersPage />
+          </MemoryRouter>
+        </AlertContext.Provider>
+      );
+
+      await wait(() => {
+        expect(alertC.showAlert).toHaveBeenCalled();
+      });
+      
+      expect(alertC.showAlert).toHaveBeenCalledWith("Nie udało się pobrać filtrów.");
+    });
   });
 
   describe("main component tests", () => {

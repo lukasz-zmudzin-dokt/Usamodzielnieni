@@ -38,7 +38,6 @@ class UserProfilePage extends React.Component {
         lastName: "",
         email: "",
       },
-      error: false,
     };
   }
 
@@ -75,7 +74,6 @@ class UserProfilePage extends React.Component {
           </Card.Header>
           <Card.Body>
             <UserBasicInfo
-              error={this.state.error}
               user={this.state.user}
               names={names}
             />

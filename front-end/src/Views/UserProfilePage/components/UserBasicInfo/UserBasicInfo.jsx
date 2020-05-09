@@ -1,8 +1,8 @@
 import React from "react";
-import {Row, Col, Alert} from "react-bootstrap";
+import {Row, Col} from "react-bootstrap";
 import UserIcon from "../UserIcon";
 
-const UserBasicInfo = ({user, names, error}) => {
+const UserBasicInfo = ({user, names}) => {
     const { firstName, lastName } = user;
     const { role } = names;
     return (
@@ -12,7 +12,7 @@ const UserBasicInfo = ({user, names, error}) => {
             </Col>
             <Col>
                 <div>
-                    {error ? <Alert variant="danger">Wystąpił błąd podcas pobierania danych</Alert> : <h5>{`${firstName} ${lastName}`}</h5>}
+                    {<h5>{`${firstName} ${lastName}`}</h5>}
                 </div>
                 <div>{role[role]}</div>
             </Col>

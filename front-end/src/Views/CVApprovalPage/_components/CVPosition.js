@@ -1,11 +1,11 @@
-import React, {useContext, useState,useRef} from "react";
+import React, {useContext, useRef} from "react";
 import { UserContext,AlertContext } from "context";
 import {Button, Col, Row} from "react-bootstrap";
-import {Redirect} from "react-router-dom";
 import {acceptCV} from "Views/CVApprovalPage/functions/acceptCV";
 import {getCVUrl} from "Views/CVApprovalPage/functions/getCVUrl";
 import { DetailsItem } from 'components';
 import proxy from "config/api";
+import {IndexLinkContainer} from 'react-router-bootstrap';
 
 const showCV = async (e, token, cvId,alertC) => {
     e.preventDefault();
@@ -16,7 +16,7 @@ const showCV = async (e, token, cvId,alertC) => {
             window.open(url, '_blank');
 
     } catch (response) {
-        alertC.current.showAlert("Wystąpił błąd.");
+        alertC.current.showAlert("Nie udało się pobrać CV.");
     }
 };
 
@@ -28,20 +28,14 @@ const handleAcceptCV = async (e, token, cvId, alertC) => {
             alertC.current.showAlert("Pomyślnie zaakceptowano CV.","success");
         }
     } catch (response) {
-        alertC.current.showAlert("Wystąpił błąd.");
+        alertC.current.showAlert("Nie udało się zaakceptować użytkownika.");
     }
-};
-
-const improveCV = (e, setRedirect) => {
-    e.preventDefault();
-    setRedirect(true);
 };
 
 const CVPosition = (props) => {
     const context = useContext(UserContext);
     const alertC = useRef(useContext(AlertContext));
     const cv = props.cv;
-    const [redirect, setRedirect] = useState(false);
 
     return (
         <Row>
@@ -61,17 +55,14 @@ const CVPosition = (props) => {
                     onClick={e => handleAcceptCV(e, context.token, cv.cv_id, alertC)}>
                     Akceptuj
                 </Button>
-                <Button
-    
-                    variant="warning m-1 p-1"
-                    className="btnImprove"
-                    onClick={e => improveCV(e, setRedirect)}>
-                    Zgłoś poprawki
-                </Button>
+                <IndexLinkContainer to={`/cvCorrection/${cv.cv_id}`}>
+                    <Button
+                        variant="warning m-1 p-1"
+                        className="btnImprove">
+                        Zgłoś poprawki
+                    </Button>
+                </IndexLinkContainer>
             </Col>
-            {redirect ? (
-                <Redirect to={"/cvCorrection/" + cv.cv_id} />
-            ) : null }
         </Row>
     );
 };

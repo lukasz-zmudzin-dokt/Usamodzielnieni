@@ -172,7 +172,7 @@ describe("CVPosition", () => {
         await wait(() => expect(alertC.showAlert).toHaveBeenCalled());
 
         expect(alertC.showAlert).toHaveBeenCalledWith(
-          "Wystąpił błąd."
+          "Nie udało się zaakceptować użytkownika."
         );
     });
 
@@ -195,7 +195,7 @@ describe("CVPosition", () => {
             }
         ));
     
-        expect(alertC.showAlert).toHaveBeenCalledWith("Wystąpił błąd.");
+        expect(alertC.showAlert).toHaveBeenCalledWith("Nie udało się pobrać CV.");
     });
 
 });

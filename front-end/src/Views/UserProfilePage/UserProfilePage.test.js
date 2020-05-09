@@ -1,5 +1,5 @@
 import React from "react";
-import {fireEvent, render, waitForElement} from "@testing-library/react";
+import {fireEvent, render,wait} from "@testing-library/react";
 import UserProfile from "Views/UserProfilePage/index.js";
 import {MemoryRouter, Router} from "react-router-dom";
 import {createMemoryHistory} from 'history';
@@ -87,9 +87,9 @@ describe("UserProfile", () => {
     expect(container).toMatchSnapshot();
   });
 
-  it('should render empty fields on api fail', async () => {
+  it('should render alert on api fail', async () => {
     apiFail = true;
-    const { queryByText,getByText } = render(
+    const { queryByText } = render(
       <AlertContext.Provider value={contextA}>
         <MemoryRouter>
           <UserProfile />
@@ -97,8 +97,9 @@ describe("UserProfile", () => {
       </AlertContext.Provider>
     );
 
-    await waitForElement(() => getByText("Nazwa użytkownika", {exact: false}));
+    await wait(() => expect(contextA.showAlert).toHaveBeenCalled());
 
+    expect(contextA.showAlert).toHaveBeenCalledWith("Wystąpił błąd podczas pobierania");
     expect(queryByText("Jan", {exact: false})).not.toBeInTheDocument();
   });
 
