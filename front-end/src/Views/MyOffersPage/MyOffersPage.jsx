@@ -10,7 +10,8 @@ const MyOffersPage = () => {
     const alertC = useRef(useContext(AlertContext));
     const [offers, setOffers] = useState([]);
     const [loading, setLoading] = useState(false);
-
+    const [activeOffer, setActiveOffer] = useState("");
+    
     useEffect(() => {
         const loadOffers = async(token, setOffers) => {
             setLoading(true);
@@ -43,7 +44,7 @@ const MyOffersPage = () => {
                 <Card.Body className="p-0">
                     { message ? message : null }
                     <Accordion>
-                        { offers.map((offer) => <MyOffer offer={offer} key={offer.id} />) }
+                        { offers.map((offer) => <MyOffer offer={offer} key={offer.id} activeOffer={activeOffer} setActiveOffer={setActiveOffer} />) }
                     </Accordion>
                 </Card.Body>
             </Card>

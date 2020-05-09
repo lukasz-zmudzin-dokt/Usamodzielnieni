@@ -2,7 +2,7 @@ import React from 'react';
 import {Form} from "react-bootstrap";
 import {adminGroup, commonGroup} from "constants/roles";
 
-const renderCommon = ({selectType}) => (
+const renderCommon = (selectType) => (
     <Form.Group className="register_account_type">
         <Form.Label>{"Jestem:"}</Form.Label>
         <Form.Control
