@@ -8,7 +8,7 @@ const CVList = (props) => {
             {props.cvs.map((cv) => {
                 return (
                     <ListGroup.Item key={cv.cv_id}>
-                        <CVPosition cv={cv}/>
+                        <CVPosition cv={cv} cutCV={props.cutCV}/>
                     </ListGroup.Item>
                 )
             })}

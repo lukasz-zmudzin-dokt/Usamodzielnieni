@@ -3,6 +3,7 @@ import {Alert, Card, Container} from "react-bootstrap";
 import { getCVs } from "./functions/getCVs";
 import {UserContext} from "context";
 import CVList from "./components/CVList";
+import {acceptCV} from "./functions/acceptCV";
 const CVApprovalPage = () => {
     const context = useContext(UserContext);
     const [loading, setLoading] = useState(false);
@@ -27,6 +28,15 @@ const CVApprovalPage = () => {
         loadCVs(context.token, setCvs, setLoading, setError);
     }, [context.token]);
 
+    const cutCV = async (id) => {
+        try {
+            await acceptCV(context.token, id);
+            setCvs(cvs.filter(cv => cv.cv_id !== id));
+        } catch(e) {
+            return false;
+        }
+    };
+
     const message = loading ? (
         <Alert variant="info" className="m-3">Ładuję...</Alert>
     ) : error ? (
@@ -43,7 +53,7 @@ const CVApprovalPage = () => {
                         {message ? (
                             message
                         ) : (
-                            <CVList cvs={cvs} />
+                            <CVList cvs={cvs} cutCV={cutCV}/>
                         )}
                     </Card.Body>
             </Card>

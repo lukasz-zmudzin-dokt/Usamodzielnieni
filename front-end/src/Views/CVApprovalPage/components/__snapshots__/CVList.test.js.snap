@@ -12,7 +12,7 @@ exports[`CVList should match with snapshot with 2 cvs 1`] = `
         class="row"
       >
         <div
-          class="detailsItem col-xl-3 col-md-4"
+          class="detailsItem col-xl-2 col-md-4"
         >
           <div
             class="detailsItem__label"
@@ -53,24 +53,28 @@ exports[`CVList should match with snapshot with 2 cvs 1`] = `
             ab@cd.pl
           </div>
         </div>
-        <button
-          class="btnDownload btn btn-primary m-1 p-1"
-          type="button"
+        <div
+          class="align-self-center d-flex justify-content-end col"
         >
-          Pokaż CV
-        </button>
-        <button
-          class="btnAccept btn btn-success m-1 p-1"
-          type="button"
-        >
-          Akceptuj
-        </button>
-        <button
-          class="btnImprove btn btn-warning m-1 p-1"
-          type="button"
-        >
-          Zgłoś poprawki
-        </button>
+          <button
+            class="btnDownload btn btn-primary m-1 p-1"
+            type="button"
+          >
+            Pokaż CV
+          </button>
+          <button
+            class="btnAccept btn btn-success m-1 p-1"
+            type="button"
+          >
+            Akceptuj
+          </button>
+          <button
+            class="btnImprove btn btn-warning m-1 p-1"
+            type="button"
+          >
+            Zgłoś poprawki
+          </button>
+        </div>
       </div>
     </div>
     <div
@@ -80,7 +84,7 @@ exports[`CVList should match with snapshot with 2 cvs 1`] = `
         class="row"
       >
         <div
-          class="detailsItem col-xl-3 col-md-4"
+          class="detailsItem col-xl-2 col-md-4"
         >
           <div
             class="detailsItem__label"
@@ -121,24 +125,28 @@ exports[`CVList should match with snapshot with 2 cvs 1`] = `
             ab@cd.pl2
           </div>
         </div>
-        <button
-          class="btnDownload btn btn-primary m-1 p-1"
-          type="button"
+        <div
+          class="align-self-center d-flex justify-content-end col"
         >
-          Pokaż CV
-        </button>
-        <button
-          class="btnAccept btn btn-success m-1 p-1"
-          type="button"
-        >
-          Akceptuj
-        </button>
-        <button
-          class="btnImprove btn btn-warning m-1 p-1"
-          type="button"
-        >
-          Zgłoś poprawki
-        </button>
+          <button
+            class="btnDownload btn btn-primary m-1 p-1"
+            type="button"
+          >
+            Pokaż CV
+          </button>
+          <button
+            class="btnAccept btn btn-success m-1 p-1"
+            type="button"
+          >
+            Akceptuj
+          </button>
+          <button
+            class="btnImprove btn btn-warning m-1 p-1"
+            type="button"
+          >
+            Zgłoś poprawki
+          </button>
+        </div>
       </div>
     </div>
   </div>
