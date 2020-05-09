@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext, useRef } from "react";
 import { ListGroup, Container, Card, Button } from "react-bootstrap";
 import MessageItem from "./components/MessageItem";
 import proxy from "config/api";
-import { UserContext } from "context";
+import { UserContext,AlertContext } from "context";
 import { useParams, useHistory } from "react-router-dom";
 import { UserPicture } from "components";
 
@@ -79,6 +79,7 @@ const dataD = [
 const MessagesList = () => {
   const [data, setData] = useState([]);
   const user = useContext(UserContext);
+  const alertC = useRef(useContext(AlertContext));
   const history = useHistory();
   const { id } = useParams();
   const messagesEl = useRef(null);
@@ -94,6 +95,7 @@ const MessagesList = () => {
         res = await getMessages(token, id);
       } catch (e) {
         console.log(e);
+        alertC.current.showAlert("Nie udało się załadować wiadomości.")
         res = [];
       }
       setData(res);
