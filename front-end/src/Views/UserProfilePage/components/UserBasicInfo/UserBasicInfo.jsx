@@ -1,6 +1,6 @@
 import React from "react";
 import {Row, Col, Alert} from "react-bootstrap";
-import UserIcon from "Views/UserProfilePage/components/UserIcon";
+import UserIcon from "../UserIcon";
 
 const UserBasicInfo = ({user, names, error}) => {
     const { firstName, lastName } = user;

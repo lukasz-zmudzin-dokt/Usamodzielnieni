@@ -1,0 +1,65 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserPicture should render multi staff picture 1`] = `
+<div>
+  <div
+    class="userPicture__container"
+  >
+    <div
+      class="userPicture userPicture--multi"
+    >
+      <span>
+        JK
+      </span>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`UserPicture should render staff picture 1`] = `
+<div>
+  <div
+    class="userPicture__container"
+  >
+    <div
+      class="userPicture userPicture--jakis_group_type"
+    >
+      <span>
+        JK
+      </span>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`UserPicture should render without crashing 1`] = `
+<div>
+  <div
+    class="userPicture__container"
+  >
+    <div
+      class="userPicture userPicture--standard"
+    >
+      <span>
+        JK
+      </span>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`UserPicture should render without crashing when data is undefined 1`] = `
+<div>
+  <div
+    class="userPicture__container"
+  >
+    <div
+      class="userPicture userPicture--standard"
+    >
+      <span>
+        ?
+      </span>
+    </div>
+  </div>
+</div>
+`;

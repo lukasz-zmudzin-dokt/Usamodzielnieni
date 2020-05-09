@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MessageItem should match snapshot(left) 1`] = `
+<div>
+  <div
+    class="messagesList__item messagesList__item--left list-group-item list-group-item-primary"
+  >
+    abc
+  </div>
+</div>
+`;
+
+exports[`MessageItem should match snapshot(right) 1`] = `
+<div>
+  <div
+    class="messagesList__item messagesList__item--right list-group-item list-group-item-info"
+  >
+    abc
+  </div>
+</div>
+`;

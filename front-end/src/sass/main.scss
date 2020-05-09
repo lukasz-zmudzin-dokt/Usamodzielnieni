@@ -7,6 +7,9 @@
 @import "pages/headerLayout";
 @import "pages/CVEditorPage";
 @import "pages/blogPage";
+@import "pages/jobOfferDetails";
+@import "pages/messagesList";
+@import "pages/chats";
 
 @import "bootstrap/custom";
 
@@ -17,5 +20,7 @@
 @import "components/notifications";
 @import "components/notificationItemContainer";
 @import "components/smallBlogPost";
+@import "components/userPicture";
+
 // Import Bootstrap and its default variables
 @import "~bootstrap/scss/bootstrap.scss";

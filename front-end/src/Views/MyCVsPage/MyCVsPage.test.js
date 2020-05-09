@@ -1,10 +1,9 @@
 import React from "react";
-import {waitForElement, render, fireEvent} from '@testing-library/react';
+import {waitForElement, render, fireEvent, waitForElementToBeRemoved} from '@testing-library/react';
 import {MemoryRouter, Router} from 'react-router-dom';
 import {UserContext} from "context/UserContext";
 import {createMemoryHistory} from 'history';
 import MyCVsPage from "./MyCVsPage";
-import CVSection from "./components/cvSection";
 
 const renderWithRouter = (
     ui,
@@ -41,6 +40,9 @@ describe('MyCVsPage', () => {
                     case "GET":
                         resolve({ status: 200, json: () => Promise.resolve(myCVs) });
                         break;
+                    case "DELETE":
+                        resolve({status: 200});
+                        break;
                     default:
                         reject({});
                         break;
@@ -58,6 +60,7 @@ describe('MyCVsPage', () => {
         myCVs = [
             {
                 cv_id: 0,
+                name: "jeden",
                 basic_info: {
                     first_name: "Jarek",
                     last_name: "Arek",
@@ -66,12 +69,13 @@ describe('MyCVsPage', () => {
             },
             {
                 cv_id: 1,
+                name: "dwa",
                 basic_info: {
                     first_name: "Ala",
                     last_name: "Mala",
                     email: "malaala@lala.la"
                 }
-            }
+            },
         ];
         failFetch = false;
         jest.clearAllMocks();
@@ -131,4 +135,67 @@ describe('MyCVsPage', () => {
 
         expect(history.location.pathname).toEqual('/cvEditor/0');
     });
+
+    it('should delete cv on button click', async () => {
+        myCVs = [ myCVs[0] ];
+        const {getByText, queryByText} = render(
+            <MemoryRouter>
+                <MyCVsPage />
+            </MemoryRouter>
+        );
+
+        await waitForElement(() => getByText('Usuń CV'));
+        expect(getByText("jeden")).toBeInTheDocument();
+
+        fireEvent.click(getByText("Usuń CV"));
+
+        await waitForElementToBeRemoved(() => getByText("jeden"));
+        await expect(queryByText("jeden")).not.toBeInTheDocument();
+    });
+
+    it('should render error on delete fail', async () => {
+        myCVs = [ myCVs[0] ];
+        const {getByText, queryByText} = render(
+            <MemoryRouter>
+                <MyCVsPage />
+            </MemoryRouter>
+        );
+
+        await waitForElement(() => getByText('Usuń CV'));
+        expect(getByText("jeden")).toBeInTheDocument();
+        failFetch = true;
+        fireEvent.click(getByText("Usuń CV"));
+
+        const cv = await waitForElement(() => queryByText('jeden'));
+        expect(cv).not.toBeNull();
+        expect(getByText("jeden")).toBeInTheDocument();
+        expect(getByText("Wystąpił błąd", {exact: false})).toBeInTheDocument();
+    });
+
+    it('should render alert on max cvs reached', async () => {
+        const maxCVs = [
+            {
+                cv_id: 3,
+                name: "trzy"
+            },
+            {
+                cv_id: 4,
+                name: "cztery"
+            },
+            {
+                cv_id: 5,
+                name: "pięć"
+            }
+        ];
+        myCVs = [...myCVs, ...maxCVs];
+
+        const {getByText, getAllByText} = render(
+            <MemoryRouter>
+                <MyCVsPage />
+            </MemoryRouter>
+        );
+
+        await waitForElement(() => getAllByText('Usuń CV'));
+        expect(getByText("Osiągnięto maksymalną liczbę CV", {exact: false})).toBeInTheDocument();
+    })
 });
