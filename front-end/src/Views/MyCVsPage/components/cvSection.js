@@ -4,6 +4,7 @@ import {IndexLinkContainer} from "react-router-bootstrap";
 import React, {useState} from "react";
 import {getCVUrl} from "../functions/getCVUrl";
 import proxy from "config/api";
+import {DeletionModal} from "components";
 
 const showCV = async (cvId, handleShowing, token) => {
     let r;
@@ -19,8 +20,11 @@ const showCV = async (cvId, handleShowing, token) => {
 const CVSection = ({cv, token, cutCV}) => {
     const [error, setError] = useState(false);
     const [disabled, setDisabled] = useState(false);
+    const [deletionConfirmed, setDeletionConfirmed] = useState(false);
+    const [showModal, setShowModal] = useState(false);
 
     const handleDeletion = async () => {
+        setDeletionConfirmed(false);
         setDisabled(true);
         const res = await cutCV(cv.cv_id);
         if (res === false) {
@@ -28,8 +32,15 @@ const CVSection = ({cv, token, cutCV}) => {
         };
     };
 
+    const handleOnClick = () => {
+        setShowModal(true);
+    }
+
+    if(deletionConfirmed)
+        handleDeletion();
     return (
         <ListGroup.Item key={cv.cv_id}>
+            {DeletionModal(showModal, setShowModal, setDeletionConfirmed, "Czy na pewno chcesz usunąć to CV?")}
             <Row className="d-flex align-items-center">
                 <Col xs={12} md={5}>{cv.name}</Col>
                 <Col xs={4} md={3}><CVStatus was_reviewed={cv.was_reviewed} is_verified={cv.is_verified} /></Col>
@@ -38,7 +49,7 @@ const CVSection = ({cv, token, cutCV}) => {
                     <IndexLinkContainer to={"/cvEditor/" + cv.cv_id}>
                         <Button variant="info" className="mx-2">Edytuj</Button>
                     </IndexLinkContainer>
-                    <Button variant="danger" disabled={disabled} onClick={handleDeletion}>{disabled ? "..." : "Usuń CV"}</Button>
+                    <Button variant="danger" disabled={disabled} onClick={handleOnClick}>{disabled ? "..." : "Usuń CV"}</Button>
                 </Col>
             </Row>
             {error ? <Alert variant="danger" className="m-3">
