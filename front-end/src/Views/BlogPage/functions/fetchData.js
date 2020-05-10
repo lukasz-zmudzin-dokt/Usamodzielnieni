@@ -1,6 +1,6 @@
 import proxy from "config/api";
 
-const getPosts = async (token, filters) => {
+const getPosts = async (filters) => {
   const enTags = encodeURIComponent(filters.tag);
   const enCategories = encodeURIComponent(filters.category);
   const categoryQ = filters.category ? `?category=${enCategories}` : "";
@@ -9,7 +9,6 @@ const getPosts = async (token, filters) => {
     : "";
   const url = `${proxy.blog}blogposts/${categoryQ}${tagQ}`;
   const headers = {
-    Authorization: "Token " + token,
     "Content-Type": "application/json",
   };
 
@@ -21,11 +20,10 @@ const getPosts = async (token, filters) => {
   }
 };
 
-const getFilters = async (token) => {
+const getFilters = async () => {
   const urlC = proxy.blog + "categories/";
   const urlT = proxy.blog + "tags/";
   const headers = {
-    Authorization: "Token " + token,
     "Content-Type": "application/json",
   };
 

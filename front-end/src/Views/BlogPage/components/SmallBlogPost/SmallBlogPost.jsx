@@ -1,6 +1,7 @@
 import React from "react";
 import { Card, Badge } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import proxy from "config/api";
 
 const stripFromTags = (str) => {
   str = str.replace(/(<([^>]+)>)|(<([^>]+)\.\.\.)/gi, "");
@@ -12,6 +13,9 @@ const BlogPost = (data) => {
   return (
     <Link class="sBlogPost__link" to={`/blog/blogpost/${data.id}`}>
       <Card>
+        {
+          data.header !== null ? <Card.Img variant="top" src={proxy.plain + data.header} /> : null
+        }
         <Card.Body>
           <Card.Title as="h3">{data.title}</Card.Title>
           <Card.Text>{stripped_str}</Card.Text>

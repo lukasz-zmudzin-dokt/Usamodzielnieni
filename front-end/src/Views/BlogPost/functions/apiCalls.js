@@ -1,9 +1,8 @@
 import proxy from "config/api";
 
-export const getPost = async (id, token) => {
+export const getPost = async (id) => {
     let url = `${proxy.blog}blogpost/${id}`;
     const headers = {
-        Authorization: "Token " + token,
         "Content-Type": "application/json"
     };
 

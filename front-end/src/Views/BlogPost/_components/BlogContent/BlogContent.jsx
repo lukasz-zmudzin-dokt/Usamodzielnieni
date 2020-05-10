@@ -33,7 +33,7 @@ const handleDeletion = async (wantsDelete, id, token, errorFlag, successFlag) =>
 };
 
 const renderButtons = (user, author, editionFlag, flag, setShowModal) => {
-    if ( ((user.type === 'Staff' && user.data.group_type.includes(staffTypes.BLOG_CREATOR)) || user.data.email === author.email) && !flag) {
+    if ( user.token && (( user.type === 'Staff' && user.data.group_type.includes(staffTypes.BLOG_CREATOR)) || user.data.email === author.email) && !flag) {
         return (
             <ButtonToolbar className="btn_toolbar text-center">
                 <Button variant="warning" className="button-edit mx-3" onClick={e => editionFlag(true)}>Edytuj 🖉</Button>
