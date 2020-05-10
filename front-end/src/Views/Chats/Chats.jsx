@@ -3,7 +3,7 @@ import { Container, Card, ListGroup, Alert } from 'react-bootstrap';
 import { UserContext } from 'context';
 import proxy from 'config/api';
 import { ChatInfo} from './components';
-//import { ChatForm } from 'components';
+import { ChatForm } from 'components';
 
 const getChats = async (token) => {
   let url = `${proxy.chat}/list`; // TODO
@@ -24,6 +24,7 @@ const getChats = async (token) => {
 const mapChats = (chats) => chats.map(chat => ({
   id: chat.id,
   name: chat.name,
+  user: chat.user
   // TODO
 }))
 
@@ -68,10 +69,10 @@ const Chats = () => {
             ))}
           </ListGroup>
         )}
-        {/*<ChatForm sendMessage={msg=>console.log(msg)}/>*/}
+        <ChatForm sendMessage={msg=>console.log(msg)}/>
       </Card>
     </Container>
   );
 }
 
-export default Chats
+export default Chats;

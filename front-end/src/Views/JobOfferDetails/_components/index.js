@@ -1,5 +1,7 @@
-import AddCvForm from "./AddCvForm/AddCvForm";
+import AddCvForm from './AddCvForm/AddCvForm';
+import RemoveOffer from './RemoveOffer/RemoveOffer';
 
 export {
-    AddCvForm
+    AddCvForm,
+    RemoveOffer
 };
