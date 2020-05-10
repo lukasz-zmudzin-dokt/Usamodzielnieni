@@ -14,7 +14,7 @@ import { UserContext} from "context";
 import { sendData, getFeedback } from "Views/CVEditorPage/functions/other.js";
 import { createCVObject } from "Views/CVEditorPage/functions/createCVObject.js";
 import { withRouter } from "react-router-dom";
-import {withAlertContext} from 'components'
+import {WithAlertContext} from 'components'
 
 class CVEditorPage extends React.Component {
   constructor(props) {
@@ -227,4 +227,4 @@ class CVEditorPage extends React.Component {
 
 CVEditorPage.contextType = UserContext;
 
-export default withRouter(withAlertContext(CVEditorPage));
+export default withRouter(WithAlertContext(CVEditorPage));

@@ -2,7 +2,7 @@ import React from 'react';
 import {AlertContext} from 'context';
 
 
-const withAlertContext = Component => (
+const WithAlertContext = Component => (
     props => (
         <AlertContext.Consumer>
             {context => <Component alertContext={context} {...props} />}
@@ -10,4 +10,4 @@ const withAlertContext = Component => (
     )
 )
 
-export default withAlertContext;
+export default WithAlertContext;

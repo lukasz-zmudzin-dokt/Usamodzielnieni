@@ -10,7 +10,7 @@ import mediumDraftExporter from "medium-draft/lib/exporter";
 import mediumDraftImporter from 'medium-draft/lib/importer';
 import {convertToRaw} from 'draft-js';
 import {Redirect} from "react-router-dom";
-import {withAlertContext} from 'components';
+import {WithAlertContext} from 'components';
 
 class BlogPostForm extends React.Component {
   constructor(props) {
@@ -223,4 +223,4 @@ class BlogPostForm extends React.Component {
 
 BlogPostForm.contextType = UserContext;
 
-export default withAlertContext(BlogPostForm);
+export default WithAlertContext(BlogPostForm);

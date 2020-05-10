@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import { Row, Col, Button, Alert, Form } from 'react-bootstrap';
 import { IndexLinkContainer } from 'react-router-bootstrap';
 import proxy from "config/api";
+import { AlertContext } from 'context';
 
 const getCvList = async (token) => {
   let url = proxy.cv + "user/list/";
@@ -36,7 +37,8 @@ const sendCv = async (offerId, cvId, token) => {
     cv: cvId,
     job_offer: offerId
   };
-  const response = await fetch(url, { method: "POST",
+  const response = await fetch(url, {
+    method: "POST",
     headers,
     body: JSON.stringify(body)
   });
@@ -53,6 +55,8 @@ const AddCvForm = ({ id, user, ...props }) => {
   const [isCvListLoading, setIsCvListLoading] = useState(false);
   const [selectedCv, setSelectedCv] = useState(null);
   const [error, setError] = useState("");
+  const alertC = useRef(useContext(AlertContext));
+
 
   useEffect(() => {
     const loadCvList = async (token) => {
@@ -86,9 +90,14 @@ const AddCvForm = ({ id, user, ...props }) => {
       response = await sendCv(id, selectedCv, user.token);
     } catch (e) {
       console.log(e);
-      setError("application");
+      alertC.current.showAlert("Wystąpił błąd podczas składania aplikacji na ofertę.");
     }
     const newStatus = response ? 'ADDED' : 'ALREADY_ADDED';
+    if (newStatus === 'ADDED') {
+      alertC.current.showAlert("Pomyślnie zaaplikowano do ogłoszenia.", "success");
+    } else {
+      alertC.current.showAlert("Już zaaplikowano do danego ogłoszenia.")
+    }
     setCvList(cvList.map(cv => {
       if (cv.id === selectedCv) {
         cv.status = newStatus;
@@ -99,16 +108,16 @@ const AddCvForm = ({ id, user, ...props }) => {
 
   const getVerifiedCvs = (cvs) => cvs.filter(cv => cv.status === 'VERIFIED')
 
+
   const msg = error === "load" ? { variant: "danger", value: "Wystąpił błąd podczas ładowania listy zweryfikowanych CV." } :
-              error === "application" ? { variant: "danger", value: "Wystąpił błąd podczas składania aplikacji na ofertę." } :
-              isCvListLoading ? { variant: "info", value: "Ładowanie listy zweryfikowanych CV..." } :
-              cvList.find(cv => cv.status === 'ADDED') ? { variant: "success", value: "Pomyślnie zaaplikowano do ogłoszenia." } :
-              cvList.find(cv => cv.status === 'ALREADY_ADDED') ? { variant: "danger", value: "Już zaaplikowano do danego ogłoszenia." } :
-              getVerifiedCvs(cvList).length === 0 && { variant: "info", value: (
-                <>
-                  Poczekaj na pozytywną weryfikację CV lub <IndexLinkContainer to="/cvEditor"><Alert.Link>utwórz nowe CV</Alert.Link></IndexLinkContainer>.
-                </>
-              ) }
+    isCvListLoading ? { variant: "info", value: "Ładowanie listy zweryfikowanych CV..." } :
+      getVerifiedCvs(cvList).length === 0 && {
+        variant: "info", value: (
+          <>
+            Poczekaj na pozytywną weryfikację CV lub <IndexLinkContainer to="/cvEditor"><Alert.Link>utwórz nowe CV</Alert.Link></IndexLinkContainer>.
+          </>
+        )
+      }
 
   return msg ? <Alert className="mb-0" variant={msg.variant}>{msg.value}</Alert> : (
     <Row>
@@ -117,7 +126,7 @@ const AddCvForm = ({ id, user, ...props }) => {
           <Form.Group controlId="selectCv">
             <Form.Label>Wybierz CV:</Form.Label>
             <Form.Control
-              as="select" 
+              as="select"
               value={selectedCv}
               onChange={onChange}
               required>
