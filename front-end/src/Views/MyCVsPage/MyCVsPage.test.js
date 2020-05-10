@@ -144,9 +144,11 @@ describe('MyCVsPage', () => {
     it('should delete cv on button click', async () => {
         myCVs = [ myCVs[0] ];
         const {getByText, queryByText} = render(
-            <MemoryRouter>
-                <MyCVsPage />
-            </MemoryRouter>
+            <AlertContext.Provider value={alertC}>
+                <MemoryRouter>
+                    <MyCVsPage />
+                </MemoryRouter>
+            </AlertContext.Provider>
         );
 
         await waitForElement(() => getByText('Usuń CV'));
@@ -156,6 +158,8 @@ describe('MyCVsPage', () => {
 
         await waitForElementToBeRemoved(() => getByText("jeden"));
         await expect(queryByText("jeden")).not.toBeInTheDocument();
+        await wait(()=> expect(alertC.showAlert).toHaveBeenCalled())
+        expect(alertC.showAlert).toHaveBeenCalledWith("Pomyślnie usunięto CV", "success");
     });
 
     it('should render error on delete fail', async () => {

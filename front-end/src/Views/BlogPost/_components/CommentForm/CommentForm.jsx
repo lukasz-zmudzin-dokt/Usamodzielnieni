@@ -1,6 +1,6 @@
-import React, { useState, useContext } from 'react'
-import { Form, Button, Alert } from "react-bootstrap";
-import { UserContext } from "context";
+import React, { useState, useContext,useRef } from 'react'
+import { Form, Button } from "react-bootstrap";
+import { UserContext,AlertContext } from "context";
 import proxy from "config/api";
 
 const addComment = async (token, content, blogId) => {
@@ -21,10 +21,9 @@ const addComment = async (token, content, blogId) => {
 
 const CommentForm = ({ blogId, afterSubmit, ...rest }) => {
     const [commentContent, setCommentContent] = useState("");
-    const [submitted, setSubmitted] = useState(false);
-    const [error, setError] = useState(false);
     const [validated, setValidated] = useState(false);
     const user = useContext(UserContext);
+    const alertC = useRef(useContext(AlertContext));
 
     const onChange = (e) => {
         const value = e.target.value;
@@ -55,15 +54,13 @@ const CommentForm = ({ blogId, afterSubmit, ...rest }) => {
                     creationDate: new Date(Date.now())
                 })
                 setCommentContent('');
-                setSubmitted(true);
+                alertC.current.showAlert("Pomyślnie przesłano komentarz.","success")
             } catch (e) {
-                setError(true);
+                alertC.current.showAlert("Wystąpił błąd podczas przesyłania komentarza.")
             }
         }
     }
 
-    const msg = error ? (<Alert variant="danger">Wystąpił błąd podczas przesyłania komentarza.</Alert>) :
-        submitted && (<Alert variant="success">Pomyślnie przesłano komentarz.</Alert>);
 
     return user.data && user.data.status === 'Verified' ? (
         <div {...rest}>
@@ -84,7 +81,6 @@ const CommentForm = ({ blogId, afterSubmit, ...rest }) => {
                         Wprowadź treść komentarza.
                     </Form.Control.Feedback>
                 </Form.Group>
-                {msg}
                 <Form.Group className="CommentForm__submitGroup mb-0">
                     <Button type="submit">Prześlij</Button>
                 </Form.Group>

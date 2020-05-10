@@ -47,6 +47,7 @@ class MyCVsPage extends React.Component {
             return false;
         }
         if (deleted) {
+            this.props.alertContext.showAlert("Pomyślnie usunięto CV", "success");
             this.setState({
                 cvs: this.state.cvs.filter(cv => cv.cv_id !== cvId)
             });
