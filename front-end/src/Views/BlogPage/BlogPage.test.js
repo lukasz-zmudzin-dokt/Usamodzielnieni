@@ -132,7 +132,6 @@ describe("BlogPage", () => {
         `${proxy.blog}blogposts/?category=abcd&tag=abcd`,
         {
           headers: {
-            Authorization: "Token undefined",
             "Content-Type": "application/json",
           },
           method: "GET",
@@ -161,7 +160,6 @@ describe("BlogPage", () => {
         `${proxy.blog}blogposts/?tag=abcd`,
         {
           headers: {
-            Authorization: "Token undefined",
             "Content-Type": "application/json",
           },
           method: "GET",
@@ -190,7 +188,6 @@ describe("BlogPage", () => {
         `${proxy.blog}blogposts/?category=abcd`,
         {
           headers: {
-            Authorization: "Token undefined",
             "Content-Type": "application/json",
           },
           method: "GET",
