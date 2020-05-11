@@ -31,7 +31,8 @@ const mapPost = (res) => ({
 const mapAuthor = (author) => ({
   email: author.email,
   firstName: author.first_name,
-  lastName: author.last_name
+  lastName: author.last_name,
+  username: author.username
 });
 
 const BlogPost = () => {

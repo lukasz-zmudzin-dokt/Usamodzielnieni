@@ -19,6 +19,7 @@ const CommentItem = ({ comment, onDeleteClick, user, ...rest }) => {
 
     return (
         <div className="commentItem" {...rest}>
+            {console.log(comment)}
             {DeletionModal(showModal, setShowModal, setDeletionConfirmed, "Czy na pewno chcesz usunąć ten komentarz?")}
             <h5 className="commentItem__header">{`${comment.author.username}`}</h5>
             <small className="commentItem__date">dodano: {comment.creationDate.toLocaleDateString(undefined, {})}</small>

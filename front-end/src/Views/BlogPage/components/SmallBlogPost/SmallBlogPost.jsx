@@ -14,7 +14,7 @@ const BlogPost = (data) => {
     <Link class="sBlogPost__link" to={`/blog/blogpost/${data.id}`}>
       <Card>
         {
-          data.header !== null ? <Card.Img variant="top" src={proxy.plain + data.header} /> : null
+          data.header !== null ? <Card.Img variant="top" src={proxy.plain + data.header} alt="Wystąpił problem z ładowaniem nagłówka"/> : null
         }
         <Card.Body>
           <Card.Title as="h3">{data.title}</Card.Title>
@@ -22,11 +22,12 @@ const BlogPost = (data) => {
         </Card.Body>
         <Card.Footer>
           <small>Tagi:</small>
-          {data.tags.map((tag) => (
+          {data.tags.length > 0 ?
+            data.tags.map((tag) => (
             <Badge variant="info" key={tag} className="ml-1">
               {tag}
             </Badge>
-          ))}
+          )) : "Brak tagów"}
         </Card.Footer>
       </Card>
     </Link>

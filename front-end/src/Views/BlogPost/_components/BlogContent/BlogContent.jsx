@@ -65,7 +65,7 @@ const BlogContent = ({ post , user }) => {
         return <Alert variant="danger" className="d-lg-block">Wystąpił błąd podczas ładowania zawartości bloga.</Alert>;
     if(wantsDelete)
         handleDeletion(setWantsDelete, post.id, user.token, setDelError, setSuccess);
-    const {firstName, lastName, email} = post.author;
+    const {username} = post.author;
     const content = convertToHTML(mediumDraftImporter(post.content));
     return (
         <Card>
@@ -95,7 +95,7 @@ const BlogContent = ({ post , user }) => {
             <Card.Footer className="blogpost_summary">
                 <Row>
                     <Col className="mx-3">
-                        <Row className="">{`Autor: ${firstName} ${lastName} (${email})`}</Row>
+                        <Row className="">{`Autor: ${username}`}</Row>
                         <Row>{`Opublikowano: ${getDateString(post.creationDate)}`}</Row>
                     </Col>
                     <div className="post_comment_counter">
