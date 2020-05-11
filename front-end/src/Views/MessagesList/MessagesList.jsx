@@ -5,6 +5,7 @@ import proxy from "config/api";
 import { UserContext } from "context";
 import { useParams, useHistory } from "react-router-dom";
 import { UserPicture } from "components";
+import {ChatForm} from "components";
 
 const getMessages = async (token, id) => {
   const headers = {
@@ -118,12 +119,14 @@ const MessagesList = () => {
         </Card.Header>
         <Card.Body className="messagesList__body">
           <ListGroup ref={messagesEl} className="messagesList__list">
-            {data.map(({ content, send, side, id }) => (
+            {dataD.map(({ content, send, side, id }) => (
               <MessageItem key={id} content={content} send={send} side={side} />
             ))}
           </ListGroup>
         </Card.Body>
+        <ChatForm sendMessage={msg => console.log(msg)}/>
       </Card>
+      
     </Container>
   );
 };

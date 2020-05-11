@@ -1,6 +1,5 @@
 import React, {useState} from "react";
-import {Form, Button} from "react-bootstrap";
-import FormGroup from "components/FormGroup";
+import {Form, Button, InputGroup, FormControl} from "react-bootstrap";
 
 const ChatForm = ({sendMessage}) => {
     const handleSubmit = (e) => {
@@ -10,26 +9,34 @@ const ChatForm = ({sendMessage}) => {
             setMessage("");
         }
     };
+    
+    const keyPressed = (e) => {
+        if(e.keyCode === 13 && e.shiftKey === false) {
+            e.preventDefault();
+            handleSubmit(e);
+        }
+    }
 
     const [message, setMessage] = useState("");
 
     return(
-        
         <Form onSubmit={(e) => handleSubmit(e)}>
-                <FormGroup
-                    id="message"
-                    type="textarea"
-                    setVal={(val) => setMessage(val)}
-                    val={message}
-                    length={{ min: 1, max: 1000 }}
+            <InputGroup className="mb-3">
+                <FormControl
+                    value={message}
+                    onChange={e => setMessage(e.target.value)}
+                    onKeyDown={e => keyPressed(e)}
+                    resize="none"
+                    as="textarea"
+                    placeholder="Aa"
                 />
-                <Form.Group>
-                    <Button type="submit">
-                        Wyślij
-                    </Button>
-                </Form.Group>
+                <InputGroup.Append>
+                <Button type="submit" variant="primary">-></Button>
+                </InputGroup.Append>
+            </InputGroup>
         </Form>
+        
     );              
 };
- 
+
 export default ChatForm;
