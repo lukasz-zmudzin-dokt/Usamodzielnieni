@@ -29,13 +29,14 @@ exports[`BlogPost should match snapshot after loaded 1`] = `
                 class="button-edit mx-3 btn btn-warning"
                 type="button"
               >
-                Edytuj 🖉
+                Edytuj post
               </button>
               <button
                 class="button-delete mx-3 btn btn-danger"
+                id="delete"
                 type="button"
               >
-                Usuń ✗
+                Usuń post
               </button>
             </div>
           </div>
@@ -90,12 +91,12 @@ exports[`BlogPost should match snapshot after loaded 1`] = `
             <div
               class="row"
             >
-              Autor: Jan Kowalski (jan@kowalski.pl)
+              Autor: undefined
             </div>
             <div
               class="row"
             >
-              Opublikowano: 06.07.2019
+              Opublikowano: 19.-2.06-0
             </div>
           </div>
           <div
@@ -127,7 +128,7 @@ exports[`BlogPost should match snapshot after loaded 1`] = `
             <h5
               class="commentItem__header"
             >
-              Jan Nowak
+              jannowak
             </h5>
             <small
               class="commentItem__date"
@@ -139,41 +140,6 @@ exports[`BlogPost should match snapshot after loaded 1`] = `
               class="commentItem__content"
             />
           </div>
-        </div>
-        <div>
-          <h5>
-            Dodaj komentarz
-          </h5>
-          <form
-            class=""
-            novalidate=""
-          >
-            <div
-              class="form-group"
-            >
-              <textarea
-                class="form-control"
-                id="commentContent"
-                placeholder="Treść komentarza"
-                required=""
-              />
-              <div
-                class="invalid-feedback"
-              >
-                Wprowadź treść komentarza.
-              </div>
-            </div>
-            <div
-              class="CommentForm__submitGroup mb-0 form-group"
-            >
-              <button
-                class="btn btn-primary"
-                type="submit"
-              >
-                Prześlij
-              </button>
-            </div>
-          </form>
         </div>
       </div>
     </div>

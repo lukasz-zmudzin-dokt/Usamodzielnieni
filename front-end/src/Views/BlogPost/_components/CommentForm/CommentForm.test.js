@@ -12,7 +12,9 @@ describe('CommentForm', () => {
             token: '123',
             data: {
                 first_name: 'Jan',
-                last_name: 'Kowalski'
+                last_name: 'Kowalski',
+                status: "Verified",
+                username: "123123"
             }
         }
     })
@@ -48,7 +50,11 @@ describe('CommentForm', () => {
         });
 
         it('should render without crashing', () => {
-            const { container } = render(<CommentForm {...props} />);
+            const { container } = render(
+                <UserProvider value={user}>
+                    <CommentForm {...props} />
+                </UserProvider>
+                );
             expect(container).toMatchSnapshot();
         });
 

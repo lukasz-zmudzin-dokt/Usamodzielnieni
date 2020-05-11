@@ -44,6 +44,7 @@ describe('CommentsList', () => {
             user: {
                 type: 'Standard',
                 data: {
+                    username: "qweqwe",
                     email: 'mail@mail.pl',
                     group_type: undefined
                 }

@@ -36,8 +36,8 @@ const renderButtons = (user, author, editionFlag, flag, setShowModal) => {
     if ( user.token && (( user.type === 'Staff' && user.data.group_type.includes(staffTypes.BLOG_CREATOR)) || user.data.email === author.email) && !flag) {
         return (
             <ButtonToolbar className="btn_toolbar text-center">
-                <Button variant="warning" className="button-edit mx-3" onClick={e => editionFlag(true)}>Edytuj 🖉</Button>
-                <Button id="delete" variant="danger" className="button-delete mx-3" onClick={e => handleOnClick(e, setShowModal)}>Usuń ✗</Button>
+                <Button variant="warning" className="button-edit mx-3" onClick={e => editionFlag(true)}>Edytuj post</Button>
+                <Button id="delete" variant="danger" className="button-delete mx-3" onClick={e => handleOnClick(e, setShowModal)}>Usuń post</Button>
             </ButtonToolbar>
         )
     }

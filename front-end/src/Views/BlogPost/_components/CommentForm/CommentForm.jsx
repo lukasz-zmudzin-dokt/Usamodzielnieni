@@ -47,9 +47,8 @@ const CommentForm = ({ blogId, afterSubmit, ...rest }) => {
                 afterSubmit({
                     id: id,
                     author: {
-                        firstName: user.data.first_name,
-                        lastName: user.data.last_name,
-                        email: user.data.email
+                        email: user.data.email,
+                        username: user.data.username
                     },
                     content: commentContent,
                     creationDate: new Date(Date.now())

@@ -26,13 +26,14 @@ exports[`BlogContent should match snapshot 1`] = `
               class="button-edit mx-3 btn btn-warning"
               type="button"
             >
-              Edytuj 🖉
+              Edytuj post
             </button>
             <button
               class="button-delete mx-3 btn btn-danger"
+              id="delete"
               type="button"
             >
-              Usuń ✗
+              Usuń post
             </button>
           </div>
         </div>
@@ -86,12 +87,12 @@ exports[`BlogContent should match snapshot 1`] = `
           <div
             class="row"
           >
-            Autor: Jan Kowalski (qwe@qwe.qwe)
+            Autor: undefined
           </div>
           <div
             class="row"
           >
-            Opublikowano: 02.02.2020
+            Opublikowano: 20.-2.02-0
           </div>
         </div>
         <div

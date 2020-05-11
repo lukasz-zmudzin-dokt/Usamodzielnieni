@@ -5,6 +5,7 @@ import {waitForElement} from "@testing-library/dom";
 import {Router} from "react-router-dom";
 import {createMemoryHistory} from 'history';
 import {UserContext} from "context/UserContext";
+import {UserProvider} from "../../../../context/UserContext";
 
 const renderWithRouter = (
     ui, {
@@ -12,7 +13,7 @@ const renderWithRouter = (
         history = createMemoryHistory({initialEntries: [route]}),
     } = {}
 ) => {
-    let context = {data: {}};
+    let context = {token: "123", type: "Staff", data: {group_type: ['staff_blog_creator']}};
     return {
         ...render(
             <UserContext.Provider value={context}>
@@ -71,7 +72,8 @@ describe('BlogContent', () => {
         admin = {
             type: 'Staff',
             data: {
-                email: 'a@m.com'
+                email: 'a@m.com',
+                group_type: ["staff_blog_creator"]
             },
             token: '123'
         };
@@ -80,7 +82,9 @@ describe('BlogContent', () => {
 
     it('should match snapshot', () => {
         const {container} = render(
-            <BlogContent post={post} user={admin}/>
+            <UserProvider>
+                <BlogContent post={post} user={admin}/>
+            </UserProvider>
         );
 
         expect(container).toMatchSnapshot();
@@ -88,7 +92,7 @@ describe('BlogContent', () => {
 
     it('should convert date type', () => {
         const secondPost = post;
-        secondPost.creationDate = "07-06-2019";
+        secondPost.creationDate = "2019-06-07";
         const {getByText} = render(
             <BlogContent post={secondPost} user={admin}/>
         );
@@ -145,7 +149,8 @@ describe('BlogContent', () => {
             <BlogContent post={post} user={admin} />
         );
 
-        fireEvent.click(getByText('Usuń', {exact: false}));
+        fireEvent.click(getByText('Usuń post'));
+        fireEvent.click(getByText("Usuń ✗"));
 
         await waitForElement(() => getByText('Ten post został usunięty', {exact: false}));
         expect(getByText('Ten post został usunięty', {exact: false})).toBeInTheDocument();
@@ -158,7 +163,8 @@ describe('BlogContent', () => {
             <BlogContent post={post} user={admin} />
         );
 
-        fireEvent.click(getByText('Usuń', {exact: false}));
+        fireEvent.click(getByText('Usuń post'));
+        fireEvent.click(getByText("Usuń ✗"));
 
         await waitForElement(() => getByText('Wystąpił błąd podczas usuwania posta.', {exact: false}));
         expect(getByText('Wystąpił błąd podczas usuwania posta.', {exact: false})).toBeInTheDocument();

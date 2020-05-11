@@ -30,8 +30,10 @@ describe('BlogPost', () => {
         user = {
             type: "Staff",
             data: {
-                email: "qwe@qwe.fgh"
-            }
+                email: "qwe@qwe.fgh",
+                group_type: ["staff_blog_creator"]
+            },
+            token: "123"
         }
     });
 
@@ -52,7 +54,8 @@ describe('BlogPost', () => {
                 author: {
                     first_name: "Jan",
                     last_name: "Nowak",
-                    email: "qwe@qwe.qwe"
+                    email: "qwe@qwe.qwe",
+                    username: "jannowak"
                 }
             }]
         };
@@ -103,6 +106,6 @@ describe('BlogPost', () => {
         );
 
         await waitForElement(() => fetch);
-        expect(getByText("Jan Nowak", {exact: false})).toBeInTheDocument();
+        expect(getByText("jannowak", {exact: false})).toBeInTheDocument();
     });
 });
