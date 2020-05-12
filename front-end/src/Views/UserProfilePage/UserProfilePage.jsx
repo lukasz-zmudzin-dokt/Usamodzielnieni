@@ -8,6 +8,7 @@ import AdminRegisterButton from "./components/AdminRegisterButton/AdminRegisterB
 import CVApprovalButton from "./components/CVApprovalButton/CVApprovalButton";
 import EmployerMyOffersButton from "./components/EmployerMyOffersButton/EmployerMyOffersButton";
 import AdminApproveUserButton from "./components/AdminApproveUserBuuton/AdminApproveUserButton";
+import UserListButton from "./components/UserListButton/UserListButton";
 
 const names = {
   role: {
@@ -82,6 +83,7 @@ class UserProfilePage extends React.Component {
               <Alert variant="info">Nie masz jeszcze dostępu do wszystkich funkcji aplikacji. Poczekaj na weryfikację swojego konta.</Alert> :
                 null
             }
+            <UserListButton user={this.context} />
           </Card.Body>
         </Card>
       </Container>
