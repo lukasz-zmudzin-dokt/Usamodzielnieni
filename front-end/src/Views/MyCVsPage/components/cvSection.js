@@ -59,7 +59,7 @@ const CVSection = ({cv, token, cutCV}) => {
             {error ? <Alert variant="danger" className="m-3">
                 Ups, coś poszło nie tak. Nie można wyświetlić CV.
             </Alert> : null}
-            <ChangeCVNameModal show={showChangeNameModal} />
+            <ChangeCVNameModal show={showChangeNameModal} setShow={setShowChangeNameModal} cvId={cv.cv_id} />
         </ListGroup.Item>
     );
 
