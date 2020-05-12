@@ -1,0 +1,99 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MyOffers should match snapshot 1`] = `
+<div>
+  <div
+    class="border-left-0 border-right-0 border-bottom-0 card"
+  >
+    <div
+      class="card-header"
+    >
+      offer2
+    </div>
+    <div
+      class="collapse"
+    >
+      <div
+        class="p-0 card-body"
+      >
+        <div
+          class="list-group"
+        >
+          <div
+            class="list-group-item"
+          >
+            <div
+              class="justify-content-end row"
+            >
+              <div
+                class="detailsItem col"
+              >
+                <div
+                  class="detailsItem__label"
+                >
+                  Imię i nazwisko
+                </div>
+                <div
+                  class="detailsItem__value"
+                >
+                  standard1
+                   
+                  standard1
+                </div>
+              </div>
+              <div
+                class="detailsItem col"
+              >
+                <div
+                  class="detailsItem__label"
+                >
+                  email
+                </div>
+                <div
+                  class="detailsItem__value"
+                >
+                  standard1@standard1.com
+                </div>
+              </div>
+              <button
+                class="mr-2 btn btn-primary"
+                type="button"
+              >
+                Pokaż CV
+              </button>
+            </div>
+          </div>
+          <div
+            class="list-group-item"
+          >
+            <div
+              class="justify-content-center row"
+            >
+              <a
+                href="/jobOffers/47991e86-4b42-4507-b154-1548bf8a3bd3"
+              >
+                <button
+                  class="btn btn-primary"
+                  type="button"
+                >
+                  Pokaż ofertę
+                </button>
+              </a>
+              <a
+                href="/offerForm/47991e86-4b42-4507-b154-1548bf8a3bd3"
+              >
+                <button
+                  class="ml-3 btn btn-primary"
+                  type="button"
+                >
+                  Edytuj ofertę
+                </button>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

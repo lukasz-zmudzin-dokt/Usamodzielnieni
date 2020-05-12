@@ -17,7 +17,6 @@ exports[`OfferForm renders correctly 1`] = `
     >
       <form
         class="offerForm__form"
-        data-testid="form"
         novalidate=""
       >
         <div
@@ -61,13 +60,14 @@ exports[`OfferForm renders correctly 1`] = `
             <input
               class="form-control"
               data-testid="default"
+              disabled=""
               id="company_name"
               maxlength="70"
               minlength="1"
               placeholder="Nazwa firmy"
               required=""
               type="text"
-              value=""
+              value="abc"
             />
             <div
               class="invalid-feedback"
@@ -87,13 +87,14 @@ exports[`OfferForm renders correctly 1`] = `
             <input
               class="form-control"
               data-testid="default"
+              disabled=""
               id="company_address"
               maxlength="200"
               minlength="1"
               placeholder="Adres firmy"
               required=""
               type="text"
-              value=""
+              value="ul. def 1, 00-000 abc"
             />
             <div
               class="invalid-feedback"
@@ -178,7 +179,11 @@ exports[`OfferForm renders correctly 1`] = `
               class="form-control"
               id="type"
               required=""
-            />
+            >
+              <option>
+                IT
+              </option>
+            </select>
             <div
               class="invalid-feedback"
             >
@@ -224,7 +229,11 @@ exports[`OfferForm renders correctly 1`] = `
               class="form-control"
               id="category"
               required=""
-            />
+            >
+              <option>
+                xd
+              </option>
+            </select>
             <div
               class="invalid-feedback"
             >
@@ -266,8 +275,7 @@ exports[`OfferForm renders correctly 1`] = `
           class="w-100 justify-content-center align-items-center m-0 row"
         >
           <button
-            class="btn btn-secondary"
-            data-testid="submitBtn"
+            class="btn btn-primary"
             type="submit"
           >
             Dodaj

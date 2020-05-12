@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CommentItem should render without crashing 1`] = `
+<div>
+  <div
+    class="commentItem"
+  >
+    <h5
+      class="commentItem__header"
+    >
+      Jan Kowalski
+    </h5>
+    <small
+      class="commentItem__date"
+    >
+      dodano: 
+      11/4/2020
+    </small>
+    <p
+      class="commentItem__content"
+    >
+      Treść komentarza
+    </p>
+    <div
+      class="commentItem__actions btn-group btn-group-sm"
+      role="group"
+    >
+      <button
+        class="btn btn-primary"
+        type="button"
+      >
+        Usuń
+      </button>
+    </div>
+  </div>
+</div>
+`;

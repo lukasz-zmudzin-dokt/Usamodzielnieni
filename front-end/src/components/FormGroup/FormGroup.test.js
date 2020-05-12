@@ -1,5 +1,5 @@
 import React from "react";
-import { render } from "@testing-library/react";
+import { render, fireEvent } from "@testing-library/react";
 import FormGroup from "components/FormGroup";
 import { MemoryRouter } from "react-router-dom";
 
@@ -64,6 +64,7 @@ describe("FormGroup", () => {
     );
     expect(getByLabelText("Opis stanowiska")).toBeInTheDocument();
   });
+
   it("should render number input if type is number", () => {
     const { getByLabelText } = render(
       <MemoryRouter initialEntries={["/"]}>
@@ -77,7 +78,7 @@ describe("FormGroup", () => {
       <MemoryRouter initialEntries={["/"]}>
         <FormGroup
           header="test"
-          type="textarea"
+          type="date"
           setVal={() => null}
           incorrect="xd"
           id="test"
@@ -85,5 +86,44 @@ describe("FormGroup", () => {
       </MemoryRouter>
     );
     expect(getByText("xd")).toBeInTheDocument();
+  });
+  it("should render disabled option if required is false", () => {
+    const { getByText } = render(
+      <MemoryRouter initialEntries={["/"]}>
+        <FormGroup
+          header="test"
+          type="select"
+          setVal={() => null}
+          incorrect="xd"
+          id="test"
+        />
+      </MemoryRouter>
+    );
+    expect(getByText("-- Wybierz --")).toBeInTheDocument();
+  });
+
+  it("should not be able to change text in input when disabled is true", () => {
+    const Form = render(
+      <MemoryRouter initialEntries={["/"]}>
+        <FormGroup
+          header="Nazwa firmy"
+          id="company_name"
+          setVal={() => null}
+          incorrect="Podaj nazwę firmy"
+          val="abc"
+          length={{ min: 1, max: 70 }}
+          required
+          disabled
+        />
+      </MemoryRouter>
+    );
+
+    const input = Form.getByLabelText("Nazwa firmy");
+
+    fireEvent.change(Form.getByPlaceholderText("Nazwa firmy"), {
+      target: { value: "abcd" },
+    });
+
+    expect(input.value).toBe("abc");
   });
 });

@@ -29,7 +29,7 @@ class PersonalDataTab extends React.Component {
     } 
 
     render() {
-        const { data } = this.props;
+        const { data, validated } = this.props;
 
         if (data === null) return null;
 
@@ -43,82 +43,110 @@ class PersonalDataTab extends React.Component {
                 error={this.props.error}
                 showComments={this.props.showComments}
             >
-                <Row>
-                    <Form.Group as={Col} xs={12} md={6} controlId="firstName">
-                        <Form.Label>
-                            Imię:
-                        </Form.Label>
-                        <Form.Control
-                            name="firstName"
-                            type="text"
-                            required
-                            defaultValue={data.firstName}
-                            placeholder="Jan"
-                            onChange={this.onChange}
-                        />
-                    </Form.Group>
-                    <Form.Group as={Col} xs={12} md={6} controlId="lastName">
-                        <Form.Label>
-                            Nazwisko:
-                        </Form.Label>
-                        <Form.Control
-                            name="lastName"
-                            type="text"
-                            required
-                            defaultValue={data.lastName}
-                            placeholder="Przykładowy"
-                            onChange={this.onChange}
-                        />
-                    </Form.Group>
-                </Row>
-                <Row>
-                    <Form.Group as={Col} xs={12} md={6}>
-                        <Form.Label htmlFor="birthDate">
-                            Data urodzenia:
-                        </Form.Label>
-                        <DatePicker
-                            id="birthDate"
-                            className="form-control"
-                            locale="pl"
-                            placeholderText="Data urodzenia"
-                            dateFormat="dd.MM.yyyy"
-                            selected={data.birthDate}
-                            onChange={birthDate => this.props.onChange({ ...this.props.data, birthDate })}
-                            withPortal
-                            peekNextMonth
-                            showMonthDropdown
-                            showYearDropdown
-                            dropdownMode="select"
-                        />
-                    </Form.Group>
-                    <Form.Group as={Col} xs={12} md={6} controlId="phoneNumber">
-                        <Form.Label>
-                            Numer telefonu:
-                        </Form.Label>
-                        <Form.Control
-                            name="phoneNumber"
-                            type="text"
-                            defaultValue={data.phoneNumber}
-                            placeholder="+48123456789"
-                            onChange={this.onChange}
-                        />
-                    </Form.Group>
-                </Row>
-                <Row>
-                    <Form.Group as={Col} xs={12} md={6} controlId="email">
-                        <Form.Label>
-                            Adres email:
-                        </Form.Label>
-                        <Form.Control
-                            name="email"
-                            type="email"
-                            required
-                            defaultValue={data.email}
-                            placeholder="example@domain.com"
-                            onChange={this.onChange}
-                        />
-                    </Form.Group>
-                </Row>
+                <Form ref={this.props.refValue} noValidate validated={validated}>
+                    <Row>
+                        <Form.Group as={Col} xs={12} md={6} controlId="firstName">
+                            <Form.Label>
+                                Imię:
+                            </Form.Label>
+                            <Form.Control
+                                name="firstName"
+                                type="text"
+                                required
+                                minLength="1"
+                                maxLength="30"
+                                defaultValue={data.firstName}
+                                placeholder="Jan"
+                                onChange={this.onChange}
+                            />
+                            <Form.Control.Feedback type="invalid">
+                                Imię jest wymagane.
+                            </Form.Control.Feedback>
+                        </Form.Group>
+                        <Form.Group as={Col} xs={12} md={6} controlId="lastName">
+                            <Form.Label>
+                                Nazwisko:
+                            </Form.Label>
+                            <Form.Control
+                                name="lastName"
+                                type="text"
+                                required
+                                minLength="1"
+                                maxLength="50"
+                                defaultValue={data.lastName}
+                                placeholder="Przykładowy"
+                                onChange={this.onChange}
+                            />
+                            <Form.Control.Feedback type="invalid">
+                                Nazwisko jest wymagane.
+                            </Form.Control.Feedback>
+                        </Form.Group>
+                    </Row>
+                    <Row>
+                        <Form.Group as={Col} xs={12} md={6}>
+                            <Form.Label htmlFor="birthDate" className={validated && !data.birthDate && 'is-invalid'}>
+                                Data urodzenia:
+                            </Form.Label>
+                            <DatePicker
+                                id="birthDate"
+                                className="form-control"
+                                locale="pl"
+                                placeholderText="Data urodzenia"
+                                dateFormat="dd.MM.yyyy"
+                                selected={data.birthDate}
+                                onChange={birthDate => this.props.onChange({ ...this.props.data, birthDate })}
+                                withPortal
+                                peekNextMonth
+                                showMonthDropdown
+                                showYearDropdown
+                                dropdownMode="select"
+                                required
+                                maxDate={new Date(Date.now())}
+                            />
+                            <Form.Control.Feedback type="invalid">
+                                Data urodzenia jest wymagana.
+                            </Form.Control.Feedback>
+                        </Form.Group>
+                        <Form.Group as={Col} xs={12} md={6} controlId="phoneNumber">
+                            <Form.Label>
+                                Numer telefonu:
+                            </Form.Label>
+                            <Form.Control
+                                name="phoneNumber"
+                                type="text"
+                                required
+                                minLength="1"
+                                maxLength="12"
+                                defaultValue={data.phoneNumber}
+                                placeholder="+48123456789"
+                                onChange={this.onChange}
+                            />
+                            <Form.Control.Feedback type="invalid">
+                                Numer telefonu jest wymagany.
+                            </Form.Control.Feedback>
+                        </Form.Group>
+                    </Row>
+                    <Row>
+                        <Form.Group as={Col} xs={12} md={6} controlId="email">
+                            <Form.Label>
+                                Adres email:
+                            </Form.Label>
+                            <Form.Control
+                                name="email"
+                                type="email"
+                                required
+                                minLength="1"
+                                maxLength="254"
+                                defaultValue={data.email}
+                                placeholder="example@domain.com"
+                                onChange={this.onChange}
+                            />
+                            <Form.Control.Feedback type="invalid">
+                                Adres email jest wymagany.
+                            </Form.Control.Feedback>
+                        </Form.Group>
+                    </Row>
+                </Form>
             </CVEditorTab>
         )
     }

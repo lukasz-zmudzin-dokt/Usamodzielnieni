@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CVSection should match snapshot 1`] = `
+<div>
+  <div
+    class="list-group-item"
+  >
+    <div
+      class="d-flex align-items-center row"
+    >
+      <div
+        class="col-md-5 col-12"
+      />
+      <div
+        class="col-md-3 col-4"
+      >
+        Oczekuje na weryfikację
+      </div>
+      <div
+        class="text-right col-md-4 col-8"
+      >
+        <button
+          class="btn btn-primary"
+          type="button"
+        >
+          Zobacz CV
+        </button>
+        <a
+          class="mx-2 btn btn-info"
+          href="/cvEditor/0"
+        >
+          Edytuj
+        </a>
+        <button
+          class="btn btn-danger"
+          type="button"
+        >
+          Usuń CV
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+`;

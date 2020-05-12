@@ -8,14 +8,14 @@ const mapPersonalData = (personalData) => ({
     email: personalData.email
 })
 const mapEducation = (education) => education.map(edu => ({
-    year_start: edu.startTime.getFullYear(),
-    year_end: edu.endTime ? edu.endTime.getFullYear() : undefined,
+    year_start: edu.startTime?.getFullYear(),
+    year_end: edu.endTime?.getFullYear(),
     name: edu.place,
     additional_info: edu.description
 }))
 const mapWorkExperience = (workExperience) => workExperience.map(exp => ({
-    year_start: exp.startTime.getFullYear(),
-    year_end: exp.endTime ? exp.endTime.getFullYear() : undefined,
+    year_start: exp.startTime?.getFullYear(),
+    year_end: exp.endTime?.getFullYear(),
     title: exp.place,
     description: exp.description
 }))
@@ -32,6 +32,5 @@ export const createCVObject = (personalData, education, workExperience, skills, 
     schools: mapEducation(education),
     experiences: mapWorkExperience(workExperience),
     skills: mapSkills(skills),
-    languages: mapLanguages(languages),
-    "wants_verification": true
+    languages: mapLanguages(languages)
 })

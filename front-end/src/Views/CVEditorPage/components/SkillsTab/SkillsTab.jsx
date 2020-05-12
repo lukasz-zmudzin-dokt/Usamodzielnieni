@@ -39,16 +39,22 @@ class SkillsTab extends React.Component {
             >
                 <ItemsList
                     getItemId={this.getSkillId} getItemName={this.getSkillName} getItem={this.getSkill}
-                    data={this.props.data} onChange={this.props.onChange} clear={this.clear}
+                    data={this.props.data} onChange={this.props.onChange} clear={this.clear} validated={this.props.validated} required
                 >
                     <Form.Group controlId="skillName">
-                        <Form.Label>Umiejętność</Form.Label>
+                        <Form.Label>Umiejętność:</Form.Label>
                         <Form.Control
                             type="text"
                             placeholder="Wpisz umiejętność"
                             value={this.state.newSkill.name}
                             onChange={this.onNameChange}
+                            required
+                            minLength="1"
+                            maxLength="50"
                         />
+                        <Form.Control.Feedback type="invalid">
+                            Pole jest wymagane. 
+                        </Form.Control.Feedback>
                     </Form.Group>
                 </ItemsList>
             </CVEditorTab>

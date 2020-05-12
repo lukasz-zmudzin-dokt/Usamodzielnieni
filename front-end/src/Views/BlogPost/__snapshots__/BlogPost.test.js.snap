@@ -1,0 +1,182 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BlogPost should match snapshot after loaded 1`] = `
+<div>
+  <div
+    class="blogpost_container container"
+  >
+    <div
+      class="card"
+    >
+      <img
+        class="card-img-top"
+        src="https://usamo-back.herokuapp.comundefined"
+      />
+      <div
+        class="post_content mx-4 card-body"
+      >
+        <h1
+          class="post_title card-title"
+        >
+          <div
+            class="row"
+          >
+            <div
+              class="btn_toolbar text-center btn-toolbar"
+              role="toolbar"
+            >
+              <button
+                class="button-edit mx-3 btn btn-warning"
+                type="button"
+              >
+                Edytuj 🖉
+              </button>
+              <button
+                class="button-delete mx-3 btn btn-danger"
+                type="button"
+              >
+                Usuń ✗
+              </button>
+            </div>
+          </div>
+        </h1>
+        <h6
+          class="text-muted mb-4 mt-2 card-subtitle"
+        >
+          Kategoria: 
+          qwe
+        </h6>
+        <p
+          class="blog_content_text text-justify card-text"
+        >
+          <div>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin nibh augue, suscipit a, scelerisque sed, lacinia in, mi. Cras vel lorem. Etiam pellentesque aliquet tellus. Phasellus pharetra nulla ac diam. Quisque semper justo at risus. Donec venenatis, turpis vel hendrerit interdum, dui ligula ultricies purus, sed posuere libero dui id orci. Nam congue, pede vitae dapibus aliquet, elit magna vulputate arcu, vel tempus metus leo non est. Etiam sit amet lectus quis est congue mollis. Phasellus congue lacus eget neque. Phasellus ornare, ante vitae consectetuer consequat, purus sapien ultricies dolor, et mollis pede metus eget nisi. Praesent sodales velit quis augue. Cras suscipit, urna at aliquam rhoncus, urna quam viverra nisi, in interdum massa nibh nec erat.
+            </p>
+          </div>
+        </p>
+        <p
+          class="post_taglist mt-5"
+        >
+          <em>
+            tagi: 
+            <span
+              class="mx-1 badge badge-info"
+            >
+              tag1
+            </span>
+            <span
+              class="mx-1 badge badge-info"
+            >
+              tag2
+            </span>
+            <span
+              class="mx-1 badge badge-info"
+            >
+              tag3
+            </span>
+          </em>
+        </p>
+      </div>
+      <div
+        class="blogpost_summary card-footer"
+      >
+        <div
+          class="row"
+        >
+          <div
+            class="mx-3 col"
+          >
+            <div
+              class="row"
+            >
+              Autor: Jan Kowalski (jan@kowalski.pl)
+            </div>
+            <div
+              class="row"
+            >
+              Opublikowano: 06.07.2019
+            </div>
+          </div>
+          <div
+            class="post_comment_counter"
+          >
+            <div
+              class="text-right mx-3 row"
+            >
+              Liczba komentarzy: 
+              1
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="blogpost_comment_card card"
+    >
+      <div
+        class="card-body"
+      >
+        <div>
+          <h4>
+            Komentarze
+          </h4>
+          <div
+            class="commentItem"
+          >
+            <h5
+              class="commentItem__header"
+            >
+              Jan Nowak
+            </h5>
+            <small
+              class="commentItem__date"
+            >
+              dodano: 
+              Invalid Date
+            </small>
+            <p
+              class="commentItem__content"
+            />
+          </div>
+        </div>
+        <div>
+          <h5>
+            Dodaj komentarz
+          </h5>
+          <form
+            class=""
+            novalidate=""
+          >
+            <div
+              class="form-group"
+            >
+              <textarea
+                class="form-control"
+                id="commentContent"
+                placeholder="Treść komentarza"
+                required=""
+              />
+              <div
+                class="invalid-feedback"
+              >
+                Wprowadź treść komentarza.
+              </div>
+            </div>
+            <div
+              class="CommentForm__submitGroup mb-0 form-group"
+            >
+              <button
+                class="btn btn-primary"
+                type="submit"
+              >
+                Prześlij
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

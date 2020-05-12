@@ -1,13 +1,15 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Container, Card, Alert, Row } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
-import "./style.css";
 import { UserContext } from "context";
 import { DetailsItem } from 'components';
-import { AddCvForm } from "./_components";
+import { AddCvForm, RemoveOffer } from "./_components";
+import { staffTypes } from "constants/staffTypes";
+import proxy from "config/api";
+import {addressToString} from "utils/converters";
 
 const getOfferDetails = async (id, token) => {
-  let url = `https://usamo-back.herokuapp.com/job/job-offer/${id}`;
+  let url = `${proxy.job}job-offer/${id}`;
   const headers = {
     Authorization: "Token " + token,
     "Content-Type": "application/json"
@@ -28,11 +30,12 @@ const mapOffer = (offer) => ({
   category: offer.category,
   type: offer.type,
   companyName: offer.company_name,
-  companyAddress: offer.company_address,
+  companyAddress: `ul. ${offer.company_address.street} ${offer.company_address.street_number}, ${offer.company_address.postal_code} ${offer.company_address.city}`,
   voivodeship: offer.voivodeship,
   expirationDate: offer.expiration_date,
   description: offer.description
 })
+
 
 const JobOfferDetails = props => {
   const [offer, setOffer] = useState({});
@@ -61,7 +64,7 @@ const JobOfferDetails = props => {
   );
 
   const msg = isOfferLoading ? <Alert variant="info">Ładowanie oferty...</Alert> :
-              error && <Alert variant="danger">Wystąpił błąd podczas ładowania oferty.</Alert>
+              error && <Alert variant="danger">Wystąpił błąd podczas ładowania oferty.</Alert>;
 
   return (
     <Container className="jobOfferDetails">
@@ -73,7 +76,7 @@ const JobOfferDetails = props => {
             <h3>{offer.title}</h3>
             <Row>
               <DetailsItem md="6" xl="4" label="Nazwa firmy">{offer.companyName}</DetailsItem>
-              <DetailsItem md="6" xl="4" label="Adres firmy">{offer.companyAddress}</DetailsItem>
+              <DetailsItem md="6" xl="4" label="Adres firmy">{addressToString(offer.companyAddress)}</DetailsItem>
               <DetailsItem md="6" xl="4" label="Lokalizacja">{offer.voivodeship}</DetailsItem>
               <DetailsItem md="6" xl="4" label="Ważne do">{offer.expirationDate}</DetailsItem>
               <DetailsItem md="6" xl="4" label="Branża">{offer.category}</DetailsItem>
@@ -82,11 +85,12 @@ const JobOfferDetails = props => {
             <p>{offer.description}</p>
           </div>
         )}
-        { user.type === 'Standard' && <AddCvForm id={props.match.params.id} user={user}/> }
+        { user.type === 'Standard' && user.data?.status === 'Verified' && <AddCvForm id={props.match.params.id} user={user} /> }
+        { user.type === 'Staff' && user.data?.group_type.includes(staffTypes.JOBS) && <RemoveOffer id={props.match.params.id} user={user} /> }
       </Card.Body>
       </Card>
     </Container>
   )
-}
+};
 
 export default withRouter(JobOfferDetails);

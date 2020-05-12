@@ -1,0 +1,61 @@
+.navbar,
+.navbar_menu {
+  background-color: #7345a9 !important;
+}
+
+.navbar_logo {
+  max-width: 200px;
+  max-height: 100px;
+}
+
+.menuOptions {
+  width: 1000px;
+}
+.menu_action_button_0 {
+  margin-right: 1vw;
+}
+
+.menu_action_button_1 {
+  min-width: 6vw;
+  margin-right: 1vw;
+}
+
+.menu_action_button_2 {
+  min-width: 6vw;
+  margin-left: 1vw;
+}
+
+.menu_action_button_3 {
+  min-width: 6vw;
+}
+
+.charity_logo {
+  max-height: 200px;
+  max-width: 250px;
+  display: inline-block;
+}
+
+.charity_logo:hover {
+  background-color: rgba(255, 255, 255, 0.5);
+  filter: brightness(150%);
+  box-shadow: 0 0 10px 10px rgba(255, 255, 255, 0.5);
+  opacity: 0.5;
+}
+
+.contactPhones {
+  color: white;
+}
+
+.nav_buttons {
+  text-align: right;
+}
+
+.action_buttons {
+  text-align: center;
+}
+
+@media (max-width: 1385px) {
+  .menu_action_button {
+    min-width: 6vw;
+  }
+}

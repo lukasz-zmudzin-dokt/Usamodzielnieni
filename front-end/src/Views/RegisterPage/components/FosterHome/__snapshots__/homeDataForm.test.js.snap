@@ -19,6 +19,8 @@ exports[`HomeDataForm should render correctly 1`] = `
         <input
           class="form-control"
           id="formGroupNameOfPlace"
+          maxlength="60"
+          minlength="1"
           name="name_of_place"
           placeholder="Nazwa placówki"
           required=""
@@ -36,6 +38,8 @@ exports[`HomeDataForm should render correctly 1`] = `
         <input
           class="form-control"
           id="formGroupStreet"
+          maxlength="120"
+          minlength="1"
           name="street"
           placeholder="Ulica"
           required=""
@@ -52,7 +56,29 @@ exports[`HomeDataForm should render correctly 1`] = `
       >
         <input
           class="form-control"
+          id="formGroupNumbah"
+          maxlength="20"
+          minlength="1"
+          name="number"
+          pattern="^([0-9]{1})[\\\\s\\\\S]*"
+          placeholder="Numer budynku"
+          required=""
+          type="text"
+        />
+        <div
+          class="invalid-feedback"
+        >
+          Podaj numer budynku, przy którym znajduje się placówka
+        </div>
+      </div>
+      <div
+        class="form-group"
+      >
+        <input
+          class="form-control"
           id="formGroupCity"
+          maxlength="40"
+          minlength="1"
           name="city"
           placeholder="Nazwa miasta"
           required=""
@@ -70,7 +96,10 @@ exports[`HomeDataForm should render correctly 1`] = `
         <input
           class="form-control"
           id="formGroupCityCode"
+          maxlength="6"
+          minlength="1"
           name="city_code"
+          pattern="[0-9]{2}[-][0-9]{3}"
           placeholder="Kod pocztowy"
           required=""
           type="text"
@@ -78,7 +107,7 @@ exports[`HomeDataForm should render correctly 1`] = `
         <div
           class="invalid-feedback"
         >
-          Podaj kod pocztowy
+          Podaj kod pocztowy w formacie 00-000
         </div>
       </div>
     </div>

@@ -2,13 +2,23 @@ import React from "react";
 import { render, waitForElement } from "@testing-library/react";
 import JobOfferDetails from "./JobOfferDetails";
 import { MemoryRouter } from 'react-router-dom';
+import { UserContext } from "context/UserContext";
 
-jest.mock('./_components', () => ({ AddCvForm: (props) => (<div></div>) }));
+jest.mock('./_components', () => ({ 
+    AddCvForm: () => <div>AddCvForm</div>,
+    RemoveOffer: () => <div>RemoveOffer</div>,
+}));
+jest.mock('constants/staffTypes', () => ({
+    staffTypes: {
+        JOBS: 'jobs'
+    }
+}));
 
 describe('JobOfferDetails', () => {
     let offer;
     let apiStatus;
     let match;
+    let user;
 
     beforeAll(() => {
         match = { params: { id: "123" }};
@@ -27,26 +37,36 @@ describe('JobOfferDetails', () => {
                 }
             });
         });
-    })
+    });
+
     beforeEach(() => {
         apiStatus = 200;
         offer = {
             id: '123',
             offer_name: 'Jakaś nazwa oferty',
             company_name: 'Jakaś nazwa firmy',
-            company_address: 'Jakiś adres',
+            company_address: { street: "def", street_number: "1", city: "abc", postal_code: "00-000" },
             voivodeship: 'Jakieś województwo',
             expiration_date: '2020-12-12',
             description: 'Jakiś baaaaaaaaaaaaaaaaaardzo dłuuuuuuuuuuuuuuugi opis oferty pracy\n123 asdasd'
         };
+        user = {
+            type: 'Standard',
+            token: '123',
+            data: {
+                status: 'Verified'
+            }
+        }
         jest.clearAllMocks();
     });
 
     it('should render without crashing', async () => {
         const { container, getByText } = render(
-            <MemoryRouter>
-                <JobOfferDetails match={match}/>
-            </MemoryRouter>
+            <UserContext.Provider value={user}>
+                <MemoryRouter>
+                    <JobOfferDetails match={match}/>
+                </MemoryRouter>
+            </UserContext.Provider>
         );
 
         await waitForElement(() => getByText('Jakaś nazwa oferty'));
@@ -77,5 +97,51 @@ describe('JobOfferDetails', () => {
         await waitForElement(() => getByText('Wystąpił błąd', { exact: false }));
         expect(getByText('Wystąpił błąd', { exact: false })).toBeInTheDocument();
         expect(queryByText('Jakaś nazwa oferty')).not.toBeInTheDocument();
+    });
+
+    it('should render RemoveOffer component when staff user group is jobs', async () => {
+        user.type = 'Staff';
+        user.data.group_type = 'jobs';
+
+        const { getByText, queryByText } = render(
+            <UserContext.Provider value={user}>
+                <MemoryRouter>
+                    <JobOfferDetails match={match}/>
+                </MemoryRouter>
+            </UserContext.Provider>
+        );
+
+        await waitForElement(() => getByText('Jakaś nazwa oferty'));
+        expect(queryByText('AddCvForm')).not.toBeInTheDocument();
+        expect(getByText('RemoveOffer')).toBeInTheDocument();
+    });
+
+    it('should render AddCvForm component when standard user is verified', async () => {
+        const { getByText, queryByText } = render(
+            <UserContext.Provider value={user}>
+                <MemoryRouter>
+                    <JobOfferDetails match={match}/>
+                </MemoryRouter>
+            </UserContext.Provider>
+        );
+
+        await waitForElement(() => getByText('Jakaś nazwa oferty'));
+        expect(queryByText('RemoveOffer')).not.toBeInTheDocument();
+        expect(getByText('AddCvForm')).toBeInTheDocument();
+    });
+
+    it('should not render AddCvForm and RemoveOffer component when user is not verified and is not a jobs staff', async () => {
+        user.data.status = 'Unverified'
+        const { getByText, queryByText } = render(
+            <UserContext.Provider value={user}>
+                <MemoryRouter>
+                    <JobOfferDetails match={match}/>
+                </MemoryRouter>
+            </UserContext.Provider>
+        );
+
+        await waitForElement(() => getByText('Jakaś nazwa oferty'));
+        expect(queryByText('RemoveOffer')).not.toBeInTheDocument();
+        expect(queryByText('AddCvForm')).not.toBeInTheDocument();
     });
 });

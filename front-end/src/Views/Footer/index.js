@@ -4,8 +4,6 @@ import FbIcon from "../../assets/facebook-128.ico";
 import LinkedInIcon from "../../assets/linkedin-128.ico";
 import YouTubeIcon from "../../assets/youtube-128.ico";
 
-import "Views/Footer/style.css";
-
 class Footer extends React.Component {
 
     render() {

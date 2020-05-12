@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserProperty  should render correctly 1`] = `
+<div>
+  <div
+    class="property list-group-item"
+  >
+    <div
+      class="row"
+    >
+      <div
+        class="col-sm-auto col-12"
+      >
+        <div
+          class="property__title"
+        >
+          :
+        </div>
+      </div>
+      <div
+        class="col"
+      />
+    </div>
+  </div>
+</div>
+`;

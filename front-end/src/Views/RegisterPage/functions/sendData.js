@@ -1,3 +1,5 @@
+import {staffTypes} from "constants/staffTypes";
+import proxy from "config/api";
 
 const adjustObject = (account_type, home, company)  => {
     let source;
@@ -6,38 +8,53 @@ const adjustObject = (account_type, home, company)  => {
             source = home;
             return({
                 facility_name: source.name_of_place,
-                facility_address: `${source.city} ${source.street} ${source.city_code}`
+                facility_address: {
+                    city: source.city,
+                    street: source.street,
+                    street_number: source.number,
+                    postal_code: source.city_code
+                }
             })}
         case "Pracodawcą": {
             source = company;
             return({
                 company_name: source.name_of_place,
-                company_address: `${source.city} ${source.street} ${source.city_code}`,
+                company_address: {
+                    city: source.city,
+                    street: source.street,
+                    street_number: source.number,
+                    postal_code: source.city_code
+                },
                 nip: source.company_nip
             })}
-        case "Administratorem": {return({
-
-        })}
-        default: {
-
-        }
+        default:
+            return {group_type: account_type};
     }
 };
 
+const checkIfArrayIncludes = (src, target) => {
+    for (let i = 0; i < src.length; i++) {
+        if (target.includes(src[i])) {
+            return true;
+        }
+    }
+    return false;
+};
 
-export const sendData = async (source) => {
+
+export const sendData = async (token, source) => {
     const account_type = source.account_type;
     let url;
-    switch (account_type) {
-        case "Podopiecznym":
-            url = "https://usamo-back.herokuapp.com/account/register/";
-            break;
-        case "Pracodawcą":
-            url = "https://usamo-back.herokuapp.com/account/register/employer/";
-            break;
-        case "Administratorem":
-            url = "https://usamo-back.herokuapp.com/account/register/staff/";
-            break;
+    const staff_types = Object.values(staffTypes);
+    let wants_data = true;
+    if (account_type === "Podopiecznym") {
+        url = proxy.account + "register/";
+    } else if (account_type === "Pracodawcą") {
+        url = proxy.account + "register/employer/";
+    } else if (checkIfArrayIncludes(account_type, staff_types)) {
+        url = proxy.account + "register/staff/";
+    } else {
+        throw new Error();
     }
 
     const object = {
@@ -45,24 +62,42 @@ export const sendData = async (source) => {
         ...source.accountData,
         ...adjustObject(account_type, source.homeData, source.companyData)
     };
-
+    const header = token !== undefined ? {
+        "Authorization": "Token " + token,
+        "Content-Type": "application/json",
+        Origin: null
+    } : {
+        "Content-Type": "application/json",
+        Origin: null
+    }
     const res = await fetch(url, {
         method: "POST",
         body: JSON.stringify(object),
-        headers: {
-            "Content-Type": "application/json",
-            Origin: null
-        }
+        headers: header
     });
-
     if (res.status === 201) {
         const data = await res.json().then(data => mapData(data));
+        let response = {data: {}};
+        if (wants_data) {
+            const dataRes = await fetch(proxy.account + "data", {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "Token " + data.token
+                }
+            });
+            if (dataRes.status === 200) {
+                response = await dataRes.json();
+            } else {
+                throw dataRes.status;
+            }
+        }
         return {
             status: res.status,
-            ...data
+            ...data,
+            data: response.data
         }
     } else {
-        throw {status: res.status}
+        throw res.status;
     }
 };
 

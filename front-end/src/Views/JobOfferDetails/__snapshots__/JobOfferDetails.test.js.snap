@@ -48,7 +48,7 @@ exports[`JobOfferDetails should render without crashing 1`] = `
               <div
                 class="detailsItem__value"
               >
-                Jakiś adres
+                ul. def 1, 00-000 abc
               </div>
             </div>
             <div
@@ -108,6 +108,9 @@ exports[`JobOfferDetails should render without crashing 1`] = `
             Jakiś baaaaaaaaaaaaaaaaaardzo dłuuuuuuuuuuuuuuugi opis oferty pracy
 123 asdasd
           </p>
+        </div>
+        <div>
+          AddCvForm
         </div>
       </div>
     </div>

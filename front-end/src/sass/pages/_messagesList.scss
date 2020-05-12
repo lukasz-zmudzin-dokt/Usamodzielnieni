@@ -1,0 +1,63 @@
+.card.messagesList__card {
+  height: calc(100vh - 94px);
+}
+
+.container.messagesList {
+  height: calc(100vh - 94px);
+}
+
+.card-body.messagesList__body {
+  position: relative;
+  padding: 0 1.25rem 1.25rem 1.25rem;
+}
+
+.list-group.messagesList__list {
+  overflow: auto;
+  height: 100%;
+}
+
+.list-group.messagesList__list::-webkit-scrollbar {
+  display: none;
+}
+
+.list-group-item.messagesList__item {
+  max-width: 80%;
+  border-radius: 1rem !important;
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  text-align: justify;
+}
+
+.messagesList__item--left {
+  align-self: flex-start;
+}
+
+.messagesList__item--right {
+  align-self: flex-end;
+}
+
+.btn.messagesList__close {
+  position: absolute;
+  left: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.card-header.messagesList__header {
+  position: relative;
+  padding: 0.75rem 40px;
+}
+
+@media (min-width: 768px) {
+  .list-group-item.messagesList__item {
+    max-width: 60%;
+  }
+  .container.messagesList {
+    height: calc(100vh - 56px);
+  }
+
+  .card.messagesList__card {
+    height: calc(100vh - 56px);
+  }
+}

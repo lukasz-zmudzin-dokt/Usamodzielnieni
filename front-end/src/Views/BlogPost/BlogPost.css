@@ -1,0 +1,15 @@
+.blogpost_comment_card {
+    margin-top: 1rem;
+}
+
+@media (max-width: 768px){
+    .blogpost_container {
+        width: 100%;
+    }
+}
+
+@media (orientation: landscape) {
+    .blogpost_container {
+        width: 50vw;
+    }
+}
