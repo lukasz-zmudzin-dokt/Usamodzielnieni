@@ -26,7 +26,6 @@ const ChatForm = ({sendMessage}) => {
                     value={message}
                     onChange={e => setMessage(e.target.value)}
                     onKeyDown={e => keyPressed(e)}
-                    resize="none"
                     as="textarea"
                     placeholder="Aa"
                 />

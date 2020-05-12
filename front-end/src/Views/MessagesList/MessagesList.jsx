@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import { ListGroup, Container, Card, Button } from "react-bootstrap";
 import MessageItem from "./components/MessageItem";
+import { ChatForm } from "./components";
 import proxy from "config/api";
 import { UserContext } from "context";
 import { useParams, useHistory } from "react-router-dom";
 import { UserPicture } from "components";
-import {ChatForm} from "components";
+import {sendMessage} from "./functions/apiCalls";
 
 const getMessages = async (token, id) => {
   const headers = {
@@ -125,6 +126,7 @@ const MessagesList = () => {
           </ListGroup>
         </Card.Body>
         <ChatForm sendMessage={msg => console.log(msg)}/>
+        {/*<ChatForm sendMessage={msg => sendMessage(user.token, id, msg)}/>*/}
       </Card>
       
     </Container>

@@ -1,1 +1,7 @@
-export { default as MessageItem } from "./MessageItem";
+import ChatForm from "./ChatForm";
+import MessageItem from "./MessageItem";
+
+export { 
+    ChatForm,
+    MessageItem
+};
