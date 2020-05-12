@@ -7,10 +7,10 @@ exports[`CVRender should match snapshot 1`] = `
   >
     <div />
     <div
-      class="mr-0 ml-0 mt-3 justify-content-center row"
+      class="m-0 justify-content-center row"
     >
       <a
-        href="https://usamo-back.herokuapp.comundefined"
+        href="https://usamo-back.herokuapp.com/abc"
         rel="noopener noreferrer"
         target="_blank"
       >

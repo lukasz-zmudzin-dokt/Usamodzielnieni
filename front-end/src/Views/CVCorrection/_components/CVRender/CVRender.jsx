@@ -4,14 +4,7 @@ import proxy from "config/api";
 import { Alert, Row } from "react-bootstrap";
 import { PaginationCV } from "Views/CVCorrection/_components";
 
-// const asyncPDFJS = async () => {
-//   const pdfjsWorker = await import("pdfjs-dist/build/pdf.worker.entry");
-//   return pdfjsWorker;
-// };
-
-// const pdfjsWorker = asyncPDFJS();
-
-pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
+pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.js';
 
 const CVRender = ({ url }) => {
   const [pages, setPages] = useState(1);
@@ -19,7 +12,7 @@ const CVRender = ({ url }) => {
 
   const file = useMemo(() => ({ url: `${proxy.plain}${url}` }), [url]);
 
-  return (
+  return url && (
     <div className="cvCorrection__pdfContainer">
       <Document
         className="CVCorrection__pdf"
@@ -36,7 +29,7 @@ const CVRender = ({ url }) => {
         />
       </Document>
       {url !== "" ? (
-        <Row className="mr-0 ml-0 mt-3 justify-content-center">
+        <Row className="m-0 justify-content-center">
           <a
             href={`${proxy.plain}${url}`}
             target="_blank"
