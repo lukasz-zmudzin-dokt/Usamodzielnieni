@@ -31,7 +31,7 @@ exports[`OfferApproval should match snapshot 1`] = `
               class="collapse"
             >
               <div
-                class="card-body"
+                class="p-0 card-body"
               >
                 <div
                   class="list-group list-group-flush"
@@ -191,7 +191,7 @@ exports[`OfferApproval should match snapshot 1`] = `
               class="collapse"
             >
               <div
-                class="card-body"
+                class="p-0 card-body"
               >
                 <div
                   class="list-group list-group-flush"

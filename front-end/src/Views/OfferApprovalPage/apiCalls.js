@@ -34,16 +34,12 @@ export const setOfferApproved = async (token, offerId) => {
 };
 
 export const setOfferRejected = async (token, offerId) => {
-    let url = proxy.job + "admin/reject/" + offerId + "/";
+    let url = proxy.job + "job-offer/" + offerId + "/";
     const headers = {
         "Authorization": "token " + token,
         "Content-Type": "application/json"
     };
-    const data = {
-        confirmed: false
-    };
-
-    const response = await fetch(url, { method: "POST", headers, body: JSON.stringify(data) });
+    const response = await fetch(url, { method: "DELETE", headers });
     if(response.status === 200) {
         return await response.json();
     } else {

@@ -29,7 +29,7 @@ const OfferPosition = ({ offer }) => {
         e.preventDefault();
         try {
             let res = await setOfferRejected(context.token, offer.id);
-            if(res.message === "Ustawiono potwierdzenie oferty pracy") {
+            if(res.message === "Offer removed successfully") {
                 setRejected(true);
             } else {
                 setError(true);
@@ -49,7 +49,7 @@ const OfferPosition = ({ offer }) => {
 
     return (
         message ? message : (
-            <Card.Body>
+            <Card.Body className="p-0">
                 <ListGroup variant="flush">
                     <ListGroup.Item>
                         <Row>

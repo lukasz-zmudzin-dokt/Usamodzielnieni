@@ -3,7 +3,7 @@
 exports[`OfferPosition should match snapshot 1`] = `
 <div>
   <div
-    class="card-body"
+    class="p-0 card-body"
   >
     <div
       class="list-group list-group-flush"

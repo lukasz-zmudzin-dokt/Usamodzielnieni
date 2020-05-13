@@ -26,8 +26,11 @@ describe('OfferPosition', () => {
         global.fetch = jest.fn().mockImplementation(() => {
             return new Promise((resolve, reject) => {
                 switch (fetchType) {
-                    case "ok":
+                    case "approveOk":
                         resolve({ status: 200, json: () => Promise.resolve({ message: "Ustawiono potwierdzenie oferty pracy"}) });
+                        break;
+                    case "rejectOk":
+                        resolve({ status: 200, json: () => Promise.resolve({ message: "Offer removed successfully"}) });
                         break;
                     case "odd":
                         resolve({ status: 200, json: () => Promise.resolve({ message: "Suma podstawy równa się kwadratowi obu ramion"}) });
@@ -58,7 +61,7 @@ describe('OfferPosition', () => {
     });
 
     it('should approve offer', async () => {
-        fetchType = "ok";
+        fetchType = "approveOk";
         const { getByText } = render (
             <MemoryRouter>
                 <OfferPosition offer={offer} />
@@ -108,7 +111,7 @@ describe('OfferPosition', () => {
     });
 
     it('should reject offer', async () => {
-        fetchType = "ok";
+        fetchType = "rejectOk";
         const { getByText } = render (
             <MemoryRouter>
                 <OfferPosition offer={offer} />
@@ -117,14 +120,13 @@ describe('OfferPosition', () => {
         await waitForElement(() => getByText("Odrzuć"));
         fireEvent.click(getByText("Odrzuć"));
         await expect(fetch).toHaveBeenCalledWith(
-            "https://usamo-back.herokuapp.com/job/admin/reject/sadgergerfwefwe/",
+            "https://usamo-back.herokuapp.com/job/job-offer/sadgergerfwefwe/",
             {
-                "body": "{\"confirmed\":false}",
                 headers: {
                     Authorization: "token undefined",
                     "Content-Type": "application/json",
                 },
-                method: "POST",
+                method: "DELETE",
             }
         );
         await waitForElement(() => getByText("Oferta odrzucona pomyślnie."));
