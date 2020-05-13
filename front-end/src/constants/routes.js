@@ -18,6 +18,7 @@ import {
   UserApprovalPage,
   MessagesList,
   Chats,
+  UserList
 } from "Views";
 import { userTypes } from "./userTypes";
 import { staffTypes } from "./staffTypes";
@@ -178,4 +179,12 @@ export default [
     exact: true,
     userVerified: true,
   },
+  {
+    path: paths.USER_LIST,
+    component: UserList,
+    isPrivate: true,
+    type: userTypes.STAFF,
+    exact: true,
+    userVerified: true
+  }
 ];

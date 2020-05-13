@@ -1,3 +1,5 @@
-const Filters = ({setFilters, disabled}) => {
+const Filters = ({setFilters}) => {
 
 };
+
+export default Filters;

@@ -20,6 +20,7 @@ const paths = {
     MY_CVS: "/myCVs",
     USER_APPROVAL: "/userApproval",
     CHATS: '/chats',
-    CHAT_DETAILS: "/chats/:id"
+    CHAT_DETAILS: "/chats/:id",
+    USER_LIST: "/userList"
 };
 export { paths };
