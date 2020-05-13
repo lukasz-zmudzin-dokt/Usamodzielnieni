@@ -8,6 +8,7 @@ const proxy = {
   blog: domain + "/blog/",
   notifications: domain + "/notifications/",
   chat: domain + "/chat/",
+  steps: domain + "/steps/"
 };
 
 export default proxy;
