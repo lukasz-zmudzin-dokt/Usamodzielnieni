@@ -1,3 +1,3 @@
-import CVApprovalPage from './CVApprovalPage';
+import CVApprovalPage from "./CVApprovalPage";
 
 export default CVApprovalPage;
