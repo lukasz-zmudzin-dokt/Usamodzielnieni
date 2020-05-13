@@ -21,8 +21,11 @@ export const setOfferApproved = async (token, offerId) => {
         "Authorization": "token " + token,
         "Content-Type": "application/json"
     };
+    const data = {
+        confirmed: true
+    };
 
-    const response = await fetch(url, { method: "POST", headers });
+    const response = await fetch(url, { method: "POST", headers, body: JSON.stringify(data) });
     if(response.status === 200) {
         return await response.json();
     } else {
@@ -36,8 +39,11 @@ export const setOfferRejected = async (token, offerId) => {
         "Authorization": "token " + token,
         "Content-Type": "application/json"
     };
+    const data = {
+        confirmed: false
+    };
 
-    const response = await fetch(url, { method: "POST", headers });
+    const response = await fetch(url, { method: "POST", headers, body: JSON.stringify(data) });
     if(response.status === 200) {
         return await response.json();
     } else {

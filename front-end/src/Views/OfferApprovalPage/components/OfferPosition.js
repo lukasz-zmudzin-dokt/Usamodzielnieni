@@ -15,7 +15,7 @@ const OfferPosition = ({ offer }) => {
         e.preventDefault();
         try {
             let res = await setOfferApproved(context.token, offer.id);
-            if(res === "Ustawiono potwierdzenie oferty pracy") {
+            if(res.message === "Ustawiono potwierdzenie oferty pracy") {
                 setApproved(true);
             } else {
                 setError(true);
@@ -29,7 +29,7 @@ const OfferPosition = ({ offer }) => {
         e.preventDefault();
         try {
             let res = await setOfferRejected(context.token, offer.id);
-            if(res === "Ustawiono odrzucenie oferty pracy") {
+            if(res.message === "Ustawiono potwierdzenie oferty pracy") {
                 setRejected(true);
             } else {
                 setError(true);
@@ -69,8 +69,8 @@ const OfferPosition = ({ offer }) => {
                     </ListGroup.Item>
                     <ListGroup.Item>
                         <Row className="justify-content-center">
-                            <Button onClick={e => approveOffer(e, offer.id)} variant="primary">Akceptuj</Button>
-                            <Button onClick={e => rejectOffer(e, offer.id)} variant="danger" className="ml-3">Odrzuć</Button>
+                            <Button onClick={e => approveOffer(e)} variant="primary">Akceptuj</Button>
+                            <Button onClick={e => rejectOffer(e)} variant="danger" className="ml-3">Odrzuć</Button>
                         </Row>
                     </ListGroup.Item>
                 </ListGroup>

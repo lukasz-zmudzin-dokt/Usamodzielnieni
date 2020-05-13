@@ -26,14 +26,11 @@ describe('OfferPosition', () => {
         global.fetch = jest.fn().mockImplementation(() => {
             return new Promise((resolve, reject) => {
                 switch (fetchType) {
-                    case "approveOk":
-                        resolve({ status: 200, json: () => Promise.resolve("Ustawiono potwierdzenie oferty pracy") });
-                        break;
-                    case "rejectOk":
-                        resolve({ status: 200, json: () => Promise.resolve("Ustawiono odrzucenie oferty pracy") });
+                    case "ok":
+                        resolve({ status: 200, json: () => Promise.resolve({ message: "Ustawiono potwierdzenie oferty pracy"}) });
                         break;
                     case "odd":
-                        resolve({ status: 200, json: () => Promise.resolve("Suma podstawy równa się kwadratowi obu ramion") });
+                        resolve({ status: 200, json: () => Promise.resolve({ message: "Suma podstawy równa się kwadratowi obu ramion"}) });
                         break;
                     case "fail":
                         resolve({ status: 500 });
@@ -61,7 +58,7 @@ describe('OfferPosition', () => {
     });
 
     it('should approve offer', async () => {
-        fetchType = "approveOk";
+        fetchType = "ok";
         const { getByText } = render (
             <MemoryRouter>
                 <OfferPosition offer={offer} />
@@ -72,6 +69,7 @@ describe('OfferPosition', () => {
         await expect(fetch).toHaveBeenCalledWith(
             "https://usamo-back.herokuapp.com/job/admin/confirm/sadgergerfwefwe/",
             {
+                "body": "{\"confirmed\":true}",
                 headers: {
                     Authorization: "token undefined",
                     "Content-Type": "application/json",
@@ -110,7 +108,7 @@ describe('OfferPosition', () => {
     });
 
     it('should reject offer', async () => {
-        fetchType = "rejectOk";
+        fetchType = "ok";
         const { getByText } = render (
             <MemoryRouter>
                 <OfferPosition offer={offer} />
@@ -121,6 +119,7 @@ describe('OfferPosition', () => {
         await expect(fetch).toHaveBeenCalledWith(
             "https://usamo-back.herokuapp.com/job/admin/reject/sadgergerfwefwe/",
             {
+                "body": "{\"confirmed\":false}",
                 headers: {
                     Authorization: "token undefined",
                     "Content-Type": "application/json",
