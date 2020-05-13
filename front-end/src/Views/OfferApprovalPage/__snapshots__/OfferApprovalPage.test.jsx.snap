@@ -1,0 +1,347 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`OfferApproval should match snapshot 1`] = `
+<div>
+  <div
+    class="container"
+  >
+    <div
+      class="card"
+    >
+      <h2
+        class="card-header"
+      >
+        Oferty pracy do zatwierdzenia
+      </h2>
+      <div
+        class="p-0 card-body"
+      >
+        <div
+          class="accordion"
+        >
+          <div
+            class="border-left-0 border-right-0 border-bottom-0 card"
+          >
+            <div
+              class="card-header"
+            >
+              Administrator funpage'a
+            </div>
+            <div
+              class="collapse"
+            >
+              <div
+                class="card-body"
+              >
+                <div
+                  class="list-group list-group-flush"
+                >
+                  <div
+                    class="list-group-item"
+                  >
+                    <div
+                      class="row"
+                    >
+                      <div
+                        class="detailsItem col-xl-2 col-md-4"
+                      >
+                        <div
+                          class="detailsItem__label"
+                        >
+                          Województwo
+                        </div>
+                        <div
+                          class="detailsItem__value"
+                        >
+                          pomorskie
+                        </div>
+                      </div>
+                      <div
+                        class="detailsItem col-xl-2 col-md-4"
+                      >
+                        <div
+                          class="detailsItem__label"
+                        >
+                          typ
+                        </div>
+                        <div
+                          class="detailsItem__value"
+                        >
+                          Praca
+                        </div>
+                      </div>
+                      <div
+                        class="detailsItem col-xl-2 col-md-4"
+                      >
+                        <div
+                          class="detailsItem__label"
+                        >
+                          Firma
+                        </div>
+                        <div
+                          class="detailsItem__value"
+                        >
+                          TruthMinistry
+                        </div>
+                      </div>
+                      <div
+                        class="detailsItem col-xl-2 col-md-4"
+                      >
+                        <div
+                          class="detailsItem__label"
+                        >
+                          Adres
+                        </div>
+                        <div
+                          class="detailsItem__value"
+                        >
+                          <p>
+                            Wiejska
+                             
+                            25
+                          </p>
+                          <p>
+                            03-371
+                             
+                            Gdynia
+                          </p>
+                        </div>
+                      </div>
+                      <div
+                        class="detailsItem col-xl-2 col-md-4"
+                      >
+                        <div
+                          class="detailsItem__label"
+                        >
+                          kategoria
+                        </div>
+                        <div
+                          class="detailsItem__value"
+                        >
+                          PR
+                        </div>
+                      </div>
+                      <div
+                        class="detailsItem col-xl-2 col-md-4"
+                      >
+                        <div
+                          class="detailsItem__label"
+                        >
+                          Data wygaśnięcia
+                        </div>
+                        <div
+                          class="detailsItem__value"
+                        >
+                          2020-05-28
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="list-group-item"
+                  >
+                    <div
+                      class="detailsItem col"
+                    >
+                      <div
+                        class="detailsItem__label"
+                      >
+                        Opis
+                      </div>
+                      <div
+                        class="detailsItem__value"
+                      >
+                        Szukamy osob dobrze zorientowanych w mediach spolecznosciowych. Oferujemy dobra place, karte Multisport...
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="list-group-item"
+                  >
+                    <div
+                      class="justify-content-center row"
+                    >
+                      <button
+                        class="btn btn-primary"
+                        type="button"
+                      >
+                        Akceptuj
+                      </button>
+                      <button
+                        class="ml-3 btn btn-danger"
+                        type="button"
+                      >
+                        Odrzuć
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="border-left-0 border-right-0 border-bottom-0 card"
+          >
+            <div
+              class="card-header"
+            >
+              Lajkonik
+            </div>
+            <div
+              class="collapse"
+            >
+              <div
+                class="card-body"
+              >
+                <div
+                  class="list-group list-group-flush"
+                >
+                  <div
+                    class="list-group-item"
+                  >
+                    <div
+                      class="row"
+                    >
+                      <div
+                        class="detailsItem col-xl-2 col-md-4"
+                      >
+                        <div
+                          class="detailsItem__label"
+                        >
+                          Województwo
+                        </div>
+                        <div
+                          class="detailsItem__value"
+                        >
+                          mazowieckie
+                        </div>
+                      </div>
+                      <div
+                        class="detailsItem col-xl-2 col-md-4"
+                      >
+                        <div
+                          class="detailsItem__label"
+                        >
+                          typ
+                        </div>
+                        <div
+                          class="detailsItem__value"
+                        >
+                          Praca
+                        </div>
+                      </div>
+                      <div
+                        class="detailsItem col-xl-2 col-md-4"
+                      >
+                        <div
+                          class="detailsItem__label"
+                        >
+                          Firma
+                        </div>
+                        <div
+                          class="detailsItem__value"
+                        >
+                          Firemka
+                        </div>
+                      </div>
+                      <div
+                        class="detailsItem col-xl-2 col-md-4"
+                      >
+                        <div
+                          class="detailsItem__label"
+                        >
+                          Adres
+                        </div>
+                        <div
+                          class="detailsItem__value"
+                        >
+                          <p>
+                            Polna
+                             
+                            225
+                          </p>
+                          <p>
+                            21-371
+                             
+                            Wwa
+                          </p>
+                        </div>
+                      </div>
+                      <div
+                        class="detailsItem col-xl-2 col-md-4"
+                      >
+                        <div
+                          class="detailsItem__label"
+                        >
+                          kategoria
+                        </div>
+                        <div
+                          class="detailsItem__value"
+                        >
+                          IT
+                        </div>
+                      </div>
+                      <div
+                        class="detailsItem col-xl-2 col-md-4"
+                      >
+                        <div
+                          class="detailsItem__label"
+                        >
+                          Data wygaśnięcia
+                        </div>
+                        <div
+                          class="detailsItem__value"
+                        >
+                          2020-12-21
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="list-group-item"
+                  >
+                    <div
+                      class="detailsItem col"
+                    >
+                      <div
+                        class="detailsItem__label"
+                      >
+                        Opis
+                      </div>
+                      <div
+                        class="detailsItem__value"
+                      >
+                        Szukamy lajkoników w mediach spolecznosciowych. Oferujemy dobra place, karte Multisport...
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="list-group-item"
+                  >
+                    <div
+                      class="justify-content-center row"
+                    >
+                      <button
+                        class="btn btn-primary"
+                        type="button"
+                      >
+                        Akceptuj
+                      </button>
+                      <button
+                        class="ml-3 btn btn-danger"
+                        type="button"
+                      >
+                        Odrzuć
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { UserContext } from "context";
 import { Alert, Card, Container } from "react-bootstrap";
 import OfferList from "./components/OfferList";
+import { getOffers } from "./apiCalls";
 
 const OfferApprovalPage = () => {
 
@@ -9,20 +10,18 @@ const OfferApprovalPage = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
     const [offers, setOffers] = useState([]);
-    const [activeOffer, setActiveOffer] = useState("");
 
     useEffect(() => {
         const loadOffers = async(token) => {
-            /* #TODO integracja z api
             setLoading(true);
             try {
                 let res = await getOffers(token);
-                setOffers(res);
+                setOffers(res.results);
                 setLoading(false);
             } catch (e) {
                 setError(true);
                 setLoading(false);
-            }*/
+            }
         };
         loadOffers(context.token);
     }, [context.token]);
