@@ -12,6 +12,7 @@ import {
 import { UserContext } from "context";
 import polish from "date-fns/locale/pl";
 import { useHistory, useParams } from "react-router-dom";
+import {addressToString} from "utils/converters";
 
 registerLocale("pl", polish);
 
@@ -59,9 +60,8 @@ const OfferForm = () => {
         return;
       }
       const [categories, types, loadedOffer] = values;
-      const { city, street, street_number } = context.data.company_address;
 
-      const company_address = `${city}, ${street} ${street_number}`;
+      const company_address = addressToString(context.data.company_address);
       setArrays({ categories, types });
       setOffer((prev) => ({
         ...prev,
@@ -93,6 +93,7 @@ const OfferForm = () => {
         await sendData(
           {
             ...offer,
+            company_address: context.data.company_address,
             expiration_date: expiration_date.toISOString().substr(0, 10),
           },
           context.token,
@@ -157,7 +158,7 @@ const OfferForm = () => {
                 header="Adres firmy"
                 id="company_address"
                 setVal={(val) => setOffer({ ...offer, company_address: val })}
-                val={company_address}
+                val={addressToString(company_address)}
                 incorrect="Podaj lokalizację"
                 length={{ min: 1, max: 200 }}
                 required
