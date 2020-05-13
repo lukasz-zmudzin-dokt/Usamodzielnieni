@@ -56,14 +56,13 @@ const Filters = ({setFilter, disabled, typeList, statusList, count}) => {
                     type="text"
                     id="email"
                 />
-                <Form.Group as={Col} xs={12} md={6}>
+                <Form.Group as={Col} xs={12} md={6} controlId="category">
                     <Form.Label>Status:</Form.Label>
                     <Form.Control
                         as="select"
                         type="select"
                         value={status}
                         onChange={e => setStatus(e.target.value)}
-                        id="category"
                     >
                         <option disabled>{DEFAULT_INPUT}</option>
                         {Object.values(userStatuses).map(status => (
@@ -71,14 +70,13 @@ const Filters = ({setFilter, disabled, typeList, statusList, count}) => {
                         ))}
                     </Form.Control>
                 </Form.Group>
-                <Form.Group as={Col} xs={12} md={6}>
+                <Form.Group as={Col} xs={12} md={6} controlId="type">
                     <Form.Label>Typ użytkownika:</Form.Label>
                     <Form.Control
                         as="select"
                         type="select"
                         value={type}
                         onChange={e => setType(e.target.value)}
-                        id="type"
                     >
                         <option disabled>{DEFAULT_INPUT}</option>
                         {Object.values(userTypes).map(type => (
