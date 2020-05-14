@@ -1,38 +1,41 @@
-import React, { useState } from 'react';
-import { Alert, Button } from 'react-bootstrap';
-import { deleteOffer } from '../../functions/deleteOffer';
+import React, { useState, useRef, useContext } from "react";
+import { Alert, Button } from "react-bootstrap";
+import { deleteOffer } from "../../functions/deleteOffer";
+import { AlertContext } from "context";
 
 const RemoveOffer = ({ id, user }) => {
-    const [confirmDeletion, setConfirmDeletion] = useState(false);
-    const [deleted, setDeleted] = useState(false);
-    const [deletionError, setDeletionError] = useState(false);
+  const [confirmDeletion, setConfirmDeletion] = useState(false);
+  const alertC = useRef(useContext(AlertContext));
 
-    const handleDeleteOffer = async () => {
-        try {
-          await deleteOffer(id, user.token);
-        } catch(err) {
-          setDeletionError(true);
-        }
-        setDeleted(true);
-        setConfirmDeletion(false);
-    };
+  const handleDeleteOffer = async () => {
+    try {
+      await deleteOffer(id, user.token);
+      alertC.current.showAlert("Pomyślnie usunięto ofertę.", "success");
+    } catch (err) {
+      alertC.current.showAlert("Wystąpił błąd przy usuwaniu oferty.");
+    }
 
-    const msg = confirmDeletion ? (
-            <Alert variant="warning">
-                Czy na pewno chcesz usunąć tę ofertę?
-                <Button variant="warning" className="ml-3" onClick={handleDeleteOffer}>
-                    Tak
-                </Button>
-            </Alert>
-        ) : 
-        (deleted && deletionError) ? <Alert variant="danger">Wystąpił błąd przy usuwaniu oferty.</Alert> :
-        (deleted && !deletionError) && <Alert variant="success">Pomyślnie usunięto ofertę.</Alert>
+    setConfirmDeletion(false);
+  };
 
-    return (
-        <div className="removeOffer">
-            {msg || <Button variant="danger" onClick={e => setConfirmDeletion(true)}>Usuń ofertę</Button>}
-        </div>
-    )
-}
+  const msg = confirmDeletion ? (
+    <Alert variant="warning">
+      Czy na pewno chcesz usunąć tę ofertę?
+      <Button variant="warning" className="ml-3" onClick={handleDeleteOffer}>
+        Tak
+      </Button>
+    </Alert>
+  ) : null;
+
+  return (
+    <div className="removeOffer">
+      {msg || (
+        <Button variant="danger" onClick={(e) => setConfirmDeletion(true)}>
+          Usuń ofertę
+        </Button>
+      )}
+    </div>
+  );
+};
 
 export default RemoveOffer;

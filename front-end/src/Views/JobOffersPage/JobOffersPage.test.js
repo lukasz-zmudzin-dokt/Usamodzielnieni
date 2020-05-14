@@ -8,7 +8,7 @@ import {
 } from "@testing-library/react";
 import JobOffersPage from "Views/JobOffersPage";
 import proxy from "config/api";
-import {AlertContext} from 'context';
+import { AlertContext } from "context";
 
 describe("JobOffersPage", () => {
   let failFetch = false;
@@ -25,8 +25,7 @@ describe("JobOffersPage", () => {
           switch (init.method) {
             case "GET":
               if (
-                input ===
-                  proxy.job + "enums/categories" ||
+                input === proxy.job + "enums/categories" ||
                 input === proxy.job + "enums/types"
               ) {
                 resolve({
@@ -180,7 +179,8 @@ describe("JobOffersPage", () => {
       await waitForElement(() => getAllByText("Pokaż szczegóły"));
 
       expect(fetch).toHaveBeenCalledWith(
-        proxy.job + "job-offers/?page=1&page_size=10&min_expiration_date=2023-05-08",
+        proxy.job +
+          "job-offers/?page=1&page_size=10&min_expiration_date=2023-05-08",
         {
           headers: {
             Authorization: "Token undefined",
@@ -242,7 +242,8 @@ describe("JobOffersPage", () => {
       });
 
       expect(fetch).toHaveBeenCalledWith(
-        proxy.job + "job-offers/?page=1&page_size=21&voivodeship=lubelskie&min_expiration_date=2020-12-31&categories=abc&types=xd",
+        proxy.job +
+          "job-offers/?page=1&page_size=21&voivodeship=lubelskie&min_expiration_date=2020-12-31&categories=abc&types=xd",
         {
           headers: {
             Authorization: "Token undefined",
@@ -256,7 +257,7 @@ describe("JobOffersPage", () => {
     it("should show alert on api fail", async () => {
       failFetch = true;
       const alertC = {
-        showAlert: jest.fn()
+        showAlert: jest.fn(),
       };
 
       render(
@@ -270,8 +271,10 @@ describe("JobOffersPage", () => {
       await wait(() => {
         expect(alertC.showAlert).toHaveBeenCalled();
       });
-      
-      expect(alertC.showAlert).toHaveBeenCalledWith("Nie udało się pobrać filtrów.");
+
+      expect(alertC.showAlert).toHaveBeenCalledWith(
+        "Nie udało się pobrać filtrów."
+      );
     });
   });
 
@@ -328,18 +331,20 @@ describe("JobOffersPage", () => {
 
     it("should render error alert when api returns error", async () => {
       failFetch = true;
-      const { queryByText } = render(
-       
-          <MemoryRouter>
+      const { queryByText, getByText } = render(
+        <MemoryRouter>
           <AlertContext.Provider value={alertC}>
             <JobOffersPage location={location} />
           </AlertContext.Provider>
-          </MemoryRouter>
-
+        </MemoryRouter>
       );
 
-      await wait(() => expect(alertC.showAlert).toHaveBeenCalled());
-      expect(alertC.showAlert).toHaveBeenCalledWith("Wystąpił błąd podczas ładowania ofert.");
+      await waitForElement(() =>
+        getByText("Wystąpił błąd podczas ładowania ofert.")
+      );
+      expect(
+        getByText("Wystąpił błąd podczas ładowania ofert.")
+      ).toBeInTheDocument();
       expect(queryByText("Nazwa oferty 1")).not.toBeInTheDocument();
     });
 
@@ -351,8 +356,16 @@ describe("JobOffersPage", () => {
         </MemoryRouter>
       );
 
-      await waitForElement(() => getByText("Brak ofert spełniających podane wymagania.", { exact: false }));
-      expect(getByText("Brak ofert spełniających podane wymagania.", { exact: false })).toBeInTheDocument();
+      await waitForElement(() =>
+        getByText("Brak ofert spełniających podane wymagania.", {
+          exact: false,
+        })
+      );
+      expect(
+        getByText("Brak ofert spełniających podane wymagania.", {
+          exact: false,
+        })
+      ).toBeInTheDocument();
     });
   });
 });

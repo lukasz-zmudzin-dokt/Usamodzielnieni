@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect, useRef } from "react";
 import { registerLocale } from "react-datepicker";
-import { Form, Container, Card, Button, Row } from "react-bootstrap";
+import { Form, Container, Card, Button, Row, Alert } from "react-bootstrap";
 import { voivodeships } from "constants/voivodeships";
 import FormGroup from "components/FormGroup";
 import {
@@ -12,7 +12,7 @@ import {
 import { UserContext, AlertContext } from "context";
 import polish from "date-fns/locale/pl";
 import { useHistory, useParams } from "react-router-dom";
-import {addressToString} from "utils/converters";
+import { addressToString } from "utils/converters";
 
 registerLocale("pl", polish);
 
@@ -21,6 +21,7 @@ const OfferForm = () => {
   const [validated, setValidated] = useState(false);
   const [arrays, setArrays] = useState({ types: [], categories: [] });
   const [disabled, setDisabled] = useState(false);
+  const [err, setErr] = useState(false);
   let { id } = useParams();
 
   const [offer, setOffer] = useState({
@@ -52,7 +53,7 @@ const OfferForm = () => {
           history.push("/offerForm");
         } else {
           setDisabled(false);
-          alertC.current.showAlert("Wystąpił błąd w trakcie ładowania formularza.");
+          setErr(true);
         }
         return;
       }
@@ -105,6 +106,12 @@ const OfferForm = () => {
     setDisabled(false);
     setValidated(true);
   };
+
+  const msg = err ? (
+    <Alert variant="danger">
+      Wystąpił błąd w trakcie ładowania formularza.
+    </Alert>
+  ) : null;
 
   const {
     offer_name,
@@ -221,6 +228,9 @@ const OfferForm = () => {
               </Button>
             </Row>
           </Form>
+          <Row className="w-100 justify-content-center align-items-center ml-0 mb-0 mt-3">
+            {msg}
+          </Row>
         </Card.Body>
       </Card>
     </Container>

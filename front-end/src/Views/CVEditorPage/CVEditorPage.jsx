@@ -213,11 +213,6 @@ class CVEditorPage extends React.Component {
                   </Tab>
                 ))}
               </Tabs>
-            {this.state.error && (
-              <Alert className="mt-3" variant="danger">
-                Wystąpił błąd podczas generowania CV.
-              </Alert>
-            )}
           </Card.Body>
         </Card>
       </Container>

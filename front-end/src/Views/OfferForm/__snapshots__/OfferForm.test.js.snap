@@ -282,6 +282,9 @@ exports[`OfferForm renders correctly 1`] = `
           </button>
         </div>
       </form>
+      <div
+        class="w-100 justify-content-center align-items-center ml-0 mb-0 mt-3 row"
+      />
     </div>
   </div>
 </div>

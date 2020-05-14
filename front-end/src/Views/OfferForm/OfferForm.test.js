@@ -31,7 +31,12 @@ const renderWithRouter = (
   let context = {
     data: {
       company_name: "abc",
-      company_address: { street: "def", street_number: "1", city: "abc", postal_code: "00-000" },
+      company_address: {
+        street: "def",
+        street_number: "1",
+        city: "abc",
+        postal_code: "00-000",
+      },
     },
   };
   let contextA = {
@@ -39,7 +44,7 @@ const renderWithRouter = (
     changeVisibility: jest.fn(),
     message: "abc",
     changeMessage: jest.fn(),
-    showAlert: jest.fn()
+    showAlert: jest.fn(),
   };
   return {
     ...render(
@@ -64,7 +69,12 @@ describe("OfferForm", () => {
   let apiOffer = {
     offer_name: "abc",
     company_name: "xd",
-    company_address: { street: "def", street_number: "1", city: "abc", postal_code: "00-000" },
+    company_address: {
+      street: "def",
+      street_number: "1",
+      city: "abc",
+      postal_code: "00-000",
+    },
     voivodeship: "lubelskie",
     description: "res.description",
     expiration_date:
@@ -118,7 +128,12 @@ describe("OfferForm", () => {
     context = {
       data: {
         company_name: "abc",
-        company_address: { street: "def", street_number: "1", city: "abc", postal_code: "00-000"},
+        company_address: {
+          street: "def",
+          street_number: "1",
+          city: "abc",
+          postal_code: "00-000",
+        },
       },
     };
     contextA = {
@@ -126,7 +141,7 @@ describe("OfferForm", () => {
       changeVisibility: jest.fn(),
       message: "abc",
       changeMessage: jest.fn(),
-      showAlert: jest.fn()
+      showAlert: jest.fn(),
     };
   });
 
@@ -158,11 +173,13 @@ describe("OfferForm", () => {
         </AlertContext.Provider>
       </UserContext.Provider>
     );
-    await waitForElement(() => getByText("Dodaj"));
-
-    expect(contextA.showAlert).toHaveBeenCalledWith(
-      "Wystąpił błąd w trakcie ładowania formularza."
+    await waitForElement(() =>
+      getByText("Wystąpił błąd w trakcie ładowania formularza.")
     );
+
+    expect(
+      getByText("Wystąpił błąd w trakcie ładowania formularza.")
+    ).toBeInTheDocument();
   });
 
   it("should return [] if api fails(types)", async () => {
@@ -177,11 +194,13 @@ describe("OfferForm", () => {
         </AlertContext.Provider>
       </UserContext.Provider>
     );
-    await waitForElement(() => getByText("Dodaj"));
-
-    expect(contextA.showAlert).toHaveBeenCalledWith(
-      "Wystąpił błąd w trakcie ładowania formularza."
+    await waitForElement(() =>
+      getByText("Wystąpił błąd w trakcie ładowania formularza.")
     );
+
+    expect(
+      getByText("Wystąpił błąd w trakcie ładowania formularza.")
+    ).toBeInTheDocument();
   });
 
   it("should not use fetch when form isn't validated", async () => {

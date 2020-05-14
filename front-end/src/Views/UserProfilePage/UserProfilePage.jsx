@@ -1,5 +1,5 @@
 import React from "react";
-import {Alert, Card, Container} from "react-bootstrap";
+import { Alert, Card, Container } from "react-bootstrap";
 import UserDetails from "Views/UserProfilePage/components/UserDetails";
 import UserBasicInfo from "Views/UserProfilePage/components/UserBasicInfo";
 import { UserContext } from "context";
@@ -8,13 +8,13 @@ import AdminRegisterButton from "./components/AdminRegisterButton/AdminRegisterB
 import CVApprovalButton from "./components/CVApprovalButton/CVApprovalButton";
 import EmployerMyOffersButton from "./components/EmployerMyOffersButton/EmployerMyOffersButton";
 import AdminApproveUserButton from "./components/AdminApproveUserBuuton/AdminApproveUserButton";
-import {WithAlertContext} from 'components';
+import { WithAlertContext } from "components";
 
 const names = {
   role: {
     admin: "Administrator",
     employer: "Pracodawca",
-    common: "Podopieczny"
+    common: "Podopieczny",
   },
   property: {
     username: "Nazwa użytkownika",
@@ -22,31 +22,28 @@ const names = {
     firstName: "Imię",
     lastName: "Nazwisko",
     email: "E-mail",
-    phoneNumber: "Numer telefonu"
-  }
+    phoneNumber: "Numer telefonu",
+  },
 };
-
 
 class UserProfilePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       user: {
-        username: "",
-        role: "",
-        firstName: "",
-        lastName: "",
-        email: "",
+        username: "...",
+        role: "...",
+        firstName: "...",
+        lastName: "...",
+        email: "...",
+        err: false,
       },
     };
   }
 
-
   componentDidMount() {
     this.getData();
   }
-
-
 
   getData = async () => {
     try {
@@ -61,8 +58,16 @@ class UserProfilePage extends React.Component {
         },
       });
     } catch (res) {
-      this.props.alertContext.showAlert("Wystąpił błąd podczas pobierania");
+      this.setState({ err: true });
     }
+  };
+
+  setMessage = () => {
+    return (
+      this.state.err && (
+        <Alert variant="danger">Wystąpił błąd podczas pobierania</Alert>
+      )
+    );
   };
 
   render() {
@@ -73,13 +78,11 @@ class UserProfilePage extends React.Component {
             <h3>Mój profil</h3>
           </Card.Header>
           <Card.Body>
-            <UserBasicInfo
-              user={this.state.user}
-              names={names}
-            />
+            <UserBasicInfo user={this.state.user} names={names} />
           </Card.Body>
           <UserDetails user={this.state.user} names={names} />
           <Card.Body className="text-center">
+            {this.setMessage()}
             <CVApprovalButton user={this.context} />
             <EmployerMyOffersButton user={this.context} />
             <AdminRegisterButton user={this.context} />

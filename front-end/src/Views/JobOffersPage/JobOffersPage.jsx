@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useContext,useRef } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Container, Card, ListGroup, Alert } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
 import Filter from "./_components/Filter";
 import qs from "query-string";
-import { UserContext,AlertContext } from "context";
+import { UserContext } from "context";
 import { JobOfferInfo, OffersPagination } from "./_components";
 import proxy from "config/api";
 
@@ -14,7 +14,7 @@ const getOffers = async (token, filters) => {
     voivodeship,
     minExpirationDate,
     category,
-    type
+    type,
   } = filters;
   const voivodeshipQ = voivodeship ? `&voivodeship=${voivodeship}` : "";
   const categoryQ = category ? `&categories=${category}` : "";
@@ -27,42 +27,41 @@ const getOffers = async (token, filters) => {
   const url = proxy.job + "job-offers/" + query;
   const headers = {
     Authorization: "Token " + token,
-    "Content-Type": "application/json"
+    "Content-Type": "application/json",
   };
 
   const response = await fetch(url, { method: "GET", headers });
   if (response.status === 200) {
-    return response.json().then(res => mapGetOffersRes(res));
+    return response.json().then((res) => mapGetOffersRes(res));
   } else {
     throw response.status;
   }
 };
 
-const mapGetOffersRes = res => ({
-  offers: res.results.map(offer => ({
+const mapGetOffersRes = (res) => ({
+  offers: res.results.map((offer) => ({
     id: offer.id,
     title: offer.offer_name,
     companyName: offer.company_name,
     companyAddress: offer.company_address,
     voivodeship: offer.voivodeship,
     expirationDate: offer.expiration_date,
-    description: offer.description
+    description: offer.description,
   })),
-  count: res.count
+  count: res.count,
 });
 
-const JobOffersPage = props => {
+const JobOffersPage = (props) => {
   const [offers, setOffers] = useState([]);
   const [count, setCount] = useState(0);
   const [isOffersLoading, setIsOffersLoading] = useState(false);
   const [filters, setFilters] = useState({
     page: 1,
-    pageSize: 10
+    pageSize: 10,
   });
   const [disabled, setDisabled] = useState(false);
+  const [err, setErr] = useState(false);
   const user = useContext(UserContext);
-  const alertC = useRef(useContext(AlertContext));
-
 
   const queryParams = qs.parse(props.location.search, { parseNumbers: true });
   if (
@@ -74,7 +73,7 @@ const JobOffersPage = props => {
 
   useEffect(() => {
     setDisabled(true);
-    const loadOffers = async token => {
+    const loadOffers = async (token) => {
       setIsOffersLoading(true);
       let res;
       try {
@@ -82,7 +81,7 @@ const JobOffersPage = props => {
       } catch (e) {
         console.log(e);
         res = { offers: [], count: 0 };
-        alertC.current.showAlert("Wystąpił błąd podczas ładowania ofert.");
+        setErr(true);
       }
       setOffers(res.offers);
       setCount(res.count);
@@ -94,12 +93,13 @@ const JobOffersPage = props => {
 
   const msg = isOffersLoading ? (
     <Alert variant="info">Ładowanie ofert...</Alert>
+  ) : err ? (
+    <Alert variant="danger">Wystąpił błąd podczas ładowania ofert.</Alert>
   ) : (
     offers.length === 0 && (
       <Alert variant="info">Brak ofert spełniających podane wymagania.</Alert>
     )
   );
-
   return (
     <Container>
       <Card>
@@ -110,7 +110,7 @@ const JobOffersPage = props => {
         ) : (
           <>
             <ListGroup variant="flush">
-              {offers.map(offer => (
+              {offers.map((offer) => (
                 <ListGroup.Item key={offer.id}>
                   <JobOfferInfo offer={offer} context={user} />
                 </ListGroup.Item>

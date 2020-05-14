@@ -39,7 +39,7 @@ const BlogPost = () => {
   const user = useContext(UserContext);
   const alertC = useRef(useContext(AlertContext));
   const post_Id = window.location.pathname.replace(/\/blog\/blogpost\//, '');
-
+  const [err,setErr] = useState(false);
   const setComments = (comments) => setPost({...post, comments});
 
   useEffect(
@@ -52,10 +52,7 @@ const BlogPost = () => {
         } catch (e) {
           console.log(e);
           loadedPost = null;
-          alertC.current.showAlert(
-            "Wystąpił błąd podczas wczytywania zawartości bloga."
-          );
-
+          setErr(true);
         }
         setPost(loadedPost);
         setIsPostLoading(false);
@@ -65,7 +62,7 @@ const BlogPost = () => {
     [post_Id, user.token]
   );
 
-  const msg = isPostLoading ? (<Alert variant="info">Ładowanie zawartości bloga...</Alert>) : !post;
+  const msg = isPostLoading ? (<Alert variant="info">Ładowanie zawartości bloga...</Alert>) : err ? <Alert variant="danger">Wystąpił błąd podczas wczytywania zawartości bloga.</Alert> : !post;
 
   return msg || (
     <Container className="blogpost_container">
