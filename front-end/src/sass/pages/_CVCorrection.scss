@@ -24,9 +24,17 @@
   width: 100%;
 }
 
+.cvCorrection__pdfLink {
+  margin-bottom: 1rem;
+}
+
 @media (min-width: 1280px) {
   .cvCorrection__pdfContainer {
     width: 60%;
     padding-right: 1.25rem;
+  }
+
+  .cvCorrection__pdfLink {
+    margin-bottom: 0;
   }
 }

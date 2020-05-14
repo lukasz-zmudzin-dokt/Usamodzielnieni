@@ -30,22 +30,12 @@ const CorrectionForm = ({ id, token }) => {
   const submit = async (event) => {
     event.preventDefault();
     event.stopPropagation();
-
     if (checkIfNotEmpty()) {
       setDisabled(true);
+
       try {
         await sendFeedback(id, token, feedback);
-        setFeedback({
-          basicInfo: "",
-          schools: "",
-          experiences: "",
-          skills: "",
-          languages: "",
-          additionalInfo: "",
-        });
-        setFail(false);
-        setMsg("Pomyślnie przesłano uwagi.");
-        history.push("/cvApproval");
+        return history.push("/cvApproval");
       } catch (err) {
         setFail(true);
         setMsg("Błąd serwera.");
@@ -54,6 +44,7 @@ const CorrectionForm = ({ id, token }) => {
       setFail(true);
       setMsg("Dodaj minimalnie jedną uwagę.");
     }
+
     setDisabled(false);
   };
 
