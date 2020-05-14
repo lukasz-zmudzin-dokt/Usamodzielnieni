@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useState } from "react";
-import { Container, Card, Row, Alert } from "react-bootstrap";
+import { Container, Card, Row } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { getCV } from "Views/CVCorrection/functions";
 import { UserContext } from "context";
