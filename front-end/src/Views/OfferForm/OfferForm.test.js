@@ -31,7 +31,12 @@ const renderWithRouter = (
   let context = {
     data: {
       company_name: "abc",
-      company_address: { street: "def", street_number: "1", city: "abc", postal_code: "00-000" },
+      company_address: {
+        street: "def",
+        street_number: "1",
+        city: "abc",
+        postal_code: "00-000",
+      },
     },
   };
   return {
@@ -54,7 +59,12 @@ describe("OfferForm", () => {
   let apiOffer = {
     offer_name: "abc",
     company_name: "xd",
-    company_address: { street: "def", street_number: "1", city: "abc", postal_code: "00-000" },
+    company_address: {
+      street: "def",
+      street_number: "1",
+      city: "abc",
+      postal_code: "00-000",
+    },
     voivodeship: "lubelskie",
     description: "res.description",
     expiration_date:
@@ -77,19 +87,11 @@ describe("OfferForm", () => {
             else resolve({ status: 200 });
             break;
           case "GET":
-            if (
-              proxy.job + "job-offer/abc/" === input &&
-              failOffer
-            ) {
+            if (proxy.job + "job-offer/abc/" === input && failOffer) {
               resolve({ status: 500 });
-            } else if (
-              proxy.job + "job-offer/abc/" === input
-            ) {
+            } else if (proxy.job + "job-offer/abc/" === input) {
               resolve({ status: 200, json: () => Promise.resolve(apiOffer) });
-            } else if (
-              failTypes &&
-              input === proxy.job + "enums/types"
-            ) {
+            } else if (failTypes && input === proxy.job + "enums/types") {
               resolve({ status: 500 });
             } else {
               resolve({ status: 200, json: () => Promise.resolve(apiSelect) });
@@ -116,7 +118,12 @@ describe("OfferForm", () => {
     context = {
       data: {
         company_name: "abc",
-        company_address: { street: "def", street_number: "1", city: "abc", postal_code: "00-000"},
+        company_address: {
+          street: "def",
+          street_number: "1",
+          city: "abc",
+          postal_code: "00-000",
+        },
       },
     };
   });
@@ -330,17 +337,14 @@ describe("OfferForm", () => {
     await waitForElement(() => getByText("Dodaj"));
 
     await wait(() =>
-      expect(fetch).toHaveBeenCalledWith(
-        proxy.job + "job-offer/abc/",
-        {
-          headers: {
-            Authorization: "Token undefined",
-            "Content-Type": "application/json",
-            Origin: null,
-          },
-          method: "GET",
-        }
-      )
+      expect(fetch).toHaveBeenCalledWith(proxy.job + "job-offer/abc/", {
+        headers: {
+          Authorization: "Token undefined",
+          "Content-Type": "application/json",
+          Origin: null,
+        },
+        method: "GET",
+      })
     );
 
     expect(getByPlaceholderText("Nazwa stanowiska").value).toBe("abc");
@@ -366,17 +370,14 @@ describe("OfferForm", () => {
     await waitForElement(() => getByText("Dodaj"));
 
     await wait(() =>
-      expect(fetch).toHaveBeenCalledWith(
-        proxy.job + "job-offer/abc/",
-        {
-          headers: {
-            Authorization: "Token undefined",
-            "Content-Type": "application/json",
-            Origin: null,
-          },
-          method: "GET",
-        }
-      )
+      expect(fetch).toHaveBeenCalledWith(proxy.job + "job-offer/abc/", {
+        headers: {
+          Authorization: "Token undefined",
+          "Content-Type": "application/json",
+          Origin: null,
+        },
+        method: "GET",
+      })
     );
     fireEvent.change(getByPlaceholderText("Adres firmy"), {
       target: { value: "abcd" },

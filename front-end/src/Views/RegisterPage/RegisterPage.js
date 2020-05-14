@@ -1,12 +1,12 @@
 import React from "react";
 import { Container, Card, Form, Button, Alert } from "react-bootstrap";
-import {Link, Redirect, withRouter} from "react-router-dom";
+import { Link, Redirect, withRouter } from "react-router-dom";
 import {
   HomeDataForm,
   PersonalDataForm,
   CompanyDataForm,
   AccountForm,
-  TypeSelection
+  TypeSelection,
 } from "./components";
 import { UserContext } from "context";
 import { sendData } from "./functions/sendData";
@@ -17,20 +17,23 @@ class RegisterPage extends React.Component {
     this.state = {
       personalData: null,
       homeData: null,
-      companyData: {company_nip: ""},
+      companyData: { company_nip: "" },
       accountData: null,
 
-      account_type: this.props.match.params.role !== 'staff' ? "Podopiecznym" : ["staff_verification"],
+      account_type:
+        this.props.match.params.role !== "staff"
+          ? "Podopiecznym"
+          : ["staff_verification"],
       validated: false,
       redirect: false,
       fail_message: "",
       error_flag: false,
       incorrect_input: false,
-      disabled: false
+      disabled: false,
     };
   }
 
-  handleIncorrectResponse = status => {
+  handleIncorrectResponse = (status) => {
     switch (status) {
       case 400:
         return "Niepoprawne dane. Spróbuj jeszcze raz.";
@@ -49,63 +52,61 @@ class RegisterPage extends React.Component {
     if (form.checkValidity() === false || password !== passwordR) {
       event.stopPropagation();
       return false;
-    }
-    else return true;
+    } else return true;
   };
 
-  cutType = e => {
+  cutType = (e) => {
     let permissions = this.state.account_type;
     let itemIdx = permissions.indexOf(e.target.name);
     if (itemIdx > -1) {
       permissions.splice(itemIdx, 1);
       this.setState({
-        account_types: permissions
+        account_types: permissions,
       });
     }
-
   };
 
-  selectType = e => {
-    if (this.props.match.params.role === 'staff') {
+  selectType = (e) => {
+    if (this.props.match.params.role === "staff") {
       let permissions = this.state.account_type;
       permissions = permissions.push(e.target.name);
       this.setState({
-        account_types: permissions
+        account_types: permissions,
       });
     } else {
       this.setState({
-        account_type: e.target.value
+        account_type: e.target.value,
       });
     }
   };
 
   renderSection = () => {
-      if (this.state.account_type === "Podopiecznym") {
-        return (
-            <HomeDataForm
-                data={this.state.homeData}
-                onBlur={homeData => this.setState({ homeData })}
-            />
-        );
-      } else if (this.state.account_type === "Pracodawcą") {
-        return (
-            <CompanyDataForm
-                data={this.state.companyData}
-                onBlur={companyData => this.setState({ companyData })}
-            />
-        );
-      }
+    if (this.state.account_type === "Podopiecznym") {
+      return (
+        <HomeDataForm
+          data={this.state.homeData}
+          onBlur={(homeData) => this.setState({ homeData })}
+        />
+      );
+    } else if (this.state.account_type === "Pracodawcą") {
+      return (
+        <CompanyDataForm
+          data={this.state.companyData}
+          onBlur={(companyData) => this.setState({ companyData })}
+        />
+      );
+    }
   };
 
   setRedirect = () => {
     this.setState({
-      redirect: true
+      redirect: true,
     });
   };
 
   setValidated = () => {
     this.setState({
-      validated: true
+      validated: true,
     });
   };
 
@@ -115,26 +116,28 @@ class RegisterPage extends React.Component {
     }
   };
 
-  handleResponse = async e => {
+  handleResponse = async (e) => {
     this.setState({ disabled: true });
     const data = {
       personalData: this.state.personalData,
       homeData: this.state.homeData,
       companyData: this.state.companyData,
       accountData: this.state.accountData,
-      account_type: this.state.account_type
+      account_type: this.state.account_type,
     };
 
     const isOK = this.handleSubmit(data, e);
     this.setValidated();
     if (isOK) {
       try {
-        const contextData = await sendData(this.context.token, data).then(response => {
-          return response;
-        });
+        const contextData = await sendData(this.context.token, data).then(
+          (response) => {
+            return response;
+          }
+        );
         const { status } = contextData;
         if (status === 201) {
-          if (this.props.match.params.role !== 'staff') {
+          if (this.props.match.params.role !== "staff") {
             const { token, type, data } = contextData;
             this.context.login(token, type, data);
           }
@@ -145,7 +148,7 @@ class RegisterPage extends React.Component {
         this.setState({
           fail_message: msg,
           error_flag: true,
-          disabled: false
+          disabled: false,
         });
       }
     }
@@ -160,7 +163,7 @@ class RegisterPage extends React.Component {
       accountData,
       personalData,
       redirect,
-      disabled
+      disabled,
     } = this.state;
     const { renderSection, handleResponse, renderRedirect } = this;
     return (
@@ -170,22 +173,27 @@ class RegisterPage extends React.Component {
             Rejestracja
           </Card.Header>
           <Card.Body className="registerPage__body">
-            <TypeSelection isAdmin={this.props.match.params.role === 'staff'} selectType={this.selectType} cutType={this.cutType} current={this.state.account_type}/>
+            <TypeSelection
+              isAdmin={this.props.match.params.role === "staff"}
+              selectType={this.selectType}
+              cutType={this.cutType}
+              current={this.state.account_type}
+            />
             <Form
               noValidate
               validated={validated}
-              onSubmit={e => handleResponse(e)}
+              onSubmit={(e) => handleResponse(e)}
               className="loginPage__form primary"
             >
               <section className="row">
                 <PersonalDataForm
                   data={personalData}
-                  onBlur={personalData => this.setState({ personalData })}
+                  onBlur={(personalData) => this.setState({ personalData })}
                 />
                 {renderSection()}
                 <AccountForm
                   data={accountData}
-                  onBlur={accountData => this.setState({ accountData })}
+                  onBlur={(accountData) => this.setState({ accountData })}
                 />
               </section>
               <Button
@@ -207,12 +215,12 @@ class RegisterPage extends React.Component {
                 {fail_message}
               </Alert>
             ) : null}
-            {this.props.match.params.role !== 'staff' ? (
-                <div className="loginPage__links">
-                  <Link to="/login" className="loginPage__link">
-                    Masz już konto? Zaloguj się!
-                  </Link>
-                </div>
+            {this.props.match.params.role !== "staff" ? (
+              <div className="loginPage__links">
+                <Link to="/login" className="loginPage__link">
+                  Masz już konto? Zaloguj się!
+                </Link>
+              </div>
             ) : null}
           </Card.Body>
         </Card>
