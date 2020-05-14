@@ -1,182 +1,193 @@
 import React from "react";
 import BlogContent from "./BlogContent";
-import {fireEvent, render} from "@testing-library/react";
-import {waitForElement} from "@testing-library/dom";
-import {Router} from "react-router-dom";
-import {createMemoryHistory} from 'history';
-import {UserContext} from "context/UserContext";
+import { fireEvent, render } from "@testing-library/react";
+import { waitForElement } from "@testing-library/dom";
+import { Router } from "react-router-dom";
+import { createMemoryHistory } from "history";
+import { UserContext } from "context/UserContext";
 
 const renderWithRouter = (
-    ui, {
-        route = `/blog/blogPost/1`,
-        history = createMemoryHistory({initialEntries: [route]}),
-    } = {}
+  ui,
+  {
+    route = `/blog/blogPost/1`,
+    history = createMemoryHistory({ initialEntries: [route] }),
+  } = {}
 ) => {
-    let context = {token: "123", type: "Staff", data: {group_type: ['staff_blog_creator']}};
-    return {
-        ...render(
-            <UserContext.Provider value={context}>
-                <Router history={history}>{ui}</Router>
-            </UserContext.Provider>
-        ),
-        history
-    };
+  let context = {
+    token: "123",
+    type: "Staff",
+    data: { group_type: ["staff_blog_creator"] },
+  };
+  return {
+    ...render(
+      <UserContext.Provider value={context}>
+        <Router history={history}>{ui}</Router>
+      </UserContext.Provider>
+    ),
+    history,
+  };
 };
 
-describe('BlogContent', () => {
-    let post;
-    let apiFail;
-    let admin;
+describe("BlogContent", () => {
+  let post;
+  let apiFail;
+  let admin;
 
-    beforeAll(() => {
-        post = {
-            author: {
-                firstName: "Jan",
-                lastName: "Kowalski",
-                email: "qwe@qwe.qwe"
-            },
-            content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin nibh augue, suscipit a, scelerisque sed, lacinia in, mi. Cras vel lorem. Etiam pellentesque aliquet tellus. Phasellus pharetra nulla ac diam. Quisque semper justo at risus. Donec venenatis, turpis vel hendrerit interdum, dui ligula ultricies purus, sed posuere libero dui id orci. Nam congue, pede vitae dapibus aliquet, elit magna vulputate arcu, vel tempus metus leo non est. Etiam sit amet lectus quis est congue mollis. Phasellus congue lacus eget neque. Phasellus ornare, ante vitae consectetuer consequat, purus sapien ultricies dolor, et mollis pede metus eget nisi. Praesent sodales velit quis augue. Cras suscipit, urna at aliquam rhoncus, urna quam viverra nisi, in interdum massa nibh nec erat.",
-            tags: ["tag1", "tag2", "tag3"],
-            creationDate: "02-02-2020qweqweqwe",
-            comments: [{
-                author: {
-                    firstName: "Artysta",
-                    lastName: "Malarz",
-                    email: "a@m.com"
-                },
-                creationDate: "01-01-2019",
-                content: "Witam w nowy rok!",
-                id: 1
-            }]
-        };
+  beforeAll(() => {
+    post = {
+      author: {
+        firstName: "Jan",
+        lastName: "Kowalski",
+        email: "qwe@qwe.qwe",
+      },
+      content:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin nibh augue, suscipit a, scelerisque sed, lacinia in, mi. Cras vel lorem. Etiam pellentesque aliquet tellus. Phasellus pharetra nulla ac diam. Quisque semper justo at risus. Donec venenatis, turpis vel hendrerit interdum, dui ligula ultricies purus, sed posuere libero dui id orci. Nam congue, pede vitae dapibus aliquet, elit magna vulputate arcu, vel tempus metus leo non est. Etiam sit amet lectus quis est congue mollis. Phasellus congue lacus eget neque. Phasellus ornare, ante vitae consectetuer consequat, purus sapien ultricies dolor, et mollis pede metus eget nisi. Praesent sodales velit quis augue. Cras suscipit, urna at aliquam rhoncus, urna quam viverra nisi, in interdum massa nibh nec erat.",
+      tags: ["tag1", "tag2", "tag3"],
+      creationDate: "02-02-2020qweqweqwe",
+      comments: [
+        {
+          author: {
+            firstName: "Artysta",
+            lastName: "Malarz",
+            email: "a@m.com",
+          },
+          creationDate: "01-01-2019",
+          content: "Witam w nowy rok!",
+          id: 1,
+        },
+      ],
+    };
 
-        global.fetch = jest.fn().mockImplementation((input, init) => {
-            return new Promise((resolve, reject) => {
-                if (!apiFail) {
-                    switch (init.method) {
-                        case 'DELETE':
-                            resolve({status: 200});
-                            break;
-                        default: reject({});
-                            break;
-                    }
-                } else {
-                    resolve({status: 500});
-                }
-            });
-        });
+    global.fetch = jest.fn().mockImplementation((input, init) => {
+      return new Promise((resolve, reject) => {
+        if (!apiFail) {
+          switch (init.method) {
+            case "DELETE":
+              resolve({ status: 200 });
+              break;
+            default:
+              reject({});
+              break;
+          }
+        } else {
+          resolve({ status: 500 });
+        }
+      });
     });
+  });
 
-    beforeEach(() => {
-        admin = {
-            type: 'Staff',
-            data: {
-                email: 'a@m.com',
-                group_type: ["staff_blog_creator"]
-            },
-            token: '123'
-        };
-        apiFail = false;
-    });
+  beforeEach(() => {
+    admin = {
+      type: "Staff",
+      data: {
+        email: "a@m.com",
+        group_type: ["staff_blog_creator"],
+      },
+      token: "123",
+    };
+    apiFail = false;
+  });
 
-    it('should match snapshot', () => {
-        const {container} = render(
-            <UserContext.Provider value={admin}>
-                <BlogContent post={post} user={admin}/>
-            </UserContext.Provider>
-        );
+  it("should match snapshot", () => {
+    const { container } = render(
+      <UserContext.Provider value={admin}>
+        <BlogContent post={post} user={admin} />
+      </UserContext.Provider>
+    );
 
-        expect(container).toMatchSnapshot();
-    });
+    expect(container).toMatchSnapshot();
+  });
 
-    it('should convert date type', () => {
-        const secondPost = post;
-        secondPost.creationDate = "2019-06-07";
-        const {getByText} = render(
-            <BlogContent post={secondPost} user={admin}/>
-        );
+  it("should convert date type", () => {
+    const secondPost = post;
+    secondPost.creationDate = "2019-06-07";
+    const { getByText } = render(
+      <BlogContent post={secondPost} user={admin} />
+    );
 
-        expect(getByText("07.06.2019", {exact: false})).toBeInTheDocument();
-    });
+    expect(getByText("07.06.2019", { exact: false })).toBeInTheDocument();
+  });
 
-    it('should return error alert', () => {
-        const {getByText} = render(
-            <BlogContent />
-        );
+  it("should return error alert", () => {
+    const { getByText } = render(<BlogContent />);
 
-        expect(getByText("Wystąpił błąd", {exact: false})).toBeInTheDocument();
-    });
+    expect(getByText("Wystąpił błąd", { exact: false })).toBeInTheDocument();
+  });
 
-    it('should return empty tag list', () => {
-        const thirdPost = post;
-        thirdPost.tags = [];
-        const {getByText, queryByText} = render(
-            <BlogContent post={thirdPost} user={admin}/>
-        );
+  it("should return empty tag list", () => {
+    const thirdPost = post;
+    thirdPost.tags = [];
+    const { getByText, queryByText } = render(
+      <BlogContent post={thirdPost} user={admin} />
+    );
 
-        expect(getByText('Brak tagów', {exact: false})).toBeInTheDocument();
-        expect(queryByText("tag1")).not.toBeInTheDocument();
-    });
+    expect(getByText("Brak tagów", { exact: false })).toBeInTheDocument();
+    expect(queryByText("tag1")).not.toBeInTheDocument();
+  });
 
-    it('should render mgmt button for admin', () => {
-        const {getByText} = render(
-            <BlogContent post={post} user={admin}/>
-        );
+  it("should render mgmt button for admin", () => {
+    const { getByText } = render(<BlogContent post={post} user={admin} />);
 
-        expect(getByText('Edytuj', {exact: false})).toBeInTheDocument();
-        expect(getByText('Usuń', {exact: false})).toBeInTheDocument();
-    });
+    expect(getByText("Edytuj", { exact: false })).toBeInTheDocument();
+    expect(getByText("Usuń", { exact: false })).toBeInTheDocument();
+  });
 
-    it('should not render mgmt buttons', () => {
-        const standard = {
-            type: 'Standard',
-            data: {
-                email: 'asd@asd.asd'
-            },
-            token: '123'
-        };
-        const {queryByText} = render(
-            <BlogContent post={post} user={standard} />
-        );
+  it("should not render mgmt buttons", () => {
+    const standard = {
+      type: "Standard",
+      data: {
+        email: "asd@asd.asd",
+      },
+      token: "123",
+    };
+    const { queryByText } = render(<BlogContent post={post} user={standard} />);
 
-        expect(queryByText('Edytuj', {exact: false})).not.toBeInTheDocument();
-        expect(queryByText('Usuń', {exact: false})).not.toBeInTheDocument();
-    });
+    expect(queryByText("Edytuj", { exact: false })).not.toBeInTheDocument();
+    expect(queryByText("Usuń", { exact: false })).not.toBeInTheDocument();
+  });
 
-    it('should delete post', async() => {
-        const {getByText} = render(
-            <BlogContent post={post} user={admin} />
-        );
+  it("should delete post", async () => {
+    const { getByText } = render(<BlogContent post={post} user={admin} />);
 
-        fireEvent.click(getByText('Usuń post'));
-        fireEvent.click(getByText("Usuń ✗"));
+    fireEvent.click(getByText("Usuń post"));
+    fireEvent.click(getByText("Usuń ✗"));
 
-        await waitForElement(() => getByText('Ten post został usunięty', {exact: false}));
-        expect(getByText('Ten post został usunięty', {exact: false})).toBeInTheDocument();
-    });
+    await waitForElement(() =>
+      getByText("Ten post został usunięty", { exact: false })
+    );
+    expect(
+      getByText("Ten post został usunięty", { exact: false })
+    ).toBeInTheDocument();
+  });
 
-    it('should throw alert on api fail while post deletion', async() => {
-        apiFail = true;
+  it("should throw alert on api fail while post deletion", async () => {
+    apiFail = true;
 
-        const {getByText, queryByText} = render(
-            <BlogContent post={post} user={admin} />
-        );
+    const { getByText, queryByText } = render(
+      <BlogContent post={post} user={admin} />
+    );
 
-        fireEvent.click(getByText('Usuń post'));
-        fireEvent.click(getByText("Usuń ✗"));
+    fireEvent.click(getByText("Usuń post"));
+    fireEvent.click(getByText("Usuń ✗"));
 
-        await waitForElement(() => getByText('Wystąpił błąd podczas usuwania posta.', {exact: false}));
-        expect(getByText('Wystąpił błąd podczas usuwania posta.', {exact: false})).toBeInTheDocument();
-        expect(queryByText('Ten post został usunięty', {exact: false})).not.toBeInTheDocument();
-    });
+    await waitForElement(() =>
+      getByText("Wystąpił błąd podczas usuwania posta.", { exact: false })
+    );
+    expect(
+      getByText("Wystąpił błąd podczas usuwania posta.", { exact: false })
+    ).toBeInTheDocument();
+    expect(
+      queryByText("Ten post został usunięty", { exact: false })
+    ).not.toBeInTheDocument();
+  });
 
-    it('should redirect on edit click', async () => {
-        const {history, getByText} = renderWithRouter(
-            <BlogContent post={post} user={admin} />
-        );
+  it("should redirect on edit click", async () => {
+    const { history, getByText } = renderWithRouter(
+      <BlogContent post={post} user={admin} />
+    );
 
-        fireEvent.click(getByText('Edytuj', {exact: false}));
+    fireEvent.click(getByText("Edytuj", { exact: false }));
 
-        expect(history.location.pathname).toEqual("/blog/newPost/" + post.id);
-    });
+    expect(history.location.pathname).toEqual("/blog/newPost/" + post.id);
+  });
 });

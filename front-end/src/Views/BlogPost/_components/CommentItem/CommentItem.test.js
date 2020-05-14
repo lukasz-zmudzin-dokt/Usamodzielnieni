@@ -52,16 +52,14 @@ describe("CommentItem", () => {
     expect(getByText("Usuń")).toBeInTheDocument();
   });
 
-    it('should call onDeleteClick when delete button is clicked', async () => {
-        props.comment.author.email = 'abc@123.com';
-        props.user.type = 'Staff';
-        props.user.data.group_type = ['staff_blog_moderator'];
+  it("should call onDeleteClick when delete button is clicked", async () => {
+    props.comment.author.email = "abc@123.com";
+    props.user.type = "Staff";
+    props.user.data.group_type = ["staff_blog_moderator"];
 
-        const { getByText } = render(
-            <CommentItem {...props} />
-        );
-        fireEvent.click(getByText('Usuń'));
-        fireEvent.click(getByText("Usuń ✗", {exact: false}));
-        await expect(props.onDeleteClick).toHaveBeenCalledTimes(1);
-    });
+    const { getByText } = render(<CommentItem {...props} />);
+    fireEvent.click(getByText("Usuń"));
+    fireEvent.click(getByText("Usuń ✗", { exact: false }));
+    await expect(props.onDeleteClick).toHaveBeenCalledTimes(1);
+  });
 });
