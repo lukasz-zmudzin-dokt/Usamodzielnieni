@@ -36,17 +36,15 @@ const CVRender = ({ url, msg }) => {
           data-testid="pdf"
         />
       </Document>
-      {url !== "" ? (
-        <Row className="mt-3 cvCorrection__pdfLink justify-content-center">
-          <a
-            href={`${proxy.plain}${url}`}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Lub pobierz CV z tego linku
-          </a>
-        </Row>
-      ) : null}
+      <Row className="mt-3 cvCorrection__pdfLink justify-content-center">
+        <a
+          href={`${proxy.plain}${url}`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Lub pobierz CV z tego linku
+        </a>
+      </Row>
       {pages !== 1 ? (
         <PaginationCV
           pages={pages}
