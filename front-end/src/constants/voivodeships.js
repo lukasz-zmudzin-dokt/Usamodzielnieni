@@ -14,5 +14,5 @@ export const voivodeships = [
   "świętokrzyskie",
   "warmińsko-mazurskie",
   "wielkopolskie",
-  "zachodniopomorskie"
+  "zachodniopomorskie",
 ];

@@ -1,5 +1,5 @@
-import React from 'react';
-import { getUserData } from 'Views/UserProfilePage/functions/getUserData.js';
+import React from "react";
+import { getUserData } from "Views/UserProfilePage/functions/getUserData.js";
 import proxy from "config/api";
 
 describe("getUserData", () => {
@@ -11,8 +11,8 @@ describe("getUserData", () => {
       first_name: "test_firstname",
       last_name: "test_lastname",
       email: "test@example.com",
-      phone_numbe: "+48321654987"
-    }
+      phone_numbe: "+48321654987",
+    },
   };
   beforeAll(() => {
     token = "123";
@@ -25,7 +25,7 @@ describe("getUserData", () => {
             case "GET":
               resolve({
                 status: 200,
-                json: () => Promise.resolve(userData)
+                json: () => Promise.resolve(userData),
               });
               break;
             default:
@@ -43,15 +43,12 @@ describe("getUserData", () => {
 
   it("should fetch the data if server response successful", async () => {
     await getUserData(token);
-    expect(fetch).toHaveBeenCalledWith(
-        proxy.account + "data",
-        {
-          headers: {
-            Authorization: "Token 123",
-            "Content-Type": "application/json"
-          },
-          method: "GET"
-        }
-    );
+    expect(fetch).toHaveBeenCalledWith(proxy.account + "data", {
+      headers: {
+        Authorization: "Token 123",
+        "Content-Type": "application/json",
+      },
+      method: "GET",
+    });
   });
 });
