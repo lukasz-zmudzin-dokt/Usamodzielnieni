@@ -49,14 +49,15 @@ const CVPosition = (props) => {
       </DetailsItem>
       <Col className="align-self-center d-flex justify-content-end">
         <Button
-          variant="primary m-1 p-1"
+          variant="primary m-1"
+          size="sm"
           className="btnDownload"
           onClick={(e) => showCV(e, context.token, cv.cv_id, alertC)}
         >
           Pokaż CV
         </Button>
         <Button
-          variant="success m-1 p-1"
+          variant="success m-1"
           className="btnAccept"
           onClick={(e) => handleAcceptCV(e, context.token, cv.cv_id, alertC)}
         >
