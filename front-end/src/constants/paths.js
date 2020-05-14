@@ -21,5 +21,6 @@ const paths = {
   USER_APPROVAL: "/userApproval",
   CHATS: "/chats",
   CHAT_DETAILS: "/chats/:id",
+  OFFER_APPROVAL: "/offerApproval",
 };
 export { paths };
