@@ -101,7 +101,7 @@ exports[`BlogPage should match snapshot 1`] = `
             <img
               alt="Wystąpił problem z ładowaniem nagłówka"
               class="card-img-top"
-              src="https://usamo-back.herokuapp.comundefined"
+              src="https://usamo-back.herokuapp.com/media/example_img.jpg"
             />
             <div
               class="card-body"
@@ -138,11 +138,6 @@ exports[`BlogPage should match snapshot 1`] = `
           <div
             class="card"
           >
-            <img
-              alt="Wystąpił problem z ładowaniem nagłówka"
-              class="card-img-top"
-              src="https://usamo-back.herokuapp.comundefined"
-            />
             <div
               class="card-body"
             >

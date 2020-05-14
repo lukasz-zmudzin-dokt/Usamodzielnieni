@@ -11,7 +11,7 @@ const stripFromTags = (str) => {
 const BlogPost = (data) => {
   const stripped_str = stripFromTags(data.summary);
   return (
-    <Link class="sBlogPost__link" to={`/blog/blogpost/${data.id}`}>
+    <Link className="sBlogPost__link" to={`/blog/blogpost/${data.id}`}>
       <Card>
         {
           data.header !== null ? <Card.Img variant="top" src={proxy.plain + data.header} alt="Wystąpił problem z ładowaniem nagłówka"/> : null
