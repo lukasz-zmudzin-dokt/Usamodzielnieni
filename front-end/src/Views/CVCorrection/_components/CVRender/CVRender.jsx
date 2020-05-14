@@ -21,7 +21,11 @@ const CVRender = ({ url, msg }) => {
       <Document
         className="CVCorrection__pdf"
         file={file}
-        error={<Alert variant="danger">Nie udało się załadować CV.</Alert>}
+        error={
+          <Alert variant="danger" className="m-0">
+            Nie udało się załadować CV.
+          </Alert>
+        }
         loading={<Alert variant="info">Ładowanie...</Alert>}
         onLoadSuccess={(pdf) => setPages(pdf.numPages)}
       >
