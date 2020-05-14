@@ -1,9 +1,7 @@
 import proxy from "config/api";
 
 const sendData = async (offer, token, id) => {
-  const url = `${proxy.job}job-offer/${
-    id ? `${id}/` : ""
-  }`;
+  const url = `${proxy.job}job-offer/${id ? `${id}/` : ""}`;
   const res = await fetch(url, {
     method: id ? "PUT" : "POST",
     body: JSON.stringify(offer),

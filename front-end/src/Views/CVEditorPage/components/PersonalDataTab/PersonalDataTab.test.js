@@ -42,7 +42,7 @@ describe('PersonalDataTab', () => {
         );
 
         fireEvent.change(
-            getByLabelText("Imię", { exact: false }), 
+            getByLabelText("Imię", { exact: false }),
             { target: { value: "Adam" } }
         );
         expect(props.onChange).toHaveBeenCalledTimes(1);

@@ -34,8 +34,8 @@ const addPhoto = async (token, photo, cvId) => {
   const formData = new FormData();
   formData.append('picture', photo, photo.name);
   const photoRes = await fetch(
-    url.picture(cvId), 
-    { method: "POST", body: formData, headers: { Authorization: "Token " + token } }
+      url.picture(cvId),
+      { method: "POST", body: formData, headers: { Authorization: "Token " + token } }
   )
 
   if (photoRes.status === 201) {

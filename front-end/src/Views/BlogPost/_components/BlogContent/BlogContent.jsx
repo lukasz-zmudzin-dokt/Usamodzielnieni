@@ -1,4 +1,5 @@
-import React, {useState} from 'react'
+import React, {useState} from 'react';
+import {DeletionModal} from 'components';
 import {Alert, Badge, Button, ButtonToolbar, Card, Col, Row} from "react-bootstrap";
 import mediumDraftImporter from 'medium-draft/lib/importer';
 import {convertToHTML} from "draft-convert";
@@ -20,8 +21,8 @@ const renderTags = tagList => {
     });
 };
 
-const handleDeletion = async (event, id, token, errorFlag, successFlag) => {
-    event.preventDefault();
+const handleDeletion = async (wantsDelete, id, token, errorFlag, successFlag) => {
+    wantsDelete(false);
     try {
         await deletePost(id, token);
         successFlag(true);
@@ -31,12 +32,12 @@ const handleDeletion = async (event, id, token, errorFlag, successFlag) => {
     }
 };
 
-const renderButtons = (id, user, author, errorFlag, successFlag, editionFlag, flag) => {
+const renderButtons = (user, author, editionFlag, flag, setShowModal) => {
     if ( ((user.type === 'Staff' && user.data.group_type.includes(staffTypes.BLOG_CREATOR)) || user.data.email === author.email) && !flag) {
         return (
             <ButtonToolbar className="btn_toolbar text-center">
                 <Button variant="warning" className="button-edit mx-3" onClick={e => editionFlag(true)}>Edytuj 🖉</Button>
-                <Button variant="danger" className="button-delete mx-3" onClick={e => handleDeletion(e, id, user.token, errorFlag, successFlag)}>Usuń ✗</Button>
+                <Button id="delete" variant="danger" className="button-delete mx-3" onClick={e => handleOnClick(e, setShowModal)}>Usuń ✗</Button>
             </ButtonToolbar>
         )
     }
@@ -48,12 +49,22 @@ const renderRedirect = (flag, id) => {
         return <Redirect data-testId="blog-redirect" to={path}/>;
 };
 
+const handleOnClick = (e, setShow) => {
+    if(e.target.id === "delete")
+        setShow(true);
+}
+
 const BlogContent = ({ post , user }) => {
     const [delError, setDelError] = useState(false);
     const [success, setSuccess] = useState(false);
     const [wantsEdition, setWantsEdition] = useState(false);
+    const [showModal, setShowModal] = useState(false);
+    const [wantsDelete, setWantsDelete] = useState(false);
+
     if (post === undefined)
         return <Alert variant="danger" className="d-lg-block">Wystąpił błąd podczas ładowania zawartości bloga.</Alert>;
+    if(wantsDelete)
+        handleDeletion(setWantsDelete, post.id, user.token, setDelError, setSuccess);
     const {firstName, lastName, email} = post.author;
     const content = convertToHTML(mediumDraftImporter(post.content));
     return (
@@ -61,6 +72,7 @@ const BlogContent = ({ post , user }) => {
             {post.header !== null && post.header !== "" ?
                 <Card.Img variant="top" src={`${proxy.plain}${post.header}`}/> : <Card.Header/>
             }
+            {DeletionModal(showModal, setShowModal, setWantsDelete, "Czy na pewno chcesz usunąć ten post?")}
             <Card.Body className="post_content mx-4">
                 {
                     delError ? <Alert variant="danger">Wystąpił błąd podczas usuwania posta.</Alert> :
@@ -69,7 +81,7 @@ const BlogContent = ({ post , user }) => {
                 <Card.Title as="h1" className="post_title">
                     <Row>
                         {post.title === "" ? "Tytuł posta" : post.title}
-                        {renderButtons(post.id, user, post.author, setDelError, setSuccess, setWantsEdition, success)}
+                        {renderButtons(user, post.author, setWantsEdition, success, setShowModal)}
                     </Row>
                 </Card.Title>
                 <Card.Subtitle as="h6" className="text-muted mb-4 mt-2">Kategoria: {post.category}</Card.Subtitle>
@@ -96,4 +108,4 @@ const BlogContent = ({ post , user }) => {
     )
 };
 
-export default BlogContent
+export default BlogContent;

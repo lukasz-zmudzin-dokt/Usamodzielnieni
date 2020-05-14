@@ -6,7 +6,7 @@ describe('ActionWithDate', () => {
     let failFetch;
     let failFetchUrl;
     let cv, file, token;
-    
+
     beforeAll(() => {
         cv = { name: "Jan Kowalski" };
         file = new File([""], "filename");
@@ -24,7 +24,7 @@ describe('ActionWithDate', () => {
                         resolve(init.body ? { status: 201, json: () => Promise.resolve({cv_id: '1'}) } : { status: 400 } );
                         break;
                     default:
-                        resolve({ 
+                        resolve({
                             status: 200,
                             json: () => Promise.resolve("/CV_Jan_Kowalski")
                         });
@@ -33,12 +33,12 @@ describe('ActionWithDate', () => {
             });
         });
     });
-    
+
     beforeEach(() => {
         failFetch = null;
         failFetchUrl = null;
     })
-    
+
     it('should call correct url when photo is undefined', async () => {
         global.open = jest.fn();
         await sendData(cv, null, token, "POST");
@@ -47,7 +47,7 @@ describe('ActionWithDate', () => {
             "_blank"
         );
     });
-    
+
     it('should call correct url when photo is defined', async () => {
         global.open = jest.fn();
         await sendData(cv, file, token, "POST");

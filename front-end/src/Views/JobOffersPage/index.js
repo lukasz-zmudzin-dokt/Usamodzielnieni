@@ -1,3 +1,3 @@
-import JobOffersPage from './JobOffersPage';
+import JobOffersPage from "./JobOffersPage";
 
 export default JobOffersPage;

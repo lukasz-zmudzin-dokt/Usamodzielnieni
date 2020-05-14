@@ -25,11 +25,11 @@ describe('ActionWithDate', () => {
         );
 
         fireEvent.change(
-            getByLabelText("Miejsce", { exact: false }), 
+            getByLabelText("Miejsce", { exact: false }),
             { target: { value: "Warszawa" } }
         );
         fireEvent.change(
-            getByLabelText("Opis", { exact: false }), 
+            getByLabelText("Opis", { exact: false }),
             { target: { value: "Jakiś opis" } }
         );
         expect(getByLabelText("Miejsce", { exact: false }).value).toBe("Warszawa");
@@ -42,11 +42,11 @@ describe('ActionWithDate', () => {
         );
 
         fireEvent.change(
-            getByLabelText("Od", { exact: false }), 
+            getByLabelText("Od", { exact: false }),
             { target: { value: new Date("October 13, 2019 00:00:00") } }
         );
         fireEvent.change(
-            getByLabelText("Do", { exact: false }), 
+            getByLabelText("Do", { exact: false }),
             { target: { value: new Date("October 15, 2021 00:00:00") } }
         );
         expect(getByLabelText("Od", { exact: false }).value).toBe("10.2019");
@@ -59,23 +59,23 @@ describe('ActionWithDate', () => {
         );
 
         fireEvent.change(
-            getByLabelText("Od", { exact: false }), 
+            getByLabelText("Od", { exact: false }),
             { target: { value: new Date("October 13, 2019 00:00:00") } }
         );
         fireEvent.change(
-            getByLabelText("Do", { exact: false }), 
+            getByLabelText("Do", { exact: false }),
             { target: { value: new Date("October 15, 2021 00:00:00") } }
         );
         fireEvent.change(
-            getByLabelText("Miejsce", { exact: false }), 
+            getByLabelText("Miejsce", { exact: false }),
             { target: { value: "Warszawa" } }
         );
         fireEvent.change(
-            getByLabelText("Opis", { exact: false }), 
+            getByLabelText("Opis", { exact: false }),
             { target: { value: "Jakiś opis" } }
         );
         fireEvent.click(getByText('Dodaj', { exact: false }));
-        
+
         expect(getByLabelText("Od", { exact: false }).value).toBe("");
         expect(getByLabelText("Do", { exact: false }).value).toBe("");
         expect(getByLabelText("Miejsce", { exact: false }).value).toBe("");
