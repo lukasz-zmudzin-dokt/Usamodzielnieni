@@ -17,12 +17,7 @@ const MyOffer = ({ offer, activeOffer, setActiveOffer }) => {
   const context = useContext(UserContext);
   const [people, setPeople] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
-
-  const context = useContext(UserContext);
   const alertC = useRef(useContext(AlertContext));
-  const [people, setPeople] = useState([]);
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const loadOfferPeople = async (token, offerId) => {
@@ -46,16 +41,6 @@ const MyOffer = ({ offer, activeOffer, setActiveOffer }) => {
 
   const message = loading ? (
     <Alert variant="info">Ładuję...</Alert>
-  ) : people.length === 0 ? (
-    <Alert className="mb-0" variant="info">
-      Brak zgłoszeń.
-    </Alert>
-  ) : null;
-
-  const message = loading ? (
-    <Alert variant="info">Ładuję...</Alert>
-  ) : error ? (
-    <Alert variant="danger">Ups, wystąpił błąd...</Alert>
   ) : people.length === 0 ? (
     <Alert className="mb-0" variant="info">
       Brak zgłoszeń.

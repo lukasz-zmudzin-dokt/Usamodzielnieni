@@ -51,22 +51,23 @@ const UserToApprove = ({ user, activeUser }) => {
       let res = await setUserApproved(token, userId);
       if (res === "User successfully verified.") {
         setApproved(true);
+        alertC.current.showAlert("Konto zatwierdzone pomyślnie", "success");
       }
     } catch (err) {
-      setError(true);
+      alertC.current.showAlert("Błąd. Nie udało się zatwierdzić użytkownika.");
     }
   };
 
-  //const rejectUser = async (e, token, userId) => {
-  const rejectUser = async (token, userId) => {
-    //e.preventDefault();
+  const rejectUser = async (e, token, userId) => {
+    e.preventDefault();
     try {
       let res = await setUserRejected(token, userId);
       if (res === "User status successfully set to not verified.") {
+        alertC.current.showAlert("Konto odrzucone pomyślnie", "success");
         setRejected(true);
       }
     } catch (err) {
-      setError(true);
+      alertC.current.showAlert("Błąd. Nie udało się odrzucić użytkownika.");
     }
   };
 
@@ -110,7 +111,7 @@ const UserToApprove = ({ user, activeUser }) => {
     <Alert className="mb-0" variant="info">
       Ładuję...
     </Alert>
-  ) : err ? (
+  ) : error ? (
     <Alert variant="danger">
       Błąd. Nie udało się załadować danych użytkownika.
     </Alert>
