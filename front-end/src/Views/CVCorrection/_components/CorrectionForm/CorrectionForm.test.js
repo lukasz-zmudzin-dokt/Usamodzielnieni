@@ -57,17 +57,6 @@ describe("CorrectionForm", () => {
     expect(fetch).toHaveBeenCalledTimes(0);
   });
 
-  it("should send if at least one field is not empty", async () => {
-    const { getByText, getByLabelText } = renderWithRouter(<CorrectionForm />);
-    fireEvent.change(getByLabelText("Dane osobowe"), {
-      target: { value: "abcd" },
-    });
-    fireEvent.click(getByText("Wyślij uwagi"));
-    await waitForElement(() => getByText("Pomyślnie przesłano uwagi."));
-    expect(getByText("Pomyślnie przesłano uwagi.")).toBeInTheDocument();
-    expect(fetch).toHaveBeenCalledTimes(1);
-  });
-
   it("should send if every field is not empty", async () => {
     const { getByText, getByLabelText, history } = renderWithRouter(
       <CorrectionForm />
@@ -91,8 +80,6 @@ describe("CorrectionForm", () => {
       target: { value: "abcd" },
     });
     fireEvent.click(getByText("Wyślij uwagi"));
-    await waitForElement(() => getByText("Pomyślnie przesłano uwagi."));
-    expect(getByText("Pomyślnie przesłano uwagi.")).toBeInTheDocument();
     expect(fetch).toHaveBeenCalledTimes(1);
     expect(history.location.pathname).toEqual("/cvApproval");
   });

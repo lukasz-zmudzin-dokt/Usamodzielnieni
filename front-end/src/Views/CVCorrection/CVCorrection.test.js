@@ -6,7 +6,7 @@ import { Router } from "react-router-dom";
 import { UserContext } from "context";
 
 jest.mock("./_components", () => ({
-  CVRender: () => <div>render</div>,
+  CVRender: ({ url }) => <div>{`render${url}`}</div>,
   CorrectionForm: () => <div>correction</div>,
 }));
 
@@ -64,8 +64,8 @@ describe("CVCorrection", () => {
 
   it("should show message if api fails", async () => {
     failFetch = true;
-    const { getByText } = renderWithRouter(<CVCorrection />);
-    await waitForElement(() => getByText("Nie udało się pobrać CV."));
-    expect(getByText("Nie udało się pobrać CV.")).toBeInTheDocument();
+    const { queryByText, getByText } = renderWithRouter(<CVCorrection />);
+    await waitForElement(() => getByText("Uwagi do CV"));
+    expect(queryByText("render/media/blank_test_cv")).not.toBeInTheDocument();
   });
 });

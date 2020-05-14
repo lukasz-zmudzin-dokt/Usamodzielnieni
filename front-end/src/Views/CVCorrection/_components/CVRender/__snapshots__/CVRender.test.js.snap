@@ -7,7 +7,7 @@ exports[`CVRender should match snapshot 1`] = `
   >
     <div />
     <div
-      class="m-0 justify-content-center row"
+      class="mt-3 cvCorrection__pdfLink justify-content-center row"
     >
       <a
         href="https://usamo-back.herokuapp.com/abc"

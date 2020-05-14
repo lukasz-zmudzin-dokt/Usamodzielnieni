@@ -20,7 +20,7 @@ exports[`CVCorrection should match snapshot 1`] = `
           class="m-0 row"
         >
           <div>
-            render
+            render/media/blank_test_cv
           </div>
           <div>
             correction

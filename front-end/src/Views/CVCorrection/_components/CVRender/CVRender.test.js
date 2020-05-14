@@ -54,6 +54,12 @@ describe("CVRender", () => {
       expect(getByText("Lub pobierz CV z tego linku")).toBeInTheDocument();
     });
 
+    it("should render msg if msg is passed", async () => {
+      const { getByText } = render(<CVRender url="/abc" msg="o nie" />);
+
+      expect(getByText("o nie")).toBeInTheDocument();
+    });
+
     it("should not render redirect link if url isn't passed", async () => {
       const { queryByText } = render(<CVRender url="" />);
 
