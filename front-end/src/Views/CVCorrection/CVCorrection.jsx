@@ -33,10 +33,9 @@ const CVCorrection = () => {
         </Card.Header>
         <Card.Body>
           <Row className="m-0">
-            <CVRender url={url} />
+            <CVRender url={url} msg={msg} />
             <CorrectionForm id={id} token={token} />
           </Row>
-          {msg ? <Alert variant="danger">{msg}</Alert> : null}
         </Card.Body>
       </Card>
     </Container>

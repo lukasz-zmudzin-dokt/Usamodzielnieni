@@ -6,13 +6,17 @@ import { PaginationCV } from "Views/CVCorrection/_components";
 
 pdfjs.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.js";
 
-const CVRender = ({ url }) => {
+const CVRender = ({ url, msg }) => {
   const [pages, setPages] = useState(1);
   const [activePage, setActivePage] = useState(1);
 
   const file = useMemo(() => ({ url: `${proxy.plain}${url}` }), [url]);
 
-  return url ? (
+  return msg ? (
+    <div className="cvCorrection__pdfContainer">
+      <Alert variant="danger">{msg}</Alert>
+    </div>
+  ) : url ? (
     <div className="cvCorrection__pdfContainer">
       <Document
         className="CVCorrection__pdf"
