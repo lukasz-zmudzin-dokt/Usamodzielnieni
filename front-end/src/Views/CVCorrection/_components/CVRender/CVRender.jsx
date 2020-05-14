@@ -14,7 +14,9 @@ const CVRender = ({ url, msg }) => {
 
   return msg ? (
     <div className="cvCorrection__pdfContainer">
-      <Alert variant="danger">{msg}</Alert>
+      <Alert variant="danger" className="m-0">
+        {msg}
+      </Alert>
     </div>
   ) : url ? (
     <div className="cvCorrection__pdfContainer">
@@ -26,7 +28,11 @@ const CVRender = ({ url, msg }) => {
             Nie udało się załadować CV.
           </Alert>
         }
-        loading={<Alert variant="info">Ładowanie...</Alert>}
+        loading={
+          <Alert variant="info" className="m-0">
+            Ładowanie...
+          </Alert>
+        }
         onLoadSuccess={(pdf) => setPages(pdf.numPages)}
       >
         <Page
