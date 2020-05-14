@@ -14,7 +14,7 @@ const BlogPost = (data) => {
     <Link className="sBlogPost__link" to={`/blog/blogpost/${data.id}`}>
       <Card>
         {
-          data.header !== null ? <Card.Img variant="top" src={proxy.plain + data.header} alt="Wystąpił problem z ładowaniem nagłówka"/> : null
+          data.header !== null ? <Card.Img variant="top" src={proxy.plain + data.header} alt="Nagłówek posta"/> : null
         }
         <Card.Body>
           <Card.Title as="h3">{data.title}</Card.Title>

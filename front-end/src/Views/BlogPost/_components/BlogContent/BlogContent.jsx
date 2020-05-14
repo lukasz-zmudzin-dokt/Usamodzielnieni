@@ -33,10 +33,10 @@ const handleDeletion = async (wantsDelete, id, token, errorFlag, successFlag) =>
 };
 
 const renderButtons = (user, author, editionFlag, flag, setShowModal) => {
-    if ( user.token && (( user.type === 'Staff' && user.data.group_type.includes(staffTypes.BLOG_CREATOR)) || user.data.email === author.email) && !flag) {
+    if ( user && user.token && (( user.type === 'Staff' && user.data.group_type.includes(staffTypes.BLOG_CREATOR)) || user.data.email === author.email) && !flag) {
         return (
             <ButtonToolbar className="btn_toolbar text-center">
-                <Button variant="warning" className="button-edit mx-3" onClick={e => editionFlag(true)}>Edytuj post</Button>
+                <Button variant="info" className="button-edit mx-3" onClick={e => editionFlag(true)}>Edytuj post</Button>
                 <Button id="delete" variant="danger" className="button-delete mx-3" onClick={e => handleOnClick(e, setShowModal)}>Usuń post</Button>
             </ButtonToolbar>
         )
@@ -62,7 +62,7 @@ const BlogContent = ({ post , user }) => {
     const [wantsDelete, setWantsDelete] = useState(false);
 
     if (post === undefined)
-        return <Alert variant="danger" className="d-lg-block">Wystąpił błąd podczas ładowania zawartości bloga.</Alert>;
+        return <Card.Body><Alert variant="danger" className="d-lg-block">Wystąpił błąd podczas ładowania zawartości bloga.</Alert></Card.Body>;
     if(wantsDelete)
         handleDeletion(setWantsDelete, post.id, user.token, setDelError, setSuccess);
     const {username} = post.author;
@@ -70,7 +70,7 @@ const BlogContent = ({ post , user }) => {
     return (
         <Card>
             {post.header !== null && post.header !== "" ?
-                <Card.Img variant="top" src={`${proxy.plain}${post.header}`}/> : <Card.Header/>
+                <Card.Img variant="top" src={`${proxy.plain}${post.header}`} alt="Nagłówek posta"/> : <Card.Header/>
             }
             {DeletionModal(showModal, setShowModal, setWantsDelete, "Czy na pewno chcesz usunąć ten post?")}
             <Card.Body className="post_content mx-4">
@@ -85,9 +85,9 @@ const BlogContent = ({ post , user }) => {
                     </Row>
                 </Card.Title>
                 <Card.Subtitle as="h6" className="text-muted mb-4 mt-2">Kategoria: {post.category}</Card.Subtitle>
-                <Card.Text className="blog_content_text text-justify">
+                <div className="blog_content_text text-justify">
                     <div dangerouslySetInnerHTML={{__html: content}}/>
-                </Card.Text>
+                </div>
                 <p className="post_taglist mt-5">
                     <em>tagi: {renderTags(post.tags)}</em>
                 </p>

@@ -69,7 +69,7 @@ const BlogPost = () => {
               isPostLoading ? (<Alert variant="info">Ładowanie zawartości bloga...</Alert>) :
               !post && (<Alert>null</Alert>);
 
-  return msg || (
+  return msg ? <Card.Body>{msg}</Card.Body> : (
     <Container className="blogpost_container">
       <BlogContent post={post} user={user}/>
       <Card className="blogpost_comment_card">

@@ -43,7 +43,7 @@ describe("BlogContent", () => {
       content:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin nibh augue, suscipit a, scelerisque sed, lacinia in, mi. Cras vel lorem. Etiam pellentesque aliquet tellus. Phasellus pharetra nulla ac diam. Quisque semper justo at risus. Donec venenatis, turpis vel hendrerit interdum, dui ligula ultricies purus, sed posuere libero dui id orci. Nam congue, pede vitae dapibus aliquet, elit magna vulputate arcu, vel tempus metus leo non est. Etiam sit amet lectus quis est congue mollis. Phasellus congue lacus eget neque. Phasellus ornare, ante vitae consectetuer consequat, purus sapien ultricies dolor, et mollis pede metus eget nisi. Praesent sodales velit quis augue. Cras suscipit, urna at aliquam rhoncus, urna quam viverra nisi, in interdum massa nibh nec erat.",
       tags: ["tag1", "tag2", "tag3"],
-      creationDate: "02-02-2020qweqweqwe",
+      creationDate: "2020-02-02qweqweqwe",
       comments: [
         {
           author: {
@@ -51,7 +51,7 @@ describe("BlogContent", () => {
             lastName: "Malarz",
             email: "a@m.com",
           },
-          creationDate: "01-01-2019",
+          creationDate: "2019-01-01",
           content: "Witam w nowy rok!",
           id: 1,
         },
@@ -90,9 +90,7 @@ describe("BlogContent", () => {
 
   it("should match snapshot", () => {
     const { container } = render(
-      <UserContext.Provider value={admin}>
         <BlogContent post={post} user={admin} />
-      </UserContext.Provider>
     );
 
     expect(container).toMatchSnapshot();

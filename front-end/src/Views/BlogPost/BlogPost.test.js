@@ -45,13 +45,14 @@ describe("BlogPost", () => {
     post = {
       id: 123,
       author: {
+        username: "jankowalski123",
         first_name: "Jan",
         last_name: "Kowalski",
         email: "jan@kowalski.pl",
       },
       content:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin nibh augue, suscipit a, scelerisque sed, lacinia in, mi. Cras vel lorem. Etiam pellentesque aliquet tellus. Phasellus pharetra nulla ac diam. Quisque semper justo at risus. Donec venenatis, turpis vel hendrerit interdum, dui ligula ultricies purus, sed posuere libero dui id orci. Nam congue, pede vitae dapibus aliquet, elit magna vulputate arcu, vel tempus metus leo non est. Etiam sit amet lectus quis est congue mollis. Phasellus congue lacus eget neque. Phasellus ornare, ante vitae consectetuer consequat, purus sapien ultricies dolor, et mollis pede metus eget nisi. Praesent sodales velit quis augue. Cras suscipit, urna at aliquam rhoncus, urna quam viverra nisi, in interdum massa nibh nec erat.",
-      date_created: "06-07-2019",
+      date_created: "2019-06-07",
       category: "qwe",
       tags: ["tag1", "tag2", "tag3"],
       comments: [
@@ -121,5 +122,15 @@ describe("BlogPost", () => {
 
     await waitForElement(() => fetch);
     expect(getByText("jannowak", { exact: false })).toBeInTheDocument();
+  });
+
+  it('should not render comment form', () => {
+    const {queryByText} = render(
+        <UserContext.Provider value={{}}>
+          <BlogPost />
+        </UserContext.Provider>
+    );
+
+    expect(queryByText("Dodaj komentarz")).not.toBeInTheDocument();
   });
 });

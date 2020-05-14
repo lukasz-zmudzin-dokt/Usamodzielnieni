@@ -6,8 +6,8 @@ import {DeletionModal} from "components";
 import {useState} from "react";
 
 const CommentItem = ({ comment, onDeleteClick, user, ...rest }) => {
-    const canModifyComment = (user) =>  user && user.data ? (comment.author.email === user.data.email)
-                                    || (user.type === 'Staff' && user.data.group_type.includes(staffTypes.BLOG_MODERATOR)) : null;
+    const canModifyComment = (user) => user.data ? (comment.author.email === user.data.email)
+                                    || (user.type === 'Staff' && user.data.group_type.includes(staffTypes.BLOG_MODERATOR)) : false;
     const handleOnClick = () => {
         setShowModal(true);
     }
@@ -23,7 +23,7 @@ const CommentItem = ({ comment, onDeleteClick, user, ...rest }) => {
             <h5 className="commentItem__header">{`${comment.author.username}`}</h5>
             <small className="commentItem__date">dodano: {comment.creationDate.toLocaleDateString(undefined, {})}</small>
             <p className="commentItem__content">{comment.content}</p>
-            {user && canModifyComment(user) ? (
+            {user && canModifyComment(user) !== false ? (
                 <ButtonGroup className="commentItem__actions" size="sm">
                     <Button onClick={handleOnClick}>Usuń</Button>
                 </ButtonGroup>
