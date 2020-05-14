@@ -1,15 +1,19 @@
-import React from "react";
+import proxy from "config/api";
 
-export const handleConnection = async (email, e) => {
-    const url = "http://usamo-back.herokuapp.com/account/password_reset/";
+export const handleConnection = async (email) => {
+    const url = proxy.account + "password_reset/";
     const object = {email: email};
-    return await fetch(url, {
+    const res = await fetch(url, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
         body: JSON.stringify(object)
-    }).then(response => {
-        return response.status === 201 || response.status === 200;
     });
+
+    if (res.status === 200 || res.status === 201) {
+        return true;
+    } else {
+        throw res.status;
+    }
 };

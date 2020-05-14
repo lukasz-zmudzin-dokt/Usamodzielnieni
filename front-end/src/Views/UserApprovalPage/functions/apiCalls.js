@@ -1,7 +1,7 @@
 import proxy from "config/api";
 
 export const getUsersToApprove = async (token) => {
-  let url = proxy.account + "admin/user_list/all/?status=2";
+  let url = proxy.account + "admin/user_list/all/?status=Waiting%20for%20verification";
   const headers = {
     Authorization: "token " + token,
     "Content-Type": "application/json",

@@ -1,102 +1,76 @@
 import React from "react";
-import bgImage from "assets/fot..png";
 import {Alert, Button, Card, Container, Form} from "react-bootstrap";
 import {handleConnection} from "./functions/submitActions";
 import "./style.css"
-import {Redirect} from "react-router-dom";
 
 class PasswordResetPrompt extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             email: "",
-            correct: undefined,
-            redirect: false
+            correct: undefined
         };
     };
 
-    setCorrect = (bool) => {
-        this.setState({
-            correct: bool
-        })
-    };
-
-    setRedirect = () => {
-        setTimeout( () => {
-            this.setState({
-                redirect: true
-            });
-        }, 3000);
-    };
-
-    renderRedirect = (redirect) => {
-        if (redirect)
-            return <Redirect to="/newPassword" />
-    };
-
-    handleSubmit = (e) => {
+    handleSubmit = async (e) => {
         e.preventDefault();
-        if (this.state.email === "")
+        const form = e.currentTarget;
+        if (form.checkValidity() === false) {
             e.stopPropagation();
-        handleConnection(this.state.email, e).then( res => {
-            this.setCorrect(res);
-        });
-    };
-
-    renderMessage = (correct, setRedirect) => {
-        if (correct !== undefined) {
-            if (correct) {
-                return (
-                    <div className="submit_message" data-testid="submit_message">
-                        <Alert variant="success" className="msg_text">Jeżeli Twoje konto istnieje, to właśnie otrzymałeś maila. Sprawdź skrzynkę i przejdź dalej!</Alert>
-                        {setRedirect()}
-                    </div>
-                );
-            }
-            return (
-                <div className="submit_message" data-testid="submit_message">
-                    <Alert variant="danger" className="msg_text">Coś poszło nie tak.</Alert>
-                </div>
-            );
+        } else {
+           try {
+               await handleConnection(this.state.email);
+               this.setState({
+                   correct: true
+               });
+           } catch(e) {
+               console.log(e);
+               this.state({
+                   correct: false
+               })
+           }
         }
+
     };
 
     render() {
-        let {email, correct, redirect} = this.state;
-        let {renderRedirect, setRedirect, renderMessage, handleSubmit} = this;
+        let {email, correct} = this.state;
+        let {handleSubmit} = this;
         return(
             <Container className="loginPage">
-                {window.innerWidth >= 768 ? (
-                    <img className="loginPage__bgImage" src={bgImage} alt="tło" />
-                ) : null}
                 <Card className="loginPage__card loginPage__card--login">
                     <Card.Header as="h2" className="loginPage__header">
                         Zmiana hasła
                     </Card.Header>
                     <Card.Body className="loginPage__body">
                         <Form
-                            noValidate
-                            onSubmit={e => handleSubmit(e)}
+                            onSubmit={handleSubmit}
                             className="primary"
                         >
-                            <Form.Group controlId="formGroupUsername">
+                            <Form.Group controlId="formGroupEmail">
                                 <Form.Control
                                     type="email"
                                     placeholder="Email"
                                     required
                                     defaultValue={email}
-                                    onBlur={e => this.setState({email: e.target.value})}
+                                    onChange={e => this.setState({email: e.target.value})}
                                     className="loginPage__input"
                                     minLength="6"
                                 />
                                 <Form.Control.Feedback type="invalid">
-                                    Podaj email
+                                    Podaj email we właściwym formacie
                                 </Form.Control.Feedback>
                             </Form.Group>
-                            <Button variant="secondary" className="passwordR_submit_email" type="submit" data-testid="sendMailBtn">Wyślij</Button>
-                            {renderMessage(correct, setRedirect)}
-                            {renderRedirect(redirect)}
+                            <Button variant="primary" className="passwordR_submit_email" type="submit" data-testid="sendMailBtn">Wyślij</Button>
                         </Form>
+                        <div className="submit_message" data-testid="submit_message">
+                            {
+                                correct ? (correct === true ?
+                                    <Alert variant="success" className="msg_text">Jeżeli Twoje konto istnieje, to właśnie otrzymałeś maila. Sprawdź skrzynkę i przejdź dalej!</Alert> :
+                                    <Alert variant="danger" className="msg_text">Coś poszło nie tak.</Alert>) :
+                                    null
+                            }
+                        </div>
                     </Card.Body>
                 </Card>
             </Container>
