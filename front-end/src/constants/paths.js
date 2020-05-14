@@ -22,5 +22,6 @@ const paths = {
   CV_CORRECTION: "/cvCorrection/:id",
   CHATS: "/chats",
   CHAT_DETAILS: "/chats/:id",
+  OFFER_APPROVAL: "/offerApproval",
 };
 export { paths };
