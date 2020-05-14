@@ -23,5 +23,7 @@ const paths = {
   CHATS: "/chats",
   CHAT_DETAILS: "/chats/:id",
   OFFER_APPROVAL: "/offerApproval",
+  PASSWORD_RESET: "/newPassword",
+  NEW_PASSWORD: "/newPassword/:id"
 };
 export { paths };

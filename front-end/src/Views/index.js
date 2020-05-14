@@ -20,6 +20,8 @@ import CVCorrection from "Views/CVCorrection";
 import MessagesList from "Views/MessagesList";
 import Chats from "Views/Chats";
 import OfferApprovalPage from "Views/OfferApprovalPage";
+import PasswordResetPrompt from "Views/PasswordResetPrompt";
+import NewPasswordPage from "Views/NewPasswordPage";
 
 export {
   UserProfilePage,
