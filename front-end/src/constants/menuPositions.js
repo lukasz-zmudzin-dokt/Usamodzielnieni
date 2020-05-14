@@ -1,8 +1,8 @@
-import {userTypes} from "./userTypes";
-import {staffTypes} from "./staffTypes";
-import {paths} from "./paths";
+import { userTypes } from "./userTypes";
+import { staffTypes } from "./staffTypes";
+import { paths } from "./paths";
 
-export default [       
+export default [
     {
         name: "Kreator CV",
         path: paths.CV_CREATOR,

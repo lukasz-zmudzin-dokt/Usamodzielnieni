@@ -5,7 +5,7 @@ import { UserProvider } from "context";
 
 describe('CommentForm', () => {
     let props, failFetch, user;
-    
+
     beforeAll(() => {
         user = {
             type: 'Standard',
@@ -54,7 +54,7 @@ describe('CommentForm', () => {
                 <UserProvider value={user}>
                     <CommentForm {...props} />
                 </UserProvider>
-                );
+            );
             expect(container).toMatchSnapshot();
         });
 
@@ -79,7 +79,7 @@ describe('CommentForm', () => {
             );
 
             fireEvent.change(
-                getByPlaceholderText('Treść komentarza'), 
+                getByPlaceholderText('Treść komentarza'),
                 { target: { value: 'Treść nowego komentarz' } }
             );
 
@@ -99,7 +99,7 @@ describe('CommentForm', () => {
             );
 
             fireEvent.change(
-                getByPlaceholderText('Treść komentarza'), 
+                getByPlaceholderText('Treść komentarza'),
                 { target: { value: 'Treść nowego komentarz' } }
             );
 

@@ -5,7 +5,6 @@ import {waitForElement} from "@testing-library/dom";
 import {Router} from "react-router-dom";
 import {createMemoryHistory} from 'history';
 import {UserContext} from "context/UserContext";
-import {UserProvider} from "../../../../context/UserContext";
 
 const renderWithRouter = (
     ui, {
@@ -30,26 +29,26 @@ describe('BlogContent', () => {
     let admin;
 
     beforeAll(() => {
-       post = {
-           author: {
-               firstName: "Jan",
-               lastName: "Kowalski",
-               email: "qwe@qwe.qwe"
-           },
-           content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin nibh augue, suscipit a, scelerisque sed, lacinia in, mi. Cras vel lorem. Etiam pellentesque aliquet tellus. Phasellus pharetra nulla ac diam. Quisque semper justo at risus. Donec venenatis, turpis vel hendrerit interdum, dui ligula ultricies purus, sed posuere libero dui id orci. Nam congue, pede vitae dapibus aliquet, elit magna vulputate arcu, vel tempus metus leo non est. Etiam sit amet lectus quis est congue mollis. Phasellus congue lacus eget neque. Phasellus ornare, ante vitae consectetuer consequat, purus sapien ultricies dolor, et mollis pede metus eget nisi. Praesent sodales velit quis augue. Cras suscipit, urna at aliquam rhoncus, urna quam viverra nisi, in interdum massa nibh nec erat.",
-           tags: ["tag1", "tag2", "tag3"],
-           creationDate: "02-02-2020qweqweqwe",
-           comments: [{
-               author: {
-                   firstName: "Artysta",
-                   lastName: "Malarz",
-                   email: "a@m.com"
-               },
-               creationDate: "01-01-2019",
-               content: "Witam w nowy rok!",
-               id: 1
-           }]
-       };
+        post = {
+            author: {
+                firstName: "Jan",
+                lastName: "Kowalski",
+                email: "qwe@qwe.qwe"
+            },
+            content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin nibh augue, suscipit a, scelerisque sed, lacinia in, mi. Cras vel lorem. Etiam pellentesque aliquet tellus. Phasellus pharetra nulla ac diam. Quisque semper justo at risus. Donec venenatis, turpis vel hendrerit interdum, dui ligula ultricies purus, sed posuere libero dui id orci. Nam congue, pede vitae dapibus aliquet, elit magna vulputate arcu, vel tempus metus leo non est. Etiam sit amet lectus quis est congue mollis. Phasellus congue lacus eget neque. Phasellus ornare, ante vitae consectetuer consequat, purus sapien ultricies dolor, et mollis pede metus eget nisi. Praesent sodales velit quis augue. Cras suscipit, urna at aliquam rhoncus, urna quam viverra nisi, in interdum massa nibh nec erat.",
+            tags: ["tag1", "tag2", "tag3"],
+            creationDate: "02-02-2020qweqweqwe",
+            comments: [{
+                author: {
+                    firstName: "Artysta",
+                    lastName: "Malarz",
+                    email: "a@m.com"
+                },
+                creationDate: "01-01-2019",
+                content: "Witam w nowy rok!",
+                id: 1
+            }]
+        };
 
         global.fetch = jest.fn().mockImplementation((input, init) => {
             return new Promise((resolve, reject) => {
@@ -82,9 +81,9 @@ describe('BlogContent', () => {
 
     it('should match snapshot', () => {
         const {container} = render(
-            <UserProvider>
+            <UserContext.Provider value={admin}>
                 <BlogContent post={post} user={admin}/>
-            </UserProvider>
+            </UserContext.Provider>
         );
 
         expect(container).toMatchSnapshot();
@@ -109,14 +108,14 @@ describe('BlogContent', () => {
     });
 
     it('should return empty tag list', () => {
-       const thirdPost = post;
-       thirdPost.tags = [];
-       const {getByText, queryByText} = render(
-           <BlogContent post={thirdPost} user={admin}/>
-       );
+        const thirdPost = post;
+        thirdPost.tags = [];
+        const {getByText, queryByText} = render(
+            <BlogContent post={thirdPost} user={admin}/>
+        );
 
-       expect(getByText('Brak tagów', {exact: false})).toBeInTheDocument();
-       expect(queryByText("tag1")).not.toBeInTheDocument();
+        expect(getByText('Brak tagów', {exact: false})).toBeInTheDocument();
+        expect(queryByText("tag1")).not.toBeInTheDocument();
     });
 
     it('should render mgmt button for admin', () => {
@@ -177,7 +176,7 @@ describe('BlogContent', () => {
         );
 
         fireEvent.click(getByText('Edytuj', {exact: false}));
-        
+
         expect(history.location.pathname).toEqual("/blog/newPost/" + post.id);
     });
 });

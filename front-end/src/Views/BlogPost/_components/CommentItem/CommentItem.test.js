@@ -1,63 +1,56 @@
-import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
-import CommentItem from './CommentItem';
+import React from "react";
+import { render, fireEvent } from "@testing-library/react";
+import CommentItem from "./CommentItem";
 
-describe('CommentItem', () => {
-    let props;
-    
-    beforeEach(() => {
-        props = {
-            comment: {
-                id: '123',
-                author: {
-                    email: 'mail@mail.pl',
-                    username: "qweqwe"
-                },
-                creationDate: new Date(2020, 10, 4),
-                content: 'Treść komentarza'
-            },
-            onEditClick: jest.fn(),
-            onDeleteClick: jest.fn(),
-            user: {
-                type: 'Standard',
-                data: {
-                    email: 'mail@mail.pl',
-                    username: "qweqwe",
-                    group_type: undefined
-                }
-            }
-        }
-    });
+describe("CommentItem", () => {
+  let props;
 
-    it('should render without crashing', () => {
-        const { container } = render(
-            <CommentItem {...props} />
-        );
-        expect(container).toMatchSnapshot();
-    });
+  beforeEach(() => {
+    props = {
+      comment: {
+        id: "123",
+        author: {
+          email: "mail@mail.pl",
+          username: "qweqwe",
+        },
+        creationDate: new Date(2020, 10, 4),
+        content: "Treść komentarza",
+      },
+      onDeleteClick: jest.fn(),
+      user: {
+        type: "Standard",
+        data: {
+          email: "mail@mail.pl",
+          username: "qweqwe",
+          group_type: undefined,
+        },
+      },
+    };
+  });
 
-    it('should render comment without buttons when standard user is not the author of the comment', () => {
-        props.comment.author.email = 'abc@123.com';
+  it("should render without crashing", () => {
+    const { container } = render(<CommentItem {...props} />);
+    expect(container).toMatchSnapshot();
+  });
 
-        const { queryByText } = render(
-            <CommentItem {...props} />
-        );
+  it("should render comment without buttons when standard user is not the author of the comment", () => {
+    props.comment.author.email = "abc@123.com";
 
-        expect(queryByText('Edytuj')).not.toBeInTheDocument();
-        expect(queryByText('Usuń')).not.toBeInTheDocument();
-    });
+    const { queryByText } = render(<CommentItem {...props} />);
 
-    it('should render comment with buttons when blog moderator is not the author of the comment', () => {
-        props.comment.author.email = 'abc@123.com';
-        props.user.type = 'Staff';
-        props.user.data.group_type = 'staff_blog_moderator';
+    expect(queryByText("Edytuj")).not.toBeInTheDocument();
+    expect(queryByText("Usuń")).not.toBeInTheDocument();
+  });
 
-        const { getByText } = render(
-            <CommentItem {...props} />
-        );
+  it("should render comment with buttons when blog moderator is not the author of the comment", () => {
+    props.comment.author.email = "abc@123.com";
+    props.user.type = "Staff";
+    props.user.data.group_type = "staff_blog_moderator";
 
-        expect(getByText('Usuń')).toBeInTheDocument();
-    });
+    const { getByText } = render(<CommentItem {...props} />);
+
+    expect(getByText("Usuń")).toBeInTheDocument();
+  });
 
     it('should call onDeleteClick when delete button is clicked', async () => {
         props.comment.author.email = 'abc@123.com';

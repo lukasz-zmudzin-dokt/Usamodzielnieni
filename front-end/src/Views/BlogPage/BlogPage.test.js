@@ -34,9 +34,7 @@ describe("BlogPage", () => {
             resolve({ status: 200 });
             break;
           case "GET":
-            if (
-              input.includes(proxy.blog + "blogposts/")
-            ) {
+            if (input.includes(proxy.blog + "blogposts/")) {
               resolve({ status: 200, json: () => Promise.resolve(apiPosts) });
             } else {
               resolve({ status: 200, json: () => Promise.resolve(apiFilters) });
