@@ -20,9 +20,21 @@ export const UserProvider = (props) => {
     type,
     data,
     login: (newToken, newType, newData) => {
-      cookies.set("token", newToken, { path: "/" });
-      cookies.set("type", newType, { path: "/" });
-      cookies.set("data", newData, { path: "/" });
+      cookies.set("token", newToken, {
+        path: "/",
+        expires: setCookieDate(),
+        secure: process.env.REACT_APP_SECURE_COOKIES,
+      });
+      cookies.set("type", newType, {
+        path: "/",
+        expires: setCookieDate(),
+        secure: process.env.REACT_APP_SECURE_COOKIES,
+      });
+      cookies.set("data", newData, {
+        path: "/",
+        expires: setCookieDate(),
+        secure: process.env.REACT_APP_SECURE_COOKIES,
+      });
       setToken(newToken);
       setType(newType);
       setData(newData);
@@ -37,4 +49,10 @@ export const UserProvider = (props) => {
     },
   };
   return <UserContext.Provider value={user} {...props} />;
+};
+
+const setCookieDate = () => {
+  const date = new Date();
+  date.setDate(date.getDate() + 1);
+  return date;
 };
