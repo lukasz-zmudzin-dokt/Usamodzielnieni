@@ -18,7 +18,7 @@ import {
   UserApprovalPage,
   MessagesList,
   Chats,
-  OfferApprovalPage
+  OfferApprovalPage,
 } from "Views";
 import { userTypes } from "./userTypes";
 import { staffTypes } from "./staffTypes";
@@ -185,5 +185,5 @@ export default [
     isPrivate: true,
     type: userTypes.STAFF,
     group: staffTypes.JOBS,
-  }
+  },
 ];
