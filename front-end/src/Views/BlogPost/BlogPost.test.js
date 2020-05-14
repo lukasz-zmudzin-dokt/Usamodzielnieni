@@ -124,11 +124,11 @@ describe("BlogPost", () => {
     expect(getByText("jannowak", { exact: false })).toBeInTheDocument();
   });
 
-  it('should not render comment form', () => {
-    const {queryByText} = render(
-        <UserContext.Provider value={{}}>
-          <BlogPost />
-        </UserContext.Provider>
+  it("should not render comment form", () => {
+    const { queryByText } = render(
+      <UserContext.Provider value={{}}>
+        <BlogPost />
+      </UserContext.Provider>
     );
 
     expect(queryByText("Dodaj komentarz")).not.toBeInTheDocument();

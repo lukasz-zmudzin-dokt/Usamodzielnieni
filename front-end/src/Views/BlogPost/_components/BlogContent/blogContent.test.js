@@ -89,9 +89,7 @@ describe("BlogContent", () => {
   });
 
   it("should match snapshot", () => {
-    const { container } = render(
-        <BlogContent post={post} user={admin} />
-    );
+    const { container } = render(<BlogContent post={post} user={admin} />);
 
     expect(container).toMatchSnapshot();
   });
