@@ -41,5 +41,5 @@ export {
   UserApprovalPage,
   MessagesList,
   Chats,
-  UserList
+  UserList,
 };

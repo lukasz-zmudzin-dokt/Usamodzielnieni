@@ -109,30 +109,34 @@ describe("UserProfile", () => {
     expect(history.location.pathname).toBe("/cvApproval", { exact: false });
   });
 
-  it('should render user list button', () => {
-    const {history, getByText} = renderWithRouter( staffTypes.CV,
-        <UserProfile/>
+  it("should render user list button", () => {
+    const { history, getByText } = renderWithRouter(
+      staffTypes.CV,
+      <UserProfile />
     );
 
-    expect(getByText('Zobacz listę wszystkich użytkowników')).toBeInTheDocument();
+    expect(
+      getByText("Zobacz listę wszystkich użytkowników")
+    ).toBeInTheDocument();
 
-    fireEvent.click(getByText('Zobacz listę wszystkich użytkowników'));
+    fireEvent.click(getByText("Zobacz listę wszystkich użytkowników"));
 
-    expect(history.location.pathname).toBe("/userList", {exact: false})
+    expect(history.location.pathname).toBe("/userList", { exact: false });
   });
 
-  it('should render no buttons', () => {
-    const {queryByText} = render(
-        <UserContext.Provider value={{type: "Standard"}}>
-          <MemoryRouter>
-            <UserProfile />
-          </MemoryRouter>
-        </UserContext.Provider>
+  it("should render no buttons", () => {
+    const { queryByText } = render(
+      <UserContext.Provider value={{ type: "Standard" }}>
+        <MemoryRouter>
+          <UserProfile />
+        </MemoryRouter>
+      </UserContext.Provider>
     );
 
-    expect(queryByText('Zobacz listę wszystkich użytkowników')).not.toBeInTheDocument();
-    expect(queryByText('Zarejestruj administratora')).not.toBeInTheDocument();
-    expect(queryByText('Zobacz CV do akceptacji')).not.toBeInTheDocument();
-  })
-
+    expect(
+      queryByText("Zobacz listę wszystkich użytkowników")
+    ).not.toBeInTheDocument();
+    expect(queryByText("Zarejestruj administratora")).not.toBeInTheDocument();
+    expect(queryByText("Zobacz CV do akceptacji")).not.toBeInTheDocument();
+  });
 });
