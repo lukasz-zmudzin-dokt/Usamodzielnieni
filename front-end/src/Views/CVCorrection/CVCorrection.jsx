@@ -23,7 +23,7 @@ const CVCorrection = () => {
       }
     };
     loadCV();
-  }, [id, token, url]);
+  }, [id, token]);
 
   return (
     <Container>
