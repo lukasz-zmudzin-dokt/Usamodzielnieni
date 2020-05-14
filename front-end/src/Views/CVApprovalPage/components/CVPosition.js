@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { UserContext } from "context";
 import { Alert, Button, Col, Row } from "react-bootstrap";
-import { Redirect } from "react-router-dom";
+import { IndexLinkContainer } from "react-router-bootstrap";
 import { acceptCV } from "Views/CVApprovalPage/functions/acceptCV";
 import { getCVUrl } from "Views/CVApprovalPage/functions/getCVUrl";
 import { DetailsItem } from "components";
@@ -31,16 +31,10 @@ const handleAcceptCV = async (e, token, cvId, setError, setAccepted) => {
   }
 };
 
-const improveCV = (e, setRedirect) => {
-  e.preventDefault();
-  setRedirect(true);
-};
-
 const CVPosition = (props) => {
   const context = useContext(UserContext);
   const cv = props.cv;
   const [error, setError] = useState(false);
-  const [redirect, setRedirect] = useState(false);
   const [accepted, setAccepted] = useState(false);
 
   const message = error ? (
@@ -66,32 +60,30 @@ const CVPosition = (props) => {
       </DetailsItem>
       <Col className="align-self-center d-flex justify-content-end">
         <Button
-          variant="primary m-1 p-1"
+          variant="primary m-1"
+          size="sm"
           className="btnDownload"
           onClick={(e) => showCV(e, context.token, cv.cv_id, setError)}
         >
           Pokaż CV
         </Button>
         <Button
-          variant="success m-1 p-1"
+          variant="success m-1"
           className="btnAccept"
+          size="sm"
           onClick={(e) =>
             handleAcceptCV(e, context.token, cv.cv_id, setError, setAccepted)
           }
         >
           Akceptuj
         </Button>
-        <Button
-          disabled
-          variant="warning m-1 p-1"
-          className="btnImprove"
-          onClick={(e) => improveCV(e, setRedirect)}
-        >
-          Zgłoś poprawki
-        </Button>
+        <IndexLinkContainer to={"/cvCorrection/" + cv.cv_id}>
+          <Button variant="warning m-1" className="btnImprove" size="sm">
+            Zgłoś poprawki
+          </Button>
+        </IndexLinkContainer>
       </Col>
       {message ? message : null}
-      {redirect ? <Redirect to={"/cvEditor/" + cv.cv_id} /> : null}
     </Row>
   );
 };
