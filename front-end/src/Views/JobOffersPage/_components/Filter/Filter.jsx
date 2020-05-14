@@ -97,18 +97,6 @@ const Filter = ({ setFilters, count, disabled }) => {
           type="date"
           id="minExpirationDate"
         />
-
-        <FormGroup
-          as={Col}
-          xs={12}
-          md={4}
-          header="Ilość ofert na stronie"
-          val={pageSize}
-          setVal={setPageSize}
-          type="number"
-          id="pageSize"
-          length={{ min: 1, max: 100 }}
-        />
         <FormGroup
           as={Col}
           xs={12}
@@ -163,7 +151,9 @@ const Filter = ({ setFilters, count, disabled }) => {
       {count !== 0 && (
         <small className="search__countText">{`Ilość znalezionych ofert: ${count}`}</small>
       )}
-      {user.type === "Employer" && user.data && user.data.status === 'Verified' ? (
+      {user.type === "Employer" &&
+      user.data &&
+      user.data.status === "Verified" ? (
         <IndexLinkContainer as={Button} to="/offerForm">
           <Button variant="success" className="mt-2">
             Dodaj ofertę
