@@ -4,4 +4,10 @@ import CompanyDataForm from "./Company/companyDataForm";
 import AccountForm from "./Account/accountForm";
 import TypeSelection from "./TypeSelection/TypeSelection";
 
-export {HomeDataForm, AccountForm, CompanyDataForm, PersonalDataForm, TypeSelection};
+export {
+  HomeDataForm,
+  AccountForm,
+  CompanyDataForm,
+  PersonalDataForm,
+  TypeSelection,
+};

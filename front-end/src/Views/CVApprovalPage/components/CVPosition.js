@@ -1,10 +1,10 @@
 import React, { useContext, useState } from "react";
 import { UserContext } from "context";
 import { Alert, Button, Col, Row } from "react-bootstrap";
-import {IndexLinkContainer} from "react-router-bootstrap";
+import { IndexLinkContainer } from "react-router-bootstrap";
 import { acceptCV } from "Views/CVApprovalPage/functions/acceptCV";
 import { getCVUrl } from "Views/CVApprovalPage/functions/getCVUrl";
-import { DetailsItem } from 'components';
+import { DetailsItem } from "components";
 import proxy from "config/api";
 
 const showCV = async (e, token, cvId, setError) => {
@@ -13,8 +13,7 @@ const showCV = async (e, token, cvId, setError) => {
     const response = await getCVUrl(token, cvId);
 
     let url = proxy.plain + response;
-    window.open(url, '_blank');
-
+    window.open(url, "_blank");
   } catch (response) {
     setError(true);
   }
@@ -32,7 +31,6 @@ const handleAcceptCV = async (e, token, cvId, setError, setAccepted) => {
   }
 };
 
-
 const CVPosition = (props) => {
   const context = useContext(UserContext);
   const cv = props.cv;
@@ -40,9 +38,13 @@ const CVPosition = (props) => {
   const [accepted, setAccepted] = useState(false);
 
   const message = error ? (
-    <Alert variant="danger" className="p-1 m-1">Wystąpił błąd.</Alert>
+    <Alert variant="danger" className="p-1 m-1">
+      Wystąpił błąd.
+    </Alert>
   ) : accepted ? (
-    <Alert variant="success" className="p-1 m-1">Pomyślnie zaakceptowano CV.</Alert>
+    <Alert variant="success" className="p-1 m-1">
+      Pomyślnie zaakceptowano CV.
+    </Alert>
   ) : null;
 
   return (

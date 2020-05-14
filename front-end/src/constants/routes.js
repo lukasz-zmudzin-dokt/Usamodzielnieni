@@ -17,6 +17,8 @@ import {
   UserProfilePage,
   UserApprovalPage,
   CVCorrection,
+  MessagesList,
+  Chats,
 } from "Views";
 import { userTypes } from "./userTypes";
 import { staffTypes } from "./staffTypes";
@@ -34,7 +36,7 @@ export default [
     isPrivate: true,
     type: userTypes.STANDARD,
     exact: true,
-    userVerified: true
+    userVerified: true,
   },
   {
     path: paths.CV_EDITOR,
@@ -42,7 +44,7 @@ export default [
     isPrivate: true,
     type: userTypes.STANDARD,
     exact: true,
-    userVerified: true
+    userVerified: true,
   },
   {
     path: paths.REGISTER,
@@ -56,7 +58,7 @@ export default [
     isPrivate: true,
     type: userTypes.STAFF,
     group: staffTypes.VERIFICATION,
-    userVerified: true
+    userVerified: true,
   },
   {
     path: paths.FOOTER,
@@ -79,21 +81,21 @@ export default [
     component: JobOffersPage,
     exact: true,
     isPrivate: true,
-    type: undefined
+    type: undefined,
   },
   {
     path: paths.JOB_OFFER_DETAILS,
     component: JobOfferDetails,
     exact: true,
     isPrivate: true,
-    type: undefined
+    type: undefined,
   },
   {
     path: paths.OFFER_FORM,
     component: OfferForm,
     isPrivate: true,
     type: userTypes.EMPLOYER,
-    userVerified: true
+    userVerified: true,
   },
   {
     path: paths.CV_APPROVAL,
@@ -101,14 +103,14 @@ export default [
     isPrivate: true,
     type: userTypes.STAFF,
     group: staffTypes.CV,
-    userVerified: true
+    userVerified: true,
   },
   {
     path: paths.MY_OFFERS,
     component: MyOffersPage,
     isPrivate: true,
     type: userTypes.EMPLOYER,
-    userVerified: true
+    userVerified: true,
   },
   {
     path: paths.CONTACT_PAGE,
@@ -135,7 +137,7 @@ export default [
     type: userTypes.STAFF,
     group: staffTypes.BLOG_CREATOR,
     exact: true,
-    userVerified: true
+    userVerified: true,
   },
   {
     path: paths.BLOG_EDIT,
@@ -144,14 +146,14 @@ export default [
     type: userTypes.STAFF,
     group: staffTypes.BLOG_CREATOR,
     exact: true,
-    userVerified: true
+    userVerified: true,
   },
   {
     path: paths.MY_CVS,
     component: MyCVsPage,
     isPrivate: true,
     type: userTypes.STANDARD,
-    userVerified: true
+    userVerified: true,
   },
   {
     path: paths.USER_APPROVAL,
@@ -159,13 +161,29 @@ export default [
     isPrivate: true,
     type: userTypes.STAFF,
     group: staffTypes.VERIFICATION,
-    userVerified: true
+    userVerified: true,
   },
   {
     path: paths.CV_CORRECTION,
     component: CVCorrection,
     isPrivate: true,
     type: userTypes.STAFF,
-    group: staffTypes.CV
-  }
+    group: staffTypes.CV,
+  },
+  {
+    path: paths.CHATS,
+    component: Chats,
+    isPrivate: true,
+    type: undefined,
+    exact: true,
+    userVerified: true,
+  },
+  {
+    path: paths.CHAT_DETAILS,
+    component: MessagesList,
+    isPrivate: true,
+    type: undefined,
+    exact: true,
+    userVerified: true,
+  },
 ];

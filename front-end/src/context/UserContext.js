@@ -6,11 +6,11 @@ export const UserContext = React.createContext({
   token: undefined,
   data: undefined,
   login: () => {},
-  logout: () => {}
+  logout: () => {},
 });
 const cookies = new Cookies();
 
-export const UserProvider = props => {
+export const UserProvider = (props) => {
   const [type, setType] = useState(cookies.get("type"));
   const [token, setToken] = useState(cookies.get("token"));
   const [data, setData] = useState(cookies.get("data"));
@@ -34,7 +34,7 @@ export const UserProvider = props => {
       setToken(undefined);
       setType(undefined);
       setData(undefined);
-    }
+    },
   };
   return <UserContext.Provider value={user} {...props} />;
 };

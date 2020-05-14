@@ -16,7 +16,9 @@ import BlogPostForm from "Views/BlogPostForm";
 import MyCVsPage from "Views/MyCVsPage";
 import CVApprovalPage from "Views/CVApprovalPage";
 import UserApprovalPage from "Views/UserApprovalPage";
-import CVCorrection from 'Views/CVCorrection';
+import CVCorrection from "Views/CVCorrection";
+import MessagesList from "Views/MessagesList";
+import Chats from "Views/Chats";
 
 export {
   UserProfilePage,
@@ -37,5 +39,7 @@ export {
   MyCVsPage,
   CVApprovalPage,
   UserApprovalPage,
-  CVCorrection
+  CVCorrection,
+  MessagesList,
+  Chats,
 };
