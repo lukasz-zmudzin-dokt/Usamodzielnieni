@@ -10,7 +10,7 @@ export const setCVName = async (token, cvId, cvName) => {
         name: cvName
     };
 
-    const response = await fetch(url, { method: "PUT", headers, data });
+    const response = await fetch(url, { method: "PUT", headers, body: JSON.stringify(data) });
     console.log(response);
     if(response.status === 200) {
         return await response.json();
