@@ -1,10 +1,10 @@
 import proxy from "config/api";
 
 export const getPost = async (id) => {
-    let url = `${proxy.blog}blogpost/${id}`;
-    const headers = {
-        "Content-Type": "application/json"
-    };
+  let url = `${proxy.blog}blogpost/${id}`;
+  const headers = {
+    "Content-Type": "application/json",
+  };
 
   const response = await fetch(url, { method: "GET", headers });
 
