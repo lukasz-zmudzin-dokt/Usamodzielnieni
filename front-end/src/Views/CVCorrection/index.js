@@ -1,1 +1,1 @@
-export {default} from './CVCorrection'
+export { default } from "./CVCorrection";
