@@ -6,7 +6,7 @@ import {
   setUserApproved,
   setUserRejected,
 } from "Views/UserApprovalPage/functions/apiCalls";
-import { DetailsItem } from "components";
+import { DetailsItem, DeletionModal } from "components";
 
 const UserToApprove = ({ user, activeUser }) => {
   const context = useContext(UserContext);
@@ -15,11 +15,14 @@ const UserToApprove = ({ user, activeUser }) => {
     []
   );
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
   const [approved, setApproved] = useState(false);
   const [rejected, setRejected] = useState(false);
-  const [err, setErr] = useState(false);
-
   const alertC = useRef(useContext(AlertContext));
+  const [showRejectModal, setShowReject] = useState(false);
+  const [rejectConfirmed, setRejectConfirmed] = useState(false);
+  //const [showAcceptModal, setShowAccept] = useState(false);
+  //const [acceptConfirmed, setAcceptConfirmed] = useState(false);
 
   useEffect(() => {
     const loadUserDetails = async (token, userId) => {
@@ -33,7 +36,7 @@ const UserToApprove = ({ user, activeUser }) => {
           setUserDetailsFacilityAddress(res.company_address);
         }
       } catch (err) {
-        setErr(true);
+        setError(true);
       }
       setLoading(false);
     };
@@ -48,24 +51,29 @@ const UserToApprove = ({ user, activeUser }) => {
       let res = await setUserApproved(token, userId);
       if (res === "User successfully verified.") {
         setApproved(true);
-        alertC.current.showAlert("Konto zatwierdzone pomyślnie", "success");
       }
     } catch (err) {
-      alertC.current.showAlert("Błąd. Nie udało się zatwierdzić użytkownika.");
+      setError(true);
     }
   };
 
-  const rejectUser = async (e, token, userId) => {
-    e.preventDefault();
+  //const rejectUser = async (e, token, userId) => {
+  const rejectUser = async (token, userId) => {
+    //e.preventDefault();
     try {
       let res = await setUserRejected(token, userId);
       if (res === "User status successfully set to not verified.") {
-        alertC.current.showAlert("Konto odrzucone pomyślnie", "success");
         setRejected(true);
       }
     } catch (err) {
-      alertC.current.showAlert("Błąd. Nie udało się odrzucić użytkownika.");
+      setError(true);
     }
+  };
+
+  const handleOnClick = (e) => {
+    if (e.target.id === "reject") setShowReject(true);
+    /*else if(e.target.id === "accept")
+            setShowAccept(true);*/
   };
 
   const address =
@@ -116,11 +124,23 @@ const UserToApprove = ({ user, activeUser }) => {
     </Alert>
   ) : null;
 
+  if (rejectConfirmed) rejectUser(context.token, user.id);
+  /*if(acceptConfirmed)
+        approveUser(context.token, user.id);*/
+
   if (message) {
     return message;
   } else {
     return (
       <Card.Body>
+        {DeletionModal(
+          showRejectModal,
+          setShowReject,
+          setRejectConfirmed,
+          "Czy na pewno chcesz odrzucić tego użytkownika?",
+          "Odrzuć",
+          "Anuluj"
+        )}
         <ListGroup variant="flush">
           <ListGroup.Item>
             <Row>
@@ -149,13 +169,15 @@ const UserToApprove = ({ user, activeUser }) => {
               <Button
                 onClick={(e) => approveUser(e, context.token, user.id)}
                 variant="success"
+                id="accept"
               >
                 Akceptuj
               </Button>
               <Button
-                onClick={(e) => rejectUser(e, context.token, user.id)}
+                onClick={(e) => handleOnClick(e)}
                 variant="danger"
                 className="ml-3"
+                id="reject"
               >
                 Odrzuć
               </Button>

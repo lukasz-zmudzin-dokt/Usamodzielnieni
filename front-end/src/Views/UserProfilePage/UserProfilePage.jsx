@@ -9,6 +9,7 @@ import CVApprovalButton from "./components/CVApprovalButton/CVApprovalButton";
 import EmployerMyOffersButton from "./components/EmployerMyOffersButton/EmployerMyOffersButton";
 import AdminApproveUserButton from "./components/AdminApproveUserBuuton/AdminApproveUserButton";
 import { WithAlertContext } from "components";
+import AdminOfferApprovalButton from "./components/AdminOfferApprovalButton/AdminOfferApprovalButton";
 
 const names = {
   role: {
@@ -87,6 +88,7 @@ class UserProfilePage extends React.Component {
             <EmployerMyOffersButton user={this.context} />
             <AdminRegisterButton user={this.context} />
             <AdminApproveUserButton user={this.context} />
+            <AdminOfferApprovalButton user={this.context} />
             {this.context.type !== "Staff" &&
             this.context.data &&
             this.context.data.status !== "Verified" ? (

@@ -30,6 +30,9 @@ const handleAcceptCV = async (e, token, cvId, alertC) => {
     } catch (response) {
         alertC.current.showAlert("Nie udało się zaakceptować użytkownika.");
     }
+  } catch (response) {
+    setError(true);
+  }
 };
 
 const CVPosition = (props) => {
