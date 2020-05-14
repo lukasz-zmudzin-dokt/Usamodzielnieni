@@ -17,7 +17,6 @@ exports[`OfferForm renders correctly 1`] = `
     >
       <form
         class="offerForm__form"
-        data-testid="form"
         novalidate=""
       >
         <div
@@ -61,13 +60,14 @@ exports[`OfferForm renders correctly 1`] = `
             <input
               class="form-control"
               data-testid="default"
+              disabled=""
               id="company_name"
               maxlength="70"
               minlength="1"
               placeholder="Nazwa firmy"
               required=""
               type="text"
-              value=""
+              value="abc"
             />
             <div
               class="invalid-feedback"
@@ -87,13 +87,14 @@ exports[`OfferForm renders correctly 1`] = `
             <input
               class="form-control"
               data-testid="default"
+              disabled=""
               id="company_address"
               maxlength="200"
               minlength="1"
               placeholder="Adres firmy"
               required=""
               type="text"
-              value=""
+              value="ul. def 1, 00-000 abc"
             />
             <div
               class="invalid-feedback"
@@ -128,10 +129,13 @@ exports[`OfferForm renders correctly 1`] = `
                 lubuskie
               </option>
               <option>
-                mazowieckie
+                łódzkie
               </option>
               <option>
                 małopolskie
+              </option>
+              <option>
+                mazowieckie
               </option>
               <option>
                 opolskie
@@ -146,6 +150,12 @@ exports[`OfferForm renders correctly 1`] = `
                 pomorskie
               </option>
               <option>
+                śląskie
+              </option>
+              <option>
+                świętokrzyskie
+              </option>
+              <option>
                 warmińsko-mazurskie
               </option>
               <option>
@@ -154,16 +164,31 @@ exports[`OfferForm renders correctly 1`] = `
               <option>
                 zachodniopomorskie
               </option>
+            </select>
+          </div>
+          <div
+            class="form-group"
+          >
+            <label
+              class="form-label"
+              for="type"
+            >
+              Wymiar pracy
+            </label>
+            <select
+              class="form-control"
+              id="type"
+              required=""
+            >
               <option>
-                łódzkie
-              </option>
-              <option>
-                śląskie
-              </option>
-              <option>
-                świętokrzyskie
+                IT
               </option>
             </select>
+            <div
+              class="invalid-feedback"
+            >
+              Podaj wymiar pracy np. staż,praca
+            </div>
           </div>
         </div>
         <div
@@ -196,6 +221,30 @@ exports[`OfferForm renders correctly 1`] = `
           >
             <label
               class="form-label"
+              for="category"
+            >
+              Branża
+            </label>
+            <select
+              class="form-control"
+              id="category"
+              required=""
+            >
+              <option>
+                xd
+              </option>
+            </select>
+            <div
+              class="invalid-feedback"
+            >
+              Podaj branżę np. IT, marketing
+            </div>
+          </div>
+          <div
+            class="form-group"
+          >
+            <label
+              class="form-label"
               for="expiration_date"
             >
               Ważne do:
@@ -212,6 +261,7 @@ exports[`OfferForm renders correctly 1`] = `
                   <input
                     class="form-control"
                     id="expiration_date"
+                    placeholder="Ważne do:"
                     required=""
                     type="text"
                     value=""
@@ -225,8 +275,7 @@ exports[`OfferForm renders correctly 1`] = `
           class="w-100 justify-content-center align-items-center m-0 row"
         >
           <button
-            class="btn btn-secondary"
-            data-testid="submitBtn"
+            class="btn btn-primary"
             type="submit"
           >
             Dodaj

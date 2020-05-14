@@ -1,0 +1,173 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BlogPage should match snapshot 1`] = `
+<div>
+  <div
+    class="container"
+  >
+    <div
+      class="card"
+    >
+      <h2
+        class="card-header"
+      >
+        Blogi
+      </h2>
+      <form
+        class="ml-3 mr-3 mb-3"
+      >
+        <div
+          class="form-row"
+        >
+          <div
+            class="form-group col-md-6 col-12"
+          >
+            <label
+              class="form-label"
+              for="category"
+            >
+              Kategoria
+            </label>
+            <select
+              class="form-control"
+              id="category"
+            >
+              <option
+                disabled=""
+              >
+                -- Wybierz --
+              </option>
+              <option>
+                abcd
+              </option>
+            </select>
+          </div>
+          <div
+            class="form-group col-md-6 col-12"
+          >
+            <label
+              class="form-label"
+              for="tag"
+            >
+              Tag
+            </label>
+            <select
+              class="form-control"
+              id="tag"
+            >
+              <option
+                disabled=""
+              >
+                -- Wybierz --
+              </option>
+              <option>
+                abcd
+              </option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <button
+            class="mr-3 btn btn-primary"
+            type="submit"
+          >
+            Filtruj posty
+          </button>
+          <button
+            class="mr-3 btn btn-outline-primary"
+            type="button"
+          >
+            Wyczyść filtry
+          </button>
+        </div>
+        <div>
+          <small
+            class="blog__countText"
+          >
+            Ilość znalezionych postów: 2
+          </small>
+        </div>
+      </form>
+      <div
+        class="ml-3 mr-3 card-columns"
+      >
+        <a
+          class="sBlogPost__link"
+          href="/blog/blogpost/1"
+        >
+          <div
+            class="card"
+          >
+            <div
+              class="card-body"
+            >
+              <h3
+                class="card-title"
+              >
+                tytuł
+              </h3>
+              <p
+                class="card-text"
+              >
+                summary
+              </p>
+            </div>
+            <div
+              class="card-footer"
+            >
+              <small>
+                Tagi:
+              </small>
+              <span
+                class="ml-1 badge badge-info"
+              >
+                tag
+              </span>
+            </div>
+          </div>
+        </a>
+        <a
+          class="sBlogPost__link"
+          href="/blog/blogpost/2"
+        >
+          <div
+            class="card"
+          >
+            <div
+              class="card-body"
+            >
+              <h3
+                class="card-title"
+              >
+                tytuł2
+              </h3>
+              <p
+                class="card-text"
+              >
+                summary2
+              </p>
+            </div>
+            <div
+              class="card-footer"
+            >
+              <small>
+                Tagi:
+              </small>
+              <span
+                class="ml-1 badge badge-info"
+              >
+                tag
+              </span>
+              <span
+                class="ml-1 badge badge-info"
+              >
+                abcd
+              </span>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+`;

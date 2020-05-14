@@ -1,104 +1,197 @@
 import {
-  UserProfilePage,
-  LoginPage,
-  RegisterPage,
-  Footer,
+  BlogPage,
+  BlogPost,
+  BlogPostForm,
+  ContactPage,
+  CVApprovalPage,
   CVEditorPage,
+  Footer,
+  JobOfferDetails,
+  JobOffersPage,
+  LoginPage,
   Menu,
-  PasswordResetPrompt,
-  NewPasswordPage,
+  MyCVsPage,
+  MyOffersPage,
   OfferForm,
-  MyOffersPage
+  RegisterPage,
+  UserProfilePage,
+  UserApprovalPage,
+  CVCorrection,
+  MessagesList,
+  Chats,
+  OfferApprovalPage,
 } from "Views";
-
-const paths = {
-  DASHBOARD: "/",
-  CV_EDITOR: "/cvEditor",
-  REGISTER: "/newAccount",
-  FOOTER: "/footer",
-  LOGIN: "/login",
-  USER: "/user",
-  PASSWORD_RESET: "/forgottenPassword",
-  NEW_PASSWORD: "/newPassword",
-  OFFER_FORM: "/offerForm",
-  JOB_OFFERS: "/jobOffers",
-  CV_APPROVAL: "/cvApproval",
-  MY_OFFERS: "/myOffers"
-};
-
-export const userTypes = {
-  STANDARD: "Standard",
-  STAFF: "Staff",
-  EMPLOYER: "Employer"
-};
+import { userTypes } from "./userTypes";
+import { staffTypes } from "./staffTypes";
+import { paths } from "./paths";
 
 export default [
   {
     path: paths.DASHBOARD,
     component: Menu,
-    exact: true
+    exact: true,
+  },
+  {
+    path: paths.CV_CREATOR,
+    component: CVEditorPage,
+    isPrivate: true,
+    type: userTypes.STANDARD,
+    exact: true,
+    userVerified: true,
   },
   {
     path: paths.CV_EDITOR,
     component: CVEditorPage,
     isPrivate: true,
-    type: userTypes.STANDARD
+    type: userTypes.STANDARD,
+    exact: true,
+    userVerified: true,
   },
   {
     path: paths.REGISTER,
     component: RegisterPage,
-    exact: true
+    exact: true,
+  },
+  {
+    path: paths.REGISTER_ADMIN,
+    component: RegisterPage,
+    exact: true,
+    isPrivate: true,
+    type: userTypes.STAFF,
+    group: staffTypes.VERIFICATION,
+    userVerified: true,
   },
   {
     path: paths.FOOTER,
     component: Footer,
-    exact: true
+    exact: true,
   },
   {
     path: paths.LOGIN,
     component: LoginPage,
-    exact: true
+    exact: true,
   },
   {
     path: paths.USER,
     component: UserProfilePage,
     isPrivate: true,
-    type: undefined
-  },
-  {
-    path: paths.PASSWORD_RESET,
-    component: PasswordResetPrompt,
-    exact: true
-  },
-  {
-    path: paths.NEW_PASSWORD,
-    component: NewPasswordPage,
-    exact: true
+    type: undefined, // jeżeli jest undefined to znaczy że jest dostępne dla wszystkich typów konta
   },
   {
     path: paths.JOB_OFFERS,
-    component: UserProfilePage, // tu trzeba zmienić komponent
+    component: JobOffersPage,
+    exact: true,
     isPrivate: true,
-    type: userTypes.EMPLOYER
+    type: undefined,
+  },
+  {
+    path: paths.JOB_OFFER_DETAILS,
+    component: JobOfferDetails,
+    exact: true,
+    isPrivate: true,
+    type: undefined,
   },
   {
     path: paths.OFFER_FORM,
     component: OfferForm,
     isPrivate: true,
-    type: userTypes.EMPLOYER
+    type: userTypes.EMPLOYER,
+    userVerified: true,
   },
   {
     path: paths.CV_APPROVAL,
-    component: UserProfilePage, // tu trzeba zmienić komponent
+    component: CVApprovalPage,
     isPrivate: true,
-    type: userTypes.STAFF
+    type: userTypes.STAFF,
+    group: staffTypes.CV,
+    userVerified: true,
   },
   {
     path: paths.MY_OFFERS,
     component: MyOffersPage,
     isPrivate: true,
-    type: userTypes.EMPLOYER
-  }
+    type: userTypes.EMPLOYER,
+    userVerified: true,
+  },
+  {
+    path: paths.CONTACT_PAGE,
+    component: ContactPage,
+  },
+  {
+    path: paths.BLOG_POST,
+    component: BlogPost,
+    isPrivate: true,
+    type: undefined,
+    exact: true,
+  },
+  {
+    path: paths.BLOG_PAGE,
+    component: BlogPage,
+    isPrivate: true,
+    type: undefined,
+    exact: true,
+  },
+  {
+    path: paths.BLOG_FORM,
+    component: BlogPostForm,
+    isPrivate: true,
+    type: userTypes.STAFF,
+    group: staffTypes.BLOG_CREATOR,
+    exact: true,
+    userVerified: true,
+  },
+  {
+    path: paths.BLOG_EDIT,
+    component: BlogPostForm,
+    isPrivate: true,
+    type: userTypes.STAFF,
+    group: staffTypes.BLOG_CREATOR,
+    exact: true,
+    userVerified: true,
+  },
+  {
+    path: paths.MY_CVS,
+    component: MyCVsPage,
+    isPrivate: true,
+    type: userTypes.STANDARD,
+    userVerified: true,
+  },
+  {
+    path: paths.USER_APPROVAL,
+    component: UserApprovalPage,
+    isPrivate: true,
+    type: userTypes.STAFF,
+    group: staffTypes.VERIFICATION,
+    userVerified: true,
+  },
+  {
+    path: paths.CV_CORRECTION,
+    component: CVCorrection,
+    isPrivate: true,
+    type: userTypes.STAFF,
+    group: staffTypes.CV,
+  },
+  {
+    path: paths.CHATS,
+    component: Chats,
+    isPrivate: true,
+    type: undefined,
+    exact: true,
+    userVerified: true,
+  },
+  {
+    path: paths.CHAT_DETAILS,
+    component: MessagesList,
+    isPrivate: true,
+    type: undefined,
+    exact: true,
+    userVerified: true,
+  },
+  {
+    path: paths.OFFER_APPROVAL,
+    component: OfferApprovalPage,
+    isPrivate: true,
+    type: userTypes.STAFF,
+    group: staffTypes.JOBS,
+  },
 ];
-
-export { paths };

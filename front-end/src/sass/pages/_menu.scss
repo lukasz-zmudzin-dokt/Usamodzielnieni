@@ -1,0 +1,42 @@
+.menu-background {
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  min-height: calc(100vh - #{$nav-marginD});
+  flex-direction: column;
+}
+
+.menu-button-small {
+  margin-right: 40px;
+  margin-left: 40px;
+}
+.btn.menu-button-big {
+  padding: 10px;
+  width: 300px;
+  margin-right: 40px;
+  margin-left: 40px;
+  font-size: xx-large;
+}
+.menu-button-row {
+  margin-top: 50px;
+  flex-direction: column;
+}
+.menu-logo {
+  width: inherit;
+}
+
+@media (max-width: 767px) {
+  .menu-button-big {
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  .menu-button-small {
+    width: 80vw;
+    margin-bottom: 20px;
+  }
+  .menu-background {
+    background-size: cover;
+    background-image: url("../../assets/menu-backdrop.png");
+    min-height: calc(100vh - #{$nav-marginM});
+  }
+}

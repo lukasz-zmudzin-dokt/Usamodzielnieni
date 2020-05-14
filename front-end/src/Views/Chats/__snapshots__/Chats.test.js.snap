@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Chats should render without crashing 1`] = `
+<div>
+  <div
+    class="container"
+  >
+    <div
+      class="card"
+    >
+      <h2
+        class="card-header"
+      >
+        Najnowsze wiadomości
+      </h2>
+      <div
+        class="list-group list-group-flush"
+      >
+        <div
+          class="list-group-item"
+        >
+          <div>
+            Wiadomość 1
+          </div>
+        </div>
+        <div
+          class="list-group-item"
+        >
+          <div>
+            Wiadomość 2
+          </div>
+        </div>
+        <div
+          class="list-group-item"
+        >
+          <div>
+            Wiadomość 3
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

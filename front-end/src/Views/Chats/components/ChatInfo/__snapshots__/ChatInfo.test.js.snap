@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ChatInfo should render without crashing 1`] = `
+<div>
+  <div
+    class="chatInfo row"
+  >
+    <div
+      class="chatInfo__picture col-auto"
+    >
+      <div>
+        UserPicture
+      </div>
+    </div>
+    <div
+      class="col"
+    >
+      <h5>
+        Nazwa chatu
+      </h5>
+      <a
+        class="btn btn-primary"
+        href="/chats/123"
+      >
+        Pokaż szczegóły
+      </a>
+    </div>
+  </div>
+</div>
+`;

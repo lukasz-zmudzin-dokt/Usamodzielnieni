@@ -1,111 +1,96 @@
 import React from "react";
-import { Row, Col, Card, Container, ListGroup, ListGroupItem } from "react-bootstrap";
-import "./style.css";
+import {Alert, Card, Container} from "react-bootstrap";
+import UserDetails from "Views/UserProfilePage/components/UserDetails";
+import UserBasicInfo from "Views/UserProfilePage/components/UserBasicInfo";
+import { UserContext } from "context";
+import { getUserData } from "Views/UserProfilePage/functions/getUserData.js";
+import AdminRegisterButton from "./components/AdminRegisterButton/AdminRegisterButton";
+import CVApprovalButton from "./components/CVApprovalButton/CVApprovalButton";
+import EmployerMyOffersButton from "./components/EmployerMyOffersButton/EmployerMyOffersButton";
+import AdminApproveUserButton from "./components/AdminApproveUserBuuton/AdminApproveUserButton";
+import AdminOfferApprovalButton from "./components/AdminOfferApprovalButton/AdminOfferApprovalButton";
 
 const names = {
-    role: {
-        admin: "Administrator",
-        employer: "Pracodawca",
-        common: "Podopieczny"
-    },
-    property: {
-        username: "Nazwa użytkownika",
-        role: "Rola",
-        firstName: "Imię",
-        lastName: "Nazwisko",
-        email: "E-mail",
-        phoneNumber: "Numer telefonu"
-    }
-}
-
-class UserIcon extends React.Component {
-    // tymczasowe - potrzebne jakieś zdjęcie lub ikona użytkownika
-    render() {
-        return (
-            <svg width="80" height="80">
-                <circle cx="40" cy="40" r="37" stroke="black" strokeWidth="3" fill="white" />
-                <circle cx="40" cy="30" r="10" fill="black" />
-                <path d="M 20 60 q 20 -30 40 0" fill="black" />
-            </svg>
-        );
-    }
-}
-
-class UserProperty extends React.Component {
-    render() {
-        const { user, property } = this.props;
-
-        return (
-            <ListGroupItem className="property">
-                <Row>
-                    <Col xs="12" sm="auto"><div className="property__title">{names.property[property]}:</div></Col>
-                    <Col>{user[property]}</Col>
-                </Row>
-            </ListGroupItem>
-        );
-    }
-}
-
-class UserBasicInfo extends React.Component {
-    render() {
-        const { firstName, lastName, role } = this.props.user;
-        return (
-
-            <Row className="text-center text-sm-left">
-                <Col xs="12" sm="auto"><UserIcon /></Col>
-                <Col>
-                    <div><h5>{firstName + " " + lastName}</h5></div>
-                    <div>{names.role[role]}</div>
-                </Col>
-            </Row>
-        );
-    }
-}
-
-class UserDetails extends React.Component {
-    render() {
-        const { user } = this.props;
-        const ignore = ["firstName", "lastName", "role"];
-
-        const userProperties = Object.keys(user).map(key => {
-            return !ignore.find(i => i === key)
-                ? <UserProperty key={key} user={user} property={key} />
-                : null;
-        });
-
-        return (
-            <ListGroup className="list-group-flush">
-                {userProperties}
-            </ListGroup>
-        );
-    }
-}
+  role: {
+    admin: "Administrator",
+    employer: "Pracodawca",
+    common: "Podopieczny"
+  },
+  property: {
+    username: "Nazwa użytkownika",
+    role: "Rola",
+    firstName: "Imię",
+    lastName: "Nazwisko",
+    email: "E-mail",
+    phoneNumber: "Numer telefonu"
+  }
+};
 
 class UserProfilePage extends React.Component {
-    state = {
-        user: {
-            username: "user1",
-            role: "common",
-            firstName: "Jan",
-            lastName: "Kowalski",
-            email: "jan.kowalski@pw.edu.pl",
-            phoneNumber: "+48123456789"
-        }
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      user: {
+        username: "",
+        role: "",
+        firstName: "",
+        lastName: "",
+        email: ""
+      },
+      error: false
+    };
+  }
 
-    render() {
-        return (
-            <Container>
-                <Card className="user_profile_card">
-                    <Card.Header className="user_card_title"><h3>Mój profil</h3></Card.Header>
-                    <Card.Body>
-                        <UserBasicInfo user={this.state.user} />
-                    </Card.Body>
-                    <UserDetails user={this.state.user} />
-                </Card>
-            </Container>
-        );
+  componentDidMount() {
+    this.getData();
+  };
+
+  getData = async () => {
+    try {
+      const res = await getUserData(this.context.token, this);
+      this.setState({
+        user: {
+          username: res.data.username,
+          firstName: res.data.first_name,
+          lastName: res.data.last_name,
+          email: res.data.email,
+          role: res.type
+        }
+      });
+    } catch (res) {
+      this.setState({error: true})
     }
+  };
+
+
+  render() {
+    return (
+      <Container>
+        <Card className="user_profile_card">
+          <Card.Header className="user_card_title">
+            <h3>Mój profil</h3>
+          </Card.Header>
+          <Card.Body>
+            <UserBasicInfo error={this.state.error} user={this.state.user} names={names} />
+          </Card.Body>
+          <UserDetails user={this.state.user} names={names} />
+          <Card.Body className="text-center">
+            <CVApprovalButton user={this.context} />
+            <EmployerMyOffersButton user={this.context} />
+            <AdminRegisterButton user={this.context} />
+            <AdminApproveUserButton user={this.context} />
+            <AdminOfferApprovalButton user={this.context} />
+            {this.context.type !== 'Staff' && this.context.data && this.context.data.status !== 'Verified' ?
+              <Alert variant="info">Nie masz jeszcze dostępu do wszystkich funkcji aplikacji. Poczekaj na weryfikację swojego konta.</Alert> :
+                null
+            }
+          </Card.Body>
+        </Card>
+      </Container>
+    );
+  }
 }
+
+UserProfilePage.contextType = UserContext;
 
 export default UserProfilePage;
