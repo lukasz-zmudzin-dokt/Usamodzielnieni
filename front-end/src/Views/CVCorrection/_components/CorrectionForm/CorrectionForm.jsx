@@ -5,7 +5,6 @@ import { sendFeedback } from "Views/CVCorrection/functions";
 import { useHistory } from "react-router-dom";
 
 const CorrectionForm = ({ id, token }) => {
-  const [fail, setFail] = useState(false);
   const [msg, setMsg] = useState("");
   const [disabled, setDisabled] = useState(false);
   const [feedback, setFeedback] = useState({
@@ -37,24 +36,16 @@ const CorrectionForm = ({ id, token }) => {
         await sendFeedback(id, token, feedback);
         return history.push("/cvApproval");
       } catch (err) {
-        setFail(true);
         setMsg("Błąd serwera.");
       }
     } else {
-      setFail(true);
       setMsg("Dodaj minimalnie jedną uwagę.");
     }
 
     setDisabled(false);
   };
 
-  const message = msg ? (
-    fail ? (
-      <Alert variant="danger">{msg}</Alert>
-    ) : (
-      <Alert variant="success">{msg}</Alert>
-    )
-  ) : null;
+  const message = msg ? <Alert variant="danger">{msg}</Alert> : null;
 
   return (
     <Form onSubmit={submit} className="CVCorrection__form">
