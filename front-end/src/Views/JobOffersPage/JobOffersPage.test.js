@@ -23,8 +23,7 @@ describe("JobOffersPage", () => {
           switch (init.method) {
             case "GET":
               if (
-                input ===
-                  proxy.job + "enums/categories" ||
+                input === proxy.job + "enums/categories" ||
                 input === proxy.job + "enums/types"
               ) {
                 resolve({
@@ -180,7 +179,8 @@ describe("JobOffersPage", () => {
       await waitForElement(() => getAllByText("Pokaż szczegóły"));
 
       expect(fetch).toHaveBeenCalledWith(
-        proxy.job + "job-offers/?page=1&page_size=10&min_expiration_date=2020-05-05",
+        proxy.job +
+          "job-offers/?page=1&page_size=10&min_expiration_date=2020-05-05",
         {
           headers: {
             Authorization: "Token undefined",
@@ -242,7 +242,8 @@ describe("JobOffersPage", () => {
       });
 
       expect(fetch).toHaveBeenCalledWith(
-        proxy.job + "job-offers/?page=1&page_size=21&voivodeship=lubelskie&min_expiration_date=2020-12-31&categories=abc&types=xd",
+        proxy.job +
+          "job-offers/?page=1&page_size=21&voivodeship=lubelskie&min_expiration_date=2020-12-31&categories=abc&types=xd",
         {
           headers: {
             Authorization: "Token undefined",
