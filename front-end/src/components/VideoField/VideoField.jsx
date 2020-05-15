@@ -33,10 +33,10 @@ const VideoField = ({ url, id }) => {
 
   return (
     videoID && (
-      <>
+      <div className="videoField__container">
         <YouTube videoId={videoID} opts={opts} onReady={onReady} />
         {conditional && <ChangeVideo id={id} token={user.token} />}
-      </>
+      </div>
     )
   );
 };

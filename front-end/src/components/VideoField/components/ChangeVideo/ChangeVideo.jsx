@@ -31,7 +31,9 @@ const ChangeVideo = ({ id, token }) => {
 
   return (
     <OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
-      <Button variant="primary">Zmień film</Button>
+      <Button variant="primary" className="videoField__button">
+        Zmień film
+      </Button>
     </OverlayTrigger>
   );
 };
