@@ -5,20 +5,14 @@ import React from "react";
 
 describe('PasswordResetPrompt', () => {
     let apiFail;
-    let apiResponseOK;
 
     beforeAll(() => {
-        jest.fn().mockImplementation((input, init) => {
+        global.fetch = jest.fn().mockImplementation((input, init) => {
             return new Promise((resolve, reject) => {
                 if(apiFail) {
                     resolve({status: 500});
-                } else if (init.method === "POST") {
-                    resolve({
-                        status: 201,
-                        json: () => Promise.resolve(apiResponseOK)
-                    })
                 } else {
-                    reject({});
+                    resolve({status: 200})
                 }
             });
         });
@@ -38,67 +32,50 @@ describe('PasswordResetPrompt', () => {
         expect(container).toMatchSnapshot();
     });
 
-    it('should change value of form', () => {
-        const {getByDisplayValue, getByPlaceholderText} = render (
-            <MemoryRouter>
-                <PasswordResetPrompt />
-            </MemoryRouter>
-        );
-
-        fireEvent.change(getByPlaceholderText("Email", {exact: false}), {
-            target: {value: "jarzynek21@wp.pl"}
-        });
-
-        expect(getByDisplayValue("jarzynek21@wp.pl")).toBeInTheDocument();
-    });
-
     it('should get call from API', async () => {
-        const {container, getByPlaceholderText, getByTestId} = render(
+        const {getByText, getByPlaceholderText} = render(
             <MemoryRouter>
                 <PasswordResetPrompt />
             </MemoryRouter>
         );
 
         fireEvent.change(getByPlaceholderText("Email", {exact: false}), {
-            target: {value: "jarzynek21@wp.pl"}
+            target: {value: "qwe@wp.pl"}
         });
 
-        fireEvent.click(getByTestId("sendMailBtn", {exact: false}));
-        await waitForElement(() => container.setCorrect());
-        expect(container.setCorrect()).toHaveBeenCalledTimes(1);
+        fireEvent.click(getByText("Wyślij"));
+        await waitForElement(() => getByText("Jeżeli Twoje konto istnieje", {exact: false}));
+        expect(fetch).toHaveBeenCalledTimes(1);
+        expect(getByText("Jeżeli Twoje konto istnieje", {exact: false})).toBeInTheDocument();
     });
 
-    it('should render callback message', async () => {
-        const {getByPlaceholderText, getByTestId} = render(
+    it('should render alert on api fail', async () => {
+        apiFail = true;
+        const {getByText, getByPlaceholderText} = render(
             <MemoryRouter>
                 <PasswordResetPrompt />
             </MemoryRouter>
         );
 
         fireEvent.change(getByPlaceholderText("Email", {exact: false}), {
-            target: {value: "jarzynek21@wp.pl"}
+            target: {value: "qwe@wp.pl"}
         });
 
-        fireEvent.click(getByTestId("sendMailBtn", {exact: false}));
-        await waitForElement(() => getByTestId("submit_message"));
-        expect(getByTestId("submit_message", {exact: false})).toBeInTheDocument();
+        fireEvent.click(getByText("Wyślij"));
+        await waitForElement(() => getByText("Coś poszło nie tak."));
+        expect(getByText("Coś poszło nie tak.")).toBeInTheDocument();
     });
 
-    it('should redirect to next step onClick', async () => {
-        const {component, getByPlaceholderText, getByTestId} = render(
+    it('should not call fetch on empty field', () => {
+        const {getByText} = render(
             <MemoryRouter>
                 <PasswordResetPrompt />
             </MemoryRouter>
         );
 
-        fireEvent.change(getByPlaceholderText("Email", {exact: false}), {
-            target: {value: "jarzynek21@wp.pl"}
-        });
+        fireEvent.click(getByText("Wyślij"));
 
-        fireEvent.click(getByTestId("sendMailBtn", {exact: false}));
-        await waitForElement(() => getByTestId("submit_message"));
-
-        fireEvent.click(getByTestId("btn_redirect", {exact: false}));
-        await waitForElement(() => component.renderRedirect()).toHaveBeenCalledTimes(1);
+        expect(fetch).toHaveBeenCalledTimes(0);
     });
+
 });

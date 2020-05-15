@@ -11,7 +11,7 @@ export const handleConnection = async (email) => {
         body: JSON.stringify(object)
     });
 
-    if (res.status === 200 || res.status === 201) {
+    if (res.status === 200) {
         return true;
     } else {
         throw res.status;
