@@ -35,7 +35,7 @@ describe("BlogPost", () => {
       data: {
         email: "qwe@qwe.fgh",
         group_type: ["staff_blog_creator"],
-        status: "Verified"
+        status: "Verified",
       },
       token: "123",
     };
@@ -135,17 +135,17 @@ describe("BlogPost", () => {
     expect(queryByText("Dodaj komentarz")).not.toBeInTheDocument();
   });
 
-  it('should render new comment after submit', async () => {
-    const {getByText, getByPlaceholderText} = render(
-        <UserContext.Provider value={user}>
-          <BlogPost />
-        </UserContext.Provider>
+  it("should render new comment after submit", async () => {
+    const { getByText, getByPlaceholderText } = render(
+      <UserContext.Provider value={user}>
+        <BlogPost />
+      </UserContext.Provider>
     );
 
     await waitForElement(() => fetch);
     expect(getByText("Dodaj komentarz")).toBeInTheDocument();
     fireEvent.change(getByPlaceholderText("Treść komentarza"), {
-      target: {value: "komentarz testowy"}
+      target: { value: "komentarz testowy" },
     });
     fireEvent.click(getByText("Prześlij"));
 
