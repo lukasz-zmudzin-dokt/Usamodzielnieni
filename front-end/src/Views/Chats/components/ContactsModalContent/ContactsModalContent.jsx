@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Container, Card, ListGroup, Alert } from 'react-bootstrap';
+import { Container, ListGroup, Alert, Row } from 'react-bootstrap';
 import { UserContext } from 'context';
 import proxy from 'config/api';
 import { Contact } from './Contact';
@@ -23,7 +23,8 @@ const getContacts = async (token) => {
 const mapContacts = (contacts) => contacts.map(contact => ({
     id: contact.id,
     first_name: contact.first_name,
-    last_name: contact.last_name
+    last_name: contact.last_name,
+    role: contact.role
     // tu nie ma modelu
 }))
 
@@ -54,22 +55,19 @@ const ContactsModalContent = () => {
 
     const msg = error ? <Alert variant="danger">Nie można załadować kontaktów</Alert> :
         isContactsLoading ? <Alert variant="info">Ładowanie listy kontaktów</Alert> :
-            contacts.length === 0 && <Alert variant="info">Nie masz żadnych kontaktów</Alert>;
+            undefined;
 
     return (
         <Container>
-            <Card>
-                <Card.Header>Lista kontaktów</Card.Header>
-                {msg ? <Card.Body>{msg}</Card.Body> : (
+            {msg ? <Row>{msg}</Row> : (
                     <ListGroup variant="flush">
                         {contacts.map((contact) => (
                             <ListGroup.Item key={contact.id}>
-                                <Contact contact={contact} />   
+                                <Contact contact={contact} />
                             </ListGroup.Item>
                         ))}
                     </ListGroup>
-                )} 
-            </Card>
+                )}
         </Container>
     )
 }

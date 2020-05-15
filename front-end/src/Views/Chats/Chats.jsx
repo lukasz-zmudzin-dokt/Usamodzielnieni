@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, Fab } from 'react';
 import { Container, Card, ListGroup, Alert, Modal, Button } from 'react-bootstrap';
 import { UserContext } from 'context';
 import proxy from 'config/api';
@@ -82,7 +82,7 @@ const Chats = () => {
         )}
         {/*<ChatForm sendMessage={msg=>console.log(msg)}/>*/}
       </Card>
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={show} onHide={handleClose} dialogClassName="newmsg-modal" scrollable="true">
         <Modal.Header closeButton>
           <Modal.Title>Wybierz osobę</Modal.Title>
         </Modal.Header>
