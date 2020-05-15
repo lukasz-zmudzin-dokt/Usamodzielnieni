@@ -44,6 +44,7 @@ const FormGroup = ({
         return (
           <Form.Control
             as={type}
+            placeholder="Wpisz treść... "
             onChange={setInput}
             value={val}
             required={required}
@@ -103,7 +104,7 @@ const FormGroup = ({
   return (
     <Form.Group
       controlId={id}
-      className={type === "textarea" ? "offerForm__textContainer" : ""}
+      className={type === "textarea" ? "textContainer" : ""}
       {...rest}
     >
       <Form.Label>{header}</Form.Label>

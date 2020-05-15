@@ -24,6 +24,7 @@ const getChats = async (token) => {
 const mapChats = (chats) => chats.map(chat => ({
   id: chat.id,
   name: chat.name,
+  user: chat.user
   // TODO
 }))
 
@@ -98,4 +99,4 @@ const Chats = () => {
   );
 }
 
-export default Chats
+export default Chats;
