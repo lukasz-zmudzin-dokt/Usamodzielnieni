@@ -1,24 +1,26 @@
 import React, { useState, useEffect, useContext } from "react";
 import { FormGroup } from "components";
-import { Form, Card, Button, Container, Row } from "react-bootstrap";
+import { Form, Card, Button, Container, Row, Alert } from "react-bootstrap";
 import { getUserData } from "./functions/changeData";
 import { useHistory, useParams } from "react-router-dom";
 import { UserContext } from "context";
+import { FacilityForm, CompanyForm } from "./components";
 
 const ChangeData = () => {
   const [data, setData] = useState({
     email: "",
-    firstName: "",
-    lastName: "",
-    phoneNumber: "",
-    facilityName: "",
-    facilityAddress: {
+    first_name: "",
+    last_name: "",
+    phone_number: "",
+    facility_name: "",
+    facility_address: {
       city: "",
       street: "",
-      streetNumber: "",
-      postalCode: "",
+      street_number: "",
+      postal_code: "",
     },
   });
+  const [loading, setLoading] = useState(false);
 
   const history = useHistory();
   const { id } = useParams();
@@ -28,36 +30,24 @@ const ChangeData = () => {
     history.push("/userList");
   };
 
-  const mapDetails = (object) => {
-    return {
-      username: object.username,
-      email: object.email,
-      firstName: object.first_name,
-      lastName: object.last_name,
-      phoneNumber: object.phone_number,
-      facilityAddress: object.facility_address,
-      ...object,
-    };
-  };
+  //standard b582b042-d6d8-4e57-9447-564a6748b4f7
+  //employer fe2c0fca-91a1-437d-846e-7fa6fe6e87ed
 
   useEffect(() => {
+    setLoading(true);
     const getData = async (token, id) => {
       try {
         const res = await getUserData(token, id);
-        const mappedRes = mapDetails(res);
-        setData(mappedRes);
+        console.log(res);
+
+        setData(res);
       } catch (err) {}
+      setLoading(false);
     };
     getData(user.token, id);
   }, [id, user.token]);
 
-  const {
-    firstName,
-    lastName,
-    phoneNumber,
-    facilityAddress,
-    facilityName,
-  } = data;
+  const { first_name, last_name, phone_number } = data;
 
   return (
     <Container>
@@ -80,96 +70,38 @@ const ChangeData = () => {
                 <Card.Body>
                   <FormGroup
                     header="Imię"
-                    setVal={(val) => setData({ ...data, firstName: val })}
-                    val={firstName}
+                    setVal={(val) => setData({ ...data, first_name: val })}
+                    val={first_name}
                     length={{ min: 1, max: 30 }}
                     id="firstName"
                   />
                   <FormGroup
                     header="Nazwisko"
-                    setVal={(val) => setData({ ...data, lastName: val })}
-                    val={lastName}
+                    setVal={(val) => setData({ ...data, last_name: val })}
+                    val={last_name}
                     length={{ min: 1, max: 30 }}
                     id="lastName"
                   />
                   <FormGroup
                     header="Numer telefonu"
                     type="tel"
-                    setVal={(val) => setData({ ...data, phoneNumber: val })}
-                    val={phoneNumber}
+                    setVal={(val) => setData({ ...data, phone_number: val })}
+                    val={phone_number}
                     invalid="Podaj numer telefonu w formacie: +48123123123"
                     pattern="[+]{1}[4]{1}[8]{1}[0-9]{3}[0-9]{3}[0-9]{3}"
                     id="phoneNumber"
                   />
                 </Card.Body>
               </Card>
-              <Card bg="light" className="changeData__wrapper__card">
-                <Card.Header>Adres placówki</Card.Header>
-                <Card.Body>
-                  <FormGroup
-                    header="Nazwa placówki"
-                    setVal={(val) => setData({ ...data, facilityName: val })}
-                    val={facilityName}
-                    length={{ min: 1, max: 100 }}
-                    id="facilityName"
-                  />
-                  <FormGroup
-                    header="Ulica"
-                    setVal={(val) =>
-                      setData({
-                        ...data,
-                        facilityAddress: { street: val, ...facilityAddress },
-                      })
-                    }
-                    val={facilityAddress.street}
-                    length={{ min: 1, max: 120 }}
-                    id="street"
-                  />
-                  <FormGroup
-                    header="Numer budynku"
-                    setVal={(val) =>
-                      setData({
-                        ...data,
-                        facilityAddress: {
-                          streetNumber: val,
-                          ...facilityAddress,
-                        },
-                      })
-                    }
-                    val={facilityAddress.streetNumber}
-                    length={{ min: 1, max: 20 }}
-                    id="streetNumber"
-                  />
-                  <FormGroup
-                    header="Nazwa miasta"
-                    setVal={(val) =>
-                      setData({
-                        ...data,
-                        facilityAddress: { city: val, ...facilityAddress },
-                      })
-                    }
-                    val={facilityAddress.city}
-                    length={{ min: 1, max: 40 }}
-                    id="city"
-                  />
-                  <FormGroup
-                    header="Kod pocztowy"
-                    setVal={(val) =>
-                      setData({
-                        ...data,
-                        facilityAddress: {
-                          postalCode: val,
-                          ...facilityAddress,
-                        },
-                      })
-                    }
-                    val={facilityAddress.postalCode}
-                    length={{ min: 1, max: 6 }}
-                    pattern="[0-9]{2}[-][0-9]{3}"
-                    id="postalCode"
-                  />
-                </Card.Body>
-              </Card>
+              {loading ? (
+                <Alert variant="info" className="changeData__loading">
+                  Ładowanie...
+                </Alert>
+              ) : data.nip ? (
+                <CompanyForm data={data} setData={setData} />
+              ) : (
+                <FacilityForm data={data} setData={setData} />
+              )}
             </div>
             <Row className="ml-0 mr-0 mt-3 justify-content-center">
               <Button type="submit" variant="primary">
