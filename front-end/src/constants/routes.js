@@ -20,8 +20,8 @@ import {
   MessagesList,
   Chats,
   OfferApprovalPage,
-    PasswordResetPrompt,
-    NewPasswordPage
+  PasswordResetPrompt,
+  NewPasswordPage,
 } from "Views";
 import { userTypes } from "./userTypes";
 import { staffTypes } from "./staffTypes";
@@ -200,12 +200,12 @@ export default [
     path: paths.PASSWORD_RESET,
     component: PasswordResetPrompt,
     type: undefined,
-    exact: true
+    exact: true,
   },
   {
     path: paths.NEW_PASSWORD,
     component: NewPasswordPage,
     type: undefined,
-    exact: true
-  }
+    exact: true,
+  },
 ];
