@@ -1,13 +1,14 @@
 import {Alert, Button, Col, ListGroup, Row} from "react-bootstrap";
 import CVStatus from "./CVStatus";
 import {IndexLinkContainer} from "react-router-bootstrap";
-import React, {useState} from "react";
-import {getCVUrl} from "../functions/getCVUrl";
+import React, { useState } from "react";
+import { getCVUrl } from "../functions/getCVUrl";
 import proxy from "config/api";
-import {DeletionModal} from "components";
+import { DeletionModal } from "components";
 import ChangeCVNameModal from "./ChangeCVNameModal.jsx";
 
-const showCV = async (cvId, handleShowing, token) => {
+const showCV = async (e, cvId, handleShowing, token) => {
+    e.preventDefault();
     let r;
     try {
         r = await getCVUrl(token, cvId);
@@ -31,8 +32,11 @@ const CVSection = ({cv, token, cutCV}) => {
         const res = await cutCV(cv.cv_id);
         if (res === false) {
             setDisabled(false);
-        };
+        }
     };
+
+    const setCVNewName = (CVNewName) => { cv.name = CVNewName; }
+    const showCVNewNameModal =() => { setShowChangeNameModal(true); }
 
     const handleOnClick = () => {
         setShowModal(true);
@@ -48,8 +52,8 @@ const CVSection = ({cv, token, cutCV}) => {
                 <Col xs={12} md={4}>{cv.name}</Col>
                 <Col xs={12} md={2}><CVStatus was_reviewed={cv.was_reviewed} is_verified={cv.is_verified} /></Col>
                 <Col xs={12} md={6} className="text-right">
-                    <Button variant="primary" onClick={e => showCV(cv.cv_id, setError, token)} className="m-1">Zobacz CV</Button>
-                    <Button variant="info" onClick={e => setShowChangeNameModal(true)} className="m-1">Zmień nazwę</Button>
+                    <Button variant="primary" onClick={e => showCV(e, cv.cv_id, setError, token)} className="m-1">Zobacz CV</Button>
+                    <Button variant="info" onClick={showCVNewNameModal} className="m-1">Zmień nazwę</Button>
                     <IndexLinkContainer to={"/cvEditor/" + cv.cv_id}>
                         <Button variant="info" className="m-1">Edytuj</Button>
                     </IndexLinkContainer>
@@ -59,7 +63,7 @@ const CVSection = ({cv, token, cutCV}) => {
             {error ? <Alert variant="danger" className="m-3">
                 Ups, coś poszło nie tak. Nie można wyświetlić CV.
             </Alert> : null}
-            <ChangeCVNameModal show={showChangeNameModal} setShow={setShowChangeNameModal} cvId={cv.cv_id} />
+            <ChangeCVNameModal show={showChangeNameModal} setShow={setShowChangeNameModal} cvId={cv.cv_id} setCVNewName={setCVNewName} />
         </ListGroup.Item>
     );
 

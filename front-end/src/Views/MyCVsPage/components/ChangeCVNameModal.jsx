@@ -1,58 +1,51 @@
-import React, {useContext, useState} from "react";
+import React, { useContext, useState } from "react";
 import { UserContext } from "context";
-import {Button, Form, FormControl, Modal, Row} from "react-bootstrap";
-import {setCVName} from "../functions/setCVName";
+import { Button, Form, Modal } from "react-bootstrap";
+import { setCVName } from "../functions/setCVName";
 import Alert from "react-bootstrap/Alert";
 
-const ChangeCVNameModal = ({ show, setShow, cvId }) => {
+const ChangeCVNameModal = ({ show, setShow, cvId, setCVNewName }) => {
 
     const context = useContext(UserContext);
     const [status, setStatus] = useState("new");
-    let newCVName = "";
+    let newCVName = {};
 
-    const handleOnClick = (e) => {
-        e.preventDefault();
+    const handleClose = () => {
         setShow(false);
-    };
+        setStatus("new");
+    }
 
-    const changeCVName = async (e) => {
+    const changeCVName = async (e, cvName) => {
         e.preventDefault();
-        console.log(cvId);
-        console.log(newCVName.value);
-        console.log(context.token);
         try {
-            const res = await setCVName(context.token, cvId, newCVName.value);
-            console.log(res);
-            if(res === "CV name changed to: " + newCVName.value) {
+            const res = await setCVName(context.token, cvId, cvName);
+            if(res === "CV name changed to: " + cvName) {
                 setStatus("success");
-                console.log(status);
-                setTimeout(setShow(false), 2000);
+                setCVNewName(cvName);
             } else {
                 setStatus("fail");
-                console.log(status);
             }
-
         } catch (err) {
             setStatus("fail");
-            console.log(status);
         }
+        setTimeout(handleClose, 1500);
     }
 
     return (
-        <Modal show={show}>
+        <Modal show={show} onHide={handleClose}>
             <Modal.Body>
                 Zmień nazwę CV
             </Modal.Body>
             <Modal.Footer>
                 {status === "new" ? (
-                    <Form className="w-100" onSubmit={e => changeCVName(e)}>
+                    <Form className="w-100" onSubmit={e => changeCVName(e, newCVName.value)}>
                         <Form.Row>
                             <Form.Group controlId="formCVNewName" className="w-100">
                                 <Form.Control placeholder="Nowa nazwa CV" ref={input => newCVName = input} />
                             </Form.Group>
                         </Form.Row>
                         <Form.Row className="justify-content-end">
-                            <Button className="m-1" id="cancel" variant="info" onClick={e => handleOnClick(e)}>
+                            <Button className="m-1" id="cancel" variant="info" onClick={handleClose}>
                                 Zostaw bieżącą nazwę
                             </Button>
                             <Button className="m-1" id="confirm" type="submit" variant="primary">
@@ -62,10 +55,12 @@ const ChangeCVNameModal = ({ show, setShow, cvId }) => {
                     </Form>
                 ) : status === "success" ? (
                     <Alert className="w-100" variant="success">
-                        Pomyślnie zmieniono zanwę CV.
+                        Pomyślnie zmieniono nazwę CV.
                     </Alert>
                 ) : (
-                    <div />
+                    <Alert className="w-100" variant="danger">
+                        Wystąpił błąd.
+                    </Alert>
                 )}
             </Modal.Footer>
         </Modal>
