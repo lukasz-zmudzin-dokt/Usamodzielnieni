@@ -14,7 +14,6 @@ import { userTypes } from "constants/userTypes";
 import proxy from "config/api";
 
 class HeaderTemplate extends React.Component {
-
   constructor(props) {
     super(props);
 
@@ -29,11 +28,10 @@ class HeaderTemplate extends React.Component {
     const { lastScrollY } = this.state;
     const currentScrollY = window.scrollY;
 
-
     if (currentScrollY > lastScrollY) {
-      this.setState({ slide: '-100px' });
+      this.setState({ slide: "-100px" });
     } else {
-      this.setState({ slide: '0px' });
+      this.setState({ slide: "0px" });
     }
     this.setState({ lastScrollY: currentScrollY });
   };
@@ -66,10 +64,10 @@ class HeaderTemplate extends React.Component {
                 userIncluded &&
                 (!pos.verified || userVerified)) ||
               adminIncluded ? (
-                <IndexLinkContainer to={path({})} key={pos.name}>
-                  <Nav.Link>{pos.name}</Nav.Link>
-                </IndexLinkContainer>
-              ) : null;
+              <IndexLinkContainer to={path({})} key={pos.name}>
+                <Nav.Link>{pos.name}</Nav.Link>
+              </IndexLinkContainer>
+            ) : null;
           })}
         </Nav>
       );
@@ -131,20 +129,25 @@ class HeaderTemplate extends React.Component {
   };
 
   componentDidMount() {
-    window.addEventListener('scroll', this.handleScroll);
+    window.addEventListener("scroll", this.handleScroll);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('scroll', this.handleScroll);
+    window.removeEventListener("scroll", this.handleScroll);
   }
 
   render() {
     return (
-      <Navbar id="navbar_menu" variant="dark" fixed="top" expand="xl"
+      <Navbar
+        id="navbar_menu"
+        variant="dark"
+        fixed="top"
+        expand="xl"
         style={{
           transform: `translate(0, ${this.state.slide})`,
-          transition: 'transform 90ms linear',
-        }}>
+          transition: "transform 90ms linear",
+        }}
+      >
         <Navbar.Brand id="navbar_logo">
           <IndexLinkContainer to="/">
             <img
