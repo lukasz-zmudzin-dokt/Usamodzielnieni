@@ -186,4 +186,13 @@ describe("BlogContent", () => {
 
     expect(history.location.pathname).toEqual("/blog/newPost/" + post.id);
   });
+
+  it('should render alternative title', () => {
+    post.title = "";
+    const {getByText} = render(
+        <BlogContent post={post} user={admin} />
+    );
+
+    expect(getByText("Tytuł posta")).toBeInTheDocument();
+  });
 });

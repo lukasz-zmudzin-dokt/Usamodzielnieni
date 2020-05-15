@@ -98,11 +98,11 @@ describe("BlogPage", () => {
     );
 
     await waitForElement(() =>
-      getByText("Wystąpił błąd podczas ładowania postów.")
+      getByText("Wystąpił błąd podczas ładowania", {exact: false})
     );
 
     expect(
-      getByText("Wystąpił błąd podczas ładowania postów.")
+      getByText("Wystąpił błąd podczas ładowania", {exact: false})
     ).toBeInTheDocument();
   });
 
