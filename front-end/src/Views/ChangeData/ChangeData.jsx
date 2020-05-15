@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { FormGroup } from "components";
 import { Form, Card, Button, Container, Row, Alert } from "react-bootstrap";
-import { getUserData } from "./functions/changeData";
+import { getUserData, sendFixedData } from "./functions/changeData";
 import { useHistory, useParams } from "react-router-dom";
 import { UserContext } from "context";
 import { FacilityForm, CompanyForm } from "./components";
@@ -49,6 +49,13 @@ const ChangeData = () => {
 
   const { first_name, last_name, phone_number } = data;
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await sendFixedData(user.token, id, data);
+    } catch (err) {}
+  };
+
   return (
     <Container>
       <Card>
@@ -63,7 +70,7 @@ const ChangeData = () => {
           Popraw dane użytkownika:{" "}
         </Card.Header>
         <Card.Body>
-          <Form className="changeData__form">
+          <Form className="changeData__form" onSubmit={(e) => handleSubmit(e)}>
             <div className="changeData__wrapper">
               <Card bg="light" className="changeData__wrapper__card">
                 <Card.Header>Dane osobowe</Card.Header>
