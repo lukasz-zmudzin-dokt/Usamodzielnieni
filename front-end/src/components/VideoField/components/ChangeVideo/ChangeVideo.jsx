@@ -16,7 +16,7 @@ const ChangeVideo = ({ id, token }) => {
       <Popover.Title as="h3">Wklej nowy url:</Popover.Title>
       <Popover.Content as={Form} onSubmit={(e) => handleSubmit(e)}>
         <Form.Control
-          type="email"
+          type="text"
           value={newUrl}
           onChange={(e) => setNewUrl(e.target.value)}
           placeholder="Podaj link do filmu"
