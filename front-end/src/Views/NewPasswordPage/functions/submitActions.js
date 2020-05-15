@@ -10,7 +10,7 @@ export const handlePasswordChange = async (object) => {
         body: JSON.stringify(object)
     });
 
-    if (res.status === 201 || res.status === 200) {
+    if (res.status === 200) {
         return await res.json();
     } else {
         throw res.status;

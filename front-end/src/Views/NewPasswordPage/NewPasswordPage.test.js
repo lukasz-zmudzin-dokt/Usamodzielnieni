@@ -1,25 +1,32 @@
 import NewPasswordPage from "./NewPasswordPage";
-import PasswordResetPrompt from "../PasswordResetPrompt/PasswordResetPrompt";
 import React from "react";
-import {MemoryRouter} from "react-router-dom";
+import {Router} from "react-router-dom";
 import {waitForElement, fireEvent, render} from "@testing-library/react";
+import { createMemoryHistory } from 'history';
 
-describe('PasswordChange', () => {
+const renderWithRouter = (
+    ui,
+    {
+        route = "/newPassword/1",
+        history = createMemoryHistory({ initialEntries: [route] }),
+    } = {}
+) => {
+    return {
+        ...render( <Router history={history}>{ui}</Router> ),
+        history,
+    };
+};
+
+describe('NewPasswordPage', () => {
      let apiFail;
-     let apiResponseOK;
 
      beforeAll(() => {
-         jest.fn().mockImplementation((input, init) => {
+         global.fetch = jest.fn().mockImplementation((input, init) => {
              return new Promise((resolve, reject) => {
                  if(apiFail) {
                      resolve({status: 500});
-                 } else if (init.method === "POST") {
-                     resolve({
-                         status: 201,
-                         json: () => Promise.resolve(apiResponseOK)
-                     })
                  } else {
-                     reject({});
+                     resolve({status: 200, json: () => Promise.resolve("hasło ok")});
                  }
              });
          });
@@ -30,82 +37,64 @@ describe('PasswordChange', () => {
         jest.clearAllMocks();
      });
 
+     it('should match snapshot', () => {
+         const {container} = renderWithRouter(
+             <NewPasswordPage />
+         );
 
+         expect(container).toMatchSnapshot();
+     });
 
-    describe('NewPasswordPage', () => {
-        it('should match snapshot', () => {
-            const {container} = render(
-                <MemoryRouter>
-                    <PasswordResetPrompt />
-                </MemoryRouter>
-            );
-            expect(container).toMatchSnapshot();
-        });
+     it('should should render message on non matching password', () => {
+         const {getByPlaceholderText, getByText} = renderWithRouter(
+             <NewPasswordPage />
+         );
 
-        it('should get call from API', async () => {
-            const {container, getByPlaceholderText, getByTestId} = render(
-                <MemoryRouter>
-                    <NewPasswordPage />
-                </MemoryRouter>
-            );
+         fireEvent.change(getByPlaceholderText("Nowe hasło"), {
+             target: {value: "qweqweqwe"}
+         });
+         fireEvent.change(getByPlaceholderText("Powtórz hasło"), {
+             target: {value: "asdasdasd"}
+         });
 
-            fireEvent.change(getByPlaceholderText("Token", {exact: false}), {
-                target: {value: "abc123"}
-            });
-            fireEvent.change(getByPlaceholderText("Nowe hasło", {exact: false}), {
-                target: {value: "qwe123qwe"}
-            });
-            fireEvent.change(getByPlaceholderText("Powtórz hasło", {exact: false}), {
-                target: {value: "qwe123qwe"}
-            });
+         fireEvent.click(getByText("Wyślij"));
+         expect(getByText("Hasła się nie zgadzają")).toBeInTheDocument();
+         expect(fetch).toHaveBeenCalledTimes(0);
+     });
 
-            fireEvent.click(getByTestId("btn_change_pass", {exact: false}));
-            await waitForElement(() => container.setPasswordChanged());
-            expect(container.setPasswordChanged()).toHaveBeenCalledTimes(1);
-        });
+     it('should render alert on api fail', async () => {
+        apiFail = true;
+         const {getByPlaceholderText, getByText} = renderWithRouter(
+             <NewPasswordPage />
+         );
 
-        it('should render callback message', async () => {
-            const {getByPlaceholderText, getByTestId} = render(
-                <MemoryRouter>
-                    <NewPasswordPage />
-                </MemoryRouter>
-            );
+         fireEvent.change(getByPlaceholderText("Nowe hasło"), {
+             target: {value: "qweqweqwe"}
+         });
+         fireEvent.change(getByPlaceholderText("Powtórz hasło"), {
+             target: {value: "qweqweqwe"}
+         });
 
-            fireEvent.change(getByPlaceholderText("Token", {exact: false}), {
-                target: {value: "123abc"}
-            });
-            fireEvent.change(getByPlaceholderText("Nowe hasło", {exact: false}), {
-                target: {value: "qwe123qwe"}
-            });
-            fireEvent.change(getByPlaceholderText("Powtórz hasło", {exact: false}), {
-                target: {value: "qwe123qwe"}
-            });
+         fireEvent.click(getByText("Wyślij"));
+         await waitForElement(() => getByText("Coś poszło nie tak", {exact: false}));
+         expect(getByText("Coś poszło nie tak", {exact: false})).toBeInTheDocument();
+     });
 
-            fireEvent.click(getByTestId("btn_change_pass", {exact: false}));
-            await waitForElement(() => getByTestId("passMsg", {exact: false}));
-            expect(getByTestId("passMsg", {exact: false}).toBeInTheDocument());
-        });
+     it('should render alert on success and redirect', async () => {
+         const {history, getByPlaceholderText, getByText} = renderWithRouter(
+             <NewPasswordPage />
+         );
 
-        it('should redirect automatically', async () => {
-            const {container, getByPlaceholderText, getByTestId} = render(
-                <MemoryRouter>
-                    <NewPasswordPage />
-                </MemoryRouter>
-            );
+         fireEvent.change(getByPlaceholderText("Nowe hasło"), {
+             target: {value: "qweqweqwe"}
+         });
+         fireEvent.change(getByPlaceholderText("Powtórz hasło"), {
+             target: {value: "qweqweqwe"}
+         });
 
-            fireEvent.change(getByPlaceholderText("Token", {exact: false}), {
-                target: {value: "abc1234"}
-            });
-            fireEvent.change(getByPlaceholderText("Nowe hasło", {exact: false}), {
-                target: {value: "qwe123qwe"}
-            });
-            fireEvent.change(getByPlaceholderText("Powtórz hasło", {exact: false}), {
-                target: {value: "qwe123qwe"}
-            });
-
-            fireEvent.click(getByTestId("btn_change_pass", {exact: false}));
-            await waitForElement(() => container.redirectToLogin());
-            expect(container.redirectToLogin()).toHaveBeenCalledTimes(1);
-        })
-    })
+         fireEvent.click(getByText("Wyślij"));
+         await waitForElement(() => getByText("Hasło zostało zmienione", {exact: false}));
+         expect(getByText("Hasło zostało zmienione", {exact: false})).toBeInTheDocument();
+         //await expect(history.location.pathname).toBe("/login");
+    });
 });

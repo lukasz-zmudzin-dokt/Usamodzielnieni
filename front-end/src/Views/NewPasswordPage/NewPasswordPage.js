@@ -12,9 +12,10 @@ class NewPasswordPage extends React.Component {
             password: "",
             passwordR: "",
             validated: false,
-            password_changed: undefined,
+            password_changed: false,
             message: "",
-            redirect: false
+            redirect: false,
+            disabled: false
         };
     };
 
@@ -24,16 +25,6 @@ class NewPasswordPage extends React.Component {
             token: token
         });
     }
-
-    validatePassword = (new_password, new_passwordR) => {
-        if (new_password !== new_passwordR)
-            return "Hasła się nie zgadzają!";
-        else if (new_password.length < 8)
-            return "Hasło jest za krótkie!";
-        else {
-            return null;
-        }
-    };
 
     setDelayedRedirect = () => {
         setTimeout( () => {
@@ -57,17 +48,17 @@ class NewPasswordPage extends React.Component {
     handleSubmit = async (e) => {
         e.preventDefault();
         const {token, password, passwordR} = this.state;
-        const password_msg = this.validatePassword(password, passwordR);
         const form = e.currentTarget;
-        if (form.checkValidity() === false || password_msg !== null) {
+        this.setState({
+            disabled: true,
+            message: ""
+        });
+        if (form.checkValidity() === false || password !== passwordR) {
             this.setState({
-                validated: false,
-                message: password_msg
+                message: "Hasła się nie zgadzają",
+                disabled: false
             });
         } else {
-            this.setState({
-                validated: true
-            });
             const data = {
                 token: token,
                 password: password
@@ -83,12 +74,17 @@ class NewPasswordPage extends React.Component {
                 this.setState({
                     password_changed: false
                 })
+            } finally {
+                this.setState({
+                    validated: true,
+                    disabled: false
+                })
             }
         }
     };
 
     render() {
-        const { password, passwordR, validated, message, password_changed } = this.state;
+        const { password, passwordR, validated, message, password_changed, disabled } = this.state;
         const {handleBlur, handleSubmit, renderRedirect} = this;
         return (
             <Container className="loginPage">
@@ -100,7 +96,6 @@ class NewPasswordPage extends React.Component {
                         <Form
                             validated={validated}
                             onSubmit={handleSubmit}
-                            className="primary"
                         >
                             <Form.Group controlId="newPassword">
                                 <Form.Control
@@ -108,9 +103,9 @@ class NewPasswordPage extends React.Component {
                                     type="password"
                                     placeholder="Nowe hasło"
                                     required
-                                    defaultValue={password}
-                                    onChange={e => handleBlur(e)}
-                                    className="loginPage__input"
+                                    isInvalid={message !== ""}
+                                    value={password}
+                                    onChange={handleBlur}
                                     minLength="8"
                                 />
                             </Form.Group>
@@ -120,20 +115,20 @@ class NewPasswordPage extends React.Component {
                                     type="password"
                                     placeholder="Powtórz hasło"
                                     required
-                                    defaultValue={passwordR}
-                                    onChange={e => handleBlur(e)}
-                                    className="loginPage__input"
+                                    isInvalid={message !== ""}
+                                    value={passwordR}
+                                    onChange={handleBlur}
                                     minLength="8"
                                 />
                                 <Form.Control.Feedback type="invalid">
                                     {message}
                                 </Form.Control.Feedback>
                             </Form.Group>
-                            <Button variant="primary" className="loginPage__button" data-testid="btn_change_pass" type="submit">Wyślij</Button>
+                            <Button variant="primary" className="loginPage__button" disabled={disabled} type="submit">{disabled ? "Ładowanie..." : "Wyślij"}</Button>
                         </Form>
-                        <div className="message_pass_changed" data-testid="passMsg">
+                        <div className="message_pass_changed">
                             {
-                                password_changed ? (password_changed === true ? <Alert variant="success" className="msgText_correct">Hasło zostało zmienione. Przekierowuję...</Alert> :
+                                validated ? (password_changed ? <Alert variant="success" className="msgText_correct">Hasło zostało zmienione. Przekierowuję...</Alert> :
                                     <Alert variant="danger" className="msgText_fail">Coś poszło nie tak. Upewnij się, że Twój token nie wygasł.</Alert>) :
                                     null
                             }
