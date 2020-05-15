@@ -1,0 +1,30 @@
+.changeData__back {
+  position: absolute;
+  left: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.card-header.changeData__header {
+  position: relative;
+  padding: 0.75rem 41px;
+}
+
+.changeData__wrapper__card:nth-child(1) {
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+  .changeData__wrapper {
+    display: flex;
+    flex-direction: row;
+  }
+  .changeData__wrapper__card {
+    flex-grow: 1;
+  }
+
+  .changeData__wrapper__card:nth-child(1) {
+    margin-right: 1rem;
+    margin-bottom: 0;
+  }
+}

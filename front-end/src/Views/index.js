@@ -20,7 +20,7 @@ import CVCorrection from "Views/CVCorrection";
 import MessagesList from "Views/MessagesList";
 import Chats from "Views/Chats";
 import OfferApprovalPage from "Views/OfferApprovalPage";
-
+import ChangeData from "Views/ChangeData";
 export {
   UserProfilePage,
   LoginPage,
@@ -44,4 +44,5 @@ export {
   OfferApprovalPage,
   MessagesList,
   Chats,
+  ChangeData,
 };

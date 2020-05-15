@@ -24,7 +24,6 @@ class PersonalDataForm extends React.Component {
               placeholder="Imię"
               onChange={(e) => onChange(onBlur, data, e)}
               required
-              defaultValue={data && data.first_name}
               minLength="1"
               maxLength="30"
             />
@@ -37,7 +36,6 @@ class PersonalDataForm extends React.Component {
               name="last_name"
               type="text"
               placeholder="Nazwisko"
-              defaultValue={data && data.last_name}
               onChange={(e) => onChange(onBlur, data, e)}
               required
               minLength="1"
@@ -53,7 +51,6 @@ class PersonalDataForm extends React.Component {
               name="phone_number"
               type="tel"
               required
-              defaultValue={data && data.phone_number}
               pattern="[+]{1}[4]{1}[8]{1}[0-9]{3}[0-9]{3}[0-9]{3}"
               placeholder="Numer telefonu"
               onChange={(e) => onChange(onBlur, data, e)}

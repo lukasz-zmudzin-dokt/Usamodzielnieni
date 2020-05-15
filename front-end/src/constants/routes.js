@@ -20,6 +20,7 @@ import {
   MessagesList,
   Chats,
   OfferApprovalPage,
+  ChangeData,
 } from "Views";
 import { userTypes } from "./userTypes";
 import { staffTypes } from "./staffTypes";
@@ -196,7 +197,7 @@ export default [
   },
   {
     path: paths.CHANGE_DATA,
-    component: RegisterPage,
+    component: ChangeData,
     isPrivate: true,
     type: userTypes.STAFF,
     group: staffTypes.VERIFICATION,

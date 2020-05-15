@@ -10,12 +10,10 @@ import {
 } from "./components";
 import { UserContext } from "context";
 import { sendData } from "./functions/sendData";
-import { getUserData } from "./functions/changeData";
 
 class RegisterPage extends React.Component {
   constructor(props) {
     super(props);
-    this.routerParam = this.props.match.params.id;
     this.state = {
       personalData: null,
       homeData: null,
@@ -34,42 +32,6 @@ class RegisterPage extends React.Component {
       disabled: false,
     };
   }
-
-  componentDidMount() {
-    if (this.routerParam) {
-      this.setState({ disabled: true });
-      const getData = async (token, id) => {
-        try {
-          const res = await getUserData(token, id);
-          console.log({ ...res });
-          const {
-            street_number,
-            city,
-            postal_code,
-            street,
-          } = res.facility_address;
-          this.setState({
-            homeData: {
-              number: street_number,
-              city,
-              city_code: postal_code,
-              street,
-              name_of_place: res.facility_name,
-            },
-            personalData: {
-              first_name: res.first_name,
-              last_name: res.last_name,
-              phone_number: res.phone_number,
-            },
-          });
-        } catch (err) {}
-        this.setState({ disabled: false });
-      };
-      getData(this.context.token, this.routerParam);
-    }
-  }
-
-  sendFixedData = () => {};
 
   handleIncorrectResponse = (status) => {
     switch (status) {
@@ -164,8 +126,6 @@ class RegisterPage extends React.Component {
       account_type: this.state.account_type,
     };
 
-    console.log(data);
-
     const isOK = this.handleSubmit(data, e);
     this.setValidated();
     if (isOK) {
@@ -205,35 +165,24 @@ class RegisterPage extends React.Component {
       redirect,
       disabled,
     } = this.state;
-    const {
-      renderSection,
-      handleResponse,
-      renderRedirect,
-      routerParam,
-      sendFixedData,
-    } = this;
-
+    const { renderSection, handleResponse, renderRedirect } = this;
     return (
       <Container className="loginPage loginPage__register">
         <Card className="loginPage__card">
           <Card.Header as="h2" className="loginPage__header">
-            {routerParam ? "Zmień dane użytkownika" : "Rejestracja"}
+            Rejestracja
           </Card.Header>
           <Card.Body className="registerPage__body">
-            {routerParam ? null : (
-              <TypeSelection
-                isAdmin={this.props.match.params.role === "staff"}
-                selectType={this.selectType}
-                cutType={this.cutType}
-                current={this.state.account_type}
-              />
-            )}
+            <TypeSelection
+              isAdmin={this.props.match.params.role === "staff"}
+              selectType={this.selectType}
+              cutType={this.cutType}
+              current={this.state.account_type}
+            />
             <Form
               noValidate
               validated={validated}
-              onSubmit={
-                routerParam ? sendFixedData() : (e) => handleResponse(e)
-              }
+              onSubmit={(e) => handleResponse(e)}
               className="loginPage__form primary"
             >
               <section className="row">
@@ -242,35 +191,20 @@ class RegisterPage extends React.Component {
                   onBlur={(personalData) => this.setState({ personalData })}
                 />
                 {renderSection()}
-                {routerParam ? null : (
-                  <AccountForm
-                    data={accountData}
-                    disabled={disabled}
-                    onBlur={(accountData) => this.setState({ accountData })}
-                  />
-                )}
+                <AccountForm
+                  data={accountData}
+                  onBlur={(accountData) => this.setState({ accountData })}
+                />
               </section>
-              {routerParam ? (
-                <Button
-                  variant="primary"
-                  className="loginPage__button"
-                  type="submit"
-                  data-testid="submitBtn"
-                  disabled={disabled}
-                >
-                  {disabled ? "Ładowanie..." : "Popraw dane"}
-                </Button>
-              ) : (
-                <Button
-                  variant="primary"
-                  className="loginPage__button"
-                  type="submit"
-                  data-testid="submitBtn"
-                  disabled={disabled}
-                >
-                  {disabled ? "Ładowanie..." : "Utwórz konto"}
-                </Button>
-              )}
+              <Button
+                variant="primary"
+                className="loginPage__button"
+                type="submit"
+                data-testid="submitBtn"
+                disabled={disabled}
+              >
+                {disabled ? "Ładowanie..." : "Utwórz konto"}
+              </Button>
             </Form>
             {error_flag ? (
               <Alert
@@ -281,7 +215,7 @@ class RegisterPage extends React.Component {
                 {fail_message}
               </Alert>
             ) : null}
-            {routerParam ? null : this.props.match.params.role !== "staff" ? (
+            {this.props.match.params.role !== "staff" ? (
               <div className="loginPage__links">
                 <Link to="/login" className="loginPage__link">
                   Masz już konto? Zaloguj się!

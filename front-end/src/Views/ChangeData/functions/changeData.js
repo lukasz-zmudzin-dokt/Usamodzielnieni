@@ -17,4 +17,6 @@ const getUserData = async (token, id) => {
   return res.json();
 };
 
-export { getUserData };
+const sendFixedData = async () => {};
+
+export { getUserData, sendFixedData };
