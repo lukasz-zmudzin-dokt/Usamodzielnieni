@@ -76,3 +76,19 @@ const CompanyForm = ({ setData, data }) => {
 };
 
 export default CompanyForm;
+
+// <Form.Group controlId="formGroupCompanyNip" className="">
+//     <Form.Control
+//         name="company_nip"
+//         type="text"
+//         pattern={"[0-9]{9}" + this.getNipControlNum()}
+//         placeholder="NIP"
+//         onChange={(e) => onChange(onBlur, data, e)}
+//         required
+//         minLength="10"
+//         maxLength="10"
+//     />
+//     <Form.Control.Feedback type="invalid">
+//         Podaj prawidłowy NIP
+//             </Form.Control.Feedback>
+// </Form.Group>

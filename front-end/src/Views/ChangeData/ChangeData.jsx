@@ -8,7 +8,6 @@ import { FacilityForm, CompanyForm } from "./components";
 
 const ChangeData = () => {
   const [data, setData] = useState({
-    email: "",
     first_name: "",
     last_name: "",
     phone_number: "",
@@ -21,6 +20,7 @@ const ChangeData = () => {
     },
   });
   const [loading, setLoading] = useState(false);
+  const [err, setErr] = useState(false);
 
   const history = useHistory();
   const { id } = useParams();
@@ -38,10 +38,10 @@ const ChangeData = () => {
     const getData = async (token, id) => {
       try {
         const res = await getUserData(token, id);
-        console.log(res);
-
         setData(res);
-      } catch (err) {}
+      } catch (err) {
+        setErr(true);
+      }
       setLoading(false);
     };
     getData(user.token, id);
@@ -53,6 +53,7 @@ const ChangeData = () => {
     e.preventDefault();
     try {
       await sendFixedData(user.token, id, data);
+      return history.push("/userList");
     } catch (err) {}
   };
 
@@ -70,52 +71,61 @@ const ChangeData = () => {
           Popraw dane użytkownika:{" "}
         </Card.Header>
         <Card.Body>
-          <Form className="changeData__form" onSubmit={(e) => handleSubmit(e)}>
-            <div className="changeData__wrapper">
-              <Card bg="light" className="changeData__wrapper__card">
-                <Card.Header>Dane osobowe</Card.Header>
-                <Card.Body>
-                  <FormGroup
-                    header="Imię"
-                    setVal={(val) => setData({ ...data, first_name: val })}
-                    val={first_name}
-                    length={{ min: 1, max: 30 }}
-                    id="firstName"
-                  />
-                  <FormGroup
-                    header="Nazwisko"
-                    setVal={(val) => setData({ ...data, last_name: val })}
-                    val={last_name}
-                    length={{ min: 1, max: 30 }}
-                    id="lastName"
-                  />
-                  <FormGroup
-                    header="Numer telefonu"
-                    type="tel"
-                    setVal={(val) => setData({ ...data, phone_number: val })}
-                    val={phone_number}
-                    invalid="Podaj numer telefonu w formacie: +48123123123"
-                    pattern="[+]{1}[4]{1}[8]{1}[0-9]{3}[0-9]{3}[0-9]{3}"
-                    id="phoneNumber"
-                  />
-                </Card.Body>
-              </Card>
-              {loading ? (
-                <Alert variant="info" className="changeData__loading">
-                  Ładowanie...
-                </Alert>
-              ) : data.nip ? (
-                <CompanyForm data={data} setData={setData} />
-              ) : (
-                <FacilityForm data={data} setData={setData} />
-              )}
-            </div>
-            <Row className="ml-0 mr-0 mt-3 justify-content-center">
-              <Button type="submit" variant="primary">
-                Prześlij zmiany
-              </Button>
-            </Row>
-          </Form>
+          {err ? (
+            <Alert variant="danger">
+              Nie udało się pobrać danych użytkownika.
+            </Alert>
+          ) : (
+            <Form
+              className="changeData__form"
+              onSubmit={(e) => handleSubmit(e)}
+            >
+              <div className="changeData__wrapper">
+                <Card bg="light" className="changeData__wrapper__card">
+                  <Card.Header>Dane osobowe</Card.Header>
+                  <Card.Body>
+                    <FormGroup
+                      header="Imię"
+                      setVal={(val) => setData({ ...data, first_name: val })}
+                      val={first_name}
+                      length={{ min: 1, max: 30 }}
+                      id="firstName"
+                    />
+                    <FormGroup
+                      header="Nazwisko"
+                      setVal={(val) => setData({ ...data, last_name: val })}
+                      val={last_name}
+                      length={{ min: 1, max: 30 }}
+                      id="lastName"
+                    />
+                    <FormGroup
+                      header="Numer telefonu"
+                      type="tel"
+                      setVal={(val) => setData({ ...data, phone_number: val })}
+                      val={phone_number}
+                      invalid="Podaj numer telefonu w formacie: +48123123123"
+                      pattern="[+]{1}[4]{1}[8]{1}[0-9]{3}[0-9]{3}[0-9]{3}"
+                      id="phoneNumber"
+                    />
+                  </Card.Body>
+                </Card>
+                {loading ? (
+                  <Alert variant="info" className="changeData__loading">
+                    Ładowanie...
+                  </Alert>
+                ) : data.nip ? (
+                  <CompanyForm data={data} setData={setData} />
+                ) : (
+                  <FacilityForm data={data} setData={setData} />
+                )}
+              </div>
+              <Row className="ml-0 mr-0 mt-3 justify-content-center">
+                <Button type="submit" variant="primary">
+                  Prześlij zmiany
+                </Button>
+              </Row>
+            </Form>
+          )}
         </Card.Body>
       </Card>
     </Container>
