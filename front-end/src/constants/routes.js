@@ -194,4 +194,11 @@ export default [
     type: userTypes.STAFF,
     group: staffTypes.JOBS,
   },
+  {
+    path: paths.CHANGE_DATA,
+    component: RegisterPage,
+    isPrivate: true,
+    type: userTypes.STAFF,
+    group: staffTypes.VERIFICATION,
+  },
 ];

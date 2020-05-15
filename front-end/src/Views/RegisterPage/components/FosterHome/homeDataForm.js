@@ -22,6 +22,7 @@ class HomeDataForm extends React.Component {
               name="name_of_place"
               type="text"
               placeholder="Nazwa placówki"
+              defaultValue={data && data.name_of_place}
               onChange={(e) => onChange(onBlur, data, e)}
               required
               minLength="1"
@@ -36,6 +37,7 @@ class HomeDataForm extends React.Component {
               name="street"
               type="text"
               placeholder="Ulica"
+              defaultValue={data && data.street}
               onChange={(e) => onChange(onBlur, data, e)}
               required
               minLength="1"
@@ -50,6 +52,7 @@ class HomeDataForm extends React.Component {
               name="number"
               type="text"
               placeholder="Numer budynku"
+              defaultValue={data && data.number}
               onChange={(e) => onChange(onBlur, data, e)}
               required
               pattern="^([0-9]{1})[\s\S]*"
@@ -65,6 +68,7 @@ class HomeDataForm extends React.Component {
               name="city"
               type="text"
               placeholder="Nazwa miasta"
+              defaultValue={data && data.city}
               onChange={(e) => onChange(onBlur, data, e)}
               required
               minLength="1"
@@ -80,6 +84,7 @@ class HomeDataForm extends React.Component {
               name="city_code"
               type="text"
               placeholder="Kod pocztowy"
+              defaultValue={data && data.city_code}
               pattern="[0-9]{2}[-][0-9]{3}"
               onChange={(e) => onChange(onBlur, data, e)}
               required

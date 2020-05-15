@@ -23,5 +23,6 @@ const paths = {
   CHATS: "/chats",
   CHAT_DETAILS: "/chats/:id",
   OFFER_APPROVAL: "/offerApproval",
+  CHANGE_DATA: "/changeData/:id",
 };
 export { paths };
