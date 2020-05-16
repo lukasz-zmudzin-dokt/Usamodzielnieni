@@ -12,7 +12,7 @@ const ChangeCVNameModal = ({ show, setShow, cvId, setCVNewName }) => {
 
     const handleClose = () => {
         setShow(false);
-        setStatus("new");
+        setTimeout(function () { setStatus("new"); }, 200);
     }
 
     const changeCVName = async (e, cvName) => {
