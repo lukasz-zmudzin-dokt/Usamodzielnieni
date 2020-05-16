@@ -31,7 +31,6 @@ const renderWithRouter = (
 
 describe("CVPosition", () => {
   let failFetch;
-  let cutCV = jest.fn();
   let apiCV = {
     cv_id: 0,
     basic_info: {
@@ -116,7 +115,10 @@ describe("CVPosition", () => {
         method: "GET",
       })
     );
-    expect(open).toHaveBeenCalledWith(proxy.plain + "/media/cv/0", "_blank");
+    expect(global.open).toHaveBeenCalledWith(
+      proxy.plain + "/media/cv/0",
+      "_blank"
+    );
   });
 
   it("should return alert on cv url fetch from failing api", async () => {
