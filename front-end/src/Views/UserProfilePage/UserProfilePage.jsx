@@ -2,16 +2,7 @@ import React from "react";
 import { Alert, Card, Container } from "react-bootstrap";
 import { UserContext } from "context";
 import { getUserData } from "Views/UserProfilePage/functions/getUserData.js";
-import {
-  UserDetails,
-  UserBasicInfo,
-  AdminRegisterButton,
-  CVApprovalButton,
-  EmployerMyOffersButton,
-  AdminApproveUserButton,
-  AdminOfferApprovalButton,
-  DeleteAccountButton,
-} from "./components";
+import { UserDetails, UserBasicInfo, ButtonsContainer } from "./components";
 import { userTypes } from "constants/userTypes";
 import { userStatuses } from "constants/userStatuses";
 
@@ -91,12 +82,7 @@ class UserProfilePage extends React.Component {
                 Poczekaj na weryfikację swojego konta.
               </Alert>
             ) : null}
-            <DeleteAccountButton user={this.context} />
-            <CVApprovalButton user={this.context} />
-            <EmployerMyOffersButton user={this.context} />
-            <AdminRegisterButton user={this.context} />
-            <AdminApproveUserButton user={this.context} />
-            <AdminOfferApprovalButton user={this.context} />
+            <ButtonsContainer user={this.context} />
           </Card.Body>
         </Card>
       </Container>

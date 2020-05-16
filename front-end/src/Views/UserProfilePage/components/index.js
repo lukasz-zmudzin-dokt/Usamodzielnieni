@@ -8,6 +8,7 @@ import { default as UserBasicInfo } from "./UserBasicInfo/UserBasicInfo";
 import { default as UserDetails } from "./UserDetails/UserDetails";
 import { default as UserIcon } from "./UserIcon/UserIcon";
 import { default as UserProperty } from "./UserProperty/UserProperty";
+import { default as ButtonsContainer } from "./ButtonsContainer/ButtonsContainer";
 
 export {
   AdminApproveUserButton,
@@ -20,4 +21,5 @@ export {
   UserDetails,
   UserIcon,
   UserProperty,
+  ButtonsContainer,
 };
