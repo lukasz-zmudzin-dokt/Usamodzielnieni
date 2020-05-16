@@ -8,14 +8,14 @@ const user = {
   firstName: "Jan",
   lastName: "Kowalski",
   email: "jan.kowalski@pw.edu.pl",
-  phoneNumber: "+48123456789"
+  phoneNumber: "+48123456789",
 };
 
 const names = {
   role: {
     admin: "Administrator",
     employer: "Pracodawca",
-    common: "Podopieczny"
+    common: "Podopieczny",
   },
   property: {
     username: "Nazwa użytkownika",
@@ -23,16 +23,13 @@ const names = {
     firstName: "Imię",
     lastName: "Nazwisko",
     email: "E-mail",
-    phoneNumber: "Numer telefonu"
-  }
+    phoneNumber: "Numer telefonu",
+  },
 };
 
 describe("UserProperty ", () => {
-
   it("should render correctly", () => {
-    const { container } = render(
-        <UserProperty user={user} names={names} />
-    );
+    const { container } = render(<UserProperty user={user} names={names} />);
     expect(container).toMatchSnapshot();
   });
 });

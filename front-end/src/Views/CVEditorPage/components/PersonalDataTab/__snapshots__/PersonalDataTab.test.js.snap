@@ -2,115 +2,155 @@
 
 exports[`PersonalDataTab should render without crashing 1`] = `
 <div>
-  <div
-    class="row"
+  <form
+    class=""
+    novalidate=""
   >
     <div
-      class="form-group col-md-6 col-12"
+      class="row"
     >
-      <label
-        class="form-label"
-        for="firstName"
+      <div
+        class="form-group col-md-6 col-12"
       >
-        Imię:
-      </label>
-      <input
-        class="form-control"
-        id="firstName"
-        name="firstName"
-        placeholder="Jan"
-        required=""
-        type="text"
-        value="Jan"
-      />
-    </div>
-    <div
-      class="form-group col-md-6 col-12"
-    >
-      <label
-        class="form-label"
-        for="lastName"
-      >
-        Nazwisko:
-      </label>
-      <input
-        class="form-control"
-        id="lastName"
-        name="lastName"
-        placeholder="Przykładowy"
-        required=""
-        type="text"
-        value="Kowalski"
-      />
-    </div>
-  </div>
-  <div
-    class="row"
-  >
-    <div
-      class="form-group col-md-6 col-12"
-    >
-      <label
-        class="form-label"
-        for="birthDate"
-      >
-        Data urodzenia:
-      </label>
-      <div>
-        <div
-          class="react-datepicker__input-container"
+        <label
+          class="form-label"
+          for="firstName"
         >
-          <input
-            class="form-control"
-            id="birthDate"
-            placeholder="Data urodzenia"
-            type="text"
-            value="13.04.2020"
-          />
+          Imię:
+        </label>
+        <input
+          class="form-control"
+          id="firstName"
+          maxlength="30"
+          minlength="1"
+          name="firstName"
+          placeholder="Jan"
+          required=""
+          type="text"
+          value="Jan"
+        />
+        <div
+          class="invalid-feedback"
+        >
+          Imię jest wymagane.
+        </div>
+      </div>
+      <div
+        class="form-group col-md-6 col-12"
+      >
+        <label
+          class="form-label"
+          for="lastName"
+        >
+          Nazwisko:
+        </label>
+        <input
+          class="form-control"
+          id="lastName"
+          maxlength="50"
+          minlength="1"
+          name="lastName"
+          placeholder="Przykładowy"
+          required=""
+          type="text"
+          value="Kowalski"
+        />
+        <div
+          class="invalid-feedback"
+        >
+          Nazwisko jest wymagane.
         </div>
       </div>
     </div>
     <div
-      class="form-group col-md-6 col-12"
+      class="row"
     >
-      <label
-        class="form-label"
-        for="phoneNumber"
+      <div
+        class="form-group col-md-6 col-12"
       >
-        Numer telefonu:
-      </label>
-      <input
-        class="form-control"
-        id="phoneNumber"
-        name="phoneNumber"
-        placeholder="+48123456789"
-        type="text"
-        value="+48123123123"
-      />
+        <label
+          class="form-label"
+          for="birthDate"
+        >
+          Data urodzenia:
+        </label>
+        <div>
+          <div
+            class="react-datepicker__input-container"
+          >
+            <input
+              class="form-control"
+              id="birthDate"
+              placeholder="Data urodzenia"
+              required=""
+              type="text"
+              value="13.04.2020"
+            />
+          </div>
+        </div>
+        <div
+          class="invalid-feedback"
+        >
+          Data urodzenia jest wymagana.
+        </div>
+      </div>
+      <div
+        class="form-group col-md-6 col-12"
+      >
+        <label
+          class="form-label"
+          for="phoneNumber"
+        >
+          Numer telefonu:
+        </label>
+        <input
+          class="form-control"
+          id="phoneNumber"
+          maxlength="12"
+          minlength="1"
+          name="phoneNumber"
+          placeholder="+48123456789"
+          required=""
+          type="text"
+          value="+48123123123"
+        />
+        <div
+          class="invalid-feedback"
+        >
+          Numer telefonu jest wymagany.
+        </div>
+      </div>
     </div>
-  </div>
-  <div
-    class="row"
-  >
     <div
-      class="form-group col-md-6 col-12"
+      class="row"
     >
-      <label
-        class="form-label"
-        for="email"
+      <div
+        class="form-group col-md-6 col-12"
       >
-        Adres email:
-      </label>
-      <input
-        class="form-control"
-        id="email"
-        name="email"
-        placeholder="example@domain.com"
-        required=""
-        type="email"
-        value="abc@abc.com"
-      />
+        <label
+          class="form-label"
+          for="email"
+        >
+          Adres email:
+        </label>
+        <input
+          class="form-control"
+          id="email"
+          maxlength="254"
+          minlength="1"
+          name="email"
+          placeholder="example@domain.com"
+          required=""
+          type="email"
+          value="abc@abc.com"
+        />
+        <div
+          class="invalid-feedback"
+        >
+          Adres email jest wymagany.
+        </div>
+      </div>
     </div>
-  </div>
+  </form>
 </div>
 `;

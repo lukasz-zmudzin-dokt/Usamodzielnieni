@@ -13,12 +13,12 @@ class LoginPage extends React.Component {
     redirect: false,
     incorrect: false,
     validated: false,
-    disabled: false
+    disabled: false,
   };
 
   setRedirect = () => {
     this.setState({
-      redirect: true
+      redirect: true,
     });
   };
 
@@ -28,7 +28,7 @@ class LoginPage extends React.Component {
     }
   };
 
-  handleIncorrectResponse = status => {
+  handleIncorrectResponse = (status) => {
     const msg =
       status === 400
         ? "Niepoprawny login lub hasło."
@@ -36,11 +36,11 @@ class LoginPage extends React.Component {
     this.setState({
       message: msg,
       incorrect: true,
-      redirect: false
+      redirect: false,
     });
   };
 
-  handleSubmit = async event => {
+  handleSubmit = async (event) => {
     this.setState({ disabled: true });
     const form = event.currentTarget;
     event.preventDefault();
@@ -48,31 +48,31 @@ class LoginPage extends React.Component {
       event.stopPropagation();
     } else {
       this.setState({
-        validated: true
+        validated: true,
       });
 
       try {
         const response = await sendData(this.state.credentials);
         const { status } = response;
-        if (status === 201) {
+        if (status === 200) {
           const { token, type } = response; //do poprawy
           fetch(proxy.account + "data/", {
             headers: {
               "Content-Type": "application/json",
-              Authorization: "Token " + token
-            }
-          }).then(dataRes => {
+              Authorization: "Token " + token,
+            },
+          }).then((dataRes) => {
             if (dataRes.status === 200) {
-              dataRes.json().then(dataValue => {
-                const {data} = dataValue;
+              dataRes.json().then((dataValue) => {
+                const { data } = dataValue;
                 this.context.login(token, type, data);
                 this.setRedirect();
-              })
+              });
             } else {
               this.setState({
                 validated: false,
                 incorrect: true,
-                message: "Coś poszło nie tak"
+                message: "Coś poszło nie tak",
               });
             }
           });
@@ -98,12 +98,12 @@ class LoginPage extends React.Component {
             <Form
               noValidate
               validated={validated}
-              onSubmit={e => handleSubmit(e)}
+              onSubmit={(e) => handleSubmit(e)}
             >
               <LoginForm
                 data-testId="loginForm"
                 data={this.state.credentials}
-                onBlur={credentials => this.setState({ credentials })}
+                onBlur={(credentials) => this.setState({ credentials })}
               />
               <Button
                 data-testid="loginBtn"
