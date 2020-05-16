@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  render,
-  fireEvent,
-  wait,
-  waitForElement,
-} from "@testing-library/react";
+import { render, fireEvent, waitForElement } from "@testing-library/react";
 import CommentForm from "./CommentForm";
 import { UserProvider } from "context";
 
@@ -18,6 +13,8 @@ describe("CommentForm", () => {
       data: {
         first_name: "Jan",
         last_name: "Kowalski",
+        status: "Verified",
+        username: "123123",
       },
     };
   });
@@ -53,7 +50,11 @@ describe("CommentForm", () => {
     });
 
     it("should render without crashing", () => {
-      const { container } = render(<CommentForm {...props} />);
+      const { container } = render(
+        <UserProvider value={user}>
+          <CommentForm {...props} />
+        </UserProvider>
+      );
       expect(container).toMatchSnapshot();
     });
 

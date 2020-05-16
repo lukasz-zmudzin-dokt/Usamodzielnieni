@@ -8,7 +8,7 @@ exports[`CommentItem should render without crashing 1`] = `
     <h5
       class="commentItem__header"
     >
-      Jan Kowalski
+      qweqwe
     </h5>
     <small
       class="commentItem__date"
