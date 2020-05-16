@@ -6,6 +6,7 @@ import { UserContext } from "context/UserContext";
 import { createMemoryHistory } from "history";
 import { staffTypes } from "constants/routes";
 import proxy from "config/api";
+import { userTypes } from "constants/userTypes";
 
 const renderWithRouter = (
   ui,
@@ -14,7 +15,10 @@ const renderWithRouter = (
     history = createMemoryHistory({ initialEntries: [route] }),
   } = {}
 ) => {
-  let context = { type: "Staff", data: { group_type: staffTypes.CV } };
+  let context = {
+    type: userTypes.STAFF,
+    data: { group_type: [staffTypes.CV] },
+  };
   return {
     ...render(
       <UserContext.Provider value={context}>

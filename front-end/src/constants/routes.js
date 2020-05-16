@@ -16,8 +16,10 @@ import {
   RegisterPage,
   UserProfilePage,
   UserApprovalPage,
+  CVCorrection,
   MessagesList,
   Chats,
+  OfferApprovalPage,
 } from "Views";
 import { userTypes } from "./userTypes";
 import { staffTypes } from "./staffTypes";
@@ -118,15 +120,11 @@ export default [
   {
     path: paths.BLOG_POST,
     component: BlogPost,
-    isPrivate: true,
-    type: undefined,
     exact: true,
   },
   {
     path: paths.BLOG_PAGE,
     component: BlogPage,
-    isPrivate: true,
-    type: undefined,
     exact: true,
   },
   {
@@ -163,6 +161,13 @@ export default [
     userVerified: true,
   },
   {
+    path: paths.CV_CORRECTION,
+    component: CVCorrection,
+    isPrivate: true,
+    type: userTypes.STAFF,
+    group: staffTypes.CV,
+  },
+  {
     path: paths.CHATS,
     component: Chats,
     isPrivate: true,
@@ -177,5 +182,12 @@ export default [
     type: undefined,
     exact: true,
     userVerified: true,
+  },
+  {
+    path: paths.OFFER_APPROVAL,
+    component: OfferApprovalPage,
+    isPrivate: true,
+    type: userTypes.STAFF,
+    group: staffTypes.JOBS,
   },
 ];

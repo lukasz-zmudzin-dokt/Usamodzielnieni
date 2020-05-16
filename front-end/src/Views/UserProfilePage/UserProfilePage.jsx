@@ -8,6 +8,9 @@ import AdminRegisterButton from "./components/AdminRegisterButton/AdminRegisterB
 import CVApprovalButton from "./components/CVApprovalButton/CVApprovalButton";
 import EmployerMyOffersButton from "./components/EmployerMyOffersButton/EmployerMyOffersButton";
 import AdminApproveUserButton from "./components/AdminApproveUserBuuton/AdminApproveUserButton";
+import AdminOfferApprovalButton from "./components/AdminOfferApprovalButton/AdminOfferApprovalButton";
+import {userTypes} from "constants/userTypes";
+import {userStatuses} from "constants/userStatuses";
 
 const names = {
   role: {
@@ -78,7 +81,8 @@ class UserProfilePage extends React.Component {
             <EmployerMyOffersButton user={this.context} />
             <AdminRegisterButton user={this.context} />
             <AdminApproveUserButton user={this.context} />
-            {this.context.type !== 'Staff' && this.context.data && this.context.data.status !== 'Verified' ?
+            <AdminOfferApprovalButton user={this.context} />
+            {this.context.type !== userTypes.STAFF && this.context.data && this.context.data.status !== userStatuses.VERIFIED ?
               <Alert variant="info">Nie masz jeszcze dostępu do wszystkich funkcji aplikacji. Poczekaj na weryfikację swojego konta.</Alert> :
                 null
             }
