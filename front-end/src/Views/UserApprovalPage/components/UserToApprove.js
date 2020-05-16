@@ -7,7 +7,7 @@ import {
   setUserRejected,
 } from "Views/UserApprovalPage/functions/apiCalls";
 import { DetailsItem, DeletionModal } from "components";
-import {userTypes} from "constants/userTypes";
+import { userTypes } from "constants/userTypes";
 
 const UserToApprove = ({ user, activeUser }) => {
   const context = useContext(UserContext);

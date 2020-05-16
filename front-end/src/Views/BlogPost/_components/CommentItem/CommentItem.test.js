@@ -1,8 +1,8 @@
 import React from "react";
 import { render, fireEvent } from "@testing-library/react";
 import CommentItem from "./CommentItem";
-import {userTypes} from "constants/userTypes";
-import {staffTypes} from "constants/staffTypes";
+import { userTypes } from "constants/userTypes";
+import { staffTypes } from "constants/staffTypes";
 
 describe("CommentItem", () => {
   let props;

@@ -2,7 +2,7 @@ import React from "react";
 import { render, wait, waitForElement } from "@testing-library/react";
 import CommentsList from "./CommentsList";
 import { CommentItem, CommentForm } from "../";
-import {userTypes} from "constants/userTypes";
+import { userTypes } from "constants/userTypes";
 
 jest.mock("../");
 

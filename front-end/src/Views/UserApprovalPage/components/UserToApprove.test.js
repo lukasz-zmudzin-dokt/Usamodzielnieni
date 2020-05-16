@@ -2,7 +2,7 @@ import React from "react";
 import { render, waitForElement, fireEvent } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import UserToApprove from "./UserToApprove";
-import {userTypes} from "constants/userTypes";
+import { userTypes } from "constants/userTypes";
 
 describe("UserApproval", () => {
   let failFetch;

@@ -2,8 +2,8 @@ import React from "react";
 import PrivateRoute from "root/_components/PrivateRoute";
 import { render } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
-import {userTypes} from "constants/userTypes";
-import {staffTypes} from "../../../constants/staffTypes";
+import { userTypes } from "constants/userTypes";
+import { staffTypes } from "../../../constants/staffTypes";
 
 describe("PrivateRoute test", () => {
   it("should match snapshot", () => {

@@ -3,9 +3,9 @@ import { render, waitForElement } from "@testing-library/react";
 import JobOfferDetails from "./JobOfferDetails";
 import { MemoryRouter } from "react-router-dom";
 import { UserContext } from "context/UserContext";
-import {userTypes} from "constants/userTypes";
-import {userStatuses} from "constants/userStatuses";
-import {staffTypes} from "constants/staffTypes";
+import { userTypes } from "constants/userTypes";
+import { userStatuses } from "constants/userStatuses";
+import { staffTypes } from "constants/staffTypes";
 
 jest.mock("./_components", () => ({
   AddCvForm: () => <div>AddCvForm</div>,

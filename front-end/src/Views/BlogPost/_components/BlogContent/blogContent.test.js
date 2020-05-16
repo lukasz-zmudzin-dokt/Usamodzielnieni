@@ -5,8 +5,8 @@ import { waitForElement } from "@testing-library/dom";
 import { Router } from "react-router-dom";
 import { createMemoryHistory } from "history";
 import { UserContext } from "context/UserContext";
-import {userTypes} from "constants/userTypes";
-import {staffTypes} from "constants/staffTypes";
+import { userTypes } from "constants/userTypes";
+import { staffTypes } from "constants/staffTypes";
 
 const renderWithRouter = (
   ui,

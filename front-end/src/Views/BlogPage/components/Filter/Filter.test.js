@@ -4,7 +4,7 @@ import Filter from "Views/BlogPage/components/Filter";
 import { DEFAULT_INPUT } from "constants/other";
 import { UserContext } from "context";
 import { MemoryRouter } from "react-router-dom";
-import {userTypes} from "constants/userTypes";
+import { userTypes } from "constants/userTypes";
 
 describe("Filter", () => {
   let failFetch = false;
@@ -102,7 +102,10 @@ describe("Filter", () => {
   it("should show button if type account = Staff", async () => {
     const { getByText } = render(
       <UserContext.Provider
-        value={{ type: userTypes.STAFF, data: { group_type: "staff_blog_creator" } }}
+        value={{
+          type: userTypes.STAFF,
+          data: { group_type: "staff_blog_creator" },
+        }}
       >
         <MemoryRouter>
           <Filter {...props} />

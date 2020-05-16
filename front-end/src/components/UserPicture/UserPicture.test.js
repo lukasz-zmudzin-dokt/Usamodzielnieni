@@ -1,7 +1,7 @@
 import React from "react";
 import { render } from "@testing-library/react";
 import UserPicture from "./UserPicture";
-import {userTypes} from "constants/userTypes";
+import { userTypes } from "constants/userTypes";
 
 describe("UserPicture", () => {
   let user;

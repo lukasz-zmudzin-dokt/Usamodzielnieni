@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { fireEvent, render, waitForElement } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import UserDetails from "./UserDetails";
-import {userTypes} from "constants/userTypes";
+import { userTypes } from "constants/userTypes";
 
 describe("UserDetails", () => {
   let failFetch;
