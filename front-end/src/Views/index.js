@@ -19,6 +19,7 @@ import UserApprovalPage from "Views/UserApprovalPage";
 import CVCorrection from "Views/CVCorrection";
 import MessagesList from "Views/MessagesList";
 import Chats from "Views/Chats";
+import UserList from "Views/UserList/UserList";
 import OfferApprovalPage from "Views/OfferApprovalPage";
 
 export {
@@ -44,4 +45,5 @@ export {
   OfferApprovalPage,
   MessagesList,
   Chats,
+  UserList,
 };

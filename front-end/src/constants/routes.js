@@ -19,6 +19,7 @@ import {
   CVCorrection,
   MessagesList,
   Chats,
+  UserList,
   OfferApprovalPage,
 } from "Views";
 import { userTypes } from "./userTypes";
@@ -180,6 +181,14 @@ export default [
     component: MessagesList,
     isPrivate: true,
     type: undefined,
+    exact: true,
+    userVerified: true,
+  },
+  {
+    path: paths.USER_LIST,
+    component: UserList,
+    isPrivate: true,
+    type: userTypes.STAFF,
     exact: true,
     userVerified: true,
   },
