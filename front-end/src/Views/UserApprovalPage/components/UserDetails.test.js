@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { fireEvent, render, waitForElement } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import UserDetails from "./UserDetails";
+import {userTypes} from "constants/userTypes";
 
 describe("UserDetails", () => {
   let failFetch;
@@ -11,13 +12,13 @@ describe("UserDetails", () => {
     standard: {
       email: "abc@gmail.com",
       id: "2949ad29-27da-49a0-aba2-1aa7b5bfa20b",
-      type: "Standard",
+      type: userTypes.STANDARD,
       username: "standard0",
     },
     employer: {
       email: "string@aaa.aaa",
       id: "e8ac8431-cc60-423d-a044-9d048285f2ee",
-      type: "Employer",
+      type: userTypes.EMPLOYER,
       username: "string",
     },
   };
@@ -62,13 +63,13 @@ describe("UserDetails", () => {
           resolve({ status: 500 });
         }
         switch (fetchUserType) {
-          case "Standard":
+          case userTypes.STANDARD:
             resolve({
               status: 200,
               json: () => Promise.resolve(apiUserDetails.standard),
             });
             break;
-          case "Employer":
+          case userTypes.EMPLOYER:
             resolve({
               status: 200,
               json: () => Promise.resolve(apiUserDetails.employer),
@@ -89,7 +90,7 @@ describe("UserDetails", () => {
   });
 
   it("should match snapshot - no one", async () => {
-    fetchUserType = "Standard";
+    fetchUserType = userTypes.STANDARD;
     const { container, getByText } = render(
       <MemoryRouter>
         <UserDetails users={[user.standard]} activeUser={""} />
@@ -100,7 +101,7 @@ describe("UserDetails", () => {
   });
 
   it("should match snapshot - standard", async () => {
-    fetchUserType = "Standard";
+    fetchUserType = userTypes.STANDARD;
     const { container, getByText } = render(
       <MemoryRouter>
         <UserDetails users={[user.standard]} activeUser={user.standard.id} />
@@ -111,7 +112,7 @@ describe("UserDetails", () => {
   });
 
   it("should match snapshot - employer", async () => {
-    fetchUserType = "Employer";
+    fetchUserType = userTypes.EMPLOYER;
     const { container, getByText } = render(
       <MemoryRouter>
         <UserDetails users={[user.employer]} activeUser={user.employer.id} />
@@ -122,7 +123,7 @@ describe("UserDetails", () => {
   });
 
   it("should show standard user data", async () => {
-    fetchUserType = "Standard";
+    fetchUserType = userTypes.STANDARD;
     const { getByText } = render(
       <MemoryRouter>
         <UserDetails users={[user.standard]} activeUser={user.standard.id} />
@@ -133,7 +134,7 @@ describe("UserDetails", () => {
   });
 
   it("should show employer user data", async () => {
-    fetchUserType = "Employer";
+    fetchUserType = userTypes.EMPLOYER;
     const { getByText } = render(
       <MemoryRouter>
         <UserDetails users={[user.employer]} activeUser={user.employer.id} />
@@ -144,7 +145,7 @@ describe("UserDetails", () => {
   });
 
   it("should click on employer", async () => {
-    fetchUserType = "Employer";
+    fetchUserType = userTypes.EMPLOYER;
     const { getByText } = render(
       <MemoryRouter>
         <UserDetails
@@ -156,8 +157,8 @@ describe("UserDetails", () => {
         />
       </MemoryRouter>
     );
-    await waitForElement(() => getByText("string (Employer)"));
-    fireEvent.click(getByText("string (Employer)"));
+    await waitForElement(() => getByText("string (employer)"));
+    fireEvent.click(getByText("string (employer)"));
     expect(check).toHaveBeenCalledTimes(1);
   });
 });

@@ -3,6 +3,7 @@ import React from "react";
 import { fireEvent, render, waitForElement } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import proxy from "config/api";
+import {userTypes} from "constants/userTypes";
 
 describe("CVSection", () => {
   let failFetch;
@@ -34,7 +35,7 @@ describe("CVSection", () => {
     });
 
     user = {
-      type: "Standard",
+      type: userTypes.STANDARD,
       token: "123",
     };
   });

@@ -2,6 +2,7 @@ import React from "react";
 import { render, waitForElement, fireEvent } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import UserToApprove from "./UserToApprove";
+import {userTypes} from "constants/userTypes";
 
 describe("UserApproval", () => {
   let failFetch;
@@ -12,13 +13,13 @@ describe("UserApproval", () => {
     standard: {
       email: "abc@gmail.com",
       id: "2949ad29-27da-49a0-aba2-1aa7b5bfa20b",
-      type: "Standard",
+      type: userTypes.STANDARD,
       username: "standard0",
     },
     employer: {
       email: "string@aaa.aaa",
       id: "e8ac8431-cc60-423d-a044-9d048285f2ee",
-      type: "Employer",
+      type: userTypes.EMPLOYER,
       username: "string",
     },
   };
@@ -65,13 +66,13 @@ describe("UserApproval", () => {
         switch (init.method) {
           case "GET":
             switch (fetchUserType) {
-              case "Standard":
+              case userTypes.STANDARD:
                 resolve({
                   status: 200,
                   json: () => Promise.resolve(apiUserDetails.standard),
                 });
                 break;
-              case "Employer":
+              case userTypes.EMPLOYER:
                 resolve({
                   status: 200,
                   json: () => Promise.resolve(apiUserDetails.employer),
@@ -118,7 +119,7 @@ describe("UserApproval", () => {
 
   it("should match snapshot (Standard type user) ", async () => {
     failFetch = false;
-    fetchUserType = "Standard";
+    fetchUserType = userTypes.STANDARD;
 
     const { container, getByText } = render(
       <MemoryRouter>
@@ -131,7 +132,7 @@ describe("UserApproval", () => {
 
   it("should match snapshot (Employer type user) ", async () => {
     failFetch = false;
-    fetchUserType = "Employer";
+    fetchUserType = userTypes.EMPLOYER;
 
     const { container, getByText } = render(
       <MemoryRouter>
@@ -158,7 +159,7 @@ describe("UserApproval", () => {
 
   it("should accept user", async () => {
     failFetch = false;
-    fetchUserType = "Standard";
+    fetchUserType = userTypes.STANDARD;
     postType = "Approve";
     const { getByText } = render(
       <MemoryRouter>
@@ -193,7 +194,7 @@ describe("UserApproval", () => {
 
   it("should reject user", async () => {
     failFetch = false;
-    fetchUserType = "Standard";
+    fetchUserType = userTypes.STANDARD;
     postType = "Reject";
     const { getByText } = render(
       <MemoryRouter>

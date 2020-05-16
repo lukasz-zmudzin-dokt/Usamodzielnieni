@@ -9,6 +9,7 @@ import { MemoryRouter, Router } from "react-router-dom";
 import { UserContext } from "context/UserContext";
 import { createMemoryHistory } from "history";
 import MyCVsPage from "./MyCVsPage";
+import {userTypes} from "constants/userTypes";
 
 const renderWithRouter = (
   ui,
@@ -17,7 +18,7 @@ const renderWithRouter = (
     history = createMemoryHistory({ initialEntries: [route] }),
   } = {}
 ) => {
-  let context = { type: "Standard" };
+  let context = { type: userTypes.STANDARD };
   return {
     ...render(
       <UserContext.Provider value={context}>
@@ -55,7 +56,7 @@ describe("MyCVsPage", () => {
     });
 
     user = {
-      type: "Standard",
+      type: userTypes.STANDARD,
       token: "123",
     };
   });

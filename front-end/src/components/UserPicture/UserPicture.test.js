@@ -1,13 +1,14 @@
 import React from "react";
 import { render } from "@testing-library/react";
 import UserPicture from "./UserPicture";
+import {userTypes} from "constants/userTypes";
 
 describe("UserPicture", () => {
   let user;
 
   beforeEach(() => {
     user = {
-      type: "Standard",
+      type: userTypes.STANDARD,
       data: {
         first_name: "Jan",
         last_name: "Kowalski",
@@ -31,7 +32,7 @@ describe("UserPicture", () => {
   });
 
   it("should render multi staff picture", () => {
-    user.type = "Staff";
+    user.type = userTypes.STAFF;
     user.data.group_type = ["jakis_group_type", "jakiś_inny_type"];
 
     const { container } = render(<UserPicture user={user} />);

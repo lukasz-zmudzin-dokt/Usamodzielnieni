@@ -5,6 +5,7 @@ import { MemoryRouter, Router } from "react-router-dom";
 import { createMemoryHistory } from "history";
 import { UserContext } from "context/UserContext";
 import { staffTypes } from "constants/staffTypes";
+import {userTypes} from "constants/userTypes";
 
 const renderWithRouter = (
   type,
@@ -14,7 +15,7 @@ const renderWithRouter = (
     history = createMemoryHistory({ initialEntries: [route] }),
   } = {}
 ) => {
-  let context = { type: "Staff", data: { group_type: type }, token: 123 };
+  let context = { type: userTypes.STAFF, data: { group_type: [type] }, token: 123 };
   return {
     ...render(
       <UserContext.Provider value={context}>

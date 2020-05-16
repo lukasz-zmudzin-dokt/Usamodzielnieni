@@ -2,11 +2,13 @@ import React from "react";
 import PrivateRoute from "root/_components/PrivateRoute";
 import { render } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
+import {userTypes} from "constants/userTypes";
+import {staffTypes} from "../../../constants/staffTypes";
 
 describe("PrivateRoute test", () => {
   it("should match snapshot", () => {
     const exampleContext = {
-      type: "Employer",
+      type: userTypes.EMPLOYER,
       token: "000111222333",
     };
     const ExampleComponent = () => <div>AComponent</div>;
@@ -32,13 +34,13 @@ describe("PrivateRoute test", () => {
 
   it("should render component if user has been authenticated", () => {
     const exampleContext = {
-      type: "Employer",
+      type: userTypes.EMPLOYER,
       token: "000111222333",
     };
     const ExampleComponent = () => <div>AComponent</div>;
     const exampleProps = {
       path: "/example",
-      type: "Employer",
+      type: userTypes.EMPLOYER,
       component: ExampleComponent,
     };
 
@@ -59,7 +61,7 @@ describe("PrivateRoute test", () => {
 
   it("should render component if user have token and type is not required", () => {
     const exampleContext = {
-      type: "staff",
+      type: userTypes.STAFF,
       token: "000111222333",
     };
     const ExampleComponent = () => <div>AComponent</div>;
@@ -113,13 +115,13 @@ describe("PrivateRoute test", () => {
 
   it("should not render component if user is logged in but have invalid type ", () => {
     const exampleContext = {
-      type: "Standard",
+      type: userTypes.STANDARD,
       token: "123143",
     };
     const ExampleComponent = () => <div>AComponent</div>;
     const exampleProps = {
       path: "/example",
-      type: "Employer",
+      type: userTypes.EMPLOYER,
       component: ExampleComponent,
     };
 
@@ -139,15 +141,15 @@ describe("PrivateRoute test", () => {
   });
   it("should not render component if staff doesnt have required group ", () => {
     const exampleContext = {
-      type: "staff",
+      type: userTypes.STAFF,
       token: "123143",
-      data: { group_type: "staff_cv" },
+      data: { group_type: [staffTypes.CV] },
     };
     const ExampleComponent = () => <div>AComponent</div>;
     const exampleProps = {
       path: "/example",
-      type: "staff",
-      group: "staff_blog_creator",
+      type: userTypes.STAFF,
+      group: [staffTypes.BLOG_CREATOR],
       component: ExampleComponent,
     };
 
@@ -168,15 +170,15 @@ describe("PrivateRoute test", () => {
 
   it("should render component if staff have required group ", () => {
     const exampleContext = {
-      type: "staff",
+      type: userTypes.STAFF,
       token: "123143",
-      data: { group_type: "staff_cv" },
+      data: { group_type: [staffTypes.CV] },
     };
     const ExampleComponent = () => <div>AComponent</div>;
     const exampleProps = {
       path: "/example",
       type: "staff",
-      group: "staff_cv",
+      group: [staffTypes.CV],
       component: ExampleComponent,
     };
 
