@@ -61,9 +61,7 @@ const CVPosition = (props) => {
           variant="success m-1"
           className="btnAccept"
           size="sm"
-          onClick={(e) =>
-            handleAcceptCV(e, context.token, cv.cv_id, setError, props.cutCV)
-          }
+          onClick={(e) => handleAcceptCV(e, cv.cv_id, setError, props.cutCV)}
         >
           Akceptuj
         </Button>

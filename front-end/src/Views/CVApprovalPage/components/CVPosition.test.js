@@ -97,7 +97,9 @@ describe("CVPosition", () => {
     await waitForElement(() => getByText("Jarek"));
     fireEvent.click(getByText("Zgłoś poprawki", { exact: false }));
 
-    expect(history.location.pathname).toEqual("/cvEditor/0", { exact: false });
+    expect(history.location.pathname).toEqual("/cvCorrection/0", {
+      exact: false,
+    });
   });
 
   it("should return cv url from api", async () => {
