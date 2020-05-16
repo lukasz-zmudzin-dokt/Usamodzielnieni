@@ -3,7 +3,7 @@ import { MemoryRouter } from "react-router-dom";
 import { render, fireEvent } from "@testing-library/react";
 import Filter from "Views/JobOffersPage/_components/Filter";
 import { UserContext } from "context";
-import {userTypes} from "constants/userTypes";
+import { userTypes } from "constants/userTypes";
 
 describe("Filter(JobOffers)", () => {
   it("renders correctly", () => {

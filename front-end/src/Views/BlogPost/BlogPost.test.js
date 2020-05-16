@@ -2,9 +2,9 @@ import React from "react";
 import BlogPost from "./BlogPost";
 import { render, waitForElement, fireEvent } from "@testing-library/react";
 import { UserContext } from "context/UserContext";
-import {userTypes} from "constants/userTypes";
-import {userStatuses} from "constants/userStatuses";
-import {staffTypes} from "constants/staffTypes";
+import { userTypes } from "constants/userTypes";
+import { userStatuses } from "constants/userStatuses";
+import { staffTypes } from "constants/staffTypes";
 
 describe("BlogPost", () => {
   let post;

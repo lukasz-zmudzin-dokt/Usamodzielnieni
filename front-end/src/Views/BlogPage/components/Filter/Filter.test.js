@@ -5,7 +5,7 @@ import { DEFAULT_INPUT } from "constants/other";
 import { UserContext } from "context";
 import { MemoryRouter } from "react-router-dom";
 import { userTypes } from "constants/userTypes";
-import {staffTypes} from "constants/staffTypes";
+import { staffTypes } from "constants/staffTypes";
 
 describe("Filter", () => {
   let failFetch = false;

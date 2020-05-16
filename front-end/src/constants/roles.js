@@ -1,4 +1,4 @@
-import {staffTypes} from "./staffTypes";
+import { staffTypes } from "./staffTypes";
 
 export const adminGroup = [
   {

@@ -2,8 +2,8 @@ import React from "react";
 import { render, fireEvent, waitForElement } from "@testing-library/react";
 import CommentForm from "./CommentForm";
 import { UserProvider } from "context";
-import {userTypes} from "constants/userTypes";
-import {userStatuses} from "constants/userStatuses";
+import { userTypes } from "constants/userTypes";
+import { userStatuses } from "constants/userStatuses";
 
 describe("CommentForm", () => {
   let props, failFetch, user;
