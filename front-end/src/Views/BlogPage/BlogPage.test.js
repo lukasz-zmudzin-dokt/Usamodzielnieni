@@ -167,6 +167,18 @@ describe("BlogPage", () => {
       );
     });
 
+    it('should render post with no tags', async () => {
+      apiPosts[0].tags = [];
+      const { getByText, getAllByText } = render(
+          <MemoryRouter>
+            <BlogPage />
+          </MemoryRouter>
+      );
+
+      await waitForElement(() => getAllByText("abcd"));
+      expect(getByText("Brak tagów")).toBeInTheDocument();
+    });
+
     it("should be called with appropriate url(1 filter - category)", async () => {
       const { getByText, getAllByText, getByLabelText } = render(
         <MemoryRouter>
