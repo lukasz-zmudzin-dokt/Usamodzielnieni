@@ -134,14 +134,14 @@ const UserToApprove = ({ user, activeUser }) => {
   } else {
     return (
       <Card.Body>
-        {DeletionModal(
-          showRejectModal,
-          setShowReject,
-          setRejectConfirmed,
-          "Czy na pewno chcesz odrzucić tego użytkownika?",
-          "Odrzuć",
-          "Anuluj"
-        )}
+        <DeletionModal
+          show={showRejectModal}
+          setShow={setShowReject}
+          delConfirmed={setRejectConfirmed}
+          question={"Czy na pewno chcesz odrzucić tego użytkownika?"}
+          confirmLabel={"Odrzuć"}
+          cancelLabel={"Anuluj"}
+        />
         <ListGroup variant="flush">
           <ListGroup.Item>
             <Row>
