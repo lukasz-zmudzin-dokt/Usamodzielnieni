@@ -2,9 +2,10 @@ import React from 'react';
 import {LinkContainer} from "react-router-bootstrap";
 import {Button} from "react-bootstrap";
 import {staffTypes} from "constants/staffTypes";
+import {userTypes} from "constants/userTypes";
 
 const AdminRegisterButton = ({user}) => (
-    user.type === "staff" && user.data.group_type.includes(staffTypes.VERIFICATION) ? (
+    user.type === userTypes.STAFF && user.data.group_type.includes(staffTypes.VERIFICATION) ? (
         <LinkContainer to="/newAccount/staff">
             <Button variant="primary">
                 Zarejestruj administratora
