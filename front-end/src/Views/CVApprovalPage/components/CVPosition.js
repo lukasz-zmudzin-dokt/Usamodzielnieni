@@ -2,7 +2,6 @@ import React, { useContext, useState } from "react";
 import { UserContext } from "context";
 import { Alert, Button, Col, Row } from "react-bootstrap";
 import { IndexLinkContainer } from "react-router-bootstrap";
-import { acceptCV } from "Views/CVApprovalPage/functions/acceptCV";
 import { getCVUrl } from "Views/CVApprovalPage/functions/getCVUrl";
 import { DetailsItem } from "components";
 import proxy from "config/api";
@@ -19,14 +18,10 @@ const showCV = async (e, token, cvId, setError) => {
   }
 };
 
-const handleAcceptCV = async (e, token, cvId, setError, setAccepted) => {
+const handleAcceptCV = async (e, cvId, setError, cutCV) => {
   e.preventDefault();
-  try {
-    const response = await acceptCV(token, cvId);
-    if (response === "CV successfully verified.") {
-      setAccepted(true);
-    }
-  } catch (response) {
+  const res = cutCV(cvId);
+  if (res === false) {
     setError(true);
   }
 };
@@ -35,15 +30,10 @@ const CVPosition = (props) => {
   const context = useContext(UserContext);
   const cv = props.cv;
   const [error, setError] = useState(false);
-  const [accepted, setAccepted] = useState(false);
 
   const message = error ? (
     <Alert variant="danger" className="p-1 m-1">
       Wystąpił błąd.
-    </Alert>
-  ) : accepted ? (
-    <Alert variant="success" className="p-1 m-1">
-      Pomyślnie zaakceptowano CV.
     </Alert>
   ) : null;
 
@@ -71,9 +61,7 @@ const CVPosition = (props) => {
           variant="success m-1"
           className="btnAccept"
           size="sm"
-          onClick={(e) =>
-            handleAcceptCV(e, context.token, cv.cv_id, setError, setAccepted)
-          }
+          onClick={(e) => handleAcceptCV(e, cv.cv_id, setError, props.cutCV)}
         >
           Akceptuj
         </Button>
