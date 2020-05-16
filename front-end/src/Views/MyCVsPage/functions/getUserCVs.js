@@ -7,7 +7,7 @@ export const getUserCVs = async (token) => {
       Authorization: "token " + token,
       "Content-Type": "application/json",
     },
-  })
+  });
 
   if (res.status === 200) {
     return await res.json();
