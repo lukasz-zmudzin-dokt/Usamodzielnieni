@@ -5,6 +5,7 @@ import { MemoryRouter, Router } from "react-router-dom";
 import { createMemoryHistory } from "history";
 import { UserContext } from "context/UserContext";
 import { staffTypes } from "constants/staffTypes";
+import { userTypes } from "constants/userTypes";
 
 const renderWithRouter = (
   type,
@@ -14,7 +15,11 @@ const renderWithRouter = (
     history = createMemoryHistory({ initialEntries: [route] }),
   } = {}
 ) => {
-  let context = { type: "Staff", data: { group_type: type }, token: 123 };
+  let context = {
+    type: userTypes.STAFF,
+    data: { group_type: [type] },
+    token: 123,
+  };
   return {
     ...render(
       <UserContext.Provider value={context}>
@@ -107,5 +112,36 @@ describe("UserProfile", () => {
     fireEvent.click(getByText("Zobacz CV do akceptacji"));
 
     expect(history.location.pathname).toBe("/cvApproval", { exact: false });
+  });
+
+  it("should render user list button", () => {
+    const { history, getByText } = renderWithRouter(
+      staffTypes.CV,
+      <UserProfile />
+    );
+
+    expect(
+      getByText("Zobacz listę wszystkich użytkowników")
+    ).toBeInTheDocument();
+
+    fireEvent.click(getByText("Zobacz listę wszystkich użytkowników"));
+
+    expect(history.location.pathname).toBe("/userList", { exact: false });
+  });
+
+  it("should render no buttons", () => {
+    const { queryByText } = render(
+      <UserContext.Provider value={{ type: "Standard" }}>
+        <MemoryRouter>
+          <UserProfile />
+        </MemoryRouter>
+      </UserContext.Provider>
+    );
+
+    expect(
+      queryByText("Zobacz listę wszystkich użytkowników")
+    ).not.toBeInTheDocument();
+    expect(queryByText("Zarejestruj administratora")).not.toBeInTheDocument();
+    expect(queryByText("Zobacz CV do akceptacji")).not.toBeInTheDocument();
   });
 });

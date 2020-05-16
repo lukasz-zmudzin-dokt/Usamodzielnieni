@@ -71,23 +71,23 @@ exports[`CVApproval should match snapshot 1`] = `
                 class="align-self-center d-flex justify-content-end col"
               >
                 <button
-                  class="btnDownload btn btn-primary m-1 p-1"
+                  class="btnDownload btn btn-primary m-1 btn-sm"
                   type="button"
                 >
                   Pokaż CV
                 </button>
                 <button
-                  class="btnAccept btn btn-success m-1 p-1"
+                  class="btnAccept btn btn-success m-1 btn-sm"
                   type="button"
                 >
                   Akceptuj
                 </button>
-                <button
-                  class="btnImprove btn btn-warning m-1 p-1"
-                  type="button"
+                <a
+                  class="btnImprove btn btn-warning m-1 btn-sm"
+                  href="/cvCorrection/0"
                 >
                   Zgłoś poprawki
-                </button>
+                </a>
               </div>
             </div>
           </div>
@@ -143,23 +143,23 @@ exports[`CVApproval should match snapshot 1`] = `
                 class="align-self-center d-flex justify-content-end col"
               >
                 <button
-                  class="btnDownload btn btn-primary m-1 p-1"
+                  class="btnDownload btn btn-primary m-1 btn-sm"
                   type="button"
                 >
                   Pokaż CV
                 </button>
                 <button
-                  class="btnAccept btn btn-success m-1 p-1"
+                  class="btnAccept btn btn-success m-1 btn-sm"
                   type="button"
                 >
                   Akceptuj
                 </button>
-                <button
-                  class="btnImprove btn btn-warning m-1 p-1"
-                  type="button"
+                <a
+                  class="btnImprove btn btn-warning m-1 btn-sm"
+                  href="/cvCorrection/1"
                 >
                   Zgłoś poprawki
-                </button>
+                </a>
               </div>
             </div>
           </div>
