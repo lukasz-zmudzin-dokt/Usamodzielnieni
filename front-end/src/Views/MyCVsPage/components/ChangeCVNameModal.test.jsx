@@ -2,42 +2,33 @@ import React from "react";
 import { fireEvent, render, waitForElement } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import ChangeCVNameModal from "./ChangeCVNameModal";
+import proxy from "config/api";
 
 describe('ChangeCVNameModal', () => {
-    let fetchResult;
+    let failFetch;
+    let setName = jest.fn(() => Promise.resolve());
 
     beforeAll(() => {
         global.setShow = jest.fn();
         global.fetch = jest.fn().mockImplementation(() => {
             return new Promise((resolve, reject) => {
-                switch (fetchResult) {
-                    case "ok":
-                        resolve({ status: 200, json: () => Promise.resolve("CV name changed to: test") });
-                        break;
-                    case "fail":
-                        resolve({ status: 500 });
-                        break;
-                    case "odd":
-                        resolve({ status: 200, json: () => Promise.resolve("wow, that's really odd response text!") });
-                        break;
-                    default:
-                        reject({});
-                        break;
+                if (failFetch) {
+                    resolve({status: 500});
+                } else {
+                    resolve({status: 200});
                 }
             });
         });
     });
 
     beforeEach(() => {
+        failFetch = false;
         jest.clearAllMocks();
     });
 
     it('changes CV Name and it works (wow)', async () => {
-        fetchResult = "ok";
         const { getByText, getByPlaceholderText } = render (
-            <MemoryRouter>
-                <ChangeCVNameModal show={true} setCVNewName={e => {}} cvId={11111111} setShow={e => {}} />
-            </MemoryRouter>
+            <ChangeCVNameModal show={true} setCVNewName={setName} cvId={11111111} setShow={setShow} />
         );
 
         await waitForElement(() => getByText("Zmień nazwę"));
@@ -46,9 +37,10 @@ describe('ChangeCVNameModal', () => {
         });
 
         fireEvent.click(getByText("Zmień nazwę"));
+        expect(getByPlaceholderText("Nowa nazwa CV").value).toBe("test");
 
         expect(fetch).toHaveBeenCalledWith(
-            "https://usamo-back.herokuapp.com/cv/name/11111111/", {
+            proxy.cv + "name/11111111/", {
                 "body": "{\"name\":\"test\"}",
                 "headers": {
                     "Authorization": "token undefined",
@@ -57,20 +49,20 @@ describe('ChangeCVNameModal', () => {
                 "method": "PUT"
             }
         );
-
         await waitForElement(() => getByText("Pomyślnie zmieniono nazwę CV."));
         expect(getByText("Pomyślnie zmieniono nazwę CV.")).toBeInTheDocument();
+        expect(setName).toHaveBeenCalled();
     });
 
     it('changes CV Name and it does not work (api fail)', async () => {
-        fetchResult = "fail";
         const { getByText, getByPlaceholderText } = render (
             <MemoryRouter>
-                <ChangeCVNameModal show={true} setCVNewName={e => {}} cvId={11111111} setShow={e => {}} />
+                <ChangeCVNameModal show={true} setCVNewName={e => {}} cvId={11111111} setShow={setShow} />
             </MemoryRouter>
         );
 
         await waitForElement(() => getByText("Zmień nazwę"));
+
         fireEvent.change(getByPlaceholderText("Nowa nazwa CV"), {
             target: { value: "test" },
         });
@@ -79,29 +71,8 @@ describe('ChangeCVNameModal', () => {
 
         expect(fetch).toHaveBeenCalledTimes(1);
 
-        await waitForElement(() => getByText("Wystąpił błąd."));
-        expect(getByText("Wystąpił błąd.")).toBeInTheDocument();
-    });
-
-    it('changes CV Name and it does not work (api odd response)', async () => {
-        fetchResult = "odd";
-        const { getByText, getByPlaceholderText } = render (
-            <MemoryRouter>
-                <ChangeCVNameModal show={true} setCVNewName={e => {}} cvId={11111111} setShow={e => {}} />
-            </MemoryRouter>
-        );
-
-        await waitForElement(() => getByText("Zmień nazwę"));
-        fireEvent.change(getByPlaceholderText("Nowa nazwa CV"), {
-            target: { value: "test" },
-        });
-
-        fireEvent.click(getByText("Zmień nazwę"));
-
-        expect(fetch).toHaveBeenCalledTimes(1);
-
-        await waitForElement(() => getByText("Wystąpił błąd."));
-        expect(getByText("Wystąpił błąd.")).toBeInTheDocument();
+        await waitForElement(() => getByText("Wystąpił błąd", {exact: false}));
+        expect(getByText("Wystąpił błąd", {exact: false})).toBeInTheDocument();
     });
 
     it('closes modal when not wanting to change cv name', async () => {
@@ -114,6 +85,17 @@ describe('ChangeCVNameModal', () => {
         await waitForElement(() => getByText("Zostaw bieżącą nazwę"));
         fireEvent.click(getByText("Zostaw bieżącą nazwę"));
         expect(setShow).toHaveBeenCalledWith(false);
+    });
+
+    it('should render alert on empty form', () => {
+        const { getByText } = render (
+            <MemoryRouter>
+                <ChangeCVNameModal show={true} setCVNewName={e => {}} cvId={11111111} setShow={setShow} />
+            </MemoryRouter>
+        );
+        fireEvent.click(getByText("Zmień nazwę"));
+
+        expect(getByText("Nazwa nie może być pusta!")).toBeInTheDocument();
     })
 
 });

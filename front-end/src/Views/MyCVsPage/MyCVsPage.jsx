@@ -18,16 +18,20 @@ class MyCVsPage extends React.Component {
         };
     }
 
+    getCVs = async () => {
+        try {
+            const res = await getUserCVs(this.context.token);
+            this.setState({cvs: res});
+        } catch (e) {
+            console.log(e);
+            this.setState({errors: true});
+        } finally {
+            this.setState({loading: false})
+        }
+    };
+
     componentDidMount() {
-        getUserCVs(this.context.token).then(response =>
-            response.status === "200:OK" ? this.setState({
-                    cvs: response.result,
-                    loading: false
-            }) :
-                this.setState({
-                    errors: true,
-                    loading: false
-                }));
+        this.getCVs();
     };
 
     cutItem = async (cvId) => {
