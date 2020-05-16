@@ -68,13 +68,16 @@ exports[`Filters should render correctly 1`] = `
             -- Wybierz --
           </option>
           <option
-            value="Verified"
+            value="verified"
           />
           <option
-            value="Not verified"
+            value="rejected"
           />
           <option
-            value="Waiting for verification"
+            value="waiting_for_verification"
+          />
+          <option
+            value="blocked"
           />
         </select>
       </div>
@@ -98,13 +101,13 @@ exports[`Filters should render correctly 1`] = `
             -- Wybierz --
           </option>
           <option
-            value="Standard"
+            value="standard"
           />
           <option
-            value="Staff"
+            value="staff"
           />
           <option
-            value="Employer"
+            value="employer"
           />
         </select>
       </div>

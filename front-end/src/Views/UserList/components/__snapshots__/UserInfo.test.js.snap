@@ -39,7 +39,7 @@ exports[`UserInfo should match snapshot 1`] = `
           <div
             class="detailsItem__value"
           >
-            Standard
+            standard
           </div>
         </div>
         <div
@@ -67,7 +67,7 @@ exports[`UserInfo should match snapshot 1`] = `
           <div
             class="detailsItem__value"
           >
-            Verified
+            verified
           </div>
         </div>
       </div>

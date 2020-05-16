@@ -2,6 +2,8 @@ import { render, waitForElement } from "@testing-library/react";
 import React from "react";
 import { MemoryRouter } from "react-router-dom";
 import UserList from "./UserList";
+import {userTypes} from "constants/userTypes";
+import {userStatuses} from "constants/userStatuses";
 
 describe("UserList", () => {
   let users, failFetch, token;
@@ -22,24 +24,26 @@ describe("UserList", () => {
   beforeEach(() => {
     failFetch = false;
 
-    users = [
-      {
-        id: 1,
-        username: "user1",
-        date_joined: "2020-05-12",
-        email: "qwe@qwe.qwe",
-        type: "Standard",
-        status: "Verified",
-      },
-      {
-        id: 2,
-        username: "user2",
-        date_joined: "2020-05-11",
-        email: "asd@asd.asd",
-        type: "Employer",
-        status: "Not verified",
-      },
-    ];
+    users = {
+      results:  [
+        {
+          id: 1,
+          username: "user1",
+          date_joined: "2020-05-12",
+          email: "qwe@qwe.qwe",
+          type: userTypes.STANDARD,
+          status: userStatuses.VERIFIED,
+        },
+        {
+          id: 2,
+          username: "user2",
+          date_joined: "2020-05-11",
+          email: "asd@asd.asd",
+          type: userTypes.EMPLOYER,
+          status: userStatuses.AWAITING,
+        },
+      ]
+    };
   });
 
   it("should match snapshot", async () => {
@@ -70,7 +74,7 @@ describe("UserList", () => {
   });
 
   it("should render alert with no users", async () => {
-    users = [];
+    users.results = [];
     const { getByText } = render(
       <MemoryRouter>
         <UserList />

@@ -45,7 +45,7 @@ const UserList = () => {
             setError(false);
             try {
                 const res = await getUsers(token, filters);
-                setUsers(mapUsers(res));
+                setUsers(mapUsers(res.results));
             } catch(e) {
                 console.log(e);
                 e !== 404 ? setError(true) : setUsers([]);
@@ -74,6 +74,7 @@ const UserList = () => {
             case userStatuses.VERIFIED: return "Zweryfikowany";
             case userStatuses.AWAITING: return "Oczekuje na weryfikację";
             case userStatuses.REJECTED: return "Odrzucony";
+            case userStatuses.BLOCKED: return "Zablokowany";
             default: return "Nieznany status";
         }
     };

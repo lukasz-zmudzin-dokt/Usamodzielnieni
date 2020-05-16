@@ -79,19 +79,24 @@ exports[`UserList should match snapshot 1`] = `
                 -- Wybierz --
               </option>
               <option
-                value="Verified"
+                value="verified"
               >
                 Zweryfikowany
               </option>
               <option
-                value="Not verified"
+                value="rejected"
               >
                 Odrzucony
               </option>
               <option
-                value="Waiting for verification"
+                value="waiting_for_verification"
               >
                 Oczekuje na weryfikację
+              </option>
+              <option
+                value="blocked"
+              >
+                Zablokowany
               </option>
             </select>
           </div>
@@ -115,17 +120,17 @@ exports[`UserList should match snapshot 1`] = `
                 -- Wybierz --
               </option>
               <option
-                value="Standard"
+                value="standard"
               >
                 Podopieczny
               </option>
               <option
-                value="Staff"
+                value="staff"
               >
                 Administrator
               </option>
               <option
-                value="Employer"
+                value="employer"
               >
                 Pracodawca
               </option>
@@ -302,7 +307,7 @@ exports[`UserList should match snapshot 1`] = `
                   <div
                     class="detailsItem__value"
                   >
-                    Odrzucony
+                    Oczekuje na weryfikację
                   </div>
                 </div>
               </div>

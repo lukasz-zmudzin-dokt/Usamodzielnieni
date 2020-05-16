@@ -4,6 +4,8 @@ import React from "react";
 import { UserContext } from "context/UserContext";
 import { createMemoryHistory } from "history";
 import UserInfo from "./UserInfo";
+import {userTypes} from "constants/userTypes";
+import {userStatuses} from "constants/userStatuses";
 
 const renderWithRouter = (
   ui,
@@ -12,7 +14,7 @@ const renderWithRouter = (
     history = createMemoryHistory({ initialEntries: [route] }),
   } = {}
 ) => {
-  let context = { type: "Staff" };
+  let context = { type: userTypes.STAFF };
   return {
     ...render(
       <UserContext.Provider value={context}>
@@ -29,8 +31,8 @@ describe("UserInfo", () => {
     username: "user1",
     date_joined: "2020-05-12",
     email: "qwe@qwe.qwe",
-    type: "Standard",
-    status: "Verified",
+    type: userTypes.STANDARD,
+    status: userStatuses.VERIFIED,
   };
 
   it("should match snapshot", () => {

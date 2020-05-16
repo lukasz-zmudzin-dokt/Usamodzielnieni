@@ -2,6 +2,7 @@ import { MemoryRouter } from "react-router-dom";
 import React from "react";
 import Filters from "./Filters";
 import { render, fireEvent, waitForElement } from "@testing-library/react";
+import {userStatuses} from "constants/userStatuses";
 
 describe("Filters", () => {
   let setFilter = jest.fn();
@@ -41,7 +42,7 @@ describe("Filters", () => {
       target: { value: "qwe@qwe.qwe" },
     });
     fireEvent.change(getByLabelText("Status:", { exact: false }), {
-      target: { value: "Verified" },
+      target: { value: userStatuses.VERIFIED },
     });
 
     fireEvent.click(getByText("Wyczyść filtry"));
@@ -89,7 +90,7 @@ describe("Filters", () => {
       target: { value: "qwe@qwe.qwe" },
     });
     fireEvent.change(getByLabelText("Status:", { exact: false }), {
-      target: { value: "Verified" },
+      target: { value: userStatuses.VERIFIED },
     });
 
     fireEvent.click(getByText("Filtruj użytkowników"));
@@ -98,7 +99,7 @@ describe("Filters", () => {
       username: "standard",
       email: "qwe@qwe.qwe",
       type: undefined,
-      status: "Verified",
+      status: userStatuses.VERIFIED,
     });
   });
 });
