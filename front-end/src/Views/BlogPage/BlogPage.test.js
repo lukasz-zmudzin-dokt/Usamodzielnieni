@@ -167,12 +167,12 @@ describe("BlogPage", () => {
       );
     });
 
-    it('should render post with no tags', async () => {
+    it("should render post with no tags", async () => {
       apiPosts[0].tags = [];
       const { getByText, getAllByText } = render(
-          <MemoryRouter>
-            <BlogPage />
-          </MemoryRouter>
+        <MemoryRouter>
+          <BlogPage />
+        </MemoryRouter>
       );
 
       await waitForElement(() => getAllByText("abcd"));
