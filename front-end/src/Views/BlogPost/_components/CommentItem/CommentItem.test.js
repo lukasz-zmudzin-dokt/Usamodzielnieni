@@ -11,18 +11,17 @@ describe("CommentItem", () => {
         id: "123",
         author: {
           email: "mail@mail.pl",
-          firstName: "Jan",
-          lastName: "Kowalski",
+          username: "qweqwe",
         },
         creationDate: new Date(2020, 10, 4),
         content: "Treść komentarza",
       },
-      onEditClick: jest.fn(),
       onDeleteClick: jest.fn(),
       user: {
         type: "Standard",
         data: {
           email: "mail@mail.pl",
+          username: "qweqwe",
           group_type: undefined,
         },
       },
@@ -53,15 +52,14 @@ describe("CommentItem", () => {
     expect(getByText("Usuń")).toBeInTheDocument();
   });
 
-  it("should call onDeleteClick when delete button is clicked", () => {
+  it("should call onDeleteClick when delete button is clicked", async () => {
     props.comment.author.email = "abc@123.com";
     props.user.type = "Staff";
-    props.user.data.group_type = "staff_blog_moderator";
+    props.user.data.group_type = ["staff_blog_moderator"];
 
     const { getByText } = render(<CommentItem {...props} />);
     fireEvent.click(getByText("Usuń"));
-
-    expect(props.onDeleteClick).toHaveBeenCalledTimes(1);
-    expect(props.onEditClick).toHaveBeenCalledTimes(0);
+    fireEvent.click(getByText("Usuń ✗", { exact: false }));
+    await expect(props.onDeleteClick).toHaveBeenCalledTimes(1);
   });
 });
