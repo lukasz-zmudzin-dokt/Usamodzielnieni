@@ -7,6 +7,7 @@ import {deletePost} from "Views/BlogPost/functions/apiCalls";
 import {Redirect} from "react-router-dom";
 import {staffTypes} from "constants/staffTypes";
 import proxy from "config/api";
+import {userTypes} from "constants/userTypes";
 
 const getDateString = dateString => {
     return dateString.substring(8,10) + "." + dateString.substring(5, 7) + "." + dateString.substring(0, 4);
@@ -33,7 +34,7 @@ const handleDeletion = async (wantsDelete, id, token, errorFlag, successFlag) =>
 };
 
 const renderButtons = (user, author, editionFlag, flag, setShowModal) => {
-    if ( user && user.token && (( user.type === 'Staff' && user.data.group_type.includes(staffTypes.BLOG_CREATOR)) || user.data.email === author.email) && !flag) {
+    if ( user && user.token && (( user.type === userTypes.STAFF && user.data.group_type.includes(staffTypes.BLOG_CREATOR)) || user.data.email === author.email) && !flag) {
         return (
             <ButtonToolbar className="btn_toolbar text-center">
                 <Button variant="info" className="button-edit mx-3" onClick={e => editionFlag(true)}>Edytuj post</Button>

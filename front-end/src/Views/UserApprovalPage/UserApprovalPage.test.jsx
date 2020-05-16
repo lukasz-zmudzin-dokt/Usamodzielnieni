@@ -2,6 +2,7 @@ import React from "react";
 import { render, waitForElement, fireEvent } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import UserApprovalPage from "./UserApprovalPage";
+import {userTypes} from "constants/userTypes";
 
 describe("UserApproval", () => {
     let failFetch;
@@ -12,7 +13,7 @@ describe("UserApproval", () => {
             id: "fcd32247-90ac-4394-92ca-27252bdc2ee9",
             last_login: "2020-04-25T23:31:59.239631+02:00",
             status: "Waiting for verification",
-            type: "Standard",
+            type: userTypes.STANDARD,
             username: "testowyuser123"
         },
         {
@@ -21,7 +22,7 @@ describe("UserApproval", () => {
             id: "fcd32247-90ac-4394-92ca-27252bdc2ee0",
             last_login: "2020-04-25T23:32:59.239631+02:00",
             status: "Waiting for verification",
-            type: "Employer",
+            type: userTypes.EMPLOYER,
             username: "testowyuser1232"
         }
     ];
@@ -49,7 +50,7 @@ describe("UserApproval", () => {
                 <UserApprovalPage />
             </MemoryRouter>
         );
-        await waitForElement(() => getByText("testowyuser123 (Standard)"));
+        await waitForElement(() => getByText("testowyuser123 (standard)"));
         expect(container).toMatchSnapshot();
     });
 
@@ -59,8 +60,8 @@ describe("UserApproval", () => {
                 <UserApprovalPage />
             </MemoryRouter>
         );
-        await waitForElement(() => getByText("testowyuser123 (Standard)"));
-        expect(getByText("testowyuser123 (Standard)")).toBeInTheDocument();
+        await waitForElement(() => getByText("testowyuser123 (standard)"));
+        expect(getByText("testowyuser123 (standard)")).toBeInTheDocument();
     });
 
     it("should view alert at api fail", async () => {

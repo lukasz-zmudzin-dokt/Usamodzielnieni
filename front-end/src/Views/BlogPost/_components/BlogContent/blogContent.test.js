@@ -5,6 +5,8 @@ import { waitForElement } from "@testing-library/dom";
 import { Router } from "react-router-dom";
 import { createMemoryHistory } from "history";
 import { UserContext } from "context/UserContext";
+import { userTypes } from "constants/userTypes";
+import { staffTypes } from "constants/staffTypes";
 
 const renderWithRouter = (
   ui,
@@ -15,8 +17,8 @@ const renderWithRouter = (
 ) => {
   let context = {
     token: "123",
-    type: "Staff",
-    data: { group_type: ["staff_blog_creator"] },
+    type: userTypes.STAFF,
+    data: { group_type: [staffTypes.BLOG_CREATOR] },
   };
   return {
     ...render(
@@ -78,10 +80,10 @@ describe("BlogContent", () => {
 
   beforeEach(() => {
     admin = {
-      type: "Staff",
+      type: userTypes.STAFF,
       data: {
         email: "a@m.com",
-        group_type: ["staff_blog_creator"],
+        group_type: [staffTypes.BLOG_CREATOR],
       },
       token: "123",
     };
@@ -130,7 +132,7 @@ describe("BlogContent", () => {
 
   it("should not render mgmt buttons", () => {
     const standard = {
-      type: "Standard",
+      type: userTypes.STANDARD,
       data: {
         email: "asd@asd.asd",
       },

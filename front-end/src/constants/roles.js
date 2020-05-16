@@ -1,22 +1,24 @@
+import { staffTypes } from "./staffTypes";
+
 export const adminGroup = [
   {
-    name: "staff_verification",
+    name: staffTypes.VERIFICATION,
     placeholder: "Weryfikacja użytkowników",
   },
   {
-    name: "staff_cv",
+    name: staffTypes.CV,
     placeholder: "Weryfikacja CV",
   },
   {
-    name: "staff_jobs",
+    name: staffTypes.JOBS,
     placeholder: "Weryfikacja ofert pracy",
   },
   {
-    name: "staff_blog_creator",
+    name: staffTypes.BLOG_CREATOR,
     placeholder: "Kreator postów na blogu",
   },
   {
-    name: "staff_blog_moderator",
+    name: staffTypes.BLOG_MODERATOR,
     placeholder: "Moderator bloga",
   },
 ];

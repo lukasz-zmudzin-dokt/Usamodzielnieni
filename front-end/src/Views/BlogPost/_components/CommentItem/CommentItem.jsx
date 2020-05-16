@@ -4,10 +4,11 @@ import "./CommentItem.css";
 import {staffTypes} from "constants/staffTypes";
 import {DeletionModal} from "components";
 import {useState} from "react";
+import {userTypes} from "constants/userTypes";
 
 const CommentItem = ({ comment, onDeleteClick, user, ...rest }) => {
     const canModifyComment = (user) => user.data ? (comment.author.email === user.data.email)
-                                    || (user.type === 'Staff' && user.data.group_type.includes(staffTypes.BLOG_MODERATOR)) : false;
+                                    || (user.type === userTypes.STAFF && user.data.group_type.includes(staffTypes.BLOG_MODERATOR)) : false;
     const handleOnClick = () => {
         setShowModal(true);
     }

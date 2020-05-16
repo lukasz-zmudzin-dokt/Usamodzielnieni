@@ -3,6 +3,9 @@ import { render, waitForElement } from "@testing-library/react";
 import JobOfferDetails from "./JobOfferDetails";
 import { MemoryRouter } from "react-router-dom";
 import { UserContext } from "context/UserContext";
+import { userTypes } from "constants/userTypes";
+import { userStatuses } from "constants/userStatuses";
+import { staffTypes } from "constants/staffTypes";
 
 jest.mock("./_components", () => ({
   AddCvForm: () => <div>AddCvForm</div>,
@@ -61,10 +64,10 @@ describe("JobOfferDetails", () => {
         "Jakiś baaaaaaaaaaaaaaaaaardzo dłuuuuuuuuuuuuuuugi opis oferty pracy\n123 asdasd",
     };
     user = {
-      type: "Standard",
+      type: userTypes.STANDARD,
       token: "123",
       data: {
-        status: "Verified",
+        status: userStatuses.VERIFIED,
       },
     };
     jest.clearAllMocks();
@@ -110,8 +113,8 @@ describe("JobOfferDetails", () => {
   });
 
   it("should render RemoveOffer component when staff user group is jobs", async () => {
-    user.type = "Staff";
-    user.data.group_type = "jobs";
+    user.type = userTypes.STAFF;
+    user.data.group_type = [staffTypes.JOBS];
 
     const { getByText, queryByText } = render(
       <UserContext.Provider value={user}>
@@ -141,7 +144,7 @@ describe("JobOfferDetails", () => {
   });
 
   it("should not render AddCvForm and RemoveOffer component when user is not verified and is not a jobs staff", async () => {
-    user.data.status = "Unverified";
+    user.data.status = userStatuses.AWAITING;
     const { getByText, queryByText } = render(
       <UserContext.Provider value={user}>
         <MemoryRouter>
