@@ -122,15 +122,11 @@ export default [
   {
     path: paths.BLOG_POST,
     component: BlogPost,
-    isPrivate: true,
-    type: undefined,
     exact: true,
   },
   {
     path: paths.BLOG_PAGE,
     component: BlogPage,
-    isPrivate: true,
-    type: undefined,
     exact: true,
   },
   {

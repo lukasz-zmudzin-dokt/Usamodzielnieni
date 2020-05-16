@@ -11,7 +11,10 @@ exports[`SkillsTab should render without crashing 1`] = `
       class="CVEditorTab__img"
       src="movie_4.png"
     />
-    <div>
+    <form
+      class=""
+      novalidate=""
+    >
       <div
         class="form-group"
       >
@@ -19,23 +22,31 @@ exports[`SkillsTab should render without crashing 1`] = `
           class="form-label"
           for="skillName"
         >
-          Umiejętność
+          Umiejętność:
         </label>
         <input
           class="form-control"
           id="skillName"
+          maxlength="50"
+          minlength="1"
           placeholder="Wpisz umiejętność"
+          required=""
           type="text"
           value=""
         />
+        <div
+          class="invalid-feedback"
+        >
+          Pole jest wymagane.
+        </div>
       </div>
       <button
-        class="itemsList__addButton btn btn-success"
-        type="button"
+        class="mb-3 btn btn-success"
+        type="submit"
       >
         + Dodaj
       </button>
-    </div>
+    </form>
     <div
       class="row"
     >
@@ -53,13 +64,17 @@ exports[`SkillsTab should render without crashing 1`] = `
       <div
         class="col-md-6 col-12"
       >
-        <button
-          class="btn btn-success btn-block"
-          id="saveButton"
-          type="submit"
+        <form
+          class=""
         >
-          Generuj CV
-        </button>
+          <button
+            class="btn btn-success btn-block"
+            id="saveButton"
+            type="submit"
+          >
+            Generuj CV
+          </button>
+        </form>
       </div>
     </div>
   </div>

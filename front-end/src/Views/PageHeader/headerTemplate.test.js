@@ -67,7 +67,7 @@ describe("navbar tests", () => {
 
   it("should render staff positions", () => {
     user.token = "123";
-    user.type = "Staff";
+    user.type = userTypes.STAFF;
     //user.data = {group_type: staffTypes.CV};
     /*const { container, queryByText } = render(
             <UserContext.Provider value={user}>

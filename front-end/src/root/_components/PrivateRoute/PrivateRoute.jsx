@@ -3,11 +3,12 @@ import { Route, Redirect } from "react-router-dom";
 
 import { paths } from "constants/paths";
 import { userTypes } from "constants/userTypes";
+import {userStatuses} from "constants/userStatuses";
 
 const PrivateRoute = ({ redirect, unverified, type, authenticated, userVerified, group, ...rest }) => {
   const checkAuth = () => {
     if (authenticated.token) {
-      if (!userVerified || authenticated.data.status === 'Verified') {
+      if (!userVerified || authenticated.data.status === userStatuses.VERIFIED) {
         if (!type) return <Route {...rest} />;
         else if (type === authenticated.type) {
           if (type === userTypes.STAFF) {

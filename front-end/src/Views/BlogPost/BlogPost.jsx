@@ -8,6 +8,7 @@ import {
   BlogContent
 } from './_components';
 import {getPost} from "./functions/apiCalls";
+import {userStatuses} from "constants/userStatuses";
 
 
 
@@ -31,7 +32,8 @@ const mapPost = (res) => ({
 const mapAuthor = (author) => ({
   email: author.email,
   firstName: author.first_name,
-  lastName: author.last_name
+  lastName: author.last_name,
+  username: author.username
 });
 
 const BlogPost = () => {
@@ -46,11 +48,11 @@ const BlogPost = () => {
 
   useEffect(
     () => {
-      const loadPost = async (postId, token) => {
+      const loadPost = async (postId) => {
         setIsPostLoading(true);
         let loadedPost;
         try {
-          loadedPost = mapPost(await getPost(postId, token));
+          loadedPost = mapPost(await getPost(postId));
         } catch (e) {
           console.log(e);
           loadedPost = null;
@@ -59,22 +61,25 @@ const BlogPost = () => {
         setPost(loadedPost);
         setIsPostLoading(false);
       };
-      loadPost(post_Id, user.token)
+      loadPost(post_Id)
     },
-    [post_Id, user.token]
+    [post_Id]
   );
 
   const msg = error ? (<Alert variant="danger">Wystąpił błąd podczas wczytywania zawartości bloga.</Alert>) :
               isPostLoading ? (<Alert variant="info">Ładowanie zawartości bloga...</Alert>) :
               !post && (<Alert>null</Alert>);
 
-  return msg || (
+  return msg ? <Card.Body>{msg}</Card.Body> : (
     <Container className="blogpost_container">
       <BlogContent post={post} user={user}/>
       <Card className="blogpost_comment_card">
         <Card.Body>
           <CommentsList user={user} blogId={post.id} comments={post.comments} setComments={setComments} />
-          <CommentForm blogId={post.id} afterSubmit={(comment) => setComments([ ...post.comments, comment ])} />
+          {
+            user.token && user.data.status === userStatuses.VERIFIED ?
+              <CommentForm blogId={post.id} afterSubmit={(comment) => setComments([ ...post.comments, comment ])} /> : null
+          }
         </Card.Body>
       </Card>
     </Container>

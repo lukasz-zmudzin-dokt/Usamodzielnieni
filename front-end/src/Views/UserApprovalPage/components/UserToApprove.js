@@ -7,6 +7,7 @@ import {
   setUserRejected,
 } from "Views/UserApprovalPage/functions/apiCalls";
 import { DetailsItem, DeletionModal } from "components";
+import { userTypes } from "constants/userTypes";
 
 const UserToApprove = ({ user, activeUser }) => {
   const context = useContext(UserContext);
@@ -30,7 +31,7 @@ const UserToApprove = ({ user, activeUser }) => {
       try {
         let res = await getUserDetails(token, userId);
         setUserDetails(res);
-        if (user.type === "Standard") {
+        if (user.type === userTypes.STANDARD) {
           setUserDetailsFacilityAddress(res.facility_address);
         } else {
           setUserDetailsFacilityAddress(res.company_address);
@@ -77,7 +78,7 @@ const UserToApprove = ({ user, activeUser }) => {
   };
 
   const address =
-    user.type === "Standard" ? (
+    user.type === userTypes.STANDARD ? (
       <DetailsItem label="Adres">
         <p>{userDetails.facility_name}</p>
         <p>

@@ -54,7 +54,7 @@ class LoginPage extends React.Component {
       try {
         const response = await sendData(this.state.credentials);
         const { status } = response;
-        if (status === 201) {
+        if (status === 200) {
           const { token, type } = response; //do poprawy
           fetch(proxy.account + "data/", {
             headers: {

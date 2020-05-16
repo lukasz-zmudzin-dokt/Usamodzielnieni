@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react'
 import { Form, Button, Alert } from "react-bootstrap";
 import { UserContext } from "context";
 import proxy from "config/api";
+import {userStatuses} from "../../../../constants/userStatuses";
 
 const addComment = async (token, content, blogId) => {
     let url = `${proxy.blog}${blogId}/comment/`;
@@ -47,9 +48,8 @@ const CommentForm = ({ blogId, afterSubmit, ...rest }) => {
                 afterSubmit({
                     id: id,
                     author: {
-                        firstName: user.data.first_name,
-                        lastName: user.data.last_name,
-                        email: user.data.email
+                        email: user.data.email,
+                        username: user.data.username
                     },
                     content: commentContent,
                     creationDate: new Date(Date.now())
@@ -65,7 +65,7 @@ const CommentForm = ({ blogId, afterSubmit, ...rest }) => {
     const msg = error ? (<Alert variant="danger">Wystąpił błąd podczas przesyłania komentarza.</Alert>) :
         submitted && (<Alert variant="success">Pomyślnie przesłano komentarz.</Alert>);
 
-    return user.data && user.data.status === 'Verified' ? (
+    return user.data && user.data.status === userStatuses.VERIFIED ? (
         <div {...rest}>
             <h5>Dodaj komentarz</h5>
             <Form 
