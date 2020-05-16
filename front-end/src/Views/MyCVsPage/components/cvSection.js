@@ -39,12 +39,12 @@ const CVSection = ({ cv, token, cutCV }) => {
   if (deletionConfirmed) handleDeletion();
   return (
     <ListGroup.Item key={cv.cv_id}>
-      {DeletionModal(
-        showModal,
-        setShowModal,
-        setDeletionConfirmed,
-        "Czy na pewno chcesz usunąć to CV?"
-      )}
+      <DeletionModal
+        show={showModal}
+        setShow={setShowModal}
+        delConfirmed={setDeletionConfirmed}
+        question={"Czy na pewno chcesz usunąć to CV?"}
+      />
       <Row className="d-flex align-items-center">
         <Col xs={12} md={5}>
           {cv.name}

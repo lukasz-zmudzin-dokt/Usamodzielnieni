@@ -17,7 +17,7 @@ const UserApprovalPage = () => {
             setLoading(true);
             try {
                 let res = await getUsersToApprove(token);
-                setUsers(res);
+                setUsers(res.results);
                 setLoading(false);
             } catch (e) {
                 setError(true);
