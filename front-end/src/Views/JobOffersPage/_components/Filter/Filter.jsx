@@ -8,6 +8,8 @@ import polish from "date-fns/locale/pl";
 import { getSelects } from "Views/OfferForm/functions/fetchData";
 import { UserContext } from "context";
 import { IndexLinkContainer } from "react-router-bootstrap";
+import {userTypes} from "constants/userTypes";
+import {userStatuses} from "constants/userStatuses";
 registerLocale("pl", polish);
 
 const Filter = ({ setFilters, count, disabled }) => {
@@ -163,7 +165,7 @@ const Filter = ({ setFilters, count, disabled }) => {
       {count !== 0 && (
         <small className="search__countText">{`Ilość znalezionych ofert: ${count}`}</small>
       )}
-      {user.type === "employer" && user.data && user.data.status === 'verified' ? (
+      {user.type === userTypes.EMPLOYER && user.data && user.data.status === userStatuses.VERIFIED ? (
         <IndexLinkContainer as={Button} to="/offerForm">
           <Button variant="success" className="mt-2">
             Dodaj ofertę
