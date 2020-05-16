@@ -4,8 +4,8 @@ import React from "react";
 import { UserContext } from "context/UserContext";
 import { createMemoryHistory } from "history";
 import UserInfo from "./UserInfo";
-import {userTypes} from "constants/userTypes";
-import {userStatuses} from "constants/userStatuses";
+import { userTypes } from "constants/userTypes";
+import { userStatuses } from "constants/userStatuses";
 
 const renderWithRouter = (
   ui,

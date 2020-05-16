@@ -2,8 +2,8 @@ import { render, waitForElement } from "@testing-library/react";
 import React from "react";
 import { MemoryRouter } from "react-router-dom";
 import UserList from "./UserList";
-import {userTypes} from "constants/userTypes";
-import {userStatuses} from "constants/userStatuses";
+import { userTypes } from "constants/userTypes";
+import { userStatuses } from "constants/userStatuses";
 
 describe("UserList", () => {
   let users, failFetch, token;
@@ -25,7 +25,7 @@ describe("UserList", () => {
     failFetch = false;
 
     users = {
-      results:  [
+      results: [
         {
           id: 1,
           username: "user1",
@@ -42,7 +42,7 @@ describe("UserList", () => {
           type: userTypes.EMPLOYER,
           status: userStatuses.AWAITING,
         },
-      ]
+      ],
     };
   });
 

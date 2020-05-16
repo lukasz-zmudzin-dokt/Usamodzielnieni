@@ -2,7 +2,7 @@ import { MemoryRouter } from "react-router-dom";
 import React from "react";
 import Filters from "./Filters";
 import { render, fireEvent, waitForElement } from "@testing-library/react";
-import {userStatuses} from "constants/userStatuses";
+import { userStatuses } from "constants/userStatuses";
 
 describe("Filters", () => {
   let setFilter = jest.fn();
