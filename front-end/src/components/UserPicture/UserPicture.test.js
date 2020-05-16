@@ -23,7 +23,7 @@ describe("UserPicture", () => {
   });
 
   it("should render staff picture", () => {
-    user.type = "Staff";
+    user.type = userTypes.STAFF;
     user.data.group_type = ["jakis_group_type"];
 
     const { container } = render(<UserPicture user={user} />);

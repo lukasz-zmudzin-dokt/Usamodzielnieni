@@ -46,8 +46,8 @@ describe("CommentItem", () => {
 
   it("should render comment with buttons when blog moderator is not the author of the comment", () => {
     props.comment.author.email = "abc@123.com";
-    props.user.type = "staff";
-    props.user.data.group_type = "staff_blog_moderator";
+    props.user.type = userTypes.STAFF;
+    props.user.data.group_type = [staffTypes.BLOG_MODERATOR];
 
     const { getByText } = render(<CommentItem {...props} />);
 

@@ -3,6 +3,7 @@ import { MemoryRouter } from "react-router-dom";
 import { render, fireEvent } from "@testing-library/react";
 import Filter from "Views/JobOffersPage/_components/Filter";
 import { UserContext } from "context";
+import {userTypes} from "constants/userTypes";
 
 describe("Filter(JobOffers)", () => {
   it("renders correctly", () => {
@@ -50,7 +51,7 @@ describe("Filter(JobOffers)", () => {
 
   it("should show add offer button if account type is Employer", () => {
     const { getByText } = render(
-      <UserContext.Provider value={{ type: "employer" }}>
+      <UserContext.Provider value={{ type: userTypes.EMPLOYER }}>
         <MemoryRouter initialEntries={["/"]}>
           <Filter setFilters={jest.fn()} count={0} />
         </MemoryRouter>

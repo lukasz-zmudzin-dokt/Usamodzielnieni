@@ -5,6 +5,7 @@ import { DEFAULT_INPUT } from "constants/other";
 import { UserContext } from "context";
 import { MemoryRouter } from "react-router-dom";
 import { userTypes } from "constants/userTypes";
+import {staffTypes} from "constants/staffTypes";
 
 describe("Filter", () => {
   let failFetch = false;
@@ -104,7 +105,7 @@ describe("Filter", () => {
       <UserContext.Provider
         value={{
           type: userTypes.STAFF,
-          data: { group_type: "staff_blog_creator" },
+          data: { group_type: [staffTypes.BLOG_CREATOR] },
         }}
       >
         <MemoryRouter>

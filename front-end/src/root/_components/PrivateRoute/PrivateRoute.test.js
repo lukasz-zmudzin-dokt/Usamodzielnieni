@@ -3,7 +3,7 @@ import PrivateRoute from "root/_components/PrivateRoute";
 import { render } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { userTypes } from "constants/userTypes";
-import { staffTypes } from "../../../constants/staffTypes";
+import { staffTypes } from "constants/staffTypes";
 
 describe("PrivateRoute test", () => {
   it("should match snapshot", () => {
@@ -14,7 +14,7 @@ describe("PrivateRoute test", () => {
     const ExampleComponent = () => <div>AComponent</div>;
     const exampleProps = {
       path: "/example",
-      type: "Employer",
+      type: userTypes.EMPLOYER,
       component: ExampleComponent,
     };
 
@@ -177,7 +177,7 @@ describe("PrivateRoute test", () => {
     const ExampleComponent = () => <div>AComponent</div>;
     const exampleProps = {
       path: "/example",
-      type: "staff",
+      type: userTypes.STAFF,
       group: [staffTypes.CV],
       component: ExampleComponent,
     };

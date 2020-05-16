@@ -8,6 +8,7 @@ import {
   BlogContent
 } from './_components';
 import {getPost} from "./functions/apiCalls";
+import {userStatuses} from "constants/userStatuses";
 
 
 
@@ -76,7 +77,7 @@ const BlogPost = () => {
         <Card.Body>
           <CommentsList user={user} blogId={post.id} comments={post.comments} setComments={setComments} />
           {
-            user.token && user.data.status === 'Verified' ?
+            user.token && user.data.status === userStatuses.VERIFIED ?
               <CommentForm blogId={post.id} afterSubmit={(comment) => setComments([ ...post.comments, comment ])} /> : null
           }
         </Card.Body>

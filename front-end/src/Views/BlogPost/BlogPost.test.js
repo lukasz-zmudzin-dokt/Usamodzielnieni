@@ -2,6 +2,9 @@ import React from "react";
 import BlogPost from "./BlogPost";
 import { render, waitForElement, fireEvent } from "@testing-library/react";
 import { UserContext } from "context/UserContext";
+import {userTypes} from "constants/userTypes";
+import {userStatuses} from "constants/userStatuses";
+import {staffTypes} from "constants/staffTypes";
 
 describe("BlogPost", () => {
   let post;
@@ -37,12 +40,12 @@ describe("BlogPost", () => {
       });
     });
     user = {
-      type: "staff",
+      type: userTypes.STAFF,
       data: {
         username: "staffName",
         email: "qwe@qwe.fgh",
-        group_type: ["staff_blog_creator"],
-        status: "Verified",
+        group_type: [staffTypes.BLOG_CREATOR],
+        status: userStatuses.VERIFIED,
       },
       token: "123",
     };

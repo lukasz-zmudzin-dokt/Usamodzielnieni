@@ -132,7 +132,7 @@ describe("BlogContent", () => {
 
   it("should not render mgmt buttons", () => {
     const standard = {
-      type: "Standard",
+      type: userTypes.STANDARD,
       data: {
         email: "asd@asd.asd",
       },

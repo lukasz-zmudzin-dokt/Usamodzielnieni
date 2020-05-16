@@ -142,6 +142,41 @@ exports[`BlogPost should match snapshot after loaded 1`] = `
             />
           </div>
         </div>
+        <div>
+          <h5>
+            Dodaj komentarz
+          </h5>
+          <form
+            class=""
+            novalidate=""
+          >
+            <div
+              class="form-group"
+            >
+              <textarea
+                class="form-control"
+                id="commentContent"
+                placeholder="Treść komentarza"
+                required=""
+              />
+              <div
+                class="invalid-feedback"
+              >
+                Wprowadź treść komentarza.
+              </div>
+            </div>
+            <div
+              class="CommentForm__submitGroup mb-0 form-group"
+            >
+              <button
+                class="btn btn-primary"
+                type="submit"
+              >
+                Prześlij
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   </div>
