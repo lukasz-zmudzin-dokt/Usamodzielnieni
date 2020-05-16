@@ -6,9 +6,9 @@ import { getCVUrl } from "../functions/getCVUrl";
 import proxy from "config/api";
 import { DeletionModal } from "components";
 import ChangeCVNameModal from "./ChangeCVNameModal.jsx";
-import { DeletionModal } from "components";
 
-const showCV = async (cvId, handleShowing, token) => {
+const showCV = async (e, cvId, handleShowing, token) => {
+    e.preventDefault();
   let r;
   try {
     r = await getCVUrl(token, cvId);
@@ -18,8 +18,6 @@ const showCV = async (cvId, handleShowing, token) => {
     handleShowing(true);
   }
 };
-
-
 
 const CVSection = ({ cv, token, cutCV }) => {
   const [error, setError] = useState(false);
@@ -53,7 +51,12 @@ const CVSection = ({ cv, token, cutCV }) => {
         delConfirmed={setDeletionConfirmed}
         question={"Czy na pewno chcesz usunąć to CV?"}
       />
-        <ChangeCVNameModal show={showChangeNameModal} setShow={setShowChangeNameModal} cvId={cv.cv_id} setCVNewName={setCVNewName} />
+      <ChangeCVNameModal
+        show={showChangeNameModal}
+        setShow={setShowChangeNameModal}
+        cvId={cv.cv_id}
+        setCVNewName={setCVNewName}
+      />
       <Row className="d-flex align-items-center">
         <Col xs={12} md={4}>
           {cv.name}
@@ -67,7 +70,7 @@ const CVSection = ({ cv, token, cutCV }) => {
         <Col xs={12} md={6} className="text-right">
           <Button
             variant="primary"
-            onClick={(e) => showCV(cv.cv_id, setError, token)}
+            onClick={(e) => showCV(e, cv.cv_id, setError, token)}
           >
             Zobacz CV
           </Button>
