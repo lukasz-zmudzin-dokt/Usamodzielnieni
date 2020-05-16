@@ -1,6 +1,6 @@
 import { Alert, Button, Col, ListGroup, Row } from "react-bootstrap";
 import CVStatus from "./CVStatus";
-import {IndexLinkContainer} from "react-router-bootstrap";
+import { IndexLinkContainer } from "react-router-bootstrap";
 import React, { useState } from "react";
 import { getCVUrl } from "../functions/getCVUrl";
 import proxy from "config/api";
@@ -8,7 +8,7 @@ import { DeletionModal } from "components";
 import ChangeCVNameModal from "./ChangeCVNameModal.jsx";
 
 const showCV = async (e, cvId, handleShowing, token) => {
-    e.preventDefault();
+  e.preventDefault();
   let r;
   try {
     r = await getCVUrl(token, cvId);
@@ -26,17 +26,21 @@ const CVSection = ({ cv, token, cutCV }) => {
   const [showModal, setShowModal] = useState(false);
   const [showChangeNameModal, setShowChangeNameModal] = useState(false);
 
-    const handleDeletion = async () => {
-        setDeletionConfirmed(false);
-        setDisabled(true);
-        const res = await cutCV(cv.cv_id);
-        if (res === false) {
-            setDisabled(false);
-        }
-    };
+  const handleDeletion = async () => {
+    setDeletionConfirmed(false);
+    setDisabled(true);
+    const res = await cutCV(cv.cv_id);
+    if (res === false) {
+      setDisabled(false);
+    }
+  };
 
-    const setCVNewName = (CVNewName) => { cv.name = CVNewName; }
-    const showCVNewNameModal =() => { setShowChangeNameModal(true); }
+  const setCVNewName = (CVNewName) => {
+    cv.name = CVNewName;
+  };
+  const showCVNewNameModal = () => {
+    setShowChangeNameModal(true);
+  };
 
   const handleOnClick = () => {
     setShowModal(true);
@@ -74,7 +78,9 @@ const CVSection = ({ cv, token, cutCV }) => {
           >
             Zobacz CV
           </Button>
-            <Button variant="info" onClick={showCVNewNameModal} className="m-1">Zmień nazwę</Button>
+          <Button variant="info" onClick={showCVNewNameModal} className="m-1">
+            Zmień nazwę
+          </Button>
           <IndexLinkContainer to={"/cvEditor/" + cv.cv_id}>
             <Button variant="info" className="mx-2">
               Edytuj
