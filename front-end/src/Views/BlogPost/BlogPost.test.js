@@ -24,6 +24,12 @@ describe("BlogPost", () => {
                   }
             );
             break;
+          case "POST":
+            resolve({
+              status: 200,
+              json: () => Promise.resolve({ id: "n1" }),
+            });
+            break;
           default:
             reject({});
             break;
@@ -33,6 +39,7 @@ describe("BlogPost", () => {
     user = {
       type: "Staff",
       data: {
+        username: "staffName",
         email: "qwe@qwe.fgh",
         group_type: ["staff_blog_creator"],
         status: "Verified",
@@ -58,6 +65,7 @@ describe("BlogPost", () => {
       tags: ["tag1", "tag2", "tag3"],
       comments: [
         {
+          id: "1",
           author: {
             first_name: "Jan",
             last_name: "Nowak",
@@ -125,13 +133,16 @@ describe("BlogPost", () => {
     expect(getByText("jannowak", { exact: false })).toBeInTheDocument();
   });
 
-  it("should not render comment form", () => {
-    const { queryByText } = render(
+  it("should not render comment form", async () => {
+    const { getByText, queryByText } = render(
       <UserContext.Provider value={{}}>
         <BlogPost />
       </UserContext.Provider>
     );
 
+    await waitForElement(() =>
+      getByText("Lorem ipsum dolor", { exact: false })
+    );
     expect(queryByText("Dodaj komentarz")).not.toBeInTheDocument();
   });
 
@@ -142,13 +153,14 @@ describe("BlogPost", () => {
       </UserContext.Provider>
     );
 
-    await waitForElement(() => fetch);
+    await waitForElement(() => getByText("Dodaj komentarz"));
     expect(getByText("Dodaj komentarz")).toBeInTheDocument();
     fireEvent.change(getByPlaceholderText("Treść komentarza"), {
       target: { value: "komentarz testowy" },
     });
     fireEvent.click(getByText("Prześlij"));
 
+    await waitForElement(() => getByText("staffName"));
     expect(getByText("komentarz testowy")).toBeInTheDocument();
   });
 });
