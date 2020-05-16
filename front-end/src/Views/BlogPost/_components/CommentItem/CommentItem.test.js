@@ -45,7 +45,7 @@ describe("CommentItem", () => {
 
   it("should render comment with buttons when blog moderator is not the author of the comment", () => {
     props.comment.author.email = "abc@123.com";
-    props.user.type = "Staff";
+    props.user.type = "staff";
     props.user.data.group_type = "staff_blog_moderator";
 
     const { getByText } = render(<CommentItem {...props} />);
@@ -55,7 +55,7 @@ describe("CommentItem", () => {
 
   it("should call onDeleteClick when delete button is clicked", () => {
     props.comment.author.email = "abc@123.com";
-    props.user.type = "Staff";
+    props.user.type = "staff";
     props.user.data.group_type = "staff_blog_moderator";
 
     const { getByText } = render(<CommentItem {...props} />);

@@ -65,7 +65,7 @@ const CommentForm = ({ blogId, afterSubmit, ...rest }) => {
     const msg = error ? (<Alert variant="danger">Wystąpił błąd podczas przesyłania komentarza.</Alert>) :
         submitted && (<Alert variant="success">Pomyślnie przesłano komentarz.</Alert>);
 
-    return user.data && user.data.status === 'Verified' ? (
+    return user.data && user.data.status === 'verified' ? (
         <div {...rest}>
             <h5>Dodaj komentarz</h5>
             <Form 

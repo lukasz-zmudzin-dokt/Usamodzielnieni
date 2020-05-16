@@ -50,7 +50,7 @@ describe("Filter(JobOffers)", () => {
 
   it("should show add offer button if account type is Employer", () => {
     const { getByText } = render(
-      <UserContext.Provider value={{ type: "Employer" }}>
+      <UserContext.Provider value={{ type: "employer" }}>
         <MemoryRouter initialEntries={["/"]}>
           <Filter setFilters={jest.fn()} count={0} />
         </MemoryRouter>

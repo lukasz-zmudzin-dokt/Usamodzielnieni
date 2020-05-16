@@ -74,7 +74,7 @@ describe("BlogContent", () => {
 
   beforeEach(() => {
     admin = {
-      type: "Staff",
+      type: "staff",
       data: {
         email: "a@m.com",
       },

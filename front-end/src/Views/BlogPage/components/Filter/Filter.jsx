@@ -93,7 +93,7 @@ const Filter = ({ token, setFilter, count }) => {
           Wyczyść filtry
         </Button>
       </div>
-      {user.type === "Staff" &&
+      {user.type === "staff" &&
       user.data.group_type.includes(staffTypes.BLOG_CREATOR) ? (
         <IndexLinkContainer as={Button} to="/blog/newPost">
           <Button variant="success" className="mt-2">

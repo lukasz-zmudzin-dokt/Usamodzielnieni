@@ -13,7 +13,7 @@ describe("CommentForm", () => {
 
   beforeAll(() => {
     user = {
-      type: "Standard",
+      type: "standard",
       token: "123",
       data: {
         first_name: "Jan",

@@ -59,7 +59,7 @@ describe("PrivateRoute test", () => {
 
   it("should render component if user have token and type is not required", () => {
     const exampleContext = {
-      type: "Staff",
+      type: "staff",
       token: "000111222333",
     };
     const ExampleComponent = () => <div>AComponent</div>;
@@ -139,14 +139,14 @@ describe("PrivateRoute test", () => {
   });
   it("should not render component if staff doesnt have required group ", () => {
     const exampleContext = {
-      type: "Staff",
+      type: "staff",
       token: "123143",
       data: { group_type: "staff_cv" },
     };
     const ExampleComponent = () => <div>AComponent</div>;
     const exampleProps = {
       path: "/example",
-      type: "Staff",
+      type: "staff",
       group: "staff_blog_creator",
       component: ExampleComponent,
     };
@@ -168,14 +168,14 @@ describe("PrivateRoute test", () => {
 
   it("should render component if staff have required group ", () => {
     const exampleContext = {
-      type: "Staff",
+      type: "staff",
       token: "123143",
       data: { group_type: "staff_cv" },
     };
     const ExampleComponent = () => <div>AComponent</div>;
     const exampleProps = {
       path: "/example",
-      type: "Staff",
+      type: "staff",
       group: "staff_cv",
       component: ExampleComponent,
     };

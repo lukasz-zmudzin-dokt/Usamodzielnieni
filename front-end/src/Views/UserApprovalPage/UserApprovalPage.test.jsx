@@ -21,7 +21,7 @@ describe("UserApproval", () => {
             id: "fcd32247-90ac-4394-92ca-27252bdc2ee0",
             last_login: "2020-04-25T23:32:59.239631+02:00",
             status: "Waiting for verification",
-            type: "Employer",
+            type: "employer",
             username: "testowyuser1232"
         }
     ];

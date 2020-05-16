@@ -31,7 +31,7 @@ describe("BlogPost", () => {
       });
     });
     user = {
-      type: "Staff",
+      type: "staff",
       data: {
         email: "qwe@qwe.fgh",
       },

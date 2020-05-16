@@ -1,10 +1,7 @@
 import React from "react";
 import { Navbar, Nav, Button, Form } from "react-bootstrap";
 import { compile } from "path-to-regexp";
-
 import logo from "assets/logo.png";
-
-// https://github.com/ReactTraining/react-router/issues/83#issuecomment-214794477
 import { IndexLinkContainer } from "react-router-bootstrap";
 import { Redirect, withRouter } from "react-router-dom";
 import { UserContext } from "context";
@@ -12,6 +9,7 @@ import Notifications from "./components/Notifications";
 import menuPositions from "constants/menuPositions";
 import { userTypes } from "constants/userTypes";
 import proxy from "config/api";
+import {userStatuses} from "constants/userStatuses";
 
 class HeaderTemplate extends React.Component {
   displayMenu() {
@@ -36,7 +34,7 @@ class HeaderTemplate extends React.Component {
             userVerified =
               pos.verified === true &&
               this.context.data &&
-              this.context.data.status === "Verified";
+              this.context.data.status === userStatuses.VERIFIED;
             return loggedOut ||
               (this.context.token &&
                 userIncluded &&
