@@ -5,6 +5,8 @@ import { waitForElement } from "@testing-library/dom";
 import { Router } from "react-router-dom";
 import { createMemoryHistory } from "history";
 import { UserContext } from "context/UserContext";
+import { userTypes } from "constants/userTypes";
+import { staffTypes } from "constants/staffTypes";
 
 const renderWithRouter = (
   ui,
@@ -13,7 +15,11 @@ const renderWithRouter = (
     history = createMemoryHistory({ initialEntries: [route] }),
   } = {}
 ) => {
-  let context = { data: {} };
+  let context = {
+    token: "123",
+    type: userTypes.STAFF,
+    data: { group_type: [staffTypes.BLOG_CREATOR] },
+  };
   return {
     ...render(
       <UserContext.Provider value={context}>
@@ -39,7 +45,7 @@ describe("BlogContent", () => {
       content:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin nibh augue, suscipit a, scelerisque sed, lacinia in, mi. Cras vel lorem. Etiam pellentesque aliquet tellus. Phasellus pharetra nulla ac diam. Quisque semper justo at risus. Donec venenatis, turpis vel hendrerit interdum, dui ligula ultricies purus, sed posuere libero dui id orci. Nam congue, pede vitae dapibus aliquet, elit magna vulputate arcu, vel tempus metus leo non est. Etiam sit amet lectus quis est congue mollis. Phasellus congue lacus eget neque. Phasellus ornare, ante vitae consectetuer consequat, purus sapien ultricies dolor, et mollis pede metus eget nisi. Praesent sodales velit quis augue. Cras suscipit, urna at aliquam rhoncus, urna quam viverra nisi, in interdum massa nibh nec erat.",
       tags: ["tag1", "tag2", "tag3"],
-      creationDate: "02-02-2020qweqweqwe",
+      creationDate: "2020-02-02qweqweqwe",
       comments: [
         {
           author: {
@@ -47,7 +53,7 @@ describe("BlogContent", () => {
             lastName: "Malarz",
             email: "a@m.com",
           },
-          creationDate: "01-01-2019",
+          creationDate: "2019-01-01",
           content: "Witam w nowy rok!",
           id: 1,
         },
@@ -74,9 +80,10 @@ describe("BlogContent", () => {
 
   beforeEach(() => {
     admin = {
-      type: "Staff",
+      type: userTypes.STAFF,
       data: {
         email: "a@m.com",
+        group_type: [staffTypes.BLOG_CREATOR],
       },
       token: "123",
     };
@@ -91,7 +98,7 @@ describe("BlogContent", () => {
 
   it("should convert date type", () => {
     const secondPost = post;
-    secondPost.creationDate = "07-06-2019";
+    secondPost.creationDate = "2019-06-07";
     const { getByText } = render(
       <BlogContent post={secondPost} user={admin} />
     );
@@ -125,7 +132,7 @@ describe("BlogContent", () => {
 
   it("should not render mgmt buttons", () => {
     const standard = {
-      type: "Standard",
+      type: userTypes.STANDARD,
       data: {
         email: "asd@asd.asd",
       },
@@ -140,7 +147,8 @@ describe("BlogContent", () => {
   it("should delete post", async () => {
     const { getByText } = render(<BlogContent post={post} user={admin} />);
 
-    fireEvent.click(getByText("Usuń", { exact: false }));
+    fireEvent.click(getByText("Usuń post"));
+    fireEvent.click(getByText("Usuń ✗"));
 
     await waitForElement(() =>
       getByText("Ten post został usunięty", { exact: false })
@@ -157,7 +165,8 @@ describe("BlogContent", () => {
       <BlogContent post={post} user={admin} />
     );
 
-    fireEvent.click(getByText("Usuń", { exact: false }));
+    fireEvent.click(getByText("Usuń post"));
+    fireEvent.click(getByText("Usuń ✗"));
 
     await waitForElement(() =>
       getByText("Wystąpił błąd podczas usuwania posta.", { exact: false })
@@ -178,5 +187,12 @@ describe("BlogContent", () => {
     fireEvent.click(getByText("Edytuj", { exact: false }));
 
     expect(history.location.pathname).toEqual("/blog/newPost/" + post.id);
+  });
+
+  it("should render alternative title", () => {
+    post.title = "";
+    const { getByText } = render(<BlogContent post={post} user={admin} />);
+
+    expect(getByText("Tytuł posta")).toBeInTheDocument();
   });
 });

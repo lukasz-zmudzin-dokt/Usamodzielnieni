@@ -1,6 +1,8 @@
 import React from "react";
 import { render, fireEvent } from "@testing-library/react";
 import CommentItem from "./CommentItem";
+import { userTypes } from "constants/userTypes";
+import { staffTypes } from "constants/staffTypes";
 
 describe("CommentItem", () => {
   let props;
@@ -11,18 +13,17 @@ describe("CommentItem", () => {
         id: "123",
         author: {
           email: "mail@mail.pl",
-          firstName: "Jan",
-          lastName: "Kowalski",
+          username: "qweqwe",
         },
         creationDate: new Date(2020, 10, 4),
         content: "Treść komentarza",
       },
-      onEditClick: jest.fn(),
       onDeleteClick: jest.fn(),
       user: {
-        type: "Standard",
+        type: userTypes.STANDARD,
         data: {
           email: "mail@mail.pl",
+          username: "qweqwe",
           group_type: undefined,
         },
       },
@@ -45,23 +46,22 @@ describe("CommentItem", () => {
 
   it("should render comment with buttons when blog moderator is not the author of the comment", () => {
     props.comment.author.email = "abc@123.com";
-    props.user.type = "Staff";
-    props.user.data.group_type = "staff_blog_moderator";
+    props.user.type = userTypes.STAFF;
+    props.user.data.group_type = [staffTypes.BLOG_MODERATOR];
 
     const { getByText } = render(<CommentItem {...props} />);
 
     expect(getByText("Usuń")).toBeInTheDocument();
   });
 
-  it("should call onDeleteClick when delete button is clicked", () => {
+  it("should call onDeleteClick when delete button is clicked", async () => {
     props.comment.author.email = "abc@123.com";
-    props.user.type = "Staff";
-    props.user.data.group_type = "staff_blog_moderator";
+    props.user.type = userTypes.STAFF;
+    props.user.data.group_type = [staffTypes.BLOG_MODERATOR];
 
     const { getByText } = render(<CommentItem {...props} />);
     fireEvent.click(getByText("Usuń"));
-
-    expect(props.onDeleteClick).toHaveBeenCalledTimes(1);
-    expect(props.onEditClick).toHaveBeenCalledTimes(0);
+    fireEvent.click(getByText("Usuń ✗", { exact: false }));
+    await expect(props.onDeleteClick).toHaveBeenCalledTimes(1);
   });
 });

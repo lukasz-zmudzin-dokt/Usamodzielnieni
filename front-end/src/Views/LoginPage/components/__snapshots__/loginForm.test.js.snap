@@ -2,50 +2,41 @@
 
 exports[`LoginForm should render correctly 1`] = `
 <div>
-  <div
-    class="loginPage__cardSection col-lg mr-lg-3 card bg-light"
-  >
+  <div>
     <div
-      class="card-body"
+      class="form-group"
     >
+      <input
+        class="loginPage__input form-control"
+        data-testid="loginPage_login"
+        id="formGroupUsername"
+        name="username"
+        placeholder="Login"
+        required=""
+        type="text"
+      />
       <div
-        class="form-group"
+        class="invalid-feedback"
       >
-        <input
-          class="loginPage__input form-control"
-          id="formGroupUsername"
-          minlength="6"
-          name="login"
-          placeholder="Login"
-          required=""
-          type="text"
-          value=""
-        />
-        <div
-          class="invalid-feedback"
-        >
-          Podaj login
-        </div>
+        Podaj login
       </div>
+    </div>
+    <div
+      class="form-group"
+    >
+      <input
+        class="form-control"
+        data-testid="loginPage_password"
+        id="formGroupPassword"
+        name="password"
+        placeholder="Hasło"
+        required=""
+        type="password"
+      />
       <div
-        class="form-group"
+        class="invalid-feedback"
       >
-        <input
-          autocomplete="on"
-          class="form-control"
-          id="formGroupPassword"
-          minlength="6"
-          name="password"
-          placeholder="Hasło"
-          required=""
-          type="password"
-          value=""
-        />
-        <div
-          class="invalid-feedback"
-        >
-          Podaj hasło
-        </div>
+        Podaj hasło
       </div>
     </div>
   </div>

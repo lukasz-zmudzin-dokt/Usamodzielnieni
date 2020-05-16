@@ -2,6 +2,7 @@ import React from "react";
 import { render, wait, waitForElement } from "@testing-library/react";
 import CommentsList from "./CommentsList";
 import { CommentItem, CommentForm } from "../";
+import { userTypes } from "constants/userTypes";
 
 jest.mock("../");
 
@@ -38,7 +39,7 @@ describe("CommentsList", () => {
       comments: [{ id: "b1" }, { id: "b2" }, { id: "b3" }],
       setComments: jest.fn(),
       user: {
-        type: "Standard",
+        type: userTypes.STANDARD,
         data: {
           email: "mail@mail.pl",
           group_type: undefined,
