@@ -5,6 +5,7 @@ import logo from "assets/logo.png";
 import { Redirect } from "react-router-dom";
 import { UserContext } from "context/UserContext";
 import proxy from "config/api";
+import { Tile } from "./components";
 
 class Menu extends React.Component {
   userLogout = (e) => {
@@ -103,6 +104,46 @@ class Menu extends React.Component {
             <Col />
           </Row>
         </div>
+        <Row>
+          <div className="tilesGrid">
+            <Tile
+              color="lightblue"
+              imageUrl="https://cdn140.picsart.com/244027593018212.png"
+              showImage={{ right: true }}
+              title="Telefon zaufania"
+            />
+            <Tile
+              color="beige"
+              imageUrl="https://cdn140.picsart.com/244027593018212.png"
+              showImage={{ right: true }}
+              title="Zapytaj"
+            />
+            <Tile
+              color="coral"
+              imageUrl="https://cdn140.picsart.com/244027593018212.png"
+              showImage={{ right: true }}
+              title="Warsztaty"
+            />
+            <Tile
+              color="cornflowerblue"
+              imageUrl="https://cdn140.picsart.com/244027593018212.png"
+              showImage={{ right: true }}
+              title="Telefon zaufania"
+            />
+            <Tile
+              color="burlywood"
+              imageUrl="https://cdn140.picsart.com/244027593018212.png"
+              showImage={{ right: true }}
+              title="Zapytaj"
+            />
+            <Tile
+              color="mediumpurple"
+              imageUrl="https://cdn140.picsart.com/244027593018212.png"
+              showImage={{ right: true }}
+              title="Warsztaty"
+            />
+          </div>
+        </Row>
       </Container>
     );
   }
