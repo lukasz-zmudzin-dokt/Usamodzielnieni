@@ -1,8 +1,9 @@
 import proxy from "config/api";
-import {userStatuses} from "constants/userStatuses";
+import { userStatuses } from "constants/userStatuses";
 
 export const getUsersToApprove = async (token) => {
-  let url = proxy.account + "admin/user_list/all/?status=" + userStatuses.AWAITING;
+  let url =
+    proxy.account + "admin/user_list/all/?status=" + userStatuses.AWAITING;
   const headers = {
     Authorization: "token " + token,
     "Content-Type": "application/json",

@@ -9,7 +9,7 @@ import Notifications from "./components/Notifications";
 import menuPositions from "constants/menuPositions";
 import { userTypes } from "constants/userTypes";
 import proxy from "config/api";
-import {userStatuses} from "constants/userStatuses";
+import { userStatuses } from "constants/userStatuses";
 
 class HeaderTemplate extends React.Component {
   displayMenu() {

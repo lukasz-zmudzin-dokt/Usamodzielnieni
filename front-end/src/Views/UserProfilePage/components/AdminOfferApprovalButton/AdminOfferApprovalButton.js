@@ -2,10 +2,11 @@ import React from "react";
 import { LinkContainer } from "react-router-bootstrap";
 import { Button } from "react-bootstrap";
 import { staffTypes } from "constants/staffTypes";
-import {userTypes} from "constants/userTypes";
+import { userTypes } from "constants/userTypes";
 
 const AdminOfferApprovalButton = ({ user }) =>
-  user.type === userTypes.STAFF && user.data.group_type.includes(staffTypes.JOBS) ? (
+  user.type === userTypes.STAFF &&
+  user.data.group_type.includes(staffTypes.JOBS) ? (
     <LinkContainer to="/offerApproval">
       <Button variant="primary" className="ml-3">
         Akceptuj oferty pracy
