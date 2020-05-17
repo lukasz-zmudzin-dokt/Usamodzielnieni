@@ -12,7 +12,7 @@ import {
 import { UserContext } from "context";
 import polish from "date-fns/locale/pl";
 import { useHistory, useParams } from "react-router-dom";
-import {addressToString} from "utils/converters";
+import { addressToString } from "utils/converters";
 
 registerLocale("pl", polish);
 
