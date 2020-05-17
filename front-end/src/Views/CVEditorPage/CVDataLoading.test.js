@@ -1,18 +1,14 @@
 import React from "react";
-import {
-  render,
-  waitForElement,
-  fireEvent,
-  queries,
-} from "@testing-library/react";
+import { render, wait } from "@testing-library/react";
 import CVEditorPage from "./CVEditorPage";
-import { Router } from "react-router-dom";
+import { Router, Route } from "react-router-dom";
 import { createMemoryHistory } from "history";
 import { UserContext } from "context/UserContext";
 
-const renderWithRouter = (
+const renderWithRouterMatch = (
   ui,
   {
+    path = "/cvEditor/:id",
     route = "/cvEditor/123",
     history = createMemoryHistory({ initialEntries: [route] }),
   } = {}
@@ -24,15 +20,16 @@ const renderWithRouter = (
   return {
     ...render(
       <UserContext.Provider value={context}>
-        <Router history={history}>{ui}</Router>
+        <Router history={history}>
+          <Route path={path}>{ui}</Route>
+        </Router>
       </UserContext.Provider>
     ),
-    history,
   };
 };
 
 describe("load cv data", () => {
-  let apiFail, data, feedback, token;
+  let apiFail, data, feedback;
   let props = {
     match: {
       params: {
@@ -41,21 +38,14 @@ describe("load cv data", () => {
     },
   };
   beforeAll(() => {
-    token = 123;
     global.fetch = jest.fn().mockImplementation((input, init) => {
       return new Promise((resolve, reject) => {
         if (apiFail) {
           resolve({ status: 500 });
-        } else if (data.was_reviewed) {
-          resolve({
-            status: 200,
-            json: () => {
-              Promise.resolve(data);
-              Promise.resolve(feedback);
-            },
-          });
-        } else {
+        } else if (input === "https://usamo-back.herokuapp.com/cv/data/123/") {
           resolve({ status: 200, json: () => Promise.resolve(data) });
+        } else {
+          resolve({ status: 200, json: () => Promise.resolve(feedback) });
         }
       });
     });
@@ -70,18 +60,19 @@ describe("load cv data", () => {
       was_reviewed: false,
       cv_id: 123,
       basic_info: {
+        date_of_birth: "14-5-2020",
+        email: "dsfsdf@gsddf.fd",
         first_name: "Jan",
-        last_name: "Kowalski",
-        date_of_birth: "01.01.2000",
+        last_name: "dsfdsfs",
         phone_number: "+48123456789",
-        email: "qwe@qwe.qwe",
+        picture: null,
       },
       schools: [
         {
-          name: "szkoła1",
-          description: "klasa1",
-          startTime: "2016",
-          endTime: "2019",
+          additional_info: "sadasdas",
+          name: "asdasdsad",
+          year_end: 2020,
+          year_start: 2020,
         },
       ],
       experiences: [],
@@ -108,68 +99,63 @@ describe("load cv data", () => {
   });
 
   it("should load correct data on personal tab", async () => {
-    const { getByLabelText } = await renderWithRouter(
+    const { getByLabelText } = renderWithRouterMatch(
       <CVEditorPage {...props} />
     );
-    await waitForElement(() => fetch);
+    await wait(() => expect(fetch).toHaveBeenCalled());
     await expect(getByLabelText("Imię:").value).toBe(
       data.basic_info.first_name
     );
     expect(getByLabelText("Nazwisko:").value).toBe(data.basic_info.last_name);
-    expect(getByLabelText("Email:").value).toBe(data.basic_info.email);
+    expect(getByLabelText("Adres email:").value).toBe(data.basic_info.email);
     expect(getByLabelText("Numer telefonu:").value).toBe(
       data.basic_info.phone_number
     );
   });
 
   it("should load and display correct date", async () => {
-    const { getByLabelText, getByText } = await renderWithRouter(
-      <CVEditorPage />
+    const { getByLabelText } = renderWithRouterMatch(
+      <CVEditorPage {...props} />
     );
 
+    await wait(() => expect(fetch).toHaveBeenCalled());
+
     const birthDate = getByLabelText("Data urodzenia:").value;
-    expect(birthDate).toEqual(new Date(2000, 0, 0));
-    expect(getByText("01.01.2020")).toBeInTheDocument();
+    console.log(birthDate);
+    expect(birthDate).toEqual("14.05.2020");
+    // expect(getByText("14.05.2020")).toBeInTheDocument();
   });
 
   it("should load data and feedback", async () => {
     data.was_reviewed = true;
-    const { getByLabelText, getByText } = renderWithRouter(
+    const { getByLabelText, getByText } = renderWithRouterMatch(
       <CVEditorPage {...props} />
     );
+
+    await wait(() => expect(fetch).toHaveBeenCalledTimes(2));
 
     expect(getByLabelText("Imię:").value).toBe("Jan");
     expect(getByText("dane osobowe ok")).toBeInTheDocument();
   });
 
-  it("should render data only", () => {
+  it("should render data only", async () => {
     data.was_reviewed = false;
-    const { getByText, getByLabelText } = renderWithRouter(<CVEditorPage />);
+    const { getByLabelText } = renderWithRouterMatch(
+      <CVEditorPage {...props} />
+    );
+
+    await wait(() => expect(fetch).toHaveBeenCalled());
+
     expect(getByLabelText("Imię:").value).toEqual("Jan");
-    expect(getByText("dane osobowe ok")).not.toBeInTheDocument();
   });
 
   it("should fail on loading data and display alert", async () => {
     apiFail = true;
-    const { getByText } = renderWithRouter(<CVEditorPage />);
+    const { getByText } = renderWithRouterMatch(<CVEditorPage {...props} />);
+
+    await wait(() => expect(fetch).toHaveBeenCalled());
 
     expect(getByText("Imię:").value).not.toBe("Jan");
     expect(getByText("Wystąpił błąd", { exact: false })).toBeInTheDocument();
-  });
-
-  it("should change photo placeholder", async () => {
-    data.has_photo = true;
-    const { getByText } = renderWithRouter(<CVEditorPage />);
-
-    await waitForElement(() => fetch);
-    await expect(getByText("Poprzednie zdjęcie")).toBeInTheDocument();
-  });
-
-  it("should not change photo placeholder", async () => {
-    data.has_photo = false;
-    const { getByText } = renderWithRouter(<CVEditorPage />);
-
-    await waitForElement(() => fetch);
-    await expect(getByText("Wybierz zdjęcie")).toBeInTheDocument();
   });
 });
