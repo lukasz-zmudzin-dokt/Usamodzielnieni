@@ -7,9 +7,9 @@ import UserDetails from "./components/UserDetails";
 const UserApprovalPage = () => {
   const context = useContext(UserContext);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
   const [users, setUsers] = useState([]);
   const [activeUser, setActiveUser] = useState("");
-  const [err, setErr] = useState(false);
 
   useEffect(() => {
     const loadUsers = async (token) => {
@@ -17,22 +17,22 @@ const UserApprovalPage = () => {
       try {
         let res = await getUsersToApprove(token);
         setUsers(res.results);
+        setLoading(false);
       } catch (e) {
-        setErr(true);
-      } finally {
+        setError(true);
         setLoading(false);
       }
     };
-    loadUsers(context.token, setUsers);
+    loadUsers(context.token);
   }, [context.token]);
 
   const message = loading ? (
     <Alert variant="info" className="m-3">
       Ładuję...
     </Alert>
-  ) : err ? (
-    <Alert variant="danger">
-      Błąd. Nie udało się załadować użytkowników do zaakceptowania.
+  ) : error ? (
+    <Alert variant="danger" className="m-3">
+      Ups, wystąpił błąd.
     </Alert>
   ) : users.length === 0 ? (
     <Alert variant="info" className="m-3">

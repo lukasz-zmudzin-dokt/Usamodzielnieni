@@ -11,15 +11,14 @@ import { userTypes } from "constants/userTypes";
 
 const UserToApprove = ({ user, activeUser }) => {
   const context = useContext(UserContext);
+  const alertC = useRef(useContext(AlertContext));
   const [userDetails, setUserDetails] = useState([]);
   const [userDetailsFacilityAddress, setUserDetailsFacilityAddress] = useState(
     []
   );
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-  const [approved, setApproved] = useState(false);
-  const [rejected, setRejected] = useState(false);
-  const alertC = useRef(useContext(AlertContext));
+
   const [showRejectModal, setShowReject] = useState(false);
   const [rejectConfirmed, setRejectConfirmed] = useState(false);
   //const [showAcceptModal, setShowAccept] = useState(false);
@@ -44,26 +43,36 @@ const UserToApprove = ({ user, activeUser }) => {
     if (user.id === activeUser) {
       loadUserDetails(context.token, user.id);
     }
-  }, [context.token, user.id, user.type, activeUser]);
+    if (rejectConfirmed) rejectUser(context.token, user.id);
+  }, [context.token, user.id, user.type, activeUser, rejectConfirmed]);
 
-  const approveUser = async (token, userId) => {
+  const approveUser = async (e, token, userId) => {
+    e.preventDefault();
     try {
-      await setUserApproved(token, userId);
-      setApproved(true);
-      alertC.current.showAlert("Konto zatwierdzone pomyślnie", "success");
+      let res = await setUserApproved(token, userId);
+      if (res.message === "Użytkownik został pomyślnie zweryfikowany") {
+        alertC.current.showAlert(res.message, "success");
+      }
     } catch (err) {
-      alertC.current.showAlert("Błąd. Nie udało się zatwierdzić użytkownika.");
+      setError(true);
+      alertC.current.showAlert("Nie udało się zweryfikować użytkownika");
     }
   };
 
+  //const rejectUser = async (e, token, userId) => {
   const rejectUser = async (token, userId) => {
+    let res;
     try {
-      await setUserRejected(token, userId);
-      setRejected(true);
-      alertC.current.showAlert("Konto odrzucone pomyślnie", "success");
+      res = await setUserRejected(token, userId);
+      console.log(res);
+      if (res.message === "Użytkownik został pomyślnie odrzucony") {
+        alertC.current.showAlert(res.message, "success");
+      }
     } catch (err) {
-      alertC.current.showAlert("Błąd. Nie udało się odrzucić użytkownika.");
+      setError(true);
+      alertC.current.showAlert("Nie udało się odrzucić użytkownika");
     }
+    setRejectConfirmed(false);
   };
 
   const handleOnClick = (e) => {
@@ -107,20 +116,11 @@ const UserToApprove = ({ user, activeUser }) => {
       Ładuję...
     </Alert>
   ) : error ? (
-    <Alert variant="danger">
-      Błąd. Nie udało się załadować danych użytkownika.
-    </Alert>
-  ) : approved ? (
-    <Alert className="mb-0" variant="success">
-      Konto zatwierdzone pomyślnie.
-    </Alert>
-  ) : rejected ? (
-    <Alert className="mb-0" variant="success">
-      Konto odrzucone pomyślnie.
+    <Alert className="mb-0" variant="danger">
+      Nie udało się załadować danych użytkownika.
     </Alert>
   ) : null;
 
-  if (rejectConfirmed) rejectUser(context.token, user.id);
   /*if(acceptConfirmed)
         approveUser(context.token, user.id);*/
 
@@ -163,7 +163,7 @@ const UserToApprove = ({ user, activeUser }) => {
           <ListGroup.Item>
             <Row className="justify-content-center">
               <Button
-                onClick={(e) => approveUser(context.token, user.id)}
+                onClick={(e) => approveUser(e, context.token, user.id)}
                 variant="success"
                 id="accept"
               >

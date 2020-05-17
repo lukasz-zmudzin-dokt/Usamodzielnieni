@@ -146,7 +146,7 @@ class RegisterPage extends React.Component {
             const { token, type, data } = contextData;
             this.context.login(token, type, data);
           }
-          this.setRedirect();
+          return this.setRedirect();
         }
       } catch (error) {
         this.handleIncorrectResponse(error.status);
