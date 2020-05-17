@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { registerLocale } from "react-datepicker";
 import { Form, Button, Col } from "react-bootstrap";
 import { DEFAULT_INPUT } from "constants/other";
@@ -6,7 +6,7 @@ import FormGroup from "components/FormGroup";
 import { voivodeships } from "constants/voivodeships";
 import polish from "date-fns/locale/pl";
 import { getSelects } from "Views/OfferForm/functions/fetchData";
-import { UserContext } from "context";
+import { UserContext, AlertContext } from "context";
 import { IndexLinkContainer } from "react-router-bootstrap";
 import { userTypes } from "constants/userTypes";
 import { userStatuses } from "constants/userStatuses";
@@ -20,8 +20,7 @@ const Filter = ({ setFilters, count, disabled }) => {
   const [type, setType] = useState(DEFAULT_INPUT);
   const [arrays, setArrays] = useState([]);
   const user = useContext(UserContext);
-
-  const context = useContext(UserContext);
+  const alertC = useRef(useContext(AlertContext));
 
   useEffect(() => {
     const loadSelects = async (token) => {
@@ -31,11 +30,12 @@ const Filter = ({ setFilters, count, disabled }) => {
       } catch (e) {
         console.log(e);
         res = { categories: [], types: [] };
+        alertC.current.showAlert("Nie udało się pobrać filtrów.");
       }
       setArrays(res);
     };
-    loadSelects(context.token);
-  }, [context.token]);
+    loadSelects(user.token);
+  }, [user.token]);
 
   const filter = (event) => {
     event.preventDefault();

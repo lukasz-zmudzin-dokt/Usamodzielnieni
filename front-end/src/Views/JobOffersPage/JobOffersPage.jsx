@@ -59,9 +59,9 @@ const JobOffersPage = (props) => {
     page: 1,
     pageSize: 10,
   });
-  const [error, setError] = useState(false);
-  const user = useContext(UserContext);
   const [disabled, setDisabled] = useState(false);
+  const [err, setErr] = useState(false);
+  const user = useContext(UserContext);
 
   const queryParams = qs.parse(props.location.search, { parseNumbers: true });
   if (
@@ -81,7 +81,7 @@ const JobOffersPage = (props) => {
       } catch (e) {
         console.log(e);
         res = { offers: [], count: 0 };
-        setError(true);
+        setErr(true);
       }
       setOffers(res.offers);
       setCount(res.count);
@@ -91,16 +91,15 @@ const JobOffersPage = (props) => {
     loadOffers(user.token);
   }, [user.token, filters]);
 
-  const msg = error ? (
-    <Alert variant="danger">Wystąpił błąd podczas ładowania ofert.</Alert>
-  ) : isOffersLoading ? (
+  const msg = isOffersLoading ? (
     <Alert variant="info">Ładowanie ofert...</Alert>
+  ) : err ? (
+    <Alert variant="danger">Wystąpił błąd podczas ładowania ofert.</Alert>
   ) : (
     offers.length === 0 && (
       <Alert variant="info">Brak ofert spełniających podane wymagania.</Alert>
     )
   );
-
   return (
     <Container>
       <Card>

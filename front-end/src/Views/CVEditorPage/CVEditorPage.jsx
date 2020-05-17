@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Container, Tab, Tabs, Alert } from "react-bootstrap";
+import { Card, Container, Tab, Tabs } from "react-bootstrap";
 import "react-datepicker/dist/react-datepicker.css";
 import {
   PersonalDataTab,
@@ -14,13 +14,13 @@ import { UserContext } from "context";
 import { sendData, getFeedback } from "Views/CVEditorPage/functions/other.js";
 import { createCVObject } from "Views/CVEditorPage/functions/createCVObject.js";
 import { withRouter } from "react-router-dom";
+import { withAlertContext } from "components";
 
 class CVEditorPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       formTab: "personalData",
-      error: false,
       tabs: {
         personalData: {
           data: null,
@@ -97,7 +97,8 @@ class CVEditorPage extends React.Component {
           this.context.token
         ).then(() => this.setState({ disabled: false }));
       } catch (e) {
-        this.setState({ error: true, disabled: false });
+        this.setState({ disabled: false });
+        this.props.alertContext.showAlert("Nie udało się wysłać CV");
       }
     }
   };
@@ -191,8 +192,8 @@ class CVEditorPage extends React.Component {
           console.log(err);
           this.setState({
             loading: false,
-            commentsError: true,
           });
+          this.props.alertContext.showAlert("Nie udało się załadować uwag.");
         });
     } else {
       this.setState({ showComments: false });
@@ -219,11 +220,6 @@ class CVEditorPage extends React.Component {
                 </Tab>
               ))}
             </Tabs>
-            {this.state.error && (
-              <Alert className="mt-3" variant="danger">
-                Wystąpił błąd podczas generowania CV.
-              </Alert>
-            )}
           </Card.Body>
         </Card>
       </Container>
@@ -233,4 +229,4 @@ class CVEditorPage extends React.Component {
 
 CVEditorPage.contextType = UserContext;
 
-export default withRouter(CVEditorPage);
+export default withRouter(withAlertContext(CVEditorPage));

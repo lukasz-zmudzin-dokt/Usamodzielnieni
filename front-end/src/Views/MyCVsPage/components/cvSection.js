@@ -1,27 +1,29 @@
-import { Alert, Button, Col, ListGroup, Row } from "react-bootstrap";
+import React, { useState, useRef, useContext } from "react";
+import { Button, Col, ListGroup, Row } from "react-bootstrap";
 import CVStatus from "./CVStatus";
 import { IndexLinkContainer } from "react-router-bootstrap";
-import React, { useState } from "react";
 import { getCVUrl } from "../functions/getCVUrl";
 import proxy from "config/api";
+import { AlertContext } from "context";
 import { DeletionModal } from "components";
 import ChangeCVNameModal from "./ChangeCVNameModal.jsx";
 
-const showCV = async (e, cvId, handleShowing, token) => {
-  e.preventDefault();
+const showCV = async (cvId, alertC, token) => {
   let r;
   try {
     r = await getCVUrl(token, cvId);
     let url = proxy.plain + r;
     window.open(url, "_blank");
   } catch (r) {
-    handleShowing(true);
+    alertC.current.showAlert(
+      "Ups, coś poszło nie tak. Nie można wyświetlić CV."
+    );
   }
 };
 
 const CVSection = ({ cv, token, cutCV }) => {
-  const [error, setError] = useState(false);
   const [disabled, setDisabled] = useState(false);
+  const alertC = useRef(useContext(AlertContext));
   const [deletionConfirmed, setDeletionConfirmed] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [showChangeNameModal, setShowChangeNameModal] = useState(false);
@@ -47,6 +49,7 @@ const CVSection = ({ cv, token, cutCV }) => {
   };
 
   if (deletionConfirmed) handleDeletion();
+
   return (
     <ListGroup.Item key={cv.cv_id}>
       <DeletionModal
@@ -74,7 +77,7 @@ const CVSection = ({ cv, token, cutCV }) => {
         <Col xs={12} md={6} className="text-right">
           <Button
             variant="primary"
-            onClick={(e) => showCV(e, cv.cv_id, setError, token)}
+            onClick={(e) => showCV(cv.cv_id, alertC, token)}
           >
             Zobacz CV
           </Button>
@@ -91,11 +94,6 @@ const CVSection = ({ cv, token, cutCV }) => {
           </Button>
         </Col>
       </Row>
-      {error ? (
-        <Alert variant="danger" className="m-3">
-          Ups, coś poszło nie tak. Nie można wyświetlić CV.
-        </Alert>
-      ) : null}
     </ListGroup.Item>
   );
 };

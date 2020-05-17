@@ -13,7 +13,6 @@ const Filter = ({ setFilter, count }) => {
   const [category, setCategory] = useState(DEFAULT_INPUT);
   const [tag, setTag] = useState(DEFAULT_INPUT);
   const [err, setErr] = useState(false);
-
   const user = useContext(UserContext);
 
   useEffect(() => {
@@ -22,7 +21,6 @@ const Filter = ({ setFilter, count }) => {
       try {
         res = await getFilters();
       } catch (e) {
-        console.log(e);
         res = { categories: [], tags: [] };
         setErr(true);
       }
@@ -94,6 +92,7 @@ const Filter = ({ setFilter, count }) => {
           Wyczyść filtry
         </Button>
       </div>
+      {msg}
       {user &&
       user.type === userTypes.STAFF &&
       user.data.group_type.includes(staffTypes.BLOG_CREATOR) ? (
@@ -108,7 +107,6 @@ const Filter = ({ setFilter, count }) => {
           <small className="blog__countText">{`Ilość znalezionych postów: ${count}`}</small>
         )}
       </div>
-      {msg}
     </Form>
   );
 };

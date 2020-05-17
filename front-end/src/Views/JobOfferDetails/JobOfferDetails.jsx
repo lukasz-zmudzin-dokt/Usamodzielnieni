@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { Container, Card, Alert, Row } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
-import { UserContext } from "context";
+import { UserContext, AlertContext } from "context";
 import { DetailsItem } from "components";
 import { AddCvForm, RemoveOffer } from "./_components";
 import { staffTypes } from "constants/staffTypes";
@@ -41,9 +41,8 @@ const mapOffer = (offer) => ({
 const JobOfferDetails = (props) => {
   const [offer, setOffer] = useState({});
   const [isOfferLoading, setIsOfferLoading] = useState(false);
-  const [error, setError] = useState(false);
   const user = useContext(UserContext);
-
+  const alertC = useRef(useContext(AlertContext));
   useEffect(() => {
     const loadOffer = async (id, token) => {
       setIsOfferLoading(true);
@@ -53,7 +52,7 @@ const JobOfferDetails = (props) => {
       } catch (e) {
         console.log(e);
         loadedOffer = {};
-        setError(true);
+        alertC.current.showAlert("Wystąpił błąd podczas ładowania oferty.");
       }
       setOffer(loadedOffer);
       setIsOfferLoading(false);
@@ -61,12 +60,8 @@ const JobOfferDetails = (props) => {
     loadOffer(props.match.params.id, user.token);
   }, [props.match.params.id, user.token]);
 
-  const msg = isOfferLoading ? (
+  const msg = isOfferLoading && (
     <Alert variant="info">Ładowanie oferty...</Alert>
-  ) : (
-    error && (
-      <Alert variant="danger">Wystąpił błąd podczas ładowania oferty.</Alert>
-    )
   );
 
   return (
