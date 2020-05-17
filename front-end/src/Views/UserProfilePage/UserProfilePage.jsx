@@ -1,5 +1,5 @@
 import React from "react";
-import {Alert, Card, Container} from "react-bootstrap";
+import { Alert, Card, Container } from "react-bootstrap";
 import UserDetails from "Views/UserProfilePage/components/UserDetails";
 import UserBasicInfo from "Views/UserProfilePage/components/UserBasicInfo";
 import { UserContext } from "context";
@@ -10,14 +10,14 @@ import EmployerMyOffersButton from "./components/EmployerMyOffersButton/Employer
 import AdminApproveUserButton from "./components/AdminApproveUserBuuton/AdminApproveUserButton";
 import UserListButton from "./components/UserListButton/UserListButton";
 import AdminOfferApprovalButton from "./components/AdminOfferApprovalButton/AdminOfferApprovalButton";
-import {userTypes} from "constants/userTypes";
-import {userStatuses} from "constants/userStatuses";
+import { userTypes } from "constants/userTypes";
+import { userStatuses } from "constants/userStatuses";
 
 const names = {
   role: {
     admin: "Administrator",
     employer: "Pracodawca",
-    common: "Podopieczny"
+    common: "Podopieczny",
   },
   property: {
     username: "Nazwa użytkownika",
@@ -25,8 +25,8 @@ const names = {
     firstName: "Imię",
     lastName: "Nazwisko",
     email: "E-mail",
-    phoneNumber: "Numer telefonu"
-  }
+    phoneNumber: "Numer telefonu",
+  },
 };
 
 class UserProfilePage extends React.Component {
@@ -38,15 +38,15 @@ class UserProfilePage extends React.Component {
         role: "",
         firstName: "",
         lastName: "",
-        email: ""
+        email: "",
       },
-      error: false
+      error: false,
     };
   }
 
   componentDidMount() {
     this.getData();
-  };
+  }
 
   getData = async () => {
     try {
@@ -57,14 +57,13 @@ class UserProfilePage extends React.Component {
           firstName: res.data.first_name,
           lastName: res.data.last_name,
           email: res.data.email,
-          role: res.type
-        }
+          role: res.type,
+        },
       });
     } catch (res) {
-      this.setState({error: true})
+      this.setState({ error: true });
     }
   };
-
 
   render() {
     return (
@@ -74,7 +73,11 @@ class UserProfilePage extends React.Component {
             <h3>Mój profil</h3>
           </Card.Header>
           <Card.Body>
-            <UserBasicInfo error={this.state.error} user={this.state.user} names={names} />
+            <UserBasicInfo
+              error={this.state.error}
+              user={this.state.user}
+              names={names}
+            />
           </Card.Body>
           <UserDetails user={this.state.user} names={names} />
           <Card.Body className="text-center">
@@ -83,10 +86,14 @@ class UserProfilePage extends React.Component {
             <AdminRegisterButton user={this.context} />
             <AdminApproveUserButton user={this.context} />
             <AdminOfferApprovalButton user={this.context} />
-            {this.context.type !== userTypes.STAFF && this.context.data && this.context.data.status !== userStatuses.VERIFIED ?
-              <Alert variant="info">Nie masz jeszcze dostępu do wszystkich funkcji aplikacji. Poczekaj na weryfikację swojego konta.</Alert> :
-                null
-            }
+            {this.context.type !== userTypes.STAFF &&
+            this.context.data &&
+            this.context.data.status !== userStatuses.VERIFIED ? (
+              <Alert variant="info">
+                Nie masz jeszcze dostępu do wszystkich funkcji aplikacji.
+                Poczekaj na weryfikację swojego konta.
+              </Alert>
+            ) : null}
             <UserListButton user={this.context} />
           </Card.Body>
         </Card>
