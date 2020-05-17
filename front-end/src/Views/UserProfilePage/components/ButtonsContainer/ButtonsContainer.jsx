@@ -6,6 +6,7 @@ import {
   AdminApproveUserButton,
   AdminOfferApprovalButton,
   DeleteAccountButton,
+  UserListButton,
 } from "../";
 
 const ButtonsContainer = ({ user }) => {
@@ -17,6 +18,7 @@ const ButtonsContainer = ({ user }) => {
       <AdminRegisterButton user={user} />
       <AdminApproveUserButton user={user} />
       <AdminOfferApprovalButton user={user} />
+      <UserListButton user={user} />
     </div>
   );
 };
