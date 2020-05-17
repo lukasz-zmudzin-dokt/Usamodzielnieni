@@ -1,26 +1,33 @@
+import { staffTypes } from "./staffTypes";
+
 export const adminGroup = [
-    {
-        name: "staff_verification",
-        placeholder: 'Weryfikacja użytkowników'
-    }, {
-        name: "staff_cv",
-        placeholder: "Weryfikacja CV"
-    }, {
-        name: "staff_jobs",
-        placeholder: "Weryfikacja ofert pracy"
-    }, {
-        name: "staff_blog_creator",
-        placeholder: "Kreator postów na blogu",
-    }, {
-        name: "staff_blog_moderator",
-        placeholder: "Moderator bloga"
-    }
+  {
+    name: staffTypes.VERIFICATION,
+    placeholder: "Weryfikacja użytkowników",
+  },
+  {
+    name: staffTypes.CV,
+    placeholder: "Weryfikacja CV",
+  },
+  {
+    name: staffTypes.JOBS,
+    placeholder: "Weryfikacja ofert pracy",
+  },
+  {
+    name: staffTypes.BLOG_CREATOR,
+    placeholder: "Kreator postów na blogu",
+  },
+  {
+    name: staffTypes.BLOG_MODERATOR,
+    placeholder: "Moderator bloga",
+  },
 ];
 
 export const commonGroup = [
-    {
-        name: "Podopiecznym"
-    }, {
-        name: "Pracodawcą"
-    }
-]
+  {
+    name: "Podopiecznym",
+  },
+  {
+    name: "Pracodawcą",
+  },
+];

@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useRef } from "react";
 import { registerLocale } from "react-datepicker";
 import { Form, Container, Card, Button, Row, Alert } from "react-bootstrap";
 import { voivodeships } from "constants/voivodeships";
@@ -9,19 +9,19 @@ import {
   getTypes,
   getOffer,
 } from "Views/OfferForm/functions/fetchData";
-import { UserContext } from "context";
+import { UserContext, AlertContext } from "context";
 import polish from "date-fns/locale/pl";
 import { useHistory, useParams } from "react-router-dom";
+import { addressToString } from "utils/converters";
 
 registerLocale("pl", polish);
 
 const OfferForm = () => {
   const history = useHistory();
   const [validated, setValidated] = useState(false);
-  const [fail, setFail] = useState(false);
   const [arrays, setArrays] = useState({ types: [], categories: [] });
   const [disabled, setDisabled] = useState(false);
-  const [message, setMessage] = useState("");
+  const [err, setErr] = useState(false);
   let { id } = useParams();
 
   const [offer, setOffer] = useState({
@@ -40,7 +40,7 @@ const OfferForm = () => {
 
   //47991e86-4b42-4507-b154-1548bf8a3bd3
   const context = useContext(UserContext);
-
+  const alertC = useRef(useContext(AlertContext));
   useEffect(() => {
     setDisabled(true);
     const loadData = async (token) => {
@@ -55,16 +55,14 @@ const OfferForm = () => {
         if (err.message === "getOffer") {
           history.push("/offerForm");
         } else {
-          setFail(true);
           setDisabled(false);
-          setMessage("Nie udało się załadować danych.");
+          setErr(true);
         }
         return;
       }
       const [categories, types, loadedOffer] = values;
-      const { city, street, street_number } = context.data.company_address;
 
-      const company_address = `${city}, ${street} ${street_number}`;
+      const company_address = addressToString(context.data.company_address);
       setArrays({ categories, types });
       setOffer((prev) => ({
         ...prev,
@@ -91,19 +89,17 @@ const OfferForm = () => {
     const form = event.currentTarget;
     event.preventDefault();
     if (checkPayValidity(pay_from_dot, pay_to_dot) === false) {
-      setFail(true);
-      setMessage('Wartości wynagrodzenia muszą być liczbami całkowitymi lub z częścią setną, a "Wynagrodzenie od" musi być mniejsze bądź równe \n "Wynagrodzenie do:"');
+      alertC.current.showAlert('Wartości wynagrodzenia muszą być liczbami całkowitymi lub z częścią setną, a "Wynagrodzenie od" musi być mniejsze bądź równe \n "Wynagrodzenie do:"');
       event.stopPropagation();
     } else if (form.checkValidity() === false) {
-      setFail(false);
       event.stopPropagation();
     } else {
-      setFail(false);
       setDisabled(true);
       try {
         await sendData(
           {
             ...offer,
+            company_address: context.data.company_address,
             expiration_date: expiration_date.toISOString().substr(0, 10),
             pay_from: pay_from_dot.replace(".", ","),
             pay_to: pay_to_dot.replace(".", ",")
@@ -114,8 +110,7 @@ const OfferForm = () => {
         history.push("/myOffers");
         return;
       } catch (e) {
-        setFail(true);
-        setMessage("Nie udało się wysłać oferty. Błąd serwera.");
+        alertC.current.showAlert("Nie udało się wysłać oferty. Błąd serwera.");
       }
     }
     setDisabled(false);
@@ -145,6 +140,12 @@ const OfferForm = () => {
     }
     return false;
   };
+
+  const msg = err ? (
+    <Alert variant="danger">
+      Wystąpił błąd w trakcie ładowania formularza.
+    </Alert>
+  ) : null;
 
   const {
     offer_name,
@@ -197,7 +198,7 @@ const OfferForm = () => {
                 header="Adres firmy"
                 id="company_address"
                 setVal={(val) => setOffer({ ...offer, company_address: val })}
-                val={company_address}
+                val={addressToString(company_address)}
                 incorrect="Podaj lokalizację"
                 length={{ min: 1, max: 200 }}
                 required
@@ -268,7 +269,7 @@ const OfferForm = () => {
                 incorrect="Podaj wymiar pracy np. staż,praca"
               />
               <FormGroup
-                header="Ważne do:"
+                header="Ważne do"
                 id="expiration_date"
                 type="date"
                 setVal={(val) => setOffer({ ...offer, expiration_date: val })}
@@ -276,11 +277,6 @@ const OfferForm = () => {
                 required
               />
             </div>
-            {fail === true ? (
-              <Row className="w-100 justify-content-center align-items-center m-0">
-                <Alert variant="danger">{message}</Alert>
-              </Row>
-            ) : null}
             <Row className="w-100 justify-content-center align-items-center m-0">
               <Button
                 variant="primary"
@@ -293,6 +289,11 @@ const OfferForm = () => {
               </Button>
             </Row>
           </Form>
+          {msg && (
+            <Row className="w-100 justify-content-center align-items-center ml-0 mb-0 mt-3">
+              {msg}
+            </Row>
+          )}
         </Card.Body>
       </Card>
     </Container >

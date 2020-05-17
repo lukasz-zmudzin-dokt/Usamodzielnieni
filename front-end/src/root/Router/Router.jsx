@@ -8,16 +8,23 @@ const Router = () => {
   const location = useLocation();
   return (
     <UserContext.Consumer>
-      {value => {
+      {(value) => {
         return (
           <Switch location={location} key={location.pathname}>
             {routes.map(
-              ({ component: Component, path, isPrivate, ...rest }) => {
+              ({
+                component: Component,
+                path,
+                isPrivate,
+                userVerified,
+                ...rest
+              }) => {
                 if (isPrivate) {
                   return (
                     <PrivateRoute
                       path={path}
                       key={path}
+                      userVerified={userVerified}
                       {...rest}
                       authenticated={value}
                     >

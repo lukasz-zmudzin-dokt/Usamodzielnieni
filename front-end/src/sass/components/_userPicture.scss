@@ -1,0 +1,46 @@
+.userPicture__container {
+  width: 3rem;
+  height: 3rem;
+  display: inline-block;
+}
+.userPicture {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  border-radius: 100%;
+  font-size: 120%;
+  font-weight: 600;
+  text-transform: uppercase;
+
+  &,
+  &--standard {
+    background-color: var(--gray-dark);
+    color: var(--white);
+  }
+  &--staff_verification {
+    background-color: var(--green);
+    color: var(--white);
+  }
+  &--staff_cv {
+    background-color: var(--blue);
+    color: var(--white);
+  }
+  &--staff_jobs {
+    background-color: var(--yellow);
+    color: var(--gray-dark);
+  }
+  &--staff_blog_creator {
+    background-color: var(--cyan);
+    color: var(--white);
+  }
+  &--staff_blog_moderator {
+    background-color: var(--teal);
+    color: var(--gray-dark);
+  }
+  &--multi {
+    background-color: var(--red);
+    color: var(--white);
+  }
+}
