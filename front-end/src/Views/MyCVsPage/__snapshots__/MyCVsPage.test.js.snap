@@ -25,21 +25,21 @@ exports[`MyCVsPage should match snapshot 1`] = `
             class="row"
           >
             <div
-              class="col-md-4 col-12"
+              class="col-md-5 col-12"
             >
               <h6>
-                Nazwa CV
+                Nazwa pliku
               </h6>
             </div>
             <div
-              class="col-md-2 col-4"
+              class="col-md-3 col-4"
             >
               <h6>
                 Status
               </h6>
             </div>
             <div
-              class="text-right col-md-6 col-8"
+              class="text-right col-md-4 col-8"
             >
               <h6>
                 Akcje

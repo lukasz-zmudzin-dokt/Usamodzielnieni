@@ -1,20 +1,20 @@
-import React, { useState, useEffect, useContext,useRef } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { getFilters } from "Views/BlogPage/functions/fetchData";
-import { Form, Col, Button} from "react-bootstrap";
+import { Form, Col, Button, Alert } from "react-bootstrap";
 import { DEFAULT_INPUT } from "constants/other.js";
 import FormGroup from "components/FormGroup";
-import { UserContext,AlertContext } from "context";
+import { UserContext } from "context";
 import { IndexLinkContainer } from "react-router-bootstrap";
-import {staffTypes} from "constants/staffTypes";
-import {userTypes} from "constants/userTypes";
+import { staffTypes } from "constants/staffTypes";
+import { userTypes } from "constants/userTypes";
 
 const Filter = ({ setFilter, count }) => {
   const [filters, setFilters] = useState({ categories: [], tags: [] });
   const [category, setCategory] = useState(DEFAULT_INPUT);
   const [tag, setTag] = useState(DEFAULT_INPUT);
+  const [err, setErr] = useState(false);
 
   const user = useContext(UserContext);
-  const alertC = useRef(useContext(AlertContext));
 
   useEffect(() => {
     const loadOffers = async () => {
@@ -22,9 +22,8 @@ const Filter = ({ setFilter, count }) => {
       try {
         res = await getFilters();
       } catch (e) {
-        alertC.current.showAlert("Wystąpił błąd podczas ładowania filtrów.")
         res = { categories: [], tags: [] };
-     
+        setErr(true);
       }
       setFilters(res);
     };
@@ -49,6 +48,12 @@ const Filter = ({ setFilter, count }) => {
       tag: undefined,
     });
   };
+
+  const msg = err ? (
+    <Alert variant="danger" className="mt-3">
+      Wystąpił błąd podczas ładowania filtrów.
+    </Alert>
+  ) : null;
 
   return (
     <Form className="ml-3 mr-3 mb-3" onSubmit={filter}>
@@ -88,7 +93,9 @@ const Filter = ({ setFilter, count }) => {
           Wyczyść filtry
         </Button>
       </div>
-      {user && user.type === userTypes.STAFF &&
+      {msg}
+      {user &&
+      user.type === userTypes.STAFF &&
       user.data.group_type.includes(staffTypes.BLOG_CREATOR) ? (
         <IndexLinkContainer as={Button} to="/blog/newPost">
           <Button variant="success" className="mt-2">

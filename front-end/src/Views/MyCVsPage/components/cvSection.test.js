@@ -9,15 +9,12 @@ import {
 import { MemoryRouter } from "react-router-dom";
 import proxy from "config/api";
 import { AlertContext } from "context";
-import { userTypes } from "constants/userTypes";
 
 describe("CVSection", () => {
   let failFetch;
   let myCV;
-  let user;
   let handleShowing = jest.fn();
   let token = 123;
-  let error = false;
   const alertC = {
     showAlert: jest.fn(),
   };
@@ -42,17 +39,7 @@ describe("CVSection", () => {
         }
       });
     });
-
-    user = {
-      type: userTypes.STANDARD,
-      token: "123",
-    };
   });
-
-  user = {
-    type: "Standard",
-    token: "123",
-  };
 
   beforeEach(() => {
     myCV = {
@@ -114,93 +101,82 @@ describe("CVSection", () => {
         "Content-Type": "application/json",
       },
     });
+  });
+  it("should render cv status approved", () => {
+    myCV = { ...myCV, is_verified: true };
+    const { getByText } = render(
+      <MemoryRouter>
+        <CVSection cv={myCV} handleShowing={handleShowing} token={token} />
+      </MemoryRouter>
+    );
 
-    it("should match snapshot", () => {
-      const { container } = render(
-        <MemoryRouter>
-          <CVSection cv={myCV} handleShowing={handleShowing} token={token} />
-        </MemoryRouter>
-      );
+    expect(getByText("Zatwierdzone")).toBeInTheDocument();
+  });
 
-      expect(container).toMatchSnapshot();
+  it("should render cv status needs fixing", () => {
+    myCV = { ...myCV, was_reviewed: true };
+    const { getByText } = render(
+      <MemoryRouter>
+        <CVSection cv={myCV} handleShowing={handleShowing} token={token} />
+      </MemoryRouter>
+    );
+
+    expect(getByText("Wymaga poprawek")).toBeInTheDocument();
+  });
+
+  it("should call fetch with right params", async () => {
+    const { getByText } = render(
+      <MemoryRouter>
+        <CVSection cv={myCV} handleShowing={handleShowing} token={token} />
+      </MemoryRouter>
+    );
+
+    fireEvent.click(getByText("Zobacz CV"));
+    await expect(fetch).toHaveBeenCalledWith(proxy.cv + "generator/0/", {
+      method: "GET",
+      headers: {
+        Authorization: "token " + token,
+        "Content-Type": "application/json",
+      },
     });
+  });
 
-    it("should render cv status approved", () => {
-      myCV = { ...myCV, is_verified: true };
-      const { getByText } = render(
-        <MemoryRouter>
-          <CVSection cv={myCV} handleShowing={handleShowing} token={token} />
-        </MemoryRouter>
-      );
+  it("should open cv url", async () => {
+    const { getByText } = render(
+      <MemoryRouter>
+        <CVSection cv={myCV} handleShowing={handleShowing} token={token} />
+      </MemoryRouter>
+    );
 
-      expect(getByText("Zatwierdzone")).toBeInTheDocument();
-    });
-
-    it("should render cv status needs fixing", () => {
-      myCV = { ...myCV, was_reviewed: true };
-      const { getByText } = render(
-        <MemoryRouter>
-          <CVSection cv={myCV} handleShowing={handleShowing} token={token} />
-        </MemoryRouter>
-      );
-
-      expect(getByText("Wymaga poprawek")).toBeInTheDocument();
-    });
-
-    it("should call fetch with right params", async () => {
-      const { getByText } = render(
-        <MemoryRouter>
-          <CVSection cv={myCV} handleShowing={handleShowing} token={token} />
-        </MemoryRouter>
-      );
-
-      fireEvent.click(getByText("Zobacz CV"));
-      await expect(fetch).toHaveBeenCalledWith(proxy.cv + "generator/0/", {
+    fireEvent.click(getByText("Zobacz CV"));
+    await waitForElement(() =>
+      fetch(proxy.cv + "generator/" + myCV.cv_id + "/", {
         method: "GET",
-        headers: {
-          Authorization: "token " + token,
-          "Content-Type": "application/json",
-        },
-      });
-    });
+      })
+    );
+    expect(open).toHaveBeenCalledWith(proxy.plain + "/media/cv/0", "_blank");
+  });
 
-    it("should open cv url", async () => {
-      const { getByText } = render(
+  it("should render error on api fail", async () => {
+    failFetch = true;
+    const { getByText } = render(
+      <AlertContext.Provider value={alertC}>
         <MemoryRouter>
-          <CVSection cv={myCV} handleShowing={handleShowing} token={token} />
+          <CVSection
+            cv={myCV}
+            handleShowing={handleShowing}
+            token={token}
+            error={false}
+          />
         </MemoryRouter>
-      );
+      </AlertContext.Provider>
+    );
 
-      fireEvent.click(getByText("Zobacz CV"));
-      await waitForElement(() =>
-        fetch(proxy.cv + "generator/" + myCV.cv_id + "/", {
-          method: "GET",
-        })
-      );
-      expect(open).toHaveBeenCalledWith(proxy.plain + "/media/cv/0", "_blank");
-    });
+    fireEvent.click(getByText("Zobacz CV"));
+    await wait(() => expect(alertC.showAlert).toHaveBeenCalled());
 
-    it("should render error on api fail", async () => {
-      failFetch = true;
-      const { getByText } = render(
-        <AlertContext.Provider value={alertC}>
-          <MemoryRouter>
-            <CVSection
-              cv={myCV}
-              handleShowing={handleShowing}
-              token={token}
-              error={false}
-            />
-          </MemoryRouter>
-        </AlertContext.Provider>
-      );
-
-      fireEvent.click(getByText("Zobacz CV"));
-      await wait(() => expect(alertC.showAlert).toHaveBeenCalled());
-
-      expect(alertC.showAlert).toHaveBeenCalledWith(
-        "Ups, coś poszło nie tak. Nie można wyświetlić CV."
-      );
-    });
+    expect(alertC.showAlert).toHaveBeenCalledWith(
+      "Ups, coś poszło nie tak. Nie można wyświetlić CV."
+    );
   });
 });

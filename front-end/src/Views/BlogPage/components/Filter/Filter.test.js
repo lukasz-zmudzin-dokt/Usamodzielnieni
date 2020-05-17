@@ -2,7 +2,7 @@ import React from "react";
 import { render, fireEvent, waitForElement } from "@testing-library/react";
 import Filter from "Views/BlogPage/components/Filter";
 import { DEFAULT_INPUT } from "constants/other";
-import { UserContext, AlertContext } from "context";
+import { UserContext } from "context";
 import { MemoryRouter } from "react-router-dom";
 import { userTypes } from "constants/userTypes";
 import { staffTypes } from "constants/staffTypes";
@@ -11,11 +11,7 @@ describe("Filter", () => {
   let failFetch = false;
   let apiFilters = ["abcd", "abcde"];
   let props;
-  let alertContext = {
-    changeMessage: jest.fn(),
-    changeVisibility: jest.fn(),
-    showAlert: jest.fn(),
-  };
+
   global.fetch = jest.fn().mockImplementation((input, init) => {
     return new Promise((resolve, reject) => {
       if (failFetch) {
@@ -51,17 +47,13 @@ describe("Filter", () => {
 
   it("should show message if api failed", async () => {
     failFetch = true;
-    const { getByText, queryByText } = render(
-      <AlertContext.Provider value={alertContext}>
-        <Filter {...props} />
-      </AlertContext.Provider>
-    );
+    const { getByText, queryByText } = render(<Filter {...props} />);
 
     await waitForElement(() => getByText("Filtruj posty", { exact: false }));
 
-    expect(alertContext.showAlert).toHaveBeenCalledWith(
-      "Wystąpił błąd podczas ładowania filtrów."
-    );
+    expect(
+      getByText("Wystąpił błąd podczas ładowania filtrów.")
+    ).toBeInTheDocument();
     expect(queryByText("abcd", { exact: false })).not.toBeInTheDocument();
   });
 
