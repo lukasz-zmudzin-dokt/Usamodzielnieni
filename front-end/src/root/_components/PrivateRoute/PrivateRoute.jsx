@@ -44,11 +44,6 @@ const PrivateRoute = ({
           }
         } else if (type === authenticated.type) {
           if (type === userTypes.STAFF) {
-            console.log(
-              authenticated.data.group_type,
-              group,
-              group === undefined
-            );
             if (
               authenticated.data.group_type.some(
                 (type) => group.indexOf(type) >= 0
