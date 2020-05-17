@@ -19,7 +19,10 @@ import {
   CVCorrection,
   MessagesList,
   Chats,
+  UserList,
   OfferApprovalPage,
+  PasswordResetPrompt,
+  NewPasswordPage,
 } from "Views";
 import { userTypes } from "./userTypes";
 import { staffTypes } from "./staffTypes";
@@ -120,15 +123,11 @@ export default [
   {
     path: paths.BLOG_POST,
     component: BlogPost,
-    isPrivate: true,
-    type: undefined,
     exact: true,
   },
   {
     path: paths.BLOG_PAGE,
     component: BlogPage,
-    isPrivate: true,
-    type: undefined,
     exact: true,
   },
   {
@@ -188,10 +187,30 @@ export default [
     userVerified: true,
   },
   {
+    path: paths.USER_LIST,
+    component: UserList,
+    isPrivate: true,
+    type: userTypes.STAFF,
+    exact: true,
+    userVerified: true,
+  },
+  {
     path: paths.OFFER_APPROVAL,
     component: OfferApprovalPage,
     isPrivate: true,
     type: userTypes.STAFF,
     group: staffTypes.JOBS,
+  },
+  {
+    path: paths.PASSWORD_RESET,
+    component: PasswordResetPrompt,
+    type: undefined,
+    exact: true,
+  },
+  {
+    path: paths.NEW_PASSWORD,
+    component: NewPasswordPage,
+    type: undefined,
+    exact: true,
   },
 ];

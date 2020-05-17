@@ -1,28 +1,30 @@
 import React from "react";
-import {
-  render,
-  fireEvent,
-  wait,
-  waitForElement,
-} from "@testing-library/react";
+import { render, fireEvent, wait } from "@testing-library/react";
 import CommentForm from "./CommentForm";
-import { UserProvider } from "context";
+import { UserProvider, AlertContext } from "context";
+import { userTypes } from "constants/userTypes";
+import { userStatuses } from "constants/userStatuses";
 
 describe("CommentForm", () => {
   let props, failFetch, user;
 
   beforeAll(() => {
     user = {
-      type: "Standard",
+      type: userTypes.STANDARD,
       token: "123",
       data: {
         first_name: "Jan",
         last_name: "Kowalski",
+        status: userStatuses.VERIFIED,
+        username: "123123",
       },
     };
   });
 
   describe("create comment", () => {
+    const alertC = {
+      showAlert: jest.fn(),
+    };
     beforeEach(() => {
       jest.clearAllMocks();
       failFetch = false;
@@ -53,7 +55,11 @@ describe("CommentForm", () => {
     });
 
     it("should render without crashing", () => {
-      const { container } = render(<CommentForm {...props} />);
+      const { container } = render(
+        <UserProvider value={user}>
+          <CommentForm {...props} />
+        </UserProvider>
+      );
       expect(container).toMatchSnapshot();
     });
 
@@ -73,7 +79,9 @@ describe("CommentForm", () => {
     it("should render success alert when new comment is successfully added", async () => {
       const { getByPlaceholderText, getByText } = render(
         <UserProvider value={user}>
-          <CommentForm {...props} />
+          <AlertContext.Provider value={alertC}>
+            <CommentForm {...props} />
+          </AlertContext.Provider>
         </UserProvider>
       );
 
@@ -84,15 +92,17 @@ describe("CommentForm", () => {
       fireEvent.click(getByText("Prześlij"));
 
       const successMsg = "Pomyślnie przesłano komentarz.";
-      await waitForElement(() => getByText(successMsg));
-      expect(getByText(successMsg)).toBeInTheDocument();
+      await wait(() => expect(alertC.showAlert).toHaveBeenCalled());
+      expect(alertC.showAlert).toHaveBeenCalledWith(successMsg, "success");
     });
 
     it("should render error alert when api returns error status", async () => {
       failFetch = true;
       const { getByPlaceholderText, getByText } = render(
         <UserProvider value={user}>
-          <CommentForm {...props} />
+          <AlertContext.Provider value={alertC}>
+            <CommentForm {...props} />
+          </AlertContext.Provider>
         </UserProvider>
       );
 
@@ -103,8 +113,8 @@ describe("CommentForm", () => {
       fireEvent.click(getByText("Prześlij"));
 
       const errorMsg = "Wystąpił błąd podczas przesyłania komentarza.";
-      await waitForElement(() => getByText(errorMsg));
-      expect(getByText(errorMsg)).toBeInTheDocument();
+      await wait(() => expect(alertC.showAlert).toHaveBeenCalled());
+      expect(alertC.showAlert).toHaveBeenCalledWith(errorMsg);
     });
   });
 });

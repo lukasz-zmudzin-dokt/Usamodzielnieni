@@ -1,51 +1,36 @@
-import React, { useContext, useState } from "react";
-import { UserContext } from "context";
-import { Alert, Button, Col, Row } from "react-bootstrap";
+import React, { useContext, useRef } from "react";
+import { UserContext, AlertContext } from "context";
+import { Button, Col, Row } from "react-bootstrap";
 import { IndexLinkContainer } from "react-router-bootstrap";
-import { acceptCV } from "Views/CVApprovalPage/functions/acceptCV";
 import { getCVUrl } from "Views/CVApprovalPage/functions/getCVUrl";
 import { DetailsItem } from "components";
 import proxy from "config/api";
 
-const showCV = async (e, token, cvId, setError) => {
+const showCV = async (e, token, cvId, alertC) => {
   e.preventDefault();
   try {
     const response = await getCVUrl(token, cvId);
-
     let url = proxy.plain + response;
     window.open(url, "_blank");
   } catch (response) {
-    setError(true);
+    alertC.current.showAlert("Nie udało się pobrać CV.");
   }
 };
 
-const handleAcceptCV = async (e, token, cvId, setError, setAccepted) => {
+const handleAcceptCV = async (e, cvId, cutCV, alertC) => {
   e.preventDefault();
   try {
-    const response = await acceptCV(token, cvId);
-    if (response === "CV successfully verified.") {
-      setAccepted(true);
-    }
-  } catch (response) {
-    setError(true);
+    await cutCV(cvId);
+    alertC.current.showAlert("Pomyślnie zaakceptowano CV.", "success");
+  } catch (e) {
+    alertC.current.showAlert("Nie udało się zaakceptować użytkownika.");
   }
 };
 
 const CVPosition = (props) => {
   const context = useContext(UserContext);
+  const alertC = useRef(useContext(AlertContext));
   const cv = props.cv;
-  const [error, setError] = useState(false);
-  const [accepted, setAccepted] = useState(false);
-
-  const message = error ? (
-    <Alert variant="danger" className="p-1 m-1">
-      Wystąpił błąd.
-    </Alert>
-  ) : accepted ? (
-    <Alert variant="success" className="p-1 m-1">
-      Pomyślnie zaakceptowano CV.
-    </Alert>
-  ) : null;
 
   return (
     <Row>
@@ -61,9 +46,9 @@ const CVPosition = (props) => {
       <Col className="align-self-center d-flex justify-content-end">
         <Button
           variant="primary m-1"
-          size="sm"
           className="btnDownload"
-          onClick={(e) => showCV(e, context.token, cv.cv_id, setError)}
+          size="sm"
+          onClick={(e) => showCV(e, context.token, cv.cv_id, alertC)}
         >
           Pokaż CV
         </Button>
@@ -71,19 +56,16 @@ const CVPosition = (props) => {
           variant="success m-1"
           className="btnAccept"
           size="sm"
-          onClick={(e) =>
-            handleAcceptCV(e, context.token, cv.cv_id, setError, setAccepted)
-          }
+          onClick={(e) => handleAcceptCV(e, cv.cv_id, props.cutCV, alertC)}
         >
           Akceptuj
         </Button>
-        <IndexLinkContainer to={"/cvCorrection/" + cv.cv_id}>
-          <Button variant="warning m-1" className="btnImprove" size="sm">
+        <IndexLinkContainer to={`/cvCorrection/${cv.cv_id}`}>
+          <Button variant="warning m-1" size="sm" className="btnImprove">
             Zgłoś poprawki
           </Button>
         </IndexLinkContainer>
       </Col>
-      {message ? message : null}
     </Row>
   );
 };
