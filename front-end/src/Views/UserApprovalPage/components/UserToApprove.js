@@ -163,7 +163,7 @@ const UserToApprove = ({ user, activeUser }) => {
           <ListGroup.Item>
             <Row className="justify-content-center">
               <Button
-                onClick={e => approveUser(context.token, user.id)}
+                onClick={(e) => approveUser(context.token, user.id)}
                 variant="success"
                 id="accept"
               >

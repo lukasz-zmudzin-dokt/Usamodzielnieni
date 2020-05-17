@@ -9,11 +9,11 @@ import proxy from "config/api";
 import { userTypes } from "constants/userTypes";
 
 const renderWithRouter = (
-    ui,
-    {
-      route = "/cvApproval",
-      history = createMemoryHistory({ initialEntries: [route] }),
-    } = {}
+  ui,
+  {
+    route = "/cvApproval",
+    history = createMemoryHistory({ initialEntries: [route] }),
+  } = {}
 ) => {
   let context = {
     type: userTypes.STAFF,
@@ -21,9 +21,9 @@ const renderWithRouter = (
   };
   return {
     ...render(
-        <UserContext.Provider value={context}>
-          <Router history={history}>{ui}</Router>
-        </UserContext.Provider>
+      <UserContext.Provider value={context}>
+        <Router history={history}>{ui}</Router>
+      </UserContext.Provider>
     ),
     history,
   };
@@ -64,9 +64,9 @@ describe("CVPosition", () => {
 
   it("should match snapshot", async () => {
     const { container, getByText } = render(
-        <MemoryRouter>
-          <CVPosition cv={apiCV} />
-        </MemoryRouter>
+      <MemoryRouter>
+        <CVPosition cv={apiCV} />
+      </MemoryRouter>
     );
     await waitForElement(() => getByText("Jarek"));
     expect(container).toMatchSnapshot();
@@ -74,9 +74,9 @@ describe("CVPosition", () => {
 
   it("should call showCV when asked to", async () => {
     const { getByText } = render(
-        <MemoryRouter>
-          <CVPosition cv={apiCV} />
-        </MemoryRouter>
+      <MemoryRouter>
+        <CVPosition cv={apiCV} />
+      </MemoryRouter>
     );
     await waitForElement(() => getByText("Jarek"));
     fireEvent.click(getByText("Pokaż CV"));
@@ -103,29 +103,29 @@ describe("CVPosition", () => {
 
   it("should return cv url from api", async () => {
     const { getByText } = render(
-        <MemoryRouter>
-          <CVPosition cv={apiCV} />
-        </MemoryRouter>
+      <MemoryRouter>
+        <CVPosition cv={apiCV} />
+      </MemoryRouter>
     );
     await waitForElement(() => getByText("Jarek"));
     fireEvent.click(getByText("Pokaż CV", { exact: false }));
 
     await waitForElement(() =>
-        fetch(proxy.cv + "generator/" + apiCV.cv_id + "/", {
-          method: "GET",
-        })
+      fetch(proxy.cv + "generator/" + apiCV.cv_id + "/", {
+        method: "GET",
+      })
     );
     expect(global.open).toHaveBeenCalledWith(
-        proxy.plain + "/media/cv/0",
-        "_blank"
+      proxy.plain + "/media/cv/0",
+      "_blank"
     );
   });
 
   it("should return alert on cv url fetch from failing api", async () => {
     const { getByText } = render(
-        <MemoryRouter>
-          <CVPosition cv={apiCV} />
-        </MemoryRouter>
+      <MemoryRouter>
+        <CVPosition cv={apiCV} />
+      </MemoryRouter>
     );
 
     await waitForElement(() => getByText("Jarek"));
@@ -133,9 +133,9 @@ describe("CVPosition", () => {
     failFetch = true;
     fireEvent.click(getByText("Pokaż CV", { exact: false }));
     await waitForElement(() =>
-        fetch(proxy.cv + "generator/" + apiCV.cv_id + "/", {
-          method: "GET",
-        })
+      fetch(proxy.cv + "generator/" + apiCV.cv_id + "/", {
+        method: "GET",
+      })
     );
     expect(getByText("Wystąpił błąd", { exact: false })).toBeInTheDocument();
   });

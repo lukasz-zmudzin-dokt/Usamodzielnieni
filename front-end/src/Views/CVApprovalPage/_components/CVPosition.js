@@ -1,4 +1,4 @@
-import React, { useContext, useRef} from "react";
+import React, { useContext, useRef } from "react";
 import { UserContext, AlertContext } from "context";
 import { Button, Col, Row } from "react-bootstrap";
 import { IndexLinkContainer } from "react-router-bootstrap";
@@ -20,13 +20,12 @@ const showCV = async (e, token, cvId, alertC) => {
 const handleAcceptCV = async (e, cvId, cutCV, alertC) => {
   e.preventDefault();
   try {
-      await cutCV(cvId);
-      alertC.current.showAlert("Pomyślnie zaakceptowano CV.", "success");
+    await cutCV(cvId);
+    alertC.current.showAlert("Pomyślnie zaakceptowano CV.", "success");
   } catch (e) {
-      alertC.current.showAlert("Nie udało się zaakceptować użytkownika.");
+    alertC.current.showAlert("Nie udało się zaakceptować użytkownika.");
   }
-}
-
+};
 
 const CVPosition = (props) => {
   const context = useContext(UserContext);
