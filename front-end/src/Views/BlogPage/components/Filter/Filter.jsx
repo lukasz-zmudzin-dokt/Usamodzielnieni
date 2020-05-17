@@ -13,7 +13,6 @@ const Filter = ({ setFilter, count }) => {
   const [category, setCategory] = useState(DEFAULT_INPUT);
   const [tag, setTag] = useState(DEFAULT_INPUT);
   const [err, setErr] = useState(false);
-
   const user = useContext(UserContext);
 
   useEffect(() => {
