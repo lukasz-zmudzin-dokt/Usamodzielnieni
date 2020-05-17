@@ -1,8 +1,9 @@
 import React from "react";
-import { Alert, Button, Card, Container, Form } from "react-bootstrap";
+import { Button, Card, Container, Form } from "react-bootstrap";
 import { handlePasswordChange } from "./functions/submitActions";
 import { Redirect, withRouter } from "react-router-dom";
 import "Views/PasswordResetPrompt/style.css";
+import { WithAlertContext } from "components";
 
 class NewPasswordPage extends React.Component {
   constructor(props) {
@@ -12,7 +13,6 @@ class NewPasswordPage extends React.Component {
       password: "",
       passwordR: "",
       validated: false,
-      password_changed: false,
       message: "",
       redirect: false,
       disabled: false,
@@ -53,8 +53,8 @@ class NewPasswordPage extends React.Component {
       message: "",
     });
     if (form.checkValidity() === false || password !== passwordR) {
+      this.props.alertContext.showAlert("Hasła się nie zgadzają");
       this.setState({
-        message: "Hasła się nie zgadzają",
         disabled: false,
       });
     } else {
@@ -64,15 +64,16 @@ class NewPasswordPage extends React.Component {
       };
       try {
         await handlePasswordChange(data);
-        this.setState({
-          password_changed: true,
-        });
+
+        this.props.alertContext.showAlert(
+          "Hasło zostało zmienione. Przekierowuję..."
+        );
         this.setDelayedRedirect();
       } catch (e) {
         console.log(e);
-        this.setState({
-          password_changed: false,
-        });
+        this.props.alertContext.showAlert(
+          "Coś poszło nie tak. Upewnij się, że Twój token nie wygasł."
+        );
       } finally {
         this.setState({
           validated: true,
@@ -83,14 +84,7 @@ class NewPasswordPage extends React.Component {
   };
 
   render() {
-    const {
-      password,
-      passwordR,
-      validated,
-      message,
-      password_changed,
-      disabled,
-    } = this.state;
+    const { password, passwordR, validated, message, disabled } = this.state;
     const { handleBlur, handleSubmit, renderRedirect } = this;
     return (
       <Container className="loginPage">
@@ -136,19 +130,6 @@ class NewPasswordPage extends React.Component {
                 {disabled ? "Ładowanie..." : "Wyślij"}
               </Button>
             </Form>
-            <div className="message_pass_changed">
-              {validated ? (
-                password_changed ? (
-                  <Alert variant="success" className="msgText_correct">
-                    Hasło zostało zmienione. Przekierowuję...
-                  </Alert>
-                ) : (
-                  <Alert variant="danger" className="msgText_fail">
-                    Coś poszło nie tak. Upewnij się, że Twój token nie wygasł.
-                  </Alert>
-                )
-              ) : null}
-            </div>
             {renderRedirect()}
           </Card.Body>
         </Card>
@@ -157,4 +138,4 @@ class NewPasswordPage extends React.Component {
   }
 }
 
-export default withRouter(NewPasswordPage);
+export default withRouter(WithAlertContext(NewPasswordPage));
