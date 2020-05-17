@@ -252,6 +252,37 @@ describe("PrivateRoute test", () => {
     expect(getByText("AComponent")).toBeInTheDocument();
   });
 
+  it("should not render component if type is array but staff group is invalid(staff/specialist) ", () => {
+    const exampleContext = {
+      type: userTypes.STAFF,
+      token: "123143",
+      data: {
+        group_type: [staffTypes.BLOG_CREATOR],
+        status: userStatuses.VERIFIED,
+      },
+    };
+    const ExampleComponent = () => <div>AComponent</div>;
+    const exampleProps = {
+      path: "/example",
+      type: [userTypes.EMPLOYER, userTypes.STAFF],
+      group: [staffTypes.CV],
+      component: ExampleComponent,
+    };
+
+    const { getByText } = render(
+      <MemoryRouter initialEntries={[exampleProps.path]}>
+        <PrivateRoute
+          {...exampleProps}
+          authenticated={exampleContext}
+          redirect="/home"
+          group={exampleProps.group}
+        />
+      </MemoryRouter>
+    );
+
+    expect(getByText("AComponent")).not.toBeInTheDocument();
+  });
+
   it("should not render component if type is array ", () => {
     const exampleContext = {
       type: userTypes.STAFF,

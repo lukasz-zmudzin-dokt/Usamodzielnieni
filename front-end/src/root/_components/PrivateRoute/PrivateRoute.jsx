@@ -25,25 +25,22 @@ const PrivateRoute = ({
       ) {
         if (!type) return <Route {...rest} />;
         else if (Array.isArray(type)) {
-          for (let i = 0; i < type.length; i++) {
-            if (type[i] === authenticated.type) {
-              if (type[i] === userTypes.STAFF) {
-                if (
-                  authenticated.data.group_type.some(
-                    (r) => group.indexOf(r) >= 0
-                  ) ||
-                  group === undefined
-                ) {
-                  return <Route {...rest} />;
-                }
-              } else {
+          let index = type.indexOf(authenticated.type);
+          if (type[index] === authenticated.type) {
+            if (type[index] === userTypes.STAFF) {
+              if (
+                authenticated.data.group_type.some(
+                  (type) => group.indexOf(type) >= 0
+                ) ||
+                group === undefined
+              ) {
                 return <Route {...rest} />;
               }
             } else {
-              if (i === type.length - 1) {
-                return <Redirect to={unverified} />;
-              }
+              return <Route {...rest} />;
             }
+          } else {
+            return <Redirect to={unverified} />;
           }
         } else if (type === authenticated.type) {
           if (type === userTypes.STAFF) {
@@ -54,7 +51,7 @@ const PrivateRoute = ({
             );
             if (
               authenticated.data.group_type.some(
-                (r) => group.indexOf(r) >= 0
+                (type) => group.indexOf(type) >= 0
               ) ||
               group === undefined
             ) {
