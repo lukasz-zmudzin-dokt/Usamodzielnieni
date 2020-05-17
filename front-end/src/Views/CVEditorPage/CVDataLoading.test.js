@@ -1,9 +1,10 @@
 import React from "react";
-import { render, wait } from "@testing-library/react";
+import { render, wait, fireEvent } from "@testing-library/react";
 import CVEditorPage from "./CVEditorPage";
 import { Router, Route } from "react-router-dom";
 import { createMemoryHistory } from "history";
 import { UserContext } from "context/UserContext";
+import proxy from "config/api";
 
 const renderWithRouterMatch = (
   ui,
@@ -29,7 +30,7 @@ const renderWithRouterMatch = (
 };
 
 describe("load cv data", () => {
-  let apiFail, data, feedback;
+  let dataFail, feedbackFail, data, feedback;
   let props = {
     match: {
       params: {
@@ -40,12 +41,25 @@ describe("load cv data", () => {
   beforeAll(() => {
     global.fetch = jest.fn().mockImplementation((input, init) => {
       return new Promise((resolve, reject) => {
-        if (apiFail) {
-          resolve({ status: 500 });
-        } else if (input === "https://usamo-back.herokuapp.com/cv/data/123/") {
-          resolve({ status: 200, json: () => Promise.resolve(data) });
-        } else {
-          resolve({ status: 200, json: () => Promise.resolve(feedback) });
+        switch (init.method) {
+          case "PUT":
+            resolve({ status: 200 });
+            break;
+          case "GET":
+            if (dataFail && input === `${proxy.cv}data/123/`) {
+              resolve({ status: 500 });
+            } else if (
+              input === "https://usamo-back.herokuapp.com/cv/data/123/"
+            ) {
+              resolve({ status: 200, json: () => Promise.resolve(data) });
+            } else if (feedbackFail && `${proxy.cv}admin/feedback/`) {
+              resolve({ status: 500 });
+            } else {
+              resolve({ status: 200, json: () => Promise.resolve(feedback) });
+            }
+            break;
+          default:
+            resolve({ status: 200 });
         }
       });
     });
@@ -53,7 +67,8 @@ describe("load cv data", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    apiFail = false;
+    dataFail = false;
+    feedbackFail = false;
     data = {
       has_photo: false,
       is_verified: false,
@@ -149,13 +164,52 @@ describe("load cv data", () => {
     expect(getByLabelText("Imię:").value).toEqual("Jan");
   });
 
-  it("should fail on loading data and display alert", async () => {
-    apiFail = true;
+  it("should fail on loading data and display alert(data)", async () => {
+    dataFail = true;
     const { getByText } = renderWithRouterMatch(<CVEditorPage {...props} />);
 
     await wait(() => expect(fetch).toHaveBeenCalled());
 
     expect(getByText("Imię:").value).not.toBe("Jan");
     expect(getByText("Wystąpił błąd", { exact: false })).toBeInTheDocument();
+  });
+
+  it("should fail on loading data and display alert(feedback)", async () => {
+    feedbackFail = true;
+    data.was_reviewed = true;
+    const { getAllByText } = renderWithRouterMatch(<CVEditorPage {...props} />);
+
+    await wait(() => expect(fetch).toHaveBeenCalledTimes(2));
+
+    expect(
+      getAllByText("Wystąpił błąd podczas wczytywania uwag do CV.", {
+        exact: false,
+      }).length
+    ).toBe(6);
+  });
+
+  it("should send edited data", async () => {
+    data.was_reviewed = false;
+    const { getByLabelText, getByText } = renderWithRouterMatch(
+      <CVEditorPage {...props} />
+    );
+
+    await wait(() => expect(fetch).toHaveBeenCalled());
+
+    fireEvent.change(getByLabelText("Imię:"), { target: { value: "janusz" } });
+    fireEvent.click(getByText("Generuj CV"));
+
+    expect(fetch).toHaveBeenCalledWith(
+      "https://usamo-back.herokuapp.com/cv/data/123/",
+      {
+        body:
+          '{"basic_info":{"first_name":"janusz","last_name":"dsfdsfs","date_of_birth":"14-5-2020","phone_number":"+48123456789","email":"dsfsdf@gsddf.fd"},"schools":[{"year_start":2019,"year_end":2019,"name":"asdasdsad","additional_info":"sadasdas"}],"experiences":[],"skills":[{"description":"taniec"},{"description":"śpiew"}],"languages":[{"name":"angielski","level":"A2"},{"name":"niemiecki","level":"biegły"}]}',
+        headers: {
+          Authorization: "Token 123",
+          "Content-Type": "application/json",
+        },
+        method: "PUT",
+      }
+    );
   });
 });
