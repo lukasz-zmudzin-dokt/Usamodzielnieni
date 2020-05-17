@@ -15,6 +15,7 @@ import { deletePost } from "Views/BlogPost/functions/apiCalls";
 import { Redirect } from "react-router-dom";
 import { staffTypes } from "constants/staffTypes";
 import proxy from "config/api";
+import { userTypes } from "constants/userTypes";
 
 const getDateString = (dateString) => {
   return (
@@ -58,7 +59,9 @@ const handleDeletion = async (
 
 const renderButtons = (user, author, editionFlag, flag, setShowModal) => {
   if (
-    ((user.type === "Staff" &&
+    user &&
+    user.token &&
+    ((user.type === userTypes.STAFF &&
       user.data.group_type.includes(staffTypes.BLOG_CREATOR)) ||
       user.data.email === author.email) &&
     !flag
@@ -66,11 +69,11 @@ const renderButtons = (user, author, editionFlag, flag, setShowModal) => {
     return (
       <ButtonToolbar className="btn_toolbar text-center">
         <Button
-          variant="warning"
+          variant="info"
           className="button-edit mx-3"
           onClick={(e) => editionFlag(true)}
         >
-          Edytuj 🖉
+          Edytuj post
         </Button>
         <Button
           id="delete"
@@ -78,7 +81,7 @@ const renderButtons = (user, author, editionFlag, flag, setShowModal) => {
           className="button-delete mx-3"
           onClick={(e) => handleOnClick(e, setShowModal)}
         >
-          Usuń ✗
+          Usuń post
         </Button>
       </ButtonToolbar>
     );
@@ -103,9 +106,11 @@ const BlogContent = ({ post, user }) => {
 
   if (post === undefined)
     return (
-      <Alert variant="danger" className="d-lg-block">
-        Wystąpił błąd podczas ładowania zawartości bloga.
-      </Alert>
+      <Card.Body>
+        <Alert variant="danger" className="d-lg-block">
+          Wystąpił błąd podczas ładowania zawartości bloga.
+        </Alert>
+      </Card.Body>
     );
   if (wantsDelete)
     handleDeletion(
@@ -115,22 +120,26 @@ const BlogContent = ({ post, user }) => {
       setDelError,
       setSuccess
     );
-  const { firstName, lastName, email } = post.author;
-  const content = convertToHTML(mediumDraftImporter(post.content));
 
+  const { username } = post.author;
+  const content = convertToHTML(mediumDraftImporter(post.content));
   return (
     <Card>
       {post.header !== null && post.header !== "" ? (
-        <Card.Img variant="top" src={`${proxy.plain}${post.header}`} />
+        <Card.Img
+          variant="top"
+          src={`${proxy.plain}${post.header}`}
+          alt="Nagłówek posta"
+        />
       ) : (
         <Card.Header />
       )}
-      {DeletionModal(
-        showModal,
-        setShowModal,
-        setWantsDelete,
-        "Czy na pewno chcesz usunąć ten post?"
-      )}
+      <DeletionModal
+        show={showModal}
+        setShow={setShowModal}
+        delConfirmed={setWantsDelete}
+        question={"Czy na pewno chcesz usunąć ten post?"}
+      />
       <Card.Body className="post_content mx-4">
         {delError ? (
           <Alert variant="danger">Wystąpił błąd podczas usuwania posta.</Alert>
@@ -152,9 +161,9 @@ const BlogContent = ({ post, user }) => {
         <Card.Subtitle as="h6" className="text-muted mb-4 mt-2">
           Kategoria: {post.category}
         </Card.Subtitle>
-        <Card.Text className="blog_content_text text-justify">
+        <div className="blog_content_text text-justify">
           <div dangerouslySetInnerHTML={{ __html: content }} />
-        </Card.Text>
+        </div>
         <p className="post_taglist mt-5">
           <em>tagi: {renderTags(post.tags)}</em>
         </p>
@@ -162,7 +171,7 @@ const BlogContent = ({ post, user }) => {
       <Card.Footer className="blogpost_summary">
         <Row>
           <Col className="mx-3">
-            <Row className="">{`Autor: ${firstName} ${lastName} (${email})`}</Row>
+            <Row className="">{`Autor: ${username}`}</Row>
             <Row>{`Opublikowano: ${getDateString(post.creationDate)}`}</Row>
           </Col>
           <div className="post_comment_counter">

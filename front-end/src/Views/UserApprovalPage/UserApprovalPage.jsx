@@ -12,14 +12,14 @@ const UserApprovalPage = () => {
   const [err, setErr] = useState(false);
 
   useEffect(() => {
-    const loadUsers = async (token, setUsers) => {
+    const loadUsers = async (token) => {
       setLoading(true);
       try {
         let res = await getUsersToApprove(token);
-        setUsers(res);
-        setLoading(false);
+        setUsers(res.results);
       } catch (e) {
         setErr(true);
+      } finally {
         setLoading(false);
       }
     };

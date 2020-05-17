@@ -41,7 +41,7 @@ export default [
   {
     name: "Blogi",
     path: paths.BLOG_PAGE,
-    allowed: [userTypes.STANDARD, userTypes.STAFF, userTypes.EMPLOYER],
+    allowed: undefined,
   },
   {
     name: "Dodaj post",

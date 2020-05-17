@@ -11,6 +11,7 @@ import {
 import { UserContext } from "context";
 import { sendData } from "./functions/sendData";
 import { WithAlertContext } from "components";
+import { staffTypes } from "constants/staffTypes";
 
 class RegisterPage extends React.Component {
   constructor(props) {
@@ -24,7 +25,7 @@ class RegisterPage extends React.Component {
       account_type:
         this.props.match.params.role !== "staff"
           ? "Podopiecznym"
-          : ["staff_verification"],
+          : [staffTypes.VERIFICATION],
       validated: false,
       redirect: false,
       disabled: false,

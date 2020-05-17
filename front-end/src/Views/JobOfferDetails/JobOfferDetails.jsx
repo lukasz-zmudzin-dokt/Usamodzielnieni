@@ -7,6 +7,8 @@ import { AddCvForm, RemoveOffer } from "./_components";
 import { staffTypes } from "constants/staffTypes";
 import proxy from "config/api";
 import {addressToString} from "utils/converters";
+import {userTypes} from "constants/userTypes";
+import {userStatuses} from "constants/userStatuses";
 
 const getOfferDetails = async (id, token) => {
   let url = `${proxy.job}job-offer/${id}`;
@@ -84,8 +86,8 @@ const JobOfferDetails = props => {
             <p>{offer.description}</p>
           </div>
         )}
-        { user.type === 'Standard' && user.data?.status === 'Verified' && <AddCvForm id={props.match.params.id} user={user} /> }
-        { user.type === 'Staff' && user.data?.group_type.includes(staffTypes.JOBS) && <RemoveOffer id={props.match.params.id} user={user} /> }
+        { user.type === userTypes.STANDARD && user.data?.status === userStatuses.VERIFIED && <AddCvForm id={props.match.params.id} user={user} /> }
+        { user.type === userTypes.STAFF && user.data?.group_type.includes(staffTypes.JOBS) && <RemoveOffer id={props.match.params.id} user={user} /> }
       </Card.Body>
       </Card>
     </Container>

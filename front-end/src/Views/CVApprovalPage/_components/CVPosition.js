@@ -1,17 +1,15 @@
-import React, { useContext, useRef } from "react";
+import React, { useContext, useRef} from "react";
 import { UserContext, AlertContext } from "context";
 import { Button, Col, Row } from "react-bootstrap";
-import { acceptCV } from "Views/CVApprovalPage/functions/acceptCV";
+import { IndexLinkContainer } from "react-router-bootstrap";
 import { getCVUrl } from "Views/CVApprovalPage/functions/getCVUrl";
 import { DetailsItem } from "components";
 import proxy from "config/api";
-import { IndexLinkContainer } from "react-router-bootstrap";
 
 const showCV = async (e, token, cvId, alertC) => {
   e.preventDefault();
   try {
     const response = await getCVUrl(token, cvId);
-
     let url = proxy.plain + response;
     window.open(url, "_blank");
   } catch (response) {
@@ -19,17 +17,16 @@ const showCV = async (e, token, cvId, alertC) => {
   }
 };
 
-const handleAcceptCV = async (e, token, cvId, alertC) => {
+const handleAcceptCV = async (e, cvId, cutCV, alertC) => {
   e.preventDefault();
   try {
-    const response = await acceptCV(token, cvId);
-    if (response === "CV successfully verified.") {
+      await cutCV(cvId);
       alertC.current.showAlert("Pomyślnie zaakceptowano CV.", "success");
-    }
-  } catch (response) {
-    alertC.current.showAlert("Nie udało się zaakceptować użytkownika.");
+  } catch (e) {
+      alertC.current.showAlert("Nie udało się zaakceptować użytkownika.");
   }
-};
+}
+
 
 const CVPosition = (props) => {
   const context = useContext(UserContext);
@@ -59,7 +56,8 @@ const CVPosition = (props) => {
         <Button
           variant="success m-1"
           className="btnAccept"
-          onClick={(e) => handleAcceptCV(e, context.token, cv.cv_id, alertC)}
+          size="sm"
+          onClick={(e) => handleAcceptCV(e, cv.cv_id, props.cutCV, alertC)}
         >
           Akceptuj
         </Button>

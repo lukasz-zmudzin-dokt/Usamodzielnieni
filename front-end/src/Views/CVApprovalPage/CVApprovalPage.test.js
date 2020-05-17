@@ -3,6 +3,7 @@ import { render, waitForElement, wait } from "@testing-library/react";
 import CVApprovalPage from "./CVApprovalPage";
 import { MemoryRouter } from "react-router-dom";
 import { AlertContext } from "context";
+import { waitForElementToBeRemoved } from "@testing-library/dom";
 
 describe("CVApproval", () => {
   let failFetch;
@@ -23,7 +24,7 @@ describe("CVApproval", () => {
         }
         switch (init.method) {
           case "POST":
-            resolve({ status: 200 });
+            resolve({ status: 200, json: () => Promise.resolve({}) });
             break;
           case "GET":
             resolve({ status: 200, json: () => Promise.resolve(apiCVs) });
@@ -106,5 +107,37 @@ describe("CVApproval", () => {
 
     await waitForElement(() => getByText("Brak CV do akceptacji."));
     expect(getByText("Brak CV do akceptacji.")).toBeInTheDocument();
+  });
+
+  it("should hide cv on accept", async () => {
+    apiCVs = [apiCVs[0]];
+    const { getByText, queryByText } = render(
+      <MemoryRouter>
+        <CVApprovalPage />
+      </MemoryRouter>
+    );
+
+    await waitForElement(() => getByText("Akceptuj"));
+    expect(getByText("Jarek")).toBeInTheDocument();
+    fireEvent.click(getByText("Akceptuj"));
+    await waitForElementToBeRemoved(() => getByText("Jarek"));
+    expect(queryByText("Jarek")).not.toBeInTheDocument();
+  });
+
+  it("should render alert on api fail while accepting", async () => {
+    apiCVs = [apiCVs[0]];
+    const { getByText, queryByText } = render(
+      <MemoryRouter>
+        <CVApprovalPage />
+      </MemoryRouter>
+    );
+
+    await waitForElement(() => getByText("Akceptuj"));
+    expect(getByText("Jarek")).toBeInTheDocument();
+
+    failFetch = true;
+    fireEvent.click(getByText("Akceptuj"));
+    const cv = await waitForElement(() => queryByText("Jarek"));
+    expect(cv).not.toBe(null);
   });
 });

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Cookies from "universal-cookie";
 
 export const UserContext = React.createContext({
-  type: undefined, // Employer,Standard,Staff
+  type: undefined,
   token: undefined,
   data: undefined,
   login: () => {},

@@ -1,21 +1,24 @@
-mport React from 'react';
+import React from 'react';
 import { render, fireEvent, wait, waitForElement } from '@testing-library/react';
 import CommentForm from './CommentForm';
 import { UserProvider,AlertContext } from "context";
+import { userTypes } from "constants/userTypes";
+import { userStatuses } from "constants/userStatuses";
 
 describe('CommentForm', () => {
     let props, failFetch, user;
     
     beforeAll(() => {
         user = {
-            type: 'Standard',
-            token: '123',
+            type: userTypes.STANDARD,
+            token: "123",
             data: {
-                first_name: 'Jan',
-                last_name: 'Kowalski',
-                status: 'Verified'
-            }
-        }
+                first_name: "Jan",
+                last_name: "Kowalski",
+                status: userStatuses.VERIFIED,
+                username: "123123",
+            },
+        };
     })
 
     describe('create comment', () => {

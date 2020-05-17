@@ -98,6 +98,11 @@ exports[`BlogPage should match snapshot 1`] = `
           <div
             class="card"
           >
+            <img
+              alt="Nagłówek posta"
+              class="card-img-top"
+              src="https://usamo-back.herokuapp.com/media/example_img.jpg"
+            />
             <div
               class="card-body"
             >

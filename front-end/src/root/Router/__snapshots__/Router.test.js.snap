@@ -18,6 +18,7 @@ exports[`Router test should match snapshot 1`] = `
           class="col-7"
         >
           <img
+            alt="Menu logo"
             class="menu-logo"
             src="logo.png"
           />
@@ -40,13 +41,13 @@ exports[`Router test should match snapshot 1`] = `
             role="toolbar"
           >
             <a
-              class="menu-button-big menu-button-white btn btn-primary"
+              class="menu-button-big btn btn-primary"
               href="/newAccount"
             >
               Utwórz konto
             </a>
             <a
-              class="menu-button-big menu-button-white btn btn-primary"
+              class="menu-button-big btn btn-primary"
               href="/login"
             >
               Zaloguj się
@@ -76,18 +77,24 @@ exports[`Router test should match snapshot 1`] = `
             >
               Kreator CV
             </a>
-            <button
-              class="menu-button-small menu-button-white disabled btn btn-primary"
-              type="button"
+            <a
+              class="menu-button-small menu-button-white btn btn-primary"
+              href="/myCVs"
             >
-              Jak zacząć?
-            </button>
-            <button
-              class="menu-button-small menu-button-white disabled btn btn-primary"
-              type="button"
+              Moje CV
+            </a>
+            <a
+              class="menu-button-small menu-button-white btn btn-primary"
+              href="/login"
             >
               Oferty pracy
-            </button>
+            </a>
+            <a
+              class="menu-button-small menu-button-white btn btn-primary"
+              href="/blog"
+            >
+              Blogi
+            </a>
           </div>
         </div>
         <div

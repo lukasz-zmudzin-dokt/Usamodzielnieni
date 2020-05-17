@@ -71,19 +71,31 @@ exports[`CVApproval should match snapshot 1`] = `
                 class="align-self-center d-flex justify-content-end col"
               >
                 <button
+<<<<<<< HEAD
                   class="btnDownload btn btn-primary m-1 p-1"
+=======
+                  class="btnDownload btn btn-primary m-1 btn-sm"
+>>>>>>> master
                   type="button"
                 >
                   Pokaż CV
                 </button>
                 <button
+<<<<<<< HEAD
                   class="btnAccept btn btn-success m-1 p-1"
+=======
+                  class="btnAccept btn btn-success m-1 btn-sm"
+>>>>>>> master
                   type="button"
                 >
                   Akceptuj
                 </button>
                 <a
+<<<<<<< HEAD
                   class="btnImprove btn btn-warning m-1 p-1"
+=======
+                  class="btnImprove btn btn-warning m-1 btn-sm"
+>>>>>>> master
                   href="/cvCorrection/0"
                 >
                   Zgłoś poprawki
@@ -143,19 +155,31 @@ exports[`CVApproval should match snapshot 1`] = `
                 class="align-self-center d-flex justify-content-end col"
               >
                 <button
+<<<<<<< HEAD
                   class="btnDownload btn btn-primary m-1 p-1"
+=======
+                  class="btnDownload btn btn-primary m-1 btn-sm"
+>>>>>>> master
                   type="button"
                 >
                   Pokaż CV
                 </button>
                 <button
+<<<<<<< HEAD
                   class="btnAccept btn btn-success m-1 p-1"
+=======
+                  class="btnAccept btn btn-success m-1 btn-sm"
+>>>>>>> master
                   type="button"
                 >
                   Akceptuj
                 </button>
                 <a
+<<<<<<< HEAD
                   class="btnImprove btn btn-warning m-1 p-1"
+=======
+                  class="btnImprove btn btn-warning m-1 btn-sm"
+>>>>>>> master
                   href="/cvCorrection/1"
                 >
                   Zgłoś poprawki

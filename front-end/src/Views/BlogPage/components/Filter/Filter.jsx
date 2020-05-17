@@ -6,8 +6,9 @@ import FormGroup from "components/FormGroup";
 import { UserContext,AlertContext } from "context";
 import { IndexLinkContainer } from "react-router-bootstrap";
 import {staffTypes} from "constants/staffTypes";
+import {userTypes} from "constants/userTypes";
 
-const Filter = ({ token, setFilter, count }) => {
+const Filter = ({ setFilter, count }) => {
   const [filters, setFilters] = useState({ categories: [], tags: [] });
   const [category, setCategory] = useState(DEFAULT_INPUT);
   const [tag, setTag] = useState(DEFAULT_INPUT);
@@ -16,10 +17,10 @@ const Filter = ({ token, setFilter, count }) => {
   const alertC = useRef(useContext(AlertContext));
 
   useEffect(() => {
-    const loadOffers = async (token) => {
+    const loadOffers = async () => {
       let res;
       try {
-        res = await getFilters(token);
+        res = await getFilters();
       } catch (e) {
         alertC.current.showAlert("Wystąpił błąd podczas ładowania filtrów.")
         res = { categories: [], tags: [] };
@@ -27,8 +28,8 @@ const Filter = ({ token, setFilter, count }) => {
       }
       setFilters(res);
     };
-    loadOffers(token);
-  }, [token]);
+    loadOffers();
+  }, []);
 
   const filter = (event) => {
     event.preventDefault();
@@ -87,7 +88,7 @@ const Filter = ({ token, setFilter, count }) => {
           Wyczyść filtry
         </Button>
       </div>
-      {user.type === "Staff" &&
+      {user && user.type === userTypes.STAFF &&
       user.data.group_type.includes(staffTypes.BLOG_CREATOR) ? (
         <IndexLinkContainer as={Button} to="/blog/newPost">
           <Button variant="success" className="mt-2">

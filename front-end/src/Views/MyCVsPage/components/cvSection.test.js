@@ -9,6 +9,7 @@ import {
 import { MemoryRouter } from "react-router-dom";
 import proxy from "config/api";
 import { AlertContext } from "context";
+import { userTypes } from "constants/userTypes";
 
 describe("CVSection", () => {
   let failFetch;
@@ -41,6 +42,11 @@ describe("CVSection", () => {
         }
       });
     });
+
+    user = {
+      type: userTypes.STANDARD,
+      token: "123",
+    };
   });
 
   user = {

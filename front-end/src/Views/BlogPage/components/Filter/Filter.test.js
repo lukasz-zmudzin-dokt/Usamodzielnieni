@@ -4,6 +4,8 @@ import Filter from "Views/BlogPage/components/Filter";
 import { DEFAULT_INPUT } from "constants/other";
 import { UserContext, AlertContext } from "context";
 import { MemoryRouter } from "react-router-dom";
+import { userTypes } from "constants/userTypes";
+import { staffTypes } from "constants/staffTypes";
 
 describe("Filter", () => {
   let failFetch = false;
@@ -109,7 +111,10 @@ describe("Filter", () => {
   it("should show button if type account = Staff", async () => {
     const { getByText } = render(
       <UserContext.Provider
-        value={{ type: "Staff", data: { group_type: "staff_blog_creator" } }}
+        value={{
+          type: userTypes.STAFF,
+          data: { group_type: [staffTypes.BLOG_CREATOR] },
+        }}
       >
         <MemoryRouter>
           <Filter {...props} />
@@ -124,7 +129,7 @@ describe("Filter", () => {
 
   it("should not show button if type account != Staff", async () => {
     const { queryByText, getByText } = render(
-      <UserContext.Provider value={{ type: "Standard" }}>
+      <UserContext.Provider value={{ type: userTypes.STANDARD }}>
         <MemoryRouter>
           <Filter {...props} />
         </MemoryRouter>

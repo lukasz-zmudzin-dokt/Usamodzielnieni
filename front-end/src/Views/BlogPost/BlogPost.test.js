@@ -1,7 +1,10 @@
 import React from "react";
 import BlogPost from "./BlogPost";
-import { render, waitForElement } from "@testing-library/react";
-import { UserContext, AlertContext } from "context";
+import { render, waitForElement, fireEvent } from "@testing-library/react";
+import { UserContext, AlertContext } from "context/UserContext";
+import { userTypes } from "constants/userTypes";
+import { userStatuses } from "constants/userStatuses";
+import { staffTypes } from "constants/staffTypes";
 
 describe("BlogPost", () => {
   let post;
@@ -27,6 +30,12 @@ describe("BlogPost", () => {
                   }
             );
             break;
+          case "POST":
+            resolve({
+              status: 200,
+              json: () => Promise.resolve({ id: "n1" }),
+            });
+            break;
           default:
             reject({});
             break;
@@ -34,10 +43,14 @@ describe("BlogPost", () => {
       });
     });
     user = {
-      type: "Staff",
+      type: userTypes.STAFF,
       data: {
+        username: "staffName",
         email: "qwe@qwe.fgh",
+        group_type: [staffTypes.BLOG_CREATOR],
+        status: userStatuses.VERIFIED,
       },
+      token: "123",
     };
   });
 
@@ -46,21 +59,24 @@ describe("BlogPost", () => {
     post = {
       id: 123,
       author: {
+        username: "jankowalski123",
         first_name: "Jan",
         last_name: "Kowalski",
         email: "jan@kowalski.pl",
       },
       content:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin nibh augue, suscipit a, scelerisque sed, lacinia in, mi. Cras vel lorem. Etiam pellentesque aliquet tellus. Phasellus pharetra nulla ac diam. Quisque semper justo at risus. Donec venenatis, turpis vel hendrerit interdum, dui ligula ultricies purus, sed posuere libero dui id orci. Nam congue, pede vitae dapibus aliquet, elit magna vulputate arcu, vel tempus metus leo non est. Etiam sit amet lectus quis est congue mollis. Phasellus congue lacus eget neque. Phasellus ornare, ante vitae consectetuer consequat, purus sapien ultricies dolor, et mollis pede metus eget nisi. Praesent sodales velit quis augue. Cras suscipit, urna at aliquam rhoncus, urna quam viverra nisi, in interdum massa nibh nec erat.",
-      date_created: "06-07-2019",
+      date_created: "2019-06-07",
       category: "qwe",
       tags: ["tag1", "tag2", "tag3"],
       comments: [
         {
+          id: "1",
           author: {
             first_name: "Jan",
             last_name: "Nowak",
             email: "qwe@qwe.qwe",
+            username: "jannowak",
           },
         },
       ],
@@ -128,6 +144,37 @@ describe("BlogPost", () => {
     );
 
     await waitForElement(() => fetch);
-    expect(getByText("Jan Nowak", { exact: false })).toBeInTheDocument();
+    expect(getByText("jannowak", { exact: false })).toBeInTheDocument();
+  });
+
+  it("should not render comment form", async () => {
+    const { getByText, queryByText } = render(
+      <UserContext.Provider value={{}}>
+        <BlogPost />
+      </UserContext.Provider>
+    );
+
+    await waitForElement(() =>
+      getByText("Lorem ipsum dolor", { exact: false })
+    );
+    expect(queryByText("Dodaj komentarz")).not.toBeInTheDocument();
+  });
+
+  it("should render new comment after submit", async () => {
+    const { getByText, getByPlaceholderText } = render(
+      <UserContext.Provider value={user}>
+        <BlogPost />
+      </UserContext.Provider>
+    );
+
+    await waitForElement(() => getByText("Dodaj komentarz"));
+    expect(getByText("Dodaj komentarz")).toBeInTheDocument();
+    fireEvent.change(getByPlaceholderText("Treść komentarza"), {
+      target: { value: "komentarz testowy" },
+    });
+    fireEvent.click(getByText("Prześlij"));
+
+    await waitForElement(() => getByText("staffName"));
+    expect(getByText("komentarz testowy")).toBeInTheDocument();
   });
 });
