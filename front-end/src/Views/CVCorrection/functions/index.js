@@ -36,7 +36,7 @@ const sendFeedback = async (id, token, feedback) => {
       Authorization: `Token ${token}`,
     },
   });
-  if (res.status !== 201) {
+  if (res.status !== 200) {
     throw res.status;
   }
   return res.status;

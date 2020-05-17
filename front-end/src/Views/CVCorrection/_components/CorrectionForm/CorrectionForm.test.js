@@ -1,18 +1,38 @@
 import React from "react";
-import { render, fireEvent, waitForElement } from "@testing-library/react";
+import {
+  render,
+  fireEvent,
+  waitForElement,
+  wait,
+} from "@testing-library/react";
 import CorrectionForm from "./CorrectionForm";
 import { createMemoryHistory } from "history";
 import { Router } from "react-router-dom";
+import { AlertContext } from "context";
+
+const reactRouterDom = require("react-router-dom");
+
+jest.mock("react-router-dom", () => ({
+  ...jest.requireActual("react-router-dom"),
+  useParams: () => ({
+    id: "abc",
+  }),
+}));
 
 const renderWithRouter = (
   ui,
+  context,
   {
-    route = "/cvApproval",
+    route = "/cvCorrection/xd",
     history = createMemoryHistory({ initialEntries: [route] }),
   } = {}
 ) => {
   return {
-    ...render(<Router history={history}>{ui}</Router>),
+    ...render(
+      <AlertContext.Provider value={context}>
+        <Router history={history}>{ui}</Router>
+      </AlertContext.Provider>
+    ),
     history,
   };
 };
@@ -20,7 +40,9 @@ const renderWithRouter = (
 describe("CorrectionForm", () => {
   let data = { id: "abc", token: "abc" };
   let failFetch = false;
-
+  let alertC = {
+    showAlert: jest.fn(),
+  };
   beforeAll(() => {
     global.fetch = jest.fn().mockImplementation((input, init) => {
       return new Promise((resolve, reject) => {
@@ -29,7 +51,7 @@ describe("CorrectionForm", () => {
         }
         switch (init.method) {
           case "POST":
-            resolve({ status: 201 });
+            resolve({ status: 200 });
             break;
           default:
             reject({});
@@ -50,17 +72,28 @@ describe("CorrectionForm", () => {
   });
 
   it("should not send anythhing if fields are empty", async () => {
-    const { getByText } = renderWithRouter(<CorrectionForm />);
+    const { getByText } = renderWithRouter(<CorrectionForm />, alertC);
     fireEvent.click(getByText("Wyślij uwagi"));
-    await waitForElement(() => getByText("Dodaj minimalnie jedną uwagę."));
-    expect(getByText("Dodaj minimalnie jedną uwagę.")).toBeInTheDocument();
+
+    await wait(() => expect(alertC.showAlert).toHaveBeenCalled());
+    expect(alertC.showAlert).toHaveBeenCalledWith(
+      "Dodaj minimalnie jedną uwagę."
+    );
     expect(fetch).toHaveBeenCalledTimes(0);
   });
 
   it("should send if every field is not empty", async () => {
+    reactRouterDom.useParams = () => ({
+      id: "abc",
+    });
     const { getByText, getByLabelText, history } = renderWithRouter(
-      <CorrectionForm />
+      <CorrectionForm />,
+      alertC,
+      {
+        route: "/cvCorrection/abc",
+      }
     );
+
     fireEvent.change(getByLabelText("Dane osobowe"), {
       target: { value: "abcd" },
     });
@@ -80,19 +113,29 @@ describe("CorrectionForm", () => {
       target: { value: "abcd" },
     });
     fireEvent.click(getByText("Wyślij uwagi"));
-    expect(fetch).toHaveBeenCalledTimes(1);
+    await wait(() => {
+      expect(fetch).toHaveBeenCalled();
+    });
+    await wait(() => expect(alertC.showAlert).toHaveBeenCalled());
+    expect(alertC.showAlert).toHaveBeenCalledWith(
+      "Pomyślnie przesłano uwagi",
+      "success"
+    );
     expect(history.location.pathname).toEqual("/cvApproval");
   });
 
   it("should not send if api fails", async () => {
     failFetch = true;
-    const { getByText, getByLabelText } = renderWithRouter(<CorrectionForm />);
+    const { getByText, getByLabelText } = renderWithRouter(
+      <CorrectionForm />,
+      alertC
+    );
     fireEvent.change(getByLabelText("Dane osobowe"), {
       target: { value: "abcd" },
     });
     fireEvent.click(getByText("Wyślij uwagi"));
-    await waitForElement(() => getByText("Błąd serwera."));
-    expect(getByText("Błąd serwera.")).toBeInTheDocument();
+    await wait(() => expect(alertC.showAlert).toHaveBeenCalled());
+    expect(alertC.showAlert).toHaveBeenCalledWith("Nie udało się wysłać uwag");
     expect(fetch).toHaveBeenCalledTimes(1);
   });
 });
