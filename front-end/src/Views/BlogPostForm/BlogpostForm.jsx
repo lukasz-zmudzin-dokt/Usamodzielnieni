@@ -1,15 +1,15 @@
 import React from "react";
 import {Alert, Button, Card, Container, Form} from "react-bootstrap";
-import {Editor, createEditorState} from 'medium-draft';
-import {getFilters, getPost, postBlogPost, uploadPhoto} from "./functions/apiCalls";
+import {createEditorState} from 'medium-draft';
+import {getFilters, getPost, postBlogPost, reserveSpace, uploadPhoto} from "./functions/apiCalls";
 import "medium-draft/lib/index.css";
-import {customizeToolbar} from "./functions/editorConfig";
 import SelectionRow from "./components/SelectionRow";
 import {UserContext} from "context/UserContext";
 import mediumDraftExporter from "medium-draft/lib/exporter";
 import mediumDraftImporter from 'medium-draft/lib/importer';
 import {convertToRaw} from 'draft-js';
 import {Redirect} from "react-router-dom";
+import EditorForm from "./components/EditorForm";
 
 class BlogPostForm extends React.Component {
   constructor(props) {
@@ -55,6 +55,8 @@ class BlogPostForm extends React.Component {
                   });
               }
           });
+      } else {
+          this.makeReservation();
       }
       this.loadFilters().then( res => {
           this.setState({
@@ -62,6 +64,21 @@ class BlogPostForm extends React.Component {
           });
       });
   }
+
+  makeReservation = async () => {
+      let res;
+      try {
+          res = await reserveSpace(this.context.token);
+          this.setState({
+              post_id: res.id
+          });
+      } catch(e) {
+          console.log(e);
+          this.setState({
+              error: "reservation"
+          });
+      }
+  };
 
   loadPost = async (id) => {
       let res;
@@ -137,10 +154,7 @@ class BlogPostForm extends React.Component {
           content: mediumDraftExporter(this.state.editorState.getCurrentContent())
       };
       try {
-          const res = await postBlogPost(data, this.context.token, this.state.method, this.state.post_id);
-          this.setState({
-              post_id: res.id
-          });
+          await postBlogPost(data, this.context.token, this.state.method, this.state.post_id);
           if (this.state.photo !== null) {
               try {
                   await uploadPhoto(this.state.post_id, this.state.photo, this.context.token, "header");
@@ -161,14 +175,19 @@ class BlogPostForm extends React.Component {
   };
 
   render () {
-      const config = customizeToolbar();
-      return (
+      return this.state.isLoading || this.state.error === "reservation" ?
+          (
+              <Card.Body>
+                  {
+                      this.state.isLoading ? <Alert variant="info">Ładowanie edytora postów.</Alert> :
+                      this.state.error === "reservation" ? <Alert variant="danger">Wystąpił błąd podczas ładowania kreatora.</Alert> :
+                      null
+                  }
+              </Card.Body>
+          ) : (
           <Container>
               <Card>
                   <Card.Header>
-                      {this.state.isLoading ?
-                        <Alert variant="info">Ładowanie edytora postów.</Alert> : null
-                      }
                       <Form.Group controlId="blogpost_photo">
                           <Form.File
                               name="photo"
@@ -194,17 +213,7 @@ class BlogPostForm extends React.Component {
                           />
                       </Form.Group>
                       <SelectionRow name="category" arrayType={this.state.filters.categories} current={this.state.category} onChange={this.onChange} />
-                      <div className="my-4">
-                          <Editor
-                              placeholder="Napisz swoją historię..."
-                              ref={this.refsEditor}
-                              editorState={this.state.editorState}
-                              onChange={this.onEditorChange}
-                              inlineButtons={config.inline}
-                              blockButtons={config.block}
-                              sideButtons={config.side}
-                          />
-                      </div>
+                      <EditorForm onChange={this.onEditorChange} state={this.state.editorState} customRef={this.refsEditor} id={this.state.post_id} token={this.context.token}/>
                       <SelectionRow className="mt-4" name="tags" arrayType={this.state.filters.tags} onChange={this.onArrayChange} current={this.state.tags} onCut={this.cutFromArray}/>
                   </Card.Body>
                   <Card.Footer className="">

@@ -42,8 +42,11 @@ export const getFilters = async (token) => {
 
 export const postBlogPost = async (data, token, method, id) => {
     let url = proxy.blog + "blogpost/";
-    if (id !== -1)
+    if (method === "PUT") {
         url = `${url}${id}/`;
+    } else {
+        data = {...data, id: id};
+    }
     const headers = {
         Authorization: "Token " + token,
         "Content-Type": "application/json"
@@ -54,18 +57,17 @@ export const postBlogPost = async (data, token, method, id) => {
     headers,
     body: JSON.stringify(data),
   });
-
-    if (response.status === 200) {
-        return await response.json().then(res => res);
+    let status = method === "PUT" ? 200 : 201;
+    if (response.status === status) {
+        return true;
     } else
-        console.log(await response.json())
         throw response.status;
 };
 
 export const uploadPhoto = async (id, photo, token, mode) => {
     const formData = new FormData();
     formData.append('file', photo, photo.name);
-    const url = mode === "header" ? `${proxy.blog}blogpost/${id}/header/` : `${proxy.blog}blogpost/id/attachment-upload/`;
+    const url = mode === "header" ? `${proxy.blog}blogpost/${id}/header/` : `${proxy.blog}blogpost/${id}/attachment-upload/`;
     const headers = {
         Authorization: "Token " + token
     };
@@ -77,6 +79,20 @@ export const uploadPhoto = async (id, photo, token, mode) => {
   });
 
   if (response.status === 200) {
-    return response.status;
+    return await response.json();
   } else throw response.status;
+};
+
+export const reserveSpace = async (token) => {
+    const url = proxy.blog + "blogpost/reservation/";
+    const headers = {
+        Authorization: "Token " + token,
+        "Content-Type": "application/json"
+    };
+    const res = await fetch(url, {method: "POST", headers});
+    if (res.status === 201) {
+        return await res.json();
+    } else {
+        throw res.status;
+    }
 };
