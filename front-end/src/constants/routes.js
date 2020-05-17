@@ -16,11 +16,17 @@ import {
   RegisterPage,
   UserProfilePage,
   UserApprovalPage,
-  Chats
+  CVCorrection,
+  MessagesList,
+  Chats,
+  UserList,
+  OfferApprovalPage,
+  PasswordResetPrompt,
+  NewPasswordPage,
 } from "Views";
-import {userTypes} from "./userTypes";
-import {staffTypes} from "./staffTypes";
-import {paths} from "./paths";
+import { userTypes } from "./userTypes";
+import { staffTypes } from "./staffTypes";
+import { paths } from "./paths";
 
 export default [
   {
@@ -34,7 +40,7 @@ export default [
     isPrivate: true,
     type: userTypes.STANDARD,
     exact: true,
-    userVerified: true
+    userVerified: true,
   },
   {
     path: paths.CV_EDITOR,
@@ -42,7 +48,7 @@ export default [
     isPrivate: true,
     type: userTypes.STANDARD,
     exact: true,
-    userVerified: true
+    userVerified: true,
   },
   {
     path: paths.REGISTER,
@@ -56,7 +62,7 @@ export default [
     isPrivate: true,
     type: userTypes.STAFF,
     group: staffTypes.VERIFICATION,
-    userVerified: true
+    userVerified: true,
   },
   {
     path: paths.FOOTER,
@@ -79,21 +85,21 @@ export default [
     component: JobOffersPage,
     exact: true,
     isPrivate: true,
-    type: undefined
+    type: undefined,
   },
   {
     path: paths.JOB_OFFER_DETAILS,
     component: JobOfferDetails,
     exact: true,
     isPrivate: true,
-    type: undefined
+    type: undefined,
   },
   {
     path: paths.OFFER_FORM,
     component: OfferForm,
     isPrivate: true,
     type: userTypes.EMPLOYER,
-    userVerified: true
+    userVerified: true,
   },
   {
     path: paths.CV_APPROVAL,
@@ -101,14 +107,14 @@ export default [
     isPrivate: true,
     type: userTypes.STAFF,
     group: staffTypes.CV,
-    userVerified: true
+    userVerified: true,
   },
   {
     path: paths.MY_OFFERS,
     component: MyOffersPage,
     isPrivate: true,
     type: userTypes.EMPLOYER,
-    userVerified: true
+    userVerified: true,
   },
   {
     path: paths.CONTACT_PAGE,
@@ -117,15 +123,11 @@ export default [
   {
     path: paths.BLOG_POST,
     component: BlogPost,
-    isPrivate: true,
-    type: undefined,
     exact: true,
   },
   {
     path: paths.BLOG_PAGE,
     component: BlogPage,
-    isPrivate: true,
-    type: undefined,
     exact: true,
   },
   {
@@ -135,7 +137,7 @@ export default [
     type: userTypes.STAFF,
     group: staffTypes.BLOG_CREATOR,
     exact: true,
-    userVerified: true
+    userVerified: true,
   },
   {
     path: paths.BLOG_EDIT,
@@ -144,14 +146,14 @@ export default [
     type: userTypes.STAFF,
     group: staffTypes.BLOG_CREATOR,
     exact: true,
-    userVerified: true
+    userVerified: true,
   },
   {
     path: paths.MY_CVS,
     component: MyCVsPage,
     isPrivate: true,
     type: userTypes.STANDARD,
-    userVerified: true
+    userVerified: true,
   },
   {
     path: paths.USER_APPROVAL,
@@ -159,7 +161,14 @@ export default [
     isPrivate: true,
     type: userTypes.STAFF,
     group: staffTypes.VERIFICATION,
-    userVerified: true
+    userVerified: true,
+  },
+  {
+    path: paths.CV_CORRECTION,
+    component: CVCorrection,
+    isPrivate: true,
+    type: userTypes.STAFF,
+    group: staffTypes.CV,
   },
   {
     path: paths.CHATS,
@@ -167,15 +176,41 @@ export default [
     isPrivate: true,
     type: undefined,
     exact: true,
-    userVerified: true
+    userVerified: true,
   },
   {
     path: paths.CHAT_DETAILS,
-    component: Chats, // zmienić na komponent z listą wiadomości w czacie
+    component: MessagesList,
     isPrivate: true,
     type: undefined,
     exact: true,
-    userVerified: true
-  }
+    userVerified: true,
+  },
+  {
+    path: paths.USER_LIST,
+    component: UserList,
+    isPrivate: true,
+    type: userTypes.STAFF,
+    exact: true,
+    userVerified: true,
+  },
+  {
+    path: paths.OFFER_APPROVAL,
+    component: OfferApprovalPage,
+    isPrivate: true,
+    type: userTypes.STAFF,
+    group: staffTypes.JOBS,
+  },
+  {
+    path: paths.PASSWORD_RESET,
+    component: PasswordResetPrompt,
+    type: undefined,
+    exact: true,
+  },
+  {
+    path: paths.NEW_PASSWORD,
+    component: NewPasswordPage,
+    type: undefined,
+    exact: true,
+  },
 ];
-

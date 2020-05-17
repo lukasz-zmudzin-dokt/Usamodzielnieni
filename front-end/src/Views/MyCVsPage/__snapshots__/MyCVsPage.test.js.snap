@@ -11,7 +11,9 @@ exports[`MyCVsPage should match snapshot 1`] = `
       <h2
         class="card-header"
       >
-        Moje CV
+        Moje CV (
+        2
+         / 5)
       </h2>
       <div
         class="list-group list-group-flush"
@@ -23,21 +25,21 @@ exports[`MyCVsPage should match snapshot 1`] = `
             class="row"
           >
             <div
-              class="col-md-5 col-12"
+              class="col-md-4 col-12"
             >
               <h6>
-                Nazwa pliku
+                Nazwa CV
               </h6>
             </div>
             <div
-              class="col-md-3 col-4"
+              class="col-md-2 col-4"
             >
               <h6>
                 Status
               </h6>
             </div>
             <div
-              class="text-right col-md-4 col-8"
+              class="text-right col-md-6 col-8"
             >
               <h6>
                 Akcje
@@ -52,27 +54,41 @@ exports[`MyCVsPage should match snapshot 1`] = `
             class="d-flex align-items-center row"
           >
             <div
-              class="col-md-5 col-12"
-            />
+              class="col-md-4 col-12"
+            >
+              jeden
+            </div>
             <div
-              class="col-md-3 col-4"
+              class="col-md-2 col-12"
             >
               Oczekuje na weryfikację
             </div>
             <div
-              class="text-right col-md-4 col-8"
+              class="text-right col-md-6 col-12"
             >
+              <button
+                class="btn btn-primary"
+                type="button"
+              >
+                Zobacz CV
+              </button>
+              <button
+                class="m-1 btn btn-info"
+                type="button"
+              >
+                Zmień nazwę
+              </button>
               <a
-                class="btn btn-info"
+                class="mx-2 btn btn-info"
                 href="/cvEditor/0"
               >
                 Edytuj
               </a>
               <button
-                class="ml-2 btn btn-primary"
+                class="btn btn-danger"
                 type="button"
               >
-                Zobacz CV
+                Usuń CV
               </button>
             </div>
           </div>
@@ -84,27 +100,41 @@ exports[`MyCVsPage should match snapshot 1`] = `
             class="d-flex align-items-center row"
           >
             <div
-              class="col-md-5 col-12"
-            />
+              class="col-md-4 col-12"
+            >
+              dwa
+            </div>
             <div
-              class="col-md-3 col-4"
+              class="col-md-2 col-12"
             >
               Oczekuje na weryfikację
             </div>
             <div
-              class="text-right col-md-4 col-8"
+              class="text-right col-md-6 col-12"
             >
+              <button
+                class="btn btn-primary"
+                type="button"
+              >
+                Zobacz CV
+              </button>
+              <button
+                class="m-1 btn btn-info"
+                type="button"
+              >
+                Zmień nazwę
+              </button>
               <a
-                class="btn btn-info"
+                class="mx-2 btn btn-info"
                 href="/cvEditor/1"
               >
                 Edytuj
               </a>
               <button
-                class="ml-2 btn btn-primary"
+                class="btn btn-danger"
                 type="button"
               >
-                Zobacz CV
+                Usuń CV
               </button>
             </div>
           </div>

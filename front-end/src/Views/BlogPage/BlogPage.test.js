@@ -12,6 +12,7 @@ describe("BlogPage", () => {
       tags: ["tag"],
       summary: "summary",
       category: "abcd",
+      header: "/media/example_img.jpg",
       id: 1,
       title: "tytuł",
     },
@@ -19,6 +20,7 @@ describe("BlogPage", () => {
       tags: ["tag", "abcd"],
       category: "abcd",
       summary: "summary2",
+      header: null,
       id: 2,
       title: "tytuł2",
     },
@@ -34,9 +36,7 @@ describe("BlogPage", () => {
             resolve({ status: 200 });
             break;
           case "GET":
-            if (
-              input.includes(proxy.blog + "blogposts/")
-            ) {
+            if (input.includes(proxy.blog + "blogposts/")) {
               resolve({ status: 200, json: () => Promise.resolve(apiPosts) });
             } else {
               resolve({ status: 200, json: () => Promise.resolve(apiFilters) });
@@ -98,11 +98,11 @@ describe("BlogPage", () => {
     );
 
     await waitForElement(() =>
-      getByText("Wystąpił błąd podczas ładowania postów.")
+      getByText("Wystąpił błąd podczas ładowania", { exact: false })
     );
 
     expect(
-      getByText("Wystąpił błąd podczas ładowania postów.")
+      getByText("Wystąpił błąd podczas ładowania", { exact: false })
     ).toBeInTheDocument();
   });
 
@@ -132,7 +132,6 @@ describe("BlogPage", () => {
         `${proxy.blog}blogposts/?category=abcd&tag=abcd`,
         {
           headers: {
-            Authorization: "Token undefined",
             "Content-Type": "application/json",
           },
           method: "GET",
@@ -161,12 +160,23 @@ describe("BlogPage", () => {
         `${proxy.blog}blogposts/?tag=abcd`,
         {
           headers: {
-            Authorization: "Token undefined",
             "Content-Type": "application/json",
           },
           method: "GET",
         }
       );
+    });
+
+    it("should render post with no tags", async () => {
+      apiPosts[0].tags = [];
+      const { getByText, getAllByText } = render(
+        <MemoryRouter>
+          <BlogPage />
+        </MemoryRouter>
+      );
+
+      await waitForElement(() => getAllByText("abcd"));
+      expect(getByText("Brak tagów")).toBeInTheDocument();
     });
 
     it("should be called with appropriate url(1 filter - category)", async () => {
@@ -190,7 +200,6 @@ describe("BlogPage", () => {
         `${proxy.blog}blogposts/?category=abcd`,
         {
           headers: {
-            Authorization: "Token undefined",
             "Content-Type": "application/json",
           },
           method: "GET",
