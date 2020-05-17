@@ -10,8 +10,6 @@ import { createMemoryHistory } from "history";
 import { Router } from "react-router-dom";
 import { AlertContext } from "context";
 
-const reactRouterDom = require("react-router-dom");
-
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
   useParams: () => ({
@@ -83,9 +81,6 @@ describe("CorrectionForm", () => {
   });
 
   it("should send if every field is not empty", async () => {
-    reactRouterDom.useParams = () => ({
-      id: "abc",
-    });
     const { getByText, getByLabelText, history } = renderWithRouter(
       <CorrectionForm />,
       alertC,

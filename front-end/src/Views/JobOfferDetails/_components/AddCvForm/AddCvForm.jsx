@@ -138,7 +138,6 @@ const AddCvForm = ({ id, user, ...props }) => {
         <Form onSubmit={onApplyClick}>
           <Form.Group controlId="selectCv">
             <Form.Label>Wybierz CV:</Form.Label>
-            {}
             <Form.Control
               as="select"
               value={selectedCv}
