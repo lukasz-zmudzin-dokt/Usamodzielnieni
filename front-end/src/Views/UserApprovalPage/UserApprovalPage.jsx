@@ -13,7 +13,7 @@ const UserApprovalPage = () => {
     const [activeUser, setActiveUser] = useState("");
 
     useEffect(() => {
-        const loadUsers = async(token, setUsers) => {
+        const loadUsers = async(token) => {
             setLoading(true);
             try {
                 let res = await getUsersToApprove(token);
@@ -24,7 +24,7 @@ const UserApprovalPage = () => {
                 setLoading(false);
             }
         };
-        loadUsers(context.token, setUsers);
+        loadUsers(context.token);
     }, [context.token]);
 
     const message = loading ? (

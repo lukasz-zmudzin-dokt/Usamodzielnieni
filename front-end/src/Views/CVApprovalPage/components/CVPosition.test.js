@@ -4,7 +4,7 @@ import { MemoryRouter, Router } from "react-router-dom";
 import CVPosition from "./CVPosition";
 import { UserContext } from "context/UserContext";
 import { createMemoryHistory } from "history";
-import { staffTypes } from "constants/routes";
+import { staffTypes } from "constants/staffTypes";
 import proxy from "config/api";
 import { userTypes } from "constants/userTypes";
 
@@ -48,9 +48,6 @@ describe("CVPosition", () => {
           resolve({ status: 500 });
         }
         switch (init.method) {
-          case "POST":
-            resolve({ status: 200 });
-            break;
           case "GET":
             resolve({
               status: 200,
@@ -93,34 +90,15 @@ describe("CVPosition", () => {
     });
   });
 
-  it("should call acceptCV when asked to", async () => {
-    const { getByText } = render(
-      <MemoryRouter>
-        <CVPosition cv={apiCV} />
-      </MemoryRouter>
-    );
-    await waitForElement(() => getByText("Jarek"));
-    fireEvent.click(getByText("Akceptuj"));
-
-    await expect(fetch).toHaveBeenCalledWith(
-      proxy.cv + "admin/verification/0/",
-      {
-        headers: {
-          Authorization: "token undefined",
-          "Content-Type": "application/json",
-        },
-        method: "POST",
-      }
-    );
-  });
-
   it("should redirect to cv feedback", async () => {
     const { history, getByText } = renderWithRouter(<CVPosition cv={apiCV} />);
 
     await waitForElement(() => getByText("Jarek"));
     fireEvent.click(getByText("Zgłoś poprawki", { exact: false }));
 
-    expect(history.location.pathname).toEqual("/cvEditor/0", { exact: false });
+    expect(history.location.pathname).toEqual("/cvCorrection/0", {
+      exact: false,
+    });
   });
 
   it("should return cv url from api", async () => {
@@ -137,21 +115,10 @@ describe("CVPosition", () => {
         method: "GET",
       })
     );
-    expect(open).toHaveBeenCalledWith(proxy.plain + "/media/cv/0", "_blank");
-  });
-
-  it("should render danger alert on api fail", async () => {
-    failFetch = true;
-    const { getByText } = render(
-      <MemoryRouter>
-        <CVPosition cv={apiCV} />
-      </MemoryRouter>
+    expect(global.open).toHaveBeenCalledWith(
+      proxy.plain + "/media/cv/0",
+      "_blank"
     );
-    await waitForElement(() => getByText("Jarek"));
-    fireEvent.click(getByText("Akceptuj"));
-
-    await waitForElement(() => getByText("Wystąpił błąd", { exact: false }));
-    expect(getByText("Wystąpił błąd", { exact: false })).toBeInTheDocument();
   });
 
   it("should return alert on cv url fetch from failing api", async () => {

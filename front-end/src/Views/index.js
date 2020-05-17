@@ -21,6 +21,8 @@ import MessagesList from "Views/MessagesList";
 import Chats from "Views/Chats";
 import UserList from "Views/UserList/UserList";
 import OfferApprovalPage from "Views/OfferApprovalPage";
+import PasswordResetPrompt from "Views/PasswordResetPrompt";
+import NewPasswordPage from "Views/NewPasswordPage";
 
 export {
   UserProfilePage,
@@ -30,6 +32,8 @@ export {
   CVEditorPage,
   Footer,
   Menu,
+  PasswordResetPrompt,
+  NewPasswordPage,
   OfferForm,
   ContactPage,
   MyOffersPage,

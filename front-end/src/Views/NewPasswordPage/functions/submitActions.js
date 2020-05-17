@@ -1,12 +1,13 @@
 import proxy from "config/api";
 
-export const getUserCVs = async (token) => {
-  const res = await fetch(proxy.cv + "user/list/", {
-    method: "GET",
+export const handlePasswordChange = async (object) => {
+  const url = proxy.account + "password_reset/confirm/";
+  const res = await fetch(url, {
+    method: "POST",
     headers: {
-      Authorization: "token " + token,
       "Content-Type": "application/json",
     },
+    body: JSON.stringify(object),
   });
 
   if (res.status === 200) {

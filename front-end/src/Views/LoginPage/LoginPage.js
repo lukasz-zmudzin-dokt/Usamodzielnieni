@@ -121,6 +121,7 @@ class LoginPage extends React.Component {
               </Alert>
             ) : null}
             <div className="loginPage__links">
+              <Link to="/newPassword">Zapomniałeś hasła?</Link>
               <Link to="/newAccount">Załóż konto!</Link>
               {renderRedirect()}
             </div>
