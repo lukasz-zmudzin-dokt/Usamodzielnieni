@@ -42,6 +42,8 @@ class ItemsList extends React.Component {
   render() {
     const { data, getItemId, getItemName, children } = this.props;
 
+    if (data === null) return null;
+
     const msg = this.props.required && this.props.validated && !data.length && (
       <Alert variant="danger">Lista nie może być pusta.</Alert>
     );
