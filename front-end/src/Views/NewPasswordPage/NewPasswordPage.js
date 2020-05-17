@@ -13,7 +13,6 @@ class NewPasswordPage extends React.Component {
       password: "",
       passwordR: "",
       validated: false,
-      message: "",
       redirect: false,
       disabled: false,
     };
@@ -50,7 +49,6 @@ class NewPasswordPage extends React.Component {
     const form = e.currentTarget;
     this.setState({
       disabled: true,
-      message: "",
     });
     if (form.checkValidity() === false || password !== passwordR) {
       this.props.alertContext.showAlert("Hasła się nie zgadzają");
@@ -84,7 +82,7 @@ class NewPasswordPage extends React.Component {
   };
 
   render() {
-    const { password, passwordR, validated, message, disabled } = this.state;
+    const { password, passwordR, validated, disabled } = this.state;
     const { handleBlur, handleSubmit, renderRedirect } = this;
     return (
       <Container className="loginPage">
@@ -100,7 +98,6 @@ class NewPasswordPage extends React.Component {
                   type="password"
                   placeholder="Nowe hasło"
                   required
-                  isInvalid={message !== ""}
                   value={password}
                   onChange={handleBlur}
                   minLength="8"
@@ -112,14 +109,10 @@ class NewPasswordPage extends React.Component {
                   type="password"
                   placeholder="Powtórz hasło"
                   required
-                  isInvalid={message !== ""}
                   value={passwordR}
                   onChange={handleBlur}
                   minLength="8"
                 />
-                <Form.Control.Feedback type="invalid">
-                  {message}
-                </Form.Control.Feedback>
               </Form.Group>
               <Button
                 variant="primary"

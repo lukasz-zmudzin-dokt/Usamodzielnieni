@@ -7,10 +7,6 @@ import proxy from "config/api";
 
 describe("BlogPage", () => {
   let contextA = {
-    open: true,
-    changeVisibility: jest.fn(),
-    message: "abc",
-    changeMessage: jest.fn(),
     showAlert: jest.fn(),
   };
   let failFetch;

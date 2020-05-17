@@ -94,6 +94,8 @@ describe("MyOffers", () => {
       </MemoryRouter>
     );
     await waitForElement(() => getByText("standard1 standard1"));
+
+    expect(container).toMatchSnapshot();
   });
 
   it("should display an error", async () => {
