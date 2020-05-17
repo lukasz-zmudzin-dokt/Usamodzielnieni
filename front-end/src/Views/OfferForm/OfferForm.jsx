@@ -228,9 +228,11 @@ const OfferForm = () => {
               </Button>
             </Row>
           </Form>
-          <Row className="w-100 justify-content-center align-items-center ml-0 mb-0 mt-3">
-            {msg}
-          </Row>
+          {msg && (
+            <Row className="w-100 justify-content-center align-items-center ml-0 mb-0 mt-3">
+              {msg}
+            </Row>
+          )}
         </Card.Body>
       </Card>
     </Container>
