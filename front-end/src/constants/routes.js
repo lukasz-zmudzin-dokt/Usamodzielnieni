@@ -208,6 +208,8 @@ export default [
     isPrivate: true,
     type: userTypes.STAFF,
     group: staffTypes.VERIFICATION,
+  },
+  {
     path: paths.PASSWORD_RESET,
     component: PasswordResetPrompt,
     type: undefined,

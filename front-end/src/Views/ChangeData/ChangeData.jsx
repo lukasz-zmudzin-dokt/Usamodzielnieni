@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { FormGroup } from "components";
 import { Form, Card, Button, Container, Row, Alert } from "react-bootstrap";
 import { getUserData, sendFixedData } from "./functions/changeData";
 import { useHistory, useParams } from "react-router-dom";
-import { UserContext } from "context";
+import { UserContext, AlertContext } from "context";
 import { FacilityForm, CompanyForm } from "./components";
 
 const ChangeData = () => {
@@ -25,6 +25,7 @@ const ChangeData = () => {
   const history = useHistory();
   const { id } = useParams();
   const user = useContext(UserContext);
+  const alertC = useRef(useContext(AlertContext));
 
   const backToList = () => {
     history.push("/userList");
@@ -53,8 +54,14 @@ const ChangeData = () => {
     e.preventDefault();
     try {
       await sendFixedData(user.token, id, data);
+      alertC.current.showAlert(
+        "Udało się przesłać poprawione dane.",
+        "success"
+      );
       return history.push("/userList");
-    } catch (err) {}
+    } catch (err) {
+      alertC.current.showAlert("Nie udało się przesłać danych.");
+    }
   };
 
   return (
