@@ -61,13 +61,13 @@ class UserProfilePage extends React.Component {
         },
       });
     } catch (res) {
-      this.setState({ err: true });
+      this.setState({ error: true });
     }
   };
 
   setMessage = () => {
     return (
-      this.state.err && (
+      this.state.error && (
         <Alert variant="danger">Wystąpił błąd podczas pobierania</Alert>
       )
     );

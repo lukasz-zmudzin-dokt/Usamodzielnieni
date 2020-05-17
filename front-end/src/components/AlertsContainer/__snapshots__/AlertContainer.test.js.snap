@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`AlertMessage should match snapshot(open = false) 1`] = `<div />`;
+exports[`AlertsContainer should match snapshot(open = false) 1`] = `<div />`;
 
-exports[`AlertMessage should match snapshot(open = true) 1`] = `
+exports[`AlertsContainer should match snapshot(open = true) 1`] = `
 <div>
   <div>
     AlertMock

@@ -5,7 +5,7 @@ import { AlertContext } from "context";
 
 jest.mock("../AlertMessage");
 
-describe("AlertMessage", () => {
+describe("AlertsContainer", () => {
   let alertC = {
     open: true,
   };
