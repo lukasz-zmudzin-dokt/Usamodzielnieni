@@ -34,8 +34,8 @@ const BlogPost = () => {
   const [post, setPost] = useState(null);
   const [isPostLoading, setIsPostLoading] = useState(false);
   const user = useContext(UserContext);
+  const [error, setError] = useState(false);
   const post_Id = window.location.pathname.replace(/\/blog\/blogpost\//, "");
-  const [err, setErr] = useState(false);
   const setComments = (comments) => setPost({ ...post, comments });
 
   useEffect(() => {
@@ -47,7 +47,7 @@ const BlogPost = () => {
       } catch (e) {
         console.log(e);
         loadedPost = null;
-        setErr(true);
+        setError(true);
       }
       setPost(loadedPost);
       setIsPostLoading(false);
@@ -55,14 +55,14 @@ const BlogPost = () => {
     loadPost(post_Id);
   }, [post_Id]);
 
-  const msg = isPostLoading ? (
-    <Alert variant="info">Ładowanie zawartości bloga...</Alert>
-  ) : err ? (
+  const msg = error ? (
     <Alert variant="danger">
       Wystąpił błąd podczas wczytywania zawartości bloga.
     </Alert>
+  ) : isPostLoading ? (
+    <Alert variant="info">Ładowanie zawartości bloga...</Alert>
   ) : (
-    !post
+    !post && <Alert>null</Alert>
   );
 
   return msg ? (

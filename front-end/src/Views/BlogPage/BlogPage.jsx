@@ -47,7 +47,7 @@ const BlogPage = () => {
         <Card.Header as="h2">Blogi</Card.Header>
         <Filter setFilter={setFilter} count={count} />
         {msg ? (
-            <Card.Body>msg</Card.Body>
+          <Card.Body>msg</Card.Body>
         ) : (
           <CardColumns className="ml-3 mr-3">
             {posts.map((data) => (

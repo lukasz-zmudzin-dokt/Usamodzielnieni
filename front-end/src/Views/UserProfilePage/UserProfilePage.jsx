@@ -8,11 +8,10 @@ import AdminRegisterButton from "./components/AdminRegisterButton/AdminRegisterB
 import CVApprovalButton from "./components/CVApprovalButton/CVApprovalButton";
 import EmployerMyOffersButton from "./components/EmployerMyOffersButton/EmployerMyOffersButton";
 import AdminApproveUserButton from "./components/AdminApproveUserBuuton/AdminApproveUserButton";
-import { WithAlertContext } from "components";
 import UserListButton from "./components/UserListButton/UserListButton";
 import AdminOfferApprovalButton from "./components/AdminOfferApprovalButton/AdminOfferApprovalButton";
-import {userTypes} from "constants/userTypes";
-import {userStatuses} from "constants/userStatuses";
+import { userTypes } from "constants/userTypes";
+import { userStatuses } from "constants/userStatuses";
 
 const names = {
   role: {
@@ -35,13 +34,13 @@ class UserProfilePage extends React.Component {
     super(props);
     this.state = {
       user: {
-        username: "...",
-        role: "...",
-        firstName: "...",
-        lastName: "...",
-        email: "...",
-        err: false,
+        username: "",
+        role: "",
+        firstName: "",
+        lastName: "",
+        email: "",
       },
+      error: false,
     };
   }
 
@@ -82,7 +81,11 @@ class UserProfilePage extends React.Component {
             <h3>Mój profil</h3>
           </Card.Header>
           <Card.Body>
-            <UserBasicInfo user={this.state.user} names={names} />
+            <UserBasicInfo
+              error={this.state.error}
+              user={this.state.user}
+              names={names}
+            />
           </Card.Body>
           <UserDetails user={this.state.user} names={names} />
           <Card.Body className="text-center">
@@ -92,10 +95,14 @@ class UserProfilePage extends React.Component {
             <AdminRegisterButton user={this.context} />
             <AdminApproveUserButton user={this.context} />
             <AdminOfferApprovalButton user={this.context} />
-            {this.context.type !== userTypes.STAFF && this.context.data && this.context.data.status !== userStatuses.VERIFIED ?
-              <Alert variant="info">Nie masz jeszcze dostępu do wszystkich funkcji aplikacji. Poczekaj na weryfikację swojego konta.</Alert> :
-                null
-            }
+            {this.context.type !== userTypes.STAFF &&
+            this.context.data &&
+            this.context.data.status !== userStatuses.VERIFIED ? (
+              <Alert variant="info">
+                Nie masz jeszcze dostępu do wszystkich funkcji aplikacji.
+                Poczekaj na weryfikację swojego konta.
+              </Alert>
+            ) : null}
             <UserListButton user={this.context} />
           </Card.Body>
         </Card>
@@ -106,4 +113,4 @@ class UserProfilePage extends React.Component {
 
 UserProfilePage.contextType = UserContext;
 
-export default WithAlertContext(UserProfilePage);
+export default UserProfilePage;

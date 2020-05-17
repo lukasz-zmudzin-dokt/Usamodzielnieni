@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Container, Tab, Tabs, Alert } from "react-bootstrap";
+import { Card, Container, Tab, Tabs } from "react-bootstrap";
 import "react-datepicker/dist/react-datepicker.css";
 import {
   PersonalDataTab,
@@ -7,14 +7,14 @@ import {
   WorkExperienceTab,
   LanguagesTab,
   SkillsTab,
-  PhotoTab
+  PhotoTab,
 } from "./components";
-import { UserContext} from "context";
+import { UserContext } from "context";
 
 import { sendData, getFeedback } from "Views/CVEditorPage/functions/other.js";
 import { createCVObject } from "Views/CVEditorPage/functions/createCVObject.js";
 import { withRouter } from "react-router-dom";
-import {WithAlertContext} from 'components'
+import { WithAlertContext } from "components";
 
 class CVEditorPage extends React.Component {
   constructor(props) {
@@ -22,7 +22,11 @@ class CVEditorPage extends React.Component {
     this.state = {
       formTab: "personalData",
       tabs: {
-        personalData: { data: null, refValue: React.createRef(), comments: undefined },
+        personalData: {
+          data: null,
+          refValue: React.createRef(),
+          comments: undefined,
+        },
         education: { data: null, comments: undefined },
         workExperience: { data: null, comments: undefined },
         skills: { data: null, comments: undefined },
@@ -33,45 +37,45 @@ class CVEditorPage extends React.Component {
       commentsError: false,
       showComments: true,
       disabled: false,
-      validated: false
+      validated: false,
     };
     this.tabs = [];
   }
 
   onPrevClick = () => {
     const { formTab } = this.state;
-    const tabIndex = this.tabs.findIndex(tab => tab.id === formTab);
+    const tabIndex = this.tabs.findIndex((tab) => tab.id === formTab);
     this.setState({ formTab: this.tabs[tabIndex - 1].id });
   };
 
   onNextClick = () => {
     const { formTab } = this.state;
-    const tabIndex = this.tabs.findIndex(tab => tab.id === formTab);
+    const tabIndex = this.tabs.findIndex((tab) => tab.id === formTab);
     this.setState({ formTab: this.tabs[tabIndex + 1].id });
   };
 
   checkValidity = () => {
     const { tabs } = this.state;
     if (tabs.personalData.refValue.current.checkValidity() === false) {
-      this.setState({ formTab: 'personalData' })
+      this.setState({ formTab: "personalData" });
       return false;
     }
     if (!tabs.education.data?.length) {
-      this.setState({ formTab: 'education' })
+      this.setState({ formTab: "education" });
       return false;
     }
     if (!tabs.skills.data?.length) {
-      this.setState({ formTab: 'skills' })
+      this.setState({ formTab: "skills" });
       return false;
     }
     if (!tabs.languages.data?.length) {
-      this.setState({ formTab: 'languages' })
+      this.setState({ formTab: "languages" });
       return false;
     }
     return true;
-  }
+  };
 
-  handleCVSubmit = async e => {
+  handleCVSubmit = async (e) => {
     this.setState({ disabled: true, validated: true });
     e.preventDefault();
     const validity = this.checkValidity();
@@ -87,9 +91,11 @@ class CVEditorPage extends React.Component {
         this.state.tabs.languages.data
       );
       try {
-        await sendData(cv, this.state.tabs.photo.data, this.context.token).then(() =>
-          this.setState({ disabled: false })
-        );
+        await sendData(
+          cv,
+          this.state.tabs.photo.data,
+          this.context.token
+        ).then(() => this.setState({ disabled: false }));
       } catch (e) {
         this.setState({ disabled: false });
         this.props.alertContext.showAlert("Nie udało się wysłać CV");
@@ -98,17 +104,18 @@ class CVEditorPage extends React.Component {
   };
 
   getTabs = () => {
-    const getTabProps = key => ({
+    const getTabProps = (key) => ({
       ...this.state.tabs[key],
-      onChange: data => this.setState(prevState => ({ 
-        tabs: { ...prevState.tabs, [key]: { ...prevState.tabs[key], data } }
-      })),
+      onChange: (data) =>
+        this.setState((prevState) => ({
+          tabs: { ...prevState.tabs, [key]: { ...prevState.tabs[key], data } },
+        })),
       onPrevClick: this.onPrevClick,
       onNextClick: this.onNextClick,
       loading: this.state.loading,
       error: this.state.commentsError,
       showComments: this.state.showComments,
-      validated: this.state.validated
+      validated: this.state.validated,
     });
     return [
       {
@@ -119,27 +126,27 @@ class CVEditorPage extends React.Component {
             {...getTabProps("personalData")}
             onPrevClick={undefined}
           />
-        )
+        ),
       },
       {
         id: "education",
         name: "Edukacja",
-        component: <EducationTab {...getTabProps("education")} />
+        component: <EducationTab {...getTabProps("education")} />,
       },
       {
         id: "workExperience",
         name: "Doświadczenie zawodowe",
-        component: <WorkExperienceTab {...getTabProps("workExperience")} />
+        component: <WorkExperienceTab {...getTabProps("workExperience")} />,
       },
       {
         id: "skills",
         name: "Umiejętności",
-        component: <SkillsTab {...getTabProps("skills")} />
+        component: <SkillsTab {...getTabProps("skills")} />,
       },
       {
         id: "languages",
         name: "Języki obce",
-        component: <LanguagesTab {...getTabProps("languages")} />
+        component: <LanguagesTab {...getTabProps("languages")} />,
       },
       {
         id: "photo",
@@ -151,8 +158,8 @@ class CVEditorPage extends React.Component {
             onSubmit={this.handleCVSubmit}
             disabled={this.state.disabled}
           />
-        )
-      }
+        ),
+      },
     ];
   };
 
@@ -161,32 +168,32 @@ class CVEditorPage extends React.Component {
     if (cvId) {
       this.setState({ loading: true });
       getFeedback(this.context.token, this.props.match.params.id)
-        .then(res => {
+        .then((res) => {
           const setTabComments = (key, comments) => {
-            this.setState(prevState => ({
+            this.setState((prevState) => ({
               tabs: {
                 ...prevState.tabs,
-                [key]: { ...prevState.tabs[key], comments }
-              }
-            }))
-          }
-          setTabComments('personalData', res.basic_info);
-          setTabComments('education', res.schools);
-          setTabComments('workExperience', res.experiences);
-          setTabComments('skills', res.skills);
-          setTabComments('languages', res.languages);
-          setTabComments('photo', res.additional_info);
+                [key]: { ...prevState.tabs[key], comments },
+              },
+            }));
+          };
+          setTabComments("personalData", res.basic_info);
+          setTabComments("education", res.schools);
+          setTabComments("workExperience", res.experiences);
+          setTabComments("skills", res.skills);
+          setTabComments("languages", res.languages);
+          setTabComments("photo", res.additional_info);
           this.setState({
             loading: false,
-            commentsError: false
+            commentsError: false,
           });
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
           this.setState({
             loading: false,
           });
-          this.props.alertContext.showAlert("Nie udało się załadować uwag.")
+          this.props.alertContext.showAlert("Nie udało się załadować uwag.");
         });
     } else {
       this.setState({ showComments: false });
@@ -201,18 +208,18 @@ class CVEditorPage extends React.Component {
         <Card>
           <Card.Header as="h2">Kreator CV</Card.Header>
           <Card.Body>
-              <Tabs
-                transition={false}
-                activeKey={this.state.formTab}
-                onSelect={e => this.setState({ formTab: e })}
-                className="CVEditorPage_tabs mb-1" // https://github.com/react-bootstrap/react-bootstrap/issues/4771
-              >
-                {this.tabs.map(tab => (
-                  <Tab eventKey={tab.id} key={tab.id} title={tab.name}>
-                    {tab.component}
-                  </Tab>
-                ))}
-              </Tabs>
+            <Tabs
+              transition={false}
+              activeKey={this.state.formTab}
+              onSelect={(e) => this.setState({ formTab: e })}
+              className="CVEditorPage_tabs mb-1" // https://github.com/react-bootstrap/react-bootstrap/issues/4771
+            >
+              {this.tabs.map((tab) => (
+                <Tab eventKey={tab.id} key={tab.id} title={tab.name}>
+                  {tab.component}
+                </Tab>
+              ))}
+            </Tabs>
           </Card.Body>
         </Card>
       </Container>

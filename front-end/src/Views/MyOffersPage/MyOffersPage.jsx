@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Accordion, Alert, Card, Container } from "react-bootstrap";
-import { UserContext } from "context";
+import { UserContext } from "context/UserContext";
 import { getMyOffers } from "./functions/apiCalls";
 import MyOffer from "./components/MyOffer";
 
@@ -8,8 +8,8 @@ const MyOffersPage = () => {
   const context = useContext(UserContext);
   const [offers, setOffers] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
   const [activeOffer, setActiveOffer] = useState("");
-  const [err, setErr] = useState(false);
 
   useEffect(() => {
     const loadOffers = async (token, setOffers) => {
@@ -20,8 +20,7 @@ const MyOffersPage = () => {
           setOffers(res.results);
         }
       } catch (err) {
-        console.log(err);
-        setErr(true);
+        setError(true);
       }
       setLoading(false);
     };
@@ -32,8 +31,10 @@ const MyOffersPage = () => {
     <Alert variant="info" className="m-3">
       Ładuję...
     </Alert>
-  ) : err ? (
-    <Alert variant="danger">Nie udało się załadować ofert.</Alert>
+  ) : error ? (
+    <Alert variant="danger" className="m-3">
+      Nie udało się załadować ofert.
+    </Alert>
   ) : offers.length === 0 ? (
     <Alert variant="info" className="m-3">
       Brak ofert
