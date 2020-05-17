@@ -8,31 +8,31 @@ import { IndexLinkContainer } from "react-router-bootstrap";
 import { WithAlertContext } from "components";
 
 class MyCVsPage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      cvs: [],
-      errors: false,
-      loading: true,
-      delError: false,
-    };
-  }
+    constructor(props) {
+        super(props);
+        this.state = {
+            cvs: [],
+            errors: false,
+            loading: true,
+            delError: false
+        };
+    }
 
-  componentDidMount() {
-    getUserCVs(this.context.token).then((response) => {
-      if (response.status === "200:OK") {
-        this.setState({
-          cvs: response.result,
-          loading: false,
-        });
-      } else {
-        this.setState({
-          loading: false,
-          errors: true,
-        });
-      }
-    });
-  }
+    getCVs = async () => {
+        try {
+            const res = await getUserCVs(this.context.token);
+            this.setState({cvs: res});
+        } catch (e) {
+            console.log(e);
+            this.setState({errors: true});
+        } finally {
+            this.setState({loading: false})
+        }
+    };
+
+    componentDidMount() {
+        this.getCVs();
+    };
 
   cutItem = async (cvId) => {
     let deleted;

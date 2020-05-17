@@ -6,6 +6,7 @@ import { getCVUrl } from "../functions/getCVUrl";
 import proxy from "config/api";
 import { AlertContext } from "context";
 import { DeletionModal } from "components";
+import ChangeCVNameModal from "./ChangeCVNameModal.jsx";
 
 const showCV = async (cvId, alertC, token) => {
   let r;
@@ -25,6 +26,7 @@ const CVSection = ({ cv, token, cutCV }) => {
   const alertC = useRef(useContext(AlertContext));
   const [deletionConfirmed, setDeletionConfirmed] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [showChangeNameModal, setShowChangeNameModal] = useState(false);
 
   const handleDeletion = async () => {
     setDeletionConfirmed(false);
@@ -33,6 +35,13 @@ const CVSection = ({ cv, token, cutCV }) => {
     if (res === false) {
       setDisabled(false);
     }
+  };
+
+  const setCVNewName = (CVNewName) => {
+    cv.name = CVNewName;
+  };
+  const showCVNewNameModal = () => {
+    setShowChangeNameModal(true);
   };
 
   const handleOnClick = () => {
@@ -49,22 +58,31 @@ const CVSection = ({ cv, token, cutCV }) => {
         delConfirmed={setDeletionConfirmed}
         question={"Czy na pewno chcesz usunąć to CV?"}
       />
+      <ChangeCVNameModal
+        show={showChangeNameModal}
+        setShow={setShowChangeNameModal}
+        cvId={cv.cv_id}
+        setCVNewName={setCVNewName}
+      />
       <Row className="d-flex align-items-center">
-        <Col xs={12} md={5}>
+        <Col xs={12} md={4}>
           {cv.name}
         </Col>
-        <Col xs={4} md={3}>
+        <Col xs={12} md={2}>
           <CVStatus
             was_reviewed={cv.was_reviewed}
             is_verified={cv.is_verified}
           />
         </Col>
-        <Col xs={8} md={4} className="text-right">
+        <Col xs={12} md={6} className="text-right">
           <Button
             variant="primary"
             onClick={(e) => showCV(cv.cv_id, alertC, token)}
           >
             Zobacz CV
+          </Button>
+          <Button variant="info" onClick={showCVNewNameModal} className="m-1">
+            Zmień nazwę
           </Button>
           <IndexLinkContainer to={"/cvEditor/" + cv.cv_id}>
             <Button variant="info" className="mx-2">

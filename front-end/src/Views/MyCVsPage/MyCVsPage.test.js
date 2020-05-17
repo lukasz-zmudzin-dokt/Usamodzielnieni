@@ -162,6 +162,8 @@ describe("MyCVsPage", () => {
     expect(getByText("jeden")).toBeInTheDocument();
 
     fireEvent.click(getByText("Usuń CV"));
+    await waitForElement(() => getByText("Czy na pewno chcesz usunąć to CV?"));
+    fireEvent.click(getByText("Usuń ✗"));
 
     await waitForElementToBeRemoved(() => getByText("jeden"));
     await expect(queryByText("jeden")).not.toBeInTheDocument();
@@ -186,7 +188,8 @@ describe("MyCVsPage", () => {
     expect(getByText("jeden")).toBeInTheDocument();
     failFetch = true;
     fireEvent.click(getByText("Usuń CV"));
-
+    await waitForElement(() => getByText("Czy na pewno chcesz usunąć to CV?"));
+    fireEvent.click(getByText("Usuń ✗"));
     const cv = await waitForElement(() => queryByText("jeden"));
     await wait(() => expect(alertC.showAlert).toHaveBeenCalled());
     expect(cv).not.toBeNull();
