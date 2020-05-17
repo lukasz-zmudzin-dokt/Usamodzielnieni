@@ -6,10 +6,8 @@ import { UserContext } from "context";
 const VideoField = ({ url, id }) => {
   const [videoID, setVideoID] = useState("");
   const user = useContext(UserContext);
-  console.log(user);
 
   useEffect(() => {
-    console.log(url);
     const search = url.lastIndexOf("=");
     setVideoID(url.slice(search + 1));
   }, [url]);
