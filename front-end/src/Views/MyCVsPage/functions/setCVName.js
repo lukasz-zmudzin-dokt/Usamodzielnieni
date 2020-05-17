@@ -16,7 +16,7 @@ export const setCVName = async (token, cvId, cvName) => {
     body: JSON.stringify(data),
   });
   if (response.status === 200) {
-    return await response.json();
+    return true;
   } else {
     throw response.status;
   }

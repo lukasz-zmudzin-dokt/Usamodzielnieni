@@ -6,7 +6,7 @@ import proxy from "config/api";
 
 describe('ChangeCVNameModal', () => {
     let failFetch;
-    let setName = jest.fn(() => Promise.resolve());
+    let setCVNewName = jest.fn(() => Promise.resolve());
 
     beforeAll(() => {
         global.setShow = jest.fn();
@@ -26,18 +26,17 @@ describe('ChangeCVNameModal', () => {
         jest.clearAllMocks();
     });
 
-    it('changes CV Name and it works (wow)', async () => {
+    it('should change cv name', async () => {
         const { getByText, getByPlaceholderText } = render (
-            <ChangeCVNameModal show={true} setCVNewName={setName} cvId={11111111} setShow={setShow} />
+            <ChangeCVNameModal show={true} setCVNewName={setCVNewName} cvId={11111111} setShow={setShow} />
         );
+        await waitForElement(() => getByPlaceholderText("Nowa nazwa CV"));
 
-        await waitForElement(() => getByText("Zmień nazwę"));
         fireEvent.change(getByPlaceholderText("Nowa nazwa CV"), {
             target: { value: "test" },
         });
 
-        fireEvent.click(getByText("Zmień nazwę"));
-        expect(getByPlaceholderText("Nowa nazwa CV").value).toBe("test");
+        fireEvent.click(getByText("Zmień nazwę", {exact: true}));
 
         expect(fetch).toHaveBeenCalledWith(
             proxy.cv + "name/11111111/", {
@@ -49,12 +48,17 @@ describe('ChangeCVNameModal', () => {
                 "method": "PUT"
             }
         );
+
         await waitForElement(() => getByText("Pomyślnie zmieniono nazwę CV."));
+
         expect(getByText("Pomyślnie zmieniono nazwę CV.")).toBeInTheDocument();
-        expect(setName).toHaveBeenCalled();
+        expect(setCVNewName).toHaveBeenCalled();
+
     });
 
     it('changes CV Name and it does not work (api fail)', async () => {
+
+        failFetch = true;
         const { getByText, getByPlaceholderText } = render (
             <MemoryRouter>
                 <ChangeCVNameModal show={true} setCVNewName={e => {}} cvId={11111111} setShow={setShow} />
@@ -71,8 +75,8 @@ describe('ChangeCVNameModal', () => {
 
         expect(fetch).toHaveBeenCalledTimes(1);
 
-        await waitForElement(() => getByText("Wystąpił błąd", {exact: false}));
-        expect(getByText("Wystąpił błąd", {exact: false})).toBeInTheDocument();
+        await waitForElement(() => getByText("Wystąpił błąd podczas próby zmiany nazwy CV."));
+        expect(getByText("Wystąpił błąd podczas próby zmiany nazwy CV.")).toBeInTheDocument();
     });
 
     it('closes modal when not wanting to change cv name', async () => {

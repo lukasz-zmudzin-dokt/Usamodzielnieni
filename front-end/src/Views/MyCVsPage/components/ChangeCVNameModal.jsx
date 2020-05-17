@@ -20,9 +20,9 @@ const ChangeCVNameModal = ({ show, setShow, cvId, setCVNewName }) => {
         setError(false);
     };
 
-    const changeCVName = async (e, cvName) => {
+    const changeCVName = async (e) => {
         e.preventDefault();
-        if (cvName === "") {
+        if (name === "") {
             setCorrect(false);
         } else {
             try {
