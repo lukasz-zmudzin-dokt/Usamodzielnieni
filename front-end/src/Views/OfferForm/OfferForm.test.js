@@ -9,7 +9,7 @@ import { Router } from "react-router-dom";
 import { MemoryRouter } from "react-router-dom";
 import OfferForm from "Views/OfferForm";
 import { createMemoryHistory } from "history";
-import { UserContext } from "context";
+import { UserContext, AlertContext } from "context";
 import proxy from "config/api";
 
 jest.mock("react-router-dom", () => ({
@@ -39,10 +39,19 @@ const renderWithRouter = (
       },
     },
   };
+  let contextA = {
+    open: true,
+    changeVisibility: jest.fn(),
+    message: "abc",
+    changeMessage: jest.fn(),
+    showAlert: jest.fn(),
+  };
   return {
     ...render(
       <UserContext.Provider value={context}>
-        <Router history={history}>{ui}</Router>
+        <AlertContext.Provider value={contextA}>
+          <Router history={history}>{ui}</Router>
+        </AlertContext.Provider>
       </UserContext.Provider>
     ),
     history,
@@ -55,6 +64,7 @@ describe("OfferForm", () => {
   let failPost;
   let failTypes;
   let context;
+  let contextA;
   let apiSelect = { offer_types: ["IT"], categories: ["xd"] };
   let apiOffer = {
     offer_name: "abc",
@@ -126,14 +136,19 @@ describe("OfferForm", () => {
         },
       },
     };
+    contextA = {
+      showAlert: jest.fn(),
+    };
   });
 
   it("renders correctly", async () => {
     const { container, getByText } = render(
       <UserContext.Provider value={context}>
-        <MemoryRouter>
-          <OfferForm />
-        </MemoryRouter>
+        <AlertContext.Provider value={contextA}>
+          <MemoryRouter>
+            <OfferForm />
+          </MemoryRouter>
+        </AlertContext.Provider>
       </UserContext.Provider>
     );
 
@@ -147,18 +162,19 @@ describe("OfferForm", () => {
 
     const { getByText } = render(
       <UserContext.Provider value={context}>
-        <MemoryRouter>
-          <OfferForm />
-        </MemoryRouter>
+        <AlertContext.Provider value={contextA}>
+          <MemoryRouter>
+            <OfferForm />
+          </MemoryRouter>
+        </AlertContext.Provider>
       </UserContext.Provider>
     );
-    await waitForElement(() => getByText("Dodaj"));
-
     await waitForElement(() =>
-      getByText("Nie udało się załadować danych", { exact: false })
+      getByText("Wystąpił błąd w trakcie ładowania formularza.")
     );
+
     expect(
-      getByText("Nie udało się załadować danych", { exact: false })
+      getByText("Wystąpił błąd w trakcie ładowania formularza.")
     ).toBeInTheDocument();
   });
 
@@ -167,27 +183,30 @@ describe("OfferForm", () => {
 
     const { getByText } = render(
       <UserContext.Provider value={context}>
-        <MemoryRouter>
-          <OfferForm />
-        </MemoryRouter>
+        <AlertContext.Provider value={contextA}>
+          <MemoryRouter>
+            <OfferForm />
+          </MemoryRouter>
+        </AlertContext.Provider>
       </UserContext.Provider>
     );
-    await waitForElement(() => getByText("Dodaj"));
-
     await waitForElement(() =>
-      getByText("Nie udało się załadować danych", { exact: false })
+      getByText("Wystąpił błąd w trakcie ładowania formularza.")
     );
+
     expect(
-      getByText("Nie udało się załadować danych", { exact: false })
+      getByText("Wystąpił błąd w trakcie ładowania formularza.")
     ).toBeInTheDocument();
   });
 
   it("should not use fetch when form isn't validated", async () => {
     const { getByPlaceholderText, getByText, getByLabelText } = render(
       <UserContext.Provider value={context}>
-        <MemoryRouter>
-          <OfferForm />
-        </MemoryRouter>
+        <AlertContext.Provider value={contextA}>
+          <MemoryRouter>
+            <OfferForm />
+          </MemoryRouter>
+        </AlertContext.Provider>
       </UserContext.Provider>
     );
 
@@ -283,9 +302,11 @@ describe("OfferForm", () => {
     failPost = true;
     const { getByPlaceholderText, getByText, getByLabelText } = render(
       <UserContext.Provider value={context}>
-        <MemoryRouter>
-          <OfferForm />
-        </MemoryRouter>
+        <AlertContext.Provider value={contextA}>
+          <MemoryRouter>
+            <OfferForm />
+          </MemoryRouter>
+        </AlertContext.Provider>
       </UserContext.Provider>
     );
 
@@ -317,9 +338,9 @@ describe("OfferForm", () => {
 
     await waitForElement(() => getByText("Dodaj"));
 
-    expect(
-      getByText("Nie udało się wysłać oferty. Błąd serwera.")
-    ).toBeInTheDocument();
+    expect(contextA.showAlert).toHaveBeenCalledWith(
+      "Nie udało się wysłać oferty. Błąd serwera."
+    );
   });
 
   it("should fulfill inputs if offer id is valid", async () => {

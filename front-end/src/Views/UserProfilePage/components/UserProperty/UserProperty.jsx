@@ -1,7 +1,7 @@
 import React from "react";
 import { Row, Col, ListGroupItem } from "react-bootstrap";
 
-const UserProperty = props => {
+const UserProperty = (props) => {
   const { names, property, user } = props;
   return (
     <ListGroupItem className="property">

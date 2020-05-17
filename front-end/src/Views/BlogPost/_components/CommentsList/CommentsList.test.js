@@ -1,13 +1,17 @@
 import React from "react";
-import { render, wait, waitForElement } from "@testing-library/react";
+import { render, wait } from "@testing-library/react";
 import CommentsList from "./CommentsList";
 import { CommentItem, CommentForm } from "../";
+import { AlertContext } from "context";
+import { userTypes } from "constants/userTypes";
 
 jest.mock("../");
 
 describe("CommentsList", () => {
   let props, failFetch;
-
+  let alertC = {
+    showAlert: jest.fn(),
+  };
   beforeEach(() => {
     jest.clearAllMocks();
 
@@ -38,7 +42,7 @@ describe("CommentsList", () => {
       comments: [{ id: "b1" }, { id: "b2" }, { id: "b3" }],
       setComments: jest.fn(),
       user: {
-        type: "Standard",
+        type: userTypes.STANDARD,
         data: {
           email: "mail@mail.pl",
           group_type: undefined,
@@ -68,13 +72,22 @@ describe("CommentsList", () => {
       return <div>CommentItem</div>;
     });
 
-    render(<CommentsList {...props} />);
+    render(
+      <AlertContext.Provider value={alertC}>
+        <CommentsList {...props} />
+      </AlertContext.Provider>
+    );
 
     await wait(() => expect(props.setComments).toHaveBeenCalledTimes(1));
     expect(props.setComments).toHaveBeenNthCalledWith(1, [
       { id: "b1" },
       { id: "b3" },
     ]);
+    await wait(() => expect(alertC.showAlert).toHaveBeenCalled());
+    expect(alertC.showAlert).toHaveBeenCalledWith(
+      "Pomyślnie usunięto komentarz.",
+      "success"
+    );
   });
 
   it("should render alert when api returns error status", async () => {
@@ -86,10 +99,14 @@ describe("CommentsList", () => {
       return <div>CommentItem</div>;
     });
 
-    const { getByText } = render(<CommentsList {...props} />);
+    render(
+      <AlertContext.Provider value={alertC}>
+        <CommentsList {...props} />
+      </AlertContext.Provider>
+    );
 
     const errorMsg = "Wystąpił błąd podczas usuwania komentarza.";
-    await waitForElement(() => getByText(errorMsg));
-    expect(getByText(errorMsg)).toBeInTheDocument();
+    await wait(() => expect(alertC.showAlert).toHaveBeenCalled());
+    expect(alertC.showAlert).toHaveBeenCalledWith(errorMsg);
   });
 });

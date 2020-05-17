@@ -19,8 +19,12 @@ import UserApprovalPage from "Views/UserApprovalPage";
 import CVCorrection from "Views/CVCorrection";
 import MessagesList from "Views/MessagesList";
 import Chats from "Views/Chats";
+import UserList from "Views/UserList/UserList";
 import OfferApprovalPage from "Views/OfferApprovalPage";
 import ChangeData from "Views/ChangeData";
+import PasswordResetPrompt from "Views/PasswordResetPrompt";
+import NewPasswordPage from "Views/NewPasswordPage";
+
 export {
   UserProfilePage,
   LoginPage,
@@ -29,6 +33,8 @@ export {
   CVEditorPage,
   Footer,
   Menu,
+  PasswordResetPrompt,
+  NewPasswordPage,
   OfferForm,
   ContactPage,
   MyOffersPage,
@@ -45,4 +51,5 @@ export {
   MessagesList,
   Chats,
   ChangeData,
+  UserList,
 };

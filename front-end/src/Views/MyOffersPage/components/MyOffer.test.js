@@ -1,10 +1,14 @@
 import React from "react";
-import { render, waitForElement, fireEvent } from "@testing-library/react";
+import { render, waitForElement, wait } from "@testing-library/react";
 import MyOffer from "./MyOffer";
 import { MemoryRouter } from "react-router-dom";
+import { AlertContext } from "context";
 
 describe("MyOffers", () => {
   let fetchType;
+  let alertC = {
+    showAlert: jest.fn(),
+  };
   let testOffer = {
     category: "IT",
     company_address: "adress1",
@@ -51,6 +55,29 @@ describe("MyOffers", () => {
     });
   });
 
+  beforeAll(() => {
+    global.fetch = jest.fn().mockImplementation((input, init) => {
+      return new Promise((resolve, reject) => {
+        switch (fetchType) {
+          case "fail":
+            resolve({ status: 500 });
+            break;
+          case "empty":
+            resolve({ status: 200, json: () => Promise.resolve([]) });
+            break;
+          case "answers":
+            resolve({ status: 200, json: () => Promise.resolve(apiPeople) });
+            break;
+          case "offer":
+            resolve({ status: 200, json: () => Promise.resolve(testOffer) });
+            break;
+          default:
+            reject([]);
+        }
+      });
+    });
+  });
+
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -73,23 +100,27 @@ describe("MyOffers", () => {
 
   it("should display an error", async () => {
     fetchType = "fail";
-    const { container, getByText } = render(
-      <MemoryRouter>
-        <MyOffer
-          offer={testOffer}
-          activeOffer={testOffer.id}
-          setActiveOffer={(e) => {}}
-        />
-      </MemoryRouter>
+    render(
+      <AlertContext.Provider value={alertC}>
+        <MemoryRouter>
+          <MyOffer
+            offer={testOffer}
+            activeOffer={testOffer.id}
+            setActiveOffer={(e) => {}}
+          />
+        </MemoryRouter>
+      </AlertContext.Provider>
     );
-    await waitForElement(() => getByText("Ups, wystąpił błąd..."));
+    await wait(() => expect(alertC.showAlert).toHaveBeenCalled());
 
-    expect(getByText("Ups, wystąpił błąd...")).toBeInTheDocument;
+    expect(alertC.showAlert).toHaveBeenCalledWith(
+      "Ups, wystąpił błąd. Nie udało się załadować aplikujących do oferty."
+    );
   });
 
   it("should fetch user data", async () => {
     fetchType = "answers";
-    const { container, getByText } = render(
+    const { getByText } = render(
       <MemoryRouter>
         <MyOffer
           offer={testOffer}
@@ -104,17 +135,23 @@ describe("MyOffers", () => {
 
   it("should display offer tab", async () => {
     fetchType = "fail";
-    const { container, getByText } = render(
-      <MemoryRouter>
-        <MyOffer
-          offer={testOffer}
-          activeOffer={testOffer.id}
-          setActiveOffer={(e) => {}}
-        />
-      </MemoryRouter>
+    const { getByText } = render(
+      <AlertContext.Provider value={alertC}>
+        <MemoryRouter>
+          <MyOffer
+            offer={testOffer}
+            activeOffer={testOffer.id}
+            setActiveOffer={(e) => {}}
+          />
+        </MemoryRouter>
+      </AlertContext.Provider>
     );
     await waitForElement(() => getByText("offer2"));
+    await wait(() => expect(alertC.showAlert).toHaveBeenCalled());
 
-    expect(getByText("offer2")).toBeInTheDocument;
+    expect(alertC.showAlert).toHaveBeenCalledWith(
+      "Ups, wystąpił błąd. Nie udało się załadować aplikujących do oferty."
+    );
+    expect(getByText("offer2")).toBeInTheDocument();
   });
 });

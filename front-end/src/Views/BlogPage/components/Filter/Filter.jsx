@@ -5,30 +5,29 @@ import { DEFAULT_INPUT } from "constants/other.js";
 import FormGroup from "components/FormGroup";
 import { UserContext } from "context";
 import { IndexLinkContainer } from "react-router-bootstrap";
-import {staffTypes} from "constants/staffTypes";
+import { staffTypes } from "constants/staffTypes";
+import { userTypes } from "constants/userTypes";
 
-const Filter = ({ token, setFilter, count }) => {
+const Filter = ({ setFilter, count }) => {
   const [filters, setFilters] = useState({ categories: [], tags: [] });
   const [category, setCategory] = useState(DEFAULT_INPUT);
   const [tag, setTag] = useState(DEFAULT_INPUT);
   const [err, setErr] = useState(false);
-
   const user = useContext(UserContext);
 
   useEffect(() => {
-    const loadOffers = async (token) => {
+    const loadOffers = async () => {
       let res;
       try {
-        res = await getFilters(token);
+        res = await getFilters();
       } catch (e) {
-        console.log(e);
         res = { categories: [], tags: [] };
         setErr(true);
       }
       setFilters(res);
     };
-    loadOffers(token);
-  }, [token]);
+    loadOffers();
+  }, []);
 
   const filter = (event) => {
     event.preventDefault();
@@ -93,7 +92,9 @@ const Filter = ({ token, setFilter, count }) => {
           Wyczyść filtry
         </Button>
       </div>
-      {user.type === "Staff" &&
+      {msg}
+      {user &&
+      user.type === userTypes.STAFF &&
       user.data.group_type.includes(staffTypes.BLOG_CREATOR) ? (
         <IndexLinkContainer as={Button} to="/blog/newPost">
           <Button variant="success" className="mt-2">
@@ -106,7 +107,6 @@ const Filter = ({ token, setFilter, count }) => {
           <small className="blog__countText">{`Ilość znalezionych postów: ${count}`}</small>
         )}
       </div>
-      {msg}
     </Form>
   );
 };
