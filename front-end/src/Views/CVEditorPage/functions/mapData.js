@@ -59,5 +59,5 @@ export const mapFeedback = (data) => ({
   workExperience: data.experiences,
   skills: data.skills,
   languages: data.languages,
-  photo: data.additional_info
+  photo: data.additional_info,
 });
