@@ -65,7 +65,7 @@ const Chats = () => {
     <Container>
       <Card>
         <Card.Header as="h2">Najnowsze wiadomości</Card.Header>
-        <VideoField url="https://www.youtube.com/watch?v=Qw4w9WgXcQ" />
+        <VideoField url="https://www.youtube.com/watch?v=dQw4w9WgXcQ" />
         {msg ? (
           <Card.Body className="chats__body">{msg}</Card.Body>
         ) : (
