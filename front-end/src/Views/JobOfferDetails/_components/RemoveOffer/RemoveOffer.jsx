@@ -34,11 +34,11 @@ const RemoveOffer = ({ id, user }) => {
         delConfirmed={setDeletionConfirmed}
         question={"Czy na pewno chcesz usunąć tę ofertę?"}
       />
-      {(
+      {
         <Button variant="danger" onClick={handleOnClick}>
           Usuń ofertę
         </Button>
-      )}
+      }
     </div>
   );
 };

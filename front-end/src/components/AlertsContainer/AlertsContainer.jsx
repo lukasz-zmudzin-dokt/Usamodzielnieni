@@ -5,12 +5,14 @@ import { AlertMessage } from "components";
 const AlertsContainer = () => {
   const context = useContext(AlertContext);
 
-  return context.open && (
-    <AlertMessage
-      message={context.message}
-      handleClose={context.changeVisibility}
-      variant={context.variant}
-    />
+  return (
+    context.open && (
+      <AlertMessage
+        message={context.message}
+        handleClose={context.changeVisibility}
+        variant={context.variant}
+      />
+    )
   );
 };
 
