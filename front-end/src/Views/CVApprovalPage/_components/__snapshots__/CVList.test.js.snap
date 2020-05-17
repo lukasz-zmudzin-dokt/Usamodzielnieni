@@ -57,31 +57,19 @@ exports[`CVList should match with snapshot with 2 cvs 1`] = `
           class="align-self-center d-flex justify-content-end col"
         >
           <button
-<<<<<<< HEAD:front-end/src/Views/CVApprovalPage/_components/__snapshots__/CVList.test.js.snap
-            class="btnDownload btn btn-primary m-1 p-1"
-=======
             class="btnDownload btn btn-primary m-1 btn-sm"
->>>>>>> master:front-end/src/Views/CVApprovalPage/components/__snapshots__/CVList.test.js.snap
             type="button"
           >
             Pokaż CV
           </button>
           <button
-<<<<<<< HEAD:front-end/src/Views/CVApprovalPage/_components/__snapshots__/CVList.test.js.snap
-            class="btnAccept btn btn-success m-1 p-1"
-=======
             class="btnAccept btn btn-success m-1 btn-sm"
->>>>>>> master:front-end/src/Views/CVApprovalPage/components/__snapshots__/CVList.test.js.snap
             type="button"
           >
             Akceptuj
           </button>
           <a
-<<<<<<< HEAD:front-end/src/Views/CVApprovalPage/_components/__snapshots__/CVList.test.js.snap
-            class="btnImprove btn btn-warning m-1 p-1"
-=======
             class="btnImprove btn btn-warning m-1 btn-sm"
->>>>>>> master:front-end/src/Views/CVApprovalPage/components/__snapshots__/CVList.test.js.snap
             href="/cvCorrection/0"
           >
             Zgłoś poprawki
@@ -141,31 +129,19 @@ exports[`CVList should match with snapshot with 2 cvs 1`] = `
           class="align-self-center d-flex justify-content-end col"
         >
           <button
-<<<<<<< HEAD:front-end/src/Views/CVApprovalPage/_components/__snapshots__/CVList.test.js.snap
-            class="btnDownload btn btn-primary m-1 p-1"
-=======
             class="btnDownload btn btn-primary m-1 btn-sm"
->>>>>>> master:front-end/src/Views/CVApprovalPage/components/__snapshots__/CVList.test.js.snap
             type="button"
           >
             Pokaż CV
           </button>
           <button
-<<<<<<< HEAD:front-end/src/Views/CVApprovalPage/_components/__snapshots__/CVList.test.js.snap
-            class="btnAccept btn btn-success m-1 p-1"
-=======
             class="btnAccept btn btn-success m-1 btn-sm"
->>>>>>> master:front-end/src/Views/CVApprovalPage/components/__snapshots__/CVList.test.js.snap
             type="button"
           >
             Akceptuj
           </button>
           <a
-<<<<<<< HEAD:front-end/src/Views/CVApprovalPage/_components/__snapshots__/CVList.test.js.snap
-            class="btnImprove btn btn-warning m-1 p-1"
-=======
             class="btnImprove btn btn-warning m-1 btn-sm"
->>>>>>> master:front-end/src/Views/CVApprovalPage/components/__snapshots__/CVList.test.js.snap
             href="/cvCorrection/1"
           >
             Zgłoś poprawki

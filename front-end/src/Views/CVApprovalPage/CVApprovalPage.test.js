@@ -1,5 +1,10 @@
 import React from "react";
-import { render, waitForElement, wait } from "@testing-library/react";
+import {
+  render,
+  waitForElement,
+  wait,
+  fireEvent,
+} from "@testing-library/react";
 import CVApprovalPage from "./CVApprovalPage";
 import { MemoryRouter } from "react-router-dom";
 import { AlertContext } from "context";
@@ -112,9 +117,11 @@ describe("CVApproval", () => {
   it("should hide cv on accept", async () => {
     apiCVs = [apiCVs[0]];
     const { getByText, queryByText } = render(
-      <MemoryRouter>
-        <CVApprovalPage />
-      </MemoryRouter>
+      <AlertContext.Provider value={contextA}>
+        <MemoryRouter>
+          <CVApprovalPage />
+        </MemoryRouter>
+      </AlertContext.Provider>
     );
 
     await waitForElement(() => getByText("Akceptuj"));
@@ -122,14 +129,22 @@ describe("CVApproval", () => {
     fireEvent.click(getByText("Akceptuj"));
     await waitForElementToBeRemoved(() => getByText("Jarek"));
     expect(queryByText("Jarek")).not.toBeInTheDocument();
+
+    await wait(() => expect(contextA.showAlert).toHaveBeenCalled());
+    expect(contextA.showAlert).toHaveBeenCalledWith(
+      "Pomyślnie zaakceptowano CV.",
+      "success"
+    );
   });
 
   it("should render alert on api fail while accepting", async () => {
     apiCVs = [apiCVs[0]];
     const { getByText, queryByText } = render(
-      <MemoryRouter>
-        <CVApprovalPage />
-      </MemoryRouter>
+      <AlertContext.Provider value={contextA}>
+        <MemoryRouter>
+          <CVApprovalPage />
+        </MemoryRouter>
+      </AlertContext.Provider>
     );
 
     await waitForElement(() => getByText("Akceptuj"));
@@ -139,5 +154,10 @@ describe("CVApproval", () => {
     fireEvent.click(getByText("Akceptuj"));
     const cv = await waitForElement(() => queryByText("Jarek"));
     expect(cv).not.toBe(null);
+
+    await wait(() => expect(contextA.showAlert).toHaveBeenCalled());
+    expect(contextA.showAlert).toHaveBeenCalledWith(
+      "Nie udało się zaakceptować użytkownika."
+    );
   });
 });

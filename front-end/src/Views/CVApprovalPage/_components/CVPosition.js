@@ -46,8 +46,8 @@ const CVPosition = (props) => {
       <Col className="align-self-center d-flex justify-content-end">
         <Button
           variant="primary m-1"
-          size="sm"
           className="btnDownload"
+          size="sm"
           onClick={(e) => showCV(e, context.token, cv.cv_id, alertC)}
         >
           Pokaż CV
@@ -61,7 +61,7 @@ const CVPosition = (props) => {
           Akceptuj
         </Button>
         <IndexLinkContainer to={`/cvCorrection/${cv.cv_id}`}>
-          <Button variant="warning m-1 p-1" className="btnImprove">
+          <Button variant="warning m-1" size="sm" className="btnImprove">
             Zgłoś poprawki
           </Button>
         </IndexLinkContainer>

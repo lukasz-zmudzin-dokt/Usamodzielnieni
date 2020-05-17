@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  render,
-  fireEvent,
-  wait,
-  waitForElement,
-} from "@testing-library/react";
+import { render, fireEvent, wait } from "@testing-library/react";
 import CommentForm from "./CommentForm";
 import { UserProvider, AlertContext } from "context";
 import { userTypes } from "constants/userTypes";

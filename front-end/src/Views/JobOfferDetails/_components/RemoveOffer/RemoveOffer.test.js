@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  render,
-  fireEvent,
-  waitForElement,
-  wait,
-} from "@testing-library/react";
+import { render, fireEvent, wait } from "@testing-library/react";
 import RemoveOffer from "./RemoveOffer";
 import { AlertContext } from "context";
 
@@ -48,7 +43,7 @@ describe("RemoveOffer", () => {
     );
 
     fireEvent.click(getByText("Usuń ofertę"));
-    fireEvent.click(getByText("Tak"));
+    fireEvent.click(getByText("Usuń ✗", { exact: false }));
 
     await wait(() => expect(alertC.showAlert).toHaveBeenCalled());
 
@@ -67,7 +62,7 @@ describe("RemoveOffer", () => {
     );
 
     fireEvent.click(getByText("Usuń ofertę"));
-    fireEvent.click(getByText("Tak"));
+    fireEvent.click(getByText("Usuń ✗", { exact: false }));
 
     await wait(() => expect(alertC.showAlert).toHaveBeenCalled());
 
