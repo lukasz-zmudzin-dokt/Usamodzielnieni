@@ -10,7 +10,7 @@ import {
 } from "./components";
 import { UserContext } from "context";
 import { sendData } from "./functions/sendData";
-import { WithAlertContext } from "components";
+import { withAlertContext } from "components";
 import { staffTypes } from "constants/staffTypes";
 
 class RegisterPage extends React.Component {
@@ -221,4 +221,4 @@ class RegisterPage extends React.Component {
 
 RegisterPage.contextType = UserContext;
 
-export default withRouter(WithAlertContext(RegisterPage));
+export default withRouter(withAlertContext(RegisterPage));

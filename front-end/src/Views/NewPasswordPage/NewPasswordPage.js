@@ -3,7 +3,7 @@ import { Button, Card, Container, Form } from "react-bootstrap";
 import { handlePasswordChange } from "./functions/submitActions";
 import { Redirect, withRouter } from "react-router-dom";
 import "Views/PasswordResetPrompt/style.css";
-import { WithAlertContext } from "components";
+import { withAlertContext } from "components";
 
 class NewPasswordPage extends React.Component {
   constructor(props) {
@@ -131,4 +131,4 @@ class NewPasswordPage extends React.Component {
   }
 }
 
-export default withRouter(WithAlertContext(NewPasswordPage));
+export default withRouter(withAlertContext(NewPasswordPage));
