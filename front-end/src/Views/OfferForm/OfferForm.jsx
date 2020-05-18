@@ -189,7 +189,7 @@ const OfferForm = () => {
                 setVal={(val) => setOffer({ ...offer, salary_min: val })}
                 val={salary_min}
                 required
-                length={{min: 0, max: offer.salary_max - 1}}
+                length={{ min: 0, max: offer.salary_max - 1 }}
                 incorrect="Pole musi być mniejsze od maksymalnej stawki"
               />
               <FormGroup
@@ -199,7 +199,7 @@ const OfferForm = () => {
                 setVal={(val) => setOffer({ ...offer, salary_max: val })}
                 val={salary_max}
                 required
-                length={{min: offer.salary_min + 1, max: 999999}}
+                length={{ min: offer.salary_min + 1, max: 999999 }}
                 incorrect="Pole musi być większe od minimalnej stawki"
               />
             </div>
