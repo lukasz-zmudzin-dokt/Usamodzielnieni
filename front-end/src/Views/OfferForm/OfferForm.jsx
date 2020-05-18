@@ -34,7 +34,7 @@ const OfferForm = () => {
     category: "",
     type: "",
     pay_from: "",
-    pay_to: ""
+    pay_to: "",
   });
 
   //47991e86-4b42-4507-b154-1548bf8a3bd3
@@ -88,7 +88,9 @@ const OfferForm = () => {
     const form = event.currentTarget;
     event.preventDefault();
     if (checkPayValidity(pay_from, pay_to) === false) {
-      alertC.current.showAlert('Wartości wynagrodzenia muszą być liczbami całkowitymi lub z częścią setną, a "Wynagrodzenie od" musi być mniejsze bądź równe \n "Wynagrodzenie do:"');
+      alertC.current.showAlert(
+        'Wartości wynagrodzenia muszą być liczbami całkowitymi lub z częścią setną, a "Wynagrodzenie od" musi być mniejsze bądź równe \n "Wynagrodzenie do:"'
+      );
       event.stopPropagation();
     } else if (form.checkValidity() === false) {
       event.stopPropagation();
@@ -101,7 +103,7 @@ const OfferForm = () => {
             company_address: context.data.company_address,
             expiration_date: expiration_date.toISOString().substr(0, 10),
             salary_min: pay_from.replace(",", "."),
-            salary_max: pay_to.replace(",", ".")
+            salary_max: pay_to.replace(",", "."),
           },
           context.token,
           id
@@ -117,7 +119,12 @@ const OfferForm = () => {
   };
 
   const checkPayValidity = (input_from, input_to) => {
-    if (input_from !== undefined && input_to !== undefined && input_from !== '' && input_to !== '') {
+    if (
+      input_from !== undefined &&
+      input_to !== undefined &&
+      input_from !== "" &&
+      input_to !== ""
+    ) {
       if (parseFloat(input_from) <= parseFloat(input_to)) {
         return true;
       }
@@ -270,7 +277,7 @@ const OfferForm = () => {
           )}
         </Card.Body>
       </Card>
-    </Container >
+    </Container>
   );
 };
 

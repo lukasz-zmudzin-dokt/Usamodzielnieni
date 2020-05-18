@@ -37,7 +37,7 @@ const mapOffer = (offer) => ({
   expirationDate: offer.expiration_date,
   description: offer.description,
   pay_from: offer.salary_min,
-  pay_to: offer.salary_max
+  pay_to: offer.salary_max,
 });
 
 const JobOfferDetails = (props) => {

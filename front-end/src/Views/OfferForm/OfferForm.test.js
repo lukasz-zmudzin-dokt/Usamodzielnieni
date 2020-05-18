@@ -83,7 +83,7 @@ describe("OfferForm", () => {
     type: "IT",
     pay_period: "nigdy",
     pay_from: "0",
-    pay_to: "420"
+    pay_to: "420",
   };
   beforeAll(() => {
     global.fetch = jest.fn().mockImplementation((input, init) => {
@@ -393,12 +393,14 @@ describe("OfferForm", () => {
     reactRouterDom.useParams = () => ({
       id: "abc",
     });
-    const { getByPlaceholderText, getByLabelText, history, getByText } = renderWithRouter(
-      <OfferForm />,
-      {
-        route: "/offerForm/abc",
-      }
-    );
+    const {
+      getByPlaceholderText,
+      getByLabelText,
+      history,
+      getByText,
+    } = renderWithRouter(<OfferForm />, {
+      route: "/offerForm/abc",
+    });
 
     await waitForElement(() => getByText("Dodaj"));
 
