@@ -20,11 +20,13 @@ const deleteAccount = async (token) => {
 };
 
 const DeleteAccountButton = ({ user }) => {
-  const [showModal, setShowModal] = useState(false);
+  const [showFirstModal, setShowFirstModal] = useState(false);
+  const [showSecondModal, setShowSecondModal] = useState(false);
   const [disabled, setDisabled] = useState(false);
 
-  const onButtonClick = () => setShowModal(true);
-  const onSuccess = async () => {
+  const onButtonClick = () => setShowFirstModal(true);
+  const onFirstSuccess = () => setShowSecondModal(true);
+  const onSecondSuccess = async () => {
     setDisabled(true);
     try {
       await deleteAccount(user.token);
@@ -43,10 +45,18 @@ const DeleteAccountButton = ({ user }) => {
         {disabled ? "Ładowanie..." : "Usuń konto"}
       </Button>
       <DeletionModal
-        show={showModal}
-        setShow={setShowModal}
-        delConfirmed={onSuccess}
-        question={"Czy na pewno chcesz usunąć swoje konto?"}
+        show={showFirstModal}
+        setShow={setShowFirstModal}
+        delConfirmed={onFirstSuccess}
+        question={"Czy chcesz usunąć swoje konto?"}
+      />
+      <DeletionModal
+        show={showSecondModal}
+        setShow={setShowSecondModal}
+        delConfirmed={onSecondSuccess}
+        question={
+          "Czy na pewno chcesz usunąć swoje konto? Tej operacji nie będzie można cofnąć."
+        }
       />
     </>
   );

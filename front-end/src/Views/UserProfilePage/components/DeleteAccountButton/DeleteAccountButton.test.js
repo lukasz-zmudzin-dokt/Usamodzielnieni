@@ -42,9 +42,7 @@ describe("DeleteAccountButton", () => {
 
     fireEvent.click(getByText("Usuń konto", { exact: false }));
 
-    expect(
-      getByText("Czy na pewno chcesz usunąć swoje konto?")
-    ).toBeInTheDocument();
+    expect(getByText("Czy chcesz usunąć swoje konto?")).toBeInTheDocument();
   });
 
   it("should logout user when confirmation button is clicked", async () => {
@@ -54,8 +52,11 @@ describe("DeleteAccountButton", () => {
 
     fireEvent.click(getByText("Usuń konto", { exact: false }));
 
-    const modal = getByRole("dialog");
-    fireEvent.click(queries.getByText(modal, "Usuń", { exact: false }));
+    const modal1 = getByRole("dialog");
+    fireEvent.click(queries.getByText(modal1, "Usuń", { exact: false }));
+
+    const modal2 = getByRole("dialog");
+    fireEvent.click(queries.getByText(modal2, "Usuń", { exact: false }));
 
     expect(getByText("Ładowanie...")).toBeInTheDocument();
     await wait(() => expect(user.logout).toHaveBeenCalledTimes(1));
@@ -73,8 +74,11 @@ describe("DeleteAccountButton", () => {
 
     fireEvent.click(getByText("Usuń konto", { exact: false }));
 
-    const modal = getByRole("dialog");
-    fireEvent.click(queries.getByText(modal, "Usuń", { exact: false }));
+    const modal1 = getByRole("dialog");
+    fireEvent.click(queries.getByText(modal1, "Usuń", { exact: false }));
+
+    const modal2 = getByRole("dialog");
+    fireEvent.click(queries.getByText(modal2, "Usuń", { exact: false }));
 
     expect(getByText("Ładowanie...")).toBeInTheDocument();
     await wait(() =>
