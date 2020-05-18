@@ -8,9 +8,7 @@ const AdminOfferApprovalButton = ({ user }) =>
   user.type === userTypes.STAFF &&
   user.data.group_type.includes(staffTypes.JOBS) ? (
     <LinkContainer to="/offerApproval">
-      <Button variant="primary" className="ml-3">
-        Akceptuj oferty pracy
-      </Button>
+      <Button variant="primary">Akceptuj oferty pracy</Button>
     </LinkContainer>
   ) : null;
 
