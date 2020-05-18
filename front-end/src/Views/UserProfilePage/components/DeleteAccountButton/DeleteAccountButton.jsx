@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Button } from "react-bootstrap";
 import { DeletionModal } from "components";
 import proxy from "config/api";
+import { AlertContext } from "context";
 
 const deleteAccount = async (token) => {
   let url = `${proxy.account}/edit/`;
@@ -24,6 +25,8 @@ const DeleteAccountButton = ({ user }) => {
   const [showSecondModal, setShowSecondModal] = useState(false);
   const [disabled, setDisabled] = useState(false);
 
+  const alertContext = useContext(AlertContext);
+
   const onButtonClick = () => setShowFirstModal(true);
   const onFirstSuccess = () => setShowSecondModal(true);
   const onSecondSuccess = async () => {
@@ -32,7 +35,7 @@ const DeleteAccountButton = ({ user }) => {
       await deleteAccount(user.token);
     } catch (e) {
       console.log(e);
-      // TODO: dodać alert po mergu pra
+      alertContext.showAlert("Wystąpił błąd podczas usuwania konta.");
       setDisabled(false);
       return;
     }

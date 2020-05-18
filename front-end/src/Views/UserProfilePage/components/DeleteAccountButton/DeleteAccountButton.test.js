@@ -1,10 +1,12 @@
 import React from "react";
 import { render, fireEvent, wait, queries } from "@testing-library/react";
 import DeleteAccountButton from "./DeleteAccountButton";
+import { AlertContext } from "context";
 
 describe("DeleteAccountButton", () => {
   let apiShouldFail;
   let user;
+  let contextA;
   beforeAll(() => {
     global.fetch = jest.fn().mockImplementation((input, init) => {
       return new Promise((resolve, reject) => {
@@ -28,6 +30,9 @@ describe("DeleteAccountButton", () => {
     user = {
       token: "123",
       logout: jest.fn(),
+    };
+    contextA = {
+      showAlert: jest.fn(),
     };
   });
 
@@ -69,7 +74,9 @@ describe("DeleteAccountButton", () => {
   it("should display error alert when api fails", async () => {
     apiShouldFail = true;
     const { getByText, getByRole, queryByText } = render(
-      <DeleteAccountButton user={user} />
+      <AlertContext.Provider value={contextA}>
+        <DeleteAccountButton user={user} />
+      </AlertContext.Provider>
     );
 
     fireEvent.click(getByText("Usuń konto", { exact: false }));
@@ -87,7 +94,9 @@ describe("DeleteAccountButton", () => {
       ).not.toBeInTheDocument()
     );
 
-    // TODO: dodać sprawdzanie alertu
+    expect(contextA.showAlert).toHaveBeenCalledWith(
+      "Wystąpił błąd podczas usuwania konta."
+    );
     expect(getByText("Usuń konto")).toBeInTheDocument();
   });
 });
