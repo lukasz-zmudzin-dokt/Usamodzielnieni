@@ -44,7 +44,7 @@ const sendMessage = async (token, id, msg, data, setData) => {
   } else {
     throw response.status;
   }
-}
+};
 
 const dataD = [
   {
@@ -151,9 +151,10 @@ const MessagesList = () => {
           </ListGroup>
         </Card.Body>
         {/*<ChatForm sendMessage={msg => console.log(msg)}/>*/}
-        <ChatForm sendMessage={msg => sendMessage(user.token, id, msg, data, setData)}/>
+        <ChatForm
+          sendMessage={(msg) => sendMessage(user.token, id, msg, data, setData)}
+        />
       </Card>
-      
     </Container>
   );
 };
