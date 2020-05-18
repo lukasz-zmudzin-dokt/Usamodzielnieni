@@ -2,9 +2,13 @@ import React from "react";
 import { render, waitForElement, fireEvent } from "@testing-library/react";
 import BlogPage from "Views/BlogPage";
 import { MemoryRouter } from "react-router-dom";
+import { AlertContext } from "context";
 import proxy from "config/api";
 
 describe("BlogPage", () => {
+  let contextA = {
+    showAlert: jest.fn(),
+  };
   let failFetch;
   let apiFilters = ["abcd"];
   let apiPosts = [
@@ -92,18 +96,18 @@ describe("BlogPage", () => {
   it("should show message if apiFails", async () => {
     failFetch = true;
     const { getByText } = render(
-      <MemoryRouter>
-        <BlogPage />
-      </MemoryRouter>
+      <AlertContext.Provider value={contextA}>
+        <MemoryRouter>
+          <BlogPage />
+        </MemoryRouter>
+      </AlertContext.Provider>
     );
 
-    await waitForElement(() =>
-      getByText("Wystąpił błąd podczas ładowania", { exact: false })
-    );
+    await waitForElement(() => getByText("Filtruj posty"));
 
-    expect(
-      getByText("Wystąpił błąd podczas ładowania", { exact: false })
-    ).toBeInTheDocument();
+    expect(contextA.showAlert).toHaveBeenCalledWith(
+      "Nie udało się załadować postów"
+    );
   });
 
   describe("Filter", () => {

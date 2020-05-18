@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { Container, Card, Alert, Row } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
-import { UserContext } from "context";
+import { UserContext, AlertContext } from "context";
 import { DetailsItem } from "components";
 import { AddCvForm, RemoveOffer } from "./_components";
 import { staffTypes } from "constants/staffTypes";
@@ -10,10 +10,9 @@ import { addressToString } from "utils/converters";
 import { userTypes } from "constants/userTypes";
 import { userStatuses } from "constants/userStatuses";
 
-const getOfferDetails = async (id, token) => {
+const getOfferDetails = async (id) => {
   let url = `${proxy.job}job-offer/${id}`;
   const headers = {
-    Authorization: "Token " + token,
     "Content-Type": "application/json",
   };
 
@@ -41,32 +40,27 @@ const mapOffer = (offer) => ({
 const JobOfferDetails = (props) => {
   const [offer, setOffer] = useState({});
   const [isOfferLoading, setIsOfferLoading] = useState(false);
-  const [error, setError] = useState(false);
   const user = useContext(UserContext);
-
+  const alertC = useRef(useContext(AlertContext));
   useEffect(() => {
-    const loadOffer = async (id, token) => {
+    const loadOffer = async (id) => {
       setIsOfferLoading(true);
       let loadedOffer;
       try {
-        loadedOffer = await getOfferDetails(id, token);
+        loadedOffer = await getOfferDetails(id);
       } catch (e) {
         console.log(e);
         loadedOffer = {};
-        setError(true);
+        alertC.current.showAlert("Wystąpił błąd podczas ładowania oferty.");
       }
       setOffer(loadedOffer);
       setIsOfferLoading(false);
     };
-    loadOffer(props.match.params.id, user.token);
-  }, [props.match.params.id, user.token]);
+    loadOffer(props.match.params.id);
+  }, [props.match.params.id]);
 
-  const msg = isOfferLoading ? (
+  const msg = isOfferLoading && (
     <Alert variant="info">Ładowanie oferty...</Alert>
-  ) : (
-    error && (
-      <Alert variant="danger">Wystąpił błąd podczas ładowania oferty.</Alert>
-    )
   );
 
   return (

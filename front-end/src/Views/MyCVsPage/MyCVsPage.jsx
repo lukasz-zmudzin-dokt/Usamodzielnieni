@@ -1,11 +1,11 @@
 import React from "react";
 import { Container, Card, Row, Col, ListGroup, Alert } from "react-bootstrap";
 import { UserContext } from "context/UserContext";
-
 import { getUserCVs } from "./functions/getUserCVs";
 import CVSection from "./components/cvSection";
 import { deleteCV } from "./functions/deleteCV";
 import { IndexLinkContainer } from "react-router-bootstrap";
+import { withAlertContext } from "components";
 
 class MyCVsPage extends React.Component {
   constructor(props) {
@@ -14,7 +14,6 @@ class MyCVsPage extends React.Component {
       cvs: [],
       errors: false,
       loading: true,
-      delError: false,
     };
   }
 
@@ -40,12 +39,11 @@ class MyCVsPage extends React.Component {
       deleted = await deleteCV(this.context.token, cvId);
     } catch (e) {
       console.log(e);
-      this.setState({
-        delError: true,
-      });
+      this.props.alertContext.showAlert("Wystąpił błąd podczas usuwania CV.");
       return false;
     }
     if (deleted) {
+      this.props.alertContext.showAlert("Pomyślnie usunięto CV", "success");
       this.setState({
         cvs: this.state.cvs.filter((cv) => cv.cv_id !== cvId),
       });
@@ -55,17 +53,13 @@ class MyCVsPage extends React.Component {
   showAlert = (show) => {
     return show ? (
       <Card.Body>
-        {this.state.errors ? (
-          <Alert variant="danger" className="mb-0">
-            Ups, coś poszło nie tak. Nie można pobrać listy CV.
-          </Alert>
-        ) : this.state.delError ? (
-          <Alert variant="danger" className="mb-0">
-            Wystąpił błąd podczas usuwania CV.
-          </Alert>
-        ) : this.state.loading ? (
+        {this.state.loading ? (
           <Alert variant="primary" className="mb-0">
             Ładuję...
+          </Alert>
+        ) : this.state.errors ? (
+          <Alert variant="danger" className="mb-0">
+            Ups, coś poszło nie tak. Nie można pobrać listy CV.
           </Alert>
         ) : this.state.cvs.length === 5 ? (
           <Alert variant="info" className="mb-0">
@@ -86,9 +80,8 @@ class MyCVsPage extends React.Component {
   };
 
   render() {
-    const { errors, cvs, loading, delError } = this.state;
-    let showBody =
-      errors || delError || cvs.length === 0 || cvs.length === 5 || loading;
+    const { cvs, loading, errors } = this.state;
+    let showBody = cvs.length === 0 || cvs.length === 5 || loading || errors;
     return (
       <Container className="mt-4">
         <Card>
@@ -129,4 +122,4 @@ class MyCVsPage extends React.Component {
 
 MyCVsPage.contextType = UserContext;
 
-export default MyCVsPage;
+export default withAlertContext(MyCVsPage);

@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { Row, Col, Button, Alert, Form } from "react-bootstrap";
 import { IndexLinkContainer } from "react-router-bootstrap";
 import proxy from "config/api";
+import { AlertContext } from "context";
 
 const getCvList = async (token) => {
   let url = proxy.cv + "user/list/";
@@ -55,6 +56,7 @@ const AddCvForm = ({ id, user, ...props }) => {
   const [isCvListLoading, setIsCvListLoading] = useState(false);
   const [selectedCv, setSelectedCv] = useState(null);
   const [error, setError] = useState("");
+  const alertC = useRef(useContext(AlertContext));
 
   useEffect(() => {
     const loadCvList = async (token) => {
@@ -88,17 +90,19 @@ const AddCvForm = ({ id, user, ...props }) => {
       response = await sendCv(id, selectedCv, user.token);
     } catch (e) {
       console.log(e);
-      setError("application");
+      alertC.current.showAlert(
+        "Wystąpił błąd podczas składania aplikacji na ofertę."
+      );
     }
     const newStatus = response ? "ADDED" : "ALREADY_ADDED";
-    setCvList(
-      cvList.map((cv) => {
-        if (cv.id === selectedCv) {
-          cv.status = newStatus;
-        }
-        return cv;
-      })
-    );
+    if (newStatus === "ADDED") {
+      alertC.current.showAlert(
+        "Pomyślnie zaaplikowano do ogłoszenia.",
+        "success"
+      );
+    } else {
+      alertC.current.showAlert("Już zaaplikowano do danego ogłoszenia.");
+    }
   };
 
   const getVerifiedCvs = (cvs) => cvs.filter((cv) => cv.status === "VERIFIED");
@@ -109,17 +113,8 @@ const AddCvForm = ({ id, user, ...props }) => {
           variant: "danger",
           value: "Wystąpił błąd podczas ładowania listy zweryfikowanych CV.",
         }
-      : error === "application"
-      ? {
-          variant: "danger",
-          value: "Wystąpił błąd podczas składania aplikacji na ofertę.",
-        }
       : isCvListLoading
       ? { variant: "info", value: "Ładowanie listy zweryfikowanych CV..." }
-      : cvList.find((cv) => cv.status === "ADDED")
-      ? { variant: "success", value: "Pomyślnie zaaplikowano do ogłoszenia." }
-      : cvList.find((cv) => cv.status === "ALREADY_ADDED")
-      ? { variant: "danger", value: "Już zaaplikowano do danego ogłoszenia." }
       : getVerifiedCvs(cvList).length === 0 && {
           variant: "info",
           value: (

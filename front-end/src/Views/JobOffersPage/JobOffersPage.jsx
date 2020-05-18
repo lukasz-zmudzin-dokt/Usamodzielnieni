@@ -7,7 +7,7 @@ import { UserContext } from "context";
 import { JobOfferInfo, OffersPagination } from "./_components";
 import proxy from "config/api";
 
-const getOffers = async (token, filters) => {
+const getOffers = async (filters) => {
   const {
     page,
     pageSize,
@@ -26,7 +26,6 @@ const getOffers = async (token, filters) => {
   const query = `?page=${page}&page_size=${pageSize}${voivodeshipQ}${expirationDateQ}${categoryQ}${typeQ}`;
   const url = proxy.job + "job-offers/" + query;
   const headers = {
-    Authorization: "Token " + token,
     "Content-Type": "application/json",
   };
 
@@ -59,9 +58,9 @@ const JobOffersPage = (props) => {
     page: 1,
     pageSize: 10,
   });
-  const [error, setError] = useState(false);
-  const user = useContext(UserContext);
   const [disabled, setDisabled] = useState(false);
+  const [err, setErr] = useState(false);
+  const user = useContext(UserContext);
 
   const queryParams = qs.parse(props.location.search, { parseNumbers: true });
   if (
@@ -73,34 +72,33 @@ const JobOffersPage = (props) => {
 
   useEffect(() => {
     setDisabled(true);
-    const loadOffers = async (token) => {
+    const loadOffers = async () => {
       setIsOffersLoading(true);
       let res;
       try {
-        res = await getOffers(token, filters);
+        res = await getOffers(filters);
       } catch (e) {
         console.log(e);
         res = { offers: [], count: 0 };
-        setError(true);
+        setErr(true);
       }
       setOffers(res.offers);
       setCount(res.count);
       setIsOffersLoading(false);
       setDisabled(false);
     };
-    loadOffers(user.token);
-  }, [user.token, filters]);
+    loadOffers();
+  }, [filters]);
 
-  const msg = error ? (
-    <Alert variant="danger">Wystąpił błąd podczas ładowania ofert.</Alert>
-  ) : isOffersLoading ? (
+  const msg = isOffersLoading ? (
     <Alert variant="info">Ładowanie ofert...</Alert>
+  ) : err ? (
+    <Alert variant="danger">Wystąpił błąd podczas ładowania ofert.</Alert>
   ) : (
     offers.length === 0 && (
       <Alert variant="info">Brak ofert spełniających podane wymagania.</Alert>
     )
   );
-
   return (
     <Container>
       <Card>

@@ -10,11 +10,12 @@ import {
 import "medium-draft/lib/index.css";
 import { customizeToolbar } from "./functions/editorConfig";
 import SelectionRow from "./components/SelectionRow";
-import { UserContext } from "context/UserContext";
+import { UserContext } from "context";
 import mediumDraftExporter from "medium-draft/lib/exporter";
 import mediumDraftImporter from "medium-draft/lib/importer";
 import { convertToRaw } from "draft-js";
 import { Redirect } from "react-router-dom";
+import { withAlertContext } from "components";
 
 class BlogPostForm extends React.Component {
   constructor(props) {
@@ -30,8 +31,6 @@ class BlogPostForm extends React.Component {
         categories: [],
         tags: [],
       },
-
-      error: "",
       redirect: false,
       post_id: -1,
       method: "POST",
@@ -80,6 +79,9 @@ class BlogPostForm extends React.Component {
     } catch (e) {
       console.log(e);
       res = null;
+      this.props.alertContext.showAlert(
+        "Wystąpił błąd podczas pobierania treści posta."
+      );
     }
     return res;
   };
@@ -91,6 +93,9 @@ class BlogPostForm extends React.Component {
     } catch (e) {
       console.log(e);
       res = { categories: [], tags: [] };
+      this.props.alertContext.showAlert(
+        "Nie udało się załadować tagów i kategorii."
+      );
     }
     return res;
   };
@@ -164,18 +169,19 @@ class BlogPostForm extends React.Component {
           );
         } catch (e) {
           console.log(e);
-          this.setState({
-            error: "photo",
-          });
+          this.props.alertContext.showAlert(
+            "Wystąpił błąd podczas dodawania zdjęcia."
+          );
         }
       }
       this.setRedirect();
     } catch (e) {
       console.log(e);
-      this.setState({
-        error: "send",
-      });
+      this.props.alertContext.showAlert(
+        "Wystąpił błąd podczas dodawania posta."
+      );
     }
+    this.setRedirect();
   };
 
   render() {
@@ -242,19 +248,6 @@ class BlogPostForm extends React.Component {
             />
           </Card.Body>
           <Card.Footer className="">
-            {this.state.error === "send" ? (
-              <Alert variant="danger">
-                Wystąpił błąd podczas dodawania posta.
-              </Alert>
-            ) : this.state.error === "get" ? (
-              <Alert variant="danger">
-                Wystąpił błąd podczas pobierania treści posta.
-              </Alert>
-            ) : this.state.error === "photo" ? (
-              <Alert variant="danger">
-                Wystąpił błąd podczas dodawania zdjęcia.
-              </Alert>
-            ) : null}
             <Button variant="primary" size="lg" onClick={this.submitPost} block>
               Opublikuj
             </Button>
@@ -270,4 +263,4 @@ class BlogPostForm extends React.Component {
 
 BlogPostForm.contextType = UserContext;
 
-export default BlogPostForm;
+export default withAlertContext(BlogPostForm);

@@ -58,6 +58,14 @@ class UserProfilePage extends React.Component {
     }
   };
 
+  setMessage = () => {
+    return (
+      this.state.error && (
+        <Alert variant="danger">Wystąpił błąd podczas pobierania</Alert>
+      )
+    );
+  };
+
   render() {
     return (
       <Container>
@@ -74,6 +82,7 @@ class UserProfilePage extends React.Component {
           </Card.Body>
           <UserDetails user={this.state.user} names={names} />
           <Card.Body className="text-center">
+            {this.setMessage()}
             {this.context.type !== userTypes.STAFF &&
             this.context.data &&
             this.context.data.status !== userStatuses.VERIFIED ? (

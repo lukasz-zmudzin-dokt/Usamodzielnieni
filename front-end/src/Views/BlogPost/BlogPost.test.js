@@ -1,7 +1,12 @@
 import React from "react";
 import BlogPost from "./BlogPost";
-import { render, waitForElement, fireEvent } from "@testing-library/react";
-import { UserContext } from "context/UserContext";
+import {
+  render,
+  waitForElement,
+  fireEvent,
+  wait,
+} from "@testing-library/react";
+import { UserContext, AlertContext } from "context";
 import { userTypes } from "constants/userTypes";
 import { userStatuses } from "constants/userStatuses";
 import { staffTypes } from "constants/staffTypes";
@@ -9,11 +14,11 @@ import { staffTypes } from "constants/staffTypes";
 describe("BlogPost", () => {
   let post;
   let apiStatus;
-  let id;
   let user;
-
+  let contextA = {
+    showAlert: jest.fn(),
+  };
   beforeAll(() => {
-    id = 123;
     global.fetch = jest.fn().mockImplementation((input, init) => {
       return new Promise((resolve, reject) => {
         switch (init.method) {
@@ -112,14 +117,20 @@ describe("BlogPost", () => {
 
   it("should render error on api fail", async () => {
     apiStatus = 500;
-    const { getByText, queryByText } = render(
+    const { queryByText, getByText } = render(
       <UserContext.Provider value={user}>
         <BlogPost />
       </UserContext.Provider>
     );
 
-    await waitForElement(() => getByText("Wystąpił błąd", { exact: false }));
-    expect(getByText("Wystąpił błąd", { exact: false })).toBeInTheDocument();
+    await waitForElement(() =>
+      getByText("Wystąpił błąd podczas wczytywania zawartości bloga.")
+    );
+
+    expect(
+      getByText("Wystąpił błąd podczas wczytywania zawartości bloga.")
+    ).toBeInTheDocument();
+
     expect(
       queryByText("Lorem ipsum dolor", { exact: false })
     ).not.toBeInTheDocument();
@@ -152,7 +163,9 @@ describe("BlogPost", () => {
   it("should render new comment after submit", async () => {
     const { getByText, getByPlaceholderText } = render(
       <UserContext.Provider value={user}>
-        <BlogPost />
+        <AlertContext.Provider value={contextA}>
+          <BlogPost />
+        </AlertContext.Provider>
       </UserContext.Provider>
     );
 
@@ -164,6 +177,11 @@ describe("BlogPost", () => {
     fireEvent.click(getByText("Prześlij"));
 
     await waitForElement(() => getByText("staffName"));
+    await wait(() => expect(contextA.showAlert).toHaveBeenCalled());
+    expect(contextA.showAlert).toHaveBeenCalledWith(
+      "Pomyślnie przesłano komentarz.",
+      "success"
+    );
     expect(getByText("komentarz testowy")).toBeInTheDocument();
   });
 });

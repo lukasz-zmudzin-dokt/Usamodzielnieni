@@ -33,11 +33,9 @@ const mapAuthor = (author) => ({
 const BlogPost = () => {
   const [post, setPost] = useState(null);
   const [isPostLoading, setIsPostLoading] = useState(false);
-  const [error, setError] = useState(false);
   const user = useContext(UserContext);
-
+  const [error, setError] = useState(false);
   const post_Id = window.location.pathname.replace(/\/blog\/blogpost\//, "");
-
   const setComments = (comments) => setPost({ ...post, comments });
 
   useEffect(() => {

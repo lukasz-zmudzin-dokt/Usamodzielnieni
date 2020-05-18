@@ -33,7 +33,7 @@ const MyOffersPage = () => {
     </Alert>
   ) : error ? (
     <Alert variant="danger" className="m-3">
-      Ups, wystąpił błąd.
+      Nie udało się załadować ofert.
     </Alert>
   ) : offers.length === 0 ? (
     <Alert variant="info" className="m-3">
