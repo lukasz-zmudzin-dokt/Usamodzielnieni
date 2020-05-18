@@ -19,7 +19,7 @@ exports[`EditorForm should match snapshot 1`] = `
           >
             <div
               class="public-DraftEditorPlaceholder-inner"
-              id="placeholder-csq3v"
+              id="placeholder-7l3se"
               style="white-space: pre-wrap;"
             >
               Napisz swoją historię...
@@ -29,7 +29,7 @@ exports[`EditorForm should match snapshot 1`] = `
             class="DraftEditor-editorContainer"
           >
             <div
-              aria-describedby="placeholder-csq3v"
+              aria-describedby="placeholder-7l3se"
               class="notranslate public-DraftEditor-content"
               contenteditable="true"
               role="textbox"
@@ -42,15 +42,15 @@ exports[`EditorForm should match snapshot 1`] = `
                 <div
                   class="md-block md-block-paragraph"
                   data-block="true"
-                  data-editor="csq3v"
-                  data-offset-key="6uqkc-0-0"
+                  data-editor="7l3se"
+                  data-offset-key="59a0g-0-0"
                 >
                   <div
                     class="public-DraftStyleDefault-block public-DraftStyleDefault-ltr"
-                    data-offset-key="6uqkc-0-0"
+                    data-offset-key="59a0g-0-0"
                   >
                     <span
-                      data-offset-key="6uqkc-0-0"
+                      data-offset-key="59a0g-0-0"
                     >
                       <br
                         data-text="true"

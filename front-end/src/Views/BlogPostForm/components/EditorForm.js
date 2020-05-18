@@ -3,7 +3,7 @@ import React from "react";
 import { uploadPhoto } from "../functions/apiCalls";
 import proxy from "config/api";
 
-const EditorForm = ({ onChange, customRef, state, id, token }) => {
+const EditorForm = ({ alerts, onChange, customRef, state, id, token }) => {
   const ImgSideButton = () =>
     class extends ImageSideButton {
       onChange = async (e) => {
@@ -20,6 +20,7 @@ const EditorForm = ({ onChange, customRef, state, id, token }) => {
             );
           } catch (e) {
             console.log(e);
+            alerts.showAlert("Wystąpił błąd przy dodawaniu zdjęcia.");
           }
         }
         this.props.close();

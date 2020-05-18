@@ -249,6 +249,7 @@ class BlogPostForm extends React.Component {
               onChange={this.onChange}
             />
             <EditorForm
+                alerts={this.props.alertContext}
               onChange={this.onEditorChange}
               state={this.state.editorState}
               customRef={this.refsEditor}

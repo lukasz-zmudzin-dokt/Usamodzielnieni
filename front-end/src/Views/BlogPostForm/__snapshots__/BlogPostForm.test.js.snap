@@ -105,7 +105,7 @@ exports[`BlogpostForm should match snapshot 1`] = `
                 >
                   <div
                     class="public-DraftEditorPlaceholder-inner"
-                    id="placeholder-5nf5u"
+                    id="placeholder-85uon"
                     style="white-space: pre-wrap;"
                   >
                     Napisz swoją historię...
@@ -115,7 +115,7 @@ exports[`BlogpostForm should match snapshot 1`] = `
                   class="DraftEditor-editorContainer"
                 >
                   <div
-                    aria-describedby="placeholder-5nf5u"
+                    aria-describedby="placeholder-85uon"
                     class="notranslate public-DraftEditor-content"
                     contenteditable="true"
                     role="textbox"
@@ -128,15 +128,15 @@ exports[`BlogpostForm should match snapshot 1`] = `
                       <div
                         class="md-block md-block-paragraph"
                         data-block="true"
-                        data-editor="5nf5u"
-                        data-offset-key="1be0b-0-0"
+                        data-editor="85uon"
+                        data-offset-key="4ej7t-0-0"
                       >
                         <div
                           class="public-DraftStyleDefault-block public-DraftStyleDefault-ltr"
-                          data-offset-key="1be0b-0-0"
+                          data-offset-key="4ej7t-0-0"
                         >
                           <span
-                            data-offset-key="1be0b-0-0"
+                            data-offset-key="4ej7t-0-0"
                           >
                             <br
                               data-text="true"
