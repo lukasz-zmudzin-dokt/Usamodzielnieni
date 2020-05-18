@@ -6,7 +6,6 @@ import proxy from "config/api";
 import { UserContext, AlertContext } from "context";
 import { useParams, useHistory } from "react-router-dom";
 import { UserPicture } from "components";
-//import {sendMessage} from "./functions/apiCalls";
 
 const getMessages = async (token, id) => {
   const headers = {
@@ -23,7 +22,7 @@ const getMessages = async (token, id) => {
   }
 };
 
-const sendMessage = async (token, id, msg, data, setData) => {
+const sendMessage = async (token, id, msg, data, setData, alertC) => {
   const url = proxy.chat + `${id}/`;
   const headers = {
     Authorization: "token " + token,
@@ -34,14 +33,17 @@ const sendMessage = async (token, id, msg, data, setData) => {
 
   if (response.status === 200) {
     let newData = data.slice();
+    const now = new Date();
+    const date = `${now.getHours()}:${now.getMinutes() < 10? "0" : ""}${now.getMinutes()} ${now.getDate()}.${now.getMonth() < 10? "0" : ""}${now.getMonth()}.${now.getFullYear()}`;
     newData.push({
       content: msg,
-      send: "11:55 12.03.2020",
+      send: date,
       side: "right",
-      id: 0,
+      id: 0, //odpowiednie id
     });
     setData(newData);
   } else {
+    alertC.current.showAlert("Nie udało się wysłać wiadomości.");
     throw response.status;
   }
 };
@@ -128,7 +130,9 @@ const MessagesList = () => {
     loadMessages(user.token, id);
     messagesEl.current.scrollTop = messagesEl.current.scrollHeight;
   }, [id, user.token]);
-  console.log(data);
+
+  //console.log(data);
+
   return (
     <Container className="messagesList">
       <Card className="messagesList__card">
@@ -152,7 +156,7 @@ const MessagesList = () => {
         </Card.Body>
         {/*<ChatForm sendMessage={msg => console.log(msg)}/>*/}
         <ChatForm
-          sendMessage={(msg) => sendMessage(user.token, id, msg, data, setData)}
+          sendMessage={(msg) => sendMessage(user.token, id, msg, data, setData, alertC)}
         />
       </Card>
     </Container>

@@ -21,8 +21,8 @@ describe("chat form tests", () => {
   });
 
   it("should call send message method and clear input value on send click", () => {
-    const { getByPlaceholderText, getByText } = render(<ChatForm {...props} />);
-    const button = getByText("->");
+    const { getByPlaceholderText, getByAltText } = render(<ChatForm {...props} />);
+    const button = getByAltText("send message");
     const input = getByPlaceholderText("Aa");
 
     fireEvent.change(input, { target: { value: "test message" } });
@@ -33,8 +33,8 @@ describe("chat form tests", () => {
   });
 
   it("should call send message method and clear input value on enter click", () => {
-    const { getByPlaceholderText, getByText } = render(<ChatForm {...props} />);
-    const button = getByText("->");
+    const { getByPlaceholderText, getByAltText } = render(<ChatForm {...props} />);
+    const button = getByAltText("send message");
     const input = getByPlaceholderText("Aa");
 
     fireEvent.change(input, { target: { value: "test message" } });
@@ -48,8 +48,8 @@ describe("chat form tests", () => {
   });
 
   it("should not call send message method when input is empty", () => {
-    const { getByPlaceholderText, getByText } = render(<ChatForm {...props} />);
-    const button = getByText("->");
+    const { getByPlaceholderText, getByAltText } = render(<ChatForm {...props} />);
+    const button = getByAltText("send message");
     const input = getByPlaceholderText("Aa");
 
     fireEvent.change(input, { target: { value: "" } });

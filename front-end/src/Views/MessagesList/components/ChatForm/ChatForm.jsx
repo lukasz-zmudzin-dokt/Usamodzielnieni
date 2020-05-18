@@ -38,7 +38,7 @@ const ChatForm = ({ sendMessage }) => {
         />
         <InputGroup.Append>
           <Button type="submit" variant="light">
-            <img src={sendMessageIcon} />
+            <img src={sendMessageIcon} alt="send message" />
           </Button>
         </InputGroup.Append>
       </InputGroup>
