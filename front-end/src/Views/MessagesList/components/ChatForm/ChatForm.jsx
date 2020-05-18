@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Form, Button, InputGroup, FormControl } from "react-bootstrap";
 import sendMessageIcon from "assets/sendMessageIcon.svg";
 
-
 const ChatForm = ({ sendMessage }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
