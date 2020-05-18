@@ -34,7 +34,11 @@ const sendMessage = async (token, id, msg, data, setData, alertC) => {
   if (response.status === 200) {
     let newData = data.slice();
     const now = new Date();
-    const date = `${now.getHours()}:${now.getMinutes() < 10? "0" : ""}${now.getMinutes()} ${now.getDate()}.${now.getMonth() < 10? "0" : ""}${now.getMonth()}.${now.getFullYear()}`;
+    const date = `${now.getHours()}:${
+      now.getMinutes() < 10 ? "0" : ""
+    }${now.getMinutes()} ${now.getDate()}.${
+      now.getMonth() < 10 ? "0" : ""
+    }${now.getMonth()}.${now.getFullYear()}`;
     newData.push({
       content: msg,
       send: date,
@@ -156,7 +160,9 @@ const MessagesList = () => {
         </Card.Body>
         {/*<ChatForm sendMessage={msg => console.log(msg)}/>*/}
         <ChatForm
-          sendMessage={(msg) => sendMessage(user.token, id, msg, data, setData, alertC)}
+          sendMessage={(msg) =>
+            sendMessage(user.token, id, msg, data, setData, alertC)
+          }
         />
       </Card>
     </Container>
