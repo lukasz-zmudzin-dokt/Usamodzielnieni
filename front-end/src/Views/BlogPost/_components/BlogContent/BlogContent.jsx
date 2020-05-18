@@ -120,6 +120,7 @@ const BlogContent = ({ post, user }) => {
       setDelError,
       setSuccess
     );
+
   const { username } = post.author;
   return (
     <Card>

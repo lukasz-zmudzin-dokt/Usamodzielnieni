@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AlertsContainer should match snapshot(open = false) 1`] = `<div />`;
+
+exports[`AlertsContainer should match snapshot(open = true) 1`] = `
+<div>
+  <div>
+    AlertMock
+  </div>
+</div>
+`;
