@@ -11,7 +11,7 @@ class ActionWithDate extends React.Component {
     super(props);
     this.state = {
       newAction: {
-        startTime: undefined,
+        startTime: new Date(),
         endTime: undefined,
         place: "",
         description: "",
@@ -47,7 +47,7 @@ class ActionWithDate extends React.Component {
   clear = () => {
     this.setState({
       newAction: {
-        startTime: undefined,
+        startTime: new Date(),
         endTime: undefined,
         place: "",
         description: "",

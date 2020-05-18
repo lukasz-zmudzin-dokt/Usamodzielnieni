@@ -38,7 +38,7 @@ exports[`WorkExperienceTab should render without crashing 1`] = `
                 id="startTime"
                 placeholder="Data rozpoczęcia"
                 type="text"
-                value=""
+                value="05.2020"
               />
             </div>
           </div>
@@ -151,7 +151,7 @@ exports[`WorkExperienceTab should render without crashing 1`] = `
             id="saveButton"
             type="submit"
           >
-            Generuj CV
+            Zapisz zmiany i generuj CV
           </button>
         </form>
       </div>

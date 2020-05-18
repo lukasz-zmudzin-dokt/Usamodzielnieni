@@ -5,6 +5,8 @@ import { Router, Route } from "react-router-dom";
 import { createMemoryHistory } from "history";
 import { UserContext } from "context/UserContext";
 import proxy from "config/api";
+import {userTypes} from "constants/userTypes";
+import {AlertContext} from "../../context/AlertContext";
 
 const renderWithRouterMatch = (
   ui,
@@ -15,7 +17,7 @@ const renderWithRouterMatch = (
   } = {}
 ) => {
   let context = {
-    type: "Standard",
+    type: userTypes.STANDARD,
     token: "123",
   };
   return {
@@ -30,7 +32,7 @@ const renderWithRouterMatch = (
 };
 
 describe("load cv data", () => {
-  let dataFail, feedbackFail, data, feedback;
+  let dataFail, feedbackFail, data, feedback, contextA;
   let props = {
     match: {
       params: {
@@ -111,11 +113,16 @@ describe("load cv data", () => {
       languages: "poliglota",
       additional_info: "",
     };
+    contextA = {
+      showAlert: jest.fn()
+    }
   });
 
   it("should load correct data on personal tab", async () => {
     const { getByLabelText } = renderWithRouterMatch(
-      <CVEditorPage {...props} />
+        <AlertContext.Provider value={contextA}>
+          <CVEditorPage {...props} />
+        </AlertContext.Provider>
     );
     await wait(() => expect(fetch).toHaveBeenCalled());
     await expect(getByLabelText("Imię:").value).toBe(
@@ -130,13 +137,14 @@ describe("load cv data", () => {
 
   it("should load and display correct date", async () => {
     const { getByLabelText } = renderWithRouterMatch(
-      <CVEditorPage {...props} />
+        <AlertContext.Provider value={contextA}>
+          <CVEditorPage {...props} />
+        </AlertContext.Provider>
     );
 
     await wait(() => expect(fetch).toHaveBeenCalled());
 
     const birthDate = getByLabelText("Data urodzenia:").value;
-    console.log(birthDate);
     expect(birthDate).toEqual("14.05.2020");
     // expect(getByText("14.05.2020")).toBeInTheDocument();
   });
@@ -144,7 +152,9 @@ describe("load cv data", () => {
   it("should load data and feedback", async () => {
     data.was_reviewed = true;
     const { getByLabelText, getByText } = renderWithRouterMatch(
-      <CVEditorPage {...props} />
+        <AlertContext.Provider value={contextA}>
+          <CVEditorPage {...props} />
+        </AlertContext.Provider>
     );
 
     await wait(() => expect(fetch).toHaveBeenCalledTimes(2));
@@ -156,7 +166,9 @@ describe("load cv data", () => {
   it("should render data only", async () => {
     data.was_reviewed = false;
     const { getByLabelText } = renderWithRouterMatch(
-      <CVEditorPage {...props} />
+        <AlertContext.Provider value={contextA}>
+          <CVEditorPage {...props} />
+        </AlertContext.Provider>
     );
 
     await wait(() => expect(fetch).toHaveBeenCalled());
@@ -166,38 +178,43 @@ describe("load cv data", () => {
 
   it("should fail on loading data and display alert(data)", async () => {
     dataFail = true;
-    const { getByText } = renderWithRouterMatch(<CVEditorPage {...props} />);
+    const { getByText } = renderWithRouterMatch(
+        <AlertContext.Provider value={contextA}>
+          <CVEditorPage {...props} />
+        </AlertContext.Provider>
+    );
 
     await wait(() => expect(fetch).toHaveBeenCalled());
 
     expect(getByText("Imię:").value).not.toBe("Jan");
-    expect(getByText("Wystąpił błąd", { exact: false })).toBeInTheDocument();
+    expect(contextA.showAlert).toHaveBeenCalledWith("Nie udało się załadować CV.");
   });
 
   it("should fail on loading data and display alert(feedback)", async () => {
     feedbackFail = true;
     data.was_reviewed = true;
-    const { getAllByText } = renderWithRouterMatch(<CVEditorPage {...props} />);
+    renderWithRouterMatch(
+        <AlertContext.Provider value={contextA}>
+          <CVEditorPage {...props} />
+        </AlertContext.Provider>
+    );
 
     await wait(() => expect(fetch).toHaveBeenCalledTimes(2));
-
-    expect(
-      getAllByText("Wystąpił błąd podczas wczytywania uwag do CV.", {
-        exact: false,
-      }).length
-    ).toBe(6);
+    expect(contextA.showAlert).toHaveBeenCalledWith("Nie udało się załadować uwag.");
   });
 
   it("should send edited data", async () => {
     data.was_reviewed = false;
     const { getByLabelText, getByText } = renderWithRouterMatch(
-      <CVEditorPage {...props} />
+        <AlertContext.Provider value={contextA}>
+          <CVEditorPage {...props} />
+        </AlertContext.Provider>
     );
 
     await wait(() => expect(fetch).toHaveBeenCalled());
 
     fireEvent.change(getByLabelText("Imię:"), { target: { value: "janusz" } });
-    fireEvent.click(getByText("Generuj CV"));
+    fireEvent.click(getByText("Zapisz zmiany i generuj CV"));
 
     expect(fetch).toHaveBeenCalledWith(
       "https://usamo-back.herokuapp.com/cv/data/123/",

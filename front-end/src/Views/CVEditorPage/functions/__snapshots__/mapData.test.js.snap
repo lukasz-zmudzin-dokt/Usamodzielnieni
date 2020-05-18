@@ -90,6 +90,7 @@ Object {
   "education": "2",
   "languages": "5",
   "personalData": "1",
+  "photo": undefined,
   "skills": "4",
   "workExperience": "3",
 }

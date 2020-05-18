@@ -120,6 +120,7 @@ class CVEditorPage extends React.Component {
       error: this.state.commentsError,
       showComments: this.state.showComments,
       validated: this.state.validated,
+      isNew: this.state.method === "POST"
     });
     return [
       {
@@ -172,6 +173,7 @@ class CVEditorPage extends React.Component {
     let feedbackRes, cvRes, feedback, data;
     try {
       this.setState({
+        loading: true,
         cv_id: id,
         method: "PUT"
       });
@@ -187,10 +189,11 @@ class CVEditorPage extends React.Component {
           });
         } catch (e) {
             console.log(e);
-          this.setState({
-            loading: false,
-          });
             this.props.alertContext.showAlert("Nie udało się załadować uwag.");
+        } finally {
+            this.setState({
+                loading: false
+            })
         }
       } else {
         this.setState({

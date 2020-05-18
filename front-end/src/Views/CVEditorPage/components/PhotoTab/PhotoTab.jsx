@@ -31,6 +31,7 @@ class PhotoTab extends React.Component {
         error={this.props.error}
         showComments={this.props.showComments}
         disabled={this.props.disabled}
+        isNew={this.props.isNew}
       >
         <Form>
           <Form.Group>

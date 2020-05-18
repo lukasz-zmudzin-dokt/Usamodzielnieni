@@ -51,7 +51,7 @@ exports[`ActionWithDate should render without crashing 1`] = `
               id="startTime"
               placeholder="Data rozpoczęcia"
               type="text"
-              value=""
+              value="05.2020"
             />
           </div>
         </div>

@@ -45,8 +45,7 @@ const addPhoto = async (token, photo, cvId) => {
     body: formData,
     headers: { Authorization: "Token " + token },
   });
-
-  if (photoRes.status === 201) {
+  if (photoRes.status === 200) {
     return;
   } else {
     throw photoRes.status;
