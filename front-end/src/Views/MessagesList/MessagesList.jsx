@@ -29,8 +29,8 @@ const sendMessage = async (token, id, msg, data, setData) => {
     Authorization: "token " + token,
     "Content-Type": "application/json",
   };
-  //const response = await fetch(url, { method: "POST", body: msg, headers });
-  const response = { status: 200 };
+  const response = await fetch(url, { method: "POST", body: msg, headers });
+  //const response = {status: 200};
 
   if (response.status === 200) {
     let newData = data.slice();
@@ -44,7 +44,7 @@ const sendMessage = async (token, id, msg, data, setData) => {
   } else {
     throw response.status;
   }
-};
+}
 
 const dataD = [
   {
@@ -151,10 +151,9 @@ const MessagesList = () => {
           </ListGroup>
         </Card.Body>
         {/*<ChatForm sendMessage={msg => console.log(msg)}/>*/}
-        <ChatForm
-          sendMessage={(msg) => sendMessage(user.token, id, msg, data, setData)}
-        />
+        <ChatForm sendMessage={msg => sendMessage(user.token, id, msg, data, setData)}/>
       </Card>
+      
     </Container>
   );
 };
