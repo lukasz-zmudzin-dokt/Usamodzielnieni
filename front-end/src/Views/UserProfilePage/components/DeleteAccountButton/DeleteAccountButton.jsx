@@ -5,7 +5,7 @@ import proxy from "config/api";
 import { AlertContext } from "context";
 
 const deleteAccount = async (token) => {
-  let url = `${proxy.account}/edit/`;
+  let url = `${proxy.account}data/`;
   const headers = {
     Authorization: "Token " + token,
     "Content-Type": "application/json",
