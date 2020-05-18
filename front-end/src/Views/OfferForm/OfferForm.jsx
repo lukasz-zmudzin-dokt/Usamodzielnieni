@@ -69,8 +69,8 @@ const OfferForm = () => {
         company_name: context.data.company_name,
         category: categories[0],
         type: types[0],
-        pay_from: loadedOffer.salary_min,
-        pay_to: loadedOffer.salary_max,
+        pay_from: loadedOffer?.salary_min,
+        pay_to: loadedOffer?.salary_max,
         ...loadedOffer,
       }));
       setDisabled(false);
