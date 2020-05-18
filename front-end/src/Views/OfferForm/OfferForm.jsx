@@ -34,8 +34,7 @@ const OfferForm = () => {
     category: "",
     type: "",
     pay_from: "",
-    pay_to: "",
-    pay_period: ""
+    pay_to: ""
   });
 
   //47991e86-4b42-4507-b154-1548bf8a3bd3
@@ -70,6 +69,8 @@ const OfferForm = () => {
         company_name: context.data.company_name,
         category: categories[0],
         type: types[0],
+        pay_from: loadedOffer.salary_min,
+        pay_to: loadedOffer.salary_max,
         ...loadedOffer,
       }));
       setDisabled(false);
@@ -84,11 +85,9 @@ const OfferForm = () => {
   ]);
 
   const submit = async (event) => {
-    const pay_from_dot = unifyPayFormat(pay_from);
-    const pay_to_dot = unifyPayFormat(pay_to);
     const form = event.currentTarget;
     event.preventDefault();
-    if (checkPayValidity(pay_from_dot, pay_to_dot) === false) {
+    if (checkPayValidity(pay_from, pay_to) === false) {
       alertC.current.showAlert('Wartości wynagrodzenia muszą być liczbami całkowitymi lub z częścią setną, a "Wynagrodzenie od" musi być mniejsze bądź równe \n "Wynagrodzenie do:"');
       event.stopPropagation();
     } else if (form.checkValidity() === false) {
@@ -101,8 +100,8 @@ const OfferForm = () => {
             ...offer,
             company_address: context.data.company_address,
             expiration_date: expiration_date.toISOString().substr(0, 10),
-            pay_from: pay_from_dot.replace(".", ","),
-            pay_to: pay_to_dot.replace(".", ",")
+            salary_min: pay_from.replace(",", "."),
+            salary_max: pay_to.replace(",", ".")
           },
           context.token,
           id
@@ -115,21 +114,6 @@ const OfferForm = () => {
     }
     setDisabled(false);
     setValidated(true);
-  };
-
-  const unifyPayFormat = (input) => {
-    if (input.match(/^\d{1,}[,\\.]{1}(\d{2})?$/) !== null) {  //jeśli input jest w formacie *[.]??
-      let value = input.replace(",", ".");                    //zamieniemy , na . żeby zadziałało parseToFloat()
-      value = value.replace(/^0+(?=\d)/, '');                 //jesli ciąg 0 na początku to usuwamy, jeśli same 0 to zostawiamy jedno
-      return value;
-    } else if (input.match(/^\d{1,}$/) !== null) {            //jeśli input jest liczbą całkowitą
-      let value = input.concat(".00");                        //dodajemy .00
-      value = value.replace(/^0+(?=\d)/, '');
-      return value;
-    } else {
-      let value = input.replace(/[^]*/, "");                  //jeśli nic nie zły format bądź niedozwolone znaki to usuwamy cały input
-      return value;
-    }
   };
 
   const checkPayValidity = (input_from, input_to) => {
@@ -158,7 +142,6 @@ const OfferForm = () => {
     type,
     pay_from,
     pay_to,
-    pay_period,
   } = offer;
 
   return (
@@ -214,23 +197,14 @@ const OfferForm = () => {
                 required
               />
               <FormGroup
-                header="Okres wypłaty wynagrodzenia"
-                id="pay_period"
-                type="select"
-                array={["za godzinę", "za dzień", "za miesiąc", "za rok", "jednokrotnie"]}
-                setVal={(val) => setOffer({ ...offer, pay_period: val })}
-                val={pay_period}
-                required
-              />
-              <FormGroup
-                header="Wynagrodzenie od (w PLN)"
+                header="Wynagrodzenie od (zł / miesiąc)"
                 id="pay_from"
                 setVal={(val) => setOffer({ ...offer, pay_from: val })}
                 val={pay_from}
                 required
               />
               <FormGroup
-                header="Wynagrodzenie do (w PLN)"
+                header="Wynagrodzenie do (zł / miesiąc)"
                 id="pay_to"
                 setVal={(val) => setOffer({ ...offer, pay_to: val })}
                 val={pay_to}

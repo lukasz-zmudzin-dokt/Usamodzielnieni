@@ -171,40 +171,9 @@ exports[`OfferForm renders correctly 1`] = `
           >
             <label
               class="form-label"
-              for="pay_period"
-            >
-              Okres wypłaty wynagrodzenia
-            </label>
-            <select
-              class="form-control"
-              id="pay_period"
-              required=""
-            >
-              <option>
-                za godzinę
-              </option>
-              <option>
-                za dzień
-              </option>
-              <option>
-                za miesiąc
-              </option>
-              <option>
-                za rok
-              </option>
-              <option>
-                jednokrotnie
-              </option>
-            </select>
-          </div>
-          <div
-            class="form-group"
-          >
-            <label
-              class="form-label"
               for="pay_from"
             >
-              Wynagrodzenie od (w PLN)
+              Wynagrodzenie od (zł / miesiąc)
             </label>
             <input
               class="form-control"
@@ -212,7 +181,7 @@ exports[`OfferForm renders correctly 1`] = `
               id="pay_from"
               maxlength="50"
               minlength="1"
-              placeholder="Wynagrodzenie od (w PLN)"
+              placeholder="Wynagrodzenie od (zł / miesiąc)"
               required=""
               type="text"
               value=""
@@ -225,7 +194,7 @@ exports[`OfferForm renders correctly 1`] = `
               class="form-label"
               for="pay_to"
             >
-              Wynagrodzenie do (w PLN)
+              Wynagrodzenie do (zł / miesiąc)
             </label>
             <input
               class="form-control"
@@ -233,7 +202,7 @@ exports[`OfferForm renders correctly 1`] = `
               id="pay_to"
               maxlength="50"
               minlength="1"
-              placeholder="Wynagrodzenie do (w PLN)"
+              placeholder="Wynagrodzenie do (zł / miesiąc)"
               required=""
               type="text"
               value=""
@@ -321,7 +290,7 @@ exports[`OfferForm renders correctly 1`] = `
               class="form-label"
               for="expiration_date"
             >
-              Ważne do:
+              Ważne do
             </label>
             <div
               class="align-items-center m-0 form-row"
@@ -335,7 +304,7 @@ exports[`OfferForm renders correctly 1`] = `
                   <input
                     class="form-control"
                     id="expiration_date"
-                    placeholder="Ważne do:"
+                    placeholder="Ważne do"
                     required=""
                     type="text"
                     value=""

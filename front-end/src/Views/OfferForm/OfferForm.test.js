@@ -230,7 +230,7 @@ describe("OfferForm", () => {
     fireEvent.change(getByLabelText("Wymiar pracy"), {
       target: { value: "IT" },
     });
-    fireEvent.change(getByLabelText("Ważne do:"), {
+    fireEvent.change(getByLabelText("Ważne do"), {
       target: {
         value:
           "Wed Jan 20 2021 00:00:00 GMT+0100 (czas środkowoeuropejski standardowy)",
@@ -266,22 +266,16 @@ describe("OfferForm", () => {
     fireEvent.change(getByLabelText("Branża"), {
       target: { value: "xd" },
     });
-    fireEvent.change(getByLabelText("Wymiar pracy"), {
-      target: { value: "IT" },
-    });
-    fireEvent.change(getByLabelText("Ważne do:"), {
+    fireEvent.change(getByLabelText("Ważne do"), {
       target: {
         value:
           "Wed Dec 04 2020 00:00:00 GMT+0100 (czas środkowoeuropejski standardowy)",
       },
     });
-    fireEvent.change(getByLabelText("Okres wypłaty wynagrodzenia"), {
-      target: { value: "nigdy" },
-    });
-    fireEvent.change(getByPlaceholderText("Wynagrodzenie od (w PLN)"), {
+    fireEvent.change(getByPlaceholderText("Wynagrodzenie od (zł / miesiąc)"), {
       target: { value: "0" },
     });
-    fireEvent.change(getByPlaceholderText("Wynagrodzenie do (w PLN)"), {
+    fireEvent.change(getByPlaceholderText("Wynagrodzenie do (zł / miesiąc)"), {
       target: { value: "420" },
     });
 
@@ -340,15 +334,15 @@ describe("OfferForm", () => {
     fireEvent.change(getByLabelText("Wymiar pracy"), {
       target: { value: "IT" },
     });
-    fireEvent.change(getByLabelText("Ważne do:"), {
+    fireEvent.change(getByLabelText("Ważne do"), {
       target: {
         value: new Date("2024-9-20"),
       },
     });
-    fireEvent.change(getByLabelText("Wynagrodzenie od (w PLN)"), {
+    fireEvent.change(getByLabelText("Wynagrodzenie od (zł / miesiąc)"), {
       target: { value: "1" },
     });
-    fireEvent.change(getByLabelText("Wynagrodzenie do (w PLN)"), {
+    fireEvent.change(getByLabelText("Wynagrodzenie do (zł / miesiąc)"), {
       target: { value: "2" },
     });
 
@@ -392,7 +386,7 @@ describe("OfferForm", () => {
     expect(getByLabelText("Opis stanowiska").value).toBe("res.description");
     expect(getByLabelText("Branża").value).toBe("xd");
     expect(getByLabelText("Wymiar pracy").value).toBe("IT");
-    expect(getByLabelText("Ważne do:").value).toBe("17.05.2023");
+    expect(getByLabelText("Ważne do").value).toBe("17.05.2023");
   });
 
   it("should send edited offer", async () => {
