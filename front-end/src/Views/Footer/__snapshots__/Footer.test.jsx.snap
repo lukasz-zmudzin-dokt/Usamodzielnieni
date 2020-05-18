@@ -19,11 +19,17 @@ exports[`Footer should match snapshot 1`] = `
         <div
           class="company-logo-row row"
         >
-          <img
-            alt="Kulczyk"
-            class="company-logo"
-            src="kulczyk-foundation-logo.png"
-          />
+          <a
+            href="https://kulczykfoundation.org.pl/"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            <img
+              alt="Kulczyk"
+              class="company-logo"
+              src="kulczyk-foundation-logo.png"
+            />
+          </a>
         </div>
       </div>
       <div
@@ -39,11 +45,17 @@ exports[`Footer should match snapshot 1`] = `
         <div
           class="company-logo-row row"
         >
-          <img
-            alt="pw"
-            class="company-logo"
-            src="politechnika-warszawska-logo.png"
-          />
+          <a
+            href="https://www.pw.edu.pl/"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            <img
+              alt="pw"
+              class="company-logo"
+              src="politechnika-warszawska-logo.png"
+            />
+          </a>
         </div>
       </div>
       <div
@@ -59,11 +71,17 @@ exports[`Footer should match snapshot 1`] = `
         <div
           class="company-logo-row row"
         >
-          <img
-            alt="oneday"
-            class="company-logo"
-            src="oneday-logo.png"
-          />
+          <a
+            href="https://www.oneday.com.pl/"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            <img
+              alt="oneday"
+              class="company-logo"
+              src="oneday-logo.png"
+            />
+          </a>
         </div>
       </div>
       <div
@@ -75,6 +93,7 @@ exports[`Footer should match snapshot 1`] = `
           <a
             class="d-flex align-items-end"
             href="https://www.youtube.com/channel/UCbKE3BfzmHGfXbB9nmmswYw"
+            rel="noopener noreferrer"
             target="_blank"
           >
             <img
@@ -91,6 +110,7 @@ exports[`Footer should match snapshot 1`] = `
           <a
             class="d-flex align-items-end"
             href="https://twitter.com/usamodzielnieni"
+            rel="noopener noreferrer"
             target="_blank"
           >
             <img
@@ -107,6 +127,7 @@ exports[`Footer should match snapshot 1`] = `
           <a
             class="d-flex align-items-end"
             href="https://www.facebook.com/Usamodzielnieni-110914023943342"
+            rel="noopener noreferrer"
             target="_blank"
           >
             <img
@@ -123,6 +144,7 @@ exports[`Footer should match snapshot 1`] = `
           <a
             class="d-flex align-items-end"
             href="https://www.instagram.com/_usamodzielnieni_"
+            rel="noopener noreferrer"
             target="_blank"
           >
             <img
