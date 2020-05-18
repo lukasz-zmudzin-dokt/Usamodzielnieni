@@ -1,7 +1,7 @@
 import React from "react";
-import { Button, Col, Row } from "react-bootstrap";
-import { IndexLinkContainer } from "react-router-bootstrap";
+import { Col, Row } from "react-bootstrap";
 import DetailsItem from "components/DetailsItem/DetailsItem";
+import ButtonsContainer from "./ButtonsContainer";
 
 const formatDate = (dateString) => {
   const joined = new Date(dateString);
@@ -10,7 +10,7 @@ const formatDate = (dateString) => {
   );
 };
 
-const UserInfo = ({ user, ...rest }) => (
+const UserInfo = ({ user, mapType, mapStatus, ...rest }) => (
   <Row {...rest}>
     <Col>
       <h5>{user.username}</h5>
@@ -19,18 +19,16 @@ const UserInfo = ({ user, ...rest }) => (
           {user.email}
         </DetailsItem>
         <DetailsItem md="4" xl="3" label="Typ">
-          {user.type}
+          {mapType(user.type)}
         </DetailsItem>
         <DetailsItem md="4" xl="3" label="Data rejestracji">
           {formatDate(user.dateJoined)}
         </DetailsItem>
         <DetailsItem md="4" xl="3" label="Status">
-          {user.status}
+          {mapStatus(user.status)}
         </DetailsItem>
       </Row>
-      <IndexLinkContainer to={`/chats/${user.id}`}>
-        <Button>Wyślij wiadomość</Button>
-      </IndexLinkContainer>
+      <ButtonsContainer user={user} />
     </Col>
   </Row>
 );

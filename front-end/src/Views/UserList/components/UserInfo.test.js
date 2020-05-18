@@ -26,23 +26,27 @@ const renderWithRouter = (
 };
 
 describe("UserInfo", () => {
-  let user = {
-    id: 1,
-    username: "user1",
-    date_joined: "2020-05-12",
-    email: "qwe@qwe.qwe",
-    type: userTypes.STANDARD,
-    status: userStatuses.VERIFIED,
+  let props = {
+    user: {
+      id: 1,
+      username: "user1",
+      date_joined: "2020-05-12",
+      email: "qwe@qwe.qwe",
+      type: userTypes.STANDARD,
+      status: userStatuses.VERIFIED,
+    },
+    mapType: (type) => type,
+    mapStatus: (status) => status,
   };
 
   it("should match snapshot", () => {
-    const { container } = renderWithRouter(<UserInfo user={user} />);
+    const { container } = renderWithRouter(<UserInfo {...props} />);
 
     expect(container).toMatchSnapshot();
   });
 
   it("should redirect to chat", () => {
-    const { history, getByText } = renderWithRouter(<UserInfo user={user} />);
+    const { history, getByText } = renderWithRouter(<UserInfo {...props} />);
     fireEvent.click(getByText("Wyślij wiadomość"));
 
     expect(history.location.pathname).toEqual("/chats/1");

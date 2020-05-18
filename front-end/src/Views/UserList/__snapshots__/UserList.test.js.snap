@@ -230,12 +230,28 @@ exports[`UserList should match snapshot 1`] = `
                   </div>
                 </div>
               </div>
-              <a
-                class="btn btn-primary"
-                href="/chats/1"
+              <div
+                class="buttonsContainer"
               >
-                Wyślij wiadomość
-              </a>
+                <a
+                  class="btn btn-primary"
+                  href="/chats/1"
+                >
+                  Wyślij wiadomość
+                </a>
+                <button
+                  class="btn btn-secondary"
+                  type="button"
+                >
+                  Zablokuj
+                </button>
+                <button
+                  class="btn btn-danger"
+                  type="button"
+                >
+                  Usuń
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -311,12 +327,28 @@ exports[`UserList should match snapshot 1`] = `
                   </div>
                 </div>
               </div>
-              <a
-                class="btn btn-primary"
-                href="/chats/2"
+              <div
+                class="buttonsContainer"
               >
-                Wyślij wiadomość
-              </a>
+                <a
+                  class="btn btn-primary"
+                  href="/chats/2"
+                >
+                  Wyślij wiadomość
+                </a>
+                <button
+                  class="btn btn-secondary"
+                  type="button"
+                >
+                  Zablokuj
+                </button>
+                <button
+                  class="btn btn-danger"
+                  type="button"
+                >
+                  Usuń
+                </button>
+              </div>
             </div>
           </div>
         </div>
