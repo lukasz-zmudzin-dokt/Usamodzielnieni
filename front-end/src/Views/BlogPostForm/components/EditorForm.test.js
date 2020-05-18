@@ -3,8 +3,6 @@ import React from "react";
 import { render, fireEvent } from "@testing-library/react";
 import { createEditorState } from "medium-draft";
 
-
-
 describe("EditorForm", () => {
   let onChange = jest.fn();
   let failFetch, token, props, alerts;
@@ -33,7 +31,7 @@ describe("EditorForm", () => {
       token: token,
     };
     alerts = {
-      showAlert: jest.fn()
+      showAlert: jest.fn(),
     };
   });
 
@@ -43,13 +41,13 @@ describe("EditorForm", () => {
     expect(container).toMatchSnapshot();
   });
 
-  it('should render alert on api fail', async () => {
+  it("should render alert on api fail", async () => {
     failFetch = true;
-    render(
-        <EditorForm {...props} />
-    );
+    render(<EditorForm {...props} />);
 
     fetch.call();
-    await expect(alerts.showAlert).toHaveBeenCalledWith("Wystąpił błąd przy dodawaniu zdjęcia.");
+    await expect(alerts.showAlert).toHaveBeenCalledWith(
+      "Wystąpił błąd przy dodawaniu zdjęcia."
+    );
   });
 });
