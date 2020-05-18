@@ -181,7 +181,7 @@ class BlogPostForm extends React.Component {
                     {
                         this.state.isLoading ? <Alert variant="info">Ładowanie edytora postów.</Alert> :
                             this.state.error === "reservation" ? <Alert variant="danger">Wystąpił błąd podczas ładowania kreatora.</Alert> :
-                                this.state.error === "get" ? <Alert variant="danger">Wystąpił błąd podczas pobierania treści posta.</Alert> : null
+                                this.state.error === "get" ? <Alert variant="danger">Wystąpił błąd podczas pobierania treści posta.</Alert> :
                                 null
                     }
                 </Card.Body>
