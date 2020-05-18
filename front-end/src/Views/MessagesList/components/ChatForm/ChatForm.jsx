@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Form, Button, InputGroup, FormControl } from "react-bootstrap";
+import sendMessageIcon from "assets/sendMessageIcon.svg";
+
 
 const ChatForm = ({ sendMessage }) => {
   const handleSubmit = async (e) => {
@@ -35,8 +37,8 @@ const ChatForm = ({ sendMessage }) => {
           placeholder="Aa"
         />
         <InputGroup.Append>
-          <Button type="submit" variant="primary">
-            ->
+          <Button type="submit" variant="light">
+            <img src={sendMessageIcon} />
           </Button>
         </InputGroup.Append>
       </InputGroup>
