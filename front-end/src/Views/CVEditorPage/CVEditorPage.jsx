@@ -14,8 +14,8 @@ import { UserContext } from "context";
 import { sendData, getFeedback } from "Views/CVEditorPage/functions/other.js";
 import { createCVObject } from "Views/CVEditorPage/functions/createCVObject.js";
 import { withRouter } from "react-router-dom";
-import {getCVdata} from "./functions/other";
-import {mapData, mapFeedback} from "./functions/mapData";
+import { getCVdata } from "./functions/other";
+import { mapData, mapFeedback } from "./functions/mapData";
 import { withAlertContext } from "components";
 
 class CVEditorPage extends React.Component {
@@ -43,7 +43,7 @@ class CVEditorPage extends React.Component {
       fetchError: false,
       method: "POST",
       cv_id: undefined,
-      has_photo: false
+      has_photo: false,
     };
     this.tabs = [];
   }
@@ -97,9 +97,13 @@ class CVEditorPage extends React.Component {
         this.state.tabs.languages.data
       );
       try {
-        await sendData(cv, this.state.tabs.photo.data, this.context.token, this.state.method, this.state.cv_id).then(() =>
-          this.setState({ disabled: false })
-        );
+        await sendData(
+          cv,
+          this.state.tabs.photo.data,
+          this.context.token,
+          this.state.method,
+          this.state.cv_id
+        ).then(() => this.setState({ disabled: false }));
       } catch (e) {
         this.setState({ disabled: false });
         this.props.alertContext.showAlert("Nie udało się wysłać CV");
@@ -120,7 +124,7 @@ class CVEditorPage extends React.Component {
       error: this.state.commentsError,
       showComments: this.state.showComments,
       validated: this.state.validated,
-      isNew: this.state.method === "POST"
+      isNew: this.state.method === "POST",
     });
     return [
       {
@@ -169,51 +173,57 @@ class CVEditorPage extends React.Component {
     ];
   };
 
-  autofillEditor = async(id) => {
+  autofillEditor = async (id) => {
     let feedbackRes, cvRes, feedback, data;
     try {
       this.setState({
         loading: true,
         cv_id: id,
-        method: "PUT"
+        method: "PUT",
       });
       cvRes = await getCVdata(this.context.token, id);
       if (cvRes.was_reviewed && !cvRes.is_verified) {
         try {
           feedbackRes = await getFeedback(this.context.token, id);
           feedback = mapFeedback(feedbackRes);
-          Object.keys(feedback).forEach(item => {
-            this.setState(prevState => ({
-              tabs: {...prevState.tabs, [item]: {...prevState.tabs[item], comments: feedback[item]}}
+          Object.keys(feedback).forEach((item) => {
+            this.setState((prevState) => ({
+              tabs: {
+                ...prevState.tabs,
+                [item]: { ...prevState.tabs[item], comments: feedback[item] },
+              },
             }));
           });
         } catch (e) {
-            console.log(e);
-            this.props.alertContext.showAlert("Nie udało się załadować uwag.");
+          console.log(e);
+          this.props.alertContext.showAlert("Nie udało się załadować uwag.");
         } finally {
-            this.setState({
-                loading: false
-            })
+          this.setState({
+            loading: false,
+          });
         }
       } else {
         this.setState({
-          showComments: false
-        })
+          showComments: false,
+        });
       }
       data = mapData(cvRes);
-      Object.keys(data).forEach(item => {
-        this.setState(prevState => ({
-          tabs: {...prevState.tabs, [item]: {...prevState.tabs[item], data: data[item]}}
-        }))
+      Object.keys(data).forEach((item) => {
+        this.setState((prevState) => ({
+          tabs: {
+            ...prevState.tabs,
+            [item]: { ...prevState.tabs[item], data: data[item] },
+          },
+        }));
       });
       this.setState({
-        has_photo: cvRes.has_picture
-      })
-    } catch(e) {
+        has_photo: cvRes.has_picture,
+      });
+    } catch (e) {
       this.setState({
-        loading: false
-      })
-        this.props.alertContext.showAlert("Nie udało się załadować CV.");
+        loading: false,
+      });
+      this.props.alertContext.showAlert("Nie udało się załadować CV.");
     }
   };
 
@@ -234,18 +244,18 @@ class CVEditorPage extends React.Component {
         <Card>
           <Card.Header as="h2">Kreator CV</Card.Header>
           <Card.Body>
-              <Tabs
-                transition={false}
-                activeKey={this.state.formTab}
-                onSelect={e => this.setState({ formTab: e })}
-                className="CVEditorPage_tabs mb-1" // https://github.com/react-bootstrap/react-bootstrap/issues/4771
-              >
-                {this.tabs.map((tab) => (
-                  <Tab eventKey={tab.id} key={tab.id} title={tab.name}>
-                    {tab.component}
-                  </Tab>
-                ))}
-              </Tabs>
+            <Tabs
+              transition={false}
+              activeKey={this.state.formTab}
+              onSelect={(e) => this.setState({ formTab: e })}
+              className="CVEditorPage_tabs mb-1" // https://github.com/react-bootstrap/react-bootstrap/issues/4771
+            >
+              {this.tabs.map((tab) => (
+                <Tab eventKey={tab.id} key={tab.id} title={tab.name}>
+                  {tab.component}
+                </Tab>
+              ))}
+            </Tabs>
           </Card.Body>
         </Card>
       </Container>

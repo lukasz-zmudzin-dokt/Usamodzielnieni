@@ -2,7 +2,7 @@ import React from "react";
 import { render, fireEvent, waitForElement } from "@testing-library/react";
 import ItemsList from "./ItemsList";
 import { Items } from "../";
-import {AlertContext} from "context/AlertContext";
+import { AlertContext } from "context/AlertContext";
 
 jest.mock("../");
 
@@ -21,8 +21,8 @@ describe("ItemsList", () => {
       children: <div></div>,
     };
     contextA = {
-      showAlert: jest.fn()
-    }
+      showAlert: jest.fn(),
+    };
   });
 
   it("should render without crashing", () => {
@@ -80,9 +80,9 @@ describe("ItemsList", () => {
       clear: jest.fn(),
     };
     const { getByText } = render(
-        <AlertContext.Provider value={contextA}>
-          <ItemsList {...props} />
-        </AlertContext.Provider>
+      <AlertContext.Provider value={contextA}>
+        <ItemsList {...props} />
+      </AlertContext.Provider>
     );
 
     await waitForElement(() => getByText("Dodaj", { exact: false }));
@@ -90,7 +90,9 @@ describe("ItemsList", () => {
     fireEvent.click(getByText("Dodaj", { exact: false }));
     expect(props.onChange).toHaveBeenCalledTimes(0);
     expect(props.clear).toHaveBeenCalledTimes(0);
-    expect(contextA.showAlert).toHaveBeenCalledWith("Taka sama pozycja znajduje się już na liście.")
+    expect(contextA.showAlert).toHaveBeenCalledWith(
+      "Taka sama pozycja znajduje się już na liście."
+    );
   });
 
   it("should remove item from array when onCutClick function is called", async () => {

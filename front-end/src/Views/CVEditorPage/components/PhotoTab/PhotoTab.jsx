@@ -14,8 +14,12 @@ class PhotoTab extends React.Component {
   };
 
   setLabel = () => {
-    const label = this.props.data !== null ? this.props.data.name :
-        this.props.hasPhoto ? "Poprzednie zdjęcie" : "Wybierz zdjęcie";
+    const label =
+      this.props.data !== null
+        ? this.props.data.name
+        : this.props.hasPhoto
+        ? "Poprzednie zdjęcie"
+        : "Wybierz zdjęcie";
     return label;
   };
 
@@ -40,7 +44,7 @@ class PhotoTab extends React.Component {
               id="custom-file"
               custom
               label={this.setLabel()}
-              ref={ref => (this.fileInput = ref)}
+              ref={(ref) => (this.fileInput = ref)}
               onChange={this.onChange}
               accept="image/*"
               data-browse="Dodaj"

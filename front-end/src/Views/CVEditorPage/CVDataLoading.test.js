@@ -5,8 +5,8 @@ import { Router, Route } from "react-router-dom";
 import { createMemoryHistory } from "history";
 import { UserContext } from "context/UserContext";
 import proxy from "config/api";
-import {userTypes} from "constants/userTypes";
-import {AlertContext} from "../../context/AlertContext";
+import { userTypes } from "constants/userTypes";
+import { AlertContext } from "../../context/AlertContext";
 
 const renderWithRouterMatch = (
   ui,
@@ -114,15 +114,15 @@ describe("load cv data", () => {
       additional_info: "",
     };
     contextA = {
-      showAlert: jest.fn()
-    }
+      showAlert: jest.fn(),
+    };
   });
 
   it("should load correct data on personal tab", async () => {
     const { getByLabelText } = renderWithRouterMatch(
-        <AlertContext.Provider value={contextA}>
-          <CVEditorPage {...props} />
-        </AlertContext.Provider>
+      <AlertContext.Provider value={contextA}>
+        <CVEditorPage {...props} />
+      </AlertContext.Provider>
     );
     await wait(() => expect(fetch).toHaveBeenCalled());
     await expect(getByLabelText("Imię:").value).toBe(
@@ -137,9 +137,9 @@ describe("load cv data", () => {
 
   it("should load and display correct date", async () => {
     const { getByLabelText } = renderWithRouterMatch(
-        <AlertContext.Provider value={contextA}>
-          <CVEditorPage {...props} />
-        </AlertContext.Provider>
+      <AlertContext.Provider value={contextA}>
+        <CVEditorPage {...props} />
+      </AlertContext.Provider>
     );
 
     await wait(() => expect(fetch).toHaveBeenCalled());
@@ -152,9 +152,9 @@ describe("load cv data", () => {
   it("should load data and feedback", async () => {
     data.was_reviewed = true;
     const { getByLabelText, getByText } = renderWithRouterMatch(
-        <AlertContext.Provider value={contextA}>
-          <CVEditorPage {...props} />
-        </AlertContext.Provider>
+      <AlertContext.Provider value={contextA}>
+        <CVEditorPage {...props} />
+      </AlertContext.Provider>
     );
 
     await wait(() => expect(fetch).toHaveBeenCalledTimes(2));
@@ -166,9 +166,9 @@ describe("load cv data", () => {
   it("should render data only", async () => {
     data.was_reviewed = false;
     const { getByLabelText } = renderWithRouterMatch(
-        <AlertContext.Provider value={contextA}>
-          <CVEditorPage {...props} />
-        </AlertContext.Provider>
+      <AlertContext.Provider value={contextA}>
+        <CVEditorPage {...props} />
+      </AlertContext.Provider>
     );
 
     await wait(() => expect(fetch).toHaveBeenCalled());
@@ -179,36 +179,40 @@ describe("load cv data", () => {
   it("should fail on loading data and display alert(data)", async () => {
     dataFail = true;
     const { getByText } = renderWithRouterMatch(
-        <AlertContext.Provider value={contextA}>
-          <CVEditorPage {...props} />
-        </AlertContext.Provider>
+      <AlertContext.Provider value={contextA}>
+        <CVEditorPage {...props} />
+      </AlertContext.Provider>
     );
 
     await wait(() => expect(fetch).toHaveBeenCalled());
 
     expect(getByText("Imię:").value).not.toBe("Jan");
-    expect(contextA.showAlert).toHaveBeenCalledWith("Nie udało się załadować CV.");
+    expect(contextA.showAlert).toHaveBeenCalledWith(
+      "Nie udało się załadować CV."
+    );
   });
 
   it("should fail on loading data and display alert(feedback)", async () => {
     feedbackFail = true;
     data.was_reviewed = true;
     renderWithRouterMatch(
-        <AlertContext.Provider value={contextA}>
-          <CVEditorPage {...props} />
-        </AlertContext.Provider>
+      <AlertContext.Provider value={contextA}>
+        <CVEditorPage {...props} />
+      </AlertContext.Provider>
     );
 
     await wait(() => expect(fetch).toHaveBeenCalledTimes(2));
-    expect(contextA.showAlert).toHaveBeenCalledWith("Nie udało się załadować uwag.");
+    expect(contextA.showAlert).toHaveBeenCalledWith(
+      "Nie udało się załadować uwag."
+    );
   });
 
   it("should send edited data", async () => {
     data.was_reviewed = false;
     const { getByLabelText, getByText } = renderWithRouterMatch(
-        <AlertContext.Provider value={contextA}>
-          <CVEditorPage {...props} />
-        </AlertContext.Provider>
+      <AlertContext.Provider value={contextA}>
+        <CVEditorPage {...props} />
+      </AlertContext.Provider>
     );
 
     await wait(() => expect(fetch).toHaveBeenCalled());

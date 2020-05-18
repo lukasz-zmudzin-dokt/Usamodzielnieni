@@ -43,22 +43,22 @@ describe("ActionWithDate", () => {
   });
 
   it("should call correct url when photo is undefined", async () => {
-      global.open = jest.fn();
-      await sendData(cv, null, token, "POST");
-      await expect(global.open).toHaveBeenCalledWith(
-        proxy.plain + "/CV_Jan_Kowalski",
-        "_blank"
-      );
-    });
+    global.open = jest.fn();
+    await sendData(cv, null, token, "POST");
+    await expect(global.open).toHaveBeenCalledWith(
+      proxy.plain + "/CV_Jan_Kowalski",
+      "_blank"
+    );
+  });
 
-    it("should call correct url when photo is defined", async () => {
-      global.open = jest.fn();
-      await sendData(cv, file, token, "POST");
-      await expect(global.open).toHaveBeenCalledWith(
-        proxy.plain + "/CV_Jan_Kowalski",
-        "_blank"
-      );
-    });
+  it("should call correct url when photo is defined", async () => {
+    global.open = jest.fn();
+    await sendData(cv, file, token, "POST");
+    await expect(global.open).toHaveBeenCalledWith(
+      proxy.plain + "/CV_Jan_Kowalski",
+      "_blank"
+    );
+  });
 
   it("should throw an error when delete api return wrong status", async () => {
     failFetch = "DELETE";
