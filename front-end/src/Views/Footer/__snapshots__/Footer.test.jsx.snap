@@ -1,0 +1,140 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Footer should match snapshot 1`] = `
+<div>
+  <div
+    class="font full-width container-fluid"
+  >
+    <div
+      class="p-5 row"
+    >
+      <div
+        class="p-4 col-md-3 col-sm-12 col-12 order-md-1 order-sm-2 order-2"
+      >
+        <div
+          class="company-title row"
+        >
+          Partner
+        </div>
+        <div
+          class="company-logo-row row"
+        >
+          <img
+            alt="Kulczyk"
+            class="company-logo"
+            src="kulczyk-foundation-logo.png"
+          />
+        </div>
+      </div>
+      <div
+        class="p-4 col-md-3 col-sm-12 col-12 order-md-2 order-sm-3 order-3"
+      >
+        <div
+          class="company-title row"
+        >
+          Twórca technologiczny 
+          <br />
+           strony studenci
+        </div>
+        <div
+          class="company-logo-row row"
+        >
+          <img
+            alt="pw"
+            class="company-logo"
+            src="politechnika-warszawska-logo.png"
+          />
+        </div>
+      </div>
+      <div
+        class="p-4 col-md-3 col-sm-12 col-12 order-md-3 order-sm-4 order-4"
+      >
+        <div
+          class="company-title row"
+        >
+          Pomysłodawca, 
+          <br />
+           twórca treści:
+        </div>
+        <div
+          class="company-logo-row row"
+        >
+          <img
+            alt="oneday"
+            class="company-logo"
+            src="oneday-logo.png"
+          />
+        </div>
+      </div>
+      <div
+        class="social-media-col col-md-2 col-sm-12 col-12 order-md-4 offset-md-1 order-sm-1 order-1"
+      >
+        <div
+          class="pt-3 row"
+        >
+          <a
+            class="d-flex align-items-end"
+            href="https://www.youtube.com/channel/UCbKE3BfzmHGfXbB9nmmswYw"
+            target="_blank"
+          >
+            <img
+              alt="yt"
+              class="social-media-icon"
+              src="youtube-icon.png"
+            />
+            youtube
+          </a>
+        </div>
+        <div
+          class="pt-3 row"
+        >
+          <a
+            class="d-flex align-items-end"
+            href="https://twitter.com/usamodzielnieni"
+            target="_blank"
+          >
+            <img
+              alt="tt"
+              class="social-media-icon"
+              src="twitter-icon.png"
+            />
+            twitter
+          </a>
+        </div>
+        <div
+          class="pt-3 row"
+        >
+          <a
+            class="d-flex align-items-end"
+            href="https://www.facebook.com/Usamodzielnieni-110914023943342"
+            target="_blank"
+          >
+            <img
+              alt="fb"
+              class="social-media-icon lol"
+              src="facebook-icon.png"
+            />
+            facebook
+          </a>
+        </div>
+        <div
+          class="pt-3 row"
+        >
+          <a
+            class="d-flex align-items-end"
+            href="https://www.instagram.com/_usamodzielnieni_"
+            target="_blank"
+          >
+            <img
+              alt="ig"
+              class="social-media-icon"
+              src="instagram-icon.png"
+            />
+            instagram
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
