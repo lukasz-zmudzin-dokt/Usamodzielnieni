@@ -23,10 +23,10 @@ const Filter = ({ setFilters, count, disabled }) => {
   const alertC = useRef(useContext(AlertContext));
 
   useEffect(() => {
-    const loadSelects = async (token) => {
+    const loadSelects = async () => {
       let res;
       try {
-        res = await getSelects(token);
+        res = await getSelects();
       } catch (e) {
         console.log(e);
         res = { categories: [], types: [] };
@@ -34,8 +34,8 @@ const Filter = ({ setFilters, count, disabled }) => {
       }
       setArrays(res);
     };
-    loadSelects(user.token);
-  }, [user.token]);
+    loadSelects();
+  }, []);
 
   const filter = (event) => {
     event.preventDefault();
