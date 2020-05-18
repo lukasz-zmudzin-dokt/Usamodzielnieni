@@ -1,64 +1,63 @@
 .font {
-    font-family: 'MonoType', serif;
-    font-size: 20px;
+  font-family: "MonoType", serif;
+  font-size: 20px;
 }
 .social-media-icon {
-    height: 35px;
-    width: 35px;
-    margin-right: 30px;
+  height: 35px;
+  width: 35px;
+  margin-right: 30px;
 }
 .company-logo {
-    width: 180px;
+  width: 180px;
 }
 .company-title {
-    height: 100px;
+  height: 100px;
 }
 a {
-    color:black
+  color: black;
 }
 a:hover {
-    text-decoration: none;
+  text-decoration: none;
 }
 
-@media(min-width: 1140px) {
-    .font {
-        font-size: 25px;
-    }
-    .company-logo {
-        width: 200px;
-    }
-    .company-title {
-        height: 110px;
-    }
+@media (min-width: 1140px) {
+  .font {
+    font-size: 25px;
+  }
+  .company-logo {
+    width: 200px;
+  }
+  .company-title {
+    height: 110px;
+  }
 }
 
 @media (min-width: 992px) and (max-width: 1139px) {
-
 }
 
 @media (min-width: 769px) and (max-width: 950px) {
-    .company-logo {
-        width: 139px;
-    }
-    .social-media-col {
-        margin-left: 50px;
-    }
+  .company-logo {
+    width: 139px;
+  }
+  .social-media-col {
+    margin-left: 50px;
+  }
 }
 
 @media (max-width: 768px) {
-    .social-media-row {
-        justify-content: center;
-    }
-    .company-title {
-        justify-content: center;
-        height: 90px;
-    }
-    .company-logo-row {
-        justify-content: center;
-        width: auto;
-    }
-    .social-media-col {
-        padding-left: calc(50vw - 100px);
-        padding-bottom: 30px;
-    }
+  .social-media-row {
+    justify-content: center;
+  }
+  .company-title {
+    justify-content: center;
+    height: 90px;
+  }
+  .company-logo-row {
+    justify-content: center;
+    width: auto;
+  }
+  .social-media-col {
+    padding-left: calc(50vw - 100px);
+    padding-bottom: 30px;
+  }
 }
