@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useContext } from "react";
 import FormGroup from "components/FormGroup";
-import { Form, Button, Row, Alert } from "react-bootstrap";
+import { Form, Button, Row } from "react-bootstrap";
 import { sendFeedback } from "Views/CVCorrection/functions";
 import { useHistory } from "react-router-dom";
+import { AlertContext } from "context";
 
 const CorrectionForm = ({ id, token }) => {
-  const [msg, setMsg] = useState("");
+  const alertC = useRef(useContext(AlertContext));
   const [disabled, setDisabled] = useState(false);
   const [feedback, setFeedback] = useState({
     basicInfo: "",
@@ -31,21 +32,19 @@ const CorrectionForm = ({ id, token }) => {
     event.stopPropagation();
     if (checkIfNotEmpty()) {
       setDisabled(true);
-
       try {
         await sendFeedback(id, token, feedback);
+        alertC.current.showAlert("Pomyślnie przesłano uwagi", "success");
         return history.push("/cvApproval");
       } catch (err) {
-        setMsg("Błąd serwera.");
+        alertC.current.showAlert("Nie udało się wysłać uwag");
       }
     } else {
-      setMsg("Dodaj minimalnie jedną uwagę.");
+      alertC.current.showAlert("Dodaj minimalnie jedną uwagę.");
     }
 
     setDisabled(false);
   };
-
-  const message = msg ? <Alert variant="danger">{msg}</Alert> : null;
 
   return (
     <Form onSubmit={submit} className="CVCorrection__form">
@@ -97,7 +96,6 @@ const CorrectionForm = ({ id, token }) => {
         val={feedback.additionalInfo}
         length={{ min: 1, max: 1000 }}
       />
-      {message}
       <Row className="justify-content-center m-0">
         <Button variant="primary" type="submit" disabled={disabled}>
           {disabled ? "Ładowanie..." : "Wyślij uwagi"}

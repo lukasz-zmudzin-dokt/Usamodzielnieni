@@ -1,6 +1,7 @@
 import React from "react";
-import { render, fireEvent, waitForElement } from "@testing-library/react";
+import { render, fireEvent, wait } from "@testing-library/react";
 import RemoveOffer from "./RemoveOffer";
+import { AlertContext } from "context";
 
 let mock_apiError = false;
 jest.mock("../../functions/deleteOffer", () => ({
@@ -14,7 +15,9 @@ jest.mock("../../functions/deleteOffer", () => ({
 
 describe("RemoveOffer", () => {
   let props;
-
+  const alertC = {
+    showAlert: jest.fn(),
+  };
   beforeAll(() => {
     props = {
       id: "123",
@@ -33,33 +36,38 @@ describe("RemoveOffer", () => {
   });
 
   it("should render success alert when api returns success", async () => {
-    const { getByText } = render(<RemoveOffer {...props} />);
-
-    fireEvent.click(getByText("Usuń ofertę"));
-    fireEvent.click(getByText("Tak"));
-
-    await waitForElement(() =>
-      getByText("Pomyślnie usunięto ofertę", { exact: false })
+    const { getByText } = render(
+      <AlertContext.Provider value={alertC}>
+        <RemoveOffer {...props} />
+      </AlertContext.Provider>
     );
 
-    expect(
-      getByText("Pomyślnie usunięto ofertę", { exact: false })
-    ).toBeInTheDocument();
+    fireEvent.click(getByText("Usuń ofertę"));
+    fireEvent.click(getByText("Usuń ✗", { exact: false }));
+
+    await wait(() => expect(alertC.showAlert).toHaveBeenCalled());
+
+    expect(alertC.showAlert).toHaveBeenCalledWith(
+      "Pomyślnie usunięto ofertę.",
+      "success"
+    );
   });
 
   it("should render error alert when api throws error", async () => {
     mock_apiError = true;
-    const { getByText } = render(<RemoveOffer {...props} />);
-
-    fireEvent.click(getByText("Usuń ofertę"));
-    fireEvent.click(getByText("Tak"));
-
-    await waitForElement(() =>
-      getByText("Wystąpił błąd przy usuwaniu oferty", { exact: false })
+    const { getByText } = render(
+      <AlertContext.Provider value={alertC}>
+        <RemoveOffer {...props} />
+      </AlertContext.Provider>
     );
 
-    expect(
-      getByText("Wystąpił błąd przy usuwaniu oferty", { exact: false })
-    ).toBeInTheDocument();
+    fireEvent.click(getByText("Usuń ofertę"));
+    fireEvent.click(getByText("Usuń ✗", { exact: false }));
+
+    await wait(() => expect(alertC.showAlert).toHaveBeenCalled());
+
+    expect(alertC.showAlert).toHaveBeenCalledWith(
+      "Wystąpił błąd przy usuwaniu oferty."
+    );
   });
 });

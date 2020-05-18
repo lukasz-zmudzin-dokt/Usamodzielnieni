@@ -1,5 +1,5 @@
-@media(max-width: 768px) {
-    .loginPage__card {
-        width: 100% !important;
-    }
+@media (max-width: 768px) {
+  .loginPage__card {
+    width: 100% !important;
+  }
 }

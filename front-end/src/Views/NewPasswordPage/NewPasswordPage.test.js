@@ -1,25 +1,33 @@
 import NewPasswordPage from "./NewPasswordPage";
 import React from "react";
 import { Router } from "react-router-dom";
-import { waitForElement, fireEvent, render } from "@testing-library/react";
+import { fireEvent, render, wait } from "@testing-library/react";
 import { createMemoryHistory } from "history";
+import { AlertContext } from "context";
 
 const renderWithRouter = (
   ui,
+  context,
   {
     route = "/newPassword/1",
     history = createMemoryHistory({ initialEntries: [route] }),
   } = {}
 ) => {
   return {
-    ...render(<Router history={history}>{ui}</Router>),
+    ...render(
+      <AlertContext.Provider value={context}>
+        <Router history={history}>{ui}</Router>
+      </AlertContext.Provider>
+    ),
     history,
   };
 };
 
 describe("NewPasswordPage", () => {
   let apiFail;
-
+  let alertC = {
+    showAlert: jest.fn(),
+  };
   beforeAll(() => {
     global.fetch = jest.fn().mockImplementation((input, init) => {
       return new Promise((resolve, reject) => {
@@ -43,9 +51,10 @@ describe("NewPasswordPage", () => {
     expect(container).toMatchSnapshot();
   });
 
-  it("should should render message on non matching password", () => {
+  it("should render message on non matching password", async () => {
     const { getByPlaceholderText, getByText } = renderWithRouter(
-      <NewPasswordPage />
+      <NewPasswordPage />,
+      alertC
     );
 
     fireEvent.change(getByPlaceholderText("Nowe hasło"), {
@@ -56,14 +65,15 @@ describe("NewPasswordPage", () => {
     });
 
     fireEvent.click(getByText("Wyślij"));
-    expect(getByText("Hasła się nie zgadzają")).toBeInTheDocument();
-    expect(fetch).toHaveBeenCalledTimes(0);
+    await wait(() => expect(alertC.showAlert).toHaveBeenCalled());
+    expect(alertC.showAlert).toHaveBeenCalledWith("Hasła się nie zgadzają");
   });
 
   it("should render alert on api fail", async () => {
     apiFail = true;
     const { getByPlaceholderText, getByText } = renderWithRouter(
-      <NewPasswordPage />
+      <NewPasswordPage />,
+      alertC
     );
 
     fireEvent.change(getByPlaceholderText("Nowe hasło"), {
@@ -74,17 +84,16 @@ describe("NewPasswordPage", () => {
     });
 
     fireEvent.click(getByText("Wyślij"));
-    await waitForElement(() =>
-      getByText("Coś poszło nie tak", { exact: false })
+    await wait(() => expect(alertC.showAlert).toHaveBeenCalled());
+    expect(alertC.showAlert).toHaveBeenCalledWith(
+      "Coś poszło nie tak. Upewnij się, że Twój token nie wygasł."
     );
-    expect(
-      getByText("Coś poszło nie tak", { exact: false })
-    ).toBeInTheDocument();
   });
 
   it("should render alert on success and redirect", async () => {
-    const { history, getByPlaceholderText, getByText } = renderWithRouter(
-      <NewPasswordPage />
+    const { getByPlaceholderText, getByText } = renderWithRouter(
+      <NewPasswordPage />,
+      alertC
     );
 
     fireEvent.change(getByPlaceholderText("Nowe hasło"), {
@@ -95,12 +104,10 @@ describe("NewPasswordPage", () => {
     });
 
     fireEvent.click(getByText("Wyślij"));
-    await waitForElement(() =>
-      getByText("Hasło zostało zmienione", { exact: false })
+    await wait(() => expect(alertC.showAlert).toHaveBeenCalled());
+    expect(alertC.showAlert).toHaveBeenCalledWith(
+      "Hasło zostało zmienione. Przekierowuję..."
     );
-    expect(
-      getByText("Hasło zostało zmienione", { exact: false })
-    ).toBeInTheDocument();
     //await expect(history.location.pathname).toBe("/login");
   });
 });

@@ -1,8 +1,13 @@
 import React from "react";
-import { fireEvent, render, waitForElement } from "@testing-library/react";
+import {
+  fireEvent,
+  render,
+  waitForElement,
+  wait,
+} from "@testing-library/react";
 import { MemoryRouter, Router } from "react-router-dom";
 import CVPosition from "./CVPosition";
-import { UserContext } from "context/UserContext";
+import { UserContext, AlertContext } from "context";
 import { createMemoryHistory } from "history";
 import { staffTypes } from "constants/staffTypes";
 import proxy from "config/api";
@@ -38,6 +43,9 @@ describe("CVPosition", () => {
       last_name: "Arek",
       email: "jamjestjarek@arek.pp",
     },
+  };
+  let alertC = {
+    showAlert: jest.fn(),
   };
 
   beforeAll(() => {
@@ -123,9 +131,11 @@ describe("CVPosition", () => {
 
   it("should return alert on cv url fetch from failing api", async () => {
     const { getByText } = render(
-      <MemoryRouter>
-        <CVPosition cv={apiCV} />
-      </MemoryRouter>
+      <AlertContext.Provider value={alertC}>
+        <MemoryRouter>
+          <CVPosition cv={apiCV} />
+        </MemoryRouter>
+      </AlertContext.Provider>
     );
 
     await waitForElement(() => getByText("Jarek"));
@@ -137,6 +147,7 @@ describe("CVPosition", () => {
         method: "GET",
       })
     );
-    expect(getByText("Wystąpił błąd", { exact: false })).toBeInTheDocument();
+    await wait(() => expect(alertC.showAlert).toHaveBeenCalled());
+    expect(alertC.showAlert).toHaveBeenCalledWith("Nie udało się pobrać CV.");
   });
 });

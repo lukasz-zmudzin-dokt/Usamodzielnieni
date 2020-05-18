@@ -11,6 +11,7 @@ describe("Filter", () => {
   let failFetch = false;
   let apiFilters = ["abcd", "abcde"];
   let props;
+
   global.fetch = jest.fn().mockImplementation((input, init) => {
     return new Promise((resolve, reject) => {
       if (failFetch) {
@@ -46,15 +47,14 @@ describe("Filter", () => {
 
   it("should show message if api failed", async () => {
     failFetch = true;
-    const { getByText } = render(<Filter {...props} />);
+    const { getByText, queryByText } = render(<Filter {...props} />);
 
-    await waitForElement(() =>
-      getByText("Wystąpił błąd podczas ładowania filtrów.", { exact: false })
-    );
+    await waitForElement(() => getByText("Filtruj posty", { exact: false }));
 
     expect(
-      getByText("Wystąpił błąd podczas ładowania filtrów.", { exact: false })
+      getByText("Wystąpił błąd podczas ładowania filtrów.")
     ).toBeInTheDocument();
+    expect(queryByText("abcd", { exact: false })).not.toBeInTheDocument();
   });
 
   it("should clear filters if button is clicked", async () => {

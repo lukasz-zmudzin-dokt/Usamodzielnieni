@@ -1,17 +1,18 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import { Alert, Card, Container } from "react-bootstrap";
 import { getCVs } from "./functions/getCVs";
-import { UserContext } from "context";
-import CVList from "./components/CVList";
+import { UserContext, AlertContext } from "context";
+import CVList from "./_components/CVList";
 import { acceptCV } from "./functions/acceptCV";
+
 const CVApprovalPage = () => {
   const context = useContext(UserContext);
+  const alertC = useRef(useContext(AlertContext));
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
   const [cvs, setCvs] = useState([]);
 
   useEffect(() => {
-    const loadCVs = async (token, setCvs, setLoading, setError) => {
+    const loadCVs = async (token) => {
       setLoading(true);
       let res;
       try {
@@ -21,11 +22,11 @@ const CVApprovalPage = () => {
       } catch (e) {
         setCvs([]);
         setLoading(false);
-        setError(true);
+        alertC.current.showAlert("Nie udało się załadować CV.");
       }
     };
 
-    loadCVs(context.token, setCvs, setLoading, setError);
+    loadCVs(context.token);
   }, [context.token]);
 
   const cutCV = async (id) => {
@@ -33,17 +34,13 @@ const CVApprovalPage = () => {
       await acceptCV(context.token, id);
       setCvs(cvs.filter((cv) => cv.cv_id !== id));
     } catch (e) {
-      return false;
+      throw false;
     }
   };
 
   const message = loading ? (
     <Alert variant="info" className="m-3">
       Ładuję...
-    </Alert>
-  ) : error ? (
-    <Alert variant="danger" className="m-3">
-      Ups, wystąpił błąd.
     </Alert>
   ) : cvs.length === 0 ? (
     <Alert variant="info" className="m-3">
