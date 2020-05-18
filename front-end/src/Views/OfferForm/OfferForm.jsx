@@ -33,8 +33,8 @@ const OfferForm = () => {
     expiration_date: "",
     category: "",
     type: "",
-    pay_from: "",
-    pay_to: "",
+    salary_min: "",
+    salary_max: "",
   });
 
   //47991e86-4b42-4507-b154-1548bf8a3bd3
@@ -69,8 +69,6 @@ const OfferForm = () => {
         company_name: context.data.company_name,
         category: categories[0],
         type: types[0],
-        pay_from: loadedOffer?.salary_min,
-        pay_to: loadedOffer?.salary_max,
         ...loadedOffer,
       }));
       setDisabled(false);
@@ -87,12 +85,7 @@ const OfferForm = () => {
   const submit = async (event) => {
     const form = event.currentTarget;
     event.preventDefault();
-    if (checkPayValidity(pay_from, pay_to) === false) {
-      alertC.current.showAlert(
-        'Wartości wynagrodzenia muszą być liczbami całkowitymi lub z częścią setną, a "Wynagrodzenie od" musi być mniejsze bądź równe \n "Wynagrodzenie do:"'
-      );
-      event.stopPropagation();
-    } else if (form.checkValidity() === false) {
+    if (form.checkValidity() === false) {
       event.stopPropagation();
     } else {
       setDisabled(true);
@@ -102,8 +95,8 @@ const OfferForm = () => {
             ...offer,
             company_address: context.data.company_address,
             expiration_date: expiration_date.toISOString().substr(0, 10),
-            salary_min: pay_from.replace(",", "."),
-            salary_max: pay_to.replace(",", "."),
+            salary_min: salary_min.replace(",", "."),
+            salary_max: salary_max.replace(",", "."),
           },
           context.token,
           id
@@ -116,20 +109,6 @@ const OfferForm = () => {
     }
     setDisabled(false);
     setValidated(true);
-  };
-
-  const checkPayValidity = (input_from, input_to) => {
-    if (
-      input_from !== undefined &&
-      input_to !== undefined &&
-      input_from !== "" &&
-      input_to !== ""
-    ) {
-      if (parseFloat(input_from) <= parseFloat(input_to)) {
-        return true;
-      }
-    }
-    return false;
   };
 
   const msg = err ? (
@@ -147,8 +126,8 @@ const OfferForm = () => {
     voivodeship,
     category,
     type,
-    pay_from,
-    pay_to,
+    salary_min,
+    salary_max,
   } = offer;
 
   return (
@@ -205,17 +184,23 @@ const OfferForm = () => {
               />
               <FormGroup
                 header="Wynagrodzenie od (zł / miesiąc)"
-                id="pay_from"
-                setVal={(val) => setOffer({ ...offer, pay_from: val })}
-                val={pay_from}
+                id="salary_min"
+                type="number"
+                setVal={(val) => setOffer({ ...offer, salary_min: val })}
+                val={salary_min}
                 required
+                length={{min: 0, max: offer.salary_max - 1}}
+                incorrect="Pole musi być mniejsze od maksymalnej stawki"
               />
               <FormGroup
                 header="Wynagrodzenie do (zł / miesiąc)"
-                id="pay_to"
-                setVal={(val) => setOffer({ ...offer, pay_to: val })}
-                val={pay_to}
+                id="salary_max"
+                type="number"
+                setVal={(val) => setOffer({ ...offer, salary_max: val })}
+                val={salary_max}
                 required
+                length={{min: offer.salary_min + 1, max: 999999}}
+                incorrect="Pole musi być większe od minimalnej stawki"
               />
             </div>
             <div className="offerForm__wrapper">
@@ -247,7 +232,6 @@ const OfferForm = () => {
                 type="select"
                 array={arrays.types}
                 required
-                incorrect="Podaj wymiar pracy np. staż,praca"
               />
               <FormGroup
                 header="Ważne do"

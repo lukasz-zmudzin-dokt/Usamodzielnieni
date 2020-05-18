@@ -114,7 +114,9 @@ exports[`JobOfferDetails should render without crashing 1`] = `
               <div
                 class="detailsItem__value"
               >
+                100000
                  zł - 
+                123123
                  zł
               </div>
             </div>

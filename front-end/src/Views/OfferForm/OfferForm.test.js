@@ -81,9 +81,8 @@ describe("OfferForm", () => {
       "Wed May 17 2023 00:00:00 GMT+0100 (czas środkowoeuropejski standardowy)",
     category: "xd",
     type: "IT",
-    pay_period: "nigdy",
-    pay_from: "0",
-    pay_to: "420",
+    salary_min: "0",
+    salary_max: "420",
   };
   beforeAll(() => {
     global.fetch = jest.fn().mockImplementation((input, init) => {
@@ -242,7 +241,7 @@ describe("OfferForm", () => {
     expect(fetch).toHaveBeenCalledTimes(2);
   });
 
-  it("should redirect when offer is send", async () => {
+  it("should redirect when offer is sent", async () => {
     // jest.resetModules();
 
     const {
@@ -343,7 +342,7 @@ describe("OfferForm", () => {
       target: { value: "1" },
     });
     fireEvent.change(getByLabelText("Wynagrodzenie do (zł / miesiąc)"), {
-      target: { value: "2" },
+      target: { value: "200" },
     });
 
     fireEvent.click(getByText("Dodaj"));
@@ -414,7 +413,7 @@ describe("OfferForm", () => {
         method: "GET",
       })
     );
-    fireEvent.change(getByPlaceholderText("Adres firmy"), {
+    fireEvent.change(getByPlaceholderText("Nazwa stanowiska"), {
       target: { value: "abcd" },
     });
 
