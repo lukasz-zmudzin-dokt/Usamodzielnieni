@@ -3,10 +3,10 @@ import { ListGroup, Container, Card, Button } from "react-bootstrap";
 import MessageItem from "./components/MessageItem";
 import { ChatForm } from "./components";
 import proxy from "config/api";
-import { UserContext } from "context";
+import { UserContext, AlertContext } from "context";
 import { useParams, useHistory } from "react-router-dom";
 import { UserPicture } from "components";
-import {sendMessage} from "./functions/apiCalls";
+//import {sendMessage} from "./functions/apiCalls";
 
 const getMessages = async (token, id) => {
   const headers = {
@@ -22,6 +22,29 @@ const getMessages = async (token, id) => {
     throw response.status;
   }
 };
+
+const sendMessage = async (token, id, msg, data, setData) => {
+  const url = proxy.chat + `${id}/`;
+  const headers = {
+    Authorization: "token " + token,
+    "Content-Type": "application/json",
+  };
+  //const response = await fetch(url, { method: "POST", body: msg, headers });
+  const response = {status: 200};
+
+  if (response.status === 200) {
+    let newData = data.slice();
+    newData.push({
+      content: msg,
+      send: "11:55 12.03.2020",
+      side: "right",
+      id: 0,
+    });
+    setData(newData);
+  } else {
+    throw response.status;
+  }
+}
 
 const dataD = [
   {
@@ -81,6 +104,7 @@ const dataD = [
 const MessagesList = () => {
   const [data, setData] = useState([]);
   const user = useContext(UserContext);
+  const alertC = useRef(useContext(AlertContext));
   const history = useHistory();
   const { id } = useParams();
   const messagesEl = useRef(null);
@@ -96,6 +120,7 @@ const MessagesList = () => {
         res = await getMessages(token, id);
       } catch (e) {
         console.log(e);
+        alertC.current.showAlert("Nie udało się załadować wiadomości.");
         res = [];
       }
       setData(res);
@@ -103,7 +128,7 @@ const MessagesList = () => {
     loadMessages(user.token, id);
     messagesEl.current.scrollTop = messagesEl.current.scrollHeight;
   }, [id, user.token]);
-
+  console.log(data);
   return (
     <Container className="messagesList">
       <Card className="messagesList__card">
@@ -125,8 +150,8 @@ const MessagesList = () => {
             ))}
           </ListGroup>
         </Card.Body>
-        <ChatForm sendMessage={msg => console.log(msg)}/>
-        {/*<ChatForm sendMessage={msg => sendMessage(user.token, id, msg)}/>*/}
+        {/*<ChatForm sendMessage={msg => console.log(msg)}/>*/}
+        <ChatForm sendMessage={msg => sendMessage(user.token, id, msg, data, setData)}/>
       </Card>
       
     </Container>

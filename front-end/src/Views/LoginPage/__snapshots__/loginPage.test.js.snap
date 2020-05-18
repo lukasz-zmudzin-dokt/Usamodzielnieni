@@ -70,6 +70,11 @@ exports[`LoginPageTest should match snapshot 1`] = `
           class="loginPage__links"
         >
           <a
+            href="/newPassword"
+          >
+            Zapomniałeś hasła?
+          </a>
+          <a
             href="/newAccount"
           >
             Załóż konto!

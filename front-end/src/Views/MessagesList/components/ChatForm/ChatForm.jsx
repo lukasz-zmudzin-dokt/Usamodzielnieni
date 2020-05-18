@@ -2,11 +2,16 @@ import React, {useState} from "react";
 import {Form, Button, InputGroup, FormControl} from "react-bootstrap";
 
 const ChatForm = ({sendMessage}) => {
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if(message !== "") {
-            sendMessage(message);
-            setMessage("");
+            try {
+                console.log(message);
+                await sendMessage(message);
+                setMessage("");
+            } catch(e) {
+                console.log(e);
+            }
         }
     };
     

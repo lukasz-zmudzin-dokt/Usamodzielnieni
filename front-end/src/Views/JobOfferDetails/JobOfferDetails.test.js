@@ -1,8 +1,8 @@
 import React from "react";
-import { render, waitForElement } from "@testing-library/react";
+import { render, waitForElement, wait } from "@testing-library/react";
 import JobOfferDetails from "./JobOfferDetails";
 import { MemoryRouter } from "react-router-dom";
-import { UserContext } from "context/UserContext";
+import { UserContext, AlertContext } from "context";
 import { userTypes } from "constants/userTypes";
 import { userStatuses } from "constants/userStatuses";
 import { staffTypes } from "constants/staffTypes";
@@ -22,7 +22,9 @@ describe("JobOfferDetails", () => {
   let apiStatus;
   let match;
   let user;
-
+  let alertC = {
+    showAlert: jest.fn(),
+  };
   beforeAll(() => {
     match = { params: { id: "123" } };
     global.fetch = jest.fn().mockImplementation((input, init) => {
@@ -101,14 +103,18 @@ describe("JobOfferDetails", () => {
 
   it("should render error alert when api returns error", async () => {
     apiStatus = 500;
-    const { getByText, queryByText } = render(
-      <MemoryRouter>
-        <JobOfferDetails match={match} />
-      </MemoryRouter>
+    const { queryByText } = render(
+      <AlertContext.Provider value={alertC}>
+        <MemoryRouter>
+          <JobOfferDetails match={match} />
+        </MemoryRouter>
+      </AlertContext.Provider>
     );
 
-    await waitForElement(() => getByText("Wystąpił błąd", { exact: false }));
-    expect(getByText("Wystąpił błąd", { exact: false })).toBeInTheDocument();
+    await wait(() => expect(alertC.showAlert).toHaveBeenCalled());
+    expect(alertC.showAlert).toHaveBeenCalledWith(
+      "Wystąpił błąd podczas ładowania oferty."
+    );
     expect(queryByText("Jakaś nazwa oferty")).not.toBeInTheDocument();
   });
 

@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import { Alert, Button, Card, ListGroup, Row } from "react-bootstrap";
-import { UserContext } from "context";
+import { UserContext, AlertContext } from "context";
 import {
   getUserDetails,
   setUserApproved,
@@ -11,14 +11,13 @@ import { userTypes } from "constants/userTypes";
 
 const UserToApprove = ({ user, activeUser }) => {
   const context = useContext(UserContext);
+  const alertC = useRef(useContext(AlertContext));
   const [userDetails, setUserDetails] = useState([]);
   const [userDetailsFacilityAddress, setUserDetailsFacilityAddress] = useState(
     []
   );
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-  const [approved, setApproved] = useState(false);
-  const [rejected, setRejected] = useState(false);
 
   const [showRejectModal, setShowReject] = useState(false);
   const [rejectConfirmed, setRejectConfirmed] = useState(false);
@@ -44,31 +43,36 @@ const UserToApprove = ({ user, activeUser }) => {
     if (user.id === activeUser) {
       loadUserDetails(context.token, user.id);
     }
-  }, [context.token, user.id, user.type, activeUser]);
+    if (rejectConfirmed) rejectUser(context.token, user.id);
+  }, [context.token, user.id, user.type, activeUser, rejectConfirmed]);
 
   const approveUser = async (e, token, userId) => {
     e.preventDefault();
     try {
       let res = await setUserApproved(token, userId);
-      if (res === "User successfully verified.") {
-        setApproved(true);
+      if (res.message === "Użytkownik został pomyślnie zweryfikowany") {
+        alertC.current.showAlert(res.message, "success");
       }
     } catch (err) {
       setError(true);
+      alertC.current.showAlert("Nie udało się zweryfikować użytkownika");
     }
   };
 
   //const rejectUser = async (e, token, userId) => {
   const rejectUser = async (token, userId) => {
-    //e.preventDefault();
+    let res;
     try {
-      let res = await setUserRejected(token, userId);
-      if (res === "User status successfully set to not verified.") {
-        setRejected(true);
+      res = await setUserRejected(token, userId);
+      console.log(res);
+      if (res.message === "Użytkownik został pomyślnie odrzucony") {
+        alertC.current.showAlert(res.message, "success");
       }
     } catch (err) {
       setError(true);
+      alertC.current.showAlert("Nie udało się odrzucić użytkownika");
     }
+    setRejectConfirmed(false);
   };
 
   const handleOnClick = (e) => {
@@ -113,19 +117,10 @@ const UserToApprove = ({ user, activeUser }) => {
     </Alert>
   ) : error ? (
     <Alert className="mb-0" variant="danger">
-      Ups, wystąpił błąd...
-    </Alert>
-  ) : approved ? (
-    <Alert className="mb-0" variant="success">
-      Konto zatwierdzone pomyślnie.
-    </Alert>
-  ) : rejected ? (
-    <Alert className="mb-0" variant="success">
-      Konto odrzucone pomyślnie.
+      Nie udało się załadować danych użytkownika.
     </Alert>
   ) : null;
 
-  if (rejectConfirmed) rejectUser(context.token, user.id);
   /*if(acceptConfirmed)
         approveUser(context.token, user.id);*/
 
@@ -134,14 +129,14 @@ const UserToApprove = ({ user, activeUser }) => {
   } else {
     return (
       <Card.Body>
-        {DeletionModal(
-          showRejectModal,
-          setShowReject,
-          setRejectConfirmed,
-          "Czy na pewno chcesz odrzucić tego użytkownika?",
-          "Odrzuć",
-          "Anuluj"
-        )}
+        <DeletionModal
+          show={showRejectModal}
+          setShow={setShowReject}
+          delConfirmed={setRejectConfirmed}
+          question={"Czy na pewno chcesz odrzucić tego użytkownika?"}
+          confirmLabel={"Odrzuć"}
+          cancelLabel={"Anuluj"}
+        />
         <ListGroup variant="flush">
           <ListGroup.Item>
             <Row>

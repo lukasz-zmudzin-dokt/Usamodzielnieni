@@ -3,6 +3,7 @@ import { render, wait, fireEvent } from "@testing-library/react";
 import MessagesList from "Views/MessagesList";
 import { createMemoryHistory } from "history";
 import { Router } from "react-router-dom";
+import { AlertContext } from "context";
 
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
@@ -41,6 +42,10 @@ describe("MessagesList", () => {
     },
   ];
 
+  const alertC = {
+    showAlert: jest.fn(),
+  };
+
   beforeAll(() => {
     global.fetch = jest.fn().mockImplementation((input, init) => {
       return new Promise((resolve, reject) => {
@@ -73,10 +78,17 @@ describe("MessagesList", () => {
 
   it("should renders [] if api fails", async () => {
     failFetch = true;
-    const { queryByText } = renderWithRouter(<MessagesList />);
+    const { queryByText } = renderWithRouter(
+      <AlertContext.Provider value={alertC}>
+        <MessagesList />
+      </AlertContext.Provider>
+    );
 
-    await wait(() => expect(fetch).toHaveBeenCalled());
+    await wait(() => expect(alertC.showAlert).toHaveBeenCalled());
 
+    expect(alertC.showAlert).toHaveBeenCalledWith(
+      "Nie udało się załadować wiadomości."
+    );
     expect(queryByText("b")).not.toBeInTheDocument();
   });
 

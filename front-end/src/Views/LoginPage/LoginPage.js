@@ -1,17 +1,16 @@
 import React from "react";
-import { Container, Button, Card, Form, Alert } from "react-bootstrap";
+import { Container, Button, Card, Form } from "react-bootstrap";
 import { Link, Redirect } from "react-router-dom";
 import LoginForm from "./components/loginForm";
 import { UserContext } from "context";
 import { sendData } from "./functions/sendData";
 import proxy from "config/api";
+import { withAlertContext } from "components";
 
 class LoginPage extends React.Component {
   state = {
     credentials: null,
-    message: "",
     redirect: false,
-    incorrect: false,
     validated: false,
     disabled: false,
   };
@@ -29,13 +28,12 @@ class LoginPage extends React.Component {
   };
 
   handleIncorrectResponse = (status) => {
-    const msg =
-      status === 400
-        ? "Niepoprawny login lub hasło."
-        : "Błąd serwera. Proszę spróbować później.";
+    status === 400
+      ? this.props.alertContext.showAlert("Niepoprawny login lub hasło.")
+      : this.props.alertContext.showAlert(
+          "Błąd serwera. Proszę spróbować później."
+        );
     this.setState({
-      message: msg,
-      incorrect: true,
       redirect: false,
     });
   };
@@ -71,9 +69,8 @@ class LoginPage extends React.Component {
             } else {
               this.setState({
                 validated: false,
-                incorrect: true,
-                message: "Coś poszło nie tak",
               });
+              this.props.alertContext.showAlert("Coś poszło nie tak");
             }
           });
         }
@@ -85,7 +82,7 @@ class LoginPage extends React.Component {
   };
 
   render() {
-    const { validated, incorrect, message, disabled } = this.state;
+    const { validated, disabled } = this.state;
     const { renderRedirect, handleSubmit } = this;
 
     return (
@@ -115,12 +112,8 @@ class LoginPage extends React.Component {
                 {disabled ? "Ładowanie..." : "Zaloguj"}
               </Button>
             </Form>
-            {incorrect ? (
-              <Alert variant="danger" className="loginPage__failure">
-                {message}
-              </Alert>
-            ) : null}
             <div className="loginPage__links">
+              <Link to="/newPassword">Zapomniałeś hasła?</Link>
               <Link to="/newAccount">Załóż konto!</Link>
               {renderRedirect()}
             </div>
@@ -133,4 +126,4 @@ class LoginPage extends React.Component {
 
 LoginPage.contextType = UserContext;
 
-export default LoginPage;
+export default withAlertContext(LoginPage);
