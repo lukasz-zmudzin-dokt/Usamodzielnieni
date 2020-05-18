@@ -49,10 +49,7 @@ const getTypes = async () => {
 };
 
 const getSelects = async () => {
-  const [categories, types] = await Promise.all([
-    getCategories(),
-    getTypes(),
-  ]);
+  const [categories, types] = await Promise.all([getCategories(), getTypes()]);
   return { categories, types };
 };
 
