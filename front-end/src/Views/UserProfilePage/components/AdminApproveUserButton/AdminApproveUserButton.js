@@ -8,9 +8,7 @@ const AdminApproveUserButton = ({ user }) =>
   user.type === userTypes.STAFF &&
   user.data.group_type.includes(staffTypes.VERIFICATION) ? (
     <LinkContainer to="/userApproval">
-      <Button variant="primary" className="ml-3">
-        Akceptuj nowych użytkowników
-      </Button>
+      <Button variant="primary">Akceptuj nowych użytkowników</Button>
     </LinkContainer>
   ) : null;
 

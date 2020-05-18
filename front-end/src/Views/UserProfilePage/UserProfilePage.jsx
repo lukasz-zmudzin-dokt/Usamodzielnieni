@@ -1,15 +1,8 @@
 import React from "react";
 import { Alert, Card, Container } from "react-bootstrap";
-import UserDetails from "Views/UserProfilePage/components/UserDetails";
-import UserBasicInfo from "Views/UserProfilePage/components/UserBasicInfo";
 import { UserContext } from "context";
 import { getUserData } from "Views/UserProfilePage/functions/getUserData.js";
-import AdminRegisterButton from "./components/AdminRegisterButton/AdminRegisterButton";
-import CVApprovalButton from "./components/CVApprovalButton/CVApprovalButton";
-import EmployerMyOffersButton from "./components/EmployerMyOffersButton/EmployerMyOffersButton";
-import AdminApproveUserButton from "./components/AdminApproveUserBuuton/AdminApproveUserButton";
-import UserListButton from "./components/UserListButton/UserListButton";
-import AdminOfferApprovalButton from "./components/AdminOfferApprovalButton/AdminOfferApprovalButton";
+import { UserDetails, UserBasicInfo, ButtonsContainer } from "./components";
 import { userTypes } from "constants/userTypes";
 import { userStatuses } from "constants/userStatuses";
 
@@ -90,11 +83,6 @@ class UserProfilePage extends React.Component {
           <UserDetails user={this.state.user} names={names} />
           <Card.Body className="text-center">
             {this.setMessage()}
-            <CVApprovalButton user={this.context} />
-            <EmployerMyOffersButton user={this.context} />
-            <AdminRegisterButton user={this.context} />
-            <AdminApproveUserButton user={this.context} />
-            <AdminOfferApprovalButton user={this.context} />
             {this.context.type !== userTypes.STAFF &&
             this.context.data &&
             this.context.data.status !== userStatuses.VERIFIED ? (
@@ -103,7 +91,7 @@ class UserProfilePage extends React.Component {
                 Poczekaj na weryfikację swojego konta.
               </Alert>
             ) : null}
-            <UserListButton user={this.context} />
+            <ButtonsContainer user={this.context} />
           </Card.Body>
         </Card>
       </Container>
