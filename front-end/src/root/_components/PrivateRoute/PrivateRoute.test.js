@@ -173,7 +173,7 @@ describe("PrivateRoute test", () => {
     const exampleContext = {
       type: userTypes.STAFF,
       token: "123143",
-      data: { group_type: [staffTypes.CV], status: "verified" },
+      data: { group_type: [staffTypes.CV], status: userStatuses.VERIFIED },
     };
     const ExampleComponent = () => <div>AComponent</div>;
     const exampleProps = {
@@ -201,7 +201,7 @@ describe("PrivateRoute test", () => {
     const exampleContext = {
       type: userTypes.EMPLOYER,
       token: "123143",
-      data: { group_type: [staffTypes.CV], status: "verified" },
+      data: { group_type: [staffTypes.CV], status: userStatuses.VERIFIED },
     };
     const ExampleComponent = () => <div>AComponent</div>;
     const exampleProps = {

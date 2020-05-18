@@ -46,7 +46,7 @@ export default [
     path: paths.CV_EDITOR,
     component: CVEditorPage,
     isPrivate: true,
-    type: [userTypes.STANDARD, userTypes.SPECIALIST],
+    type: userTypes.STANDARD,
     exact: true,
     userVerified: true,
   },
