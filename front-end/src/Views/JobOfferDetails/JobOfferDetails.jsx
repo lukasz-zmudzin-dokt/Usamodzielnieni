@@ -10,10 +10,9 @@ import { addressToString } from "utils/converters";
 import { userTypes } from "constants/userTypes";
 import { userStatuses } from "constants/userStatuses";
 
-const getOfferDetails = async (id, token) => {
+const getOfferDetails = async (id) => {
   let url = `${proxy.job}job-offer/${id}`;
   const headers = {
-    Authorization: "Token " + token,
     "Content-Type": "application/json",
   };
 
@@ -44,11 +43,11 @@ const JobOfferDetails = (props) => {
   const user = useContext(UserContext);
   const alertC = useRef(useContext(AlertContext));
   useEffect(() => {
-    const loadOffer = async (id, token) => {
+    const loadOffer = async (id) => {
       setIsOfferLoading(true);
       let loadedOffer;
       try {
-        loadedOffer = await getOfferDetails(id, token);
+        loadedOffer = await getOfferDetails(id);
       } catch (e) {
         console.log(e);
         loadedOffer = {};
@@ -57,8 +56,8 @@ const JobOfferDetails = (props) => {
       setOffer(loadedOffer);
       setIsOfferLoading(false);
     };
-    loadOffer(props.match.params.id, user.token);
-  }, [props.match.params.id, user.token]);
+    loadOffer(props.match.params.id);
+  }, [props.match.params.id]);
 
   const msg = isOfferLoading && (
     <Alert variant="info">Ładowanie oferty...</Alert>
