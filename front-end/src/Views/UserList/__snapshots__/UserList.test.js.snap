@@ -243,13 +243,13 @@ exports[`UserList should match snapshot 1`] = `
                   class="btn btn-secondary"
                   type="button"
                 >
-                  Zablokuj
+                  Zablokuj konto
                 </button>
                 <button
                   class="btn btn-danger"
                   type="button"
                 >
-                  Usuń
+                  Usuń konto
                 </button>
               </div>
             </div>
@@ -340,13 +340,13 @@ exports[`UserList should match snapshot 1`] = `
                   class="btn btn-secondary"
                   type="button"
                 >
-                  Zablokuj
+                  Zablokuj konto
                 </button>
                 <button
                   class="btn btn-danger"
                   type="button"
                 >
-                  Usuń
+                  Usuń konto
                 </button>
               </div>
             </div>
