@@ -12,6 +12,28 @@ import proxy from "config/api";
 import { userStatuses } from "constants/userStatuses";
 
 class HeaderTemplate extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      auth: false,
+      slide: 0,
+      lastScrollY: 0,
+    };
+  }
+
+  handleScroll = () => {
+    const { lastScrollY } = this.state;
+    const currentScrollY = window.scrollY;
+
+    if (currentScrollY > lastScrollY) {
+      this.setState({ slide: "-100px" });
+    } else {
+      this.setState({ slide: "0px" });
+    }
+    this.setState({ lastScrollY: currentScrollY });
+  };
+
   displayMenu() {
     let type = this.context.token ? this.context.type : undefined;
     let adminGroup =
@@ -104,9 +126,26 @@ class HeaderTemplate extends React.Component {
     });
   };
 
+  componentDidMount() {
+    window.addEventListener("scroll", this.handleScroll);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this.handleScroll);
+  }
+
   render() {
     return (
-      <Navbar id="navbar_menu" variant="dark" fixed="top" expand="xl">
+      <Navbar
+        id="navbar_menu"
+        variant="dark"
+        fixed="top"
+        expand="xl"
+        style={{
+          transform: `translate(0, ${this.state.slide})`,
+          transition: "transform 90ms linear",
+        }}
+      >
         <Navbar.Brand id="navbar_logo">
           <IndexLinkContainer to="/">
             <img

@@ -268,6 +268,11 @@ exports[`RegisterPage RegisterPageTest should match snapshot 1`] = `
                     required=""
                     type="text"
                   />
+                  <small
+                    class="text-muted form-text"
+                  >
+                    Nazwa użytkownika będzie widoczna dla innych użytkowników przy Twoich komentarzach. Twoje imię i nazwisko są widoczne tylko dla pracowników.
+                  </small>
                   <div
                     class="invalid-feedback"
                   >

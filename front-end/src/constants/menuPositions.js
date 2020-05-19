@@ -24,7 +24,7 @@ export default [
   {
     name: "Oferty pracy",
     path: paths.JOB_OFFERS,
-    allowed: [userTypes.STANDARD, userTypes.STAFF, userTypes.EMPLOYER],
+    allowed: undefined,
   },
   {
     name: "Dodaj ofertę",

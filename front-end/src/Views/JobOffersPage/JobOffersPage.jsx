@@ -7,7 +7,7 @@ import { UserContext } from "context";
 import { JobOfferInfo, OffersPagination } from "./_components";
 import proxy from "config/api";
 
-const getOffers = async (token, filters) => {
+const getOffers = async (filters) => {
   const {
     page,
     pageSize,
@@ -26,7 +26,6 @@ const getOffers = async (token, filters) => {
   const query = `?page=${page}&page_size=${pageSize}${voivodeshipQ}${expirationDateQ}${categoryQ}${typeQ}`;
   const url = proxy.job + "job-offers/" + query;
   const headers = {
-    Authorization: "Token " + token,
     "Content-Type": "application/json",
   };
 
@@ -73,11 +72,11 @@ const JobOffersPage = (props) => {
 
   useEffect(() => {
     setDisabled(true);
-    const loadOffers = async (token) => {
+    const loadOffers = async () => {
       setIsOffersLoading(true);
       let res;
       try {
-        res = await getOffers(token, filters);
+        res = await getOffers(filters);
       } catch (e) {
         console.log(e);
         res = { offers: [], count: 0 };
@@ -88,8 +87,8 @@ const JobOffersPage = (props) => {
       setIsOffersLoading(false);
       setDisabled(false);
     };
-    loadOffers(user.token);
-  }, [user.token, filters]);
+    loadOffers();
+  }, [filters]);
 
   const msg = isOffersLoading ? (
     <Alert variant="info">Ładowanie ofert...</Alert>

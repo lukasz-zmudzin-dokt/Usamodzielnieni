@@ -85,14 +85,12 @@ export default [
     path: paths.JOB_OFFERS,
     component: JobOffersPage,
     exact: true,
-    isPrivate: true,
     type: undefined,
   },
   {
     path: paths.JOB_OFFER_DETAILS,
     component: JobOfferDetails,
     exact: true,
-    isPrivate: true,
     type: undefined,
   },
   {
