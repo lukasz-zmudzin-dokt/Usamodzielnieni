@@ -10,7 +10,14 @@ const formatDate = (dateString) => {
   );
 };
 
-const UserInfo = ({ user, mapType, mapStatus, ...rest }) => (
+const UserInfo = ({
+  user,
+  setUser,
+  deleteUser,
+  mapType,
+  mapStatus,
+  ...rest
+}) => (
   <Row {...rest}>
     <Col>
       <h5>{user.username}</h5>
@@ -28,7 +35,7 @@ const UserInfo = ({ user, mapType, mapStatus, ...rest }) => (
           {mapStatus(user.status)}
         </DetailsItem>
       </Row>
-      <ButtonsContainer user={user} />
+      <ButtonsContainer user={user} setUser={setUser} deleteUser={deleteUser} />
     </Col>
   </Row>
 );

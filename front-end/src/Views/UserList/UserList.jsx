@@ -108,6 +108,18 @@ const UserList = () => {
     )
   );
 
+  const setUser = (user) => {
+    setUsers((prevUsers) =>
+      prevUsers.map((prevUser) => (prevUser.id === user.id ? user : prevUser))
+    );
+  };
+
+  const deleteUser = (user) => {
+    setUsers((prevUsers) =>
+      prevUsers.filter((prevUser) => prevUser.id !== user.id)
+    );
+  };
+
   return (
     <Container>
       <Card>
@@ -125,7 +137,13 @@ const UserList = () => {
           <ListGroup variant="flush">
             {users.map((user) => (
               <ListGroup.Item key={user.id}>
-                <UserInfo user={user} mapType={mapType} mapStatus={mapStatus} />
+                <UserInfo
+                  user={user}
+                  setUser={setUser}
+                  deleteUser={deleteUser}
+                  mapType={mapType}
+                  mapStatus={mapStatus}
+                />
               </ListGroup.Item>
             ))}
           </ListGroup>
