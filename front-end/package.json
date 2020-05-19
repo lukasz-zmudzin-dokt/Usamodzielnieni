@@ -24,6 +24,9 @@
     "universal-cookie": "^4.0.2",
     "path-to-regexp": "latest"
   },
+  "optionalDependencies": {
+    "fsevents": "latest"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
