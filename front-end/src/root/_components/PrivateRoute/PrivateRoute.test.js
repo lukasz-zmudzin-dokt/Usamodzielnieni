@@ -4,6 +4,7 @@ import { render } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { userTypes } from "constants/userTypes";
 import { staffTypes } from "constants/staffTypes";
+import { userStatuses } from "constants/userStatuses";
 
 describe("PrivateRoute test", () => {
   it("should match snapshot", () => {
@@ -172,7 +173,7 @@ describe("PrivateRoute test", () => {
     const exampleContext = {
       type: userTypes.STAFF,
       token: "123143",
-      data: { group_type: [staffTypes.CV] },
+      data: { group_type: [staffTypes.CV], status: userStatuses.VERIFIED },
     };
     const ExampleComponent = () => <div>AComponent</div>;
     const exampleProps = {
@@ -185,9 +186,7 @@ describe("PrivateRoute test", () => {
     const { getByText } = render(
       <MemoryRouter initialEntries={[exampleProps.path]}>
         <PrivateRoute
-          path={exampleProps.path}
-          type={exampleProps.type}
-          component={exampleProps.component}
+          {...exampleProps}
           authenticated={exampleContext}
           redirect="/home"
           group={exampleProps.group}
@@ -196,5 +195,146 @@ describe("PrivateRoute test", () => {
     );
 
     expect(getByText("AComponent")).toBeInTheDocument();
+  });
+
+  it("should render component if type is array(employer/specialist) ", () => {
+    const exampleContext = {
+      type: userTypes.EMPLOYER,
+      token: "123143",
+      data: { group_type: [staffTypes.CV], status: userStatuses.VERIFIED },
+    };
+    const ExampleComponent = () => <div>AComponent</div>;
+    const exampleProps = {
+      path: "/example",
+      type: [userTypes.EMPLOYER, userTypes.SPECIALIST],
+      component: ExampleComponent,
+    };
+
+    const { getByText } = render(
+      <MemoryRouter initialEntries={[exampleProps.path]}>
+        <PrivateRoute
+          {...exampleProps}
+          authenticated={exampleContext}
+          redirect="/home"
+          group={exampleProps.group}
+        />
+      </MemoryRouter>
+    );
+
+    expect(getByText("AComponent")).toBeInTheDocument();
+  });
+
+  it("should render component if type is array(staff/specialist) ", () => {
+    const exampleContext = {
+      type: userTypes.STAFF,
+      token: "123143",
+      data: { group_type: [staffTypes.CV], status: userStatuses.VERIFIED },
+    };
+    const ExampleComponent = () => <div>AComponent</div>;
+    const exampleProps = {
+      path: "/example",
+      type: [userTypes.EMPLOYER, userTypes.STAFF],
+      group: [staffTypes.CV],
+      component: ExampleComponent,
+    };
+
+    const { getByText } = render(
+      <MemoryRouter initialEntries={[exampleProps.path]}>
+        <PrivateRoute
+          {...exampleProps}
+          authenticated={exampleContext}
+          redirect="/home"
+          group={exampleProps.group}
+        />
+      </MemoryRouter>
+    );
+
+    expect(getByText("AComponent")).toBeInTheDocument();
+  });
+
+  it("should not render component if type is array but staff group is invalid(staff/specialist) ", () => {
+    const exampleContext = {
+      type: userTypes.STAFF,
+      token: "123143",
+      data: {
+        group_type: [staffTypes.BLOG_CREATOR],
+        status: userStatuses.VERIFIED,
+      },
+    };
+    const ExampleComponent = () => <div>AComponent</div>;
+    const exampleProps = {
+      path: "/example",
+      type: [userTypes.EMPLOYER, userTypes.STAFF],
+      group: [staffTypes.CV],
+      component: ExampleComponent,
+    };
+
+    const { queryByText } = render(
+      <MemoryRouter initialEntries={[exampleProps.path]}>
+        <PrivateRoute
+          {...exampleProps}
+          authenticated={exampleContext}
+          redirect="/home"
+          group={exampleProps.group}
+        />
+      </MemoryRouter>
+    );
+
+    expect(queryByText("AComponent")).not.toBeInTheDocument();
+  });
+
+  it("should not render component if type is array ", () => {
+    const exampleContext = {
+      type: userTypes.STAFF,
+      token: "123143",
+      data: { group_type: [staffTypes.CV], status: userStatuses.VERIFIED },
+    };
+    const ExampleComponent = () => <div>AComponent</div>;
+    const exampleProps = {
+      path: "/example",
+      type: [userTypes.EMPLOYER, userTypes.SPECIALIST],
+      component: ExampleComponent,
+    };
+
+    const { queryByText } = render(
+      <MemoryRouter initialEntries={[exampleProps.path]}>
+        <PrivateRoute
+          {...exampleProps}
+          authenticated={exampleContext}
+          redirect="/home"
+          group={exampleProps.group}
+        />
+      </MemoryRouter>
+    );
+
+    expect(queryByText("AComponent")).not.toBeInTheDocument();
+  });
+
+  it("should not render component if user isn't verified ", () => {
+    const exampleContext = {
+      type: userTypes.STANDARD,
+      token: "123143",
+      data: { status: userStatuses.AWAITING },
+    };
+    const ExampleComponent = () => <div>AComponent</div>;
+    const exampleProps = {
+      path: "/example",
+      type: [userTypes.STANDARD],
+      component: ExampleComponent,
+      userVerified: true,
+    };
+
+    const { queryByText } = render(
+      <MemoryRouter initialEntries={[exampleProps.path]}>
+        <PrivateRoute
+          {...exampleProps}
+          authenticated={exampleContext}
+          redirect="/home"
+          group={exampleProps.group}
+        />
+      </MemoryRouter>
+    );
+
+    expect(queryByText("AComponent")).not.toBeInTheDocument();
   });
 });
