@@ -118,7 +118,7 @@ exports[`PersonalDataTab should render without crashing 1`] = `
         <div
           class="invalid-feedback"
         >
-          Numer telefonu jest wymagany.
+          Podaj numer telefonu w formacie: +48123123123
         </div>
       </div>
     </div>

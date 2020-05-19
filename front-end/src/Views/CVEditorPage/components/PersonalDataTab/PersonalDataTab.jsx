@@ -122,7 +122,7 @@ class PersonalDataTab extends React.Component {
                 onChange={this.onChange}
               />
               <Form.Control.Feedback type="invalid">
-                Numer telefonu jest wymagany.
+                Podaj numer telefonu w formacie: +48123123123
               </Form.Control.Feedback>
             </Form.Group>
           </Row>
