@@ -52,10 +52,10 @@ a:hover {
 
 @media (width: 768px) {
   .company-logo {
-    width: 139px!important;
+    width: 139px !important;
   }
   .social-media-col {
-    padding-left: 0!important;
+    padding-left: 0 !important;
   }
 }
 
