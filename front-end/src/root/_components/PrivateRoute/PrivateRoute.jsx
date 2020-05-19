@@ -23,7 +23,6 @@ const PrivateRoute = ({
         !userVerified ||
         authenticated.data.status === userStatuses.VERIFIED
       ) {
-        console.log(group);
         if (!type) return <Route {...rest} />;
         else if (Array.isArray(type)) {
           let index = type.indexOf(authenticated.type);
