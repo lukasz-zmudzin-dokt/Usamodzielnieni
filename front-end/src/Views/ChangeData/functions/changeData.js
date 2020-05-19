@@ -1,7 +1,34 @@
 import proxy from "config/api";
 
+const changeDataObject = (data) => {
+  if (data.nip) {
+    return {};
+  } else {
+    const {
+      email,
+      facility_address,
+      facility_name,
+      first_name,
+      last_name,
+      password,
+      phone_number,
+      username,
+    } = data;
+    return {
+      email,
+      facility_address,
+      facility_name,
+      first_name,
+      last_name,
+      password,
+      phone_number,
+      username,
+    };
+  }
+};
+
 const getUserData = async (token, id) => {
-  const urlUserData = `${proxy.account}admin/user_details/${id}`;
+  const urlUserData = `${proxy.account}admin/user_details/${id}/`;
   const header = {
     method: "GET",
     headers: {
@@ -18,10 +45,11 @@ const getUserData = async (token, id) => {
 };
 
 const sendFixedData = async (token, id, data) => {
-  const url = `${proxy.account}admin/change_data/${id}`;
+  const url = `${proxy.account}admin/user_details/edit/${id}/`;
+  const changeData = changeDataObject(data);
   const header = {
     method: "PUT",
-    body: JSON.stringify(data),
+    body: JSON.stringify(changeData),
     headers: {
       "Content-Type": "application/json",
       Origin: null,
