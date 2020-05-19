@@ -31,6 +31,12 @@ const UserInfo = ({ user, ...rest }) => (
       <IndexLinkContainer to={`/chats/${user.id}`}>
         <Button>Wyślij wiadomość</Button>
       </IndexLinkContainer>
+      <IndexLinkContainer
+        className="changeData__button"
+        to={`/changeData/${user.id}`}
+      >
+        <Button>Zmień dane użytkownika</Button>
+      </IndexLinkContainer>
     </Col>
   </Row>
 );

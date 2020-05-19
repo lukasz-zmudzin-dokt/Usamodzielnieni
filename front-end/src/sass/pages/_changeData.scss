@@ -14,6 +14,10 @@
   margin-bottom: 1rem;
 }
 
+.changeData__button{
+  margin-top: 1rem;
+}
+
 @media (min-width: 768px) {
   .changeData__wrapper {
     display: flex;
@@ -32,4 +36,8 @@
     flex-grow: 1;
     align-self: flex-start;
   }
+  .changeData__button{
+  margin-top: 0rem;
+  margin-left: 1rem;
+}
 }
