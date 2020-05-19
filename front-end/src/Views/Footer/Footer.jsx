@@ -21,7 +21,9 @@ const Footer = () => {
           md={{ span: 3, order: 1 }}
           className="p-4"
         >
-          <Row className="company-title">Partner</Row>
+          <Row className="company-title">
+            Partner
+          </Row>
           <Row className="company-logo-row">
             <a
               href="https://kulczykfoundation.org.pl/"
@@ -39,7 +41,7 @@ const Footer = () => {
           className="p-4"
         >
           <Row className="company-title">
-            Twórca technologiczny <br /> strony studenci
+            Twórca strony - studenci
           </Row>
           <Row className="company-logo-row">
             <a
@@ -58,7 +60,7 @@ const Footer = () => {
           className="p-4"
         >
           <Row className="company-title">
-            Pomysłodawca, <br /> twórca treści:
+             Pomysłodawca, twórca treści
           </Row>
           <Row className="company-logo-row">
             <a

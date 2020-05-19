@@ -38,9 +38,7 @@ exports[`Footer should match snapshot 1`] = `
         <div
           class="company-title row"
         >
-          Twórca technologiczny 
-          <br />
-           strony studenci
+          Twórca strony - studenci
         </div>
         <div
           class="company-logo-row row"
@@ -64,9 +62,7 @@ exports[`Footer should match snapshot 1`] = `
         <div
           class="company-title row"
         >
-          Pomysłodawca, 
-          <br />
-           twórca treści:
+          Pomysłodawca, twórca treści
         </div>
         <div
           class="company-logo-row row"
