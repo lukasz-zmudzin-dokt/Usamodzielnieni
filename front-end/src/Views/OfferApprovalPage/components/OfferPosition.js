@@ -42,7 +42,6 @@ const OfferPosition = ({ offer }) => {
   return (
     <Card.Body className="p-0">
       <ListGroup variant="flush">
-        {console.log(offer)}
         <ListGroup.Item>
           <Row>
             <DetailsItem md={4} xl={2} label="Województwo">
