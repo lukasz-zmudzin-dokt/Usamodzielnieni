@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useRef, useContext } from "react";
 import { Route, Redirect } from "react-router-dom";
-
+import { AlertContext } from "context";
 import { paths } from "constants/paths";
 import { userTypes } from "constants/userTypes";
 import { userStatuses } from "constants/userStatuses";
@@ -17,11 +17,13 @@ const PrivateRoute = ({
   group,
   ...rest
 }) => {
+  const alertC = useRef(useContext(AlertContext));
   const checkAuth = () => {
     if (authenticated.token) {
       if (
         !userVerified ||
-        authenticated.data.status === userStatuses.VERIFIED
+        (authenticated.data &&
+          authenticated.data.status === userStatuses.VERIFIED)
       ) {
         if (!type) return <Route {...rest} />;
         else if (Array.isArray(type)) {
@@ -40,6 +42,7 @@ const PrivateRoute = ({
               return <Route {...rest} />;
             }
           } else {
+            alertC.current.showAlert("Nie masz dostępu do tej strony.");
             return <Redirect to={unverified} />;
           }
         } else if (type === authenticated.type) {
@@ -54,8 +57,12 @@ const PrivateRoute = ({
             }
           } else return <Route {...rest} />;
         }
-      } else return <Redirect to={unverified} />;
+      } else {
+        alertC.current.showAlert("Nie masz dostępu do tej strony.");
+        return <Redirect to={unverified} />;
+      }
     }
+    alertC.current.showAlert("Nie masz dostępu do tej strony.");
     return <Redirect to={redirect} />;
   };
 
