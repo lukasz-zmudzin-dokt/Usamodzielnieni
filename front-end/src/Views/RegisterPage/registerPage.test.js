@@ -18,21 +18,6 @@ describe("RegisterPage", () => {
       );
     });
 
-    it("onClick should be called", async () => {
-      const onClick = jest.fn();
-      const { component, getByText } = render(
-        <MemoryRouter>
-          <RegisterPage onSubmit={onClick} />
-        </MemoryRouter>
-      );
-      component.setState({
-        userName: "123",
-      });
-      fireEvent.click(getByText("Wyślij"));
-
-      await expect(onClick).toHaveBeenCalledWith("123");
-    });
-
     it("should match snapshot", () => {
       const { container } = render(
         <UserProvider>
@@ -90,7 +75,7 @@ describe("RegisterPage", () => {
 
     it("should get response from api", async () => {
       apiFailure = false;
-      const { getByText } = render(
+      const { getByText, getByTestId } = render(
         <MemoryRouter>
           <RegisterPage token={token} />
         </MemoryRouter>
