@@ -1,3 +1,3 @@
-import MyCVsPage from './MyCVsPage';
+import MyCVsPage from "./MyCVsPage";
 
 export default MyCVsPage;

@@ -1,24 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`CommentsList should render list with edit form when onEditClick is called 1`] = `
-<div>
-  <div>
-    <h4>
-      Komentarze
-    </h4>
-    <div>
-      CommentItem
-    </div>
-    <div>
-      CommentForm
-    </div>
-    <div>
-      CommentItem
-    </div>
-  </div>
-</div>
-`;
-
 exports[`CommentsList should render without crashing 1`] = `
 <div>
   <div>

@@ -21,6 +21,11 @@ const paths = {
     USER_APPROVAL: "/userApproval",
     STEPS: "/steps",
     CHATS: '/chats',
-    CHAT_DETAILS: "/chats/:id"
+    CHAT_DETAILS: "/chats/:id",
+    CV_CORRECTION: "/cvCorrection/:id",
+    USER_LIST: "/userList",
+    OFFER_APPROVAL: "/offerApproval",
+    PASSWORD_RESET: "/newPassword",
+    NEW_PASSWORD: "/newPassword/:id",
 };
 export { paths };

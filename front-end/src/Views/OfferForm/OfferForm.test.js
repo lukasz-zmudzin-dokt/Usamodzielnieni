@@ -9,7 +9,7 @@ import { Router } from "react-router-dom";
 import { MemoryRouter } from "react-router-dom";
 import OfferForm from "Views/OfferForm";
 import { createMemoryHistory } from "history";
-import { UserContext } from "context";
+import { UserContext, AlertContext } from "context";
 import proxy from "config/api";
 
 jest.mock("react-router-dom", () => ({
@@ -31,13 +31,27 @@ const renderWithRouter = (
   let context = {
     data: {
       company_name: "abc",
-      company_address: { street: "def", street_number: "1", city: "abc", postal_code: "00-000" },
+      company_address: {
+        street: "def",
+        street_number: "1",
+        city: "abc",
+        postal_code: "00-000",
+      },
     },
+  };
+  let contextA = {
+    open: true,
+    changeVisibility: jest.fn(),
+    message: "abc",
+    changeMessage: jest.fn(),
+    showAlert: jest.fn(),
   };
   return {
     ...render(
       <UserContext.Provider value={context}>
-        <Router history={history}>{ui}</Router>
+        <AlertContext.Provider value={contextA}>
+          <Router history={history}>{ui}</Router>
+        </AlertContext.Provider>
       </UserContext.Provider>
     ),
     history,
@@ -50,11 +64,17 @@ describe("OfferForm", () => {
   let failPost;
   let failTypes;
   let context;
+  let contextA;
   let apiSelect = { offer_types: ["IT"], categories: ["xd"] };
   let apiOffer = {
     offer_name: "abc",
     company_name: "xd",
-    company_address: { street: "def", street_number: "1", city: "abc", postal_code: "00-000" },
+    company_address: {
+      street: "def",
+      street_number: "1",
+      city: "abc",
+      postal_code: "00-000",
+    },
     voivodeship: "lubelskie",
     description: "res.description",
     expiration_date:
@@ -77,19 +97,11 @@ describe("OfferForm", () => {
             else resolve({ status: 200 });
             break;
           case "GET":
-            if (
-              proxy.job + "job-offer/abc/" === input &&
-              failOffer
-            ) {
+            if (proxy.job + "job-offer/abc/" === input && failOffer) {
               resolve({ status: 500 });
-            } else if (
-              proxy.job + "job-offer/abc/" === input
-            ) {
+            } else if (proxy.job + "job-offer/abc/" === input) {
               resolve({ status: 200, json: () => Promise.resolve(apiOffer) });
-            } else if (
-              failTypes &&
-              input === proxy.job + "enums/types"
-            ) {
+            } else if (failTypes && input === proxy.job + "enums/types") {
               resolve({ status: 500 });
             } else {
               resolve({ status: 200, json: () => Promise.resolve(apiSelect) });
@@ -116,17 +128,27 @@ describe("OfferForm", () => {
     context = {
       data: {
         company_name: "abc",
-        company_address: { street: "def", street_number: "1", city: "abc", postal_code: "00-000"},
+        company_address: {
+          street: "def",
+          street_number: "1",
+          city: "abc",
+          postal_code: "00-000",
+        },
       },
+    };
+    contextA = {
+      showAlert: jest.fn(),
     };
   });
 
   it("renders correctly", async () => {
     const { container, getByText } = render(
       <UserContext.Provider value={context}>
-        <MemoryRouter>
-          <OfferForm />
-        </MemoryRouter>
+        <AlertContext.Provider value={contextA}>
+          <MemoryRouter>
+            <OfferForm />
+          </MemoryRouter>
+        </AlertContext.Provider>
       </UserContext.Provider>
     );
 
@@ -140,18 +162,19 @@ describe("OfferForm", () => {
 
     const { getByText } = render(
       <UserContext.Provider value={context}>
-        <MemoryRouter>
-          <OfferForm />
-        </MemoryRouter>
+        <AlertContext.Provider value={contextA}>
+          <MemoryRouter>
+            <OfferForm />
+          </MemoryRouter>
+        </AlertContext.Provider>
       </UserContext.Provider>
     );
-    await waitForElement(() => getByText("Dodaj"));
-
     await waitForElement(() =>
-      getByText("Nie udało się załadować danych", { exact: false })
+      getByText("Wystąpił błąd w trakcie ładowania formularza.")
     );
+
     expect(
-      getByText("Nie udało się załadować danych", { exact: false })
+      getByText("Wystąpił błąd w trakcie ładowania formularza.")
     ).toBeInTheDocument();
   });
 
@@ -160,27 +183,30 @@ describe("OfferForm", () => {
 
     const { getByText } = render(
       <UserContext.Provider value={context}>
-        <MemoryRouter>
-          <OfferForm />
-        </MemoryRouter>
+        <AlertContext.Provider value={contextA}>
+          <MemoryRouter>
+            <OfferForm />
+          </MemoryRouter>
+        </AlertContext.Provider>
       </UserContext.Provider>
     );
-    await waitForElement(() => getByText("Dodaj"));
-
     await waitForElement(() =>
-      getByText("Nie udało się załadować danych", { exact: false })
+      getByText("Wystąpił błąd w trakcie ładowania formularza.")
     );
+
     expect(
-      getByText("Nie udało się załadować danych", { exact: false })
+      getByText("Wystąpił błąd w trakcie ładowania formularza.")
     ).toBeInTheDocument();
   });
 
   it("should not use fetch when form isn't validated", async () => {
     const { getByPlaceholderText, getByText, getByLabelText } = render(
       <UserContext.Provider value={context}>
-        <MemoryRouter>
-          <OfferForm />
-        </MemoryRouter>
+        <AlertContext.Provider value={contextA}>
+          <MemoryRouter>
+            <OfferForm />
+          </MemoryRouter>
+        </AlertContext.Provider>
       </UserContext.Provider>
     );
 
@@ -276,9 +302,11 @@ describe("OfferForm", () => {
     failPost = true;
     const { getByPlaceholderText, getByText, getByLabelText } = render(
       <UserContext.Provider value={context}>
-        <MemoryRouter>
-          <OfferForm />
-        </MemoryRouter>
+        <AlertContext.Provider value={contextA}>
+          <MemoryRouter>
+            <OfferForm />
+          </MemoryRouter>
+        </AlertContext.Provider>
       </UserContext.Provider>
     );
 
@@ -310,9 +338,9 @@ describe("OfferForm", () => {
 
     await waitForElement(() => getByText("Dodaj"));
 
-    expect(
-      getByText("Nie udało się wysłać oferty. Błąd serwera.")
-    ).toBeInTheDocument();
+    expect(contextA.showAlert).toHaveBeenCalledWith(
+      "Nie udało się wysłać oferty. Błąd serwera."
+    );
   });
 
   it("should fulfill inputs if offer id is valid", async () => {
@@ -330,17 +358,14 @@ describe("OfferForm", () => {
     await waitForElement(() => getByText("Dodaj"));
 
     await wait(() =>
-      expect(fetch).toHaveBeenCalledWith(
-        proxy.job + "job-offer/abc/",
-        {
-          headers: {
-            Authorization: "Token undefined",
-            "Content-Type": "application/json",
-            Origin: null,
-          },
-          method: "GET",
-        }
-      )
+      expect(fetch).toHaveBeenCalledWith(proxy.job + "job-offer/abc/", {
+        headers: {
+          Authorization: "Token undefined",
+          "Content-Type": "application/json",
+          Origin: null,
+        },
+        method: "GET",
+      })
     );
 
     expect(getByPlaceholderText("Nazwa stanowiska").value).toBe("abc");
@@ -366,17 +391,14 @@ describe("OfferForm", () => {
     await waitForElement(() => getByText("Dodaj"));
 
     await wait(() =>
-      expect(fetch).toHaveBeenCalledWith(
-        proxy.job + "job-offer/abc/",
-        {
-          headers: {
-            Authorization: "Token undefined",
-            "Content-Type": "application/json",
-            Origin: null,
-          },
-          method: "GET",
-        }
-      )
+      expect(fetch).toHaveBeenCalledWith(proxy.job + "job-offer/abc/", {
+        headers: {
+          Authorization: "Token undefined",
+          "Content-Type": "application/json",
+          Origin: null,
+        },
+        method: "GET",
+      })
     );
     fireEvent.change(getByPlaceholderText("Adres firmy"), {
       target: { value: "abcd" },

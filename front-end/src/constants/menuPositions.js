@@ -1,6 +1,6 @@
-import {userTypes} from "./userTypes";
-import {staffTypes} from "./staffTypes";
-import {paths} from "./paths";
+import { userTypes } from "./userTypes";
+import { staffTypes } from "./staffTypes";
+import { paths } from "./paths";
 
 export default [       
     {

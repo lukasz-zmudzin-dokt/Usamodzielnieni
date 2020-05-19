@@ -9,7 +9,7 @@ class PhotoTab extends React.Component {
     this.fileInput = React.createRef();
   }
 
-  onChange = e => {
+  onChange = (e) => {
     this.props.onChange(this.fileInput.files[0]);
   };
 
@@ -33,7 +33,7 @@ class PhotoTab extends React.Component {
               id="custom-file"
               label={this.props.data ? this.props.data.name : "Wybierz zdjęcie"}
               custom
-              ref={ref => (this.fileInput = ref)}
+              ref={(ref) => (this.fileInput = ref)}
               onChange={this.onChange}
               accept="image/*"
               data-browse="Dodaj"
