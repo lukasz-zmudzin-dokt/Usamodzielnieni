@@ -59,7 +59,7 @@ describe("ActionWithDate", () => {
       target: { value: "Jakiś opis" },
     });
     fireEvent.click(getByText("Dodaj", { exact: false }));
-    expect(getByLabelText("Od", { exact: false }).value).toBe("05.2020");
+    expect(getByLabelText("Od", { exact: false }).value).toBe("");
     expect(getByLabelText("Do", { exact: false }).value).toBe("");
     expect(getByLabelText("Miejsce", { exact: false }).value).toBe("");
     expect(getByLabelText("Opis", { exact: false }).value).toBe("");

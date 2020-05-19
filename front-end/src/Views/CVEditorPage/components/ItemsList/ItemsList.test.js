@@ -19,6 +19,8 @@ describe("ItemsList", () => {
       onChange: () => {},
       clear: () => {},
       children: <div></div>,
+      smallFormValidated: false,
+      setSmallFormValidated: jest.fn(),
     };
     contextA = {
       showAlert: jest.fn(),
@@ -53,6 +55,7 @@ describe("ItemsList", () => {
 
   it("should add item when add button is clicked and form is valid", async () => {
     props = {
+      ...props,
       data: ["item"],
       getItem: () => "item2",
       getItemId: (item) => item,
@@ -73,6 +76,7 @@ describe("ItemsList", () => {
 
   it("should not add item and display error alert when add button is clicked and form is invalid", async () => {
     props = {
+      ...props,
       data: ["item"],
       getItem: () => "item",
       getItemId: (item) => item,
