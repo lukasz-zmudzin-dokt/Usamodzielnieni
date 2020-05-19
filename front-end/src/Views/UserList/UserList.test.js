@@ -4,12 +4,14 @@ import { MemoryRouter } from "react-router-dom";
 import UserList from "./UserList";
 import { userTypes } from "constants/userTypes";
 import { userStatuses } from "constants/userStatuses";
+import UserInfo from "./components/UserInfo";
+
+jest.mock("./components/UserInfo");
 
 describe("UserList", () => {
-  let users, failFetch, token;
+  let users, failFetch;
 
   beforeAll(() => {
-    token = 123;
     global.fetch = jest.fn().mockImplementation(() => {
       return new Promise((resolve, reject) => {
         if (failFetch) {
@@ -22,8 +24,9 @@ describe("UserList", () => {
   });
 
   beforeEach(() => {
+    jest.clearAllMocks();
+    UserInfo.mockImplementation((props) => <div>{props.user.username}</div>);
     failFetch = false;
-
     users = {
       results: [
         {
