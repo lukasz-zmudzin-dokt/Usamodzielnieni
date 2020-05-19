@@ -5,6 +5,9 @@ import { paths } from "constants/paths";
 import { userTypes } from "constants/userTypes";
 import { userStatuses } from "constants/userStatuses";
 
+// linijka 32: (ciekawe zastosowanie)
+// https://stackoverflow.com/questions/16312528/check-if-an-array-contains-any-element-of-another-array-in-javascript/29447130
+
 const PrivateRoute = ({
   redirect,
   unverified,
@@ -23,11 +26,31 @@ const PrivateRoute = ({
           authenticated.data.status === userStatuses.VERIFIED)
       ) {
         if (!type) return <Route {...rest} />;
-        else if (type === authenticated.type) {
+        else if (Array.isArray(type)) {
+          let index = type.indexOf(authenticated.type);
+          if (type[index] === authenticated.type) {
+            if (type[index] === userTypes.STAFF) {
+              if (
+                group === undefined ||
+                authenticated.data.group_type.some(
+                  (type) => group.indexOf(type) >= 0
+                )
+              ) {
+                return <Route {...rest} />;
+              }
+            } else {
+              return <Route {...rest} />;
+            }
+          } else {
+            return <Redirect to={unverified} />;
+          }
+        } else if (type === authenticated.type) {
           if (type === userTypes.STAFF) {
             if (
-              authenticated.data.group_type.includes(group) ||
-              group === undefined
+              group === undefined ||
+              authenticated.data.group_type.some(
+                (type) => group.indexOf(type) >= 0
+              )
             ) {
               return <Route {...rest} />;
             }
