@@ -1,0 +1,138 @@
+.progressBarFragment__container {
+    display: grid;
+    column-gap: 1rem;
+    grid-template-columns: 1fr 24px 1fr;
+    grid-template-rows: min-content max-content;
+    grid-template-areas:
+        ". bullet title"
+        ". bar infoMobile";
+    justify-items: center;
+    @include media-breakpoint-down(md) {
+        grid-template-columns: 24px 1fr;
+        grid-template-areas:
+            "bullet title"
+            "bar infoMobile";
+    }
+}
+.progressBarFragment {
+    grid-area: bar;
+    min-height: 80px;
+    background-color: map-get($theme-colors, "secondary");
+    width: 4px;
+    border-radius: 2px;
+
+    @include media-breakpoint-down(md) {
+        min-height: 50px;
+    }
+
+    & > &__state {
+        width: 100%;
+        height: 0;
+        background-color: map-get($theme-colors, "primary");
+        border-radius: 2px;
+    }
+    &--visited > &__state {
+        height: 100%;
+    }
+    &--current {
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+    &--next {
+        min-height: 200px;
+        border-radius: 0;
+        background: linear-gradient(0deg, rgba(255, 255, 255, 0), map-get($theme-colors, "secondary"));;
+    }
+}
+.bullet {
+    grid-area: bullet;
+    display: flex;
+    margin: 4px 0;
+    &--main {
+        background-color: map-get($theme-colors, "light");
+        border-radius: 100px;
+        padding: 0.2rem 1rem;
+        white-space: nowrap;
+        @include media-breakpoint-down(md) {
+            justify-self: left;
+        }
+    }
+    &--sub {
+        display: inline-block;
+        border: solid 7px map-get($theme-colors, "light");
+        border-radius: 100px;
+        padding: 5px;
+        background-color: map-get($theme-colors, "primary");
+    }
+}
+.bullet__title {
+    grid-area: title;
+    justify-self: start;
+    align-self: center;
+}
+.stepInfo {
+    grid-area: infoMobile;
+    margin: 1rem 0;
+    width: 100%;
+    @include media-breakpoint-up(lg) {
+        position: fixed;
+        width: 310px;
+        justify-self: start;
+        top: 11rem;
+    }
+    @include media-breakpoint-up(xl) {
+        width: 400px;
+    }
+}
+
+// // animacje
+
+.progressBarFragment__container {
+    overflow-y: hidden;
+    animation: showStep 4s ease-out;
+    animation-fill-mode: forwards;
+
+    // &--visited {
+    //     animation: hideStep .3s ease-out;
+    //     animation-fill-mode: forwards;
+    // }
+}
+
+.progressBarFragment {
+    & > &__state {
+        transition: height .5s ease-out;
+    }
+
+    &--visited {
+        & + .stepInfo {
+            max-height: 0;
+            border-width: 0;
+            overflow-y: hidden;
+        }
+    }
+}
+
+.stepInfo {
+    transition: max-height 1s ease-out;
+    max-height: 200px;
+}
+
+@keyframes showStep {
+    0% {
+        max-height: 84px;
+    }
+  
+    100% {
+        max-height: 100vh;
+    }
+}
+
+@keyframes hideStep {
+    0% {
+        max-height: 10vh;
+    }
+  
+    100% {
+        max-height: 84px;
+    }
+}

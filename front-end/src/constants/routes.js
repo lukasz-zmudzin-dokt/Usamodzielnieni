@@ -16,6 +16,7 @@ import {
   RegisterPage,
   UserProfilePage,
   UserApprovalPage,
+  Steps,
   MessagesList,
   Chats,
 } from "Views";
@@ -160,7 +161,12 @@ export default [
     isPrivate: true,
     type: userTypes.STAFF,
     group: staffTypes.VERIFICATION,
-    userVerified: true,
+    userVerified: true
+  },
+  {
+    path: paths.STEPS,
+    component: Steps,
+    isPrivate: true
   },
   {
     path: paths.CHATS,
