@@ -15,10 +15,12 @@ const PrivateRoute = ({
   ...rest
 }) => {
   const checkAuth = () => {
+    console.log(authenticated);
     if (authenticated.token) {
       if (
         !userVerified ||
-        authenticated.data.status === userStatuses.VERIFIED
+        (authenticated.data &&
+          authenticated.data.status === userStatuses.VERIFIED)
       ) {
         if (!type) return <Route {...rest} />;
         else if (type === authenticated.type) {
