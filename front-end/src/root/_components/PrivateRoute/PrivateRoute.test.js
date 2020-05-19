@@ -269,7 +269,7 @@ describe("PrivateRoute test", () => {
       component: ExampleComponent,
     };
 
-    const { getByText } = render(
+    const { queryByText } = render(
       <MemoryRouter initialEntries={[exampleProps.path]}>
         <PrivateRoute
           {...exampleProps}
@@ -280,7 +280,7 @@ describe("PrivateRoute test", () => {
       </MemoryRouter>
     );
 
-    expect(getByText("AComponent")).not.toBeInTheDocument();
+    expect(queryByText("AComponent")).not.toBeInTheDocument();
   });
 
   it("should not render component if type is array ", () => {

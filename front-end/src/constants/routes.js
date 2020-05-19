@@ -182,7 +182,7 @@ export default [
     path: paths.CHAT_DETAILS,
     component: MessagesList,
     isPrivate: true,
-    type: [undefined, userTypes.SPECIALIST],
+    type: undefined,
     exact: true,
     userVerified: true,
   },
