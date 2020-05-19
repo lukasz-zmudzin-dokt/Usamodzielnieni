@@ -1,5 +1,5 @@
 import React from "react";
-import { render, fireEvent, wait, queries } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { userStatuses } from "constants/userStatuses";
 import { userTypes } from "constants/userTypes";
