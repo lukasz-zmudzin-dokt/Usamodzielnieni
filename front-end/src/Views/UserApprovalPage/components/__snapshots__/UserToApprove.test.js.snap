@@ -150,12 +150,14 @@ exports[`UserApproval should match snapshot (Employer type user)  1`] = `
         >
           <button
             class="btn btn-success"
+            id="accept"
             type="button"
           >
             Akceptuj
           </button>
           <button
             class="ml-3 btn btn-danger"
+            id="reject"
             type="button"
           >
             Odrzuć
@@ -303,12 +305,14 @@ exports[`UserApproval should match snapshot (Standard type user)  1`] = `
         >
           <button
             class="btn btn-success"
+            id="accept"
             type="button"
           >
             Akceptuj
           </button>
           <button
             class="ml-3 btn btn-danger"
+            id="reject"
             type="button"
           >
             Odrzuć

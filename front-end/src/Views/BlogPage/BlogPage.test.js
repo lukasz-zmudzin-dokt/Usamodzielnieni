@@ -2,9 +2,13 @@ import React from "react";
 import { render, waitForElement, fireEvent } from "@testing-library/react";
 import BlogPage from "Views/BlogPage";
 import { MemoryRouter } from "react-router-dom";
+import { AlertContext } from "context";
 import proxy from "config/api";
 
 describe("BlogPage", () => {
+  let contextA = {
+    showAlert: jest.fn(),
+  };
   let failFetch;
   let apiFilters = ["abcd"];
   let apiPosts = [
@@ -12,6 +16,7 @@ describe("BlogPage", () => {
       tags: ["tag"],
       summary: "summary",
       category: "abcd",
+      header: "/media/example_img.jpg",
       id: 1,
       title: "tytuł",
     },
@@ -19,6 +24,7 @@ describe("BlogPage", () => {
       tags: ["tag", "abcd"],
       category: "abcd",
       summary: "summary2",
+      header: null,
       id: 2,
       title: "tytuł2",
     },
@@ -34,9 +40,7 @@ describe("BlogPage", () => {
             resolve({ status: 200 });
             break;
           case "GET":
-            if (
-              input.includes(proxy.blog + "blogposts/")
-            ) {
+            if (input.includes(proxy.blog + "blogposts/")) {
               resolve({ status: 200, json: () => Promise.resolve(apiPosts) });
             } else {
               resolve({ status: 200, json: () => Promise.resolve(apiFilters) });
@@ -92,18 +96,18 @@ describe("BlogPage", () => {
   it("should show message if apiFails", async () => {
     failFetch = true;
     const { getByText } = render(
-      <MemoryRouter>
-        <BlogPage />
-      </MemoryRouter>
+      <AlertContext.Provider value={contextA}>
+        <MemoryRouter>
+          <BlogPage />
+        </MemoryRouter>
+      </AlertContext.Provider>
     );
 
-    await waitForElement(() =>
-      getByText("Wystąpił błąd podczas ładowania postów.")
-    );
+    await waitForElement(() => getByText("Filtruj posty"));
 
-    expect(
-      getByText("Wystąpił błąd podczas ładowania postów.")
-    ).toBeInTheDocument();
+    expect(contextA.showAlert).toHaveBeenCalledWith(
+      "Nie udało się załadować postów"
+    );
   });
 
   describe("Filter", () => {
@@ -132,7 +136,6 @@ describe("BlogPage", () => {
         `${proxy.blog}blogposts/?category=abcd&tag=abcd`,
         {
           headers: {
-            Authorization: "Token undefined",
             "Content-Type": "application/json",
           },
           method: "GET",
@@ -161,12 +164,23 @@ describe("BlogPage", () => {
         `${proxy.blog}blogposts/?tag=abcd`,
         {
           headers: {
-            Authorization: "Token undefined",
             "Content-Type": "application/json",
           },
           method: "GET",
         }
       );
+    });
+
+    it("should render post with no tags", async () => {
+      apiPosts[0].tags = [];
+      const { getByText, getAllByText } = render(
+        <MemoryRouter>
+          <BlogPage />
+        </MemoryRouter>
+      );
+
+      await waitForElement(() => getAllByText("abcd"));
+      expect(getByText("Brak tagów")).toBeInTheDocument();
     });
 
     it("should be called with appropriate url(1 filter - category)", async () => {
@@ -190,7 +204,6 @@ describe("BlogPage", () => {
         `${proxy.blog}blogposts/?category=abcd`,
         {
           headers: {
-            Authorization: "Token undefined",
             "Content-Type": "application/json",
           },
           method: "GET",

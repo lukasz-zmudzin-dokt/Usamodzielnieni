@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { registerLocale } from "react-datepicker";
 import { Form, Button, Col } from "react-bootstrap";
 import { DEFAULT_INPUT } from "constants/other";
@@ -6,8 +6,10 @@ import FormGroup from "components/FormGroup";
 import { voivodeships } from "constants/voivodeships";
 import polish from "date-fns/locale/pl";
 import { getSelects } from "Views/OfferForm/functions/fetchData";
-import { UserContext } from "context";
+import { UserContext, AlertContext } from "context";
 import { IndexLinkContainer } from "react-router-bootstrap";
+import { userTypes } from "constants/userTypes";
+import { userStatuses } from "constants/userStatuses";
 registerLocale("pl", polish);
 
 const Filter = ({ setFilters, count, disabled }) => {
@@ -18,22 +20,22 @@ const Filter = ({ setFilters, count, disabled }) => {
   const [type, setType] = useState(DEFAULT_INPUT);
   const [arrays, setArrays] = useState([]);
   const user = useContext(UserContext);
-
-  const context = useContext(UserContext);
+  const alertC = useRef(useContext(AlertContext));
 
   useEffect(() => {
-    const loadSelects = async (token) => {
+    const loadSelects = async () => {
       let res;
       try {
-        res = await getSelects(token);
+        res = await getSelects();
       } catch (e) {
         console.log(e);
         res = { categories: [], types: [] };
+        alertC.current.showAlert("Nie udało się pobrać filtrów.");
       }
       setArrays(res);
     };
-    loadSelects(context.token);
-  }, [context.token]);
+    loadSelects();
+  }, []);
 
   const filter = (event) => {
     event.preventDefault();
@@ -163,9 +165,11 @@ const Filter = ({ setFilters, count, disabled }) => {
       {count !== 0 && (
         <small className="search__countText">{`Ilość znalezionych ofert: ${count}`}</small>
       )}
-      {user.type === "Employer" && user.data && user.data.status === 'Verified' ? (
+      {user.type === userTypes.EMPLOYER &&
+      user.data &&
+      user.data.status === userStatuses.VERIFIED ? (
         <IndexLinkContainer as={Button} to="/offerForm">
-          <Button variant="success" className="mt-2">
+          <Button variant="success" className="mx-2 mt-2">
             Dodaj ofertę
           </Button>
         </IndexLinkContainer>
