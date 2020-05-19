@@ -23,16 +23,17 @@ const PrivateRoute = ({
         !userVerified ||
         authenticated.data.status === userStatuses.VERIFIED
       ) {
+        console.log(group);
         if (!type) return <Route {...rest} />;
         else if (Array.isArray(type)) {
           let index = type.indexOf(authenticated.type);
           if (type[index] === authenticated.type) {
             if (type[index] === userTypes.STAFF) {
               if (
+                group === undefined ||
                 authenticated.data.group_type.some(
                   (type) => group.indexOf(type) >= 0
-                ) ||
-                group === undefined
+                )
               ) {
                 return <Route {...rest} />;
               }
@@ -45,10 +46,10 @@ const PrivateRoute = ({
         } else if (type === authenticated.type) {
           if (type === userTypes.STAFF) {
             if (
+              group === undefined ||
               authenticated.data.group_type.some(
                 (type) => group.indexOf(type) >= 0
-              ) ||
-              group === undefined
+              )
             ) {
               return <Route {...rest} />;
             }
