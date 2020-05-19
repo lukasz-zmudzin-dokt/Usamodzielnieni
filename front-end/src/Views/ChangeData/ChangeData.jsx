@@ -8,6 +8,7 @@ import { FacilityForm, CompanyForm } from "./components";
 
 const ChangeData = () => {
   const [data, setData] = useState({
+    email: "",
     first_name: "",
     last_name: "",
     phone_number: "",
@@ -19,9 +20,10 @@ const ChangeData = () => {
       postal_code: "",
     },
   });
+  const [validated, setValidated] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [disabled, setDisabled] = useState(true);
   const [err, setErr] = useState(false);
-
   const history = useHistory();
   const { id } = useParams();
   const user = useContext(UserContext);
@@ -36,6 +38,7 @@ const ChangeData = () => {
 
   useEffect(() => {
     setLoading(true);
+    setDisabled(true);
     const getData = async (token, id) => {
       try {
         const res = await getUserData(token, id);
@@ -44,24 +47,32 @@ const ChangeData = () => {
         setErr(true);
       }
       setLoading(false);
+      setDisabled(false);
     };
     getData(user.token, id);
   }, [id, user.token]);
 
-  const { first_name, last_name, phone_number } = data;
+  const { first_name, last_name, phone_number, email } = data;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      await sendFixedData(user.token, id, data);
-      alertC.current.showAlert(
-        "Udało się przesłać poprawione dane.",
-        "success"
-      );
-      return history.push("/userList");
-    } catch (err) {
-      alertC.current.showAlert("Nie udało się przesłać danych.");
+    const form = e.currentTarget;
+
+    if (form.checkValidity() !== false) {
+      setDisabled(true);
+      try {
+        await sendFixedData(user.token, id, data);
+        alertC.current.showAlert(
+          "Udało się przesłać poprawione dane.",
+          "success"
+        );
+        return history.push("/userList");
+      } catch (err) {
+        alertC.current.showAlert("Nie udało się przesłać danych.");
+      }
     }
+    setValidated(true);
+    setDisabled(false);
   };
 
   return (
@@ -85,6 +96,8 @@ const ChangeData = () => {
           ) : (
             <Form
               className="changeData__form"
+              noValidate
+              validated={validated}
               onSubmit={(e) => handleSubmit(e)}
             >
               <div className="changeData__wrapper">
@@ -96,23 +109,43 @@ const ChangeData = () => {
                       setVal={(val) => setData({ ...data, first_name: val })}
                       val={first_name}
                       length={{ min: 1, max: 30 }}
+                      required
                       id="firstName"
+                      incorrect="Podaj imię użytkownika."
                     />
                     <FormGroup
                       header="Nazwisko"
                       setVal={(val) => setData({ ...data, last_name: val })}
                       val={last_name}
                       length={{ min: 1, max: 30 }}
+                      required
                       id="lastName"
+                      incorrect="Podaj nazwisko użytkownika."
                     />
                     <FormGroup
                       header="Numer telefonu"
                       type="tel"
                       setVal={(val) => setData({ ...data, phone_number: val })}
                       val={phone_number}
-                      invalid="Podaj numer telefonu w formacie: +48123123123"
                       pattern="[+]{1}[4]{1}[8]{1}[0-9]{3}[0-9]{3}[0-9]{3}"
                       id="phoneNumber"
+                      incorrect="Podaj numer telefonu użytkownika w formacie +48123123123."
+                      required
+                    />
+                  </Card.Body>
+                </Card>
+                <Card bg="light" className="changeData__wrapper__card mb-3">
+                  <Card.Header>Dane konta</Card.Header>
+                  <Card.Body>
+                    <FormGroup
+                      header="Email"
+                      type="email"
+                      setVal={(val) => setData({ ...data, email: val })}
+                      val={email}
+                      length={{ min: 1, max: 60 }}
+                      required
+                      id="email"
+                      incorrect="Podaj poprawny email użytkownika."
                     />
                   </Card.Body>
                 </Card>
@@ -127,8 +160,8 @@ const ChangeData = () => {
                 )}
               </div>
               <Row className="ml-0 mr-0 mt-3 justify-content-center">
-                <Button type="submit" variant="primary">
-                  Prześlij zmiany
+                <Button type="submit" disabled={disabled} variant="primary">
+                  {disabled ? "Ładowanie... " : "Prześlij zmiany"}
                 </Button>
               </Row>
             </Form>

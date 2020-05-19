@@ -42,6 +42,7 @@ describe("ChangeData", () => {
   let failPut;
   let failGet;
   let data = {
+    email: "abc@o2.pl",
     first_name: "user",
     last_name: "user",
     phone_number: "+48123123123",
@@ -79,7 +80,10 @@ describe("ChangeData", () => {
   });
 
   beforeEach(() => {
+    failGet = false;
+    failPut = false;
     data = {
+      email: "abc@o2.pl",
       first_name: "user",
       last_name: "user",
       phone_number: "+48123123123",
@@ -90,13 +94,14 @@ describe("ChangeData", () => {
         street_number: "12",
         postal_code: "12-123",
       },
+      username: "abc",
     };
   });
 
   it("should match snapshot", async () => {
     const { container, getByText } = renderWithRouter(<ChangeData />);
 
-    await waitForElement(() => getByText("Adres placówki"));
+    await waitForElement(() => getByText("Prześlij zmiany"));
 
     expect(container).toMatchSnapshot();
   });
@@ -107,8 +112,11 @@ describe("ChangeData", () => {
       alertC
     );
 
-    await waitForElement(() => getByText("Adres placówki"));
+    await waitForElement(() => getByText("Prześlij zmiany"));
 
+    fireEvent.change(getByLabelText("Email"), {
+      target: { value: "abc@o2.pl" },
+    });
     fireEvent.change(getByLabelText("Imię"), {
       target: { value: "abc" },
     });
@@ -116,16 +124,16 @@ describe("ChangeData", () => {
       target: { value: "abc" },
     });
     fireEvent.change(getByLabelText("Numer telefonu"), {
-      target: { value: "adsasd" },
+      target: { value: "+48123123123" },
     });
     fireEvent.change(getByLabelText("Nazwa placówki"), {
       target: { value: "asdad" },
     });
     fireEvent.change(getByLabelText("Ulica"), {
-      target: { value: "ges" },
+      target: { value: "abc" },
     });
     fireEvent.change(getByLabelText("Numer budynku"), {
-      target: { value: "cde" },
+      target: { value: "1" },
     });
     fireEvent.change(getByLabelText("Nazwa miasta"), {
       target: { value: "abc" },
@@ -151,6 +159,7 @@ describe("ChangeData", () => {
 
   it("should redirect after sending data(company form)", async () => {
     data = {
+      email: "abc@o2.pl",
       first_name: "user",
       last_name: "user",
       phone_number: "+48123123123",
@@ -168,8 +177,11 @@ describe("ChangeData", () => {
       alertC
     );
 
-    await waitForElement(() => getByText("Adres firmy"));
+    await waitForElement(() => getByText("Prześlij zmiany"));
 
+    fireEvent.change(getByLabelText("Email"), {
+      target: { value: "abc@o2.pl" },
+    });
     fireEvent.change(getByLabelText("Imię"), {
       target: { value: "abc" },
     });
@@ -177,16 +189,16 @@ describe("ChangeData", () => {
       target: { value: "abc" },
     });
     fireEvent.change(getByLabelText("Numer telefonu"), {
-      target: { value: "adsasd" },
+      target: { value: "+48123123123" },
     });
     fireEvent.change(getByLabelText("Nazwa firmy"), {
       target: { value: "asdad" },
     });
     fireEvent.change(getByLabelText("Ulica"), {
-      target: { value: "ges" },
+      target: { value: "abc" },
     });
     fireEvent.change(getByLabelText("Numer budynku"), {
-      target: { value: "cde" },
+      target: { value: "1" },
     });
     fireEvent.change(getByLabelText("Nazwa miasta"), {
       target: { value: "abc" },
@@ -194,6 +206,7 @@ describe("ChangeData", () => {
     fireEvent.change(getByLabelText("Kod pocztowy"), {
       target: { value: "21-115" },
     });
+
     fireEvent.click(getByText("Prześlij zmiany"));
 
     await wait(() => {
@@ -212,7 +225,7 @@ describe("ChangeData", () => {
   it("should redirect after click back button", async () => {
     const { getByText, history } = renderWithRouter(<ChangeData />);
 
-    await waitForElement(() => getByText("Adres placówki"));
+    await waitForElement(() => getByText("Prześlij zmiany"));
 
     fireEvent.click(getByText("<"));
 
@@ -221,6 +234,7 @@ describe("ChangeData", () => {
 
   it("should render CompanyForm when nip is in data", async () => {
     data = {
+      email: "abc@o2.pl",
       first_name: "user",
       last_name: "user",
       phone_number: "+48123123123",
@@ -234,6 +248,8 @@ describe("ChangeData", () => {
       nip: "123123123",
     };
     const { getByText } = renderWithRouter(<ChangeData />);
+
+    await waitForElement(() => getByText("Prześlij zmiany"));
 
     await waitForElement(() => getByText("Adres firmy"));
   });
@@ -250,6 +266,8 @@ describe("ChangeData", () => {
   it("should render fail send message if api fails", async () => {
     failPut = true;
     const { getByText } = renderWithRouter(<ChangeData />, alertC);
+
+    await waitForElement(() => getByText("Prześlij zmiany"));
 
     fireEvent.click(getByText("Prześlij zmiany"));
 

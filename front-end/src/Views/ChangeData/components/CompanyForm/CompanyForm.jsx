@@ -14,9 +14,12 @@ const CompanyForm = ({ setData, data }) => {
           val={company_name}
           length={{ min: 1, max: 100 }}
           id="companyName"
+          required
+          incorrect="Podaj poprawną nazwę firmy."
         />
         <FormGroup
           header="Ulica"
+          required
           setVal={(val) =>
             setData({
               ...data,
@@ -26,9 +29,11 @@ const CompanyForm = ({ setData, data }) => {
           val={company_address.street}
           length={{ min: 1, max: 120 }}
           id="streetC"
+          incorrect="Podaj poprawną nazwę ulicy."
         />
         <FormGroup
           header="Numer budynku"
+          required
           setVal={(val) =>
             setData({
               ...data,
@@ -38,12 +43,15 @@ const CompanyForm = ({ setData, data }) => {
               },
             })
           }
+          pattern="^([0-9]{1})[\s\S]*"
           val={company_address.street_number}
           length={{ min: 1, max: 20 }}
           id="streetNumberC"
+          incorrect="Podaj poprawny numer budynku."
         />
         <FormGroup
           header="Nazwa miasta"
+          required
           setVal={(val) =>
             setData({
               ...data,
@@ -53,9 +61,11 @@ const CompanyForm = ({ setData, data }) => {
           val={company_address.city}
           length={{ min: 1, max: 40 }}
           id="cityC"
+          incorrect="Podaj poprawną nazwę miasta."
         />
         <FormGroup
           header="Kod pocztowy"
+          required
           setVal={(val) =>
             setData({
               ...data,
@@ -68,6 +78,7 @@ const CompanyForm = ({ setData, data }) => {
           val={company_address.postal_code}
           length={{ min: 1, max: 6 }}
           pattern="[0-9]{2}[-][0-9]{3}"
+          incorrect="Podaj poprawny kod pocztowy."
           id="postalCodeC"
         />
       </Card.Body>

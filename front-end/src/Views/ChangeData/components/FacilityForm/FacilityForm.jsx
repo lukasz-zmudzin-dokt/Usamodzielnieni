@@ -14,6 +14,8 @@ const FacilityForm = ({ setData, data }) => {
           val={facility_name}
           length={{ min: 1, max: 100 }}
           id="facilityName"
+          required
+          incorrect="Podaj poprawną nazwę placówki."
         />
         <FormGroup
           header="Ulica"
@@ -26,6 +28,8 @@ const FacilityForm = ({ setData, data }) => {
           val={facility_address.street}
           length={{ min: 1, max: 120 }}
           id="street"
+          required
+          incorrect="Podaj poprawną nazwę ulicy."
         />
         <FormGroup
           header="Numer budynku"
@@ -41,6 +45,9 @@ const FacilityForm = ({ setData, data }) => {
           val={facility_address.street_number}
           length={{ min: 1, max: 20 }}
           id="streetNumber"
+          required
+          pattern="^([0-9]{1})[\s\S]*"
+          incorrect="Podaj poprawny numer budynku."
         />
         <FormGroup
           header="Nazwa miasta"
@@ -53,6 +60,8 @@ const FacilityForm = ({ setData, data }) => {
           val={facility_address.city}
           length={{ min: 1, max: 40 }}
           id="city"
+          required
+          incorrect="Podaj poprawną nazwę miasta."
         />
         <FormGroup
           header="Kod pocztowy"
@@ -65,10 +74,11 @@ const FacilityForm = ({ setData, data }) => {
               },
             })
           }
+          required
           val={facility_address.postal_code}
-          length={{ min: 1, max: 6 }}
           pattern="[0-9]{2}[-][0-9]{3}"
           id="postalCode"
+          incorrect="Podaj poprawny kod pocztowy w formacie 00-000."
         />
       </Card.Body>
     </Card>

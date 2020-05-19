@@ -4,6 +4,7 @@ import FacilityForm from "./FacilityForm";
 
 describe("FacilityForm", () => {
   let data = {
+    email: "abc@o2.pl",
     first_name: "user",
     last_name: "user",
     phone_number: "+48123123123",

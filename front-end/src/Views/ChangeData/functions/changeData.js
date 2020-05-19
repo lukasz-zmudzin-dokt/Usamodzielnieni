@@ -1,26 +1,27 @@
 import proxy from "config/api";
 
 const changeDataObject = (data) => {
+  const { email, first_name, last_name, phone_number, username } = data;
   if (data.nip) {
-    return {};
-  } else {
-    const {
+    const { company_address, company_name, nip } = data;
+    return {
       email,
-      facility_address,
-      facility_name,
+      company_address,
+      company_name,
       first_name,
       last_name,
-      password,
       phone_number,
       username,
-    } = data;
+      nip,
+    };
+  } else {
+    const { facility_address, facility_name } = data;
     return {
       email,
       facility_address,
       facility_name,
       first_name,
       last_name,
-      password,
       phone_number,
       username,
     };
