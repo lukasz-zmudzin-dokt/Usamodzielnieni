@@ -5,8 +5,16 @@ import { MemoryRouter } from "react-router-dom";
 import { userTypes } from "constants/userTypes";
 import { staffTypes } from "constants/staffTypes";
 import { userStatuses } from "constants/userStatuses";
+import { AlertContext } from "context";
 
 describe("PrivateRoute test", () => {
+  const alertC = {
+    showAlert: jest.fn(),
+  };
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
   it("should match snapshot", () => {
     const exampleContext = {
       type: userTypes.EMPLOYER,
@@ -100,17 +108,22 @@ describe("PrivateRoute test", () => {
     };
 
     const { queryByText } = render(
-      <MemoryRouter initialEntries={[exampleProps.path]}>
-        <PrivateRoute
-          path={exampleProps.path}
-          type={exampleProps.type}
-          component={exampleProps.component}
-          authenticated={exampleContext}
-          redirect="/home"
-        />
-      </MemoryRouter>
+      <AlertContext.Provider value={alertC}>
+        <MemoryRouter initialEntries={[exampleProps.path]}>
+          <PrivateRoute
+            path={exampleProps.path}
+            type={exampleProps.type}
+            component={exampleProps.component}
+            authenticated={exampleContext}
+            redirect="/home"
+          />
+        </MemoryRouter>
+      </AlertContext.Provider>
     );
 
+    expect(alertC.showAlert).toHaveBeenCalledWith(
+      "Nie masz dostępu do tej strony."
+    );
     expect(queryByText("AComponent")).not.toBeInTheDocument();
   });
 
@@ -127,15 +140,17 @@ describe("PrivateRoute test", () => {
     };
 
     const { queryByText } = render(
-      <MemoryRouter initialEntries={[exampleProps.path]}>
-        <PrivateRoute
-          path={exampleProps.path}
-          type={exampleProps.type}
-          component={exampleProps.component}
-          authenticated={exampleContext}
-          redirect="/home"
-        />
-      </MemoryRouter>
+      <AlertContext.Provider value={alertC}>
+        <MemoryRouter initialEntries={[exampleProps.path]}>
+          <PrivateRoute
+            path={exampleProps.path}
+            type={exampleProps.type}
+            component={exampleProps.component}
+            authenticated={exampleContext}
+            redirect="/home"
+          />
+        </MemoryRouter>
+      </AlertContext.Provider>
     );
 
     expect(queryByText("AComponent")).not.toBeInTheDocument();
@@ -155,16 +170,22 @@ describe("PrivateRoute test", () => {
     };
 
     const { queryByText } = render(
-      <MemoryRouter initialEntries={[exampleProps.path]}>
-        <PrivateRoute
-          path={exampleProps.path}
-          type={exampleProps.type}
-          component={exampleProps.component}
-          authenticated={exampleContext}
-          redirect="/home"
-          group={exampleProps.group}
-        />
-      </MemoryRouter>
+      <AlertContext.Provider value={alertC}>
+        <MemoryRouter initialEntries={[exampleProps.path]}>
+          <PrivateRoute
+            path={exampleProps.path}
+            type={exampleProps.type}
+            component={exampleProps.component}
+            authenticated={exampleContext}
+            redirect="/home"
+            group={exampleProps.group}
+          />
+        </MemoryRouter>
+      </AlertContext.Provider>
+    );
+
+    expect(alertC.showAlert).toHaveBeenCalledWith(
+      "Nie masz dostępu do tej strony."
     );
     expect(queryByText("AComponent")).not.toBeInTheDocument();
   });
@@ -270,16 +291,20 @@ describe("PrivateRoute test", () => {
     };
 
     const { queryByText } = render(
-      <MemoryRouter initialEntries={[exampleProps.path]}>
-        <PrivateRoute
-          {...exampleProps}
-          authenticated={exampleContext}
-          redirect="/home"
-          group={exampleProps.group}
-        />
-      </MemoryRouter>
+      <AlertContext.Provider value={alertC}>
+        <MemoryRouter initialEntries={[exampleProps.path]}>
+          <PrivateRoute
+            {...exampleProps}
+            authenticated={exampleContext}
+            redirect="/home"
+            group={exampleProps.group}
+          />
+        </MemoryRouter>
+      </AlertContext.Provider>
     );
-
+    expect(alertC.showAlert).toHaveBeenCalledWith(
+      "Nie masz dostępu do tej strony."
+    );
     expect(queryByText("AComponent")).not.toBeInTheDocument();
   });
 
@@ -297,16 +322,21 @@ describe("PrivateRoute test", () => {
     };
 
     const { queryByText } = render(
-      <MemoryRouter initialEntries={[exampleProps.path]}>
-        <PrivateRoute
-          {...exampleProps}
-          authenticated={exampleContext}
-          redirect="/home"
-          group={exampleProps.group}
-        />
-      </MemoryRouter>
+      <AlertContext.Provider value={alertC}>
+        <MemoryRouter initialEntries={[exampleProps.path]}>
+          <PrivateRoute
+            {...exampleProps}
+            authenticated={exampleContext}
+            redirect="/home"
+            group={exampleProps.group}
+          />
+        </MemoryRouter>
+      </AlertContext.Provider>
     );
 
+    expect(alertC.showAlert).toHaveBeenCalledWith(
+      "Nie masz dostępu do tej strony."
+    );
     expect(queryByText("AComponent")).not.toBeInTheDocument();
   });
 
@@ -325,16 +355,20 @@ describe("PrivateRoute test", () => {
     };
 
     const { queryByText } = render(
-      <MemoryRouter initialEntries={[exampleProps.path]}>
-        <PrivateRoute
-          {...exampleProps}
-          authenticated={exampleContext}
-          redirect="/home"
-          group={exampleProps.group}
-        />
-      </MemoryRouter>
+      <AlertContext.Provider value={alertC}>
+        <MemoryRouter initialEntries={[exampleProps.path]}>
+          <PrivateRoute
+            {...exampleProps}
+            authenticated={exampleContext}
+            redirect="/home"
+            group={exampleProps.group}
+          />
+        </MemoryRouter>
+      </AlertContext.Provider>
     );
-
+    expect(alertC.showAlert).toHaveBeenCalledWith(
+      "Nie masz dostępu do tej strony."
+    );
     expect(queryByText("AComponent")).not.toBeInTheDocument();
   });
 });
