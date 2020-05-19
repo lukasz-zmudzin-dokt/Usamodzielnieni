@@ -6,6 +6,9 @@ import { createMemoryHistory } from "history";
 import UserInfo from "./UserInfo";
 import { userTypes } from "constants/userTypes";
 import { userStatuses } from "constants/userStatuses";
+import ButtonsContainer from "./ButtonsContainer";
+
+jest.mock("./ButtonsContainer");
 
 const renderWithRouter = (
   ui,
@@ -38,17 +41,16 @@ describe("UserInfo", () => {
     mapType: (type) => type,
     mapStatus: (status) => status,
   };
+  beforeEach(() => {
+    jest.clearAllMocks();
+    ButtonsContainer.mockImplementation(({ disabled }) => (
+      <div>ButtonsContainer</div>
+    ));
+  });
 
   it("should match snapshot", () => {
     const { container } = renderWithRouter(<UserInfo {...props} />);
 
     expect(container).toMatchSnapshot();
-  });
-
-  it("should redirect to chat", () => {
-    const { history, getByText } = renderWithRouter(<UserInfo {...props} />);
-    fireEvent.click(getByText("Wyślij wiadomość"));
-
-    expect(history.location.pathname).toEqual("/chats/1");
   });
 });

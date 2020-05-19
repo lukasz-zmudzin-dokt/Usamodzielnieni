@@ -1,13 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`BlockAccountButton should not block and delete buttons when user type is staff 1`] = `
+exports[`ButtonsContainer should not block and delete buttons when user type is staff 1`] = `
 <div>
   <div
     class="buttonsContainer"
   >
     <a
       class="btn btn-primary"
-      href="/chats/undefined"
+      href="/chats/1"
     >
       Wyślij wiadomość
     </a>
@@ -15,7 +15,7 @@ exports[`BlockAccountButton should not block and delete buttons when user type i
 </div>
 `;
 
-exports[`BlockAccountButton should render disabled buttons when user status is blocked 1`] = `
+exports[`ButtonsContainer should render disabled buttons when user status is blocked 1`] = `
 <div>
   <div
     class="buttonsContainer"
@@ -41,14 +41,14 @@ exports[`BlockAccountButton should render disabled buttons when user status is b
 </div>
 `;
 
-exports[`BlockAccountButton should render without crashing 1`] = `
+exports[`ButtonsContainer should render without crashing 1`] = `
 <div>
   <div
     class="buttonsContainer"
   >
     <a
       class="btn btn-primary"
-      href="/chats/undefined"
+      href="/chats/1"
     >
       Wyślij wiadomość
     </a>

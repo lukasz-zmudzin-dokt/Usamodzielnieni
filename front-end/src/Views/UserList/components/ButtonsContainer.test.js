@@ -1,8 +1,11 @@
 import React from "react";
-import { render } from "@testing-library/react";
+import { render, fireEvent } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { userStatuses } from "constants/userStatuses";
 import { userTypes } from "constants/userTypes";
+import { UserContext } from "context/UserContext";
+import { Router } from "react-router-dom";
+import { createMemoryHistory } from "history";
 import ButtonsContainer from "./ButtonsContainer";
 import BlockAccountButton from "./BlockAccountButton";
 import DeleteAccountButton from "./DeleteAccountButton";
@@ -10,7 +13,25 @@ import DeleteAccountButton from "./DeleteAccountButton";
 jest.mock("./BlockAccountButton");
 jest.mock("./DeleteAccountButton");
 
-describe("BlockAccountButton", () => {
+const renderWithRouter = (
+  ui,
+  {
+    route = `/userList`,
+    history = createMemoryHistory({ initialEntries: [route] }),
+  } = {}
+) => {
+  let context = { type: userTypes.STAFF };
+  return {
+    ...render(
+      <UserContext.Provider value={context}>
+        <Router history={history}>{ui}</Router>
+      </UserContext.Provider>
+    ),
+    history,
+  };
+};
+
+describe("ButtonsContainer", () => {
   let apiShouldFail;
   let props;
   beforeAll(() => {
@@ -42,6 +63,7 @@ describe("BlockAccountButton", () => {
     apiShouldFail = false;
     props = {
       user: {
+        id: 1,
         token: "123",
         logout: jest.fn(),
         status: userStatuses.VERIFIED,
@@ -81,5 +103,14 @@ describe("BlockAccountButton", () => {
     );
 
     expect(container).toMatchSnapshot();
+  });
+
+  it("should redirect to chat", () => {
+    const { history, getByText } = renderWithRouter(
+      <ButtonsContainer {...props} />
+    );
+    fireEvent.click(getByText("Wyślij wiadomość"));
+
+    expect(history.location.pathname).toEqual("/chats/1");
   });
 });

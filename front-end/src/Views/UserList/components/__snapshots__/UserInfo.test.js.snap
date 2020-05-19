@@ -71,27 +71,8 @@ exports[`UserInfo should match snapshot 1`] = `
           </div>
         </div>
       </div>
-      <div
-        class="buttonsContainer"
-      >
-        <a
-          class="btn btn-primary"
-          href="/chats/1"
-        >
-          Wyślij wiadomość
-        </a>
-        <button
-          class="btn btn-secondary"
-          type="button"
-        >
-          Zablokuj konto
-        </button>
-        <button
-          class="btn btn-danger"
-          type="button"
-        >
-          Usuń konto
-        </button>
+      <div>
+        ButtonsContainer
       </div>
     </div>
   </div>
