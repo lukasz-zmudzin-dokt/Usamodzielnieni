@@ -169,7 +169,7 @@ const Filter = ({ setFilters, count, disabled }) => {
       user.data &&
       user.data.status === userStatuses.VERIFIED ? (
         <IndexLinkContainer as={Button} to="/offerForm">
-          <Button variant="success" className="mt-2">
+          <Button variant="success" className="mx-2 mt-2">
             Dodaj ofertę
           </Button>
         </IndexLinkContainer>
