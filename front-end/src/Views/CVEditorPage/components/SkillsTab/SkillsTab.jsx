@@ -7,6 +7,7 @@ class SkillsTab extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      smallFormValidated: false,
       newSkill: {
         name: "",
       },
@@ -24,6 +25,8 @@ class SkillsTab extends React.Component {
       newSkill: { ...prevState, name },
     }));
   };
+  setSmallFormValidated = (value) =>
+    this.setState({ smallFormValidated: value });
 
   render() {
     return (
@@ -46,6 +49,8 @@ class SkillsTab extends React.Component {
           clear={this.clear}
           validated={this.props.validated}
           required
+          smallFormValidated={this.state.smallFormValidated}
+          setSmallFormValidated={this.setSmallFormValidated}
         >
           <Form.Group controlId="skillName">
             <Form.Label>Umiejętność:</Form.Label>
