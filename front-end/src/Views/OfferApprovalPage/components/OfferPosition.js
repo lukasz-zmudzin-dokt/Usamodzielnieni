@@ -42,6 +42,7 @@ const OfferPosition = ({ offer }) => {
   return (
     <Card.Body className="p-0">
       <ListGroup variant="flush">
+        {console.log(offer)}
         <ListGroup.Item>
           <Row>
             <DetailsItem md={4} xl={2} label="Województwo">
@@ -67,6 +68,11 @@ const OfferPosition = ({ offer }) => {
             </DetailsItem>
             <DetailsItem md={4} xl={2} label="Data wygaśnięcia">
               {offer.expiration_date}
+            </DetailsItem>
+          </Row>
+          <Row>
+            <DetailsItem md={2} xl={3} label="Wynagrodzenie">
+              {offer.salary_min} zł - {offer.salary_max} zł
             </DetailsItem>
           </Row>
         </ListGroup.Item>
