@@ -22,6 +22,15 @@ exports[`ActionWithDate - integration should add action item to list when endTim
 </button>
 `;
 
+exports[`ActionWithDate should not add action item to list when startTime is undefined 1`] = `
+<label
+  class="is-invalid form-label"
+  for="startTime"
+>
+  Od:
+</label>
+`;
+
 exports[`ActionWithDate should render without crashing 1`] = `
 <div>
   <form

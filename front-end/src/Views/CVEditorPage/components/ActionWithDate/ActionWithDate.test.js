@@ -64,6 +64,14 @@ describe("ActionWithDate", () => {
     expect(getByLabelText("Miejsce", { exact: false }).value).toBe("");
     expect(getByLabelText("Opis", { exact: false }).value).toBe("");
   });
+
+  it("should not add action item to list when startTime is undefined", () => {
+    const { getByText } = render(<ActionWithDate {...props} />);
+
+    fireEvent.click(getByText("Dodaj", { exact: false }));
+
+    expect(getByText("Od:")).toMatchSnapshot();
+  });
 });
 
 describe("ActionWithDate - integration", () => {
