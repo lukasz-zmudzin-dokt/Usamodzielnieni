@@ -2,15 +2,15 @@ import React, { useState } from "react";
 import Cookies from "universal-cookie";
 
 export const UserContext = React.createContext({
-  type: undefined, // Employer,Standard,Staff
+  type: undefined,
   token: undefined,
   data: undefined,
   login: () => {},
-  logout: () => {}
+  logout: () => {},
 });
 const cookies = new Cookies();
 
-export const UserProvider = props => {
+export const UserProvider = (props) => {
   const [type, setType] = useState(cookies.get("type"));
   const [token, setToken] = useState(cookies.get("token"));
   const [data, setData] = useState(cookies.get("data"));
@@ -20,9 +20,21 @@ export const UserProvider = props => {
     type,
     data,
     login: (newToken, newType, newData) => {
-      cookies.set("token", newToken, { path: "/" });
-      cookies.set("type", newType, { path: "/" });
-      cookies.set("data", newData, { path: "/" });
+      cookies.set("token", newToken, {
+        path: "/",
+        expires: setCookieDate(),
+        secure: process.env.REACT_APP_SECURE_COOKIES === "on",
+      });
+      cookies.set("type", newType, {
+        path: "/",
+        expires: setCookieDate(),
+        secure: process.env.REACT_APP_SECURE_COOKIES === "on",
+      });
+      cookies.set("data", newData, {
+        path: "/",
+        expires: setCookieDate(),
+        secure: process.env.REACT_APP_SECURE_COOKIES === "on",
+      });
       setToken(newToken);
       setType(newType);
       setData(newData);
@@ -34,7 +46,13 @@ export const UserProvider = props => {
       setToken(undefined);
       setType(undefined);
       setData(undefined);
-    }
+    },
   };
   return <UserContext.Provider value={user} {...props} />;
+};
+
+const setCookieDate = () => {
+  const date = new Date();
+  date.setDate(date.getDate() + 1);
+  return date;
 };

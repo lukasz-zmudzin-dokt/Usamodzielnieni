@@ -28,7 +28,11 @@ exports[`MessagesList should match snapshot 1`] = `
             </span>
           </div>
         </div>
-        Piotr Kowalski
+        <span
+          class="ml-2"
+        >
+          Piotr Kowalski
+        </span>
       </h3>
       <div
         class="messagesList__body card-body"

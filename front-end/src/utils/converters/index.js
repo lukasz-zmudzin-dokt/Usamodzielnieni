@@ -1,3 +1,3 @@
-import {addressToString} from "./addressObjectToString";
+import { addressToString } from "./addressObjectToString";
 
-export {addressToString};
+export { addressToString };

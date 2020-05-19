@@ -13,7 +13,7 @@ exports[`UserDetails should match snapshot - employer 1`] = `
       >
         string
          (
-        Employer
+        employer
         )
       </div>
       <div
@@ -167,12 +167,14 @@ exports[`UserDetails should match snapshot - employer 1`] = `
               >
                 <button
                   class="btn btn-success"
+                  id="accept"
                   type="button"
                 >
                   Akceptuj
                 </button>
                 <button
                   class="ml-3 btn btn-danger"
+                  id="reject"
                   type="button"
                 >
                   Odrzuć
@@ -357,7 +359,7 @@ exports[`UserDetails should match snapshot - standard 1`] = `
       >
         standard0
          (
-        Standard
+        standard
         )
       </div>
       <div
@@ -497,12 +499,14 @@ exports[`UserDetails should match snapshot - standard 1`] = `
               >
                 <button
                   class="btn btn-success"
+                  id="accept"
                   type="button"
                 >
                   Akceptuj
                 </button>
                 <button
                   class="ml-3 btn btn-danger"
+                  id="reject"
                   type="button"
                 >
                   Odrzuć
