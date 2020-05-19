@@ -9,8 +9,6 @@ import {
   Col,
   Row,
 } from "react-bootstrap";
-import mediumDraftImporter from "medium-draft/lib/importer";
-import { convertToHTML } from "draft-convert";
 import { deletePost } from "Views/BlogPost/functions/apiCalls";
 import { Redirect } from "react-router-dom";
 import { staffTypes } from "constants/staffTypes";
@@ -69,6 +67,7 @@ const renderButtons = (user, author, editionFlag, flag, setShowModal) => {
     return (
       <ButtonToolbar className="btn_toolbar text-center">
         <Button
+          key="edit"
           variant="info"
           className="button-edit mx-3"
           onClick={(e) => editionFlag(true)}
@@ -77,6 +76,7 @@ const renderButtons = (user, author, editionFlag, flag, setShowModal) => {
         </Button>
         <Button
           id="delete"
+          key="delete"
           variant="danger"
           className="button-delete mx-3"
           onClick={(e) => handleOnClick(e, setShowModal)}
@@ -122,7 +122,6 @@ const BlogContent = ({ post, user }) => {
     );
 
   const { username } = post.author;
-  const content = convertToHTML(mediumDraftImporter(post.content));
   return (
     <Card>
       {post.header !== null && post.header !== "" ? (
@@ -162,7 +161,7 @@ const BlogContent = ({ post, user }) => {
           Kategoria: {post.category}
         </Card.Subtitle>
         <div className="blog_content_text text-justify">
-          <div dangerouslySetInnerHTML={{ __html: content }} />
+          <div dangerouslySetInnerHTML={{ __html: post.content }} />
         </div>
         <p className="post_taglist mt-5">
           <em>tagi: {renderTags(post.tags)}</em>
