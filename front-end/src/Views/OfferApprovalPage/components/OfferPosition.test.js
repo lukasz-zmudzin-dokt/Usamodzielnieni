@@ -31,6 +31,8 @@ describe("OfferPosition", () => {
     offer_name: "Lajkonik",
     type: "Praca",
     voivodeship: "mazowieckie",
+    salary_min: 1,
+    salary_max: 2137,
   };
 
   beforeAll(() => {

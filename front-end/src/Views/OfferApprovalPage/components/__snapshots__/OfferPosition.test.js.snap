@@ -122,7 +122,9 @@ exports[`OfferPosition should match snapshot 1`] = `
             <div
               class="detailsItem__value"
             >
+              1
                zł - 
+              2137
                zł
             </div>
           </div>
