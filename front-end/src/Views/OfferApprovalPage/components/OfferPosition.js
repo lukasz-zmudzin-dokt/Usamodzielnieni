@@ -1,4 +1,4 @@
-import React, {useContext, useRef, useState} from "react";
+import React, { useContext, useRef, useState } from "react";
 import { UserContext, AlertContext } from "context";
 import { Button, Card, ListGroup, Row } from "react-bootstrap";
 import { DetailsItem } from "components";
@@ -73,24 +73,22 @@ const OfferPosition = ({ offer }) => {
         <ListGroup.Item>
           <DetailsItem label="Opis">{offer.description}</DetailsItem>
         </ListGroup.Item>
-          {
-            !actionTaken ? (
-                <ListGroup.Item>
-                  <Row className="justify-content-center">
-                    <Button onClick={(e) => approveOffer(e)} variant="primary">
-                      Akceptuj
-                    </Button>
-                    <Button
-                        onClick={(e) => rejectOffer(e)}
-                        variant="danger"
-                        className="ml-3"
-                    >
-                      Odrzuć
-                    </Button>
-                  </Row>
-                </ListGroup.Item>
-            ) : null
-          }
+        {!actionTaken ? (
+          <ListGroup.Item>
+            <Row className="justify-content-center">
+              <Button onClick={(e) => approveOffer(e)} variant="primary">
+                Akceptuj
+              </Button>
+              <Button
+                onClick={(e) => rejectOffer(e)}
+                variant="danger"
+                className="ml-3"
+              >
+                Odrzuć
+              </Button>
+            </Row>
+          </ListGroup.Item>
+        ) : null}
       </ListGroup>
     </Card.Body>
   );

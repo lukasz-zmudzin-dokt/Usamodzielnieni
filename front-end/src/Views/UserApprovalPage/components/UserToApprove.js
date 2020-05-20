@@ -157,29 +157,27 @@ const UserToApprove = ({ user, activeUser }) => {
           <ListGroup.Item>
             <Row>{address}</Row>
           </ListGroup.Item>
-          {
-            !actionTaken ? (
-                <ListGroup.Item>
-                  <Row className="justify-content-center">
-                    <Button
-                        onClick={(e) => approveUser(e, context.token, user.id)}
-                        variant="success"
-                        id="accept"
-                    >
-                      Akceptuj
-                    </Button>
-                    <Button
-                        onClick={(e) => handleOnClick(e)}
-                        variant="danger"
-                        className="ml-3"
-                        id="reject"
-                    >
-                      Odrzuć
-                    </Button>
-                  </Row>
-                </ListGroup.Item>
-            ) : null
-          }
+          {!actionTaken ? (
+            <ListGroup.Item>
+              <Row className="justify-content-center">
+                <Button
+                  onClick={(e) => approveUser(e, context.token, user.id)}
+                  variant="success"
+                  id="accept"
+                >
+                  Akceptuj
+                </Button>
+                <Button
+                  onClick={(e) => handleOnClick(e)}
+                  variant="danger"
+                  className="ml-3"
+                  id="reject"
+                >
+                  Odrzuć
+                </Button>
+              </Row>
+            </ListGroup.Item>
+          ) : null}
         </ListGroup>
       </Card.Body>
     );

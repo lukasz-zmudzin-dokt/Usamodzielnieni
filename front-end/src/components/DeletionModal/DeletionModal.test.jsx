@@ -48,10 +48,10 @@ describe("deletion modal tests", () => {
     expect(props.delConfirmed).toHaveBeenCalledWith(true);
   });
 
-  it('should do nothing', () => {
-    const {getByTestId} = render(<DeletionModal {...props} />);
+  it("should do nothing", () => {
+    const { getByTestId } = render(<DeletionModal {...props} />);
     fireEvent.click(getByTestId("modal_cancel"));
     expect(props.delConfirmed).not.toHaveBeenCalled();
     //expect(props.setShow).toHaveBeenCalledwith(false);
-  })
+  });
 });

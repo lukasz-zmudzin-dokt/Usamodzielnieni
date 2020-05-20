@@ -30,7 +30,7 @@ describe("CVSection", () => {
           case "GET":
             resolve({
               status: 200,
-              json: () => Promise.resolve({url: "/media/cv/0"}),
+              json: () => Promise.resolve({ url: "/media/cv/0" }),
             });
             break;
           default:

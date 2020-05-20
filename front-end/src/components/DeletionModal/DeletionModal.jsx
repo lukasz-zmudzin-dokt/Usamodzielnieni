@@ -21,11 +21,16 @@ const DeletionModal = ({
     <Modal show={show}>
       <Modal.Body>{question}</Modal.Body>
       <Modal.Footer>
-        <Button id="cancel" data-testid="modal_cancel" variant="primary" onClick={(e) => handleOnClick(e)}>
+        <Button
+          id="cancel"
+          data-testid="modal_cancel"
+          variant="primary"
+          onClick={(e) => handleOnClick(e)}
+        >
           {cancelLabel ? cancelLabel : "Zostaw"}
         </Button>
         <Button
-            data-testid="modal_confirm"
+          data-testid="modal_confirm"
           id="confirm"
           variant={"danger"}
           onClick={(e) => handleOnClick(e)}
