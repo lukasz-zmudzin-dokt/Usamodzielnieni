@@ -4,8 +4,8 @@ import { ProgressBar } from './components';
 
 const Steps = () => {
     const [steps, setSteps] = useState([
-        { id: '1', type: 'main', title: 'Tytuł głównego kroku 1', value: 'Opis kroku 1 wraz z filmikami.', next: ['2', '5'] },
-        { id: '2', type: 'main', title: 'Tytuł głównego kroku 2', value: 'Opis kroku 2 wraz z filmikami.', next: ['3'] },
+        { id: '1', type: 'main', title: 'Tytuł głównego kroku 1', value: 'Opis kroku 1 wraz z filmikami.', next: ['2'] },
+        { id: '2', type: 'main', title: 'Tytuł głównego kroku 2', value: 'Opis kroku 2 wraz z filmikami.', next: ['3', '5'] },
         { id: '3', type: 'sub', title: 'Tytuł podkroku 2.1', value: 'Opis kroku 2.1 wraz z filmikami.', next: ['4'] },
         { id: '4', type: 'sub', title: 'Tytuł podkroku 2.2', value: 'Opis kroku 2.2 wraz z filmikami.', next: ['5'] },
         { id: '5', type: 'main', title: 'Tytuł głównego kroku 3', value: 'Opis kroku 3 wraz z filmikami.', next: ['6'] },
@@ -27,7 +27,7 @@ const Steps = () => {
     return (
         <Container>
             <h1>Kroki usamodzielnienia</h1>
-            <ProgressBar steps={steps} path={path} setCurrent={setCurrent} />
+            <ProgressBar steps={steps} path={path} setCurrent={setCurrent} setSteps={setSteps} />
         </Container>
     )
 }

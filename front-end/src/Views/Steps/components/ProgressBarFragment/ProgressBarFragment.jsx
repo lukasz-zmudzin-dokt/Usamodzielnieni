@@ -1,7 +1,7 @@
 import React from 'react';
 import { Bullet, StepInfo } from '../';
 
-const ProgressBarFragment = ({ step, current, setCurrent }) => {
+const ProgressBarFragment = ({ step, current, setCurrent, steps, setSteps }) => {
     const type = current ? 'current' :
                 step ? 'visited' : 'next';
 
@@ -14,6 +14,8 @@ const ProgressBarFragment = ({ step, current, setCurrent }) => {
             {step && <StepInfo
                 step={step}
                 setCurrent={setCurrent}
+                steps={steps}
+                setSteps={setSteps}
             />}
         </div>
     )
