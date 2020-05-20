@@ -122,16 +122,20 @@ const ChangeData = () => {
                       id="lastName"
                       incorrect="Podaj nazwisko użytkownika."
                     />
-                    <FormGroup
-                      header="Numer telefonu"
-                      type="tel"
-                      setVal={(val) => setData({ ...data, phone_number: val })}
-                      val={phone_number}
-                      pattern="[+]{1}[4]{1}[8]{1}[0-9]{3}[0-9]{3}[0-9]{3}"
-                      id="phoneNumber"
-                      incorrect="Podaj numer telefonu użytkownika w formacie +48123123123."
-                      required
-                    />
+                    {data.group_type ? null : (
+                      <FormGroup
+                        header="Numer telefonu"
+                        type="tel"
+                        setVal={(val) =>
+                          setData({ ...data, phone_number: val })
+                        }
+                        val={phone_number}
+                        pattern="[+]{1}[4]{1}[8]{1}[0-9]{3}[0-9]{3}[0-9]{3}"
+                        id="phoneNumber"
+                        incorrect="Podaj numer telefonu użytkownika w formacie +48123123123."
+                        required
+                      />
+                    )}
                   </Card.Body>
                 </Card>
                 <Card bg="light" className="changeData__wrapper__card mb-3">
@@ -155,7 +159,7 @@ const ChangeData = () => {
                   </Alert>
                 ) : data.nip ? (
                   <CompanyForm data={data} setData={setData} />
-                ) : (
+                ) : data.group_type ? null : (
                   <FacilityForm data={data} setData={setData} />
                 )}
               </div>

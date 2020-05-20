@@ -277,4 +277,21 @@ describe("ChangeData", () => {
       "Nie udało się przesłać danych."
     );
   });
+
+  it("should render only staff fields if group_type is defined", async () => {
+    data = {
+      email: "abc@o2.pl",
+      first_name: "user",
+      last_name: "user",
+      group_type: ["abc"],
+      username: "abc",
+    };
+    const { getByText, queryByText } = renderWithRouter(<ChangeData />);
+
+    await waitForElement(() => getByText("Prześlij zmiany"));
+
+    expect(queryByText("Numer telefonu")).not.toBeInTheDocument();
+    expect(queryByText("Adres placówki")).not.toBeInTheDocument();
+    expect(queryByText("Adres firmy")).not.toBeInTheDocument();
+  });
 });
