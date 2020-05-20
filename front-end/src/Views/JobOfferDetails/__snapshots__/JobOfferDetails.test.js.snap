@@ -103,6 +103,23 @@ exports[`JobOfferDetails should render without crashing 1`] = `
                 class="detailsItem__value"
               />
             </div>
+            <div
+              class="detailsItem col-xl-4 col-md-6"
+            >
+              <div
+                class="detailsItem__label"
+              >
+                Wynagrodzenie
+              </div>
+              <div
+                class="detailsItem__value"
+              >
+                100000
+                 zł - 
+                123123
+                 zł
+              </div>
+            </div>
           </div>
           <p>
             Jakiś baaaaaaaaaaaaaaaaaardzo dłuuuuuuuuuuuuuuugi opis oferty pracy

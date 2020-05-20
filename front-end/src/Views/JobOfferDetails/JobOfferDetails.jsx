@@ -35,6 +35,8 @@ const mapOffer = (offer) => ({
   voivodeship: offer.voivodeship,
   expirationDate: offer.expiration_date,
   description: offer.description,
+  pay_from: offer.salary_min,
+  pay_to: offer.salary_max,
 });
 
 const JobOfferDetails = (props) => {
@@ -89,6 +91,9 @@ const JobOfferDetails = (props) => {
                 </DetailsItem>
                 <DetailsItem md="6" xl="4" label="Typ">
                   {offer.type}
+                </DetailsItem>
+                <DetailsItem md="6" xl="4" label="Wynagrodzenie">
+                  {offer.pay_from} zł - {offer.pay_to} zł
                 </DetailsItem>
               </Row>
               <p>{offer.description}</p>

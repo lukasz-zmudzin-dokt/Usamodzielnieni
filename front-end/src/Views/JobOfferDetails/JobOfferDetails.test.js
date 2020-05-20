@@ -60,6 +60,8 @@ describe("JobOfferDetails", () => {
         city: "abc",
         postal_code: "00-000",
       },
+      salary_max: 123123,
+      salary_min: 100000,
       voivodeship: "Jakieś województwo",
       expiration_date: "2020-12-12",
       description:

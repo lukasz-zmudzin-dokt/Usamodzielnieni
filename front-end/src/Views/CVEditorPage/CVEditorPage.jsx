@@ -14,6 +14,8 @@ import { UserContext } from "context";
 import { sendData, getFeedback } from "Views/CVEditorPage/functions/other.js";
 import { createCVObject } from "Views/CVEditorPage/functions/createCVObject.js";
 import { withRouter } from "react-router-dom";
+import { getCVdata } from "./functions/other";
+import { mapData, mapFeedback } from "./functions/mapData";
 import { withAlertContext } from "components";
 
 class CVEditorPage extends React.Component {
@@ -38,6 +40,10 @@ class CVEditorPage extends React.Component {
       showComments: true,
       disabled: false,
       validated: false,
+      fetchError: false,
+      method: "POST",
+      cv_id: undefined,
+      has_photo: false,
     };
     this.tabs = [];
   }
@@ -94,7 +100,9 @@ class CVEditorPage extends React.Component {
         await sendData(
           cv,
           this.state.tabs.photo.data,
-          this.context.token
+          this.context.token,
+          this.state.method,
+          this.state.cv_id
         ).then(() => this.setState({ disabled: false }));
       } catch (e) {
         this.setState({ disabled: false });
@@ -116,6 +124,7 @@ class CVEditorPage extends React.Component {
       error: this.state.commentsError,
       showComments: this.state.showComments,
       validated: this.state.validated,
+      isNew: this.state.method === "POST",
     });
     return [
       {
@@ -157,44 +166,71 @@ class CVEditorPage extends React.Component {
             onNextClick={undefined}
             onSubmit={this.handleCVSubmit}
             disabled={this.state.disabled}
+            hasPhoto={this.state.has_photo}
           />
         ),
       },
     ];
   };
 
-  componentDidMount() {
-    let cvId = this.props.match.params.id;
-    if (cvId) {
-      this.setState({ loading: true });
-      getFeedback(this.context.token, this.props.match.params.id)
-        .then((res) => {
-          const setTabComments = (key, comments) => {
+  autofillEditor = async (id) => {
+    let feedbackRes, cvRes, feedback, data;
+    try {
+      this.setState({
+        loading: true,
+        cv_id: id,
+        method: "PUT",
+      });
+      cvRes = await getCVdata(this.context.token, id);
+      if (cvRes.was_reviewed && !cvRes.is_verified) {
+        try {
+          feedbackRes = await getFeedback(this.context.token, id);
+          feedback = mapFeedback(feedbackRes);
+          Object.keys(feedback).forEach((item) => {
             this.setState((prevState) => ({
               tabs: {
                 ...prevState.tabs,
-                [key]: { ...prevState.tabs[key], comments },
+                [item]: { ...prevState.tabs[item], comments: feedback[item] },
               },
             }));
-          };
-          setTabComments("personalData", res.basic_info);
-          setTabComments("education", res.schools);
-          setTabComments("workExperience", res.experiences);
-          setTabComments("skills", res.skills);
-          setTabComments("languages", res.languages);
-          setTabComments("photo", res.additional_info);
-          this.setState({
-            loading: false,
-            commentsError: false,
           });
-        })
-        .catch((err) => {
-          console.log(err);
-          this.setState({
-            loading: false,
-          });
+        } catch (e) {
+          console.log(e);
           this.props.alertContext.showAlert("Nie udało się załadować uwag.");
+        } finally {
+          this.setState({
+            loading: false,
+          });
+        }
+      } else {
+        this.setState({
+          showComments: false,
         });
+      }
+      data = mapData(cvRes);
+      Object.keys(data).forEach((item) => {
+        this.setState((prevState) => ({
+          tabs: {
+            ...prevState.tabs,
+            [item]: { ...prevState.tabs[item], data: data[item] },
+          },
+        }));
+      });
+      this.setState({
+        has_photo: cvRes.has_picture,
+      });
+    } catch (e) {
+      this.setState({
+        loading: false,
+      });
+      this.props.alertContext.showAlert("Nie udało się załadować CV.");
+    }
+  };
+
+  componentDidMount() {
+    let cvId = this.props.match.params.id;
+    if (cvId) {
+      this.autofillEditor(cvId);
     } else {
       this.setState({ showComments: false });
     }

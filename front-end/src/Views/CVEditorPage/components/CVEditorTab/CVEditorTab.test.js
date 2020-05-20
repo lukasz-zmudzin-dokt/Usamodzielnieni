@@ -13,6 +13,7 @@ describe("CVEditorTab", () => {
       onNextClick: () => {},
       comments: "",
       loading: false,
+      showComments: true,
     };
   });
 
@@ -26,7 +27,7 @@ describe("CVEditorTab", () => {
     props.onNextClick = undefined;
     const { getByText, queryByText } = render(<CVEditorTab {...props} />);
 
-    expect(getByText("Generuj CV")).toBeInTheDocument();
+    expect(getByText("Zapisz zmiany i generuj CV")).toBeInTheDocument();
     expect(queryByText("Dalej", { exact: false })).not.toBeInTheDocument();
   });
 

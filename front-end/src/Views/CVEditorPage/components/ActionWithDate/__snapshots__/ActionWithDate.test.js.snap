@@ -6,7 +6,7 @@ exports[`ActionWithDate - integration should add action item to list 1`] = `
   id="Warszawa_Jakiś opis"
   type="button"
 >
-  Jakiś opis od: 02/2020 do: 12/2020 (Warszawa)
+  Warszawa od: 02/2020 do: 12/2020 (Jakiś opis)
    x
 </button>
 `;
@@ -17,9 +17,18 @@ exports[`ActionWithDate - integration should add action item to list when endTim
   id="Warszawa_Jakiś opis"
   type="button"
 >
-  Jakiś opis od: 02/2020 do: teraz (Warszawa)
+  Warszawa od: 02/2020  (Jakiś opis)
    x
 </button>
+`;
+
+exports[`ActionWithDate should not add action item to list when startTime is undefined 1`] = `
+<label
+  class="is-invalid form-label"
+  for="startTime"
+>
+  Od:
+</label>
 `;
 
 exports[`ActionWithDate should render without crashing 1`] = `
@@ -50,10 +59,16 @@ exports[`ActionWithDate should render without crashing 1`] = `
               class="form-control"
               id="startTime"
               placeholder="Data rozpoczęcia"
+              required=""
               type="text"
               value=""
             />
           </div>
+        </div>
+        <div
+          class="invalid-feedback"
+        >
+          Data rozpoczęcia jest wymagana.
         </div>
       </div>
       <div

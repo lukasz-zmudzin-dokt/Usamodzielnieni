@@ -1,0 +1,97 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`map mapData should map data 1`] = `
+Object {
+  "education": Array [
+    Object {
+      "description": "klasa1",
+      "endTime": 2018-12-30T23:00:00.000Z,
+      "place": "szkoła1",
+      "startTime": 2015-12-30T23:00:00.000Z,
+    },
+  ],
+  "languages": Array [
+    Object {
+      "level": "A2",
+      "name": "angielski",
+    },
+    Object {
+      "level": "biegły",
+      "name": "niemiecki",
+    },
+  ],
+  "personalData": Object {
+    "birthDate": 1999-12-31T23:00:00.000Z,
+    "email": "qwe@qwe.qwe",
+    "firstName": "Jan",
+    "lastName": "Kowalski",
+    "phoneNumber": "+48123456789",
+  },
+  "skills": Array [
+    Object {
+      "name": "taniec",
+    },
+    Object {
+      "name": "śpiew",
+    },
+  ],
+  "workExperience": Array [
+    Object {
+      "description": "stanowisko1",
+      "endTime": undefined,
+      "place": "praca1",
+      "startTime": 2019-12-30T23:00:00.000Z,
+    },
+  ],
+}
+`;
+
+exports[`map mapData should map data with empty experience array 1`] = `
+Object {
+  "education": Array [
+    Object {
+      "description": "klasa1",
+      "endTime": 2018-12-30T23:00:00.000Z,
+      "place": "szkoła1",
+      "startTime": 2015-12-30T23:00:00.000Z,
+    },
+  ],
+  "languages": Array [
+    Object {
+      "level": "A2",
+      "name": "angielski",
+    },
+    Object {
+      "level": "biegły",
+      "name": "niemiecki",
+    },
+  ],
+  "personalData": Object {
+    "birthDate": 1999-12-31T23:00:00.000Z,
+    "email": "qwe@qwe.qwe",
+    "firstName": "Jan",
+    "lastName": "Kowalski",
+    "phoneNumber": "+48123456789",
+  },
+  "skills": Array [
+    Object {
+      "name": "taniec",
+    },
+    Object {
+      "name": "śpiew",
+    },
+  ],
+  "workExperience": Array [],
+}
+`;
+
+exports[`map mapFeedback should match snapshot 1`] = `
+Object {
+  "education": "2",
+  "languages": "5",
+  "personalData": "1",
+  "photo": undefined,
+  "skills": "4",
+  "workExperience": "3",
+}
+`;
