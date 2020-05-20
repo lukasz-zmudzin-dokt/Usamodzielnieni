@@ -1,5 +1,5 @@
 import React, { useState, useContext, useRef, useEffect } from "react";
-import { Button, Card, Container, Form, Modal } from "react-bootstrap";
+import { Button, Form, Modal } from "react-bootstrap";
 import { AlertContext, UserContext } from "context";
 import { FormGroup } from "components";
 
@@ -7,13 +7,18 @@ const EditStep = ({ step, show, handleClose }) => {
   const [newStep, setNewStep] = useState(step);
   const user = useContext(UserContext);
   const alertC = useRef(useContext(AlertContext));
-
+  useEffect(() => {
+    setNewStep(step);
+  }, [step]);
   const handleSubmit = () => {};
 
   return (
     <Modal show={show} onHide={handleClose}>
       <Form onSubmit={handleSubmit}>
-        <Modal.Header>
+        <Modal.Header closeButton>
+          <Modal.Title>Edytuj krok</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
           <FormGroup
             type="text"
             header="Zmień tytuł"
@@ -23,8 +28,6 @@ const EditStep = ({ step, show, handleClose }) => {
             setVal={(val) => setNewStep({ ...newStep, title: val })}
             incorrect="Krok musi mieć tytuł."
           />
-        </Modal.Header>
-        <Modal.Body>
           <FormGroup
             type="textarea"
             header="Zmień zawartość kroku"
@@ -49,7 +52,6 @@ const EditStep = ({ step, show, handleClose }) => {
             />
           ))}
           <Modal.Footer>
-            <Button onClick={handleClose}>Zamknij</Button>
             <Button type="submit">Prześlij zmiany</Button>
           </Modal.Footer>
         </Modal.Body>

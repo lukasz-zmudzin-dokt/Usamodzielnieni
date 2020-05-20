@@ -51,10 +51,7 @@ const Steps = () => {
   ]);
   const [path, setPath] = useState(["1"]);
 
-  console.log(path);
-
   const setCurrent = (id) => {
-    console.log(id);
     const index = path.indexOf(id);
 
     if (index >= 0) {
@@ -69,9 +66,13 @@ const Steps = () => {
       <h1>Kroki usamodzielnienia</h1>
       <Button onClick={() => setShowEdit(true)}>Edytuj ten krok</Button>
       <Button onClick={() => setShowNew(true)}>Dodaj nowy krok</Button>
-      <NewStep show={showNew} handleClose={() => setShowNew(false)} />
+      <NewStep
+        steps={steps}
+        show={showNew}
+        handleClose={() => setShowNew(false)}
+      />
       <EditStep
-        step={steps[path[path.length - 1]]}
+        step={steps.find((item) => item.id === path[path.length - 1])}
         show={showEdit}
         handleClose={() => setShowEdit(false)}
       />

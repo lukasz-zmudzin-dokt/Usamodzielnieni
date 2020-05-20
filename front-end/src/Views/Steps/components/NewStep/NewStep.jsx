@@ -1,18 +1,27 @@
 import React, { useState, useContext, useRef, useEffect } from "react";
-import { Button, Card, Container, Form, Modal, Col } from "react-bootstrap";
+import {
+  Button,
+  Card,
+  Container,
+  Form,
+  Modal,
+  Col,
+  Row,
+} from "react-bootstrap";
 import { AlertContext, UserContext } from "context";
 import { FormGroup } from "components";
 
-const NewStep = ({ id, show, handleClose }) => {
+const NewStep = ({ steps, show, handleClose }) => {
   const [newStep, setNewStep] = useState({
     title: "",
     value: "",
+    place: "Przed",
+    type: "Podkrok",
     next: [],
   });
   const [buttonVal, setButtonVal] = useState("");
   const user = useContext(UserContext);
   const alertC = useRef(useContext(AlertContext));
-  const [validatedBtn, setValidatedBtn] = useState(false);
   const [validated, setValidated] = useState(false);
 
   const handleSubmit = (e) => {
@@ -55,6 +64,33 @@ const NewStep = ({ id, show, handleClose }) => {
         </Modal.Header>
         <Modal.Body>
           <FormGroup
+            type="select"
+            header="Ma się pojawić ..."
+            id="stepType"
+            array={["Przed", "Po"]}
+            required
+            val={newStep.place}
+            setVal={(val) => setNewStep({ ...newStep, place: val })}
+          />
+          <FormGroup
+            type="select"
+            header={newStep.place === "Przed" ? "Krokiem..." : "Kroku..."}
+            id="stepType"
+            array={[...steps.map((item) => item.title)]}
+            required
+            val={newStep.type}
+            setVal={(val) => setNewStep({ ...newStep, type: val })}
+          />
+          <FormGroup
+            type="select"
+            header="Wybierz rodzaj kroku"
+            id="stepType"
+            array={["Podkrok", "Krok główny"]}
+            required
+            val={newStep.type}
+            setVal={(val) => setNewStep({ ...newStep, type: val })}
+          />
+          <FormGroup
             type="text"
             header="Dodaj tytuł"
             id="stepTitle"
@@ -74,12 +110,12 @@ const NewStep = ({ id, show, handleClose }) => {
           <Col className="p-0 mb-3">
             <p>Lista przycisków:</p>
             {newStep.next.map((val) => (
-              <>
-                <p>{val}</p>
+              <Row className="mr-0 ml-0 mb-3 align-items-center">
+                <p className="font-weight-bold mb-0 mr-3">{val}</p>
                 <Button onClick={() => deleteButton(val)} variant="danger">
                   Usuń
                 </Button>
-              </>
+              </Row>
             ))}
             <FormGroup
               type="text"
@@ -91,8 +127,10 @@ const NewStep = ({ id, show, handleClose }) => {
 
             <Button onClick={addNewButton}>Dodaj przycisk</Button>
           </Col>
-          <Button type="submit">Prześlij zmiany</Button>
         </Modal.Body>
+        <Modal.Footer>
+          <Button type="submit">Dodaj krok</Button>
+        </Modal.Footer>
       </Form>
     </Modal>
   );
