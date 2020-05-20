@@ -5,6 +5,7 @@ import { staffTypes } from "constants/staffTypes";
 import { DeletionModal } from "components";
 import { useState } from "react";
 import { userTypes } from "constants/userTypes";
+import { renderWithTimeout } from "utils/renderWithTimeout/renderWithTimeout";
 
 const CommentItem = ({ comment, onDeleteClick, user, ...rest }) => {
   const canModifyComment = (user) =>
@@ -21,6 +22,18 @@ const CommentItem = ({ comment, onDeleteClick, user, ...rest }) => {
 
   if (deletionConfirmed) onDeleteClick(comment.id);
 
+  const delButton = () => (
+    <ButtonGroup className="commentItem__actions" size="sm">
+      <Button onClick={handleOnClick}>Usuń</Button>
+    </ButtonGroup>
+  );
+  let now = new Date();
+  let date = new Date(comment.creationDate);
+  let timeout =
+    now.getTime() > date.getTime() + 60000
+      ? 0
+      : 60000 - (now.getTime() - date.getTime());
+
   return (
     <div className="commentItem" {...rest}>
       <DeletionModal
@@ -34,11 +47,9 @@ const CommentItem = ({ comment, onDeleteClick, user, ...rest }) => {
         dodano: {comment.creationDate.toLocaleDateString(undefined, {})}
       </small>
       <p className="commentItem__content">{comment.content}</p>
-      {user && canModifyComment(user) !== false ? (
-        <ButtonGroup className="commentItem__actions" size="sm">
-          <Button onClick={handleOnClick}>Usuń</Button>
-        </ButtonGroup>
-      ) : null}
+      {user && canModifyComment(user) !== false
+        ? renderWithTimeout(delButton, timeout)
+        : null}
     </div>
   );
 };
