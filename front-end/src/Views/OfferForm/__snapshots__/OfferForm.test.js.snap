@@ -171,23 +171,51 @@ exports[`OfferForm renders correctly 1`] = `
           >
             <label
               class="form-label"
-              for="type"
+              for="salary_min"
             >
-              Wymiar pracy
+              Wynagrodzenie od (zł / miesiąc)
             </label>
-            <select
+            <input
               class="form-control"
-              id="type"
+              data-testid="default"
+              id="salary_min"
+              max="NaN"
+              min="0"
+              placeholder="Wynagrodzenie od (zł / miesiąc)"
               required=""
-            >
-              <option>
-                IT
-              </option>
-            </select>
+              type="number"
+              value=""
+            />
             <div
               class="invalid-feedback"
             >
-              Podaj wymiar pracy np. staż,praca
+              Pole musi być mniejsze od maksymalnej stawki
+            </div>
+          </div>
+          <div
+            class="form-group"
+          >
+            <label
+              class="form-label"
+              for="salary_max"
+            >
+              Wynagrodzenie do (zł / miesiąc)
+            </label>
+            <input
+              class="form-control"
+              data-testid="default"
+              id="salary_max"
+              max="999999"
+              min="NaN"
+              placeholder="Wynagrodzenie do (zł / miesiąc)"
+              required=""
+              type="number"
+              value=""
+            />
+            <div
+              class="invalid-feedback"
+            >
+              Pole musi być większe od minimalnej stawki
             </div>
           </div>
         </div>
@@ -195,7 +223,7 @@ exports[`OfferForm renders correctly 1`] = `
           class="offerForm__wrapper"
         >
           <div
-            class="offerForm__textContainer form-group"
+            class="textContainer form-group"
           >
             <label
               class="form-label"
@@ -208,6 +236,7 @@ exports[`OfferForm renders correctly 1`] = `
               id="description"
               maxlength="1000"
               minlength="1"
+              placeholder="Wpisz treść... "
               required=""
             />
             <div
@@ -245,9 +274,28 @@ exports[`OfferForm renders correctly 1`] = `
           >
             <label
               class="form-label"
+              for="type"
+            >
+              Wymiar pracy
+            </label>
+            <select
+              class="form-control"
+              id="type"
+              required=""
+            >
+              <option>
+                IT
+              </option>
+            </select>
+          </div>
+          <div
+            class="form-group"
+          >
+            <label
+              class="form-label"
               for="expiration_date"
             >
-              Ważne do:
+              Ważne do
             </label>
             <div
               class="align-items-center m-0 form-row"
@@ -261,7 +309,7 @@ exports[`OfferForm renders correctly 1`] = `
                   <input
                     class="form-control"
                     id="expiration_date"
-                    placeholder="Ważne do:"
+                    placeholder="Ważne do"
                     required=""
                     type="text"
                     value=""
@@ -276,6 +324,7 @@ exports[`OfferForm renders correctly 1`] = `
         >
           <button
             class="btn btn-primary"
+            data-testid="submitBtn"
             type="submit"
           >
             Dodaj

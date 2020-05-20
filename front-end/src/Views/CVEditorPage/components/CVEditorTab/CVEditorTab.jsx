@@ -12,7 +12,8 @@ const CVEditorTab = ({
   loading,
   error,
   showComments,
-  disabled = false
+  isNew,
+  disabled = false,
 }) => (
   <div>
     <h3>{title}</h3>
@@ -38,7 +39,7 @@ const CVEditorTab = ({
       <Col xs={12} md={6}>
         <Button
           className="form_navigation_prev"
-          onClick={e => onPrevClick(e)}
+          onClick={(e) => onPrevClick(e)}
           disabled={!onPrevClick}
           block
         >
@@ -49,7 +50,7 @@ const CVEditorTab = ({
         {onNextClick ? (
           <Button
             className="form_navigation_next"
-            onClick={e => onNextClick(e)}
+            onClick={(e) => onNextClick(e)}
             block
           >
             Dalej →
@@ -63,7 +64,11 @@ const CVEditorTab = ({
               block
               disabled={disabled}
             >
-              {disabled ? "Ładowanie..." : "Generuj CV"}
+              {disabled
+                ? "Ładowanie..."
+                : isNew
+                ? "Generuj CV"
+                : "Zapisz zmiany i generuj CV"}
             </Button>
           </Form>
         )}

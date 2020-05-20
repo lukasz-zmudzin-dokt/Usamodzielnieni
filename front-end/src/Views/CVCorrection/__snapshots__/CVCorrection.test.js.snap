@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CVCorrection should match snapshot 1`] = `
+<div>
+  <div
+    class="container"
+  >
+    <div
+      class="card"
+    >
+      <h2
+        class="offerForm__header card-header"
+      >
+        Uwagi do CV
+      </h2>
+      <div
+        class="card-body"
+      >
+        <div
+          class="m-0 row"
+        >
+          <div>
+            render/media/blank_test_cv
+          </div>
+          <div>
+            correction
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

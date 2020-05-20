@@ -14,6 +14,7 @@ const FormGroup = ({
   required,
   id,
   disabled,
+  step,
   ...rest
 }) => {
   const setInput = (e) => {
@@ -44,6 +45,7 @@ const FormGroup = ({
         return (
           <Form.Control
             as={type}
+            placeholder="Wpisz treść... "
             onChange={setInput}
             value={val}
             required={required}
@@ -79,6 +81,7 @@ const FormGroup = ({
             required={required}
             min={length.min}
             max={length.max}
+            step={step}
             data-testid="default"
             disabled={disabled}
           />
@@ -103,7 +106,7 @@ const FormGroup = ({
   return (
     <Form.Group
       controlId={id}
-      className={type === "textarea" ? "offerForm__textContainer" : ""}
+      className={type === "textarea" ? "textContainer" : ""}
       {...rest}
     >
       <Form.Label>{header}</Form.Label>
@@ -134,6 +137,7 @@ FormGroup.defaultProps = {
   required: false,
   length: { min: 1, max: 50 },
   disabled: false,
+  step: 1,
 };
 
 export default FormGroup;

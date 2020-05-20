@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ProgressBarFragment should render without crashing 1`] = `
+<div>
+  <div
+    class="progressBarFragment__container progressBarFragment__container--current"
+  >
+    <div>
+      Bullet
+    </div>
+    <div
+      class="progressBarFragment progressBarFragment--current"
+    >
+      <div
+        class="progressBarFragment__state"
+      />
+    </div>
+    <div>
+      StepInfo
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ProgressBarFragment should render without crashing when current is false and step is defined 1`] = `
+<div>
+  <div
+    class="progressBarFragment__container progressBarFragment__container--visited"
+  >
+    <div>
+      Bullet
+    </div>
+    <div
+      class="progressBarFragment progressBarFragment--visited"
+    >
+      <div
+        class="progressBarFragment__state"
+      />
+    </div>
+    <div>
+      StepInfo
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ProgressBarFragment should render without crashing when current is false and step is undefined 1`] = `
+<div>
+  <div
+    class="progressBarFragment__container progressBarFragment__container--next"
+  >
+    <div
+      class="progressBarFragment progressBarFragment--next"
+    >
+      <div
+        class="progressBarFragment__state"
+      />
+    </div>
+  </div>
+</div>
+`;

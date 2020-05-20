@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import { ListGroup, Container, Card, Button } from "react-bootstrap";
 import MessageItem from "./components/MessageItem";
+import { ChatForm } from "./components";
 import proxy from "config/api";
-import { UserContext } from "context";
+import { UserContext, AlertContext } from "context";
 import { useParams, useHistory } from "react-router-dom";
 import { UserPicture } from "components";
 
@@ -17,6 +18,36 @@ const getMessages = async (token, id) => {
   if (response.status === 200) {
     return response.json();
   } else {
+    throw response.status;
+  }
+};
+
+const sendMessage = async (token, id, msg, data, setData, alertC) => {
+  const url = proxy.chat + `${id}/`;
+  const headers = {
+    Authorization: "token " + token,
+    "Content-Type": "application/json",
+  };
+  const response = await fetch(url, { method: "POST", body: msg, headers });
+  //const response = {status: 200};
+
+  if (response.status === 200) {
+    let newData = data.slice();
+    const now = new Date();
+    const date = `${now.getHours()}:${
+      now.getMinutes() < 10 ? "0" : ""
+    }${now.getMinutes()} ${now.getDate()}.${
+      now.getMonth() < 10 ? "0" : ""
+    }${now.getMonth()}.${now.getFullYear()}`;
+    newData.push({
+      content: msg,
+      send: date,
+      side: "right",
+      id: 0, //odpowiednie id
+    });
+    setData(newData);
+  } else {
+    alertC.current.showAlert("Nie udało się wysłać wiadomości.");
     throw response.status;
   }
 };
@@ -79,6 +110,7 @@ const dataD = [
 const MessagesList = () => {
   const [data, setData] = useState([]);
   const user = useContext(UserContext);
+  const alertC = useRef(useContext(AlertContext));
   const history = useHistory();
   const { id } = useParams();
   const messagesEl = useRef(null);
@@ -94,6 +126,7 @@ const MessagesList = () => {
         res = await getMessages(token, id);
       } catch (e) {
         console.log(e);
+        alertC.current.showAlert("Nie udało się załadować wiadomości.");
         res = [];
       }
       setData(res);
@@ -101,6 +134,8 @@ const MessagesList = () => {
     loadMessages(user.token, id);
     messagesEl.current.scrollTop = messagesEl.current.scrollHeight;
   }, [id, user.token]);
+
+  //console.log(data);
 
   return (
     <Container className="messagesList">
@@ -118,11 +153,17 @@ const MessagesList = () => {
         </Card.Header>
         <Card.Body className="messagesList__body">
           <ListGroup ref={messagesEl} className="messagesList__list">
-            {data.map(({ content, send, side, id }) => (
+            {dataD.map(({ content, send, side, id }) => (
               <MessageItem key={id} content={content} send={send} side={side} />
             ))}
           </ListGroup>
         </Card.Body>
+        {/*<ChatForm sendMessage={msg => console.log(msg)}/>*/}
+        <ChatForm
+          sendMessage={(msg) =>
+            sendMessage(user.token, id, msg, data, setData, alertC)
+          }
+        />
       </Card>
     </Container>
   );
