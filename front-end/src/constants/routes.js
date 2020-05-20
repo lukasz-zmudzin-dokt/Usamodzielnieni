@@ -16,6 +16,7 @@ import {
   RegisterPage,
   UserProfilePage,
   UserApprovalPage,
+  Steps,
   CVCorrection,
   MessagesList,
   Chats,
@@ -160,6 +161,11 @@ export default [
     type: userTypes.STAFF,
     group: staffTypes.VERIFICATION,
     userVerified: true,
+  },
+  {
+    path: paths.STEPS,
+    component: Steps,
+    isPrivate: true,
   },
   {
     path: paths.CV_CORRECTION,
