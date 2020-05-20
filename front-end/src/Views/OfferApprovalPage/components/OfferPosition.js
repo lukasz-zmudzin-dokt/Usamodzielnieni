@@ -1,6 +1,6 @@
-import React, { useContext, useState } from "react";
-import { UserContext } from "context";
-import { Alert, Button, Card, ListGroup, Row } from "react-bootstrap";
+import React, { useContext, useRef } from "react";
+import { UserContext, AlertContext } from "context";
+import { Button, Card, ListGroup, Row } from "react-bootstrap";
 import { DetailsItem } from "components";
 import {
   setOfferApproved,
@@ -9,21 +9,19 @@ import {
 
 const OfferPosition = ({ offer }) => {
   const context = useContext(UserContext);
-  const [error, setError] = useState(false);
-  const [approved, setApproved] = useState(false);
-  const [rejected, setRejected] = useState(false);
+  const alertC = useRef(useContext(AlertContext));
 
   const approveOffer = async (e) => {
     e.preventDefault();
     try {
       let res = await setOfferApproved(context.token, offer.id);
       if (res.message === "Ustawiono potwierdzenie oferty pracy") {
-        setApproved(true);
+        alertC.current.showAlert("Pomyślnie potwierdzono ofertę", "success");
       } else {
-        setError(true);
+        alertC.current.showAlert("Nie udało się potwierdzić oferty.");
       }
     } catch (err) {
-      setError(true);
+      alertC.current.showAlert("Nie udało się potwierdzić oferty.");
     }
   };
 
@@ -32,32 +30,16 @@ const OfferPosition = ({ offer }) => {
     try {
       let res = await setOfferRejected(context.token, offer.id);
       if (res.message === "Offer removed successfully") {
-        setRejected(true);
+        alertC.current.showAlert("Pomyślnie odrzucono ofertę.", "success");
       } else {
-        setError(true);
+        alertC.current.showAlert("Nie udało się odrzucić oferty.");
       }
     } catch (e) {
-      setError(true);
+      alertC.current.showAlert("Nie udało się odrzucić oferty.");
     }
   };
 
-  const message = error ? (
-    <Alert className="mb-0" variant="danger">
-      Ups, wystąpił błąd...
-    </Alert>
-  ) : approved ? (
-    <Alert className="mb-0" variant="success">
-      Oferta zatwierdzona pomyślnie.
-    </Alert>
-  ) : rejected ? (
-    <Alert className="mb-0" variant="success">
-      Oferta odrzucona pomyślnie.
-    </Alert>
-  ) : null;
-
-  return message ? (
-    message
-  ) : (
+  return (
     <Card.Body className="p-0">
       <ListGroup variant="flush">
         <ListGroup.Item>
@@ -85,6 +67,11 @@ const OfferPosition = ({ offer }) => {
             </DetailsItem>
             <DetailsItem md={4} xl={2} label="Data wygaśnięcia">
               {offer.expiration_date}
+            </DetailsItem>
+          </Row>
+          <Row>
+            <DetailsItem md={2} xl={3} label="Wynagrodzenie">
+              {offer.salary_min} zł - {offer.salary_max} zł
             </DetailsItem>
           </Row>
         </ListGroup.Item>

@@ -9,21 +9,27 @@ exports[`CVSection should match snapshot 1`] = `
       class="d-flex align-items-center row"
     >
       <div
-        class="col-md-5 col-12"
+        class="col-md-4 col-12"
       />
       <div
-        class="col-md-3 col-4"
+        class="col-md-2 col-12"
       >
         Oczekuje na weryfikację
       </div>
       <div
-        class="text-right col-md-4 col-8"
+        class="text-right col-md-6 col-12"
       >
         <button
           class="btn btn-primary"
           type="button"
         >
           Zobacz CV
+        </button>
+        <button
+          class="m-1 btn btn-info"
+          type="button"
+        >
+          Zmień nazwę
         </button>
         <a
           class="mx-2 btn btn-info"

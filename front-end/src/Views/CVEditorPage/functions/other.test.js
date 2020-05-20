@@ -1,4 +1,4 @@
-import { sendData, getFeedback } from "./other.js";
+import { sendData, getFeedback, getCVdata } from "./other.js";
 import proxy from "config/api";
 
 describe("ActionWithDate", () => {
@@ -44,7 +44,7 @@ describe("ActionWithDate", () => {
 
   it("should call correct url when photo is undefined", async () => {
     global.open = jest.fn();
-    await sendData(cv, null, token);
+    await sendData(cv, null, token, "POST");
     await expect(global.open).toHaveBeenCalledWith(
       proxy.plain + "/CV_Jan_Kowalski",
       "_blank"
@@ -53,7 +53,7 @@ describe("ActionWithDate", () => {
 
   it("should call correct url when photo is defined", async () => {
     global.open = jest.fn();
-    await sendData(cv, file, token);
+    await sendData(cv, file, token, "POST");
     await expect(global.open).toHaveBeenCalledWith(
       proxy.plain + "/CV_Jan_Kowalski",
       "_blank"
@@ -87,19 +87,19 @@ describe("ActionWithDate", () => {
 
 describe("getFeedback test", () => {
   let comments = {};
-  let failFetch;
+  let failFetch, noneFound;
   beforeAll(() => {
     global.fetch = jest.fn().mockImplementation((input, init) => {
       return new Promise((resolve, reject) => {
         if (failFetch) {
           resolve({ status: 500 });
+        } else if (noneFound) {
+          resolve({ status: 404, json: () => Promise.resolve({}) });
         } else {
           switch (init.method) {
             case "GET":
-              resolve({
-                status: 200,
-                json: () => Promise.resolve(comments),
-              });
+              resolve({ status: 200, json: () => Promise.resolve(comments) });
+              break;
             default:
               resolve({});
               break;
@@ -111,10 +111,6 @@ describe("getFeedback test", () => {
 
   beforeEach(() => {
     failFetch = false;
-    comments = {};
-  });
-
-  it("should return comments", async () => {
     comments = {
       cv_id: 12,
       basic_info: "dane osobowe ok",
@@ -124,8 +120,13 @@ describe("getFeedback test", () => {
       languages: "poliglota",
       additional_info: "",
     };
+    noneFound = false;
+  });
+
+  it("should return comments", async () => {
     expect(getFeedback()).resolves.toEqual(comments);
   });
+
   it("should throw status 500", async () => {
     failFetch = true;
     let status;
@@ -135,5 +136,106 @@ describe("getFeedback test", () => {
       status = e;
     }
     expect(status).toEqual(500);
+  });
+
+  it("should return empty feedback object if none found", async () => {
+    noneFound = true;
+    expect(getFeedback()).resolves.toEqual({});
+  });
+});
+
+describe("cv data loading", () => {
+  let token, failFetch, data, id;
+
+  beforeAll(() => {
+    token = "123";
+    global.fetch = jest.fn().mockImplementation((input, init) => {
+      return new Promise((resolve, reject) => {
+        if (failFetch) {
+          resolve({ status: 500 });
+        } else {
+          switch (init.method) {
+            case "GET":
+              resolve({ status: 200, json: () => Promise.resolve(data) });
+              break;
+            default:
+              reject({});
+              break;
+          }
+        }
+      });
+    });
+  });
+
+  beforeEach(() => {
+    id = 123;
+    failFetch = false;
+    data = {
+      has_photo: false,
+      is_verified: false,
+      was_reviewed: true,
+      basic_info: {
+        first_name: "Jan",
+        last_name: "Kowalski",
+        date_of_birth: "01-01-2000",
+        phone_number: "+48123456789",
+        email: "qwe@qwe.qwe",
+      },
+      schools: [
+        {
+          name: "szkoła1",
+          description: "klasa1",
+          startTime: "2016",
+          endTime: "2019",
+        },
+      ],
+      experiences: [
+        {
+          title: "praca1",
+          description: "stanowisko1",
+          startTime: "2020",
+          endTime: null,
+        },
+      ],
+      skills: [{ description: "taniec" }, { description: "śpiew" }],
+      languages: [
+        {
+          name: "angielski",
+          level: "A2",
+        },
+        {
+          name: "niemiecki",
+          level: "biegły",
+        },
+      ],
+    };
+  });
+
+  it("should return correct data", async () => {
+    const res = await getCVdata(token, id);
+
+    expect(res).toEqual(data);
+  });
+
+  it("should be called with right headers", async () => {
+    await getCVdata(token, id);
+    await expect(fetch).toHaveBeenCalledWith(proxy.cv + "data/" + id + "/", {
+      method: "GET",
+      headers: {
+        Authorization: "Token " + token,
+        "Content-Type": "application/json",
+      },
+    });
+  });
+
+  it("should throw error on api fail", async () => {
+    failFetch = true;
+    let res;
+    try {
+      res = await getCVdata(token, id);
+    } catch (e) {
+      expect(e).toBe(500);
+    }
+    expect(res).not.toEqual(data);
   });
 });

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Cookies from "universal-cookie";
 
 export const UserContext = React.createContext({
-  type: undefined, // Employer,Standard,Staff
+  type: undefined,
   token: undefined,
   data: undefined,
   login: () => {},
@@ -23,17 +23,17 @@ export const UserProvider = (props) => {
       cookies.set("token", newToken, {
         path: "/",
         expires: setCookieDate(),
-        secure: process.env.REACT_APP_SECURE_COOKIES,
+        secure: process.env.REACT_APP_SECURE_COOKIES === "on",
       });
       cookies.set("type", newType, {
         path: "/",
         expires: setCookieDate(),
-        secure: process.env.REACT_APP_SECURE_COOKIES,
+        secure: process.env.REACT_APP_SECURE_COOKIES === "on",
       });
       cookies.set("data", newData, {
         path: "/",
         expires: setCookieDate(),
-        secure: process.env.REACT_APP_SECURE_COOKIES,
+        secure: process.env.REACT_APP_SECURE_COOKIES === "on",
       });
       setToken(newToken);
       setType(newType);

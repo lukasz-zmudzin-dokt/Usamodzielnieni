@@ -1,0 +1,56 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SelectionRow should render correctly 1`] = `
+<div>
+  <div>
+    <div
+      class="categories mx-0 row"
+    >
+      <div
+        class="col"
+      >
+        <select
+          class="form-control"
+          name="category"
+        >
+          <option>
+            Wybierz kategorię z listy
+          </option>
+          <option
+            value="kategoria1"
+          >
+            kategoria1
+          </option>
+          <option
+            value="kategoria2"
+          >
+            kategoria2
+          </option>
+        </select>
+      </div>
+      <div
+        class="mx-0 .col-mx-0 text-center"
+      >
+        lub
+      </div>
+      <div
+        class="col"
+      >
+        <input
+          class="form-control"
+          name="category"
+          placeholder="Wpisz nową kategorię"
+        />
+      </div>
+    </div>
+    <div>
+      <p
+        class="mx-3 mt-2 text-muted"
+      >
+        Kategoria: 
+        kategoria1
+      </p>
+    </div>
+  </div>
+</div>
+`;

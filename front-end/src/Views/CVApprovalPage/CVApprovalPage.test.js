@@ -1,11 +1,21 @@
 import React from "react";
-import { render, waitForElement, fireEvent } from "@testing-library/react";
+import {
+  render,
+  waitForElement,
+  wait,
+  fireEvent,
+} from "@testing-library/react";
 import CVApprovalPage from "./CVApprovalPage";
 import { MemoryRouter } from "react-router-dom";
+import { AlertContext } from "context";
+import { waitForElementToBeRemoved } from "@testing-library/dom";
 
 describe("CVApproval", () => {
   let failFetch;
   let apiCVs;
+  let contextA = {
+    showAlert: jest.fn(),
+  };
 
   beforeAll(() => {
     global.fetch = jest.fn().mockImplementation((input, init) => {
@@ -15,7 +25,7 @@ describe("CVApproval", () => {
         }
         switch (init.method) {
           case "POST":
-            resolve({ status: 200 });
+            resolve({ status: 200, json: () => Promise.resolve({}) });
             break;
           case "GET":
             resolve({ status: 200, json: () => Promise.resolve(apiCVs) });
@@ -73,14 +83,19 @@ describe("CVApproval", () => {
 
   it("should view alert at api fail", async () => {
     failFetch = true;
-    const { getByText } = render(
-      <MemoryRouter>
-        <CVApprovalPage />
-      </MemoryRouter>
+    render(
+      <AlertContext.Provider value={contextA}>
+        <MemoryRouter>
+          <CVApprovalPage />
+        </MemoryRouter>
+      </AlertContext.Provider>
     );
 
-    await waitForElement(() => getByText("Ups, wystąpił błąd."));
-    expect(getByText("Ups, wystąpił błąd.")).toBeInTheDocument();
+    await wait(() => expect(contextA.showAlert).toHaveBeenCalled());
+
+    expect(contextA.showAlert).toHaveBeenCalledWith(
+      "Nie udało się załadować CV."
+    );
   });
 
   it("should view alert at api returning no cvs", async () => {
@@ -93,5 +108,52 @@ describe("CVApproval", () => {
 
     await waitForElement(() => getByText("Brak CV do akceptacji."));
     expect(getByText("Brak CV do akceptacji.")).toBeInTheDocument();
+  });
+
+  it("should hide cv on accept", async () => {
+    apiCVs = [apiCVs[0]];
+    const { getByText, queryByText } = render(
+      <AlertContext.Provider value={contextA}>
+        <MemoryRouter>
+          <CVApprovalPage />
+        </MemoryRouter>
+      </AlertContext.Provider>
+    );
+
+    await waitForElement(() => getByText("Akceptuj"));
+    expect(getByText("Jarek")).toBeInTheDocument();
+    fireEvent.click(getByText("Akceptuj"));
+    await waitForElementToBeRemoved(() => getByText("Jarek"));
+    expect(queryByText("Jarek")).not.toBeInTheDocument();
+
+    await wait(() => expect(contextA.showAlert).toHaveBeenCalled());
+    expect(contextA.showAlert).toHaveBeenCalledWith(
+      "Pomyślnie zaakceptowano CV.",
+      "success"
+    );
+  });
+
+  it("should render alert on api fail while accepting", async () => {
+    apiCVs = [apiCVs[0]];
+    const { getByText, queryByText } = render(
+      <AlertContext.Provider value={contextA}>
+        <MemoryRouter>
+          <CVApprovalPage />
+        </MemoryRouter>
+      </AlertContext.Provider>
+    );
+
+    await waitForElement(() => getByText("Akceptuj"));
+    expect(getByText("Jarek")).toBeInTheDocument();
+
+    failFetch = true;
+    fireEvent.click(getByText("Akceptuj"));
+    const cv = await waitForElement(() => queryByText("Jarek"));
+    expect(cv).not.toBe(null);
+
+    await wait(() => expect(contextA.showAlert).toHaveBeenCalled());
+    expect(contextA.showAlert).toHaveBeenCalledWith(
+      "Nie udało się zaakceptować użytkownika."
+    );
   });
 });

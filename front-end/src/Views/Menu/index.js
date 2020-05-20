@@ -87,9 +87,7 @@ class Menu extends React.Component {
                     Moje CV
                   </Button>
                 </LinkContainer>
-                <LinkContainer
-                  to={!this.context.token ? "/login" : "/jobOffers"}
-                >
+                <LinkContainer to={"/jobOffers"}>
                   <Button className="menu-button-small menu-button-white">
                     Oferty pracy
                   </Button>

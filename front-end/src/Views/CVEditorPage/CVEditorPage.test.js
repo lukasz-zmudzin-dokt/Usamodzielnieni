@@ -2,6 +2,7 @@ import React from "react";
 import { render, fireEvent, queries } from "@testing-library/react";
 import CVEditorPage from "./CVEditorPage";
 import { sendData, getFeedback } from "./functions/other.js";
+import { MemoryRouter } from "react-router-dom";
 
 let mock_submitData = {};
 
@@ -63,7 +64,9 @@ jest.mock("./components", () => ({
     return (
       <div>
         <span>PhotoTabMock</span>
-        <button type="submit">Prześlij</button>
+        <button type="submit" onClick={() => props.onSubmit(mock_submitData)}>
+          Prześlij
+        </button>
       </div>
     );
   },
@@ -98,18 +101,30 @@ describe("CVEditorPage", () => {
   });
 
   it("should render without crashing", () => {
-    const { container } = render(<CVEditorPage />);
+    const { container } = render(
+      <MemoryRouter>
+        <CVEditorPage />
+      </MemoryRouter>
+    );
     expect(container).toMatchSnapshot();
   });
   it("should render without crashing when api fails", () => {
     apiShouldFail = true;
-    const { container } = render(<CVEditorPage />);
+    const { container } = render(
+      <MemoryRouter>
+        <CVEditorPage />
+      </MemoryRouter>
+    );
     expect(container).toMatchSnapshot();
   });
 
   it("should change tab when the active card calls onNextClick and onPrevClick function", () => {
     let activeTab;
-    const { getByRole } = render(<CVEditorPage />);
+    const { getByRole } = render(
+      <MemoryRouter>
+        <CVEditorPage />
+      </MemoryRouter>
+    );
 
     activeTab = getByRole("tabpanel");
     const nextButton = queries.getByText(activeTab, "Dalej");
@@ -126,77 +141,15 @@ describe("CVEditorPage", () => {
   });
 
   it("should change tab when tab button is clicked", () => {
-    const { getByRole } = render(<CVEditorPage />);
+    const { getByRole } = render(
+      <MemoryRouter>
+        <CVEditorPage />
+      </MemoryRouter>
+    );
 
     fireEvent.click(queries.getByText(getByRole("tablist"), "Edukacja"));
     const activeTab = getByRole("tabpanel");
 
     expect(activeTab).toMatchSnapshot();
-  });
-});
-
-describe("CVEditorPage  - submit", () => {
-  let shouldThrowError;
-  beforeEach(() => {
-    jest.clearAllMocks();
-    shouldThrowError = false;
-    mock_submitData = {
-      PersonalDataTab: {
-        firstName: "Jan",
-        lastName: "Kowalski",
-        birthDate: new Date(2000, 10, 4),
-        phoneNumber: "+48123123123",
-        email: "jan.kowalski@mail.com",
-      },
-      EducationTab: [
-        {
-          startTime: new Date(2002, 4, 4),
-          endTime: new Date(2003, 5, 6),
-          place: "Warszawa",
-          description: "Jakiś opis",
-        },
-      ],
-      WorkExperienceTab: [
-        {
-          startTime: new Date(2002, 4, 4),
-          endTime: new Date(2003, 5, 6),
-          place: "Warszawa",
-          description: "Jakiś opis",
-        },
-      ],
-      LanguagesTab: [{ name: "angielski", level: "podstawowy" }],
-      SkillsTab: [{ name: "Jakaś umiejętność" }],
-      PhotoTab: {},
-    };
-    sendData.mockImplementation(() => {
-      if (shouldThrowError) {
-        throw new Error();
-      }
-      return jest.fn();
-    });
-  });
-
-  it("should submit form when submit button is clicked", async () => {
-    const { getByRole } = render(<CVEditorPage />);
-
-    fireEvent.click(queries.getByText(getByRole("tablist"), "Zdjęcie"));
-    const activeTab = getByRole("tabpanel");
-    const submitButton = queries.getByText(activeTab, "Prześlij");
-    fireEvent.click(submitButton);
-
-    expect(sendData).toHaveBeenCalledTimes(1);
-    expect(sendData.mock.calls[0]).toMatchSnapshot();
-  });
-
-  it("should render error alert after submit returns error", async () => {
-    shouldThrowError = true;
-    const { getByRole, getByText } = render(<CVEditorPage />);
-
-    fireEvent.click(queries.getByText(getByRole("tablist"), "Zdjęcie"));
-    const activeTab = getByRole("tabpanel");
-    const submitButton = queries.getByText(activeTab, "Prześlij");
-    fireEvent.click(submitButton);
-
-    expect(getByText("Wystąpił błąd", { exact: false })).toBeInTheDocument();
   });
 });

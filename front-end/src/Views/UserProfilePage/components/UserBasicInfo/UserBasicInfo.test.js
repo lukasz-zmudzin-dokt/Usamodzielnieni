@@ -34,12 +34,4 @@ describe("UserBasicInfo ", () => {
     );
     expect(container).toMatchSnapshot();
   });
-
-  it("should render alert when api failed", () => {
-    const { getByText } = render(
-      <UserBasicInfo error={true} user={user} names={names} />
-    );
-
-    expect(getByText("Wystąpił błąd", { exact: false })).toBeInTheDocument();
-  });
 });

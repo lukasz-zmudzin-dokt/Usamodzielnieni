@@ -1,10 +1,7 @@
 import React from "react";
 import { Navbar, Nav, Button, Form } from "react-bootstrap";
 import { compile } from "path-to-regexp";
-
 import logo from "assets/logo.png";
-
-// https://github.com/ReactTraining/react-router/issues/83#issuecomment-214794477
 import { IndexLinkContainer } from "react-router-bootstrap";
 import { Redirect, withRouter } from "react-router-dom";
 import { UserContext } from "context";
@@ -12,8 +9,31 @@ import Notifications from "./components/Notifications";
 import menuPositions from "constants/menuPositions";
 import { userTypes } from "constants/userTypes";
 import proxy from "config/api";
+import { userStatuses } from "constants/userStatuses";
 
 class HeaderTemplate extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      auth: false,
+      slide: 0,
+      lastScrollY: 0,
+    };
+  }
+
+  handleScroll = () => {
+    const { lastScrollY } = this.state;
+    const currentScrollY = window.scrollY;
+
+    if (currentScrollY > lastScrollY) {
+      this.setState({ slide: "-100px" });
+    } else {
+      this.setState({ slide: "0px" });
+    }
+    this.setState({ lastScrollY: currentScrollY });
+  };
+
   displayMenu() {
     let type = this.context.token ? this.context.type : undefined;
     let adminGroup =
@@ -36,7 +56,7 @@ class HeaderTemplate extends React.Component {
             userVerified =
               pos.verified === true &&
               this.context.data &&
-              this.context.data.status === "Verified";
+              this.context.data.status === userStatuses.VERIFIED;
             return loggedOut ||
               (this.context.token &&
                 userIncluded &&
@@ -106,9 +126,26 @@ class HeaderTemplate extends React.Component {
     });
   };
 
+  componentDidMount() {
+    window.addEventListener("scroll", this.handleScroll);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this.handleScroll);
+  }
+
   render() {
     return (
-      <Navbar id="navbar_menu" variant="dark" fixed="top" expand="xl">
+      <Navbar
+        id="navbar_menu"
+        variant="dark"
+        fixed="top"
+        expand="xl"
+        style={{
+          transform: `translate(0, ${this.state.slide})`,
+          transition: "transform 90ms linear",
+        }}
+      >
         <Navbar.Brand id="navbar_logo">
           <IndexLinkContainer to="/">
             <img

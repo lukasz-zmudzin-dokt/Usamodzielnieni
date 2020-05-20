@@ -81,6 +81,7 @@ export const sendData = async (token, source) => {
   });
   if (res.status === 201) {
     const data = await res.json().then((data) => mapData(data));
+    console.log(data);
     let response = { data: {} };
     if (wants_data) {
       const dataRes = await fetch(proxy.account + "data", {
@@ -106,6 +107,6 @@ export const sendData = async (token, source) => {
 };
 
 const mapData = (data) => ({
-  token: data.token,
+  token: data.token_data.token,
   type: data.type,
 });

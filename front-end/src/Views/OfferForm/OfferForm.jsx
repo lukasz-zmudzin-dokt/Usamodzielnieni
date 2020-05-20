@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useRef } from "react";
 import { registerLocale } from "react-datepicker";
 import { Form, Container, Card, Button, Row, Alert } from "react-bootstrap";
 import { voivodeships } from "constants/voivodeships";
@@ -9,20 +9,19 @@ import {
   getTypes,
   getOffer,
 } from "Views/OfferForm/functions/fetchData";
-import { UserContext } from "context";
+import { UserContext, AlertContext } from "context";
 import polish from "date-fns/locale/pl";
 import { useHistory, useParams } from "react-router-dom";
-import {addressToString} from "utils/converters";
+import { addressToString } from "utils/converters";
 
 registerLocale("pl", polish);
 
 const OfferForm = () => {
   const history = useHistory();
   const [validated, setValidated] = useState(false);
-  const [fail, setFail] = useState(false);
   const [arrays, setArrays] = useState({ types: [], categories: [] });
   const [disabled, setDisabled] = useState(false);
-  const [message, setMessage] = useState("");
+  const [err, setErr] = useState(false);
   let { id } = useParams();
 
   const [offer, setOffer] = useState({
@@ -34,11 +33,13 @@ const OfferForm = () => {
     expiration_date: "",
     category: "",
     type: "",
+    salary_min: "",
+    salary_max: "",
   });
 
   //47991e86-4b42-4507-b154-1548bf8a3bd3
   const context = useContext(UserContext);
-
+  const alertC = useRef(useContext(AlertContext));
   useEffect(() => {
     setDisabled(true);
     const loadData = async (token) => {
@@ -53,9 +54,8 @@ const OfferForm = () => {
         if (err.message === "getOffer") {
           history.push("/offerForm");
         } else {
-          setFail(true);
           setDisabled(false);
-          setMessage("Nie udało się załadować danych.");
+          setErr(true);
         }
         return;
       }
@@ -95,6 +95,8 @@ const OfferForm = () => {
             ...offer,
             company_address: context.data.company_address,
             expiration_date: expiration_date.toISOString().substr(0, 10),
+            salary_min: salary_min.replace(",", "."),
+            salary_max: salary_max.replace(",", "."),
           },
           context.token,
           id
@@ -102,13 +104,18 @@ const OfferForm = () => {
         history.push("/myOffers");
         return;
       } catch (e) {
-        setFail(true);
-        setMessage("Nie udało się wysłać oferty. Błąd serwera.");
+        alertC.current.showAlert("Nie udało się wysłać oferty. Błąd serwera.");
       }
     }
     setDisabled(false);
     setValidated(true);
   };
+
+  const msg = err ? (
+    <Alert variant="danger">
+      Wystąpił błąd w trakcie ładowania formularza.
+    </Alert>
+  ) : null;
 
   const {
     offer_name,
@@ -119,6 +126,8 @@ const OfferForm = () => {
     voivodeship,
     category,
     type,
+    salary_min,
+    salary_max,
   } = offer;
 
   return (
@@ -174,14 +183,29 @@ const OfferForm = () => {
                 required
               />
               <FormGroup
-                header="Wymiar pracy"
-                id="type"
-                setVal={(val) => setOffer({ ...offer, type: val })}
-                val={type}
-                type="select"
-                array={arrays.types}
+                header="Wynagrodzenie od (zł / miesiąc)"
+                id="salary_min"
+                type="number"
+                setVal={(val) => setOffer({ ...offer, salary_min: val })}
+                val={salary_min}
                 required
-                incorrect="Podaj wymiar pracy np. staż,praca"
+                step={0.01}
+                length={{ min: 0, max: offer.salary_max * 1 - 1 }}
+                incorrect="Pole musi być mniejsze od maksymalnej stawki"
+              />
+              <FormGroup
+                header="Wynagrodzenie do (zł / miesiąc)"
+                id="salary_max"
+                type="number"
+                setVal={(val) => setOffer({ ...offer, salary_max: val })}
+                val={salary_max}
+                required
+                step={0.01}
+                length={{
+                  min: offer.salary_min * 1 + 1,
+                  max: 999999,
+                }}
+                incorrect="Pole musi być większe od minimalnej stawki"
               />
             </div>
             <div className="offerForm__wrapper">
@@ -206,7 +230,16 @@ const OfferForm = () => {
                 incorrect="Podaj branżę np. IT, marketing"
               />
               <FormGroup
-                header="Ważne do:"
+                header="Wymiar pracy"
+                id="type"
+                setVal={(val) => setOffer({ ...offer, type: val })}
+                val={type}
+                type="select"
+                array={arrays.types}
+                required
+              />
+              <FormGroup
+                header="Ważne do"
                 id="expiration_date"
                 type="date"
                 setVal={(val) => setOffer({ ...offer, expiration_date: val })}
@@ -214,22 +247,23 @@ const OfferForm = () => {
                 required
               />
             </div>
-            {fail === true ? (
-              <Row className="w-100 justify-content-center align-items-center m-0">
-                <Alert variant="danger">{message}</Alert>
-              </Row>
-            ) : null}
             <Row className="w-100 justify-content-center align-items-center m-0">
               <Button
                 variant="primary"
                 type="submit"
                 className=""
+                data-testid="submitBtn"
                 disabled={disabled}
               >
                 {disabled ? "Ładowanie..." : "Dodaj"}
               </Button>
             </Row>
           </Form>
+          {msg && (
+            <Row className="w-100 justify-content-center align-items-center ml-0 mb-0 mt-3">
+              {msg}
+            </Row>
+          )}
         </Card.Body>
       </Card>
     </Container>

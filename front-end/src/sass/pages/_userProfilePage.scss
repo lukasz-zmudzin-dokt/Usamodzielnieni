@@ -3,4 +3,11 @@
   font-weight: 600;
 }
 
-
+.buttonsContainer {
+  & > .btn {
+    margin-left: 1rem;
+    &:first-child {
+      margin-left: 0;
+    }
+  }
+}
