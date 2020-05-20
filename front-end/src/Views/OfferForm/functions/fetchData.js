@@ -61,7 +61,7 @@ const getOffer = async (token, id) => {
     headers: {
       "Content-Type": "application/json",
       Origin: null,
-      Authorization: "Token " + token
+      Authorization: "Token " + token,
     },
   });
   if (res.status !== 200) {

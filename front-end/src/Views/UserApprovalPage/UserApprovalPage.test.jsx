@@ -15,27 +15,27 @@ describe("UserApproval", () => {
     showAlert: jest.fn(),
   };
   let apiUsers = {
-      results: [
-          {
-              date_joined: "2020-04-25T23:31:59.239639+02:00",
-              email: "qwe@qwe.vcb",
-              id: "fcd32247-90ac-4394-92ca-27252bdc2ee9",
-              last_login: "2020-04-25T23:31:59.239631+02:00",
-              status: "Waiting for verification",
-              type: userTypes.STANDARD,
-              username: "testowyuser123",
-          },
-          {
-              date_joined: "2019-04-25T23:31:59.239639+02:00",
-              email: "qwe@qwe.vcb2",
-              id: "fcd32247-90ac-4394-92ca-27252bdc2ee0",
-              last_login: "2020-04-25T23:32:59.239631+02:00",
-              status: "Waiting for verification",
-              type: userTypes.EMPLOYER,
-              username: "testowyuser1232",
-          },
-      ]
-  }
+    results: [
+      {
+        date_joined: "2020-04-25T23:31:59.239639+02:00",
+        email: "qwe@qwe.vcb",
+        id: "fcd32247-90ac-4394-92ca-27252bdc2ee9",
+        last_login: "2020-04-25T23:31:59.239631+02:00",
+        status: "Waiting for verification",
+        type: userTypes.STANDARD,
+        username: "testowyuser123",
+      },
+      {
+        date_joined: "2019-04-25T23:31:59.239639+02:00",
+        email: "qwe@qwe.vcb2",
+        id: "fcd32247-90ac-4394-92ca-27252bdc2ee0",
+        last_login: "2020-04-25T23:32:59.239631+02:00",
+        status: "Waiting for verification",
+        type: userTypes.EMPLOYER,
+        username: "testowyuser1232",
+      },
+    ],
+  };
 
   beforeAll(() => {
     global.fetch = jest.fn().mockImplementation((input, init) => {
@@ -88,12 +88,8 @@ describe("UserApproval", () => {
       </AlertContext.Provider>
     );
 
-    await waitForElement(() =>
-      getByText("Ups, wystąpił błąd.")
-    );
-    expect(
-      getByText("Ups, wystąpił błąd.")
-    ).toBeInTheDocument();
+    await waitForElement(() => getByText("Ups, wystąpił błąd."));
+    expect(getByText("Ups, wystąpił błąd.")).toBeInTheDocument();
   });
 
   it("should view alert at api returning no users", async () => {

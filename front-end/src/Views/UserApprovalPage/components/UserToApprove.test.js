@@ -97,16 +97,17 @@ describe("UserApproval", () => {
               case "Approve":
                 resolve({
                   status: 200,
-                  json: () => Promise.resolve({message: "Użytkownik został pomyślnie zweryfikowany"}),
+                  json: () =>
+                    Promise.resolve({
+                      message: "Użytkownik został pomyślnie zweryfikowany",
+                    }),
                 });
                 break;
               case "Reject":
                 resolve({
                   status: 200,
                   json: () =>
-                    Promise.resolve(
-                        {message: "Konto odrzucone pomyślnie"}
-                    ),
+                    Promise.resolve({ message: "Konto odrzucone pomyślnie" }),
                 });
                 break;
               default:
