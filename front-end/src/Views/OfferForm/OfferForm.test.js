@@ -29,6 +29,7 @@ const renderWithRouter = (
   } = {}
 ) => {
   let context = {
+    token: 123,
     data: {
       company_name: "abc",
       company_address: {
@@ -272,10 +273,10 @@ describe("OfferForm", () => {
       },
     });
     fireEvent.change(getByPlaceholderText("Wynagrodzenie od (zł / miesiąc)"), {
-      target: { value: "0" },
+      target: { value: 1 },
     });
     fireEvent.change(getByPlaceholderText("Wynagrodzenie do (zł / miesiąc)"), {
-      target: { value: "420" },
+      target: { value: 420 },
     });
 
     fireEvent.click(getByText("Dodaj"));
@@ -284,6 +285,7 @@ describe("OfferForm", () => {
       expect(fetch).toHaveBeenCalled();
     });
 
+    //expect(getByText("dupa")).toBeInTheDocument();
     expect(history.location.pathname).toEqual("/myOffers");
   });
 
@@ -406,7 +408,7 @@ describe("OfferForm", () => {
     await wait(() =>
       expect(fetch).toHaveBeenCalledWith(proxy.job + "job-offer/abc/", {
         headers: {
-          Authorization: "Token undefined",
+          Authorization: "Token 123",
           "Content-Type": "application/json",
           Origin: null,
         },
