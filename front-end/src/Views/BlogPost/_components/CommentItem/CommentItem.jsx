@@ -5,7 +5,7 @@ import { staffTypes } from "constants/staffTypes";
 import { DeletionModal } from "components";
 import { useState } from "react";
 import { userTypes } from "constants/userTypes";
-import {renderWithTimeout} from "utils/renderWithTimeout";
+import {renderWithTimeout} from "utils/renderWithTimeout/renderWithTimeout";
 
 const CommentItem = ({ comment, onDeleteClick, user, ...rest }) => {
   const canModifyComment = (user) =>
