@@ -16,6 +16,7 @@ import BlogPostForm from "Views/BlogPostForm";
 import MyCVsPage from "Views/MyCVsPage";
 import CVApprovalPage from "Views/CVApprovalPage";
 import UserApprovalPage from "Views/UserApprovalPage";
+import Steps from "Views/Steps";
 import CVCorrection from "Views/CVCorrection";
 import MessagesList from "Views/MessagesList";
 import Chats from "Views/Chats";
@@ -46,6 +47,7 @@ export {
   MyCVsPage,
   CVApprovalPage,
   UserApprovalPage,
+  Steps,
   CVCorrection,
   OfferApprovalPage,
   MessagesList,

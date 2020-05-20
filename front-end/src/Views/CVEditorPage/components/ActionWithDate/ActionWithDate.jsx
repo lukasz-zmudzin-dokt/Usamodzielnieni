@@ -10,6 +10,7 @@ class ActionWithDate extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      smallFormValidated: false,
       newAction: {
         startTime: undefined,
         endTime: undefined,
@@ -54,6 +55,8 @@ class ActionWithDate extends React.Component {
       },
     });
   };
+  setSmallFormValidated = (value) =>
+    this.setState({ smallFormValidated: value });
 
   render() {
     return (
@@ -66,10 +69,21 @@ class ActionWithDate extends React.Component {
         clear={this.clear}
         validated={this.props.validated}
         required={this.props.required}
+        smallFormValidated={this.state.smallFormValidated}
+        setSmallFormValidated={this.setSmallFormValidated}
       >
         <Row>
           <Form.Group as={Col} xs={12} md={6}>
-            <Form.Label htmlFor="startTime">Od:</Form.Label>
+            <Form.Label
+              htmlFor="startTime"
+              className={
+                this.state.smallFormValidated &&
+                !this.state.newAction.startTime &&
+                "is-invalid"
+              }
+            >
+              Od:
+            </Form.Label>
             <DatePicker
               id="startTime"
               className="form-control"
@@ -83,8 +97,12 @@ class ActionWithDate extends React.Component {
                 }))
               }
               showMonthYearPicker
+              required
               maxDate={this.state.newAction.endTime}
             />
+            <Form.Control.Feedback type="invalid">
+              Data rozpoczęcia jest wymagana.
+            </Form.Control.Feedback>
           </Form.Group>
           <Form.Group as={Col} xs={12} md={6}>
             <Form.Label htmlFor="endTime">Do:</Form.Label>

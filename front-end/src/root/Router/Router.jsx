@@ -1,11 +1,22 @@
-import React from "react";
-import { Route, Switch, useLocation } from "react-router-dom";
+import React, { useRef, useContext } from "react";
+import { Route, Switch, useLocation, useHistory } from "react-router-dom";
 import routes from "constants/routes";
 import PrivateRoute from "root/_components/PrivateRoute";
-import { UserContext } from "context/UserContext";
+import { UserContext, AlertContext } from "context";
 
 const Router = () => {
   const location = useLocation();
+  const history = useHistory();
+  const alertC = useRef(useContext(AlertContext));
+  const user = useContext(UserContext);
+
+  const handleRedirect = () => {
+    const msg = `Nie ma takiej strony. Nastąpiło przekierowanie do ${
+      user.token ? "twojego profilu." : "strony głównej."
+    }`;
+    alertC.current.showAlert(msg);
+    user.token ? history.push("/user") : history.push("/");
+  };
   return (
     <UserContext.Consumer>
       {(value) => {
@@ -39,6 +50,7 @@ const Router = () => {
                 );
               }
             )}
+            <Route>{handleRedirect}</Route>
           </Switch>
         );
       }}

@@ -15,6 +15,7 @@ const FormGroup = ({
   id,
   disabled,
   pattern,
+  step,
   ...rest
 }) => {
   const setInput = (e) => {
@@ -79,6 +80,10 @@ const FormGroup = ({
             onChange={setInput}
             value={val}
             required={required}
+            min={length.min}
+            max={length.max}
+            step={step}
+            data-testid="default"
             disabled={disabled}
             pattern={pattern}
           />
@@ -144,6 +149,7 @@ FormGroup.defaultProps = {
   required: false,
   length: { min: 1, max: 50 },
   disabled: false,
+  step: 1,
 };
 
 export default FormGroup;

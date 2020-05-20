@@ -85,7 +85,7 @@ exports[`Router test should match snapshot 1`] = `
             </a>
             <a
               class="menu-button-small menu-button-white btn btn-primary"
-              href="/login"
+              href="/jobOffers"
             >
               Oferty pracy
             </a>

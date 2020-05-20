@@ -1,4 +1,7 @@
 @import "utilities/variables";
+@import "bootstrap/custom";
+// Import Bootstrap and its default variables
+@import "~bootstrap/scss/bootstrap.scss";
 
 @import "pages/loginRegisterPage.scss";
 @import "pages/offerForm.scss";
@@ -7,13 +10,13 @@
 @import "pages/headerLayout";
 @import "pages/CVEditorPage";
 @import "pages/blogPage";
+@import "pages/steps";
 @import "pages/CVCorrection";
 @import "pages/jobOfferDetails";
 @import "pages/messagesList";
 @import "pages/chats";
 @import "pages/changeData";
 
-@import "bootstrap/custom";
 
 @import "components/detailsItem";
 @import "components/CVEditorTab";
@@ -25,6 +28,3 @@
 @import "components/alertMessage";
 @import "components/formGroup";
 @import "components/userPicture";
-
-// Import Bootstrap and its default variables
-@import "~bootstrap/scss/bootstrap.scss";

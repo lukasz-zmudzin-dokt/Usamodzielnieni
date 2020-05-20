@@ -20,6 +20,7 @@ const paths = {
   MY_CVS: "/myCVs",
   USER_APPROVAL: "/userApproval",
   CV_CORRECTION: "/cvCorrection/:id",
+  STEPS: "/steps",
   CHATS: "/chats",
   CHAT_DETAILS: "/chats/:id",
   USER_LIST: "/userList",

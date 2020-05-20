@@ -1,49 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`CVEditorPage  - submit should submit form when submit button is clicked 1`] = `
-Array [
-  Object {
-    "basic_info": Object {
-      "date_of_birth": "4-11-2000",
-      "email": "jan.kowalski@mail.com",
-      "first_name": "Jan",
-      "last_name": "Kowalski",
-      "phone_number": "+48123123123",
-    },
-    "experiences": Array [
-      Object {
-        "description": "Jakiś opis",
-        "title": "Warszawa",
-        "year_end": 2003,
-        "year_start": 2002,
-      },
-    ],
-    "languages": Array [
-      Object {
-        "level": "podstawowy",
-        "name": "angielski",
-      },
-    ],
-    "schools": Array [
-      Object {
-        "additional_info": "Jakiś opis",
-        "name": "Warszawa",
-        "year_end": 2003,
-        "year_start": 2002,
-      },
-    ],
-    "skills": Array [
-      Object {
-        "description": "Jakaś umiejętność",
-      },
-    ],
-    "wants_verification": true,
-  },
-  Object {},
-  undefined,
-]
-`;
-
 exports[`CVEditorPage should change tab when tab button is clicked 1`] = `
 <div
   aria-hidden="false"
@@ -117,154 +73,149 @@ exports[`CVEditorPage should render without crashing 1`] = `
       <div
         class="card-body"
       >
-        <form
-          class=""
-          id="cv_data"
+        <nav
+          class="CVEditorPage_tabs mb-1 nav card-header-tabs nav-tabs"
+          role="tablist"
         >
-          <nav
-            class="CVEditorPage_tabs nav card-header-tabs nav-tabs"
-            role="tablist"
+          <a
+            aria-selected="true"
+            class="nav-item nav-link active"
+            data-rb-event-key="personalData"
+            href="#"
+            role="tab"
           >
-            <a
-              aria-selected="true"
-              class="nav-item nav-link active"
-              data-rb-event-key="personalData"
-              href="#"
-              role="tab"
-            >
-              Dane osobowe
-            </a>
-            <a
-              aria-selected="false"
-              class="nav-item nav-link"
-              data-rb-event-key="education"
-              href="#"
-              role="tab"
-              tabindex="-1"
-            >
-              Edukacja
-            </a>
-            <a
-              aria-selected="false"
-              class="nav-item nav-link"
-              data-rb-event-key="workExperience"
-              href="#"
-              role="tab"
-              tabindex="-1"
-            >
-              Doświadczenie zawodowe
-            </a>
-            <a
-              aria-selected="false"
-              class="nav-item nav-link"
-              data-rb-event-key="skills"
-              href="#"
-              role="tab"
-              tabindex="-1"
-            >
-              Umiejętności
-            </a>
-            <a
-              aria-selected="false"
-              class="nav-item nav-link"
-              data-rb-event-key="languages"
-              href="#"
-              role="tab"
-              tabindex="-1"
-            >
-              Języki obce
-            </a>
-            <a
-              aria-selected="false"
-              class="nav-item nav-link"
-              data-rb-event-key="photo"
-              href="#"
-              role="tab"
-              tabindex="-1"
-            >
-              Zdjęcie
-            </a>
-          </nav>
+            Dane osobowe
+          </a>
+          <a
+            aria-selected="false"
+            class="nav-item nav-link"
+            data-rb-event-key="education"
+            href="#"
+            role="tab"
+            tabindex="-1"
+          >
+            Edukacja
+          </a>
+          <a
+            aria-selected="false"
+            class="nav-item nav-link"
+            data-rb-event-key="workExperience"
+            href="#"
+            role="tab"
+            tabindex="-1"
+          >
+            Doświadczenie zawodowe
+          </a>
+          <a
+            aria-selected="false"
+            class="nav-item nav-link"
+            data-rb-event-key="skills"
+            href="#"
+            role="tab"
+            tabindex="-1"
+          >
+            Umiejętności
+          </a>
+          <a
+            aria-selected="false"
+            class="nav-item nav-link"
+            data-rb-event-key="languages"
+            href="#"
+            role="tab"
+            tabindex="-1"
+          >
+            Języki obce
+          </a>
+          <a
+            aria-selected="false"
+            class="nav-item nav-link"
+            data-rb-event-key="photo"
+            href="#"
+            role="tab"
+            tabindex="-1"
+          >
+            Zdjęcie
+          </a>
+        </nav>
+        <div
+          class="tab-content"
+        >
           <div
-            class="tab-content"
+            aria-hidden="false"
+            class="tab-pane active"
+            role="tabpanel"
           >
-            <div
-              aria-hidden="false"
-              class="tab-pane active"
-              role="tabpanel"
-            >
-              <div>
-                <span>
-                  PersonalDataTabMock
-                </span>
-                <button
-                  type="button"
-                >
-                  Dalej
-                </button>
-              </div>
-            </div>
-            <div
-              aria-hidden="true"
-              class="tab-pane"
-              role="tabpanel"
-            >
-              <div>
-                <span>
-                  EducationTabMock
-                </span>
-                <button
-                  type="button"
-                >
-                  Wstecz
-                </button>
-              </div>
-            </div>
-            <div
-              aria-hidden="true"
-              class="tab-pane"
-              role="tabpanel"
-            >
-              <div>
-                WorkExperienceTabMock
-              </div>
-            </div>
-            <div
-              aria-hidden="true"
-              class="tab-pane"
-              role="tabpanel"
-            >
-              <div>
-                SkillsTabMock
-              </div>
-            </div>
-            <div
-              aria-hidden="true"
-              class="tab-pane"
-              role="tabpanel"
-            >
-              <div>
-                LanguagesTabMock
-              </div>
-            </div>
-            <div
-              aria-hidden="true"
-              class="tab-pane"
-              role="tabpanel"
-            >
-              <div>
-                <span>
-                  PhotoTabMock
-                </span>
-                <button
-                  type="submit"
-                >
-                  Prześlij
-                </button>
-              </div>
+            <div>
+              <span>
+                PersonalDataTabMock
+              </span>
+              <button
+                type="button"
+              >
+                Dalej
+              </button>
             </div>
           </div>
-        </form>
+          <div
+            aria-hidden="true"
+            class="tab-pane"
+            role="tabpanel"
+          >
+            <div>
+              <span>
+                EducationTabMock
+              </span>
+              <button
+                type="button"
+              >
+                Wstecz
+              </button>
+            </div>
+          </div>
+          <div
+            aria-hidden="true"
+            class="tab-pane"
+            role="tabpanel"
+          >
+            <div>
+              WorkExperienceTabMock
+            </div>
+          </div>
+          <div
+            aria-hidden="true"
+            class="tab-pane"
+            role="tabpanel"
+          >
+            <div>
+              SkillsTabMock
+            </div>
+          </div>
+          <div
+            aria-hidden="true"
+            class="tab-pane"
+            role="tabpanel"
+          >
+            <div>
+              LanguagesTabMock
+            </div>
+          </div>
+          <div
+            aria-hidden="true"
+            class="tab-pane"
+            role="tabpanel"
+          >
+            <div>
+              <span>
+                PhotoTabMock
+              </span>
+              <button
+                type="submit"
+              >
+                Prześlij
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -287,154 +238,149 @@ exports[`CVEditorPage should render without crashing when api fails 1`] = `
       <div
         class="card-body"
       >
-        <form
-          class=""
-          id="cv_data"
+        <nav
+          class="CVEditorPage_tabs mb-1 nav card-header-tabs nav-tabs"
+          role="tablist"
         >
-          <nav
-            class="CVEditorPage_tabs nav card-header-tabs nav-tabs"
-            role="tablist"
+          <a
+            aria-selected="true"
+            class="nav-item nav-link active"
+            data-rb-event-key="personalData"
+            href="#"
+            role="tab"
           >
-            <a
-              aria-selected="true"
-              class="nav-item nav-link active"
-              data-rb-event-key="personalData"
-              href="#"
-              role="tab"
-            >
-              Dane osobowe
-            </a>
-            <a
-              aria-selected="false"
-              class="nav-item nav-link"
-              data-rb-event-key="education"
-              href="#"
-              role="tab"
-              tabindex="-1"
-            >
-              Edukacja
-            </a>
-            <a
-              aria-selected="false"
-              class="nav-item nav-link"
-              data-rb-event-key="workExperience"
-              href="#"
-              role="tab"
-              tabindex="-1"
-            >
-              Doświadczenie zawodowe
-            </a>
-            <a
-              aria-selected="false"
-              class="nav-item nav-link"
-              data-rb-event-key="skills"
-              href="#"
-              role="tab"
-              tabindex="-1"
-            >
-              Umiejętności
-            </a>
-            <a
-              aria-selected="false"
-              class="nav-item nav-link"
-              data-rb-event-key="languages"
-              href="#"
-              role="tab"
-              tabindex="-1"
-            >
-              Języki obce
-            </a>
-            <a
-              aria-selected="false"
-              class="nav-item nav-link"
-              data-rb-event-key="photo"
-              href="#"
-              role="tab"
-              tabindex="-1"
-            >
-              Zdjęcie
-            </a>
-          </nav>
+            Dane osobowe
+          </a>
+          <a
+            aria-selected="false"
+            class="nav-item nav-link"
+            data-rb-event-key="education"
+            href="#"
+            role="tab"
+            tabindex="-1"
+          >
+            Edukacja
+          </a>
+          <a
+            aria-selected="false"
+            class="nav-item nav-link"
+            data-rb-event-key="workExperience"
+            href="#"
+            role="tab"
+            tabindex="-1"
+          >
+            Doświadczenie zawodowe
+          </a>
+          <a
+            aria-selected="false"
+            class="nav-item nav-link"
+            data-rb-event-key="skills"
+            href="#"
+            role="tab"
+            tabindex="-1"
+          >
+            Umiejętności
+          </a>
+          <a
+            aria-selected="false"
+            class="nav-item nav-link"
+            data-rb-event-key="languages"
+            href="#"
+            role="tab"
+            tabindex="-1"
+          >
+            Języki obce
+          </a>
+          <a
+            aria-selected="false"
+            class="nav-item nav-link"
+            data-rb-event-key="photo"
+            href="#"
+            role="tab"
+            tabindex="-1"
+          >
+            Zdjęcie
+          </a>
+        </nav>
+        <div
+          class="tab-content"
+        >
           <div
-            class="tab-content"
+            aria-hidden="false"
+            class="tab-pane active"
+            role="tabpanel"
           >
-            <div
-              aria-hidden="false"
-              class="tab-pane active"
-              role="tabpanel"
-            >
-              <div>
-                <span>
-                  PersonalDataTabMock
-                </span>
-                <button
-                  type="button"
-                >
-                  Dalej
-                </button>
-              </div>
-            </div>
-            <div
-              aria-hidden="true"
-              class="tab-pane"
-              role="tabpanel"
-            >
-              <div>
-                <span>
-                  EducationTabMock
-                </span>
-                <button
-                  type="button"
-                >
-                  Wstecz
-                </button>
-              </div>
-            </div>
-            <div
-              aria-hidden="true"
-              class="tab-pane"
-              role="tabpanel"
-            >
-              <div>
-                WorkExperienceTabMock
-              </div>
-            </div>
-            <div
-              aria-hidden="true"
-              class="tab-pane"
-              role="tabpanel"
-            >
-              <div>
-                SkillsTabMock
-              </div>
-            </div>
-            <div
-              aria-hidden="true"
-              class="tab-pane"
-              role="tabpanel"
-            >
-              <div>
-                LanguagesTabMock
-              </div>
-            </div>
-            <div
-              aria-hidden="true"
-              class="tab-pane"
-              role="tabpanel"
-            >
-              <div>
-                <span>
-                  PhotoTabMock
-                </span>
-                <button
-                  type="submit"
-                >
-                  Prześlij
-                </button>
-              </div>
+            <div>
+              <span>
+                PersonalDataTabMock
+              </span>
+              <button
+                type="button"
+              >
+                Dalej
+              </button>
             </div>
           </div>
-        </form>
+          <div
+            aria-hidden="true"
+            class="tab-pane"
+            role="tabpanel"
+          >
+            <div>
+              <span>
+                EducationTabMock
+              </span>
+              <button
+                type="button"
+              >
+                Wstecz
+              </button>
+            </div>
+          </div>
+          <div
+            aria-hidden="true"
+            class="tab-pane"
+            role="tabpanel"
+          >
+            <div>
+              WorkExperienceTabMock
+            </div>
+          </div>
+          <div
+            aria-hidden="true"
+            class="tab-pane"
+            role="tabpanel"
+          >
+            <div>
+              SkillsTabMock
+            </div>
+          </div>
+          <div
+            aria-hidden="true"
+            class="tab-pane"
+            role="tabpanel"
+          >
+            <div>
+              LanguagesTabMock
+            </div>
+          </div>
+          <div
+            aria-hidden="true"
+            class="tab-pane"
+            role="tabpanel"
+          >
+            <div>
+              <span>
+                PhotoTabMock
+              </span>
+              <button
+                type="submit"
+              >
+                Prześlij
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
