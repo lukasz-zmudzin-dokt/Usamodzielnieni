@@ -8,6 +8,7 @@ import {
 import { MemoryRouter } from "react-router-dom";
 import OfferPosition from "./OfferPosition";
 import { AlertContext } from "context";
+import proxy from "config/api";
 
 describe("OfferPosition", () => {
   let fetchType;
@@ -54,7 +55,7 @@ describe("OfferPosition", () => {
             break;
           case "odd":
             resolve({
-              status: 200,
+              status: 400,
               json: () =>
                 Promise.resolve({
                   message: "Suma podstawy równa się kwadratowi obu ramion",
@@ -98,7 +99,7 @@ describe("OfferPosition", () => {
     await waitForElement(() => getByText("Akceptuj"));
     fireEvent.click(getByText("Akceptuj"));
     await expect(fetch).toHaveBeenCalledWith(
-      "https://usamo-back.herokuapp.com/job/admin/confirm/sadgergerfwefwe/",
+      proxy.job + "admin/confirm/sadgergerfwefwe/",
       {
         body: '{"confirmed":true}',
         headers: {
@@ -162,7 +163,7 @@ describe("OfferPosition", () => {
     await waitForElement(() => getByText("Odrzuć"));
     fireEvent.click(getByText("Odrzuć"));
     await expect(fetch).toHaveBeenCalledWith(
-      "https://usamo-back.herokuapp.com/job/job-offer/sadgergerfwefwe/",
+      proxy.job + "job-offer/sadgergerfwefwe/",
       {
         headers: {
           Authorization: "token undefined",

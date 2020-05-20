@@ -61,9 +61,8 @@ const UserToApprove = ({ user, activeUser }) => {
 
   //const rejectUser = async (e, token, userId) => {
   const rejectUser = async (token, userId) => {
-    let res;
     try {
-      res = await setUserRejected(token, userId);
+      let res = await setUserRejected(token, userId);
       alertC.current.showAlert(res.message, "success");
       setActionTaken(true);
     } catch (err) {
@@ -123,7 +122,7 @@ const UserToApprove = ({ user, activeUser }) => {
         approveUser(context.token, user.id);*/
 
   if (message) {
-    return message;
+    return <Card.Body>{message}</Card.Body>;
   } else {
     return (
       <Card.Body>

@@ -16,6 +16,10 @@ describe("deletion modal tests", () => {
     };
   });
 
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   it("should display default labels", () => {
     const { getByText } = render(<DeletionModal show="true" />);
     expect(getByText("Usuń ✗")).toBeInTheDocument();
@@ -43,4 +47,11 @@ describe("deletion modal tests", () => {
     expect(props.setShow).toHaveBeenCalledWith(false);
     expect(props.delConfirmed).toHaveBeenCalledWith(true);
   });
+
+  it('should do nothing', () => {
+    const {getByTestId} = render(<DeletionModal {...props} />);
+    fireEvent.click(getByTestId("modal_cancel"));
+    expect(props.delConfirmed).not.toHaveBeenCalled();
+    //expect(props.setShow).toHaveBeenCalledwith(false);
+  })
 });

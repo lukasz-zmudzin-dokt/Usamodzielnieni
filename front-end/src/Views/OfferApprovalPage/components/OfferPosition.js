@@ -74,7 +74,7 @@ const OfferPosition = ({ offer }) => {
           <DetailsItem label="Opis">{offer.description}</DetailsItem>
         </ListGroup.Item>
           {
-            actionTaken ? (
+            !actionTaken ? (
                 <ListGroup.Item>
                   <Row className="justify-content-center">
                     <Button onClick={(e) => approveOffer(e)} variant="primary">
