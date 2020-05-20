@@ -8,9 +8,11 @@ import { Router } from "react-router-dom";
 import { createMemoryHistory } from "history";
 import ButtonsContainer from "./ButtonsContainer";
 import BlockAccountButton from "./BlockAccountButton";
+import UnblockAccountButton from "./UnblockAccountButton";
 import DeleteAccountButton from "./DeleteAccountButton";
 
 jest.mock("./BlockAccountButton");
+jest.mock("./UnblockAccountButton");
 jest.mock("./DeleteAccountButton");
 
 const renderWithRouter = (
@@ -54,8 +56,11 @@ describe("ButtonsContainer", () => {
   });
   beforeEach(() => {
     jest.clearAllMocks();
-    BlockAccountButton.mockImplementation(({ disabled }) => (
-      <button disabled={disabled}>BlockAccountButton</button>
+    BlockAccountButton.mockImplementation(() => (
+      <button>BlockAccountButton</button>
+    ));
+    UnblockAccountButton.mockImplementation(() => (
+      <button>UnblockAccountButton</button>
     ));
     DeleteAccountButton.mockImplementation(({ disabled }) => (
       <button disabled={disabled}>DeleteAccountButton</button>
@@ -83,7 +88,7 @@ describe("ButtonsContainer", () => {
     expect(container).toMatchSnapshot();
   });
 
-  it("should render disabled buttons when user status is blocked", async () => {
+  it("should render unblock buttons when user status is blocked", async () => {
     props.user.status = userStatuses.BLOCKED;
     const { container } = render(
       <MemoryRouter>
@@ -94,7 +99,7 @@ describe("ButtonsContainer", () => {
     expect(container).toMatchSnapshot();
   });
 
-  it("should not block and delete buttons when user type is staff", async () => {
+  it("should not render block and delete buttons when user type is staff", async () => {
     props.user.type = userTypes.STAFF;
     const { container } = render(
       <MemoryRouter>

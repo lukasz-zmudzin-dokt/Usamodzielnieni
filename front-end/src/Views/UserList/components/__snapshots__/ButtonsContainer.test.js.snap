@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ButtonsContainer should not block and delete buttons when user type is staff 1`] = `
+exports[`ButtonsContainer should not render block and delete buttons when user type is staff 1`] = `
 <div>
   <div
     class="buttonsContainer"
@@ -15,7 +15,7 @@ exports[`ButtonsContainer should not block and delete buttons when user type is 
 </div>
 `;
 
-exports[`ButtonsContainer should render disabled buttons when user status is blocked 1`] = `
+exports[`ButtonsContainer should render unblock buttons when user status is blocked 1`] = `
 <div>
   <div
     class="buttonsContainer"
@@ -27,10 +27,8 @@ exports[`ButtonsContainer should render disabled buttons when user status is blo
     >
       Wyślij wiadomość
     </button>
-    <button
-      disabled=""
-    >
-      BlockAccountButton
+    <button>
+      UnblockAccountButton
     </button>
     <button
       disabled=""

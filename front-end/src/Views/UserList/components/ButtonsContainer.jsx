@@ -3,6 +3,7 @@ import { Button } from "react-bootstrap";
 import { IndexLinkContainer } from "react-router-bootstrap";
 import { userTypes } from "constants/userTypes";
 import BlockAccountButton from "./BlockAccountButton";
+import UnblockAccountButton from "./UnblockAccountButton";
 import DeleteAccountButton from "./DeleteAccountButton";
 import { userStatuses } from "constants/userStatuses";
 
@@ -20,11 +21,11 @@ const ButtonsContainer = ({ user, setUser, deleteUser }) => {
       )}
       {user.type !== userTypes.STAFF && (
         <>
-          <BlockAccountButton
-            disabled={disableButtons}
-            user={user}
-            setUser={setUser}
-          />
+          {!disableButtons ? (
+            <BlockAccountButton user={user} setUser={setUser} />
+          ) : (
+            <UnblockAccountButton user={user} setUser={setUser} />
+          )}
           <DeleteAccountButton
             disabled={disableButtons}
             user={user}
