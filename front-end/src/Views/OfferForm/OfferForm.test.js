@@ -69,12 +69,12 @@ describe("OfferForm", () => {
   let apiSelect = { offer_types: ["IT"], categories: ["xd"] };
   let apiOffer = {
     offer_name: "abc",
-    company_name: "xd",
+    company_name: "test",
     company_address: {
-      street: "def",
+      street: "Test",
       street_number: "1",
-      city: "abc",
-      postal_code: "00-000",
+      city: "Testowe",
+      postal_code: "22-222",
     },
     voivodeship: "lubelskie",
     description: "res.description",
@@ -82,7 +82,7 @@ describe("OfferForm", () => {
       "Wed May 17 2023 00:00:00 GMT+0100 (czas środkowoeuropejski standardowy)",
     category: "xd",
     type: "IT",
-    salary_min: "0",
+    salary_min: "1",
     salary_max: "420",
   };
   beforeAll(() => {
@@ -266,10 +266,12 @@ describe("OfferForm", () => {
     fireEvent.change(getByLabelText("Branża"), {
       target: { value: "xd" },
     });
+    fireEvent.change(getByLabelText("Wymiar pracy"), {
+      target: { value: "IT" },
+    });
     fireEvent.change(getByLabelText("Ważne do"), {
       target: {
-        value:
-          "Wed Dec 04 2020 00:00:00 GMT+0100 (czas środkowoeuropejski standardowy)",
+        value: new Date("2024-12-04"),
       },
     });
     fireEvent.change(getByPlaceholderText("Wynagrodzenie od (zł / miesiąc)"), {
@@ -285,7 +287,12 @@ describe("OfferForm", () => {
       expect(fetch).toHaveBeenCalled();
     });
 
-    //expect(getByText("dupa")).toBeInTheDocument();
+    expect(
+      getByPlaceholderText("Wynagrodzenie do (zł / miesiąc)").validity
+        .stepMismatch
+    ).toBe(false);
+    expect(fetch).toHaveBeenCalledTimes(3);
+
     expect(history.location.pathname).toEqual("/myOffers");
   });
 
@@ -373,7 +380,7 @@ describe("OfferForm", () => {
     await wait(() =>
       expect(fetch).toHaveBeenCalledWith(proxy.job + "job-offer/abc/", {
         headers: {
-          Authorization: "Token undefined",
+          Authorization: "Token 123",
           "Content-Type": "application/json",
           Origin: null,
         },
@@ -382,7 +389,7 @@ describe("OfferForm", () => {
     );
 
     expect(getByPlaceholderText("Nazwa stanowiska").value).toBe("abc");
-    expect(getByPlaceholderText("Nazwa firmy").value).toBe("xd");
+    expect(getByPlaceholderText("Nazwa firmy").value).toBe("test");
     expect(getByLabelText("Województwo").value).toBe("lubelskie");
     expect(getByLabelText("Opis stanowiska").value).toBe("res.description");
     expect(getByLabelText("Branża").value).toBe("xd");
@@ -394,14 +401,12 @@ describe("OfferForm", () => {
     reactRouterDom.useParams = () => ({
       id: "abc",
     });
-    const {
-      getByPlaceholderText,
-      getByLabelText,
-      history,
-      getByText,
-    } = renderWithRouter(<OfferForm />, {
-      route: "/offerForm/abc",
-    });
+    const { getByPlaceholderText, history, getByText } = renderWithRouter(
+      <OfferForm />,
+      {
+        route: "/offerForm/abc",
+      }
+    );
 
     await waitForElement(() => getByText("Dodaj"));
 
