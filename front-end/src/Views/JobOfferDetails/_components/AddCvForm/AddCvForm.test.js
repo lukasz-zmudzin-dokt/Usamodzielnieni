@@ -33,7 +33,7 @@ describe("AddCvForm", () => {
                 : {
                     status: 200,
                     json: () =>
-                      Promise.resolve([
+                      Promise.resolve({results: [
                         {
                           cv_id: "1",
                           name: "nazwa cv",
@@ -44,7 +44,7 @@ describe("AddCvForm", () => {
                           name: "nazwa cv 2",
                           is_verified: isCvVerified,
                         },
-                      ]),
+                      ]}),
                   }
             );
             break;
