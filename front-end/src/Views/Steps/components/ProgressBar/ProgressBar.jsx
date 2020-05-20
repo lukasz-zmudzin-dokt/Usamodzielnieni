@@ -7,37 +7,43 @@ const tmpSteps = [
   {
     id: "1",
     type: "main",
-    title: "Tytuł głównego kroku 1",
+    title:
+      "Tytuł głównego kroku 1 123 123 123 123 123 123 123 123 123 123 123 123 ",
     value: "Opis kroku 1 wraz z filmikami.",
-    next: ["2", "5"],
+    next: [
+      { id: "2", choiceName: "Tak" },
+      { id: "5", choiceName: "Nie" },
+    ],
   },
   {
     id: "2",
     type: "main",
-    title: "Tytuł głównego kroku 2",
+    title:
+      "Tytuł głównego kroku 2 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123",
     value: "Opis kroku 2 wraz z filmikami.",
-    next: ["3"],
+    next: [{ id: "3", choiceName: "Dalej" }],
   },
   {
     id: "3",
     type: "sub",
-    title: "Tytuł podkroku 2.1",
+    title:
+      "Tytuł podkroku 2.1 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123",
     value: "Opis kroku 2.1 wraz z filmikami.",
-    next: ["4"],
+    next: [{ id: "4", choiceName: "Dalej" }],
   },
   {
     id: "4",
     type: "sub",
     title: "Tytuł podkroku 2.2",
     value: "Opis kroku 2.2 wraz z filmikami.",
-    next: ["5"],
+    next: [{ id: "5", choiceName: "Dalej" }],
   },
   {
     id: "5",
     type: "main",
     title: "Tytuł głównego kroku 3",
     value: "Opis kroku 3 wraz z filmikami.",
-    next: ["6"],
+    next: [{ id: "6", choiceName: "Dalej" }],
   },
   {
     id: "6",

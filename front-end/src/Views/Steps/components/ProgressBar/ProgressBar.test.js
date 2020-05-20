@@ -32,8 +32,8 @@ describe("ProgressBar", () => {
     ));
     apiShouldFail = false;
     steps = [
-      { id: "1", title: "Krok 1", next: ["2"] },
-      { id: "2", title: "Krok 2", next: ["3"] },
+      { id: "1", title: "Krok 1", next: [{ id: "2" }] },
+      { id: "2", title: "Krok 2", next: [{ id: "3" }] },
       { id: "3", title: "Krok 3" },
     ];
   });
@@ -59,7 +59,7 @@ describe("ProgressBar", () => {
 
   it("should change path when setCurrent is called", async () => {
     ProgressBarFragment.mockImplementation(({ step, setCurrent }) => (
-      <button onClick={() => setCurrent(step.next[0])}>
+      <button onClick={() => setCurrent(step.next[0].id)}>
         {step?.title || "empty"}
       </button>
     ));
