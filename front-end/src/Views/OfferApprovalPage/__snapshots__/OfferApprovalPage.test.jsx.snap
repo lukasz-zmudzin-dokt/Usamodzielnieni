@@ -136,6 +136,27 @@ exports[`OfferApproval should match snapshot 1`] = `
                         </div>
                       </div>
                     </div>
+                    <div
+                      class="row"
+                    >
+                      <div
+                        class="detailsItem col-xl-3 col-md-2"
+                      >
+                        <div
+                          class="detailsItem__label"
+                        >
+                          Wynagrodzenie
+                        </div>
+                        <div
+                          class="detailsItem__value"
+                        >
+                          456
+                           zł - 
+                          654
+                           zł
+                        </div>
+                      </div>
+                    </div>
                   </div>
                   <div
                     class="list-group-item"
@@ -293,6 +314,27 @@ exports[`OfferApproval should match snapshot 1`] = `
                           class="detailsItem__value"
                         >
                           2020-12-21
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="row"
+                    >
+                      <div
+                        class="detailsItem col-xl-3 col-md-2"
+                      >
+                        <div
+                          class="detailsItem__label"
+                        >
+                          Wynagrodzenie
+                        </div>
+                        <div
+                          class="detailsItem__value"
+                        >
+                          123
+                           zł - 
+                          321
+                           zł
                         </div>
                       </div>
                     </div>

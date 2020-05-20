@@ -37,10 +37,16 @@ exports[`EducationTab should render without crashing 1`] = `
                 class="form-control"
                 id="startTime"
                 placeholder="Data rozpoczęcia"
+                required=""
                 type="text"
                 value=""
               />
             </div>
+          </div>
+          <div
+            class="invalid-feedback"
+          >
+            Data rozpoczęcia jest wymagana.
           </div>
         </div>
         <div
@@ -151,7 +157,7 @@ exports[`EducationTab should render without crashing 1`] = `
             id="saveButton"
             type="submit"
           >
-            Generuj CV
+            Zapisz zmiany i generuj CV
           </button>
         </form>
       </div>

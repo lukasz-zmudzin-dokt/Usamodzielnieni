@@ -109,6 +109,7 @@ exports[`PersonalDataTab should render without crashing 1`] = `
           maxlength="12"
           minlength="1"
           name="phoneNumber"
+          pattern="[+]{1}[4]{1}[8]{1}[0-9]{3}[0-9]{3}[0-9]{3}"
           placeholder="+48123456789"
           required=""
           type="text"
@@ -117,7 +118,7 @@ exports[`PersonalDataTab should render without crashing 1`] = `
         <div
           class="invalid-feedback"
         >
-          Numer telefonu jest wymagany.
+          Podaj numer telefonu w formacie: +48123123123
         </div>
       </div>
     </div>

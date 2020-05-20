@@ -11,6 +11,12 @@ exports[`CVEditorTab should render without crashing 1`] = `
       class="CVEditorTab__img"
       src="./ścieżka_do_pliku.png"
     />
+    <div
+      class="fade alert alert-success show"
+      role="alert"
+    >
+      Brak uwag do tej części CV.
+    </div>
     <div />
     <div
       class="row"

@@ -118,10 +118,11 @@ class PersonalDataTab extends React.Component {
                 maxLength="12"
                 defaultValue={data.phoneNumber}
                 placeholder="+48123456789"
+                pattern="[+]{1}[4]{1}[8]{1}[0-9]{3}[0-9]{3}[0-9]{3}"
                 onChange={this.onChange}
               />
               <Form.Control.Feedback type="invalid">
-                Numer telefonu jest wymagany.
+                Podaj numer telefonu w formacie: +48123123123
               </Form.Control.Feedback>
             </Form.Group>
           </Row>

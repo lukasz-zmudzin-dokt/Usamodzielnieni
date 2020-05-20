@@ -11,6 +11,7 @@ const EducationTab = ({
   loading,
   showComments,
   validated,
+  error,
 }) => (
   <CVEditorTab
     title="Edukacja"
@@ -19,6 +20,7 @@ const EducationTab = ({
     onNextClick={onNextClick}
     comments={comments}
     loading={loading}
+    error={error}
     showComments={showComments}
   >
     <ActionWithDate
