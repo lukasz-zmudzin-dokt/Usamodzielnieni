@@ -102,7 +102,6 @@ const ProgressBar = () => {
   }, []);
 
   const setCurrent = (id) => {
-    console.log(id);
     const index = path.indexOf(id);
 
     if (index >= 0) {
