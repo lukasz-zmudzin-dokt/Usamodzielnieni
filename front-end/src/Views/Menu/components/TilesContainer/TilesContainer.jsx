@@ -110,7 +110,7 @@ const getTiles = async () => {
 
   const response = await fetch(url, { method: "GET", headers });
 
-  return tmpTiles;
+  // return tmpTiles;
 
   // eslint-disable-next-line no-unreachable
   if (response.status !== 200) {
