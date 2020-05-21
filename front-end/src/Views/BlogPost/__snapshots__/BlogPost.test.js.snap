@@ -133,7 +133,7 @@ exports[`BlogPost should match snapshot after loaded 1`] = `
               class="commentItem__date"
             >
               dodano: 
-              Invalid Date
+              NaN_date_en-US_4_
             </small>
             <p
               class="commentItem__content"
