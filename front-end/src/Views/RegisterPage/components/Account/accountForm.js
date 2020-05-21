@@ -41,6 +41,11 @@ class AccountForm extends React.Component {
               minLength="6"
               maxLength="30"
             />
+            <Form.Text className="text-muted">
+              Nazwa użytkownika będzie widoczna dla innych użytkowników przy
+              Twoich komentarzach. Twoje imię i nazwisko są widoczne tylko dla
+              pracowników.
+            </Form.Text>
             <Form.Control.Feedback type="invalid">
               Minimalna ilośc znaków: 6
             </Form.Control.Feedback>

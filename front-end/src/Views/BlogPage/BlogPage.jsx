@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useContext } from "react";
-import { UserContext } from "context";
+import React, { useState, useEffect, useContext, useRef } from "react";
+import { AlertContext } from "context";
+
 import { Container, Card, Alert, CardColumns } from "react-bootstrap";
 import { getPosts } from "Views/BlogPage/functions/fetchData";
 import BlogPost from "Views/BlogPage/components/SmallBlogPost";
@@ -8,33 +9,31 @@ import Filter from "Views/BlogPage/components/Filter";
 const BlogPage = () => {
   const [posts, setPosts] = useState([]);
   const [filter, setFilter] = useState({});
-  const context = useContext(UserContext);
+  const alertC = useRef(useContext(AlertContext));
   const [count, setCount] = useState(0);
-  const [err, setErr] = useState(false);
+
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const loadOffers = async (token) => {
+    const loadOffers = async () => {
       setIsLoading(true);
       let res;
       try {
-        res = await getPosts(token, filter);
+        res = await getPosts(filter);
       } catch (e) {
         console.log(e);
         res = [];
-        setErr(true);
+        alertC.current.showAlert("Nie udało się załadować postów");
       }
       setIsLoading(false);
       setCount(res.length);
       setPosts(res);
     };
 
-    loadOffers(context.token);
-  }, [context.token, filter]);
+    loadOffers();
+  }, [filter]);
 
-  const msg = err ? (
-    <Alert variant="danger">Wystąpił błąd podczas ładowania postów.</Alert>
-  ) : isLoading ? (
+  const msg = isLoading ? (
     <Alert variant="info">Ładowanie postów...</Alert>
   ) : (
     count === 0 && (
@@ -46,9 +45,9 @@ const BlogPage = () => {
     <Container>
       <Card>
         <Card.Header as="h2">Blogi</Card.Header>
-        <Filter token={context.token} setFilter={setFilter} count={count} />
+        <Filter setFilter={setFilter} count={count} />
         {msg ? (
-          msg
+          <Card.Body>{msg}</Card.Body>
         ) : (
           <CardColumns className="ml-3 mr-3">
             {posts.map((data) => (

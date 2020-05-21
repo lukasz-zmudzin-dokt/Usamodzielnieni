@@ -4,14 +4,17 @@ exports[`ItemsList should not render when data is null 1`] = `<div />`;
 
 exports[`ItemsList should render without crashing 1`] = `
 <div>
-  <div>
+  <form
+    class=""
+    novalidate=""
+  >
     <div />
     <button
-      class="itemsList__addButton btn btn-success"
-      type="button"
+      class="mb-3 btn btn-success"
+      type="submit"
     >
       + Dodaj
     </button>
-  </div>
+  </form>
 </div>
 `;

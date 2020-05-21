@@ -25,21 +25,21 @@ exports[`MyCVsPage should match snapshot 1`] = `
             class="row"
           >
             <div
-              class="col-md-5 col-12"
+              class="col-md-4 col-12"
             >
               <h6>
-                Nazwa pliku
+                Nazwa CV
               </h6>
             </div>
             <div
-              class="col-md-3 col-4"
+              class="col-md-2 col-4"
             >
               <h6>
                 Status
               </h6>
             </div>
             <div
-              class="text-right col-md-4 col-8"
+              class="text-right col-md-6 col-8"
             >
               <h6>
                 Akcje
@@ -54,23 +54,29 @@ exports[`MyCVsPage should match snapshot 1`] = `
             class="d-flex align-items-center row"
           >
             <div
-              class="col-md-5 col-12"
+              class="col-md-4 col-12"
             >
               jeden
             </div>
             <div
-              class="col-md-3 col-4"
+              class="col-md-2 col-12"
             >
               Oczekuje na weryfikację
             </div>
             <div
-              class="text-right col-md-4 col-8"
+              class="text-right col-md-6 col-12"
             >
               <button
                 class="btn btn-primary"
                 type="button"
               >
                 Zobacz CV
+              </button>
+              <button
+                class="m-1 btn btn-info"
+                type="button"
+              >
+                Zmień nazwę
               </button>
               <a
                 class="mx-2 btn btn-info"
@@ -94,23 +100,29 @@ exports[`MyCVsPage should match snapshot 1`] = `
             class="d-flex align-items-center row"
           >
             <div
-              class="col-md-5 col-12"
+              class="col-md-4 col-12"
             >
               dwa
             </div>
             <div
-              class="col-md-3 col-4"
+              class="col-md-2 col-12"
             >
               Oczekuje na weryfikację
             </div>
             <div
-              class="text-right col-md-4 col-8"
+              class="text-right col-md-6 col-12"
             >
               <button
                 class="btn btn-primary"
                 type="button"
               >
                 Zobacz CV
+              </button>
+              <button
+                class="m-1 btn btn-info"
+                type="button"
+              >
+                Zmień nazwę
               </button>
               <a
                 class="mx-2 btn btn-info"

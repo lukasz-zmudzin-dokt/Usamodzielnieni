@@ -8,6 +8,7 @@ const ButtonList = ({ array, cutItem }) => {
         tagi:
         {array.map((item) => (
           <Button
+            key={item}
             variant="info"
             className="mx-1 my-1"
             size="sm"

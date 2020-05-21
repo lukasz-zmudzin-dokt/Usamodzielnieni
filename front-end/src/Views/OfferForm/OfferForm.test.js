@@ -9,7 +9,7 @@ import { Router } from "react-router-dom";
 import { MemoryRouter } from "react-router-dom";
 import OfferForm from "Views/OfferForm";
 import { createMemoryHistory } from "history";
-import { UserContext } from "context";
+import { UserContext, AlertContext } from "context";
 import proxy from "config/api";
 
 jest.mock("react-router-dom", () => ({
@@ -39,10 +39,19 @@ const renderWithRouter = (
       },
     },
   };
+  let contextA = {
+    open: true,
+    changeVisibility: jest.fn(),
+    message: "abc",
+    changeMessage: jest.fn(),
+    showAlert: jest.fn(),
+  };
   return {
     ...render(
       <UserContext.Provider value={context}>
-        <Router history={history}>{ui}</Router>
+        <AlertContext.Provider value={contextA}>
+          <Router history={history}>{ui}</Router>
+        </AlertContext.Provider>
       </UserContext.Provider>
     ),
     history,
@@ -55,6 +64,7 @@ describe("OfferForm", () => {
   let failPost;
   let failTypes;
   let context;
+  let contextA;
   let apiSelect = { offer_types: ["IT"], categories: ["xd"] };
   let apiOffer = {
     offer_name: "abc",
@@ -71,6 +81,8 @@ describe("OfferForm", () => {
       "Wed May 17 2023 00:00:00 GMT+0100 (czas środkowoeuropejski standardowy)",
     category: "xd",
     type: "IT",
+    salary_min: "0",
+    salary_max: "420",
   };
   beforeAll(() => {
     global.fetch = jest.fn().mockImplementation((input, init) => {
@@ -126,14 +138,19 @@ describe("OfferForm", () => {
         },
       },
     };
+    contextA = {
+      showAlert: jest.fn(),
+    };
   });
 
   it("renders correctly", async () => {
     const { container, getByText } = render(
       <UserContext.Provider value={context}>
-        <MemoryRouter>
-          <OfferForm />
-        </MemoryRouter>
+        <AlertContext.Provider value={contextA}>
+          <MemoryRouter>
+            <OfferForm />
+          </MemoryRouter>
+        </AlertContext.Provider>
       </UserContext.Provider>
     );
 
@@ -147,18 +164,19 @@ describe("OfferForm", () => {
 
     const { getByText } = render(
       <UserContext.Provider value={context}>
-        <MemoryRouter>
-          <OfferForm />
-        </MemoryRouter>
+        <AlertContext.Provider value={contextA}>
+          <MemoryRouter>
+            <OfferForm />
+          </MemoryRouter>
+        </AlertContext.Provider>
       </UserContext.Provider>
     );
-    await waitForElement(() => getByText("Dodaj"));
-
     await waitForElement(() =>
-      getByText("Nie udało się załadować danych", { exact: false })
+      getByText("Wystąpił błąd w trakcie ładowania formularza.")
     );
+
     expect(
-      getByText("Nie udało się załadować danych", { exact: false })
+      getByText("Wystąpił błąd w trakcie ładowania formularza.")
     ).toBeInTheDocument();
   });
 
@@ -167,27 +185,30 @@ describe("OfferForm", () => {
 
     const { getByText } = render(
       <UserContext.Provider value={context}>
-        <MemoryRouter>
-          <OfferForm />
-        </MemoryRouter>
+        <AlertContext.Provider value={contextA}>
+          <MemoryRouter>
+            <OfferForm />
+          </MemoryRouter>
+        </AlertContext.Provider>
       </UserContext.Provider>
     );
-    await waitForElement(() => getByText("Dodaj"));
-
     await waitForElement(() =>
-      getByText("Nie udało się załadować danych", { exact: false })
+      getByText("Wystąpił błąd w trakcie ładowania formularza.")
     );
+
     expect(
-      getByText("Nie udało się załadować danych", { exact: false })
+      getByText("Wystąpił błąd w trakcie ładowania formularza.")
     ).toBeInTheDocument();
   });
 
   it("should not use fetch when form isn't validated", async () => {
     const { getByPlaceholderText, getByText, getByLabelText } = render(
       <UserContext.Provider value={context}>
-        <MemoryRouter>
-          <OfferForm />
-        </MemoryRouter>
+        <AlertContext.Provider value={contextA}>
+          <MemoryRouter>
+            <OfferForm />
+          </MemoryRouter>
+        </AlertContext.Provider>
       </UserContext.Provider>
     );
 
@@ -208,7 +229,7 @@ describe("OfferForm", () => {
     fireEvent.change(getByLabelText("Wymiar pracy"), {
       target: { value: "IT" },
     });
-    fireEvent.change(getByLabelText("Ważne do:"), {
+    fireEvent.change(getByLabelText("Ważne do"), {
       target: {
         value:
           "Wed Jan 20 2021 00:00:00 GMT+0100 (czas środkowoeuropejski standardowy)",
@@ -220,7 +241,7 @@ describe("OfferForm", () => {
     expect(fetch).toHaveBeenCalledTimes(2);
   });
 
-  it("should redirect when offer is send", async () => {
+  it("should redirect when offer is sent", async () => {
     // jest.resetModules();
 
     const {
@@ -244,14 +265,17 @@ describe("OfferForm", () => {
     fireEvent.change(getByLabelText("Branża"), {
       target: { value: "xd" },
     });
-    fireEvent.change(getByLabelText("Wymiar pracy"), {
-      target: { value: "IT" },
-    });
-    fireEvent.change(getByLabelText("Ważne do:"), {
+    fireEvent.change(getByLabelText("Ważne do"), {
       target: {
         value:
           "Wed Dec 04 2020 00:00:00 GMT+0100 (czas środkowoeuropejski standardowy)",
       },
+    });
+    fireEvent.change(getByPlaceholderText("Wynagrodzenie od (zł / miesiąc)"), {
+      target: { value: "0" },
+    });
+    fireEvent.change(getByPlaceholderText("Wynagrodzenie do (zł / miesiąc)"), {
+      target: { value: "420" },
     });
 
     fireEvent.click(getByText("Dodaj"));
@@ -283,9 +307,11 @@ describe("OfferForm", () => {
     failPost = true;
     const { getByPlaceholderText, getByText, getByLabelText } = render(
       <UserContext.Provider value={context}>
-        <MemoryRouter>
-          <OfferForm />
-        </MemoryRouter>
+        <AlertContext.Provider value={contextA}>
+          <MemoryRouter>
+            <OfferForm />
+          </MemoryRouter>
+        </AlertContext.Provider>
       </UserContext.Provider>
     );
 
@@ -307,19 +333,25 @@ describe("OfferForm", () => {
     fireEvent.change(getByLabelText("Wymiar pracy"), {
       target: { value: "IT" },
     });
-    fireEvent.change(getByLabelText("Ważne do:"), {
+    fireEvent.change(getByLabelText("Ważne do"), {
       target: {
         value: new Date("2024-9-20"),
       },
+    });
+    fireEvent.change(getByLabelText("Wynagrodzenie od (zł / miesiąc)"), {
+      target: { value: "1" },
+    });
+    fireEvent.change(getByLabelText("Wynagrodzenie do (zł / miesiąc)"), {
+      target: { value: "200" },
     });
 
     fireEvent.click(getByText("Dodaj"));
 
     await waitForElement(() => getByText("Dodaj"));
 
-    expect(
-      getByText("Nie udało się wysłać oferty. Błąd serwera.")
-    ).toBeInTheDocument();
+    expect(contextA.showAlert).toHaveBeenCalledWith(
+      "Nie udało się wysłać oferty. Błąd serwera."
+    );
   });
 
   it("should fulfill inputs if offer id is valid", async () => {
@@ -353,19 +385,21 @@ describe("OfferForm", () => {
     expect(getByLabelText("Opis stanowiska").value).toBe("res.description");
     expect(getByLabelText("Branża").value).toBe("xd");
     expect(getByLabelText("Wymiar pracy").value).toBe("IT");
-    expect(getByLabelText("Ważne do:").value).toBe("17.05.2023");
+    expect(getByLabelText("Ważne do").value).toBe("17.05.2023");
   });
 
   it("should send edited offer", async () => {
     reactRouterDom.useParams = () => ({
       id: "abc",
     });
-    const { getByPlaceholderText, history, getByText } = renderWithRouter(
-      <OfferForm />,
-      {
-        route: "/offerForm/abc",
-      }
-    );
+    const {
+      getByPlaceholderText,
+      getByLabelText,
+      history,
+      getByText,
+    } = renderWithRouter(<OfferForm />, {
+      route: "/offerForm/abc",
+    });
 
     await waitForElement(() => getByText("Dodaj"));
 
@@ -379,7 +413,7 @@ describe("OfferForm", () => {
         method: "GET",
       })
     );
-    fireEvent.change(getByPlaceholderText("Adres firmy"), {
+    fireEvent.change(getByPlaceholderText("Nazwa stanowiska"), {
       target: { value: "abcd" },
     });
 

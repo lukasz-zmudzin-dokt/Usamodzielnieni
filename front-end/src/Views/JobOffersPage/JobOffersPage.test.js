@@ -8,12 +8,14 @@ import {
 } from "@testing-library/react";
 import JobOffersPage from "Views/JobOffersPage";
 import proxy from "config/api";
+import { AlertContext } from "context";
 
 describe("JobOffersPage", () => {
   let failFetch = false;
   let apiOffers = [];
   let apiSelect = { offer_types: ["xd", "abc"], categories: ["abc", "xd"] };
   let count;
+
   beforeAll(() => {
     global.fetch = jest.fn().mockImplementation((input, init) => {
       return new Promise((resolve, reject) => {
@@ -98,8 +100,6 @@ describe("JobOffersPage", () => {
         </MemoryRouter>
       );
 
-      expect(fetch).toHaveBeenCalledTimes(2);
-
       await waitForElement(() => getAllByText("Pokaż szczegóły"));
       expect(getAllByText("Pokaż szczegóły").length).toBe(3);
     });
@@ -139,7 +139,6 @@ describe("JobOffersPage", () => {
         proxy.job + "job-offers/?page=1&page_size=10&voivodeship=lubelskie",
         {
           headers: {
-            Authorization: "Token undefined",
             "Content-Type": "application/json",
           },
           method: "GET",
@@ -171,7 +170,7 @@ describe("JobOffersPage", () => {
       await waitForElement(() => getByText("Filtruj oferty"));
 
       fireEvent.change(getByLabelText("Okres ważności"), {
-        target: { value: new Date("May 5, 2020 00:00:00") },
+        target: { value: new Date("May 8, 2023 00:00:00") },
       });
 
       fireEvent.click(getByText("Filtruj oferty"));
@@ -180,10 +179,9 @@ describe("JobOffersPage", () => {
 
       expect(fetch).toHaveBeenCalledWith(
         proxy.job +
-          "job-offers/?page=1&page_size=10&min_expiration_date=2020-05-05",
+          "job-offers/?page=1&page_size=10&min_expiration_date=2023-05-08",
         {
           headers: {
-            Authorization: "Token undefined",
             "Content-Type": "application/json",
           },
           method: "GET",
@@ -246,17 +244,42 @@ describe("JobOffersPage", () => {
           "job-offers/?page=1&page_size=21&voivodeship=lubelskie&min_expiration_date=2020-12-31&categories=abc&types=xd",
         {
           headers: {
-            Authorization: "Token undefined",
             "Content-Type": "application/json",
           },
           method: "GET",
         }
       );
     });
+
+    it("should show alert on api fail", async () => {
+      failFetch = true;
+      const alertC = {
+        showAlert: jest.fn(),
+      };
+
+      render(
+        <AlertContext.Provider value={alertC}>
+          <MemoryRouter initialEntries={["/jobOffers"]}>
+            <JobOffersPage />
+          </MemoryRouter>
+        </AlertContext.Provider>
+      );
+
+      await wait(() => {
+        expect(alertC.showAlert).toHaveBeenCalled();
+      });
+
+      expect(alertC.showAlert).toHaveBeenCalledWith(
+        "Nie udało się pobrać filtrów."
+      );
+    });
   });
 
   describe("main component tests", () => {
     let location;
+    let alertC = {
+      showAlert: jest.fn(),
+    };
     beforeEach(() => {
       location = { search: "" };
       apiOffers = [
@@ -274,6 +297,8 @@ describe("JobOffersPage", () => {
       ];
       count = 1;
     });
+
+    // afterEach(cleanup);
 
     it("should render without crashing", async () => {
       const { container, getByText } = render(
@@ -303,14 +328,20 @@ describe("JobOffersPage", () => {
 
     it("should render error alert when api returns error", async () => {
       failFetch = true;
-      const { getByText, queryByText } = render(
+      const { queryByText, getByText } = render(
         <MemoryRouter>
-          <JobOffersPage location={location} />
+          <AlertContext.Provider value={alertC}>
+            <JobOffersPage location={location} />
+          </AlertContext.Provider>
         </MemoryRouter>
       );
 
-      await waitForElement(() => getByText("Wystąpił błąd", { exact: false }));
-      expect(getByText("Wystąpił błąd", { exact: false })).toBeInTheDocument();
+      await waitForElement(() =>
+        getByText("Wystąpił błąd podczas ładowania ofert.")
+      );
+      expect(
+        getByText("Wystąpił błąd podczas ładowania ofert.")
+      ).toBeInTheDocument();
       expect(queryByText("Nazwa oferty 1")).not.toBeInTheDocument();
     });
 
@@ -322,8 +353,16 @@ describe("JobOffersPage", () => {
         </MemoryRouter>
       );
 
-      await waitForElement(() => getByText("Brak ofert", { exact: false }));
-      expect(getByText("Brak ofert", { exact: false })).toBeInTheDocument();
+      await waitForElement(() =>
+        getByText("Brak ofert spełniających podane wymagania.", {
+          exact: false,
+        })
+      );
+      expect(
+        getByText("Brak ofert spełniających podane wymagania.", {
+          exact: false,
+        })
+      ).toBeInTheDocument();
     });
   });
 });

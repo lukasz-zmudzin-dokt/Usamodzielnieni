@@ -11,7 +11,10 @@ exports[`EducationTab should render without crashing 1`] = `
       class="CVEditorTab__img"
       src="movie_2.png"
     />
-    <div>
+    <form
+      class=""
+      novalidate=""
+    >
       <div
         class="row"
       >
@@ -34,10 +37,16 @@ exports[`EducationTab should render without crashing 1`] = `
                 class="form-control"
                 id="startTime"
                 placeholder="Data rozpoczęcia"
+                required=""
                 type="text"
                 value=""
               />
             </div>
+          </div>
+          <div
+            class="invalid-feedback"
+          >
+            Data rozpoczęcia jest wymagana.
           </div>
         </div>
         <div
@@ -78,10 +87,18 @@ exports[`EducationTab should render without crashing 1`] = `
         <input
           class="form-control"
           id="actionPlace"
+          maxlength="200"
+          minlength="1"
           placeholder="Nazwa szkoły/miejsca pracy"
+          required=""
           type="text"
           value=""
         />
+        <div
+          class="invalid-feedback"
+        >
+          Miejsce jest wymagane.
+        </div>
       </div>
       <div
         class="form-group"
@@ -95,18 +112,26 @@ exports[`EducationTab should render without crashing 1`] = `
         <input
           class="form-control"
           id="actionDescription"
+          maxlength="150"
+          minlength="1"
           placeholder="Profil/stanowisko ..."
+          required=""
           type="text"
           value=""
         />
+        <div
+          class="invalid-feedback"
+        >
+          Opis jest wymagany.
+        </div>
       </div>
       <button
-        class="itemsList__addButton btn btn-success"
-        type="button"
+        class="mb-3 btn btn-success"
+        type="submit"
       >
         + Dodaj
       </button>
-    </div>
+    </form>
     <div
       class="row"
     >
@@ -124,13 +149,17 @@ exports[`EducationTab should render without crashing 1`] = `
       <div
         class="col-md-6 col-12"
       >
-        <button
-          class="btn btn-success btn-block"
-          id="saveButton"
-          type="submit"
+        <form
+          class=""
         >
-          Generuj CV
-        </button>
+          <button
+            class="btn btn-success btn-block"
+            id="saveButton"
+            type="submit"
+          >
+            Zapisz zmiany i generuj CV
+          </button>
+        </form>
       </div>
     </div>
   </div>

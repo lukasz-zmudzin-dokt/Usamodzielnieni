@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ButtonList should render correctly 1`] = `
+<div>
+  <div
+    class="mt-2"
+  >
+    tagi:
+    <button
+      class="mx-1 my-1 btn btn-info btn-sm"
+      name="tag1"
+      type="button"
+    >
+      tag1
+       x
+    </button>
+    <button
+      class="mx-1 my-1 btn btn-info btn-sm"
+      name="tag2"
+      type="button"
+    >
+      tag2
+       x
+    </button>
+  </div>
+</div>
+`;

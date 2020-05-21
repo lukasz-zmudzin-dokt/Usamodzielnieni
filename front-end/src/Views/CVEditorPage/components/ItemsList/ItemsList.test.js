@@ -2,11 +2,12 @@ import React from "react";
 import { render, fireEvent, waitForElement } from "@testing-library/react";
 import ItemsList from "./ItemsList";
 import { Items } from "../";
+import { AlertContext } from "context/AlertContext";
 
 jest.mock("../");
 
 describe("ItemsList", () => {
-  let props;
+  let props, contextA;
   beforeEach(() => {
     Items.mockImplementation(() => <div>Items</div>);
 
@@ -18,6 +19,11 @@ describe("ItemsList", () => {
       onChange: () => {},
       clear: () => {},
       children: <div></div>,
+      smallFormValidated: false,
+      setSmallFormValidated: jest.fn(),
+    };
+    contextA = {
+      showAlert: jest.fn(),
     };
   });
 
@@ -49,6 +55,7 @@ describe("ItemsList", () => {
 
   it("should add item when add button is clicked and form is valid", async () => {
     props = {
+      ...props,
       data: ["item"],
       getItem: () => "item2",
       getItemId: (item) => item,
@@ -69,22 +76,27 @@ describe("ItemsList", () => {
 
   it("should not add item and display error alert when add button is clicked and form is invalid", async () => {
     props = {
+      ...props,
       data: ["item"],
       getItem: () => "item",
       getItemId: (item) => item,
       onChange: jest.fn(),
       clear: jest.fn(),
     };
-    const { getByText } = render(<ItemsList {...props} />);
+    const { getByText } = render(
+      <AlertContext.Provider value={contextA}>
+        <ItemsList {...props} />
+      </AlertContext.Provider>
+    );
 
     await waitForElement(() => getByText("Dodaj", { exact: false }));
     expect(props.onChange).toHaveBeenCalledTimes(0);
     fireEvent.click(getByText("Dodaj", { exact: false }));
     expect(props.onChange).toHaveBeenCalledTimes(0);
     expect(props.clear).toHaveBeenCalledTimes(0);
-    expect(
-      getByText("Taka sama pozycja", { exact: false })
-    ).toBeInTheDocument();
+    expect(contextA.showAlert).toHaveBeenCalledWith(
+      "Taka sama pozycja znajduje się już na liście."
+    );
   });
 
   it("should remove item from array when onCutClick function is called", async () => {
