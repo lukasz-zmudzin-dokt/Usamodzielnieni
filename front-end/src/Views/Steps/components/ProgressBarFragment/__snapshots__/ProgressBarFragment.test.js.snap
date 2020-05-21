@@ -15,8 +15,34 @@ exports[`ProgressBarFragment should render without crashing 1`] = `
         class="progressBarFragment__state"
       />
     </div>
-    <div>
-      StepInfo
+    <div
+      class="stepCard card"
+    >
+      <div
+        class="card-body"
+      >
+        <div>
+          <div
+            class=""
+          >
+            <div
+              class="yt_player"
+            />
+          </div>
+        </div>
+        <h4
+          class="card-text"
+          text-muted="true"
+        >
+          Opis kroku:
+        </h4>
+        <h4
+          class="mt-3 card-text"
+          text-muted="true"
+        >
+          Akcje:
+        </h4>
+      </div>
     </div>
   </div>
 </div>
@@ -37,8 +63,34 @@ exports[`ProgressBarFragment should render without crashing when current is fals
         class="progressBarFragment__state"
       />
     </div>
-    <div>
-      StepInfo
+    <div
+      class="stepCard card"
+    >
+      <div
+        class="card-body"
+      >
+        <div>
+          <div
+            class=""
+          >
+            <div
+              class="yt_player"
+            />
+          </div>
+        </div>
+        <h4
+          class="card-text"
+          text-muted="true"
+        >
+          Opis kroku:
+        </h4>
+        <h4
+          class="mt-3 card-text"
+          text-muted="true"
+        >
+          Akcje:
+        </h4>
+      </div>
     </div>
   </div>
 </div>

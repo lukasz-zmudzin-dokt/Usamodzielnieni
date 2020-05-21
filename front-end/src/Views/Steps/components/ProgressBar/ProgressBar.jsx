@@ -63,7 +63,7 @@ const getSteps = async () => {
   const response = await fetch(url, { method: "GET", headers });
 
   if (response.status !== 200) {
-    return tmpSteps;
+    //return tmpSteps;
 
     // eslint-disable-next-line no-unreachable
     throw response.status;
