@@ -30,7 +30,12 @@ const ChangeData = () => {
   const alertC = useRef(useContext(AlertContext));
 
   const backToList = () => {
-    history.push("/userList");
+    if (data.group_type){
+      history.push("/user");
+    }else{
+      history.push("/userList");
+    }
+
   };
 
   //standard b582b042-d6d8-4e57-9447-564a6748b4f7

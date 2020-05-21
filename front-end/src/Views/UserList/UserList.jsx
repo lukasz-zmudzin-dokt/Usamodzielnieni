@@ -126,7 +126,7 @@ const UserList = () => {
           <ListGroup variant="flush">
             {users.map((user) => (
               <ListGroup.Item key={user.id}>
-                <UserInfo user={user} />
+                <UserInfo context={context} user={user} />
               </ListGroup.Item>
             ))}
           </ListGroup>

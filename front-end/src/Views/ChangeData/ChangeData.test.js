@@ -222,7 +222,7 @@ describe("ChangeData", () => {
     expect(history.location.pathname).toEqual("/userList");
   });
 
-  it("should redirect after click back button", async () => {
+  it("should redirect after click back button(changing normal user data)", async () => {
     const { getByText, history } = renderWithRouter(<ChangeData />);
 
     await waitForElement(() => getByText("Prześlij zmiany"));
@@ -231,6 +231,24 @@ describe("ChangeData", () => {
 
     expect(history.location.pathname).toEqual("/userList");
   });
+
+  it("should redirect after click back button(changing staff user data)", async () => {
+    data = {
+      email: "abc@o2.pl",
+      first_name: "user",
+      last_name: "user",
+      group_type: ["abc"],
+      username: "abc",
+    };
+    const { getByText, history } = renderWithRouter(<ChangeData />);
+
+    await waitForElement(() => getByText("Prześlij zmiany"));
+
+    fireEvent.click(getByText("<"));
+
+    expect(history.location.pathname).toEqual("/user");
+  });
+
 
   it("should render CompanyForm when nip is in data", async () => {
     data = {
