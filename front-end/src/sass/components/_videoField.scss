@@ -2,10 +2,22 @@
   height: 100%;
   width: 100%;
   position: relative;
+
+  & div:first-child{
+    height: 100%;
+    width: 100%;
+  }
 }
+
 
 .videoField__button {
   position: absolute;
   top: 5px;
   right: 5px;
 }
+
+// .videoField__video{
+//   height: 100%;
+//   max-width: 100%;
+// }
+

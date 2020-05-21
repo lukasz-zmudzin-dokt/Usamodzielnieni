@@ -26,14 +26,18 @@ const VideoField = ({ url, id }) => {
     event.target.pauseVideo();
   };
 
-  const conditional =
-    user.type === "Staff" && user.data.group_type.length === 5;
+  const conditional = user.type === "Staff";
 
   return (
     videoID && (
       <div className="videoField__container">
-        <YouTube videoId={videoID} opts={opts} onReady={onReady} />
-        {conditional && <ChangeVideo id={id} token={user.token} />}
+        <YouTube
+          className="videoField__video"
+          videoId={videoID}
+          opts={opts}
+          onReady={onReady}
+        />
+        {<ChangeVideo id={id} token={user.token} />}
       </div>
     )
   );
