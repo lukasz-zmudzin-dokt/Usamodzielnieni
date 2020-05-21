@@ -97,16 +97,17 @@ describe("UserApproval", () => {
               case "Approve":
                 resolve({
                   status: 200,
-                  json: () => Promise.resolve("User successfully verified."),
+                  json: () =>
+                    Promise.resolve({
+                      message: "Użytkownik został pomyślnie zweryfikowany",
+                    }),
                 });
                 break;
               case "Reject":
                 resolve({
                   status: 200,
                   json: () =>
-                    Promise.resolve(
-                      "User status successfully set to not verified."
-                    ),
+                    Promise.resolve({ message: "Konto odrzucone pomyślnie" }),
                 });
                 break;
               default:
@@ -165,10 +166,10 @@ describe("UserApproval", () => {
     );
 
     await waitForElement(() =>
-      getByText("Błąd. Nie udało się załadować danych użytkownika.")
+      getByText("Nie udało się załadować danych użytkownika.")
     );
     expect(
-      getByText("Błąd. Nie udało się załadować danych użytkownika.")
+      getByText("Nie udało się załadować danych użytkownika.")
     ).toBeInTheDocument();
     expect(queryByText("Jan")).not.toBeInTheDocument();
   });
@@ -189,7 +190,7 @@ describe("UserApproval", () => {
     fireEvent.click(getByText("Akceptuj"));
     await wait(() => expect(contextA.showAlert).toHaveBeenCalled());
     expect(contextA.showAlert).toHaveBeenCalledWith(
-      "Konto zatwierdzone pomyślnie",
+      "Użytkownik został pomyślnie zweryfikowany",
       "success"
     );
   });
@@ -198,7 +199,7 @@ describe("UserApproval", () => {
     failFetch = false;
     fetchUserType = userTypes.STANDARD;
     postType = "Reject";
-    const { getByText } = render(
+    const { getByText, getByTestId } = render(
       <AlertContext.Provider value={contextA}>
         <MemoryRouter>
           <UserToApprove user={user.standard} activeUser={user.standard.id} />
@@ -207,6 +208,8 @@ describe("UserApproval", () => {
     );
     await waitForElement(() => getByText("11-123 Warszawa"));
     fireEvent.click(getByText("Odrzuć"));
+    fireEvent.click(getByTestId("modal_confirm"));
+
     await wait(() => expect(contextA.showAlert).toHaveBeenCalled());
     expect(contextA.showAlert).toHaveBeenCalledWith(
       "Konto odrzucone pomyślnie",

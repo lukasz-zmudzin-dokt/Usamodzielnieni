@@ -41,7 +41,7 @@ describe("CVCorrection", () => {
         }
         switch (init.method) {
           case "GET":
-            resolve({ status: 200, json: () => Promise.resolve(url) });
+            resolve({ status: 200, json: () => Promise.resolve({ url }) });
             break;
           default:
             reject({});
