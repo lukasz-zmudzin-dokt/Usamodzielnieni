@@ -45,7 +45,7 @@
         }
     }
 
-    const findParents = (steps, step) => {
+    export const findParents = (steps, step) => {
         let parents = [];
         steps.forEach(element => {
             if(element.next && element.next.includes(step.id)) {

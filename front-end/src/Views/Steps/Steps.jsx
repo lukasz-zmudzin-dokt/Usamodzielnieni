@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Container } from 'react-bootstrap';
 import { ProgressBar } from './components';
-import {deleteStep} from './functions/deleteStep';
+import {deleteStep, findParents} from './functions/deleteStep';
 
 const Steps = () => {
     const [steps, setSteps] = useState([
@@ -33,8 +33,16 @@ const Steps = () => {
         setPath(newPath);
         setWantsDelete(false);
     }
-    
-    console.log(steps);
+
+    if(path.length === 0) {
+        steps.forEach(step => {
+            if(findParents(steps, step).length === 0) {
+                let newPath = [];
+                newPath.push(step.id);
+                setPath(newPath);
+            }
+        });
+    }
 
     return (
         <Container>
