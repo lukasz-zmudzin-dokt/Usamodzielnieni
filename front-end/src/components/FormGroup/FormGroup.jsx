@@ -53,6 +53,7 @@ const FormGroup = ({
               checked={checked === 1 && val === `${id.split("--sort")[0]}`}
               onChange={() => changeChecked(1)}
               id={`inline-checkbox-${header}1`}
+              data-testid={`checkUp-${id}`}
             />
             <Form.Check
               inline
@@ -61,6 +62,7 @@ const FormGroup = ({
               checked={checked === 0 && val === `-${id.split("--sort")[0]}`}
               onChange={() => changeChecked(0)}
               id={`inline-checkbox-${header}2`}
+              data-testid={`checkDown-${id}`}
             />
           </div>
         );

@@ -26,7 +26,6 @@ const getOffers = async (filters, sort) => {
   const pageQuery = `page=${page}&page_size=${pageSize}${voivodeshipQ}${expirationDateQ}${categoryQ}${typeQ}`;
   const query = sort ? `?ordering=${sort}&${pageQuery}` : `?${pageQuery}`;
   const url = proxy.job + "job-offers/" + query;
-  console.log(url);
   const headers = {
     "Content-Type": "application/json",
   };
