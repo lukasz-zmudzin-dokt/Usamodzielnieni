@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Form } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import PropTypes from "prop-types";
@@ -17,9 +17,19 @@ const FormGroup = ({
   step,
   ...rest
 }) => {
+  const [checked, setChecked] = useState(-1);
   const setInput = (e) => {
     const value = e.target.value;
     setVal(value);
+  };
+
+  const changeChecked = (id) => {
+    if (id === checked) {
+      setChecked(-1);
+    } else {
+      setChecked(id);
+    }
+    setVal(id);
   };
 
   const setDate = (date) => {
@@ -27,6 +37,27 @@ const FormGroup = ({
   };
   const setFormType = () => {
     switch (type) {
+      case "check--sort":
+        return (
+          <div key={`inline-checkbox`}>
+            <Form.Check
+              inline
+              label="Rosnąco"
+              type="checkbox"
+              checked={checked === 0}
+              onChange={() => changeChecked(0)}
+              id={`inline-checkbox-${header}1`}
+            />
+            <Form.Check
+              inline
+              label="Malejąco"
+              type="checkbox"
+              checked={checked === 1}
+              onChange={() => changeChecked(1)}
+              id={`inline-checkbox-${header}2`}
+            />
+          </div>
+        );
       case "select":
         return (
           <Form.Control

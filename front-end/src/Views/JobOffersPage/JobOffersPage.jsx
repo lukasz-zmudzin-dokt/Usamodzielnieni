@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Container, Card, ListGroup, Alert } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
-import Filter from "./_components/Filter";
+
 import qs from "query-string";
 import { UserContext } from "context";
-import { JobOfferInfo, OffersPagination } from "./_components";
+import { JobOfferInfo, OffersPagination, Filter } from "./_components";
 import proxy from "config/api";
 
 const getOffers = async (filters) => {

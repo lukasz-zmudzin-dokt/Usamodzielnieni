@@ -10,6 +10,7 @@ import { UserContext, AlertContext } from "context";
 import { IndexLinkContainer } from "react-router-bootstrap";
 import { userTypes } from "constants/userTypes";
 import { userStatuses } from "constants/userStatuses";
+import { Sort } from "../";
 registerLocale("pl", polish);
 
 const Filter = ({ setFilters, count, disabled }) => {
@@ -18,6 +19,7 @@ const Filter = ({ setFilters, count, disabled }) => {
   const [minExpirationDate, setMinExpirationDate] = useState();
   const [category, setCategory] = useState(DEFAULT_INPUT);
   const [type, setType] = useState(DEFAULT_INPUT);
+  const [sort, setSort] = useState({});
   const [arrays, setArrays] = useState([]);
   const user = useContext(UserContext);
   const alertC = useRef(useContext(AlertContext));
@@ -133,10 +135,10 @@ const Filter = ({ setFilters, count, disabled }) => {
           id="type"
         />
       </Form.Row>
-
+      <Sort sort={sort} setSort={setSort} />
       <Button
         type="submit"
-        className="mr-3"
+        className="mr-3 mt-3 mb-3"
         variant="primary"
         disabled={disabled}
       >
@@ -144,22 +146,20 @@ const Filter = ({ setFilters, count, disabled }) => {
       </Button>
       <Button
         variant="outline-primary"
-        className="mr-3"
+        className="mr-3 mt-3 mb-3"
         onClick={deleteFilter}
         disabled={disabled}
       >
         {disabled ? "Ładowanie..." : "Wyczyść filtry"}
       </Button>
       {count !== 0 && (
-        <small className="search__countText">{`Ilość znalezionych ofert: ${count}`}</small>
+        <small className="search__countText mr-3">{`Ilość znalezionych ofert: ${count}`}</small>
       )}
       {user.type === userTypes.EMPLOYER &&
       user.data &&
       user.data.status === userStatuses.VERIFIED ? (
         <IndexLinkContainer as={Button} to="/offerForm">
-          <Button variant="success" className="mx-2 mt-2">
-            Dodaj ofertę
-          </Button>
+          <Button variant="success">Dodaj ofertę</Button>
         </IndexLinkContainer>
       ) : null}
     </Form>
