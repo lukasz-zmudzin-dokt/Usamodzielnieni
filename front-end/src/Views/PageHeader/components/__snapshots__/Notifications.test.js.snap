@@ -5,7 +5,7 @@ exports[`Notifications should open notifications list when toggle is clicked and
   aria-labelledby=""
   class="dropdown-menu show"
   data-testid="dropdownMenu"
-  style="position: absolute; top: 0px; left: 0px; transform: translate3d(NaNpx, NaNpx, 0); will-change: transform;"
+  style="position: absolute; top: 0px; left: 0px; transform: translate(0px, 0px);"
   x-placement="bottom-start"
 >
   <div
@@ -24,7 +24,7 @@ exports[`Notifications should open notifications list when toggle is clicked and
           Rozpatrzono CV
         </div>
         <small>
-          2020-3-14
+          3/14/2020
         </small>
       </a>
       <button
@@ -47,7 +47,7 @@ exports[`Notifications should open notifications list when toggle is clicked and
           Dostępne nowe oferty pracy
         </div>
         <small>
-          2020-3-14
+          3/14/2020
         </small>
       </a>
       <button
