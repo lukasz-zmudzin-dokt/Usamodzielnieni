@@ -84,7 +84,10 @@ const JobOfferDetails = (props) => {
                   {offer.voivodeship}
                 </DetailsItem>
                 <DetailsItem md="6" xl="4" label="Ważne do">
-                  {offer.expirationDate}
+                  {new Date(offer.expirationDate).toLocaleDateString(
+                    undefined,
+                    {}
+                  )}
                 </DetailsItem>
                 <DetailsItem md="6" xl="4" label="Branża">
                   {offer.category}
