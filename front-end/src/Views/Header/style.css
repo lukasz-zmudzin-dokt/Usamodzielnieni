@@ -1,0 +1,13 @@
+.font {
+    font-family: "MonoType", serif;
+    font-size: 16px;
+}
+.navbar-left-button {
+    background-color: #A63A53;
+    color: white!important;
+    padding-left: 20px!important;
+    padding-right: 30px!important;
+}
+.navbar-right-button {
+
+}

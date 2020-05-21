@@ -24,6 +24,7 @@ import UserList from "Views/UserList/UserList";
 import OfferApprovalPage from "Views/OfferApprovalPage";
 import PasswordResetPrompt from "Views/PasswordResetPrompt";
 import NewPasswordPage from "Views/NewPasswordPage";
+import Header from "./Header";
 
 export {
   UserProfilePage,
@@ -52,4 +53,5 @@ export {
   MessagesList,
   Chats,
   UserList,
+    Header
 };
