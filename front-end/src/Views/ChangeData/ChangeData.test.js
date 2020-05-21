@@ -249,7 +249,6 @@ describe("ChangeData", () => {
     expect(history.location.pathname).toEqual("/user");
   });
 
-
   it("should render CompanyForm when nip is in data", async () => {
     data = {
       email: "abc@o2.pl",
