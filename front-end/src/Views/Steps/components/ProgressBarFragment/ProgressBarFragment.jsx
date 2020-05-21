@@ -1,6 +1,5 @@
 import React, {useEffect, useRef} from "react";
-import { Bullet } from "../";
-import StepCard from "../StepCard/StepCard";
+import { Bullet, StepCard } from "../";
 
 const ProgressBarFragment = ({ step, current, index, setCurrent }) => {
     const ref = useRef(null);
