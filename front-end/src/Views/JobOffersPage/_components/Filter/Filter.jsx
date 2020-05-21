@@ -13,13 +13,13 @@ import { userStatuses } from "constants/userStatuses";
 import { Sort } from "../";
 registerLocale("pl", polish);
 
-const Filter = ({ setFilters, count, disabled }) => {
+const Filter = ({ setFilters, count, disabled, setSortJob }) => {
   const [voivodeship, setVoivodeship] = useState(DEFAULT_INPUT);
   const [pageSize, setPageSize] = useState(10);
   const [minExpirationDate, setMinExpirationDate] = useState();
   const [category, setCategory] = useState(DEFAULT_INPUT);
   const [type, setType] = useState(DEFAULT_INPUT);
-  const [sort, setSort] = useState({});
+  const [sort, setSort] = useState("");
   const [arrays, setArrays] = useState([]);
   const user = useContext(UserContext);
   const alertC = useRef(useContext(AlertContext));
@@ -67,6 +67,7 @@ const Filter = ({ setFilters, count, disabled }) => {
       category: categoryV,
       type: typeV,
     });
+    setSortJob(sort);
   };
 
   const deleteFilter = (e) => {

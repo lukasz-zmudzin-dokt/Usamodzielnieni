@@ -23,13 +23,19 @@ const FormGroup = ({
     setVal(value);
   };
 
-  const changeChecked = (id) => {
-    if (id === checked) {
+  const changeChecked = (newId) => {
+    const value = id.split("--sort");
+    if (newId === checked) {
       setChecked(-1);
     } else {
-      setChecked(id);
+      if (newId === 0) {
+        setChecked(newId);
+        setVal(`-${value[0]}`);
+      } else {
+        setChecked(newId);
+        setVal(`${value[0]}`);
+      }
     }
-    setVal(id);
   };
 
   const setDate = (date) => {
@@ -44,16 +50,16 @@ const FormGroup = ({
               inline
               label="Rosnąco"
               type="checkbox"
-              checked={checked === 0}
-              onChange={() => changeChecked(0)}
+              checked={checked === 1 && val === `${id.split("--sort")[0]}`}
+              onChange={() => changeChecked(1)}
               id={`inline-checkbox-${header}1`}
             />
             <Form.Check
               inline
               label="Malejąco"
               type="checkbox"
-              checked={checked === 1}
-              onChange={() => changeChecked(1)}
+              checked={checked === 0 && val === `-${id.split("--sort")[0]}`}
+              onChange={() => changeChecked(0)}
               id={`inline-checkbox-${header}2`}
             />
           </div>
