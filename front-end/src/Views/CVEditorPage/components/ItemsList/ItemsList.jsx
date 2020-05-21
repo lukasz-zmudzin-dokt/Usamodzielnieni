@@ -6,9 +6,6 @@ import { withAlertContext } from "components";
 class ItemsList extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      validated: false,
-    };
     if (this.props.data === null) {
       this.props.onChange([]);
     }
@@ -17,10 +14,10 @@ class ItemsList extends React.Component {
   addItem = (e) => {
     e.preventDefault();
     if (!e.currentTarget.checkValidity()) {
-      this.setState({ validated: true });
+      this.props.setSmallFormValidated(true);
       e.stopPropagation();
     } else {
-      this.setState({ validated: false });
+      this.props.setSmallFormValidated(false);
       const { data, getItemId, getItem } = this.props;
       const item = getItem();
 
@@ -49,7 +46,11 @@ class ItemsList extends React.Component {
     );
 
     return (
-      <Form onSubmit={this.addItem} noValidate validated={this.state.validated}>
+      <Form
+        onSubmit={this.addItem}
+        noValidate
+        validated={this.props.smallFormValidated}
+      >
         {data.length > 0 && (
           <Form.Group controlId="items">
             <Items

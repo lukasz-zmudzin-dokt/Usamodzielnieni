@@ -9,12 +9,11 @@ import { DeletionModal } from "components";
 import ChangeCVNameModal from "./ChangeCVNameModal.jsx";
 
 const showCV = async (cvId, alertC, token) => {
-  let r;
   try {
-    r = await getCVUrl(token, cvId);
-    let url = proxy.plain + r;
+    const r = await getCVUrl(token, cvId);
+    let url = proxy.plain + r.url;
     window.open(url, "_blank");
-  } catch (r) {
+  } catch (e) {
     alertC.current.showAlert(
       "Ups, coś poszło nie tak. Nie można wyświetlić CV."
     );

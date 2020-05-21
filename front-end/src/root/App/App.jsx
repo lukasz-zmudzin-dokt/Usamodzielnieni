@@ -4,6 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import { UserProvider, AlertProvider } from "context";
 import Router from "root/Router";
 import { AlertsContainer } from "components";
+import Footer from "Views/Footer";
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
             <Router />
             <AlertsContainer />
           </div>
+          <Footer />
         </BrowserRouter>
       </AlertProvider>
     </UserProvider>

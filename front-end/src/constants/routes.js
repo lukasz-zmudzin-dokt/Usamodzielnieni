@@ -16,6 +16,7 @@ import {
   RegisterPage,
   UserProfilePage,
   UserApprovalPage,
+  Steps,
   CVCorrection,
   MessagesList,
   Chats,
@@ -84,14 +85,12 @@ export default [
     path: paths.JOB_OFFERS,
     component: JobOffersPage,
     exact: true,
-    isPrivate: true,
     type: undefined,
   },
   {
     path: paths.JOB_OFFER_DETAILS,
     component: JobOfferDetails,
     exact: true,
-    isPrivate: true,
     type: undefined,
   },
   {
@@ -162,6 +161,11 @@ export default [
     type: userTypes.STAFF,
     group: staffTypes.VERIFICATION,
     userVerified: true,
+  },
+  {
+    path: paths.STEPS,
+    component: Steps,
+    isPrivate: true,
   },
   {
     path: paths.CV_CORRECTION,

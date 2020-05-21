@@ -13,6 +13,16 @@ class PhotoTab extends React.Component {
     this.props.onChange(this.fileInput.files[0]);
   };
 
+  setLabel = () => {
+    const label =
+      this.props.data !== null
+        ? this.props.data.name
+        : this.props.hasPhoto
+        ? "Poprzednie zdjęcie"
+        : "Wybierz zdjęcie";
+    return label;
+  };
+
   render() {
     return (
       <CVEditorTab
@@ -25,14 +35,15 @@ class PhotoTab extends React.Component {
         error={this.props.error}
         showComments={this.props.showComments}
         disabled={this.props.disabled}
+        isNew={this.props.isNew}
       >
         <Form>
           <Form.Group>
             <Form.Label htmlFor="custom-file">Zdjęcie:</Form.Label>
             <Form.File
               id="custom-file"
-              label={this.props.data ? this.props.data.name : "Wybierz zdjęcie"}
               custom
+              label={this.setLabel()}
               ref={(ref) => (this.fileInput = ref)}
               onChange={this.onChange}
               accept="image/*"

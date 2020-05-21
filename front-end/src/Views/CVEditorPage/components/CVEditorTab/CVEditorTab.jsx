@@ -12,6 +12,7 @@ const CVEditorTab = ({
   loading,
   error,
   showComments,
+  isNew,
   disabled = false,
 }) => (
   <div>
@@ -63,7 +64,11 @@ const CVEditorTab = ({
               block
               disabled={disabled}
             >
-              {disabled ? "Ładowanie..." : "Generuj CV"}
+              {disabled
+                ? "Ładowanie..."
+                : isNew
+                ? "Generuj CV"
+                : "Zapisz zmiany i generuj CV"}
             </Button>
           </Form>
         )}

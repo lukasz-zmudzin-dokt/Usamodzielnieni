@@ -1,20 +1,21 @@
 import React from "react";
 import { Alert, Button, Card, Container, Form } from "react-bootstrap";
-import { Editor, createEditorState } from "medium-draft";
+import { createEditorState } from "medium-draft";
 import {
   getFilters,
   getPost,
   postBlogPost,
+  reserveSpace,
   uploadPhoto,
 } from "./functions/apiCalls";
 import "medium-draft/lib/index.css";
-import { customizeToolbar } from "./functions/editorConfig";
 import SelectionRow from "./components/SelectionRow";
-import { UserContext } from "context";
+import { UserContext } from "context/UserContext";
 import mediumDraftExporter from "medium-draft/lib/exporter";
 import mediumDraftImporter from "medium-draft/lib/importer";
 import { convertToRaw } from "draft-js";
 import { Redirect } from "react-router-dom";
+import EditorForm from "./components/EditorForm";
 import { withAlertContext } from "components";
 
 class BlogPostForm extends React.Component {
@@ -31,6 +32,8 @@ class BlogPostForm extends React.Component {
         categories: [],
         tags: [],
       },
+
+      error: "",
       redirect: false,
       post_id: -1,
       method: "POST",
@@ -64,6 +67,8 @@ class BlogPostForm extends React.Component {
           });
         }
       });
+    } else {
+      this.makeReservation();
     }
     this.loadFilters().then((res) => {
       this.setState({
@@ -72,6 +77,21 @@ class BlogPostForm extends React.Component {
     });
   }
 
+  makeReservation = async () => {
+    let res;
+    try {
+      res = await reserveSpace(this.context.token);
+      this.setState({
+        post_id: res.id,
+      });
+    } catch (e) {
+      console.log(e);
+      this.setState({
+        error: "reservation",
+      });
+    }
+  };
+
   loadPost = async (id) => {
     let res;
     try {
@@ -79,9 +99,6 @@ class BlogPostForm extends React.Component {
     } catch (e) {
       console.log(e);
       res = null;
-      this.props.alertContext.showAlert(
-        "Wystąpił błąd podczas pobierania treści posta."
-      );
     }
     return res;
   };
@@ -93,9 +110,6 @@ class BlogPostForm extends React.Component {
     } catch (e) {
       console.log(e);
       res = { categories: [], tags: [] };
-      this.props.alertContext.showAlert(
-        "Nie udało się załadować tagów i kategorii."
-      );
     }
     return res;
   };
@@ -151,21 +165,19 @@ class BlogPostForm extends React.Component {
       content: mediumDraftExporter(this.state.editorState.getCurrentContent()),
     };
     try {
-      const res = await postBlogPost(
+      await postBlogPost(
         data,
         this.context.token,
         this.state.method,
         this.state.post_id
       );
-      this.setState({
-        post_id: res.id,
-      });
       if (this.state.photo !== null) {
         try {
           await uploadPhoto(
             this.state.post_id,
             this.state.photo,
-            this.context.token
+            this.context.token,
+            "header"
           );
         } catch (e) {
           console.log(e);
@@ -181,18 +193,27 @@ class BlogPostForm extends React.Component {
         "Wystąpił błąd podczas dodawania posta."
       );
     }
-    this.setRedirect();
   };
 
   render() {
-    const config = customizeToolbar();
-    return (
+    return this.state.isLoading || this.state.error === "reservation" ? (
+      <Card.Body>
+        {this.state.isLoading ? (
+          <Alert variant="info">Ładowanie edytora postów.</Alert>
+        ) : this.state.error === "reservation" ? (
+          <Alert variant="danger">
+            Wystąpił błąd podczas ładowania kreatora.
+          </Alert>
+        ) : this.state.error === "get" ? (
+          <Alert variant="danger">
+            Wystąpił błąd podczas pobierania treści posta.
+          </Alert>
+        ) : null}
+      </Card.Body>
+    ) : (
       <Container>
         <Card>
           <Card.Header>
-            {this.state.isLoading ? (
-              <Alert variant="info">Ładowanie edytora postów.</Alert>
-            ) : null}
             <Form.Group controlId="blogpost_photo">
               <Form.File
                 name="photo"
@@ -227,17 +248,14 @@ class BlogPostForm extends React.Component {
               current={this.state.category}
               onChange={this.onChange}
             />
-            <div className="my-4">
-              <Editor
-                placeholder="Napisz swoją historię..."
-                ref={this.refsEditor}
-                editorState={this.state.editorState}
-                onChange={this.onEditorChange}
-                inlineButtons={config.inline}
-                blockButtons={config.block}
-                sideButtons={[]}
-              />
-            </div>
+            <EditorForm
+              alerts={this.props.alertContext}
+              onChange={this.onEditorChange}
+              state={this.state.editorState}
+              customRef={this.refsEditor}
+              id={this.state.post_id}
+              token={this.context.token}
+            />
             <SelectionRow
               className="mt-4"
               name="tags"

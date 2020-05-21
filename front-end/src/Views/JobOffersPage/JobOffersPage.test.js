@@ -139,7 +139,6 @@ describe("JobOffersPage", () => {
         proxy.job + "job-offers/?page=1&page_size=10&voivodeship=lubelskie",
         {
           headers: {
-            Authorization: "Token undefined",
             "Content-Type": "application/json",
           },
           method: "GET",
@@ -183,7 +182,6 @@ describe("JobOffersPage", () => {
           "job-offers/?page=1&page_size=10&min_expiration_date=2023-05-08",
         {
           headers: {
-            Authorization: "Token undefined",
             "Content-Type": "application/json",
           },
           method: "GET",
@@ -246,7 +244,6 @@ describe("JobOffersPage", () => {
           "job-offers/?page=1&page_size=21&voivodeship=lubelskie&min_expiration_date=2020-12-31&categories=abc&types=xd",
         {
           headers: {
-            Authorization: "Token undefined",
             "Content-Type": "application/json",
           },
           method: "GET",

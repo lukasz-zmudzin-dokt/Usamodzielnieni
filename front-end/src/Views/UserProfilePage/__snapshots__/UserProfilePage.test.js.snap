@@ -108,7 +108,18 @@ exports[`UserProfile should render correctly 1`] = `
       </div>
       <div
         class="text-center card-body"
-      />
+      >
+        <div
+          class="buttonsContainer"
+        >
+          <button
+            class="btn btn-danger"
+            type="button"
+          >
+            Usuń konto
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </div>
