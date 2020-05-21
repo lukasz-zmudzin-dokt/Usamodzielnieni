@@ -104,7 +104,7 @@ exports[`OfferPosition should match snapshot 1`] = `
             <div
               class="detailsItem__value"
             >
-              2020-12-21
+              1608508800000_date_en-US_4_
             </div>
           </div>
         </div>
