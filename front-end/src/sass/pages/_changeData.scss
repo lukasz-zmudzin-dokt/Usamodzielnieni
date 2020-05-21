@@ -10,9 +10,11 @@
   padding: 0.75rem 41px;
 }
 
-.changeData__wrapper__card:nth-child(1) {
-  margin-bottom: 1rem;
-}
+  .changeData__wrapper__card--account {
+    margin: 1rem 0;
+   
+  }
+
 
 .changeData__button{
   margin-top: 1rem;
@@ -27,8 +29,12 @@
     flex-grow: 1;
   }
 
+    .changeData__wrapper__card--account {
+    margin: 0 1rem;
+   
+  }
+
   .changeData__wrapper__card:nth-child(1) {
-    margin-right: 1rem;
     margin-bottom: 0;
   }
 
