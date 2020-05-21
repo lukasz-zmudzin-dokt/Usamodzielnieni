@@ -1,7 +1,7 @@
 import React from 'react'
 import { ProgressBarFragment } from '../';
 
-const ProgressBar = ({ steps, path, setCurrent, setSteps }) => {
+const ProgressBar = ({ steps, path, setCurrent, wantsDelete }) => {
     return (
         <div>
             {path.map((stepId, i) => (
@@ -10,8 +10,7 @@ const ProgressBar = ({ steps, path, setCurrent, setSteps }) => {
                     step={steps.find(step => step.id === stepId)}
                     current={path.length - 1 === i}
                     setCurrent={setCurrent}
-                    steps={steps}
-                    setSteps={setSteps}
+                    wantsDelete={wantsDelete}
                     />
             ))}
             { steps.find(step => step.id === path[path.length - 1])?.next && <ProgressBarFragment />}
