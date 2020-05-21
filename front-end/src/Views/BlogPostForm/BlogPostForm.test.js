@@ -9,6 +9,8 @@ import { userTypes } from "constants/userTypes";
 import proxy from "config/api";
 import EditorForm from "./components/EditorForm";
 
+jest.mock("./components/EditorForm");
+
 const renderWithRouter = (
   ui,
   {
@@ -94,6 +96,7 @@ describe("BlogpostForm", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     apiFail = false;
+    EditorForm.mockImplementation(() => <div>EditorForm</div>);
   });
 
   it("should match snapshot", () => {

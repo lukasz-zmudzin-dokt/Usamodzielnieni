@@ -31,7 +31,7 @@ export const setOfferApproved = async (token, offerId) => {
     body: JSON.stringify(data),
   });
   if (response.status === 200) {
-    return await response.json();
+    return response.status;
   } else {
     throw response.status;
   }
@@ -45,7 +45,7 @@ export const setOfferRejected = async (token, offerId) => {
   };
   const response = await fetch(url, { method: "DELETE", headers });
   if (response.status === 200) {
-    return await response.json();
+    return response.status;
   } else {
     throw response.status;
   }

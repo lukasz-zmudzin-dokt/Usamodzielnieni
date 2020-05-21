@@ -192,6 +192,7 @@ class RegisterPage extends React.Component {
                 <AccountForm
                   data={accountData}
                   onBlur={(accountData) => this.setState({ accountData })}
+                  isAdmin={this.props.match.params.role === "staff"}
                 />
               </section>
               <Button

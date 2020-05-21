@@ -12,6 +12,7 @@ import { userTypes } from "constants/userTypes";
 const UserToApprove = ({ user, activeUser }) => {
   const context = useContext(UserContext);
   const alertC = useRef(useContext(AlertContext));
+  const [actionTaken, setActionTaken] = useState(false);
   const [userDetails, setUserDetails] = useState([]);
   const [userDetailsFacilityAddress, setUserDetailsFacilityAddress] = useState(
     []
@@ -50,9 +51,8 @@ const UserToApprove = ({ user, activeUser }) => {
     e.preventDefault();
     try {
       let res = await setUserApproved(token, userId);
-      if (res.message === "Użytkownik został pomyślnie zweryfikowany") {
-        alertC.current.showAlert(res.message, "success");
-      }
+      alertC.current.showAlert(res.message, "success");
+      setActionTaken(true);
     } catch (err) {
       setError(true);
       alertC.current.showAlert("Nie udało się zweryfikować użytkownika");
@@ -61,13 +61,10 @@ const UserToApprove = ({ user, activeUser }) => {
 
   //const rejectUser = async (e, token, userId) => {
   const rejectUser = async (token, userId) => {
-    let res;
     try {
-      res = await setUserRejected(token, userId);
-      console.log(res);
-      if (res.message === "Użytkownik został pomyślnie odrzucony") {
-        alertC.current.showAlert(res.message, "success");
-      }
+      let res = await setUserRejected(token, userId);
+      alertC.current.showAlert(res.message, "success");
+      setActionTaken(true);
     } catch (err) {
       setError(true);
       alertC.current.showAlert("Nie udało się odrzucić użytkownika");
@@ -125,7 +122,7 @@ const UserToApprove = ({ user, activeUser }) => {
         approveUser(context.token, user.id);*/
 
   if (message) {
-    return message;
+    return <Card.Body>{message}</Card.Body>;
   } else {
     return (
       <Card.Body>
@@ -160,25 +157,27 @@ const UserToApprove = ({ user, activeUser }) => {
           <ListGroup.Item>
             <Row>{address}</Row>
           </ListGroup.Item>
-          <ListGroup.Item>
-            <Row className="justify-content-center">
-              <Button
-                onClick={(e) => approveUser(e, context.token, user.id)}
-                variant="success"
-                id="accept"
-              >
-                Akceptuj
-              </Button>
-              <Button
-                onClick={(e) => handleOnClick(e)}
-                variant="danger"
-                className="ml-3"
-                id="reject"
-              >
-                Odrzuć
-              </Button>
-            </Row>
-          </ListGroup.Item>
+          {!actionTaken ? (
+            <ListGroup.Item>
+              <Row className="justify-content-center">
+                <Button
+                  onClick={(e) => approveUser(e, context.token, user.id)}
+                  variant="success"
+                  id="accept"
+                >
+                  Akceptuj
+                </Button>
+                <Button
+                  onClick={(e) => handleOnClick(e)}
+                  variant="danger"
+                  className="ml-3"
+                  id="reject"
+                >
+                  Odrzuć
+                </Button>
+              </Row>
+            </ListGroup.Item>
+          ) : null}
         </ListGroup>
       </Card.Body>
     );
