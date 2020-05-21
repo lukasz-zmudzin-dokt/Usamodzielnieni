@@ -50,6 +50,7 @@ const tmpSteps = [
     type: "sub",
     title: "Tytuł podkroku 3.1",
     description: "Opis kroku 3.1 wraz z filmikami.",
+    next: [{id: "1", choiceName: "początek"}]
   },
 ];
 
@@ -125,6 +126,7 @@ const ProgressBar = () => {
         {path.map((stepId, i) => (
           <ProgressBarFragment
             key={stepId}
+            index={i}
             step={steps.find((step) => step.id === stepId)}
             current={path.length - 1 === i}
             setCurrent={setCurrent}

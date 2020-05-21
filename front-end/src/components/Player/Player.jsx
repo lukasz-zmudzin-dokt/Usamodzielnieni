@@ -1,19 +1,23 @@
 import YouTube from "react-youtube";
 import React from "react";
 
-export const Player = ({src}) => {
+const Player = ({src}) => {
 
     const _onReady = event => {
         event.target.pauseVideo();
     };
 
     const videoProps = {
+        height: "100%",
+        width: "100%",
         playerVars: {
-            autoplay: 1
+            autoplay: 0
         }
     };
 
     return (
-        <YouTube className="mb-3" videoId={src || "dQw4w9WgXcQ"} opts={videoProps} onReady={_onReady} />
-    )
+        <YouTube className="yt_player" videoId={src || "dQw4w9WgXcQ"} opts={videoProps} onReady={_onReady} />
+    );
 };
+
+export default Player;
