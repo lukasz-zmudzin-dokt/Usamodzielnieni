@@ -9,7 +9,7 @@ const tmpSteps = [
     type: "main",
     title:
       "Tytuł głównego kroku 1 123 123 123 123 123 123 123 123 123 123 123 123 ",
-    value: "Opis kroku 1 wraz z filmikami.",
+    description: "Opis kroku 1 wraz z filmikami.",
     next: [
       { id: "2", choiceName: "Tak" },
       { id: "5", choiceName: "Nie" },
@@ -20,7 +20,7 @@ const tmpSteps = [
     type: "main",
     title:
       "Tytuł głównego kroku 2 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123",
-    value: "Opis kroku 2 wraz z filmikami.",
+    description: "Opis kroku 2 wraz z filmikami.",
     next: [{ id: "3", choiceName: "Dalej" }],
   },
   {
@@ -28,28 +28,28 @@ const tmpSteps = [
     type: "sub",
     title:
       "Tytuł podkroku 2.1 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123",
-    value: "Opis kroku 2.1 wraz z filmikami.",
+    description: "Opis kroku 2.1 wraz z filmikami.",
     next: [{ id: "4", choiceName: "Dalej" }],
   },
   {
     id: "4",
     type: "sub",
     title: "Tytuł podkroku 2.2",
-    value: "Opis kroku 2.2 wraz z filmikami.",
+    description: "Opis kroku 2.2 wraz z filmikami.",
     next: [{ id: "5", choiceName: "Dalej" }],
   },
   {
     id: "5",
     type: "main",
     title: "Tytuł głównego kroku 3",
-    value: "Opis kroku 3 wraz z filmikami.",
+    description: "Opis kroku 3 wraz z filmikami.",
     next: [{ id: "6", choiceName: "Dalej" }],
   },
   {
     id: "6",
     type: "sub",
     title: "Tytuł podkroku 3.1",
-    value: "Opis kroku 3.1 wraz z filmikami.",
+    description: "Opis kroku 3.1 wraz z filmikami.",
   },
 ];
 
@@ -62,7 +62,7 @@ const getSteps = async () => {
   const response = await fetch(url, { method: "GET", headers });
 
   if (response.status !== 200) {
-    // return tmpSteps;
+    return tmpSteps;
 
     // eslint-disable-next-line no-unreachable
     throw response.status;
