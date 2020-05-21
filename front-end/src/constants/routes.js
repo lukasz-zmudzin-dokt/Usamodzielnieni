@@ -160,12 +160,12 @@ export default [
     isPrivate: true,
     type: userTypes.STAFF,
     group: staffTypes.VERIFICATION,
-    userVerified: true
+    userVerified: true,
   },
   {
     path: paths.STEPS,
     component: Steps,
-    isPrivate: true
+    isPrivate: true,
   },
   {
     path: paths.CV_CORRECTION,

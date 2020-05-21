@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`StepInfo should render without buttons when next is undefined 1`] = `
+<div>
+  <div
+    class="stepInfo card"
+  >
+    <div
+      class="card-body"
+    >
+      <p>
+        Opis
+      </p>
+      <button
+        class="mr-2 btn btn-primary"
+        type="button"
+      >
+        Tak
+      </button>
+      <button
+        class="mr-2 btn btn-primary"
+        type="button"
+      >
+        Nie
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`StepInfo should render without crashing 1`] = `
+<div>
+  <div
+    class="stepInfo card"
+  >
+    <div
+      class="card-body"
+    >
+      <p>
+        Opis
+      </p>
+      <button
+        class="mr-2 btn btn-primary"
+        type="button"
+      >
+        Tak
+      </button>
+      <button
+        class="mr-2 btn btn-primary"
+        type="button"
+      >
+        Nie
+      </button>
+    </div>
+  </div>
+</div>
+`;

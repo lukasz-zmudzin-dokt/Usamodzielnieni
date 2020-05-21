@@ -92,6 +92,8 @@ const UserList = () => {
         return "Pracodawca";
       case userTypes.STANDARD:
         return "Podopieczny";
+      case userTypes.SPECIALIST:
+        return "Specjalista";
       default:
         return "Nieznany typ";
     }

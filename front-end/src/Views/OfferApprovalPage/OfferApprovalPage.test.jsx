@@ -8,6 +8,8 @@ describe("OfferApproval", () => {
   let apiOffers = [
     {
       category: "PR",
+      salary_min: "456",
+      salary_max: "654",
       company_address: {
         city: "Gdynia",
         postal_code: "03-371",
@@ -25,6 +27,8 @@ describe("OfferApproval", () => {
     },
     {
       category: "IT",
+      salary_min: "123",
+      salary_max: "321",
       company_address: {
         city: "Wwa",
         postal_code: "21-371",

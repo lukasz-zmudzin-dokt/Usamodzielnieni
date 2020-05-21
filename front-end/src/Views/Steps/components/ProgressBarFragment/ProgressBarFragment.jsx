@@ -1,5 +1,5 @@
-import React from 'react';
-import { Bullet, StepInfo } from '../';
+import React from "react";
+import { Bullet, StepInfo } from "../";
 
 const ProgressBarFragment = ({ step, current, setCurrent, wantsDelete }) => {
     const type = current ? 'current' :

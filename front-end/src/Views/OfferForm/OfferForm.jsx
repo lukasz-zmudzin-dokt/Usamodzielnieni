@@ -33,6 +33,8 @@ const OfferForm = () => {
     expiration_date: "",
     category: "",
     type: "",
+    salary_min: "",
+    salary_max: "",
   });
 
   //47991e86-4b42-4507-b154-1548bf8a3bd3
@@ -50,6 +52,7 @@ const OfferForm = () => {
         ]);
       } catch (err) {
         if (err.message === "getOffer") {
+          alertC.current.showAlert("Wystąpił błąd przy pobieraniu oferty.");
           history.push("/offerForm");
         } else {
           setDisabled(false);
@@ -93,6 +96,8 @@ const OfferForm = () => {
             ...offer,
             company_address: context.data.company_address,
             expiration_date: expiration_date.toISOString().substr(0, 10),
+            salary_min: salary_min.replace(",", "."),
+            salary_max: salary_max.replace(",", "."),
           },
           context.token,
           id
@@ -122,6 +127,8 @@ const OfferForm = () => {
     voivodeship,
     category,
     type,
+    salary_min,
+    salary_max,
   } = offer;
 
   return (
@@ -177,14 +184,29 @@ const OfferForm = () => {
                 required
               />
               <FormGroup
-                header="Wymiar pracy"
-                id="type"
-                setVal={(val) => setOffer({ ...offer, type: val })}
-                val={type}
-                type="select"
-                array={arrays.types}
+                header="Wynagrodzenie od (zł / miesiąc)"
+                id="salary_min"
+                type="number"
+                setVal={(val) => setOffer({ ...offer, salary_min: val })}
+                val={salary_min}
                 required
-                incorrect="Podaj wymiar pracy np. staż,praca"
+                step={0.01}
+                length={{ min: 0, max: offer.salary_max * 1 - 1 }}
+                incorrect="Pole musi być mniejsze od maksymalnej stawki"
+              />
+              <FormGroup
+                header="Wynagrodzenie do (zł / miesiąc)"
+                id="salary_max"
+                type="number"
+                setVal={(val) => setOffer({ ...offer, salary_max: val })}
+                val={salary_max}
+                required
+                step={0.01}
+                length={{
+                  min: offer.salary_min * 1 + 1,
+                  max: 999999,
+                }}
+                incorrect="Pole musi być większe od minimalnej stawki"
               />
             </div>
             <div className="offerForm__wrapper">
@@ -209,7 +231,16 @@ const OfferForm = () => {
                 incorrect="Podaj branżę np. IT, marketing"
               />
               <FormGroup
-                header="Ważne do:"
+                header="Wymiar pracy"
+                id="type"
+                setVal={(val) => setOffer({ ...offer, type: val })}
+                val={type}
+                type="select"
+                array={arrays.types}
+                required
+              />
+              <FormGroup
+                header="Ważne do"
                 id="expiration_date"
                 type="date"
                 setVal={(val) => setOffer({ ...offer, expiration_date: val })}
@@ -222,6 +253,7 @@ const OfferForm = () => {
                 variant="primary"
                 type="submit"
                 className=""
+                data-testid="submitBtn"
                 disabled={disabled}
               >
                 {disabled ? "Ładowanie..." : "Dodaj"}

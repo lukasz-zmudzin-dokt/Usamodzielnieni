@@ -7,6 +7,7 @@ class LanguagesTab extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      smallFormValidated: false,
       newLanguage: {
         name: "",
         level: "podstawowy",
@@ -35,6 +36,8 @@ class LanguagesTab extends React.Component {
       newLanguage: { ...prevState.newLanguage, level },
     }));
   };
+  setSmallFormValidated = (value) =>
+    this.setState({ smallFormValidated: value });
 
   render() {
     const levels = ["podstawowy", "komunikatywny", "biegły"];
@@ -58,6 +61,8 @@ class LanguagesTab extends React.Component {
           clear={this.clear}
           validated={this.props.validated}
           required
+          smallFormValidated={this.state.smallFormValidated}
+          setSmallFormValidated={this.setSmallFormValidated}
         >
           <Row>
             <Form.Group as={Col} xs={12} md={6} controlId="languageName">

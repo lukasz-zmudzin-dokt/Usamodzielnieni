@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Bullet should render without crashing 1`] = `
+<div>
+  <div
+    class="bullet bullet--main"
+  >
+    <span>
+      Tytuł kroku
+    </span>
+  </div>
+</div>
+`;
+
+exports[`Bullet should render without crashing when step type is sub 1`] = `
+<div>
+  <div
+    class="bullet bullet--sub"
+  />
+  <div
+    class="bullet__title"
+  >
+    <span>
+      Tytuł kroku
+    </span>
+  </div>
+</div>
+`;

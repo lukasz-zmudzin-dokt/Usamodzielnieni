@@ -107,7 +107,7 @@ exports[`LanguagesTab should render without crashing 1`] = `
             id="saveButton"
             type="submit"
           >
-            Generuj CV
+            Zapisz zmiany i generuj CV
           </button>
         </form>
       </div>

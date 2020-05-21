@@ -50,7 +50,6 @@ exports[`photo tab tests should render without crashing 1`] = `
       >
         <button
           class="form_navigation_prev btn btn-primary btn-block"
-          disabled=""
           type="button"
         >
           ← Wstecz
@@ -67,7 +66,7 @@ exports[`photo tab tests should render without crashing 1`] = `
             id="saveButton"
             type="submit"
           >
-            Generuj CV
+            Zapisz zmiany i generuj CV
           </button>
         </form>
       </div>
