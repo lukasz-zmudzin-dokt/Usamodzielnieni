@@ -40,42 +40,62 @@
     min-height: calc(100vh - #{$nav-marginM});
   }
 }
+
 .tilesGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(26rem, 1fr));
-  @media (max-width: 500px) {
-    grid-template-columns: 1fr;
-  }
+  --tile-unit: calc((1vh + 0.56vw) / 2);
+  --tile-height: calc(50 * var(--tile-unit));
+  --tile-width: calc(0.75 * var(--tile-height));
+  --tiles-gap: calc(var(--tile-unit) / 2 + 0.3rem);
+  display: flex;
+  flex-wrap: wrap;
   width: 100%;
-  gap: 0.5rem;
-  margin: 0.5rem;
+  padding: var(--tiles-gap) 0 0 var(--tiles-gap);
+  background-color: #fff;
   .tile__container {
-    height: 0;
-    padding-bottom: 127%;
+    display: flex;
+    flex: 1 0 auto;
+    justify-content: center;
+    height: var(--tile-height);
+    min-width: var(--tile-width);
+    margin: 0 var(--tiles-gap) var(--tiles-gap) 0;
     position: relative;
+
     .tile {
       display: grid;
       grid-template:
-        "bg-top bg-top bg-top bg-top bg-top" 4rem
-        "bg-left border-left border-top border-right bg-right" 0.5rem
-        "bg-left border-left image border-right bg-right" 30fr
-        ". title title title ." 5rem
-        ". . . . ." 4rem / 4rem 0.5rem 30fr 0.5rem 4rem;
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      top: 0;
-      left: 0;
+        "bg-top bg-top bg-top" 1fr
+        "bg-left content bg-right" 8fr
+        ". . ." 1fr / 1fr 8fr 1fr;
+      height: var(--tile-height);
+      width: var(--tile-width);
+
+      .tile_content {
+        --ctn-border-size: calc(var(--tile-unit) / 2 + 0.3rem);
+        --ctn-title-size: calc(var(--tile-unit) * 3 + 2.5rem);
+        grid-area: content;
+        display: grid;
+        grid-template:
+          "border-left border-top border-right" var(--ctn-border-size)
+          "border-left image border-right" calc(0.8 * var(--tile-height) - var(--ctn-border-size) - var(--ctn-title-size))
+          "title title title" var(--ctn-title-size) / var(--ctn-border-size) 1fr var(--ctn-border-size);
+      }
 
       .tile__image {
+        --img-mg-top: calc(-0.09 * var(--tile-height));
+        --img-mg-sides: calc(-0.09 * var(--tile-width));
         grid-area: image;
-        margin: -2.5rem -2.5rem 0 -2.5rem;
+        margin: var(--img-mg-top) var(--img-mg-sides) 0;
         position: relative;
         display: flex;
-        align-items: end;
+        align-items: stretch;
         z-index: 2;
+        height: calc(100% - var(--img-mg-top));
+        width: calc(100% - 2 * var(--img-mg-sides));
         img {
           width: 100%;
+          object-fit: contain;
+          object-position: bottom;
+          transition: transform .2s ease;
         }
       }
       .tile_title {
@@ -83,6 +103,8 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        border: solid var(--ctn-border-size) #fff;
+        transition: background-color .2s ease;
         span {
           text-align: center;
         }
@@ -125,5 +147,24 @@
         }
       }
     }
+
+    &:hover {
+      .tile__image img {
+        transform: scale(1.05);
+      }
+      .tile_title {
+        color: initial;
+        background-color: rgb(228, 228, 228);
+        color: #000;
+      }
+    }
   }
 }
+
+// .tilesGrid {
+//   justify-content: center;
+//   .tile__container {
+//     flex: 0 0 auto;
+//     width: calc(0.75 * var(--tile-size));
+//   }
+// }

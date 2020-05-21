@@ -1,50 +1,43 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-const Tile = ({ title, showImage, imageUrl, color }) => {
+const Tile = ({ title, showImage, imageUrl, color, destination }) => {
+  const getClassNames = (name, position) =>
+    `tile__${name} tile__${name}--${position} ${
+      showImage[position] ? "tile__fragment--show" : ""
+    }`;
+  const positions = ["left", "top", "right"];
+
   return (
-    <div className="tile__container" style={{ backgroundColor: color }}>
+    <Link
+      to={destination}
+      className="tile__container"
+      style={{ backgroundColor: color }}
+    >
       <div className="tile">
-        <div
-          className={`tile__border tile__border--left ${
-            showImage.left ? "tile__fragment--show" : ""
-          }`}
-        ></div>
-        <div
-          style={{ backgroundColor: color }}
-          className={`tile__bg tile__bg--left ${
-            showImage.left ? "tile__fragment--show" : ""
-          }`}
-        ></div>
-        <div
-          className={`tile__border tile__border--top ${
-            showImage.top ? "tile__fragment--show" : ""
-          }`}
-        ></div>
-        <div
-          style={{ backgroundColor: color }}
-          className={`tile__bg tile__bg--top ${
-            showImage.top ? "tile__fragment--show" : ""
-          }`}
-        ></div>
-        <div
-          className={`tile__border tile__border--right ${
-            showImage.right ? "tile__fragment--show" : ""
-          }`}
-        ></div>
-        <div
-          style={{ backgroundColor: color }}
-          className={`tile__bg tile__bg--right ${
-            showImage.right ? "tile__fragment--show" : ""
-          }`}
-        ></div>
-        <div className="tile__image">
-          <img alt="" src={imageUrl} />
-        </div>
-        <div className="tile_title">
-          <span>{title}</span>
+        {positions.map((position) => (
+          <div
+            key={`bg_${position}`}
+            style={{ backgroundColor: color }}
+            className={getClassNames("bg", position)}
+          ></div>
+        ))}
+        <div className="tile_content">
+          {positions.map((position) => (
+            <div
+              key={`border_${position}`}
+              className={getClassNames("border", position)}
+            ></div>
+          ))}
+          <div className="tile__image">
+            <img alt="" src={imageUrl} />
+          </div>
+          <div className="tile_title">
+            <span>{title}</span>
+          </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 

@@ -10,6 +10,7 @@ const tmpTiles = [
     color: "lightblue",
     show: { left: true, top: true, right: true },
     imageUrl: "/warsztaty.png",
+    destination: "/login",
   },
   {
     id: "2",
@@ -17,6 +18,7 @@ const tmpTiles = [
     color: "beige",
     show: { left: true, top: true, right: true },
     imageUrl: "/zapytaj.png",
+    destination: "/login",
   },
   {
     id: "3",
@@ -24,6 +26,7 @@ const tmpTiles = [
     color: "coral",
     show: { top: true },
     imageUrl: "/zdrowie.png",
+    destination: "/login",
   },
   {
     id: "4",
@@ -31,6 +34,7 @@ const tmpTiles = [
     color: "cornflowerblue",
     show: { left: true, top: true, right: true },
     imageUrl: "/zapytaj.png",
+    destination: "/login",
   },
   {
     id: "5",
@@ -38,6 +42,7 @@ const tmpTiles = [
     color: "burlywood",
     show: { top: true },
     imageUrl: "/zdrowie.png",
+    destination: "/login",
   },
   {
     id: "6",
@@ -45,6 +50,55 @@ const tmpTiles = [
     color: "mediumpurple",
     show: { left: true, top: true, right: true },
     imageUrl: "/warsztaty.png",
+    destination: "/login",
+  },
+  {
+    id: "21",
+    title: "Telefon zaufania",
+    color: "lightblue",
+    show: { left: true, top: true, right: true },
+    imageUrl: "/warsztaty.png",
+    destination: "/login",
+  },
+  {
+    id: "22",
+    title: "Zapytaj",
+    color: "beige",
+    show: { left: true, top: true, right: true },
+    imageUrl: "/zapytaj.png",
+    destination: "/login",
+  },
+  {
+    id: "23",
+    title: "Warsztaty",
+    color: "coral",
+    show: { top: true },
+    imageUrl: "/zdrowie.png",
+    destination: "/login",
+  },
+  {
+    id: "24",
+    title: "Telefon zaufania",
+    color: "cornflowerblue",
+    show: { left: true, top: true, right: true },
+    imageUrl: "/zapytaj.png",
+    destination: "/login",
+  },
+  {
+    id: "25",
+    title: "Zapytaj",
+    color: "burlywood",
+    show: { top: true },
+    imageUrl: "/zdrowie.png",
+    destination: "/login",
+  },
+  {
+    id: "26",
+    title: "Warsztaty",
+    color: "mediumpurple",
+    show: { left: true, top: true, right: true },
+    imageUrl: "/warsztaty.png",
+    destination: "/login",
   },
 ];
 
@@ -73,8 +127,11 @@ const mapTiles = (tiles) =>
     color: tile.color,
     show: tile.show,
     imageUrl: tile.url,
+    destination: mapDestination(tile.destination),
     // TODO
   }));
+
+const mapDestination = (destination) => destination; // TODO
 
 const TilesContainer = () => {
   const [tiles, setTiles] = useState();
@@ -110,6 +167,7 @@ const TilesContainer = () => {
             imageUrl={tile.imageUrl}
             showImage={tile.show}
             title={tile.title}
+            destination={tile.destination}
           />
         ))}
       </div>
