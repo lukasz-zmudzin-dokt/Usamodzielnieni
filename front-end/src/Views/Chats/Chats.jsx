@@ -51,18 +51,18 @@ const Chats = () => {
 
   const user = useContext(UserContext);
 
-  const CustomFAB = () => {
-    const icon = "+";
-    return (
-      <div className={"floating-menu"}>
-        <div className="floating-menu-item" onClick={() => handleShow()}> {/* nie wiem czemu ale zrobienie tak zamiast*/}
-          <div className="floating-menu-icon">                            {/*onclick={handleShow()} rozwiązuje problem z ciągłym klikaniem*/}
-            <div className="floating-menu-text">{icon}</div>
-          </div>
-        </div>
-      </div >
-    );
-  };
+  // const CustomFAB = () => {
+  //   const icon = "+";
+  //   return (
+  //     <div className={"floating-menu"}>
+  //       <div className="floating-menu-item" onClick={() => handleShow()}> {/* nie wiem czemu ale zrobienie tak zamiast*/}
+  //         <div className="floating-menu-icon">                            {/*onclick={handleShow()} rozwiązuje problem z ciągłym klikaniem*/}
+  //           <div className="floating-menu-text">{icon}</div>
+  //         </div>
+  //       </div>
+  //     </div >
+  //   );
+  // };
 
   useEffect(() => {
     const loadChats = async (token) => {
@@ -94,9 +94,10 @@ const Chats = () => {
       <Card>
         <Card.Header as="h2">Najnowsze wiadomości</Card.Header>
         <Card.Body>
-          <CustomFAB
-            style
-          />
+          {/* <CustomFAB /> */}
+          <Button className="float-right" variant="primary" onClick={handleShow}>
+            Nowa wiadomość
+          </Button>
         </Card.Body>
         {msg ? (
           <Card.Body className="chats__body">{msg}</Card.Body>
