@@ -3,6 +3,7 @@ import { Button, Card } from "react-bootstrap";
 import {DeletionModal} from "components";
 import {userTypes} from "constants/userTypes";
 import proxy from "config/api";
+import {staffTypes} from "constants/staffTypes";
 
 const copyToClipboard = (text, setCopied) => {
   setCopied(true);
@@ -37,9 +38,10 @@ const PhoneCard = ({ contact, user, cutItem, alertC }) => {
 
   const handleDeletion = async () => {
     try {
-      await deleteCard(contact.id, user.token);
+      const id = contact.id;
+      await deleteCard(id, user.token);
       alertC.showAlert("Pomyślnie usunięto kartę kontaktu.", "success");
-      cutItem(contact.id);
+      cutItem(id);
     } catch(e) {
       console.log(e);
       if (e === 404) {
@@ -51,30 +53,28 @@ const PhoneCard = ({ contact, user, cutItem, alertC }) => {
   };
 
   return (
-    <Card bg="primary" text="light" className="my-3">
+    <Card bg="outline-primary" text="dark" className="my-3">
       <Card.Body>
-        <Card.Title className="d-flex justify-content-between">
-          {contact.name}
+        <Card.Title className="d-flex justify-content-between" as="h2">
+          {contact.phone}
           {
-            user?.type === userTypes.STAFF ? (
-                <Button size="sm" variant="danger" onClick={e => setShow(true)}>
-                  X
+            user?.type === userTypes.STAFF && user.data.group_type.includes(staffTypes.BLOG_MODERATOR) ? (
+                <Button size="sm" variant="light" onClick={e => setShow(true)}>
+                    X
                 </Button>
             ) : null
           }
         </Card.Title>
-        <Card.Text>{contact.phone}</Card.Text>
-      </Card.Body>
-      <Card.Footer>
+        <Card.Text>{contact.name}</Card.Text>
         <Button
-          variant="light"
-          block
-          size="sm"
-          onClick={(e) => copyToClipboard(contact.number, setCopied)}
+            variant="primary"
+            block
+            size="sm"
+            onClick={(e) => copyToClipboard(contact.phone, setCopied)}
         >
           {copied ? "Skopiowano" : "Skopiuj ten numer"}
         </Button>
-      </Card.Footer>
+      </Card.Body>
       {
         show ? (
             <DeletionModal

@@ -6,6 +6,7 @@ import {withAlertContext} from "components";
 import {userTypes} from "constants/userTypes";
 import {showNewContactForm} from "./components/NewContact";
 import proxy from "config/api";
+import {staffTypes} from "constants/staffTypes";
 
 class ContactPage extends React.Component {
   constructor(props) {
@@ -90,10 +91,10 @@ class ContactPage extends React.Component {
   };
 
   cutPhone = (contactId) => {
-    const list = this.state.phoneList;
+    let list = this.state.phoneList;
     const idx = list.findIndex(item => item.id === contactId);
     if (idx !== -1) {
-      list.slice(idx, 1);
+      list.splice(idx, 1);
       this.setState({
         phoneList: list
       });
@@ -102,33 +103,6 @@ class ContactPage extends React.Component {
 
   render() {
     const {handleClick, displayModal} = this;
-    const phoneList = [
-      {
-        id: 1,
-        name: "Telefon Zaufania Dla Dzieci i Młodzieży",
-        phone: "116 111",
-      },
-      {
-        id: 2,
-        name: "Telefon Zaufania dla Osób Dorosłych w Kryzysie Emocjonalnym",
-        phone: "116 123",
-      },
-      {
-        id: 3,
-        name: 'Ogólnopolski Telefon Zaufania "Narkotyki – Narkomania"',
-        phone: "801 199 990",
-      },
-      {
-        id: 4,
-        name: 'Telefon Zaufania "Uzależnienia behawioralne"',
-        phone: "801 889 880",
-      },
-      {
-        id: 5,
-        name: "Linia wsparcia dla osób w stanie kryzysu psychicznego",
-        phone: "800 70 22 22",
-      },
-    ];
 
     return this.state.loading ? (
         <Card.Body>
@@ -143,7 +117,7 @@ class ContactPage extends React.Component {
           </Card.Header>
           <Card.Body className="bg_card">
             {
-              this.context.type && this.context.type === userTypes.STAFF ? (
+              this.context.type && this.context.type === userTypes.STAFF && this.context.data.group_type.includes(staffTypes.BLOG_MODERATOR) ? (
                   <Button variant="primary" className="mb-3" onClick={handleClick}>Dodaj kontakt</Button>
               ) : null
             }
