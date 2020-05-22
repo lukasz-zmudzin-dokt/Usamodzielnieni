@@ -2,7 +2,6 @@ import React from "react";
 import { Card, Button } from "react-bootstrap";
 
 const StepInfo = ({ step, setCurrent, wantsDelete }) => {
-
   return (
     <Card className="stepInfo">
       <Card.Body>
@@ -18,7 +17,9 @@ const StepInfo = ({ step, setCurrent, wantsDelete }) => {
           </Button>
         ))}
       </Card.Body>
-      <Button variant="danger" onClick={() => wantsDelete(true)}>Usuń krok</Button>
+      <Button variant="danger" onClick={() => wantsDelete(true)}>
+        Usuń krok
+      </Button>
     </Card>
   );
 };
