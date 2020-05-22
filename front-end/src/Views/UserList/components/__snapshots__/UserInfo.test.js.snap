@@ -53,7 +53,7 @@ exports[`UserInfo should match snapshot 1`] = `
           <div
             class="detailsItem__value"
           >
-            NaN-NaNNaN
+            1589241600000_date_en-US_2_
           </div>
         </div>
         <div
@@ -71,12 +71,9 @@ exports[`UserInfo should match snapshot 1`] = `
           </div>
         </div>
       </div>
-      <a
-        class="btn btn-primary"
-        href="/chats/1"
-      >
-        Wyślij wiadomość
-      </a>
+      <div>
+        ButtonsContainer
+      </div>
     </div>
   </div>
 </div>
