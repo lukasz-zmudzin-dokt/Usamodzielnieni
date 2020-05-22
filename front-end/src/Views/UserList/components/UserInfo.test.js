@@ -33,7 +33,7 @@ describe("UserInfo", () => {
     user: {
       id: 1,
       username: "user1",
-      date_joined: "2020-05-12",
+      dateJoined: new Date("2020-05-12"),
       email: "qwe@qwe.qwe",
       type: userTypes.STANDARD,
       status: userStatuses.VERIFIED,

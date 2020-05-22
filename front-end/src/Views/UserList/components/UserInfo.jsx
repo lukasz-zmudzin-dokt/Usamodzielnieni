@@ -3,13 +3,6 @@ import { Col, Row } from "react-bootstrap";
 import DetailsItem from "components/DetailsItem/DetailsItem";
 import ButtonsContainer from "./ButtonsContainer";
 
-const formatDate = (dateString) => {
-  const joined = new Date(dateString);
-  return (
-    joined.getDate() + "-" + (joined.getMonth() + 1) + -+joined.getFullYear()
-  );
-};
-
 const UserInfo = ({
   user,
   setUser,
@@ -29,7 +22,7 @@ const UserInfo = ({
           {mapType(user.type)}
         </DetailsItem>
         <DetailsItem md="4" xl="3" label="Data rejestracji">
-          {formatDate(user.dateJoined)}
+          {user.dateJoined.toLocaleDateString?.()}
         </DetailsItem>
         <DetailsItem md="4" xl="3" label="Status">
           {mapStatus(user.status)}

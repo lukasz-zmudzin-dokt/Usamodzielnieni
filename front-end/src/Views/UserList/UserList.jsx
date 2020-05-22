@@ -46,7 +46,7 @@ const UserList = () => {
         username: user.username,
         status: user.status,
         type: user.type,
-        dateJoined: user.date_joined,
+        dateJoined: new Date(user.date_joined),
         lastLogin: user.last_login,
       }));
     };

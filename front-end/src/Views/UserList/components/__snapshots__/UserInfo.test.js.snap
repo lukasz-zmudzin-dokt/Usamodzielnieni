@@ -53,7 +53,7 @@ exports[`UserInfo should match snapshot 1`] = `
           <div
             class="detailsItem__value"
           >
-            NaN-NaNNaN
+            5/12/2020
           </div>
         </div>
         <div
