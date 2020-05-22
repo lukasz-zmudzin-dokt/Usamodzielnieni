@@ -1,8 +1,15 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { Container, Card, ListGroup, Alert, Modal, Button } from 'react-bootstrap';
-import { UserContext } from 'context';
-import proxy from 'config/api';
-import { ChatInfo, ContactsModalContent } from './components';
+import React, { useState, useEffect, useContext } from "react";
+import {
+  Container,
+  Card,
+  ListGroup,
+  Alert,
+  Modal,
+  Button,
+} from "react-bootstrap";
+import { UserContext } from "context";
+import proxy from "config/api";
+import { ChatInfo, ContactsModalContent } from "./components";
 import "./style.css";
 //import { ChatForm } from 'components';
 
@@ -52,16 +59,17 @@ const Chats = () => {
       } else {
         handleClose();
       }
-    }
+    };
     return (
       <div className={"floating-menu"} onClick={handleClick()}>
-        <div className="floating-menu-item" >
-          <div className="floating-menu-icon"><div className="floating-menu-text">{icon}</div></div>
+        <div className="floating-menu-item">
+          <div className="floating-menu-icon">
+            <div className="floating-menu-text">{icon}</div>
+          </div>
         </div>
       </div>
-
-    )
-  }
+    );
+  };
 
   useEffect(() => {
     const loadChats = async (token) => {
@@ -85,8 +93,8 @@ const Chats = () => {
   ) : isChatsLoading ? (
     <Alert variant="info">Ładowanie wiadomości...</Alert>
   ) : (
-        chats.length === 0 && <Alert variant="info">Brak wiadomości.</Alert>
-      );
+    chats.length === 0 && <Alert variant="info">Brak wiadomości.</Alert>
+  );
 
   return (
     <Container>
@@ -95,7 +103,9 @@ const Chats = () => {
         <Card.Body>
           <CustomFAB />
         </Card.Body>
-        {msg ? <Card.Body className="chats__body">{msg}</Card.Body> : (
+        {msg ? (
+          <Card.Body className="chats__body">{msg}</Card.Body>
+        ) : (
           <ListGroup variant="flush">
             {chats.map((chat) => (
               <ListGroup.Item key={chat.id}>
@@ -105,7 +115,12 @@ const Chats = () => {
           </ListGroup>
         )}
       </Card>
-      <Modal show={show} onHide={handleClose} dialogClassName="newmsg-modal" scrollable="true">
+      <Modal
+        show={show}
+        onHide={handleClose}
+        dialogClassName="newmsg-modal"
+        scrollable="true"
+      >
         <Modal.Header closeButton>
           <Modal.Title>Wybierz osobę</Modal.Title>
         </Modal.Header>
