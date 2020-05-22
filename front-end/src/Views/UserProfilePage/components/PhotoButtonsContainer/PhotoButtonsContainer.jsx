@@ -1,12 +1,15 @@
-import React from "react";
-import { Button, ButtonGroup } from "react-bootstrap";
+import React, { useContext } from "react";
+import { ButtonGroup } from "react-bootstrap";
+import { ChangePhotoButton, DeletePhotoButton } from "../";
+import { UserContext } from "context";
 
 const PhotoButtonsContainer = () => {
+  const user = useContext(UserContext);
+
   return (
     <ButtonGroup size="sm">
-      <Button>Left</Button>
-      <Button>Middle</Button>
-      <Button>Right</Button>
+      <ChangePhotoButton user={user} />
+      <DeletePhotoButton user={user} />
     </ButtonGroup>
   );
 };

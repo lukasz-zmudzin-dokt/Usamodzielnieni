@@ -10,6 +10,9 @@ import { default as UserIcon } from "./UserIcon/UserIcon";
 import { default as UserProperty } from "./UserProperty/UserProperty";
 import { default as ButtonsContainer } from "./ButtonsContainer/ButtonsContainer";
 import { default as UserListButton } from "./UserListButton/UserListButton";
+import { default as PhotoButtonsContainer } from "./PhotoButtonsContainer/PhotoButtonsContainer";
+import { default as DeletePhotoButton } from "./DeletePhotoButton/DeletePhotoButton";
+import { default as ChangePhotoButton } from "./ChangePhotoButton/ChangePhotoButton";
 
 export {
   AdminApproveUserButton,
@@ -24,4 +27,7 @@ export {
   UserProperty,
   ButtonsContainer,
   UserListButton,
+  PhotoButtonsContainer,
+  DeletePhotoButton,
+  ChangePhotoButton,
 };
