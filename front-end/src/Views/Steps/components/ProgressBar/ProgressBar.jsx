@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { ProgressBarFragment } from "../";
 import proxy from "config/api";
 import { Alert } from "react-bootstrap";
-import {}
+import {deleteStep, findParents} from "../../functions/deleteStep";
 
 const tmpSteps = [
   {
@@ -51,6 +51,7 @@ const tmpSteps = [
     type: "sub",
     title: "Tytuł podkroku 3.1",
     value: "Opis kroku 3.1 wraz z filmikami.",
+    next: [],
   },
 ];
 
@@ -82,10 +83,12 @@ const mapSteps = (steps) =>
   }));
 
 const ProgressBar = () => {
-  const [steps, setSteps] = useState();
-  const [path, setPath] = useState(["1"]);
+  const [steps, setSteps] = useState(tmpSteps);
+  //const [path, setPath] = useState(["1"]);
+  const [path, setPath] = useState([]);
   const [error, setError] = useState(false);
-
+  const [wantsDelete, setWantsDelete] = useState(false);
+/*
   useEffect(() => {
     const loadSteps = async () => {
       let res;
@@ -101,7 +104,7 @@ const ProgressBar = () => {
 
     loadSteps();
   }, []);
-
+*/
   const setCurrent = (id) => {
     const index = path.indexOf(id);
 
@@ -120,6 +123,25 @@ const ProgressBar = () => {
     !steps && <Alert variant="info">Ładowanie...</Alert>
   );
 
+  if(wantsDelete) {
+    let step = steps.find(s => s.id === path[path.length - 1]);
+    deleteStep(steps, step, setSteps);
+    setWantsDelete(false);
+    let newPath = path;
+    newPath.pop();
+    setPath(newPath);
+  }
+
+  if(path.length === 0) {
+    steps.forEach(step => {
+        if(findParents(steps, step).length === 0) {
+            let newPath = [];
+            newPath.push(step.id);
+            setPath(newPath);
+        }
+    });
+  }
+
   return (
     msg || (
       <div>
@@ -129,6 +151,7 @@ const ProgressBar = () => {
             step={steps.find((step) => step.id === stepId)}
             current={path.length - 1 === i}
             setCurrent={setCurrent}
+            wantsDelete={setWantsDelete}
           />
         ))}
         {steps.find((step) => step.id === path[path.length - 1])?.next && (
