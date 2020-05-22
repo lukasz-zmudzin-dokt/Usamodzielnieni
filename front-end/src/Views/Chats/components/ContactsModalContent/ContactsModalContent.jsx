@@ -67,7 +67,7 @@ const ContactsModalContent = () => {
         <ListGroup variant="flush">
           {contacts.map((contact) => (
             <ListGroup.Item key={contact.id}>
-              <Contact contact={contact} />
+              <Contact first_name={contact.first_name} id={contact.id} />
             </ListGroup.Item>
           ))}
         </ListGroup>
