@@ -52,6 +52,9 @@ exports[`MessagesList should match snapshot 1`] = `
           </div>
         </div>
       </div>
+      <div>
+        ChatForm
+      </div>
     </div>
   </div>
 </div>

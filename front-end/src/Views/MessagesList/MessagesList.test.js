@@ -4,7 +4,9 @@ import MessagesList from "Views/MessagesList";
 import { createMemoryHistory } from "history";
 import { Router } from "react-router-dom";
 import { AlertContext } from "context";
+import { ChatForm } from "./components";
 
+jest.mock("./components");
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
   useParams: () => ({
@@ -67,6 +69,7 @@ describe("MessagesList", () => {
   beforeEach(() => {
     failFetch = false;
     jest.clearAllMocks();
+    ChatForm.mockImplementation(() => <div>ChatForm</div>);
   });
   it("should match snapshot", async () => {
     const { container } = renderWithRouter(<MessagesList />);

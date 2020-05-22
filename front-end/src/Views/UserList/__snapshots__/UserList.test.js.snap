@@ -134,6 +134,11 @@ exports[`UserList should match snapshot 1`] = `
               >
                 Pracodawca
               </option>
+              <option
+                value="specialist"
+              >
+                Specjalista
+              </option>
             </select>
           </div>
         </div>

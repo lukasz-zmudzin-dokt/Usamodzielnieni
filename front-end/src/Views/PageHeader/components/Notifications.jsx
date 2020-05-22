@@ -92,7 +92,7 @@ const Notifications = ({ location, token, ...rest }) => {
       setNotifications(loadedNotifications);
       setIsLoading(false);
     };
-    // loadNotifications(token);
+    loadNotifications(token);
   }, [token]);
 
   const toRemove = notifications.filter(

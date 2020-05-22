@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { fireEvent, render, waitForElement } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import UserDetails from "./UserDetails";
@@ -87,17 +87,6 @@ describe("UserDetails", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     failFetch = false;
-  });
-
-  it("should match snapshot - no one", async () => {
-    fetchUserType = userTypes.STANDARD;
-    const { container, getByText } = render(
-      <MemoryRouter>
-        <UserDetails users={[user.standard]} activeUser={""} />
-      </MemoryRouter>
-    );
-    await waitForElement(() => getByText("standard0 (Standard)"));
-    expect(container).toMatchSnapshot();
   });
 
   it("should match snapshot - standard", async () => {
