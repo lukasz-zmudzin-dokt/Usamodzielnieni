@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ButtonsContainer should not render block and delete buttons when user type is staff 1`] = `
+<div>
+  <div
+    class="buttonsContainer"
+  >
+    <a
+      class="btn btn-primary"
+      href="/chats/1"
+    >
+      Wyślij wiadomość
+    </a>
+  </div>
+</div>
+`;
+
+exports[`ButtonsContainer should render unblock buttons when user status is blocked 1`] = `
+<div>
+  <div
+    class="buttonsContainer"
+  >
+    <button
+      class="btn btn-primary"
+      disabled=""
+      type="button"
+    >
+      Wyślij wiadomość
+    </button>
+    <button>
+      UnblockAccountButton
+    </button>
+    <button
+      disabled=""
+    >
+      DeleteAccountButton
+    </button>
+  </div>
+</div>
+`;
+
+exports[`ButtonsContainer should render without crashing 1`] = `
+<div>
+  <div
+    class="buttonsContainer"
+  >
+    <a
+      class="btn btn-primary"
+      href="/chats/1"
+    >
+      Wyślij wiadomość
+    </a>
+    <button>
+      BlockAccountButton
+    </button>
+    <button>
+      DeleteAccountButton
+    </button>
+  </div>
+</div>
+`;
