@@ -50,7 +50,7 @@ const tmpSteps = [
     type: "sub",
     title: "Tytuł podkroku 3.1",
     description: "Opis kroku 3.1 wraz z filmikami.",
-    next: [{id: "1", choiceName: "początek"}]
+    next: [{ id: "1", choiceName: "początek" }],
   },
 ];
 
