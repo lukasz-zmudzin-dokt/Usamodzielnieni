@@ -1,17 +1,10 @@
-<<<<<<< HEAD
-import React, { useState, useEffect, useContext, Fab } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Container, Card, ListGroup, Alert, Modal, Button } from 'react-bootstrap';
 import { UserContext } from 'context';
 import proxy from 'config/api';
 import { ChatInfo, ContactsModalContent } from './components';
+import "./style.css";
 //import { ChatForm } from 'components';
-=======
-import React, { useState, useEffect, useContext } from "react";
-import { Container, Card, ListGroup, Alert } from "react-bootstrap";
-import { UserContext } from "context";
-import proxy from "config/api";
-import { ChatInfo } from "./components";
->>>>>>> master
 
 const getChats = async (token) => {
   let url = `${proxy.chat}/list`; // TODO
@@ -47,8 +40,28 @@ const Chats = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-
   const user = useContext(UserContext);
+
+  const CustomFAB = () => {
+    const icon = "+";
+    const [clicked, setClicked] = useState(false);
+    const handleClick = () => {
+      setClicked(!clicked);
+      if (clicked) {
+        handleShow();
+      } else {
+        handleClose();
+      }
+    }
+    return (
+      <div className={"floating-menu"} onClick={handleClick()}>
+        <div className="floating-menu-item" >
+          <div className="floating-menu-icon"><div className="floating-menu-text">{icon}</div></div>
+        </div>
+      </div>
+
+    )
+  }
 
   useEffect(() => {
     const loadChats = async (token) => {
@@ -67,36 +80,22 @@ const Chats = () => {
     loadChats(user.token);
   }, [user.token]);
 
-<<<<<<< HEAD
-  const msg = error ? <Alert variant="danger">Wystąpił błąd podczas ładowania wiadomości.</Alert> :
-    isChatsLoading ? <Alert variant="info">Ładowanie wiadomości...</Alert> :
-      chats.length === 0 && <Alert variant="info">Brak wiadomości.</Alert>;
-=======
   const msg = error ? (
     <Alert variant="danger">Wystąpił błąd podczas ładowania wiadomości.</Alert>
   ) : isChatsLoading ? (
     <Alert variant="info">Ładowanie wiadomości...</Alert>
   ) : (
-    chats.length === 0 && <Alert variant="info">Brak wiadomości.</Alert>
-  );
->>>>>>> master
+        chats.length === 0 && <Alert variant="info">Brak wiadomości.</Alert>
+      );
 
   return (
     <Container>
       <Card>
         <Card.Header as="h2">Najnowsze wiadomości</Card.Header>
-<<<<<<< HEAD
         <Card.Body>
-          <Button variant="primary" onClick={handleShow}>
-            Nowa wiadomość
-          </Button>
+          <CustomFAB />
         </Card.Body>
         {msg ? <Card.Body className="chats__body">{msg}</Card.Body> : (
-=======
-        {msg ? (
-          <Card.Body className="chats__body">{msg}</Card.Body>
-        ) : (
->>>>>>> master
           <ListGroup variant="flush">
             {chats.map((chat) => (
               <ListGroup.Item key={chat.id}>
