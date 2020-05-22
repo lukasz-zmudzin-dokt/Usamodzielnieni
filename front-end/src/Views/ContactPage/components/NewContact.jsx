@@ -12,19 +12,18 @@ const submitContact = async (data, token) => {
         "Content-Type": "application/json"
     };
 
-    const res = await fetch(url, { method: "POST", headers });
+    const res = await fetch(url, { method: "POST", headers, body: JSON.stringify(data) });
 
     if (res.status === 201) {
-        return res.status;
+        return await res.json();
     } else {
         throw res.status;
     }
 };
 
-const NewContact = ({user, show, setShow, setContacts}) => {
+const NewContact = ({user, show, setShow, setContacts, alertC}) => {
     const [phone, setPhone] = useState("");
     const [name, setName] = useState("");
-    const alertC = useRef(useContext(AlertContext));
 
     const handleSubmit = async(event) => {
         event.preventDefault();
@@ -36,24 +35,30 @@ const NewContact = ({user, show, setShow, setContacts}) => {
                 phone_number: phone
             };
             try {
-                await submitContact(data, user.token);
-                alertC.current.showAlert("Pomyślnie dodano kontakt");
-                setContacts(data);
+                let res = await submitContact(data, user.token);
+                alertC.showAlert("Pomyślnie dodano kontakt", "success");
+                //backend nie zwraca id lol
+                console.log(res);
+                setContacts({
+                    id: res.id,
+                    name: name,
+                    phone: phone
+                });
                 setShow(false);
             } catch(e) {
                 console.log(e);
-                alertC.current.showAlert("Wystąpił błąd podczas dodawania kontaktu.")
+                alertC.showAlert("Wystąpił błąd podczas dodawania kontaktu.")
             }
         }
     };
 
     return (
-        <Modal show={show} onHide={setShow(false)}>
-            <Modal.Header>
+        <Modal show={show} onHide={e => setShow(false)}>
+            <Modal.Header closeButton>
                 <Modal.Title>Nowy kontakt</Modal.Title>
             </Modal.Header>
-            <Modal.Body>
-                <Form onSubmit={handleSubmit} >
+            <Form onSubmit={handleSubmit} >
+                <Modal.Body>
                     <FormGroup
                         header="Nazwa kontaktu"
                         setVal={setName}
@@ -72,11 +77,23 @@ const NewContact = ({user, show, setShow, setContacts}) => {
                         incorrect="Podaj telefon kontaktowy"
                         length={{ min: 1, max: 120 }}
                     />
-                </Form>
-            </Modal.Body>
-            <Modal.Footer>
-                <Button variant="primary" type="submit">Dodaj</Button>
-            </Modal.Footer>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="primary" type="submit">Dodaj</Button>
+                </Modal.Footer>
+            </Form>
         </Modal>
+    )
+};
+
+export const showNewContactForm = (show, setShow, user, setContacts, alertC) => {
+    return (
+        <NewContact
+            user={user}
+            setContacts={setContacts}
+            setShow={setShow}
+            show={show}
+            alertC={alertC}
+        />
     )
 };

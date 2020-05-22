@@ -1,53 +1,168 @@
 import React from "react";
-import { Card, Container, CardColumns } from "react-bootstrap";
+import {Card, Container, CardColumns, Button, Alert} from "react-bootstrap";
 import PhoneCard from "./components/PhoneCard";
 import {UserContext} from "context/UserContext";
 import {withAlertContext} from "components";
+import {userTypes} from "constants/userTypes";
+import {showNewContactForm} from "./components/NewContact";
+import proxy from "config/api";
 
 class ContactPage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      modalShow: false,
+      phoneList: [],
+      loading: false
+    }
+  }
+
+  componentDidMount() {
+    this.setState({
+      loading: true
+    });
+    this.getContacts();
+  }
+
+  getContacts = async() => {
+    try {
+      const list = await this.loadData();
+      console.log("poszło");
+      const phoneList = list.map(item => ({
+        id: item.id,
+        name: item.title,
+        phone: item.phone_number
+      }));
+      this.setState({
+        phoneList: phoneList
+      });
+    } catch(e) {
+      console.log(e);
+      this.props.alertContext.showAlert("Wystąpił błąd podczas pobierania listy kontaktów.");
+    } finally {
+      this.setState({
+        loading: false
+      })
+    }
+  };
+
+  loadData = async () => {
+    const url = proxy.contact + "contacts/";
+    const res = await fetch(url, {method: "GET", headers: {
+      "Content-Type": "application/json"
+      }});
+
+    if (res.status === 200) {
+      return await res.json();
+    } else {
+      throw res.status;
+    }
+  };
+
+  displayModal = () => {
+    const toggleModal = (val) => {
+      this.setState({
+        modalShow: val
+      });
+    };
+
+    return this.state.modalShow ? showNewContactForm(
+        this.state.modalShow,
+        toggleModal,
+        this.context,
+        this.setPhoneList,
+        this.props.alertContext
+    ) : null;
+  };
+
+  handleClick = (e) => {
+    this.setState({
+      modalShow: true
+    });
+  };
+
+  setPhoneList = (contact) => {
+    let list = this.state.phoneList;
+    list.push(contact);
+    this.setState( {
+      phoneList: list
+    });
+  };
+
+  cutPhone = (contactId) => {
+    const list = this.state.phoneList;
+    const idx = list.findIndex(item => item.id === contactId);
+    if (idx !== -1) {
+      list.slice(idx, 1);
+      this.setState({
+        phoneList: list
+      });
+    }
+  };
+
   render() {
+    const {handleClick, displayModal} = this;
     const phoneList = [
       {
+        id: 1,
         name: "Telefon Zaufania Dla Dzieci i Młodzieży",
         phone: "116 111",
       },
       {
+        id: 2,
         name: "Telefon Zaufania dla Osób Dorosłych w Kryzysie Emocjonalnym",
         phone: "116 123",
       },
       {
+        id: 3,
         name: 'Ogólnopolski Telefon Zaufania "Narkotyki – Narkomania"',
         phone: "801 199 990",
       },
       {
+        id: 4,
         name: 'Telefon Zaufania "Uzależnienia behawioralne"',
         phone: "801 889 880",
       },
       {
+        id: 5,
         name: "Linia wsparcia dla osób w stanie kryzysu psychicznego",
         phone: "800 70 22 22",
       },
     ];
 
-    return (
+    return this.state.loading ? (
+        <Card.Body>
+          <Alert variant="info">Ładowanie...</Alert>
+        </Card.Body>
+    ) : (
       <Container>
+        {console.log(this.state)}
         <Card className="contact_page_card">
           <Card.Header as="h2" className="contact_page_title">
             Lista przydatnych telefonów
           </Card.Header>
           <Card.Body className="bg_card">
-            {}
+            {
+              this.context.type && this.context.type === userTypes.STAFF ? (
+                  <Button variant="primary" className="mb-3" onClick={handleClick}>Dodaj kontakt</Button>
+              ) : null
+            }
             <CardColumns>
-              {phoneList.map((contact) => (
+              {this.state.phoneList.length === 0 ?
+                <Alert variant="info">Brak kontaktów do wyświetlenia.</Alert> :
+                this.state.phoneList.map((contact) => (
                 <PhoneCard
                   key={contact.name + contact.phone}
-                  name={contact.name}
-                  number={contact.phone}
+                  contact={contact}
+                  cutItem={this.cutPhone}
+                  user={this.context}
+                  alertC={this.props.alertContext}
                 />
               ))}
             </CardColumns>
           </Card.Body>
         </Card>
+        {this.state.modalShow ? displayModal() : null}
       </Container>
     );
   }
