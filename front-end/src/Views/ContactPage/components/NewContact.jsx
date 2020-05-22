@@ -1,9 +1,8 @@
-import React, {useContext, useRef, useState} from "react";
+import React, {useState} from "react";
 import {Button, Modal} from "react-bootstrap";
 import {FormGroup} from "components";
 import Form from "react-bootstrap/Form";
 import proxy from "config/api";
-import {AlertContext} from "context/AlertContext";
 
 const submitContact = async (data, token) => {
     const url = proxy.contact + "contact/";
@@ -21,7 +20,7 @@ const submitContact = async (data, token) => {
     }
 };
 
-const NewContact = ({user, show, setShow, setContacts, alertC}) => {
+export const NewContact = ({user, show, setShow, setContacts, alertC}) => {
     const [phone, setPhone] = useState("");
     const [name, setName] = useState("");
 
@@ -37,8 +36,6 @@ const NewContact = ({user, show, setShow, setContacts, alertC}) => {
             try {
                 let res = await submitContact(data, user.token);
                 alertC.showAlert("Pomyślnie dodano kontakt", "success");
-                //backend nie zwraca id lol
-                console.log(res);
                 setContacts({
                     id: res.id,
                     name: name,
@@ -83,17 +80,5 @@ const NewContact = ({user, show, setShow, setContacts, alertC}) => {
                 </Modal.Footer>
             </Form>
         </Modal>
-    )
-};
-
-export const showNewContactForm = (show, setShow, user, setContacts, alertC) => {
-    return (
-        <NewContact
-            user={user}
-            setContacts={setContacts}
-            setShow={setShow}
-            show={show}
-            alertC={alertC}
-        />
     )
 };

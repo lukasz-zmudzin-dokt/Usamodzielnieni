@@ -4,7 +4,7 @@ import PhoneCard from "./components/PhoneCard";
 import {UserContext} from "context/UserContext";
 import {withAlertContext} from "components";
 import {userTypes} from "constants/userTypes";
-import {showNewContactForm} from "./components/NewContact";
+import {NewContact} from "./components/NewContact";
 import proxy from "config/api";
 import {staffTypes} from "constants/staffTypes";
 
@@ -60,20 +60,10 @@ class ContactPage extends React.Component {
     }
   };
 
-  displayModal = () => {
-    const toggleModal = (val) => {
-      this.setState({
-        modalShow: val
-      });
-    };
-
-    return this.state.modalShow ? showNewContactForm(
-        this.state.modalShow,
-        toggleModal,
-        this.context,
-        this.setPhoneList,
-        this.props.alertContext
-    ) : null;
+  toggleModal = (val) => {
+    this.setState({
+      modalShow: val
+    });
   };
 
   handleClick = (e) => {
@@ -102,7 +92,7 @@ class ContactPage extends React.Component {
   };
 
   render() {
-    const {handleClick, displayModal} = this;
+    const {handleClick} = this;
 
     return this.state.loading ? (
         <Card.Body>
@@ -110,7 +100,6 @@ class ContactPage extends React.Component {
         </Card.Body>
     ) : (
       <Container>
-        {console.log(this.state)}
         <Card className="contact_page_card">
           <Card.Header as="h2" className="contact_page_title">
             Lista przydatnych telefonów
@@ -138,7 +127,15 @@ class ContactPage extends React.Component {
             }
           </Card.Body>
         </Card>
-        {this.state.modalShow ? displayModal() : null}
+        {this.state.modalShow ? (
+            <NewContact
+                user={this.context}
+                setContacts={this.setPhoneList}
+                setShow={this.toggleModal}
+                show={this.state.modalShow}
+                alertC={this.props.alertContext}
+            />
+        ) : null}
       </Container>
     );
   }
