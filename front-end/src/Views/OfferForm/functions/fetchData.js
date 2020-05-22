@@ -53,7 +53,7 @@ const getSelects = async () => {
   return { categories, types };
 };
 
-const getOffer = async (id) => {
+const getOffer = async (token, id) => {
   const url = `${proxy.job}job-offer/${id}/`;
 
   const res = await fetch(url, {
@@ -61,6 +61,7 @@ const getOffer = async (id) => {
     headers: {
       "Content-Type": "application/json",
       Origin: null,
+      Authorization: "Token " + token,
     },
   });
   if (res.status !== 200) {

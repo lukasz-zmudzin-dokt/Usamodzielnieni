@@ -16,7 +16,7 @@ const CVCorrection = () => {
       let res;
       try {
         res = await getCV(id, token);
-        setURL(res);
+        setURL(res.url);
       } catch (err) {
         console.log(err);
         setMsg("Nie udało się pobrać CV.");

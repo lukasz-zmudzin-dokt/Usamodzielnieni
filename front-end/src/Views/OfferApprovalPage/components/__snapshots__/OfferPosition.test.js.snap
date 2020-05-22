@@ -104,7 +104,28 @@ exports[`OfferPosition should match snapshot 1`] = `
             <div
               class="detailsItem__value"
             >
-              2020-12-21
+              1608508800000_date_en-US_4_
+            </div>
+          </div>
+        </div>
+        <div
+          class="row"
+        >
+          <div
+            class="detailsItem col-xl-3 col-md-2"
+          >
+            <div
+              class="detailsItem__label"
+            >
+              Wynagrodzenie
+            </div>
+            <div
+              class="detailsItem__value"
+            >
+              1
+               zł - 
+              2137
+               zł
             </div>
           </div>
         </div>

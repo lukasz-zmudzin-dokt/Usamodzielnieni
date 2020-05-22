@@ -10,7 +10,7 @@ const showCV = async (e, token, cvId, alertC) => {
   e.preventDefault();
   try {
     const response = await getCVUrl(token, cvId);
-    let url = proxy.plain + response;
+    let url = proxy.plain + response.url;
     window.open(url, "_blank");
   } catch (response) {
     alertC.current.showAlert("Nie udało się pobrać CV.");

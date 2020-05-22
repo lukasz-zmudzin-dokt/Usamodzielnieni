@@ -75,7 +75,7 @@ class LoginPage extends React.Component {
           });
         }
       } catch (response) {
-        this.handleIncorrectResponse(response.status);
+        this.handleIncorrectResponse(response);
       }
     }
     this.setState({ disabled: false });
