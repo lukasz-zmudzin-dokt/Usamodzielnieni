@@ -142,27 +142,6 @@ exports[`JobOffersPage main component tests should render without crashing 1`] =
           >
             <label
               class="form-label"
-              for="pageSize"
-            >
-              Ilość ofert na stronie
-            </label>
-            <input
-              class="form-control"
-              data-testid="default"
-              id="pageSize"
-              max="100"
-              min="1"
-              placeholder="Ilość ofert na stronie"
-              step="1"
-              type="number"
-              value="10"
-            />
-          </div>
-          <div
-            class="form-group col-md-4 col-12"
-          >
-            <label
-              class="form-label"
               for="category"
             >
               Branża
@@ -211,20 +190,376 @@ exports[`JobOffersPage main component tests should render without crashing 1`] =
             </select>
           </div>
         </div>
+        <div
+          class="accordion"
+        >
+          <div
+            class="card"
+          >
+            <div
+              class="card-header"
+            >
+              <button
+                class="btn btn-link"
+                type="button"
+              >
+                <div
+                  class="m-0 card-title h5"
+                >
+                  Sortowanie
+                </div>
+              </button>
+            </div>
+            <div
+              class="collapse"
+            >
+              <div
+                class="card-body"
+              >
+                <div
+                  class="form-row"
+                >
+                  <div
+                    class="form-group col-md-3 col-12"
+                  >
+                    <label
+                      class="form-label"
+                      for="offer_name--sort"
+                    >
+                      Nazwa oferty
+                    </label>
+                    <div>
+                      <div
+                        class="form-check form-check-inline"
+                      >
+                        <input
+                          class="form-check-input"
+                          data-testid="checkUp-offer_name--sort"
+                          id="inline-checkbox-Nazwa oferty1"
+                          type="checkbox"
+                        />
+                        <label
+                          class="form-check-label"
+                          for="inline-checkbox-Nazwa oferty1"
+                          title=""
+                        >
+                          Rosnąco
+                        </label>
+                      </div>
+                      <div
+                        class="form-check form-check-inline"
+                      >
+                        <input
+                          class="form-check-input"
+                          data-testid="checkDown-offer_name--sort"
+                          id="inline-checkbox-Nazwa oferty2"
+                          type="checkbox"
+                        />
+                        <label
+                          class="form-check-label"
+                          for="inline-checkbox-Nazwa oferty2"
+                          title=""
+                        >
+                          Malejąco
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="form-group col-md-3 col-12"
+                  >
+                    <label
+                      class="form-label"
+                      for="category--sort"
+                    >
+                      Branża
+                    </label>
+                    <div>
+                      <div
+                        class="form-check form-check-inline"
+                      >
+                        <input
+                          class="form-check-input"
+                          data-testid="checkUp-category--sort"
+                          id="inline-checkbox-Branża1"
+                          type="checkbox"
+                        />
+                        <label
+                          class="form-check-label"
+                          for="inline-checkbox-Branża1"
+                          title=""
+                        >
+                          Rosnąco
+                        </label>
+                      </div>
+                      <div
+                        class="form-check form-check-inline"
+                      >
+                        <input
+                          class="form-check-input"
+                          data-testid="checkDown-category--sort"
+                          id="inline-checkbox-Branża2"
+                          type="checkbox"
+                        />
+                        <label
+                          class="form-check-label"
+                          for="inline-checkbox-Branża2"
+                          title=""
+                        >
+                          Malejąco
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="form-group col-md-3 col-12"
+                  >
+                    <label
+                      class="form-label"
+                      for="voivodeship--sort"
+                    >
+                      Województwo
+                    </label>
+                    <div>
+                      <div
+                        class="form-check form-check-inline"
+                      >
+                        <input
+                          class="form-check-input"
+                          data-testid="checkUp-voivodeship--sort"
+                          id="inline-checkbox-Województwo1"
+                          type="checkbox"
+                        />
+                        <label
+                          class="form-check-label"
+                          for="inline-checkbox-Województwo1"
+                          title=""
+                        >
+                          Rosnąco
+                        </label>
+                      </div>
+                      <div
+                        class="form-check form-check-inline"
+                      >
+                        <input
+                          class="form-check-input"
+                          data-testid="checkDown-voivodeship--sort"
+                          id="inline-checkbox-Województwo2"
+                          type="checkbox"
+                        />
+                        <label
+                          class="form-check-label"
+                          for="inline-checkbox-Województwo2"
+                          title=""
+                        >
+                          Malejąco
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="form-group col-md-3 col-12"
+                  >
+                    <label
+                      class="form-label"
+                      for="company_name--sort"
+                    >
+                      Nazwa firmy
+                    </label>
+                    <div>
+                      <div
+                        class="form-check form-check-inline"
+                      >
+                        <input
+                          class="form-check-input"
+                          data-testid="checkUp-company_name--sort"
+                          id="inline-checkbox-Nazwa firmy1"
+                          type="checkbox"
+                        />
+                        <label
+                          class="form-check-label"
+                          for="inline-checkbox-Nazwa firmy1"
+                          title=""
+                        >
+                          Rosnąco
+                        </label>
+                      </div>
+                      <div
+                        class="form-check form-check-inline"
+                      >
+                        <input
+                          class="form-check-input"
+                          data-testid="checkDown-company_name--sort"
+                          id="inline-checkbox-Nazwa firmy2"
+                          type="checkbox"
+                        />
+                        <label
+                          class="form-check-label"
+                          for="inline-checkbox-Nazwa firmy2"
+                          title=""
+                        >
+                          Malejąco
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="form-group col-md-3 col-12"
+                  >
+                    <label
+                      class="form-label"
+                      for="expiration_date--sort"
+                    >
+                      Okres ważności
+                    </label>
+                    <div>
+                      <div
+                        class="form-check form-check-inline"
+                      >
+                        <input
+                          class="form-check-input"
+                          data-testid="checkUp-expiration_date--sort"
+                          id="inline-checkbox-Okres ważności1"
+                          type="checkbox"
+                        />
+                        <label
+                          class="form-check-label"
+                          for="inline-checkbox-Okres ważności1"
+                          title=""
+                        >
+                          Rosnąco
+                        </label>
+                      </div>
+                      <div
+                        class="form-check form-check-inline"
+                      >
+                        <input
+                          class="form-check-input"
+                          data-testid="checkDown-expiration_date--sort"
+                          id="inline-checkbox-Okres ważności2"
+                          type="checkbox"
+                        />
+                        <label
+                          class="form-check-label"
+                          for="inline-checkbox-Okres ważności2"
+                          title=""
+                        >
+                          Malejąco
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="form-group col-md-3 col-12"
+                  >
+                    <label
+                      class="form-label"
+                      for="salary_min--sort"
+                    >
+                      Minimalne wynagrodzenie
+                    </label>
+                    <div>
+                      <div
+                        class="form-check form-check-inline"
+                      >
+                        <input
+                          class="form-check-input"
+                          data-testid="checkUp-salary_min--sort"
+                          id="inline-checkbox-Minimalne wynagrodzenie1"
+                          type="checkbox"
+                        />
+                        <label
+                          class="form-check-label"
+                          for="inline-checkbox-Minimalne wynagrodzenie1"
+                          title=""
+                        >
+                          Rosnąco
+                        </label>
+                      </div>
+                      <div
+                        class="form-check form-check-inline"
+                      >
+                        <input
+                          class="form-check-input"
+                          data-testid="checkDown-salary_min--sort"
+                          id="inline-checkbox-Minimalne wynagrodzenie2"
+                          type="checkbox"
+                        />
+                        <label
+                          class="form-check-label"
+                          for="inline-checkbox-Minimalne wynagrodzenie2"
+                          title=""
+                        >
+                          Malejąco
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="form-group col-md-3 col-12"
+                  >
+                    <label
+                      class="form-label"
+                      for="salary_max--sort"
+                    >
+                      Maksymalne wynagrodzenie
+                    </label>
+                    <div>
+                      <div
+                        class="form-check form-check-inline"
+                      >
+                        <input
+                          class="form-check-input"
+                          data-testid="checkUp-salary_max--sort"
+                          id="inline-checkbox-Maksymalne wynagrodzenie1"
+                          type="checkbox"
+                        />
+                        <label
+                          class="form-check-label"
+                          for="inline-checkbox-Maksymalne wynagrodzenie1"
+                          title=""
+                        >
+                          Rosnąco
+                        </label>
+                      </div>
+                      <div
+                        class="form-check form-check-inline"
+                      >
+                        <input
+                          class="form-check-input"
+                          data-testid="checkDown-salary_max--sort"
+                          id="inline-checkbox-Maksymalne wynagrodzenie2"
+                          type="checkbox"
+                        />
+                        <label
+                          class="form-check-label"
+                          for="inline-checkbox-Maksymalne wynagrodzenie2"
+                          title=""
+                        >
+                          Malejąco
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         <button
-          class="mr-3 btn btn-primary"
+          class="mr-3 mt-3 mb-3 btn btn-primary"
           type="submit"
         >
           Filtruj oferty
         </button>
         <button
-          class="mr-3 btn btn-outline-primary"
+          class="mr-3 mt-3 mb-3 btn btn-outline-primary"
           type="button"
         >
           Wyczyść filtry
         </button>
         <small
-          class="search__countText"
+          class="search__countText mr-3"
         >
           Ilość znalezionych ofert: 1
         </small>
@@ -286,7 +621,7 @@ exports[`JobOffersPage main component tests should render without crashing 1`] =
                   <div
                     class="detailsItem__value"
                   >
-                    2020-12-12
+                    1607731200000_date_en-US_4_
                   </div>
                 </div>
               </div>

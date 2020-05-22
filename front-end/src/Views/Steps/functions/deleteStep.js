@@ -7,7 +7,7 @@
             parents.forEach(parent => {
                 let stepPtr = parent.next.find(el => el.id === step.id);
                 parent.next.splice(parent.next.indexOf(stepPtr), 1);
-                if(next && !parent.next.map((n) => {return n.id}).includes(next.id)) {
+                if(next && !parent.next.map((n) => {return n.id}).includes(next.id) && next.id !== parent.id) {
                     parent.next.push(next);
                 }
             });
@@ -16,7 +16,7 @@
             let next = step.next.length > 0? step.next[0] : undefined;
             let stepPtr = parent.next.find(el => el.id === step.id);
             parent.next.splice(parent.next.indexOf(stepPtr), 1);
-            if(next && !parent.next.map((n) => {return n.id}).includes(next.id)) {
+            if(next && !parent.next.map((n) => {return n.id}).includes(next.id) && next.id !== parent.id) {
                 parent.next.push(next);
             }
         }

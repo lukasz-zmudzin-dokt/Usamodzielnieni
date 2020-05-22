@@ -61,7 +61,10 @@ const OfferPosition = ({ offer }) => {
               {offer.category}
             </DetailsItem>
             <DetailsItem md={4} xl={2} label="Data wygaśnięcia">
-              {offer.expiration_date}
+              {new Date(offer.expiration_date).toLocaleDateString(
+                undefined,
+                {}
+              )}
             </DetailsItem>
           </Row>
           <Row>

@@ -10,7 +10,7 @@ const tmpSteps = [
     type: "main",
     title:
       "Tytuł głównego kroku 1 123 123 123 123 123 123 123 123 123 123 123 123 ",
-    value: "Opis kroku 1 wraz z filmikami.",
+    description: "Opis kroku 1 wraz z filmikami.",
     next: [
       { id: "2", choiceName: "Tak" },
       { id: "5", choiceName: "Nie" },
@@ -21,7 +21,7 @@ const tmpSteps = [
     type: "main",
     title:
       "Tytuł głównego kroku 2 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123",
-    value: "Opis kroku 2 wraz z filmikami.",
+    description: "Opis kroku 2 wraz z filmikami.",
     next: [{ id: "3", choiceName: "Dalej" }],
   },
   {
@@ -29,29 +29,29 @@ const tmpSteps = [
     type: "sub",
     title:
       "Tytuł podkroku 2.1 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123",
-    value: "Opis kroku 2.1 wraz z filmikami.",
+    description: "Opis kroku 2.1 wraz z filmikami.",
     next: [{ id: "4", choiceName: "Dalej" }],
   },
   {
     id: "4",
     type: "sub",
     title: "Tytuł podkroku 2.2",
-    value: "Opis kroku 2.2 wraz z filmikami.",
+    description: "Opis kroku 2.2 wraz z filmikami.",
     next: [{ id: "5", choiceName: "Dalej" }],
   },
   {
     id: "5",
     type: "main",
     title: "Tytuł głównego kroku 3",
-    value: "Opis kroku 3 wraz z filmikami.",
+    description: "Opis kroku 3 wraz z filmikami.",
     next: [{ id: "6", choiceName: "Dalej" }],
   },
   {
     id: "6",
     type: "sub",
     title: "Tytuł podkroku 3.1",
-    value: "Opis kroku 3.1 wraz z filmikami.",
-    next: [],
+    description: "Opis kroku 3.1 wraz z filmikami.",
+    next: [{id: "1", choiceName: "początek"}]
   },
 ];
 
@@ -64,7 +64,7 @@ const getSteps = async () => {
   const response = await fetch(url, { method: "GET", headers });
 
   if (response.status !== 200) {
-    // return tmpSteps;
+    //return tmpSteps;
 
     // eslint-disable-next-line no-unreachable
     throw response.status;
@@ -84,8 +84,8 @@ const mapSteps = (steps) =>
 
 const ProgressBar = () => {
   const [steps, setSteps] = useState(tmpSteps);
-  //const [path, setPath] = useState(["1"]);
-  const [path, setPath] = useState([]);
+  const [path, setPath] = useState(["1"]);
+  //const [path, setPath] = useState([]);
   const [error, setError] = useState(false);
   const [wantsDelete, setWantsDelete] = useState(false);
 /*
@@ -131,7 +131,7 @@ const ProgressBar = () => {
     newPath.pop();
     setPath(newPath);
   }
-
+/*
   if(path.length === 0) {
     steps.forEach(step => {
         if(findParents(steps, step).length === 0) {
@@ -141,13 +141,14 @@ const ProgressBar = () => {
         }
     });
   }
-
+*/
   return (
     msg || (
       <div>
         {path.map((stepId, i) => (
           <ProgressBarFragment
             key={stepId}
+            index={i}
             step={steps.find((step) => step.id === stepId)}
             current={path.length - 1 === i}
             setCurrent={setCurrent}
