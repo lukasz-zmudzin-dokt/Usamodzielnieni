@@ -13,6 +13,7 @@ import { ChatInfo, ContactsModalContent } from "./components";
 import "./style.css";
 //import { ChatForm } from 'components';
 
+
 const getChats = async (token) => {
   let url = `${proxy.chat}/list`; // TODO
   const headers = {
@@ -47,27 +48,19 @@ const Chats = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+
   const user = useContext(UserContext);
 
   const CustomFAB = () => {
     const icon = "+";
-    const [clicked, setClicked] = useState(false);
-    const handleClick = () => {
-      setClicked(!clicked);
-      if (clicked) {
-        handleShow();
-      } else {
-        handleClose();
-      }
-    };
     return (
-      <div className={"floating-menu"} onClick={handleClick()}>
-        <div className="floating-menu-item">
-          <div className="floating-menu-icon">
+      <div className={"floating-menu"}>
+        <div className="floating-menu-item" onClick={() => handleShow()}> {/* nie wiem czemu ale zrobienie tak zamiast*/}
+          <div className="floating-menu-icon">                            {/*onclick={handleShow()} rozwiązuje problem z ciągłym klikaniem*/}
             <div className="floating-menu-text">{icon}</div>
           </div>
         </div>
-      </div>
+      </div >
     );
   };
 
@@ -93,27 +86,29 @@ const Chats = () => {
   ) : isChatsLoading ? (
     <Alert variant="info">Ładowanie wiadomości...</Alert>
   ) : (
-    chats.length === 0 && <Alert variant="info">Brak wiadomości.</Alert>
-  );
+        chats.length === 0 && <Alert variant="info">Brak wiadomości.</Alert>
+      );
 
   return (
     <Container>
       <Card>
         <Card.Header as="h2">Najnowsze wiadomości</Card.Header>
         <Card.Body>
-          <CustomFAB />
+          <CustomFAB
+            style
+          />
         </Card.Body>
         {msg ? (
           <Card.Body className="chats__body">{msg}</Card.Body>
         ) : (
-          <ListGroup variant="flush">
-            {chats.map((chat) => (
-              <ListGroup.Item key={chat.id}>
-                <ChatInfo chat={chat} />
-              </ListGroup.Item>
-            ))}
-          </ListGroup>
-        )}
+            <ListGroup variant="flush">
+              {chats.map((chat) => (
+                <ListGroup.Item key={chat.id}>
+                  <ChatInfo chat={chat} />
+                </ListGroup.Item>
+              ))}
+            </ListGroup>
+          )}
       </Card>
       <Modal
         show={show}
