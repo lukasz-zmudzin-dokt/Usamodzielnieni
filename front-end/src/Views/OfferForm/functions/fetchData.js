@@ -17,14 +17,13 @@ const sendData = async (offer, token, id) => {
   return res.status;
 };
 
-const getCategories = async (token) => {
+const getCategories = async () => {
   const urlCategories = proxy.job + "enums/categories";
   const res = await fetch(urlCategories, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
       Origin: null,
-      Authorization: `Token ${token}`,
     },
   });
   if (res.status !== 200) {
@@ -33,7 +32,7 @@ const getCategories = async (token) => {
   return res.json().then((res) => res.categories);
 };
 
-const getTypes = async (token) => {
+const getTypes = async () => {
   const urlTypes = proxy.job + "enums/types";
 
   const res = await fetch(urlTypes, {
@@ -41,7 +40,6 @@ const getTypes = async (token) => {
     headers: {
       "Content-Type": "application/json",
       Origin: null,
-      Authorization: `Token ${token}`,
     },
   });
   if (res.status !== 200) {
@@ -50,11 +48,8 @@ const getTypes = async (token) => {
   return res.json().then((res) => res.offer_types);
 };
 
-const getSelects = async (token) => {
-  const [categories, types] = await Promise.all([
-    getCategories(token),
-    getTypes(token),
-  ]);
+const getSelects = async () => {
+  const [categories, types] = await Promise.all([getCategories(), getTypes()]);
   return { categories, types };
 };
 
@@ -66,7 +61,7 @@ const getOffer = async (token, id) => {
     headers: {
       "Content-Type": "application/json",
       Origin: null,
-      Authorization: `Token ${token}`,
+      Authorization: "Token " + token,
     },
   });
   if (res.status !== 200) {

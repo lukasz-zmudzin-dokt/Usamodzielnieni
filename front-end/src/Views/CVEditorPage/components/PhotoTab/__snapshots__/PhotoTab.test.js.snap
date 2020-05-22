@@ -11,23 +11,37 @@ exports[`photo tab tests should render without crashing 1`] = `
       class="CVEditorTab__img"
       src="movie_1.png"
     />
-    <div
-      class="form-group"
+    <form
+      class=""
     >
-      <label
-        class="form-label"
-        for="photo"
+      <div
+        class="form-group"
       >
-        Wybierz zdjęcie:
-      </label>
-      <input
-        accept="image/*"
-        class="form-control-file"
-        id="photo"
-        name="photo"
-        type="file"
-      />
-    </div>
+        <label
+          class="form-label"
+          for="custom-file"
+        >
+          Zdjęcie:
+        </label>
+        <div
+          class="custom custom-file"
+        >
+          <input
+            accept="image/*"
+            class="custom-file-input"
+            id="custom-file"
+            type="file"
+          />
+          <label
+            class="custom-file-label"
+            data-browse="Dodaj"
+            for="custom-file"
+          >
+            Wybierz zdjęcie
+          </label>
+        </div>
+      </div>
+    </form>
     <div
       class="row"
     >
@@ -36,7 +50,6 @@ exports[`photo tab tests should render without crashing 1`] = `
       >
         <button
           class="form_navigation_prev btn btn-primary btn-block"
-          disabled=""
           type="button"
         >
           ← Wstecz
@@ -45,13 +58,17 @@ exports[`photo tab tests should render without crashing 1`] = `
       <div
         class="col-md-6 col-12"
       >
-        <button
-          class="btn btn-success btn-block"
-          id="saveButton"
-          type="submit"
+        <form
+          class=""
         >
-          Generuj CV
-        </button>
+          <button
+            class="btn btn-success btn-block"
+            id="saveButton"
+            type="submit"
+          >
+            Zapisz zmiany i generuj CV
+          </button>
+        </form>
       </div>
     </div>
   </div>

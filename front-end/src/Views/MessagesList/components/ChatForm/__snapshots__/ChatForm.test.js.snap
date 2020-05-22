@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`chat form tests should render without crashing 1`] = `
+<div>
+  <form
+    class=""
+  >
+    <div
+      class="mb-3 input-group"
+    >
+      <textarea
+        class="form-control"
+        placeholder="Aa"
+      />
+      <div
+        class="input-group-append"
+      >
+        <button
+          class="btn btn-light"
+          type="submit"
+        >
+          <img
+            alt="send message"
+            src="sendMessageIcon.svg"
+          />
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+`;

@@ -76,7 +76,7 @@ exports[`JobOfferDetails should render without crashing 1`] = `
               <div
                 class="detailsItem__value"
               >
-                2020-12-12
+                1607731200000_date_en-US_4_
               </div>
             </div>
             <div
@@ -102,6 +102,23 @@ exports[`JobOfferDetails should render without crashing 1`] = `
               <div
                 class="detailsItem__value"
               />
+            </div>
+            <div
+              class="detailsItem col-xl-4 col-md-6"
+            >
+              <div
+                class="detailsItem__label"
+              >
+                Wynagrodzenie
+              </div>
+              <div
+                class="detailsItem__value"
+              >
+                100000
+                 zł - 
+                123123
+                 zł
+              </div>
             </div>
           </div>
           <p>

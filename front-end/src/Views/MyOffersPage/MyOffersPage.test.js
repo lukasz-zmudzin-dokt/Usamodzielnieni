@@ -1,10 +1,14 @@
 import React from "react";
-import { render, waitForElement, fireEvent } from "@testing-library/react";
+import { render, waitForElement, wait } from "@testing-library/react";
 import MyOffersPage from "./MyOffersPage";
 import { MemoryRouter } from "react-router-dom";
+import { AlertContext } from "context";
 
 describe("MyOffers", () => {
   let fetchCheck;
+  let alertC = {
+    showAlert: jest.fn(),
+  };
   let apiOffers = [
     {
       category: "IT",
@@ -95,13 +99,15 @@ describe("MyOffers", () => {
   it("should view alert at api fail", async () => {
     fetchCheck = "fail";
     const { getByText } = render(
-      <MemoryRouter>
-        <MyOffersPage />
-      </MemoryRouter>
+      <AlertContext.Provider value={alertC}>
+        <MemoryRouter>
+          <MyOffersPage />
+        </MemoryRouter>
+      </AlertContext.Provider>
     );
 
-    await waitForElement(() => getByText("Ups, wystąpił błąd."));
-    expect(getByText("Ups, wystąpił błąd.")).toBeInTheDocument();
+    await waitForElement(() => getByText("Nie udało się załadować ofert."));
+    expect(getByText("Nie udało się załadować ofert.")).toBeInTheDocument();
   });
 
   it("should view alert at api returning no cvs", async () => {

@@ -1,0 +1,137 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Filters should render correctly 1`] = `
+<div>
+  <form
+    class="search__form"
+  >
+    <div
+      class="form-row"
+    >
+      <div
+        class="form-group col-md-6 col-12"
+      >
+        <label
+          class="form-label"
+          for="username"
+        >
+          Nazwa użytkownika
+        </label>
+        <input
+          class="form-control"
+          data-testid="default"
+          id="username"
+          maxlength="50"
+          minlength="1"
+          placeholder="Nazwa użytkownika"
+          type="text"
+          value=""
+        />
+      </div>
+      <div
+        class="form-group col-md-6 col-12"
+      >
+        <label
+          class="form-label"
+          for="email"
+        >
+          Email
+        </label>
+        <input
+          class="form-control"
+          data-testid="default"
+          id="email"
+          maxlength="50"
+          minlength="1"
+          placeholder="Email"
+          type="text"
+          value=""
+        />
+      </div>
+      <div
+        class="form-group col-md-6 col-12"
+      >
+        <label
+          class="form-label"
+          for="category"
+        >
+          Status:
+        </label>
+        <select
+          class="form-control"
+          id="category"
+          type="select"
+        >
+          <option
+            disabled=""
+          >
+            -- Wybierz --
+          </option>
+          <option
+            value="verified"
+          />
+          <option
+            value="rejected"
+          />
+          <option
+            value="waiting_for_verification"
+          />
+          <option
+            value="blocked"
+          />
+        </select>
+      </div>
+      <div
+        class="form-group col-md-6 col-12"
+      >
+        <label
+          class="form-label"
+          for="type"
+        >
+          Typ użytkownika:
+        </label>
+        <select
+          class="form-control"
+          id="type"
+          type="select"
+        >
+          <option
+            disabled=""
+          >
+            -- Wybierz --
+          </option>
+          <option
+            value="standard"
+          />
+          <option
+            value="staff"
+          />
+          <option
+            value="employer"
+          />
+          <option
+            value="specialist"
+          />
+        </select>
+      </div>
+    </div>
+    <button
+      class="mr-3 btn btn-primary"
+      type="submit"
+    >
+      Filtruj użytkowników
+    </button>
+    <button
+      class="mr-3 btn btn-outline-primary"
+      type="button"
+    >
+      Wyczyść filtry
+    </button>
+    <small
+      class="search__countText"
+    >
+      Liczba znalezionych użytkowników: 10
+    </small>
+  </form>
+</div>
+`;

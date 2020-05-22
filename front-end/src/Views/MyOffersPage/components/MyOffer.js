@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import {
   Accordion,
   Card,
@@ -8,7 +8,7 @@ import {
   Button,
 } from "react-bootstrap";
 import "Views/MyOffersPage/style.css";
-import { UserContext } from "context/UserContext";
+import { UserContext, AlertContext } from "context";
 import { getOfferPeople } from "../functions/apiCalls";
 import MyOfferPerson from "./MyOfferPerson";
 import { Link } from "react-router-dom";
@@ -17,7 +17,7 @@ const MyOffer = ({ offer, activeOffer, setActiveOffer }) => {
   const context = useContext(UserContext);
   const [people, setPeople] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const alertC = useRef(useContext(AlertContext));
 
   useEffect(() => {
     const loadOfferPeople = async (token, offerId) => {
@@ -28,7 +28,9 @@ const MyOffer = ({ offer, activeOffer, setActiveOffer }) => {
           setPeople(res);
         }
       } catch (err) {
-        setError(true);
+        alertC.current.showAlert(
+          "Ups, wystąpił błąd. Nie udało się załadować aplikujących do oferty."
+        );
       }
       setLoading(false);
     };
@@ -39,8 +41,6 @@ const MyOffer = ({ offer, activeOffer, setActiveOffer }) => {
 
   const message = loading ? (
     <Alert variant="info">Ładuję...</Alert>
-  ) : error ? (
-    <Alert variant="danger">Ups, wystąpił błąd...</Alert>
   ) : people.length === 0 ? (
     <Alert className="mb-0" variant="info">
       Brak zgłoszeń.

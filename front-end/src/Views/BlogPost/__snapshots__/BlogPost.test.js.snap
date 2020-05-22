@@ -9,6 +9,7 @@ exports[`BlogPost should match snapshot after loaded 1`] = `
       class="card"
     >
       <img
+        alt="Nagłówek posta"
         class="card-img-top"
         src="https://usamo-back.herokuapp.comundefined"
       />
@@ -26,16 +27,17 @@ exports[`BlogPost should match snapshot after loaded 1`] = `
               role="toolbar"
             >
               <button
-                class="button-edit mx-3 btn btn-warning"
+                class="button-edit mx-3 btn btn-info"
                 type="button"
               >
-                Edytuj 🖉
+                Edytuj post
               </button>
               <button
                 class="button-delete mx-3 btn btn-danger"
+                id="delete"
                 type="button"
               >
-                Usuń ✗
+                Usuń post
               </button>
             </div>
           </div>
@@ -46,15 +48,13 @@ exports[`BlogPost should match snapshot after loaded 1`] = `
           Kategoria: 
           qwe
         </h6>
-        <p
-          class="blog_content_text text-justify card-text"
+        <div
+          class="blog_content_text text-justify"
         >
           <div>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin nibh augue, suscipit a, scelerisque sed, lacinia in, mi. Cras vel lorem. Etiam pellentesque aliquet tellus. Phasellus pharetra nulla ac diam. Quisque semper justo at risus. Donec venenatis, turpis vel hendrerit interdum, dui ligula ultricies purus, sed posuere libero dui id orci. Nam congue, pede vitae dapibus aliquet, elit magna vulputate arcu, vel tempus metus leo non est. Etiam sit amet lectus quis est congue mollis. Phasellus congue lacus eget neque. Phasellus ornare, ante vitae consectetuer consequat, purus sapien ultricies dolor, et mollis pede metus eget nisi. Praesent sodales velit quis augue. Cras suscipit, urna at aliquam rhoncus, urna quam viverra nisi, in interdum massa nibh nec erat.
-            </p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin nibh augue, suscipit a, scelerisque sed, lacinia in, mi. Cras vel lorem. Etiam pellentesque aliquet tellus. Phasellus pharetra nulla ac diam. Quisque semper justo at risus. Donec venenatis, turpis vel hendrerit interdum, dui ligula ultricies purus, sed posuere libero dui id orci. Nam congue, pede vitae dapibus aliquet, elit magna vulputate arcu, vel tempus metus leo non est. Etiam sit amet lectus quis est congue mollis. Phasellus congue lacus eget neque. Phasellus ornare, ante vitae consectetuer consequat, purus sapien ultricies dolor, et mollis pede metus eget nisi. Praesent sodales velit quis augue. Cras suscipit, urna at aliquam rhoncus, urna quam viverra nisi, in interdum massa nibh nec erat.
           </div>
-        </p>
+        </div>
         <p
           class="post_taglist mt-5"
         >
@@ -90,12 +90,12 @@ exports[`BlogPost should match snapshot after loaded 1`] = `
             <div
               class="row"
             >
-              Autor: Jan Kowalski (jan@kowalski.pl)
+              Autor: jankowalski123
             </div>
             <div
               class="row"
             >
-              Opublikowano: 06.07.2019
+              Opublikowano: 07.06.2019
             </div>
           </div>
           <div
@@ -127,13 +127,13 @@ exports[`BlogPost should match snapshot after loaded 1`] = `
             <h5
               class="commentItem__header"
             >
-              Jan Nowak
+              jannowak
             </h5>
             <small
               class="commentItem__date"
             >
               dodano: 
-              Invalid Date
+              NaN_date_en-US_4_
             </small>
             <p
               class="commentItem__content"

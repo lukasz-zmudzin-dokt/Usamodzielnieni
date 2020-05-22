@@ -41,6 +41,13 @@ class AccountForm extends React.Component {
               minLength="6"
               maxLength="30"
             />
+            {!this.props.isAdmin ? (
+              <Form.Text className="text-muted">
+                Nazwa użytkownika będzie widoczna dla innych użytkowników przy
+                Twoich komentarzach. Twoje imię i nazwisko są widoczne tylko dla
+                pracowników i pracodawców.
+              </Form.Text>
+            ) : null}
             <Form.Control.Feedback type="invalid">
               Minimalna ilośc znaków: 6
             </Form.Control.Feedback>
@@ -49,15 +56,15 @@ class AccountForm extends React.Component {
             <Form.Control
               name="password"
               type="password"
-              placeholder="Hasło"
+              placeholder="Hasło (min. 8 znaków)"
               onChange={(e) => onChange(onBlur, data, e)}
               required
-              minLength="6"
+              minLength="8"
               maxLength="128"
             />
 
             <Form.Control.Feedback type="invalid">
-              Minimalna ilośc znaków: 6
+              Minimalna ilośc znaków: 8
             </Form.Control.Feedback>
           </Form.Group>
           <Form.Group controlId="formGroupPasswordRepeat">
@@ -67,11 +74,11 @@ class AccountForm extends React.Component {
               placeholder="Powtórz hasło"
               onChange={(e) => onChange(onBlur, data, e)}
               required
-              minLength="6"
+              minLength="8"
               maxLength="128"
             />
             <Form.Control.Feedback type="invalid">
-              Minimalna ilośc znaków: 6
+              Minimalna ilośc znaków: 8
             </Form.Control.Feedback>
           </Form.Group>
         </Card.Body>

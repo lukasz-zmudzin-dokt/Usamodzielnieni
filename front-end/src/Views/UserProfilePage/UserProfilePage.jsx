@@ -1,20 +1,16 @@
 import React from "react";
-import {Alert, Card, Container} from "react-bootstrap";
-import UserDetails from "Views/UserProfilePage/components/UserDetails";
-import UserBasicInfo from "Views/UserProfilePage/components/UserBasicInfo";
+import { Alert, Card, Container } from "react-bootstrap";
 import { UserContext } from "context";
 import { getUserData } from "Views/UserProfilePage/functions/getUserData.js";
-import AdminRegisterButton from "./components/AdminRegisterButton/AdminRegisterButton";
-import CVApprovalButton from "./components/CVApprovalButton/CVApprovalButton";
-import EmployerMyOffersButton from "./components/EmployerMyOffersButton/EmployerMyOffersButton";
-import AdminApproveUserButton from "./components/AdminApproveUserBuuton/AdminApproveUserButton";
-import AdminOfferApprovalButton from "./components/AdminOfferApprovalButton/AdminOfferApprovalButton";
+import { UserDetails, UserBasicInfo, ButtonsContainer } from "./components";
+import { userTypes } from "constants/userTypes";
+import { userStatuses } from "constants/userStatuses";
 
 const names = {
   role: {
     admin: "Administrator",
     employer: "Pracodawca",
-    common: "Podopieczny"
+    common: "Podopieczny",
   },
   property: {
     username: "Nazwa użytkownika",
@@ -22,8 +18,8 @@ const names = {
     firstName: "Imię",
     lastName: "Nazwisko",
     email: "E-mail",
-    phoneNumber: "Numer telefonu"
-  }
+    phoneNumber: "Numer telefonu",
+  },
 };
 
 class UserProfilePage extends React.Component {
@@ -35,15 +31,15 @@ class UserProfilePage extends React.Component {
         role: "",
         firstName: "",
         lastName: "",
-        email: ""
+        email: "",
       },
-      error: false
+      error: false,
     };
   }
 
   componentDidMount() {
     this.getData();
-  };
+  }
 
   getData = async () => {
     try {
@@ -54,14 +50,21 @@ class UserProfilePage extends React.Component {
           firstName: res.data.first_name,
           lastName: res.data.last_name,
           email: res.data.email,
-          role: res.type
-        }
+          role: res.type,
+        },
       });
     } catch (res) {
-      this.setState({error: true})
+      this.setState({ error: true });
     }
   };
 
+  setMessage = () => {
+    return (
+      this.state.error && (
+        <Alert variant="danger">Wystąpił błąd podczas pobierania</Alert>
+      )
+    );
+  };
 
   render() {
     return (
@@ -71,19 +74,24 @@ class UserProfilePage extends React.Component {
             <h3>Mój profil</h3>
           </Card.Header>
           <Card.Body>
-            <UserBasicInfo error={this.state.error} user={this.state.user} names={names} />
+            <UserBasicInfo
+              error={this.state.error}
+              user={this.state.user}
+              names={names}
+            />
           </Card.Body>
           <UserDetails user={this.state.user} names={names} />
           <Card.Body className="text-center">
-            <CVApprovalButton user={this.context} />
-            <EmployerMyOffersButton user={this.context} />
-            <AdminRegisterButton user={this.context} />
-            <AdminApproveUserButton user={this.context} />
-            <AdminOfferApprovalButton user={this.context} />
-            {this.context.type !== 'Staff' && this.context.data && this.context.data.status !== 'Verified' ?
-              <Alert variant="info">Nie masz jeszcze dostępu do wszystkich funkcji aplikacji. Poczekaj na weryfikację swojego konta.</Alert> :
-                null
-            }
+            {this.setMessage()}
+            {this.context.type !== userTypes.STAFF &&
+            this.context.data &&
+            this.context.data.status !== userStatuses.VERIFIED ? (
+              <Alert variant="info">
+                Nie masz jeszcze dostępu do wszystkich funkcji aplikacji.
+                Poczekaj na weryfikację swojego konta.
+              </Alert>
+            ) : null}
+            <ButtonsContainer user={this.context} />
           </Card.Body>
         </Card>
       </Container>

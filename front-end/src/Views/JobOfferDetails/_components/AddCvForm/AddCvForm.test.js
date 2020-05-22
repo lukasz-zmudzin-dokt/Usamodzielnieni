@@ -1,14 +1,22 @@
 import React from "react";
-import { render, waitForElement, fireEvent } from "@testing-library/react";
+import {
+  render,
+  waitForElement,
+  fireEvent,
+  wait,
+} from "@testing-library/react";
 import AddCvForm from "./AddCvForm";
 import { MemoryRouter } from "react-router-dom";
+import { AlertContext } from "context";
 
 describe("AddCvForm", () => {
   let isCvVerified;
   let apiStatus;
   let user;
   let id;
-
+  const alertC = {
+    showAlert: jest.fn(),
+  };
   beforeAll(() => {
     user = { token: "abc123" };
     id = "123";
@@ -25,18 +33,20 @@ describe("AddCvForm", () => {
                 : {
                     status: 200,
                     json: () =>
-                      Promise.resolve([
-                        {
-                          cv_id: "1",
-                          name: "nazwa cv",
-                          is_verified: isCvVerified,
-                        },
-                        {
-                          cv_id: "2",
-                          name: "nazwa cv 2",
-                          is_verified: isCvVerified,
-                        },
-                      ]),
+                      Promise.resolve({
+                        results: [
+                          {
+                            cv_id: "1",
+                            name: "nazwa cv",
+                            is_verified: isCvVerified,
+                          },
+                          {
+                            cv_id: "2",
+                            name: "nazwa cv 2",
+                            is_verified: isCvVerified,
+                          },
+                        ],
+                      }),
                   }
             );
             break;
@@ -105,44 +115,50 @@ describe("AddCvForm", () => {
   });
 
   it("should render error alert when api returns error after click", async () => {
-    const { getByText, queryByText } = render(
-      <MemoryRouter>
-        <AddCvForm id={id} user={user} />
-      </MemoryRouter>
+    const { getByText } = render(
+      <AlertContext.Provider value={alertC}>
+        <MemoryRouter>
+          <AddCvForm id={id} user={user} />
+        </MemoryRouter>
+      </AlertContext.Provider>
     );
 
     await waitForElement(() => getByText("Aplikuj do oferty"));
     apiStatus = 500;
     fireEvent.click(getByText("Aplikuj do oferty"));
 
-    await waitForElement(() => getByText("Wystąpił błąd", { exact: false }));
-    expect(getByText("Wystąpił błąd", { exact: false })).toBeInTheDocument();
-    expect(queryByText("Aplikuj do oferty")).not.toBeInTheDocument();
-    expect(queryByText("utwórz nowe CV")).not.toBeInTheDocument();
+    await wait(() => expect(alertC.showAlert).toHaveBeenCalled());
+    expect(alertC.showAlert).toHaveBeenCalledWith(
+      "Wystąpił błąd podczas składania aplikacji na ofertę."
+    );
   });
 
   it("should render fail alert when api returns already added status after click", async () => {
-    const { getByText, queryByText } = render(
-      <MemoryRouter>
-        <AddCvForm id={id} user={user} />
-      </MemoryRouter>
+    const { getByText } = render(
+      <AlertContext.Provider value={alertC}>
+        <MemoryRouter>
+          <AddCvForm id={id} user={user} />
+        </MemoryRouter>
+      </AlertContext.Provider>
     );
 
     await waitForElement(() => getByText("Aplikuj do oferty"));
     apiStatus = 403;
     fireEvent.click(getByText("Aplikuj do oferty"));
 
-    await waitForElement(() => getByText("Już zaaplikowano", { exact: false }));
-    expect(getByText("Już zaaplikowano", { exact: false })).toBeInTheDocument();
-    expect(queryByText("Aplikuj do oferty")).not.toBeInTheDocument();
-    expect(queryByText("utwórz nowe CV")).not.toBeInTheDocument();
+    await wait(() => expect(alertC.showAlert).toHaveBeenCalled());
+    expect(alertC.showAlert).toHaveBeenCalledWith(
+      "Już zaaplikowano do danego ogłoszenia."
+    );
   });
 
   it("should render success alert when api returns success after click", async () => {
-    const { getByText, queryByText, getByLabelText } = render(
-      <MemoryRouter>
-        <AddCvForm id={id} user={user} />
-      </MemoryRouter>
+    const { getByText, getByLabelText } = render(
+      <AlertContext.Provider value={alertC}>
+        <MemoryRouter>
+          <AddCvForm id={id} user={user} />
+        </MemoryRouter>
+      </AlertContext.Provider>
     );
 
     await waitForElement(() => getByText("Aplikuj do oferty"));
@@ -151,14 +167,11 @@ describe("AddCvForm", () => {
     });
     fireEvent.click(getByText("Aplikuj do oferty"));
 
-    await waitForElement(() =>
-      getByText("Pomyślnie zaaplikowano", { exact: false })
+    await wait(() => expect(alertC.showAlert).toHaveBeenCalled());
+    expect(alertC.showAlert).toHaveBeenCalledWith(
+      "Pomyślnie zaaplikowano do ogłoszenia.",
+      "success"
     );
-    expect(
-      getByText("Pomyślnie zaaplikowano", { exact: false })
-    ).toBeInTheDocument();
-    expect(queryByText("Aplikuj do oferty")).not.toBeInTheDocument();
-    expect(queryByText("utwórz nowe CV")).not.toBeInTheDocument();
   });
 
   it("should render loading alert when component is waiting for api response", async () => {

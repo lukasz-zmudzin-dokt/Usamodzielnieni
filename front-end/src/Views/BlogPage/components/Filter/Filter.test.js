@@ -4,11 +4,14 @@ import Filter from "Views/BlogPage/components/Filter";
 import { DEFAULT_INPUT } from "constants/other";
 import { UserContext } from "context";
 import { MemoryRouter } from "react-router-dom";
+import { userTypes } from "constants/userTypes";
+import { staffTypes } from "constants/staffTypes";
 
 describe("Filter", () => {
   let failFetch = false;
   let apiFilters = ["abcd", "abcde"];
   let props;
+
   global.fetch = jest.fn().mockImplementation((input, init) => {
     return new Promise((resolve, reject) => {
       if (failFetch) {
@@ -44,15 +47,14 @@ describe("Filter", () => {
 
   it("should show message if api failed", async () => {
     failFetch = true;
-    const { getByText } = render(<Filter {...props} />);
+    const { getByText, queryByText } = render(<Filter {...props} />);
 
-    await waitForElement(() =>
-      getByText("Wystąpił błąd podczas ładowania filtrów.", { exact: false })
-    );
+    await waitForElement(() => getByText("Filtruj posty", { exact: false }));
 
     expect(
-      getByText("Wystąpił błąd podczas ładowania filtrów.", { exact: false })
+      getByText("Wystąpił błąd podczas ładowania filtrów.")
     ).toBeInTheDocument();
+    expect(queryByText("abcd", { exact: false })).not.toBeInTheDocument();
   });
 
   it("should clear filters if button is clicked", async () => {
@@ -101,7 +103,10 @@ describe("Filter", () => {
   it("should show button if type account = Staff", async () => {
     const { getByText } = render(
       <UserContext.Provider
-        value={{ type: "Staff", data: { group_type: "staff_blog_creator" } }}
+        value={{
+          type: userTypes.STAFF,
+          data: { group_type: [staffTypes.BLOG_CREATOR] },
+        }}
       >
         <MemoryRouter>
           <Filter {...props} />
@@ -116,7 +121,7 @@ describe("Filter", () => {
 
   it("should not show button if type account != Staff", async () => {
     const { queryByText, getByText } = render(
-      <UserContext.Provider value={{ type: "Standard" }}>
+      <UserContext.Provider value={{ type: userTypes.STANDARD }}>
         <MemoryRouter>
           <Filter {...props} />
         </MemoryRouter>

@@ -1,0 +1,184 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserList should match snapshot 1`] = `
+<div>
+  <div
+    class="container"
+  >
+    <div
+      class="card"
+    >
+      <h2
+        class="card-header"
+      >
+        Lista użytkowników
+      </h2>
+      <form
+        class="search__form"
+      >
+        <div
+          class="form-row"
+        >
+          <div
+            class="form-group col-md-6 col-12"
+          >
+            <label
+              class="form-label"
+              for="username"
+            >
+              Nazwa użytkownika
+            </label>
+            <input
+              class="form-control"
+              data-testid="default"
+              id="username"
+              maxlength="50"
+              minlength="1"
+              placeholder="Nazwa użytkownika"
+              type="text"
+              value=""
+            />
+          </div>
+          <div
+            class="form-group col-md-6 col-12"
+          >
+            <label
+              class="form-label"
+              for="email"
+            >
+              Email
+            </label>
+            <input
+              class="form-control"
+              data-testid="default"
+              id="email"
+              maxlength="50"
+              minlength="1"
+              placeholder="Email"
+              type="text"
+              value=""
+            />
+          </div>
+          <div
+            class="form-group col-md-6 col-12"
+          >
+            <label
+              class="form-label"
+              for="category"
+            >
+              Status:
+            </label>
+            <select
+              class="form-control"
+              id="category"
+              type="select"
+            >
+              <option
+                disabled=""
+              >
+                -- Wybierz --
+              </option>
+              <option
+                value="verified"
+              >
+                Zweryfikowany
+              </option>
+              <option
+                value="rejected"
+              >
+                Odrzucony
+              </option>
+              <option
+                value="waiting_for_verification"
+              >
+                Oczekuje na weryfikację
+              </option>
+              <option
+                value="blocked"
+              >
+                Zablokowany
+              </option>
+            </select>
+          </div>
+          <div
+            class="form-group col-md-6 col-12"
+          >
+            <label
+              class="form-label"
+              for="type"
+            >
+              Typ użytkownika:
+            </label>
+            <select
+              class="form-control"
+              id="type"
+              type="select"
+            >
+              <option
+                disabled=""
+              >
+                -- Wybierz --
+              </option>
+              <option
+                value="standard"
+              >
+                Podopieczny
+              </option>
+              <option
+                value="staff"
+              >
+                Administrator
+              </option>
+              <option
+                value="employer"
+              >
+                Pracodawca
+              </option>
+              <option
+                value="specialist"
+              >
+                Specjalista
+              </option>
+            </select>
+          </div>
+        </div>
+        <button
+          class="mr-3 btn btn-primary"
+          type="submit"
+        >
+          Filtruj użytkowników
+        </button>
+        <button
+          class="mr-3 btn btn-outline-primary"
+          type="button"
+        >
+          Wyczyść filtry
+        </button>
+        <small
+          class="search__countText"
+        >
+          Liczba znalezionych użytkowników: 2
+        </small>
+      </form>
+      <div
+        class="list-group list-group-flush"
+      >
+        <div
+          class="list-group-item"
+        >
+          <div>
+            user1
+          </div>
+        </div>
+        <div
+          class="list-group-item"
+        >
+          <div>
+            user2
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

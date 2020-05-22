@@ -1,23 +1,24 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import { Alert, Button, Card, ListGroup, Row } from "react-bootstrap";
-import { UserContext } from "context";
+import { UserContext, AlertContext } from "context";
 import {
   getUserDetails,
   setUserApproved,
   setUserRejected,
 } from "Views/UserApprovalPage/functions/apiCalls";
 import { DetailsItem, DeletionModal } from "components";
+import { userTypes } from "constants/userTypes";
 
 const UserToApprove = ({ user, activeUser }) => {
   const context = useContext(UserContext);
+  const alertC = useRef(useContext(AlertContext));
+  const [actionTaken, setActionTaken] = useState(false);
   const [userDetails, setUserDetails] = useState([]);
   const [userDetailsFacilityAddress, setUserDetailsFacilityAddress] = useState(
     []
   );
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-  const [approved, setApproved] = useState(false);
-  const [rejected, setRejected] = useState(false);
 
   const [showRejectModal, setShowReject] = useState(false);
   const [rejectConfirmed, setRejectConfirmed] = useState(false);
@@ -30,7 +31,7 @@ const UserToApprove = ({ user, activeUser }) => {
       try {
         let res = await getUserDetails(token, userId);
         setUserDetails(res);
-        if (user.type === "Standard") {
+        if (user.type === userTypes.STANDARD) {
           setUserDetailsFacilityAddress(res.facility_address);
         } else {
           setUserDetailsFacilityAddress(res.company_address);
@@ -43,31 +44,32 @@ const UserToApprove = ({ user, activeUser }) => {
     if (user.id === activeUser) {
       loadUserDetails(context.token, user.id);
     }
-  }, [context.token, user.id, user.type, activeUser]);
+    if (rejectConfirmed) rejectUser(context.token, user.id);
+  }, [context.token, user.id, user.type, activeUser, rejectConfirmed]);
 
   const approveUser = async (e, token, userId) => {
     e.preventDefault();
     try {
       let res = await setUserApproved(token, userId);
-      if (res === "User successfully verified.") {
-        setApproved(true);
-      }
+      alertC.current.showAlert(res.message, "success");
+      setActionTaken(true);
     } catch (err) {
       setError(true);
+      alertC.current.showAlert("Nie udało się zweryfikować użytkownika");
     }
   };
 
   //const rejectUser = async (e, token, userId) => {
   const rejectUser = async (token, userId) => {
-    //e.preventDefault();
     try {
       let res = await setUserRejected(token, userId);
-      if (res === "User status successfully set to not verified.") {
-        setRejected(true);
-      }
+      alertC.current.showAlert(res.message, "success");
+      setActionTaken(true);
     } catch (err) {
       setError(true);
+      alertC.current.showAlert("Nie udało się odrzucić użytkownika");
     }
+    setRejectConfirmed(false);
   };
 
   const handleOnClick = (e) => {
@@ -77,7 +79,7 @@ const UserToApprove = ({ user, activeUser }) => {
   };
 
   const address =
-    user.type === "Standard" ? (
+    user.type === userTypes.STANDARD ? (
       <DetailsItem label="Adres">
         <p>{userDetails.facility_name}</p>
         <p>
@@ -112,35 +114,26 @@ const UserToApprove = ({ user, activeUser }) => {
     </Alert>
   ) : error ? (
     <Alert className="mb-0" variant="danger">
-      Ups, wystąpił błąd...
-    </Alert>
-  ) : approved ? (
-    <Alert className="mb-0" variant="success">
-      Konto zatwierdzone pomyślnie.
-    </Alert>
-  ) : rejected ? (
-    <Alert className="mb-0" variant="success">
-      Konto odrzucone pomyślnie.
+      Nie udało się załadować danych użytkownika.
     </Alert>
   ) : null;
 
-  if (rejectConfirmed) rejectUser(context.token, user.id);
   /*if(acceptConfirmed)
         approveUser(context.token, user.id);*/
 
   if (message) {
-    return message;
+    return <Card.Body>{message}</Card.Body>;
   } else {
     return (
       <Card.Body>
-        {DeletionModal(
-          showRejectModal,
-          setShowReject,
-          setRejectConfirmed,
-          "Czy na pewno chcesz odrzucić tego użytkownika?",
-          "Odrzuć",
-          "Anuluj"
-        )}
+        <DeletionModal
+          show={showRejectModal}
+          setShow={setShowReject}
+          delConfirmed={setRejectConfirmed}
+          question={"Czy na pewno chcesz odrzucić tego użytkownika?"}
+          confirmLabel={"Odrzuć"}
+          cancelLabel={"Anuluj"}
+        />
         <ListGroup variant="flush">
           <ListGroup.Item>
             <Row>
@@ -164,25 +157,27 @@ const UserToApprove = ({ user, activeUser }) => {
           <ListGroup.Item>
             <Row>{address}</Row>
           </ListGroup.Item>
-          <ListGroup.Item>
-            <Row className="justify-content-center">
-              <Button
-                onClick={(e) => approveUser(e, context.token, user.id)}
-                variant="success"
-                id="accept"
-              >
-                Akceptuj
-              </Button>
-              <Button
-                onClick={(e) => handleOnClick(e)}
-                variant="danger"
-                className="ml-3"
-                id="reject"
-              >
-                Odrzuć
-              </Button>
-            </Row>
-          </ListGroup.Item>
+          {!actionTaken ? (
+            <ListGroup.Item>
+              <Row className="justify-content-center">
+                <Button
+                  onClick={(e) => approveUser(e, context.token, user.id)}
+                  variant="success"
+                  id="accept"
+                >
+                  Akceptuj
+                </Button>
+                <Button
+                  onClick={(e) => handleOnClick(e)}
+                  variant="danger"
+                  className="ml-3"
+                  id="reject"
+                >
+                  Odrzuć
+                </Button>
+              </Row>
+            </ListGroup.Item>
+          ) : null}
         </ListGroup>
       </Card.Body>
     );

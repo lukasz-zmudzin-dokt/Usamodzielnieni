@@ -9,7 +9,7 @@ import { Router } from "react-router-dom";
 import { MemoryRouter } from "react-router-dom";
 import OfferForm from "Views/OfferForm";
 import { createMemoryHistory } from "history";
-import { UserContext } from "context";
+import { UserContext, AlertContext } from "context";
 import proxy from "config/api";
 
 jest.mock("react-router-dom", () => ({
@@ -29,6 +29,7 @@ const renderWithRouter = (
   } = {}
 ) => {
   let context = {
+    token: 123,
     data: {
       company_name: "abc",
       company_address: {
@@ -39,10 +40,19 @@ const renderWithRouter = (
       },
     },
   };
+  let contextA = {
+    open: true,
+    changeVisibility: jest.fn(),
+    message: "abc",
+    changeMessage: jest.fn(),
+    showAlert: jest.fn(),
+  };
   return {
     ...render(
       <UserContext.Provider value={context}>
-        <Router history={history}>{ui}</Router>
+        <AlertContext.Provider value={contextA}>
+          <Router history={history}>{ui}</Router>
+        </AlertContext.Provider>
       </UserContext.Provider>
     ),
     history,
@@ -55,15 +65,16 @@ describe("OfferForm", () => {
   let failPost;
   let failTypes;
   let context;
+  let contextA;
   let apiSelect = { offer_types: ["IT"], categories: ["xd"] };
   let apiOffer = {
     offer_name: "abc",
-    company_name: "xd",
+    company_name: "test",
     company_address: {
-      street: "def",
+      street: "Test",
       street_number: "1",
-      city: "abc",
-      postal_code: "00-000",
+      city: "Testowe",
+      postal_code: "22-222",
     },
     voivodeship: "lubelskie",
     description: "res.description",
@@ -71,6 +82,8 @@ describe("OfferForm", () => {
       "Wed May 17 2023 00:00:00 GMT+0100 (czas środkowoeuropejski standardowy)",
     category: "xd",
     type: "IT",
+    salary_min: "1",
+    salary_max: "420",
   };
   beforeAll(() => {
     global.fetch = jest.fn().mockImplementation((input, init) => {
@@ -126,14 +139,19 @@ describe("OfferForm", () => {
         },
       },
     };
+    contextA = {
+      showAlert: jest.fn(),
+    };
   });
 
   it("renders correctly", async () => {
     const { container, getByText } = render(
       <UserContext.Provider value={context}>
-        <MemoryRouter>
-          <OfferForm />
-        </MemoryRouter>
+        <AlertContext.Provider value={contextA}>
+          <MemoryRouter>
+            <OfferForm />
+          </MemoryRouter>
+        </AlertContext.Provider>
       </UserContext.Provider>
     );
 
@@ -147,18 +165,19 @@ describe("OfferForm", () => {
 
     const { getByText } = render(
       <UserContext.Provider value={context}>
-        <MemoryRouter>
-          <OfferForm />
-        </MemoryRouter>
+        <AlertContext.Provider value={contextA}>
+          <MemoryRouter>
+            <OfferForm />
+          </MemoryRouter>
+        </AlertContext.Provider>
       </UserContext.Provider>
     );
-    await waitForElement(() => getByText("Dodaj"));
-
     await waitForElement(() =>
-      getByText("Nie udało się załadować danych", { exact: false })
+      getByText("Wystąpił błąd w trakcie ładowania formularza.")
     );
+
     expect(
-      getByText("Nie udało się załadować danych", { exact: false })
+      getByText("Wystąpił błąd w trakcie ładowania formularza.")
     ).toBeInTheDocument();
   });
 
@@ -167,27 +186,30 @@ describe("OfferForm", () => {
 
     const { getByText } = render(
       <UserContext.Provider value={context}>
-        <MemoryRouter>
-          <OfferForm />
-        </MemoryRouter>
+        <AlertContext.Provider value={contextA}>
+          <MemoryRouter>
+            <OfferForm />
+          </MemoryRouter>
+        </AlertContext.Provider>
       </UserContext.Provider>
     );
-    await waitForElement(() => getByText("Dodaj"));
-
     await waitForElement(() =>
-      getByText("Nie udało się załadować danych", { exact: false })
+      getByText("Wystąpił błąd w trakcie ładowania formularza.")
     );
+
     expect(
-      getByText("Nie udało się załadować danych", { exact: false })
+      getByText("Wystąpił błąd w trakcie ładowania formularza.")
     ).toBeInTheDocument();
   });
 
   it("should not use fetch when form isn't validated", async () => {
     const { getByPlaceholderText, getByText, getByLabelText } = render(
       <UserContext.Provider value={context}>
-        <MemoryRouter>
-          <OfferForm />
-        </MemoryRouter>
+        <AlertContext.Provider value={contextA}>
+          <MemoryRouter>
+            <OfferForm />
+          </MemoryRouter>
+        </AlertContext.Provider>
       </UserContext.Provider>
     );
 
@@ -208,7 +230,7 @@ describe("OfferForm", () => {
     fireEvent.change(getByLabelText("Wymiar pracy"), {
       target: { value: "IT" },
     });
-    fireEvent.change(getByLabelText("Ważne do:"), {
+    fireEvent.change(getByLabelText("Ważne do"), {
       target: {
         value:
           "Wed Jan 20 2021 00:00:00 GMT+0100 (czas środkowoeuropejski standardowy)",
@@ -220,7 +242,7 @@ describe("OfferForm", () => {
     expect(fetch).toHaveBeenCalledTimes(2);
   });
 
-  it("should redirect when offer is send", async () => {
+  it("should redirect when offer is sent", async () => {
     // jest.resetModules();
 
     const {
@@ -247,11 +269,16 @@ describe("OfferForm", () => {
     fireEvent.change(getByLabelText("Wymiar pracy"), {
       target: { value: "IT" },
     });
-    fireEvent.change(getByLabelText("Ważne do:"), {
+    fireEvent.change(getByLabelText("Ważne do"), {
       target: {
-        value:
-          "Wed Dec 04 2020 00:00:00 GMT+0100 (czas środkowoeuropejski standardowy)",
+        value: new Date("2024-12-04"),
       },
+    });
+    fireEvent.change(getByPlaceholderText("Wynagrodzenie od (zł / miesiąc)"), {
+      target: { value: 1 },
+    });
+    fireEvent.change(getByPlaceholderText("Wynagrodzenie do (zł / miesiąc)"), {
+      target: { value: 420 },
     });
 
     fireEvent.click(getByText("Dodaj"));
@@ -259,6 +286,12 @@ describe("OfferForm", () => {
     await wait(() => {
       expect(fetch).toHaveBeenCalled();
     });
+
+    expect(
+      getByPlaceholderText("Wynagrodzenie do (zł / miesiąc)").validity
+        .stepMismatch
+    ).toBe(false);
+    expect(fetch).toHaveBeenCalledTimes(3);
 
     expect(history.location.pathname).toEqual("/myOffers");
   });
@@ -283,9 +316,11 @@ describe("OfferForm", () => {
     failPost = true;
     const { getByPlaceholderText, getByText, getByLabelText } = render(
       <UserContext.Provider value={context}>
-        <MemoryRouter>
-          <OfferForm />
-        </MemoryRouter>
+        <AlertContext.Provider value={contextA}>
+          <MemoryRouter>
+            <OfferForm />
+          </MemoryRouter>
+        </AlertContext.Provider>
       </UserContext.Provider>
     );
 
@@ -307,19 +342,25 @@ describe("OfferForm", () => {
     fireEvent.change(getByLabelText("Wymiar pracy"), {
       target: { value: "IT" },
     });
-    fireEvent.change(getByLabelText("Ważne do:"), {
+    fireEvent.change(getByLabelText("Ważne do"), {
       target: {
         value: new Date("2024-9-20"),
       },
+    });
+    fireEvent.change(getByLabelText("Wynagrodzenie od (zł / miesiąc)"), {
+      target: { value: "1" },
+    });
+    fireEvent.change(getByLabelText("Wynagrodzenie do (zł / miesiąc)"), {
+      target: { value: "200" },
     });
 
     fireEvent.click(getByText("Dodaj"));
 
     await waitForElement(() => getByText("Dodaj"));
 
-    expect(
-      getByText("Nie udało się wysłać oferty. Błąd serwera.")
-    ).toBeInTheDocument();
+    expect(contextA.showAlert).toHaveBeenCalledWith(
+      "Nie udało się wysłać oferty. Błąd serwera."
+    );
   });
 
   it("should fulfill inputs if offer id is valid", async () => {
@@ -339,7 +380,7 @@ describe("OfferForm", () => {
     await wait(() =>
       expect(fetch).toHaveBeenCalledWith(proxy.job + "job-offer/abc/", {
         headers: {
-          Authorization: "Token undefined",
+          Authorization: "Token 123",
           "Content-Type": "application/json",
           Origin: null,
         },
@@ -348,12 +389,12 @@ describe("OfferForm", () => {
     );
 
     expect(getByPlaceholderText("Nazwa stanowiska").value).toBe("abc");
-    expect(getByPlaceholderText("Nazwa firmy").value).toBe("xd");
+    expect(getByPlaceholderText("Nazwa firmy").value).toBe("test");
     expect(getByLabelText("Województwo").value).toBe("lubelskie");
     expect(getByLabelText("Opis stanowiska").value).toBe("res.description");
     expect(getByLabelText("Branża").value).toBe("xd");
     expect(getByLabelText("Wymiar pracy").value).toBe("IT");
-    expect(getByLabelText("Ważne do:").value).toBe("17.05.2023");
+    expect(getByLabelText("Ważne do").value).toBe("17.05.2023");
   });
 
   it("should send edited offer", async () => {
@@ -372,14 +413,14 @@ describe("OfferForm", () => {
     await wait(() =>
       expect(fetch).toHaveBeenCalledWith(proxy.job + "job-offer/abc/", {
         headers: {
-          Authorization: "Token undefined",
+          Authorization: "Token 123",
           "Content-Type": "application/json",
           Origin: null,
         },
         method: "GET",
       })
     );
-    fireEvent.change(getByPlaceholderText("Adres firmy"), {
+    fireEvent.change(getByPlaceholderText("Nazwa stanowiska"), {
       target: { value: "abcd" },
     });
 

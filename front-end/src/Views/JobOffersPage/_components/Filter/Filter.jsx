@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { registerLocale } from "react-datepicker";
 import { Form, Button, Col } from "react-bootstrap";
 import { DEFAULT_INPUT } from "constants/other";
@@ -6,34 +6,38 @@ import FormGroup from "components/FormGroup";
 import { voivodeships } from "constants/voivodeships";
 import polish from "date-fns/locale/pl";
 import { getSelects } from "Views/OfferForm/functions/fetchData";
-import { UserContext } from "context";
+import { UserContext, AlertContext } from "context";
 import { IndexLinkContainer } from "react-router-bootstrap";
+import { userTypes } from "constants/userTypes";
+import { userStatuses } from "constants/userStatuses";
+import { Sort } from "../";
 registerLocale("pl", polish);
 
-const Filter = ({ setFilters, count, disabled }) => {
+const Filter = ({ setFilters, count, disabled, setSortJob }) => {
   const [voivodeship, setVoivodeship] = useState(DEFAULT_INPUT);
   const [pageSize, setPageSize] = useState(10);
   const [minExpirationDate, setMinExpirationDate] = useState();
   const [category, setCategory] = useState(DEFAULT_INPUT);
   const [type, setType] = useState(DEFAULT_INPUT);
+  const [sort, setSort] = useState("");
   const [arrays, setArrays] = useState([]);
   const user = useContext(UserContext);
-
-  const context = useContext(UserContext);
+  const alertC = useRef(useContext(AlertContext));
 
   useEffect(() => {
-    const loadSelects = async (token) => {
+    const loadSelects = async () => {
       let res;
       try {
-        res = await getSelects(token);
+        res = await getSelects();
       } catch (e) {
         console.log(e);
         res = { categories: [], types: [] };
+        alertC.current.showAlert("Nie udało się pobrać filtrów.");
       }
       setArrays(res);
     };
-    loadSelects(context.token);
-  }, [context.token]);
+    loadSelects();
+  }, []);
 
   const filter = (event) => {
     event.preventDefault();
@@ -63,6 +67,7 @@ const Filter = ({ setFilters, count, disabled }) => {
       category: categoryV,
       type: typeV,
     });
+    setSortJob(sort);
   };
 
   const deleteFilter = (e) => {
@@ -96,18 +101,6 @@ const Filter = ({ setFilters, count, disabled }) => {
           setVal={setMinExpirationDate}
           type="date"
           id="minExpirationDate"
-        />
-
-        <FormGroup
-          as={Col}
-          xs={12}
-          md={4}
-          header="Ilość ofert na stronie"
-          val={pageSize}
-          setVal={setPageSize}
-          type="number"
-          id="pageSize"
-          length={{ min: 1, max: 100 }}
         />
         <FormGroup
           as={Col}
@@ -143,10 +136,10 @@ const Filter = ({ setFilters, count, disabled }) => {
           id="type"
         />
       </Form.Row>
-
+      <Sort sort={sort} setSort={setSort} />
       <Button
         type="submit"
-        className="mr-3"
+        className="mr-3 mt-3 mb-3"
         variant="primary"
         disabled={disabled}
       >
@@ -154,20 +147,20 @@ const Filter = ({ setFilters, count, disabled }) => {
       </Button>
       <Button
         variant="outline-primary"
-        className="mr-3"
+        className="mr-3 mt-3 mb-3"
         onClick={deleteFilter}
         disabled={disabled}
       >
         {disabled ? "Ładowanie..." : "Wyczyść filtry"}
       </Button>
       {count !== 0 && (
-        <small className="search__countText">{`Ilość znalezionych ofert: ${count}`}</small>
+        <small className="search__countText mr-3">{`Ilość znalezionych ofert: ${count}`}</small>
       )}
-      {user.type === "Employer" && user.data && user.data.status === 'Verified' ? (
+      {user.type === userTypes.EMPLOYER &&
+      user.data &&
+      user.data.status === userStatuses.VERIFIED ? (
         <IndexLinkContainer as={Button} to="/offerForm">
-          <Button variant="success" className="mt-2">
-            Dodaj ofertę
-          </Button>
+          <Button variant="success">Dodaj ofertę</Button>
         </IndexLinkContainer>
       ) : null}
     </Form>

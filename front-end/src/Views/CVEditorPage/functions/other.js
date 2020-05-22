@@ -10,22 +10,23 @@ const getHeaders = (token) => ({
   "Content-Type": "application/json",
 });
 
-const generateCv = async (token, object) => {
+const generateCv = async (token, object, method, id) => {
   const headers = getHeaders(token);
-  const res = await fetch(url.generate(), {
-    method: "POST",
+  const link = id !== undefined ? domain + "data/" + id + "/" : url.generate();
+  const res = await fetch(link, {
+    method: method,
     body: JSON.stringify(object),
     headers,
   });
-
-  if (res.status === 201) {
+  const status = id !== undefined ? 200 : 201;
+  if (res.status === status) {
     return res.json();
   } else {
     throw res.status;
   }
 };
 
-const getCv = async (token, id) => {
+const fetchDocument = async (token, id) => {
   const headers = getHeaders(token);
   const res = await fetch(url.generate(id), { method: "GET", headers });
 
@@ -44,26 +45,26 @@ const addPhoto = async (token, photo, cvId) => {
     body: formData,
     headers: { Authorization: "Token " + token },
   });
-
-  if (photoRes.status === 201) {
+  if (photoRes.status === 200) {
     return;
   } else {
     throw photoRes.status;
   }
 };
 
-const sendData = async (object, photo, token) => {
+const sendData = async (object, photo, token, method, id) => {
   let file;
   try {
-    let cvRes = await generateCv(token, object);
+    let cvRes = await generateCv(token, object, method, id);
+    const cvId = id !== undefined ? id : cvRes.cv_id;
     if (photo) {
-      await addPhoto(token, photo, cvRes.cv_id);
+      await addPhoto(token, photo, cvId);
     }
-    file = await getCv(token, cvRes.cv_id);
+    file = await fetchDocument(token, cvId);
   } catch (e) {
     throw new Error("api error");
   }
-  const cvUrl = `${proxy.plain}/${file.substring(1)}`;
+  const cvUrl = `${proxy.plain}${file.url}`;
   window.open(cvUrl, "_blank");
 };
 
@@ -86,4 +87,16 @@ const getFeedback = async (token, id) => {
   }
 };
 
-export { sendData, getFeedback };
+const getCVdata = async (token, id) => {
+  const url = `${domain}data/${id}/`;
+  const headers = getHeaders(token);
+  const res = await fetch(url, { method: "GET", headers });
+
+  if (res.status === 200) {
+    return await res.json();
+  } else {
+    throw res.status;
+  }
+};
+
+export { sendData, getFeedback, getCVdata };

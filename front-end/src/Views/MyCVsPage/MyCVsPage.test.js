@@ -4,11 +4,13 @@ import {
   render,
   fireEvent,
   waitForElementToBeRemoved,
+  wait,
 } from "@testing-library/react";
 import { MemoryRouter, Router } from "react-router-dom";
-import { UserContext } from "context/UserContext";
+import { UserContext, AlertContext } from "context";
 import { createMemoryHistory } from "history";
 import MyCVsPage from "./MyCVsPage";
+import { userTypes } from "constants/userTypes";
 
 const renderWithRouter = (
   ui,
@@ -17,7 +19,7 @@ const renderWithRouter = (
     history = createMemoryHistory({ initialEntries: [route] }),
   } = {}
 ) => {
-  let context = { type: "Standard" };
+  let context = { type: userTypes.STANDARD };
   return {
     ...render(
       <UserContext.Provider value={context}>
@@ -32,7 +34,9 @@ describe("MyCVsPage", () => {
   let failFetch;
   let myCVs;
   let user;
-
+  const alertC = {
+    showAlert: jest.fn(),
+  };
   beforeAll(() => {
     global.open = jest.fn();
     global.fetch = jest.fn().mockImplementation((input, init) => {
@@ -42,7 +46,10 @@ describe("MyCVsPage", () => {
         }
         switch (init.method) {
           case "GET":
-            resolve({ status: 200, json: () => Promise.resolve(myCVs) });
+            resolve({
+              status: 200,
+              json: () => Promise.resolve({ results: myCVs }),
+            });
             break;
           case "DELETE":
             resolve({ status: 200 });
@@ -55,7 +62,7 @@ describe("MyCVsPage", () => {
     });
 
     user = {
-      type: "Standard",
+      type: userTypes.STANDARD,
       token: "123",
     };
   });
@@ -102,19 +109,21 @@ describe("MyCVsPage", () => {
     failFetch = true;
     const { getByText, queryByText } = render(
       <UserContext.Provider value={user}>
-        <MemoryRouter>
-          <MyCVsPage />
-        </MemoryRouter>
+        <AlertContext.Provider value={alertC}>
+          <MemoryRouter>
+            <MyCVsPage />
+          </MemoryRouter>
+        </AlertContext.Provider>
       </UserContext.Provider>
     );
 
     expect(getByText("Ładuję", { exact: false })).toBeInTheDocument();
 
     await waitForElement(() =>
-      getByText("Ups, coś poszło nie tak", { exact: false })
+      getByText("Ups, coś poszło nie tak. Nie można pobrać listy CV.")
     );
     expect(
-      getByText("Ups, coś poszło nie tak", { exact: false })
+      getByText("Ups, coś poszło nie tak. Nie można pobrać listy CV.")
     ).toBeInTheDocument();
     expect(queryByText("Ładuję", { exact: false })).not.toBeInTheDocument();
   });
@@ -145,37 +154,52 @@ describe("MyCVsPage", () => {
   it("should delete cv on button click", async () => {
     myCVs = [myCVs[0]];
     const { getByText, queryByText } = render(
-      <MemoryRouter>
-        <MyCVsPage />
-      </MemoryRouter>
+      <AlertContext.Provider value={alertC}>
+        <MemoryRouter>
+          <MyCVsPage />
+        </MemoryRouter>
+      </AlertContext.Provider>
     );
 
     await waitForElement(() => getByText("Usuń CV"));
     expect(getByText("jeden")).toBeInTheDocument();
 
     fireEvent.click(getByText("Usuń CV"));
+    await waitForElement(() => getByText("Czy na pewno chcesz usunąć to CV?"));
+    fireEvent.click(getByText("Usuń ✗"));
 
     await waitForElementToBeRemoved(() => getByText("jeden"));
     await expect(queryByText("jeden")).not.toBeInTheDocument();
+    await wait(() => expect(alertC.showAlert).toHaveBeenCalled());
+    expect(alertC.showAlert).toHaveBeenCalledWith(
+      "Pomyślnie usunięto CV",
+      "success"
+    );
   });
 
   it("should render error on delete fail", async () => {
     myCVs = [myCVs[0]];
     const { getByText, queryByText } = render(
-      <MemoryRouter>
-        <MyCVsPage />
-      </MemoryRouter>
+      <AlertContext.Provider value={alertC}>
+        <MemoryRouter>
+          <MyCVsPage />
+        </MemoryRouter>
+      </AlertContext.Provider>
     );
 
     await waitForElement(() => getByText("Usuń CV"));
     expect(getByText("jeden")).toBeInTheDocument();
     failFetch = true;
     fireEvent.click(getByText("Usuń CV"));
-
+    await waitForElement(() => getByText("Czy na pewno chcesz usunąć to CV?"));
+    fireEvent.click(getByText("Usuń ✗"));
     const cv = await waitForElement(() => queryByText("jeden"));
+    await wait(() => expect(alertC.showAlert).toHaveBeenCalled());
     expect(cv).not.toBeNull();
     expect(getByText("jeden")).toBeInTheDocument();
-    expect(getByText("Wystąpił błąd", { exact: false })).toBeInTheDocument();
+    expect(alertC.showAlert).toHaveBeenCalledWith(
+      "Wystąpił błąd podczas usuwania CV."
+    );
   });
 
   it("should render alert on max cvs reached", async () => {

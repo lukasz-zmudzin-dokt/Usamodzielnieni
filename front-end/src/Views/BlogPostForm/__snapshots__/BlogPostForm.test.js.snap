@@ -1,0 +1,141 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BlogpostForm should match snapshot 1`] = `
+<div>
+  <div
+    class="container"
+  >
+    <div
+      class="card"
+    >
+      <div
+        class="card-header"
+      >
+        <div
+          class="form-group"
+        >
+          <div
+            class="custom custom-file"
+          >
+            <input
+              accept="image/*"
+              class="custom-file-input"
+              id="blogspot_header_photo"
+              name="photo"
+              type="file"
+            />
+            <label
+              class="custom-file-label"
+              data-browse="Dodaj"
+              for="blogspot_header_photo"
+            >
+              Wybierz zdjęcie na nagłówek posta
+            </label>
+          </div>
+        </div>
+      </div>
+      <div
+        class="card-body"
+      >
+        <div
+          class="mx-3 mb-4 form-group"
+        >
+          <input
+            class="blogpost_title_form block form-control form-control-lg"
+            id="blogpost_title"
+            name="title"
+            placeholder="Wpisz tytuł posta..."
+            value=""
+          />
+        </div>
+        <div>
+          <div
+            class="categories mx-0 row"
+          >
+            <div
+              class="col"
+            >
+              <select
+                class="form-control"
+                name="category"
+              >
+                <option>
+                  Wybierz kategorię z listy
+                </option>
+              </select>
+            </div>
+            <div
+              class="mx-0 .col-mx-0 text-center"
+            >
+              lub
+            </div>
+            <div
+              class="col"
+            >
+              <input
+                class="form-control"
+                name="category"
+                placeholder="Wpisz nową kategorię"
+              />
+            </div>
+          </div>
+          <div>
+            <p
+              class="mx-3 mt-2 text-muted"
+            >
+              Kategoria: 
+              nie wybrano
+            </p>
+          </div>
+        </div>
+        <div>
+          EditorForm
+        </div>
+        <div>
+          <div
+            class="categories mx-0 row"
+          >
+            <div
+              class="col"
+            >
+              <select
+                class="form-control"
+                name="tags"
+              >
+                <option>
+                  Wybierz tagi z listy
+                </option>
+              </select>
+            </div>
+            <div
+              class="mx-0 .col-mx-0 text-center"
+            >
+              lub
+            </div>
+            <div
+              class="col"
+            >
+              <input
+                class="form-control"
+                name="tags"
+                placeholder="Dodaj nowy tag"
+              />
+            </div>
+          </div>
+          <div />
+        </div>
+      </div>
+      <div
+        class="card-footer"
+      >
+        <button
+          class="btn btn-primary btn-block btn-lg"
+          type="button"
+        >
+          Opublikuj
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+`;

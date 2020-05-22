@@ -13,7 +13,7 @@ exports[`UserDetails should match snapshot - employer 1`] = `
       >
         string
          (
-        Employer
+        employer
         )
       </div>
       <div
@@ -167,169 +167,14 @@ exports[`UserDetails should match snapshot - employer 1`] = `
               >
                 <button
                   class="btn btn-success"
+                  id="accept"
                   type="button"
                 >
                   Akceptuj
                 </button>
                 <button
                   class="ml-3 btn btn-danger"
-                  type="button"
-                >
-                  Odrzuć
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-`;
-
-exports[`UserDetails should match snapshot - no one 1`] = `
-<div>
-  <div
-    class="accordion"
-  >
-    <div
-      class="border-left-0 border-right-0 border-bottom-0 card"
-    >
-      <div
-        class="card-header"
-      >
-        standard0
-         (
-        Standard
-        )
-      </div>
-      <div
-        class="collapse"
-      >
-        <div
-          class="card-body"
-        >
-          <div
-            class="list-group list-group-flush"
-          >
-            <div
-              class="list-group-item"
-            >
-              <div
-                class="row"
-              >
-                <div
-                  class="detailsItem col-md-4"
-                >
-                  <div
-                    class="detailsItem__label"
-                  >
-                    Nazwa użytkownika
-                  </div>
-                  <div
-                    class="detailsItem__value"
-                  />
-                </div>
-                <div
-                  class="detailsItem col"
-                >
-                  <div
-                    class="detailsItem__label"
-                  >
-                    Imię
-                  </div>
-                  <div
-                    class="detailsItem__value"
-                  />
-                </div>
-                <div
-                  class="detailsItem col"
-                >
-                  <div
-                    class="detailsItem__label"
-                  >
-                    Nazwisko
-                  </div>
-                  <div
-                    class="detailsItem__value"
-                  />
-                </div>
-              </div>
-            </div>
-            <div
-              class="list-group-item"
-            >
-              <div
-                class="row"
-              >
-                <div
-                  class="detailsItem col"
-                >
-                  <div
-                    class="detailsItem__label"
-                  >
-                    Email
-                  </div>
-                  <div
-                    class="detailsItem__value"
-                  />
-                </div>
-                <div
-                  class="detailsItem col"
-                >
-                  <div
-                    class="detailsItem__label"
-                  >
-                    Telefon
-                  </div>
-                  <div
-                    class="detailsItem__value"
-                  />
-                </div>
-              </div>
-            </div>
-            <div
-              class="list-group-item"
-            >
-              <div
-                class="row"
-              >
-                <div
-                  class="detailsItem col"
-                >
-                  <div
-                    class="detailsItem__label"
-                  >
-                    Adres
-                  </div>
-                  <div
-                    class="detailsItem__value"
-                  >
-                    <p />
-                    <p>
-                       
-                    </p>
-                    <p>
-                       
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              class="list-group-item"
-            >
-              <div
-                class="justify-content-center row"
-              >
-                <button
-                  class="btn btn-success"
-                  type="button"
-                >
-                  Akceptuj
-                </button>
-                <button
-                  class="ml-3 btn btn-danger"
+                  id="reject"
                   type="button"
                 >
                   Odrzuć
@@ -357,7 +202,7 @@ exports[`UserDetails should match snapshot - standard 1`] = `
       >
         standard0
          (
-        Standard
+        standard
         )
       </div>
       <div
@@ -497,12 +342,14 @@ exports[`UserDetails should match snapshot - standard 1`] = `
               >
                 <button
                   class="btn btn-success"
+                  id="accept"
                   type="button"
                 >
                   Akceptuj
                 </button>
                 <button
                   class="ml-3 btn btn-danger"
+                  id="reject"
                   type="button"
                 >
                   Odrzuć

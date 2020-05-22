@@ -1,0 +1,162 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CVList should match with snapshot with 2 cvs 1`] = `
+<div>
+  <div
+    class="list-group"
+  >
+    <div
+      class="list-group-item"
+    >
+      <div
+        class="row"
+      >
+        <div
+          class="detailsItem col-xl-2 col-md-4"
+        >
+          <div
+            class="detailsItem__label"
+          >
+            Imię
+          </div>
+          <div
+            class="detailsItem__value"
+          >
+            Jan
+          </div>
+        </div>
+        <div
+          class="detailsItem col-xl-3 col-md-4"
+        >
+          <div
+            class="detailsItem__label"
+          >
+            Nazwisko
+          </div>
+          <div
+            class="detailsItem__value"
+          >
+            Kowalski
+          </div>
+        </div>
+        <div
+          class="detailsItem col-xl-3 col-md-4"
+        >
+          <div
+            class="detailsItem__label"
+          >
+            Email
+          </div>
+          <div
+            class="detailsItem__value"
+          >
+            ab@cd.pl
+          </div>
+        </div>
+        <div
+          class="align-self-center d-flex justify-content-end col"
+        >
+          <button
+            class="btnDownload btn btn-primary m-1 btn-sm"
+            type="button"
+          >
+            Pokaż CV
+          </button>
+          <button
+            class="btnAccept btn btn-success m-1 btn-sm"
+            type="button"
+          >
+            Akceptuj
+          </button>
+          <a
+            class="btnImprove btn btn-warning m-1 btn-sm"
+            href="/cvCorrection/0"
+          >
+            Zgłoś poprawki
+          </a>
+        </div>
+      </div>
+    </div>
+    <div
+      class="list-group-item"
+    >
+      <div
+        class="row"
+      >
+        <div
+          class="detailsItem col-xl-2 col-md-4"
+        >
+          <div
+            class="detailsItem__label"
+          >
+            Imię
+          </div>
+          <div
+            class="detailsItem__value"
+          >
+            Jan2
+          </div>
+        </div>
+        <div
+          class="detailsItem col-xl-3 col-md-4"
+        >
+          <div
+            class="detailsItem__label"
+          >
+            Nazwisko
+          </div>
+          <div
+            class="detailsItem__value"
+          >
+            Kowalski2
+          </div>
+        </div>
+        <div
+          class="detailsItem col-xl-3 col-md-4"
+        >
+          <div
+            class="detailsItem__label"
+          >
+            Email
+          </div>
+          <div
+            class="detailsItem__value"
+          >
+            ab@cd.pl2
+          </div>
+        </div>
+        <div
+          class="align-self-center d-flex justify-content-end col"
+        >
+          <button
+            class="btnDownload btn btn-primary m-1 btn-sm"
+            type="button"
+          >
+            Pokaż CV
+          </button>
+          <button
+            class="btnAccept btn btn-success m-1 btn-sm"
+            type="button"
+          >
+            Akceptuj
+          </button>
+          <a
+            class="btnImprove btn btn-warning m-1 btn-sm"
+            href="/cvCorrection/1"
+          >
+            Zgłoś poprawki
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`CVList should match with snapshot with no cvs 1`] = `
+<div>
+  <div
+    class="list-group"
+  />
+</div>
+`;

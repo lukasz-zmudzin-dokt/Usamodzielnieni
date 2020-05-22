@@ -24,7 +24,7 @@ export default [
   {
     name: "Oferty pracy",
     path: paths.JOB_OFFERS,
-    allowed: [userTypes.STANDARD, userTypes.STAFF, userTypes.EMPLOYER],
+    allowed: undefined,
   },
   {
     name: "Dodaj ofertę",
@@ -41,7 +41,7 @@ export default [
   {
     name: "Blogi",
     path: paths.BLOG_PAGE,
-    allowed: [userTypes.STANDARD, userTypes.STAFF, userTypes.EMPLOYER],
+    allowed: undefined,
   },
   {
     name: "Dodaj post",
@@ -52,6 +52,11 @@ export default [
   {
     name: "Telefony",
     path: paths.CONTACT_PAGE,
+    allowed: undefined, //wszyscy są upoważnieni - zalogowani i niezalogowani
+  },
+  {
+    name: "Kroki",
+    path: paths.STEPS,
     allowed: undefined, //wszyscy są upoważnieni - zalogowani i niezalogowani
   },
   {
