@@ -147,19 +147,21 @@ class ContactPage extends React.Component {
                   <Button variant="primary" className="mb-3" onClick={handleClick}>Dodaj kontakt</Button>
               ) : null
             }
-            <CardColumns>
-              {this.state.phoneList.length === 0 ?
-                <Alert variant="info">Brak kontaktów do wyświetlenia.</Alert> :
-                this.state.phoneList.map((contact) => (
-                <PhoneCard
-                  key={contact.name + contact.phone}
-                  contact={contact}
-                  cutItem={this.cutPhone}
-                  user={this.context}
-                  alertC={this.props.alertContext}
-                />
-              ))}
-            </CardColumns>
+            {this.state.phoneList.length === 0 ?
+                <Alert variant="info">Brak kontaktów do wyświetlenia.</Alert> : (
+                    <CardColumns>
+                      {this.state.phoneList.map((contact) => (
+                      <PhoneCard
+                          key={contact.name + contact.phone}
+                          contact={contact}
+                          cutItem={this.cutPhone}
+                          user={this.context}
+                          alertC={this.props.alertContext}
+                      />
+                      ))}
+                    </CardColumns>
+                )
+            }
           </Card.Body>
         </Card>
         {this.state.modalShow ? displayModal() : null}
