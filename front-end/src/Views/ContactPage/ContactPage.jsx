@@ -1,6 +1,8 @@
 import React from "react";
 import { Card, Container, CardColumns } from "react-bootstrap";
 import PhoneCard from "./components/PhoneCard";
+import {UserContext} from "context/UserContext";
+import {withAlertContext} from "components";
 
 class ContactPage extends React.Component {
   render() {
@@ -34,6 +36,7 @@ class ContactPage extends React.Component {
             Lista przydatnych telefonów
           </Card.Header>
           <Card.Body className="bg_card">
+            {}
             <CardColumns>
               {phoneList.map((contact) => (
                 <PhoneCard
@@ -50,4 +53,6 @@ class ContactPage extends React.Component {
   }
 }
 
-export default ContactPage;
+ContactPage.contextType = UserContext;
+
+export default withAlertContext(ContactPage);

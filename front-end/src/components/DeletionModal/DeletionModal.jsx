@@ -18,7 +18,7 @@ const DeletionModal = ({
   };
 
   return (
-    <Modal show={show}>
+    <Modal show={show} onHide={setShow(false)}>
       <Modal.Body>{question}</Modal.Body>
       <Modal.Footer>
         <Button
