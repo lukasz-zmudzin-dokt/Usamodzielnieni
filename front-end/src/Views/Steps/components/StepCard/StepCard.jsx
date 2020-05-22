@@ -1,8 +1,10 @@
-import React from "react";
+import React, {useContext} from "react";
 import { Button, Card } from "react-bootstrap";
 import Player from "components/Player";
-
+import { UserContext } from "context";
+import {userTypes} from "constants/userTypes"
 const StepCard = ({ step, setCurrent, wantsDelete }) => {
+    const user = useContext(UserContext);
   return (
     <Card className="stepCard">
       <Card.Body>
@@ -27,9 +29,12 @@ const StepCard = ({ step, setCurrent, wantsDelete }) => {
           </Button>
         ))}
       </Card.Body>
-      <Button variant="danger" onClick={() => wantsDelete(true)}>
-        Usuń krok
-      </Button>
+      {(user.type === userTypes.STAFF)?
+        <Button variant="danger" onClick={() => wantsDelete(true)}>
+            Usuń krok
+        </Button>
+        : null
+        }
     </Card>
   );
 };
