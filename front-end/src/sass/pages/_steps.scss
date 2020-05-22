@@ -1,3 +1,7 @@
+html {
+    scroll-behavior: smooth;
+}
+
 .progressBarFragment__container {
     display: grid;
     column-gap: 1rem;
@@ -6,7 +10,7 @@
     grid-template-areas:
         ". bullet title"
         ". bar title"
-        ". bar infoMobile";
+        "infoMobile bar .";
     justify-items: center;
     @include media-breakpoint-down(md) {
         column-gap: 0.75rem;
@@ -87,12 +91,12 @@
         padding-right: 0.75rem;
     }
 }
-.stepInfo {
+.stepCard {
     grid-area: infoMobile;
     margin: 1rem 0;
     width: 100%;
     @include media-breakpoint-up(lg) {
-        position: fixed;
+        position: static;
         width: 310px;
         justify-self: start;
         top: 11rem;
@@ -105,14 +109,14 @@
 // // animacje
 
 .progressBarFragment__container {
-    overflow-y: hidden;
-    animation: showStep 4s ease-out;
+    //overflow-y: hidden;
+    animation: showStep 1.5s ease-out;
     animation-fill-mode: forwards;
 }
 @include media-breakpoint-down(md) {
-    .stepInfo {
+    .stepCard {
         transition: max-height 1s ease-out;
-        max-height: 200px;
+        max-height: fit-content;
     }
 }
 

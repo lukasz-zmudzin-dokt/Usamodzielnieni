@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`StepCardTest should match snapshot 1`] = `
+<div>
+  <div
+    class="stepCard card"
+  >
+    <div
+      class="card-body"
+    >
+      <div>
+        <div
+          class=""
+        >
+          <div
+            class="yt_player"
+          />
+        </div>
+      </div>
+      <h4
+        class="card-text"
+        text-muted="true"
+      >
+        Opis kroku:
+      </h4>
+      Opis kroku 2 wraz z filmikami.
+      <h4
+        class="mt-3 card-text"
+        text-muted="true"
+      >
+        Akcje:
+      </h4>
+      <button
+        class="btn btn-primary btn-block"
+        type="button"
+      >
+        Dalej
+      </button>
+    </div>
+  </div>
+</div>
+`;

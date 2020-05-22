@@ -39,6 +39,17 @@ const UserList = () => {
   const [disabled, setDisabled] = useState(false);
 
   useEffect(() => {
+    const mapUsers = (list) => {
+      return list.map((user) => ({
+        id: user.id,
+        email: user.email,
+        username: user.username,
+        status: user.status,
+        type: user.type,
+        dateJoined: new Date(user.date_joined),
+        lastLogin: user.last_login,
+      }));
+    };
     const loadList = async (token) => {
       setLoading(true);
       setDisabled(true);
@@ -56,18 +67,6 @@ const UserList = () => {
     };
     loadList(context.token);
   }, [context.token, filters]);
-
-  const mapUsers = (list) => {
-    return list.map((user) => ({
-      id: user.id,
-      email: user.email,
-      username: user.username,
-      status: mapStatus(user.status),
-      type: mapType(user.type),
-      dateJoined: user.date_joined,
-      lastLogin: user.last_login,
-    }));
-  };
 
   const mapStatus = (status) => {
     switch (status) {
@@ -111,6 +110,18 @@ const UserList = () => {
     )
   );
 
+  const setUser = (user) => {
+    setUsers((prevUsers) =>
+      prevUsers.map((prevUser) => (prevUser.id === user.id ? user : prevUser))
+    );
+  };
+
+  const deleteUser = (user) => {
+    setUsers((prevUsers) =>
+      prevUsers.filter((prevUser) => prevUser.id !== user.id)
+    );
+  };
+
   return (
     <Container>
       <Card>
@@ -128,7 +139,13 @@ const UserList = () => {
           <ListGroup variant="flush">
             {users.map((user) => (
               <ListGroup.Item key={user.id}>
-                <UserInfo user={user} />
+                <UserInfo
+                  user={user}
+                  setUser={setUser}
+                  deleteUser={deleteUser}
+                  mapType={mapType}
+                  mapStatus={mapStatus}
+                />
               </ListGroup.Item>
             ))}
           </ListGroup>
