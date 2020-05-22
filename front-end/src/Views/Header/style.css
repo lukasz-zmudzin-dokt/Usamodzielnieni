@@ -6,8 +6,33 @@
     background-color: #A63A53;
     color: white!important;
     padding-left: 20px!important;
-    padding-right: 30px!important;
+    padding-right: 20px!important;
 }
 .navbar-right-button {
+    color: white!important;
+    padding-left: 20px!important;
+    padding-right: 20px!important;
+    margin-left: 20px;
+}
+.register-color {
+    background-color: #42B4A8;
+    width: 160px;
+}
+.login-color {
+    background-color: #4F74C6;
+}
+.notification-color {
+    background-color: #ff884d;
+}
+.account-dropdown-button {
+    background-color: #6ac8bf!important;
+}
 
+.dropdown-menu {
+    border-style: none;
+    margin: 0;
+    padding: 0;
+}
+.white {
+    color: white!important;
 }
