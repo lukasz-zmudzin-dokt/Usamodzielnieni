@@ -7,4 +7,5 @@ export { default as FormGroup } from "./FormGroup";
 export { default as AlertMessage } from "./AlertMessage";
 export { default as AlertsContainer } from "./AlertsContainer";
 export { default as withAlertContext } from "./withAlertContext";
+export { default as Pagination } from "./Pagination";
 export { DetailsItem, UserPicture, DeletionModal, Player };

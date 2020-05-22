@@ -39,24 +39,27 @@ describe("CVApproval", () => {
   });
 
   beforeEach(() => {
-    apiCVs = [
-      {
-        cv_id: 0,
-        basic_info: {
-          first_name: "Jarek",
-          last_name: "Arek",
-          email: "jamjestjarek@arek.pp",
+    apiCVs = {
+      count: 2,
+      results: [
+        {
+          cv_id: 0,
+          basic_info: {
+            first_name: "Jarek",
+            last_name: "Arek",
+            email: "jamjestjarek@arek.pp",
+          },
         },
-      },
-      {
-        cv_id: 1,
-        basic_info: {
-          first_name: "Ala",
-          last_name: "Mala",
-          email: "malaala@lala.la",
+        {
+          cv_id: 1,
+          basic_info: {
+            first_name: "Ala",
+            last_name: "Mala",
+            email: "malaala@lala.la",
+          },
         },
-      },
-    ];
+      ],
+    };
     failFetch = false;
     jest.clearAllMocks();
   });
@@ -111,7 +114,7 @@ describe("CVApproval", () => {
   });
 
   it("should hide cv on accept", async () => {
-    apiCVs = [apiCVs[0]];
+    apiCVs = { count: 1, results: [apiCVs.results[0]] };
     const { getByText, queryByText } = render(
       <AlertContext.Provider value={contextA}>
         <MemoryRouter>
@@ -134,7 +137,7 @@ describe("CVApproval", () => {
   });
 
   it("should render alert on api fail while accepting", async () => {
-    apiCVs = [apiCVs[0]];
+    apiCVs = { count: 1, results: [apiCVs.results[0]] };
     const { getByText, queryByText } = render(
       <AlertContext.Provider value={contextA}>
         <MemoryRouter>
