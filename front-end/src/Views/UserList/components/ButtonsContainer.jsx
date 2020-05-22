@@ -22,7 +22,9 @@ const ButtonsContainer = ({ user, setUser, deleteUser }) => {
       {user.type !== userTypes.STAFF && (
         <>
           {!disableButtons ? (
-            <BlockAccountButton user={user} setUser={setUser} />
+            user.status === userStatuses.VERIFIED && (
+              <BlockAccountButton user={user} setUser={setUser} />
+            )
           ) : (
             <UnblockAccountButton user={user} setUser={setUser} />
           )}

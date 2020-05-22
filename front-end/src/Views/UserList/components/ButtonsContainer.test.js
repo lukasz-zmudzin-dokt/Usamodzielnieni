@@ -110,6 +110,19 @@ describe("ButtonsContainer", () => {
     expect(container).toMatchSnapshot();
   });
 
+  it("should not render block when user status is not verified", async () => {
+    props.user.status = userStatuses.AWAITING;
+    const { getByText, queryByText } = render(
+      <MemoryRouter>
+        <ButtonsContainer {...props} />
+      </MemoryRouter>
+    );
+
+    expect(queryByText("BlockAccountButton")).not.toBeInTheDocument();
+    expect(getByText("DeleteAccountButton")).toBeInTheDocument();
+    expect(getByText("Wyślij wiadomość")).toBeInTheDocument();
+  });
+
   it("should redirect to chat", () => {
     const { history, getByText } = renderWithRouter(
       <ButtonsContainer {...props} />
