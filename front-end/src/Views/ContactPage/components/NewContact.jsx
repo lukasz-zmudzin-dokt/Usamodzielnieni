@@ -64,15 +64,17 @@ export const NewContact = ({user, show, setShow, setContacts, alertC}) => {
                         required
                         incorrect="Podaj nazwę kontaktu"
                         length={{ min: 1, max: 120 }}
+                        data-testid="modal_name"
                     />
                     <FormGroup
                         header="Numer telefonu"
                         setVal={setPhone}
-                        id="name"
+                        id="phone"
                         val={phone}
                         required
                         incorrect="Podaj telefon kontaktowy"
                         length={{ min: 1, max: 120 }}
+                        data-testid="modal_phone"
                     />
                 </Modal.Body>
                 <Modal.Footer>

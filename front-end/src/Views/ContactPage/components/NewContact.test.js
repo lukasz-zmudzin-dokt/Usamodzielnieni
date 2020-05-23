@@ -1,7 +1,7 @@
 import {userTypes} from "constants/userTypes";
 import {staffTypes} from "constants/staffTypes";
-import { render, fireEvent, waitForElement, wait } from "@testing-library/react";
-import {NewContact, showNewContactForm} from "./NewContact";
+import { render, fireEvent, wait } from "@testing-library/react";
+import {NewContact} from "./NewContact";
 import React from "react";
 
 
@@ -9,15 +9,13 @@ import React from "react";
 describe("NewContact test", () => {
     let apiFail, user, show, setShow, setContacts, alertC;
 
-    const test = <button onClick={showNewContactForm}>Pokaż modal</button>;
-
     beforeAll(() => {
         global.fetch = jest.fn().mockImplementation(() => {
             return new Promise((resolve) => {
                 if (apiFail) {
                     resolve({status: 500});
                 } else {
-                    resolve({status: 201, json: () => Promise.resolve("asd")})
+                    resolve({status: 201, json: () => Promise.resolve({id: "asd"})})
                 }
             });
         });
@@ -51,5 +49,64 @@ describe("NewContact test", () => {
         );
 
         await expect(container).toMatchSnapshot();
+    });
+
+    it('should validate form and submit phone', async () => {
+        const {getByLabelText, getByText} = render(
+            <NewContact
+                user={user}
+                show={show}
+                setShow={setShow}
+                setContacts={setContacts}
+                alertC={alertC}
+            />
+        );
+
+        fireEvent.change(getByLabelText("Nazwa kontaktu"), {
+            target: {value: "qweqwe"}
+        });
+        fireEvent.change(getByLabelText("Numer telefonu"), {
+            target: {value: "123123123"}
+        });
+        fireEvent.click(getByText("Dodaj"));
+
+        await wait(() => expect(fetch).toHaveBeenCalled());
+
+        expect(alertC.showAlert).toHaveBeenCalledWith(
+            "Pomyślnie dodano kontakt", "success"
+        );
+
+        expect(setContacts).toHaveBeenCalledWith({
+            id: "asd",
+            name: "qweqwe",
+            phone: "123123123"
+        });
+    });
+
+    it('should render alert on api fail', async () => {
+        apiFail = true;
+        const {getByLabelText, getByText} = render(
+            <NewContact
+                user={user}
+                show={show}
+                setShow={setShow}
+                setContacts={setContacts}
+                alertC={alertC}
+            />
+        );
+
+        fireEvent.change(getByLabelText("Nazwa kontaktu"), {
+            target: {value: "qweqwe"}
+        });
+        fireEvent.change(getByLabelText("Numer telefonu"), {
+            target: {value: "123123123"}
+        });
+        fireEvent.click(getByText("Dodaj"));
+
+        await wait(() => expect(fetch).toHaveBeenCalled());
+
+        expect(alertC.showAlert).toHaveBeenCalledWith(
+            "Wystąpił błąd podczas dodawania kontaktu."
+        );
     });
 });

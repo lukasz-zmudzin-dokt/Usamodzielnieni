@@ -28,7 +28,6 @@ class ContactPage extends React.Component {
   getContacts = async() => {
     try {
       const list = await this.loadData();
-      console.log("poszło");
       const phoneList = list.map(item => ({
         id: item.id,
         name: item.title,
