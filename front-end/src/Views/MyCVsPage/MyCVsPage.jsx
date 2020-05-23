@@ -20,7 +20,7 @@ class MyCVsPage extends React.Component {
   getCVs = async () => {
     try {
       const res = await getUserCVs(this.context.token);
-      this.setState({ cvs: res.results });
+      this.setState({ cvs: res });
     } catch (e) {
       console.log(e);
       this.setState({ errors: true });
