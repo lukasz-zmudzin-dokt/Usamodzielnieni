@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Button, Card } from "react-bootstrap";
-import {DeletionModal} from "components";
-import {userTypes} from "constants/userTypes";
+import { DeletionModal } from "components";
+import { userTypes } from "constants/userTypes";
 import proxy from "config/api";
-import {staffTypes} from "constants/staffTypes";
+import { staffTypes } from "constants/staffTypes";
 
 const copyToClipboard = (text, setCopied) => {
   setCopied(true);
@@ -20,10 +20,10 @@ const deleteCard = async (id, token) => {
   const url = proxy.contact + "contact/" + id + "/";
   const headers = {
     Authorization: "Token " + token,
-    "Content-Type": "application/json"
+    "Content-Type": "application/json",
   };
 
-  const res = await fetch (url, {headers, method: "DELETE"});
+  const res = await fetch(url, { headers, method: "DELETE" });
 
   if (res.status === 200) {
     return await res.json();
@@ -42,7 +42,7 @@ const PhoneCard = ({ contact, user, cutItem, alertC }) => {
       await deleteCard(id, user.token);
       alertC.showAlert("Pomyślnie usunięto kartę kontaktu.", "success");
       cutItem(id);
-    } catch(e) {
+    } catch (e) {
       console.log(e);
       if (e === 404) {
         alertC.showAlert("Ta karta została już usunięta.");
@@ -57,34 +57,31 @@ const PhoneCard = ({ contact, user, cutItem, alertC }) => {
       <Card.Body>
         <Card.Title className="d-flex justify-content-between" as="h2">
           {contact.phone}
-          {
-            user?.type === userTypes.STAFF && user.data.group_type.includes(staffTypes.BLOG_MODERATOR) ? (
-                <Button size="sm" variant="light" onClick={e => setShow(true)}>
-                    X
-                </Button>
-            ) : null
-          }
+          {user?.type === userTypes.STAFF &&
+          user.data.group_type.includes(staffTypes.BLOG_MODERATOR) ? (
+            <Button size="sm" variant="light" onClick={(e) => setShow(true)}>
+              X
+            </Button>
+          ) : null}
         </Card.Title>
         <Card.Text>{contact.name}</Card.Text>
         <Button
-            variant="primary"
-            block
-            size="sm"
-            onClick={(e) => copyToClipboard(contact.phone, setCopied)}
+          variant="primary"
+          block
+          size="sm"
+          onClick={(e) => copyToClipboard(contact.phone, setCopied)}
         >
           {copied ? "Skopiowano" : "Skopiuj ten numer"}
         </Button>
       </Card.Body>
-      {
-        show ? (
-            <DeletionModal
-              show={show}
-              setShow={setShow}
-              question="Czy na pewno chcesz usunąć ten kontakt?"
-              delConfirmed={handleDeletion}
-              />
-        ) : null
-      }
+      {show ? (
+        <DeletionModal
+          show={show}
+          setShow={setShow}
+          question="Czy na pewno chcesz usunąć ten kontakt?"
+          delConfirmed={handleDeletion}
+        />
+      ) : null}
     </Card>
   );
 };

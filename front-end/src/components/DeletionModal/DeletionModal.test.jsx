@@ -21,7 +21,9 @@ describe("deletion modal tests", () => {
   });
 
   it("should display default labels", () => {
-    const { getByText } = render(<DeletionModal show="true" setShow={jest.fn()} />);
+    const { getByText } = render(
+      <DeletionModal show="true" setShow={jest.fn()} />
+    );
     expect(getByText("Usuń ✗")).toBeInTheDocument();
     expect(getByText("Zostaw")).toBeInTheDocument();
   });
