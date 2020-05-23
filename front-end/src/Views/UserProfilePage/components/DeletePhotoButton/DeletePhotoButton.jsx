@@ -37,6 +37,7 @@ const DeletePhotoButton = ({ user }) => {
       setDisabled(false);
       return;
     }
+    setDisabled(false);
     user.changeData({ ...user.data, picture_url: null });
   };
 
@@ -47,7 +48,7 @@ const DeletePhotoButton = ({ user }) => {
         onClick={onButtonClick}
         disabled={disabled || user.data.picture_url === null}
       >
-        {disabled ? "Ładowanie..." : "Usuń"}
+        Usuń
       </Button>
       <DeletionModal
         show={showModal}

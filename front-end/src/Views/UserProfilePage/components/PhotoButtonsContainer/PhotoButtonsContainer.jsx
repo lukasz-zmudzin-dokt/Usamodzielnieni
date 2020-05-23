@@ -1,11 +1,8 @@
-import React, { useContext } from "react";
+import React from "react";
 import { ButtonGroup } from "react-bootstrap";
 import { ChangePhotoButton, DeletePhotoButton } from "../";
-import { UserContext } from "context";
 
-const PhotoButtonsContainer = () => {
-  const user = useContext(UserContext);
-
+const PhotoButtonsContainer = ({ user }) => {
   return (
     <ButtonGroup size="sm">
       <ChangePhotoButton user={user} />

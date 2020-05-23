@@ -1,19 +1,26 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Row, Col } from "react-bootstrap";
-import { UserIcon, PhotoButtonsContainer } from "../";
+import { PhotoButtonsContainer } from "../";
+import { UserPicture } from "components";
+import { UserContext } from "context";
 
 const UserBasicInfo = ({ user, names }) => {
   const { firstName, lastName } = user;
   const { role } = names;
+
+  const userContext = useContext(UserContext);
+
   return (
     <Col>
       <Row className="text-center text-sm-left">
         <Col xs="12" sm="auto">
-          <Row className="justify-content-center mb-2">
-            <UserIcon />
+          <Row className="justify-content-center">
+            <h3>
+              <UserPicture user={userContext} />
+            </h3>
           </Row>
           <Row className="justify-content-center mb-3 mb-sm-0">
-            <PhotoButtonsContainer />
+            <PhotoButtonsContainer user={userContext} />
           </Row>
         </Col>
         <Col>
