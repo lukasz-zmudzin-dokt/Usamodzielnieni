@@ -55,11 +55,10 @@ const getUserData = async (token, id) => {
   return res.json();
 };
 
-const sendFixedData = async (token, id, data, isAdmin) => {
-  const url = isAdmin
+const sendFixedData = async (token, id, data) => {
+  const url = data.group_type
     ? `${proxy.account}admin/data/edit/`
     : `${proxy.account}admin/user_details/edit/${id}/`;
-
   const header = {
     method: "PATCH",
     body: JSON.stringify(data),

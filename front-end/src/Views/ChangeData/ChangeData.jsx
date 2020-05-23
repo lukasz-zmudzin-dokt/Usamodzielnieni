@@ -33,7 +33,6 @@ const ChangeData = () => {
   const { id } = useParams();
   const user = useContext(UserContext);
   const alertC = useRef(useContext(AlertContext));
-  const [prevData, setPrevData] = useState({});
 
   const backToList = () => {
     if (data.group_type) {
@@ -52,8 +51,6 @@ const ChangeData = () => {
     const getData = async (token, id) => {
       try {
         const res = await getUserData(token, id);
-
-        setPrevData(res);
         setData(res);
       } catch (err) {
         setErr(true);
@@ -73,23 +70,9 @@ const ChangeData = () => {
     if (form.checkValidity() !== false) {
       setDisabled(true);
       const changeData = changeDataObject(data);
-      const prevMapData = changeDataObject(prevData);
-      let validData = {};
-      Object.keys(changeData).map((key) =>
-        changeData[key] === prevMapData[key]
-          ? null
-          : (validData[key] = changeData[key])
-      );
-      if (
-        Object.keys(validData).length === 0 &&
-        validData.constructor === Object
-      ) {
-        alertC.current.showAlert("Nie zmieniłeś żadnych danych.");
-        setDisabled(false);
-        return -1;
-      }
+
       try {
-        await sendFixedData(user.token, id, validData, prevData.group_type);
+        await sendFixedData(user.token, id, changeData);
         alertC.current.showAlert(
           "Udało się przesłać poprawione dane.",
           "success"

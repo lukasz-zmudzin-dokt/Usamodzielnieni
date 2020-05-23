@@ -159,18 +159,24 @@ describe("ChangeData", () => {
 
   it("should redirect after sending data(company form)", async () => {
     data = {
-      email: "abc@o2.pl",
-      first_name: "user",
-      last_name: "user",
-      phone_number: "+48123123123",
-      company_name: "abc",
       company_address: {
-        city: "new",
-        street: "city",
-        street_number: "12",
-        postal_code: "12-123",
+        city: "Poznań",
+        postal_code: "02-371",
+        street: "Jana Pawła",
+        street_number: "2",
       },
-      nip: "123123123",
+      company_name: "employer52",
+      date_joined: "2020-04-26T22:20:47.159000+02:00",
+      email: "employer5@employer5.com",
+      first_name: "employer5",
+      id: "96b7ea64-abc0-42b7-9844-69b30cb4ae37",
+      last_login: "2020-04-26T22:20:47.159000+02:00",
+      last_name: "employer5",
+      nip: "8233582855",
+      phone_number: "+48127253233",
+      picture_url: null,
+      status: "waiting_for_verification",
+      username: "employer5",
     };
     const { getByText, history, getByLabelText } = renderWithRouter(
       <ChangeData />,
@@ -318,5 +324,36 @@ describe("ChangeData", () => {
     expect(queryByText("Numer telefonu")).not.toBeInTheDocument();
     expect(queryByText("Adres placówki")).not.toBeInTheDocument();
     expect(queryByText("Adres firmy")).not.toBeInTheDocument();
+  });
+
+  it("should send staff data", async () => {
+    data = {
+      email: "abc@o2.pl",
+      first_name: "user",
+      last_name: "user",
+      group_type: ["abc"],
+      username: "abc",
+      picture_url: null,
+    };
+    const { getByText, getByLabelText } = renderWithRouter(
+      <ChangeData />,
+      alertC
+    );
+
+    await waitForElement(() => getByText("Prześlij zmiany"));
+
+    fireEvent.change(getByLabelText("Login"), {
+      target: {
+        value: "abc",
+      },
+    });
+
+    fireEvent.click(getByText("Prześlij zmiany"));
+
+    await wait(() => expect(alertC.showAlert).toHaveBeenCalled());
+
+    expect(alertC.showAlert).toHaveBeenCalledWith(
+      "Nie udało się przesłać danych."
+    );
   });
 });
