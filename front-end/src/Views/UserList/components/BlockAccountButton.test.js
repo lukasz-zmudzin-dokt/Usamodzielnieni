@@ -1,13 +1,16 @@
 import React from "react";
 import { render, fireEvent, wait, queries } from "@testing-library/react";
 import BlockAccountButton from "./BlockAccountButton";
-import { AlertContext } from "context";
+import { AlertContext, UserContext } from "context";
+import {userTypes} from "constants/userTypes";
+import {staffTypes} from "constants/staffTypes";
 
 describe("BlockAccountButton", () => {
   let apiShouldFail;
   let user;
   let contextA;
   let setUser;
+  let context;
   beforeAll(() => {
     global.fetch = jest.fn().mockImplementation((input, init) => {
       return new Promise((resolve, reject) => {
@@ -36,16 +39,30 @@ describe("BlockAccountButton", () => {
       showAlert: jest.fn(),
     };
     setUser = jest.fn();
+    context = {
+      type: userTypes.STAFF,
+      data: {
+        group_type: [staffTypes.VERIFICATION, staffTypes.BLOG_MODERATOR]
+      }
+    }
   });
 
   it("should render without crashing", async () => {
-    const { container } = render(<BlockAccountButton user={user} />);
+    const { container } = render(
+        <UserContext.Provider value={context}>
+          <BlockAccountButton user={user} />
+        </UserContext.Provider>
+    );
 
     expect(container).toMatchSnapshot();
   });
 
   it("should open modal when button is clicked", async () => {
-    const { getByText } = render(<BlockAccountButton user={user} />);
+    const { getByText } = render(
+        <UserContext.Provider value={context}>
+          <BlockAccountButton user={user} />
+        </UserContext.Provider>
+    );
 
     fireEvent.click(getByText("Zablokuj konto", { exact: false }));
 
@@ -57,7 +74,9 @@ describe("BlockAccountButton", () => {
   it("should display success alert when confirmation button is clicked", async () => {
     const { getByText, getByRole, queryByText } = render(
       <AlertContext.Provider value={contextA}>
-        <BlockAccountButton user={user} setUser={setUser} />
+        <UserContext.Provider value={context}>
+          <BlockAccountButton user={user} setUser={setUser}/>
+        </UserContext.Provider>
       </AlertContext.Provider>
     );
 
@@ -86,7 +105,9 @@ describe("BlockAccountButton", () => {
     apiShouldFail = true;
     const { getByText, getByRole, queryByText } = render(
       <AlertContext.Provider value={contextA}>
-        <BlockAccountButton user={user} />
+        <UserContext.Provider value={context}>
+          <BlockAccountButton user={user} setUser={setUser}/>
+        </UserContext.Provider>
       </AlertContext.Provider>
     );
 
