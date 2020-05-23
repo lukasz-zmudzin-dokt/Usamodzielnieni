@@ -128,7 +128,7 @@ const FormGroup = ({
       default:
         return (
           <Form.Control
-            type="text"
+            type={type || "text"}
             placeholder={header}
             onChange={setInput}
             value={val}

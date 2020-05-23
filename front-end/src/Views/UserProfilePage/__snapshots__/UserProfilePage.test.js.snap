@@ -118,6 +118,12 @@ exports[`UserProfile should render correctly 1`] = `
           >
             Usuń konto
           </button>
+          <button
+            class="btn btn-info"
+            type="button"
+          >
+            Zmień hasło
+          </button>
         </div>
       </div>
     </div>
