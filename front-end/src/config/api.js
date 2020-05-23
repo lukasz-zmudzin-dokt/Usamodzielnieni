@@ -9,6 +9,7 @@ const proxy = {
   notifications: domain + "/notifications/",
   chat: domain + "/chat/",
   steps: domain + "/steps/",
+  videos: domain + "/videos/",
 };
 
 export default proxy;

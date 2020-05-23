@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Row, Col, Alert, Form } from "react-bootstrap";
-
+import { VideoField } from "components";
 const CVEditorTab = ({
   title,
   movie,
@@ -17,7 +17,9 @@ const CVEditorTab = ({
 }) => (
   <div>
     <h3>{title}</h3>
-    <img className="CVEditorTab__img" src={movie} alt="" />
+    <div className="CVEditorTab__video">
+      <VideoField id={1} />
+    </div>
 
     {!showComments ? null : loading ? (
       <Alert variant="info">Wczytuję uwagi...</Alert>

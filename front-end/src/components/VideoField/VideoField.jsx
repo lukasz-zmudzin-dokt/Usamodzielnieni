@@ -2,15 +2,36 @@ import React, { useState, useEffect, useContext } from "react";
 import YouTube from "react-youtube";
 import { ChangeVideo } from "./components";
 import { UserContext } from "context";
+import proxy from "config/api";
+import { getUrl } from "./functions";
+import { Alert } from "react-bootstrap";
+import { staffTypes } from "constants/staffTypes";
 
-const VideoField = ({ url, id }) => {
-  const [videoID, setVideoID] = useState("");
+const VideoField = ({ id = 1 }) => {
+  const [video, setVideo] = useState({ id: 0 });
+  const [err, setErr] = useState("");
+  const [loading, setLoading] = useState(false);
   const user = useContext(UserContext);
 
   useEffect(() => {
-    const search = url.lastIndexOf("=");
-    setVideoID(url.slice(search + 1));
-  }, [url]);
+    // const search = url.lastIndexOf("=");
+    setLoading(true);
+    const getVideos = async () => {
+      let res;
+      try {
+        res = await getUrl(user.token, id);
+        let changeRes = res;
+        const index = res.url.lastIndexOf("=");
+        changeRes.url = res.url.slice(index + 1);
+        setVideo(changeRes);
+      } catch (e) {
+        console.log("błąd");
+      }
+      setLoading(false);
+    };
+    getVideos();
+    // setVideoID(url.slice(search + 1));
+  }, [id, user.token]);
 
   const opts = {
     height: "100%",
@@ -26,17 +47,25 @@ const VideoField = ({ url, id }) => {
     event.target.pauseVideo();
   };
 
-  const conditional = user.type === "Staff";
+  const conditional = user.type === "Staff" && staffTypes.BLOG_MODERATOR;
+
+  const msg = err ? (
+    <Alert variant="danger">Wystąpił błąd podczas wczytywania filmu.</Alert>
+  ) : loading ? (
+    <Alert variant="info">Ładowanie...</Alert>
+  ) : null;
 
   return (
-    videoID && (
+    msg || (
       <div className="videoField__container">
-        <YouTube
-          className="videoField__video"
-          videoId={videoID}
-          opts={opts}
-          onReady={onReady}
-        />
+        {video.url && (
+          <YouTube
+            className="videoField__video"
+            videoId={video.url}
+            opts={opts}
+            onReady={onReady}
+          />
+        )}
         {<ChangeVideo id={id} token={user.token} />}
       </div>
     )
