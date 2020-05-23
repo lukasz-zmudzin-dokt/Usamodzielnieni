@@ -48,7 +48,6 @@ export const UserProvider = (props) => {
       setData(undefined);
     },
   };
-  console.log(user.data);
   return <UserContext.Provider value={user} {...props} />;
 };
 

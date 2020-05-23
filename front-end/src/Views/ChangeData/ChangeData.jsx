@@ -1,7 +1,11 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import { FormGroup } from "components";
 import { Form, Card, Button, Container, Row, Alert } from "react-bootstrap";
-import { getUserData, sendFixedData } from "./functions/changeData";
+import {
+  getUserData,
+  sendFixedData,
+  changeDataObject,
+} from "./functions/changeData";
 import { useHistory, useParams } from "react-router-dom";
 import { UserContext, AlertContext } from "context";
 import { FacilityForm, CompanyForm } from "./components";
@@ -29,6 +33,7 @@ const ChangeData = () => {
   const { id } = useParams();
   const user = useContext(UserContext);
   const alertC = useRef(useContext(AlertContext));
+  const [prevData, setPrevData] = useState({});
 
   const backToList = () => {
     if (data.group_type) {
@@ -47,6 +52,8 @@ const ChangeData = () => {
     const getData = async (token, id) => {
       try {
         const res = await getUserData(token, id);
+
+        setPrevData(res);
         setData(res);
       } catch (err) {
         setErr(true);
@@ -65,8 +72,24 @@ const ChangeData = () => {
 
     if (form.checkValidity() !== false) {
       setDisabled(true);
+      const changeData = changeDataObject(data);
+      const prevMapData = changeDataObject(prevData);
+      let validData = {};
+      Object.keys(changeData).map((key) =>
+        changeData[key] === prevMapData[key]
+          ? null
+          : (validData[key] = changeData[key])
+      );
+      if (
+        Object.keys(validData).length === 0 &&
+        validData.constructor === Object
+      ) {
+        alertC.current.showAlert("Nie zmieniłeś żadnych danych.");
+        setDisabled(false);
+        return -1;
+      }
       try {
-        await sendFixedData(user.token, id, data);
+        await sendFixedData(user.token, id, validData, prevData.group_type);
         alertC.current.showAlert(
           "Udało się przesłać poprawione dane.",
           "success"
@@ -97,6 +120,10 @@ const ChangeData = () => {
           {err ? (
             <Alert variant="danger">
               Nie udało się pobrać danych użytkownika.
+            </Alert>
+          ) : loading ? (
+            <Alert variant="info" className="changeData__loading">
+              Ładowanie...
             </Alert>
           ) : (
             <Form
@@ -171,11 +198,7 @@ const ChangeData = () => {
                     />
                   </Card.Body>
                 </Card>
-                {loading ? (
-                  <Alert variant="info" className="changeData__loading">
-                    Ładowanie...
-                  </Alert>
-                ) : data.nip ? (
+                {data.nip ? (
                   <CompanyForm data={data} setData={setData} />
                 ) : data.group_type ? null : (
                   <FacilityForm data={data} setData={setData} />

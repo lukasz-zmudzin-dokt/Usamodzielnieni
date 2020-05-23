@@ -55,15 +55,14 @@ const getUserData = async (token, id) => {
   return res.json();
 };
 
-const sendFixedData = async (token, id, data) => {
-  const url = data.group_type
-    ? `${proxy.account}admin/data/edit/${id}/`
+const sendFixedData = async (token, id, data, isAdmin) => {
+  const url = isAdmin
+    ? `${proxy.account}admin/data/edit/`
     : `${proxy.account}admin/user_details/edit/${id}/`;
-  const changeData = changeDataObject(data);
-  console.log(data);
+
   const header = {
-    method: "PUT",
-    body: JSON.stringify(changeData),
+    method: "PATCH",
+    body: JSON.stringify(data),
     headers: {
       "Content-Type": "application/json",
       Origin: null,
@@ -77,4 +76,4 @@ const sendFixedData = async (token, id, data) => {
   return res.status;
 };
 
-export { getUserData, sendFixedData };
+export { getUserData, sendFixedData, changeDataObject };
