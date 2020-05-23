@@ -3,7 +3,7 @@ import { Button, Row, Col, Alert, Form } from "react-bootstrap";
 import { VideoField } from "components";
 const CVEditorTab = ({
   title,
-  movie,
+  id,
   children,
   onPrevClick,
   onNextClick,
@@ -17,9 +17,8 @@ const CVEditorTab = ({
 }) => (
   <div>
     <h3>{title}</h3>
-    <div className="CVEditorTab__video">
-      <VideoField id={1} />
-    </div>
+
+    <VideoField id={id} />
 
     {!showComments ? null : loading ? (
       <Alert variant="info">Wczytuję uwagi...</Alert>

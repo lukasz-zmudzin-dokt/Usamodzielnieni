@@ -9,7 +9,7 @@ import { staffTypes } from "constants/staffTypes";
 
 const VideoField = ({ id = 1 }) => {
   const [video, setVideo] = useState({ id: 0 });
-  const [err, setErr] = useState("");
+  const [err, setErr] = useState(false);
   const [loading, setLoading] = useState(false);
   const user = useContext(UserContext);
 
@@ -20,12 +20,14 @@ const VideoField = ({ id = 1 }) => {
       let res;
       try {
         res = await getUrl(user.token, id);
+        console.log(res);
         let changeRes = res;
         const index = res.url.lastIndexOf("=");
         changeRes.url = res.url.slice(index + 1);
         setVideo(changeRes);
       } catch (e) {
         console.log("błąd");
+        setErr(true);
       }
       setLoading(false);
     };
@@ -66,7 +68,7 @@ const VideoField = ({ id = 1 }) => {
             onReady={onReady}
           />
         )}
-        {<ChangeVideo id={id} token={user.token} />}
+        <ChangeVideo id={id} token={user.token} />
       </div>
     )
   );

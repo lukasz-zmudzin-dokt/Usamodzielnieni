@@ -37,6 +37,7 @@ class PersonalDataTab extends React.Component {
       <CVEditorTab
         title="Dane osobowe"
         movie={movie_1}
+        id={this.props.id}
         onNextClick={this.props.onNextClick}
         comments={this.props.comments}
         loading={this.props.loading}

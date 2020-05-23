@@ -2,10 +2,11 @@
   height: 100%;
   width: 100%;
   position: relative;
+  min-height: 100px;
 
   & div:first-child{
-    height: 100%;
-    width: 100%;
+    position: relative;
+    padding-bottom: 56.25%;
   }
 }
 
@@ -16,8 +17,11 @@
   right: 5px;
 }
 
-// .videoField__video{
-//   height: 100%;
-//   max-width: 100%;
-// }
+.videoField__video{
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
 

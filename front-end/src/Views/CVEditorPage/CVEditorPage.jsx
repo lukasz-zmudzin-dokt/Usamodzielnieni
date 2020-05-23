@@ -132,6 +132,7 @@ class CVEditorPage extends React.Component {
         name: "Dane osobowe",
         component: (
           <PersonalDataTab
+            id={2}
             {...getTabProps("personalData")}
             onPrevClick={undefined}
           />
