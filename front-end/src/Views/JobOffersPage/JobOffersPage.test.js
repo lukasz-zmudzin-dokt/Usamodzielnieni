@@ -251,6 +251,77 @@ describe("JobOffersPage", () => {
       );
     });
 
+    it("should return url with appropriate filters and ordering(last order should be placed in url)", async () => {
+      count = 1;
+      apiOffers = [
+        {
+          id: "abcdc",
+          offer_name: "asd",
+          company_name: "xd",
+          company_address: "xd",
+          voivodeship: "lubelskie",
+          expiration_date: "2020-06-06",
+          description: "asda",
+          category: "abc",
+          type: "xd",
+        },
+      ];
+
+      const { getByLabelText, getByText, getByTestId } = render(
+        <MemoryRouter initialEntries={["/jobOffers"]}>
+          <JobOffersPage />
+        </MemoryRouter>
+      );
+
+      await wait(() => {
+        expect(fetch).toHaveBeenCalled();
+      });
+
+      fireEvent.change(getByLabelText("Okres ważności"), {
+        target: { value: new Date("December 31, 2020 00:00:00") },
+      });
+      fireEvent.change(getByLabelText("Województwo"), {
+        target: { value: "lubelskie" },
+      });
+      fireEvent.change(getByLabelText("Ilość ofert na stronie"), {
+        target: { value: 21 },
+      });
+      fireEvent.change(getByLabelText("Branża"), {
+        target: { value: "abc" },
+      });
+      fireEvent.change(getByLabelText("Typ stanowiska"), {
+        target: { value: "xd" },
+      });
+
+      fireEvent.click(getByTestId("checkUp-offer_name--sort"));
+
+      fireEvent.click(getByTestId("checkUp-category--sort"));
+      fireEvent.click(getByTestId("checkUp-salary_min--sort"));
+      fireEvent.click(getByTestId("checkUp-salary_max--sort"));
+      fireEvent.click(getByTestId("checkUp-company_name--sort"));
+      fireEvent.click(getByTestId("checkUp-expiration_date--sort"));
+      fireEvent.click(getByTestId("checkDown-company_name--sort"));
+
+      jest.clearAllMocks();
+
+      fireEvent.click(getByText("Filtruj oferty"));
+
+      await wait(() => {
+        expect(fetch).toHaveBeenCalled();
+      });
+
+      expect(fetch).toHaveBeenCalledWith(
+        proxy.job +
+          "job-offers/?ordering=-company_name&page=1&page_size=21&voivodeship=lubelskie&min_expiration_date=2020-12-31&categories=abc&types=xd",
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          method: "GET",
+        }
+      );
+    });
+
     it("should show alert on api fail", async () => {
       failFetch = true;
       const alertC = {

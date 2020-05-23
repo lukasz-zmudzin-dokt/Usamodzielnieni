@@ -81,7 +81,7 @@ class MyCVsPage extends React.Component {
 
   render() {
     const { cvs, loading, errors } = this.state;
-    let showBody = cvs.length === 0 || cvs.length === 5 || loading || errors;
+    let showBody = loading || errors || cvs.length === 0 || cvs.length === 5;
     return (
       <Container className="mt-4">
         <Card>

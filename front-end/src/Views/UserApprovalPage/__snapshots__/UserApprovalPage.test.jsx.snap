@@ -27,7 +27,7 @@ exports[`UserApproval should match snapshot 1`] = `
             >
               testowyuser123
                (
-              Standard
+              standard
               )
             </div>
             <div
@@ -151,12 +151,14 @@ exports[`UserApproval should match snapshot 1`] = `
                     >
                       <button
                         class="btn btn-success"
+                        id="accept"
                         type="button"
                       >
                         Akceptuj
                       </button>
                       <button
                         class="ml-3 btn btn-danger"
+                        id="reject"
                         type="button"
                       >
                         Odrzuć
@@ -175,7 +177,7 @@ exports[`UserApproval should match snapshot 1`] = `
             >
               testowyuser1232
                (
-              Employer
+              employer
               )
             </div>
             <div
@@ -311,12 +313,14 @@ exports[`UserApproval should match snapshot 1`] = `
                     >
                       <button
                         class="btn btn-success"
+                        id="accept"
                         type="button"
                       >
                         Akceptuj
                       </button>
                       <button
                         class="ml-3 btn btn-danger"
+                        id="reject"
                         type="button"
                       >
                         Odrzuć

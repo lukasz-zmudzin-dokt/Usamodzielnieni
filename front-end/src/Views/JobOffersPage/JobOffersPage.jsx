@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Container, Card, ListGroup, Alert } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
-import Filter from "./_components/Filter";
+
 import qs from "query-string";
 import { UserContext } from "context";
-import { JobOfferInfo, OffersPagination } from "./_components";
+import { JobOfferInfo, Filter } from "./_components";
 import proxy from "config/api";
+import { Pagination } from "components";
 
-const getOffers = async (filters) => {
+const getOffers = async (filters, sort) => {
   const {
     page,
     pageSize,
@@ -23,7 +24,8 @@ const getOffers = async (filters) => {
   const expirationDateQ = minExpirationDate
     ? `&min_expiration_date=${minExpirationDate}`
     : "";
-  const query = `?page=${page}&page_size=${pageSize}${voivodeshipQ}${expirationDateQ}${categoryQ}${typeQ}`;
+  const pageQuery = `page=${page}&page_size=${pageSize}${voivodeshipQ}${expirationDateQ}${categoryQ}${typeQ}`;
+  const query = sort ? `?ordering=${sort}&${pageQuery}` : `?${pageQuery}`;
   const url = proxy.job + "job-offers/" + query;
   const headers = {
     "Content-Type": "application/json",
@@ -58,6 +60,7 @@ const JobOffersPage = (props) => {
     page: 1,
     pageSize: 10,
   });
+  const [sort, setSort] = useState("");
   const [disabled, setDisabled] = useState(false);
   const [err, setErr] = useState(false);
   const user = useContext(UserContext);
@@ -76,7 +79,7 @@ const JobOffersPage = (props) => {
       setIsOffersLoading(true);
       let res;
       try {
-        res = await getOffers(filters);
+        res = await getOffers(filters, sort);
       } catch (e) {
         console.log(e);
         res = { offers: [], count: 0 };
@@ -88,7 +91,7 @@ const JobOffersPage = (props) => {
       setDisabled(false);
     };
     loadOffers();
-  }, [filters]);
+  }, [filters, sort]);
 
   const msg = isOffersLoading ? (
     <Alert variant="info">Ładowanie ofert...</Alert>
@@ -103,7 +106,12 @@ const JobOffersPage = (props) => {
     <Container>
       <Card>
         <Card.Header as="h2">Oferty pracy</Card.Header>
-        <Filter setFilters={setFilters} count={count} disabled={disabled} />
+        <Filter
+          setFilters={setFilters}
+          setSortJob={setSort}
+          count={count}
+          disabled={disabled}
+        />
         {msg ? (
           <Card.Body>{msg}</Card.Body>
         ) : (
@@ -116,7 +124,7 @@ const JobOffersPage = (props) => {
               ))}
             </ListGroup>
             <Card.Body>
-              <OffersPagination
+              <Pagination
                 current={filters.page}
                 max={Math.ceil(count / filters.pageSize)}
               />

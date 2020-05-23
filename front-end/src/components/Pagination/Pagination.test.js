@@ -1,16 +1,16 @@
 import React from "react";
 import { render } from "@testing-library/react";
-import OffersPagination from "./OffersPagination";
+import Pagination from "./Pagination";
 import { MemoryRouter } from "react-router-dom";
 
-describe("OffersPagination", () => {
+describe("Pagination", () => {
   it("should render without crashing", () => {
     const current = 20;
     const max = 100;
 
     const { container } = render(
       <MemoryRouter>
-        <OffersPagination current={current} max={max} />
+        <Pagination current={current} max={max} />
       </MemoryRouter>
     );
 
@@ -23,7 +23,7 @@ describe("OffersPagination", () => {
 
     const { getByText, queryByText } = render(
       <MemoryRouter>
-        <OffersPagination current={current} max={max} />
+        <Pagination current={current} max={max} />
       </MemoryRouter>
     );
 
@@ -48,7 +48,7 @@ describe("OffersPagination", () => {
 
     const { getByText, queryByText } = render(
       <MemoryRouter>
-        <OffersPagination current={current} max={max} />
+        <Pagination current={current} max={max} />
       </MemoryRouter>
     );
 
@@ -79,7 +79,7 @@ describe("OffersPagination", () => {
 
     const { getByText, queryByText } = render(
       <MemoryRouter>
-        <OffersPagination current={current} max={max} />
+        <Pagination current={current} max={max} />
       </MemoryRouter>
     );
 
