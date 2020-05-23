@@ -82,9 +82,7 @@ const Footer = () => {
               <Col className="p-0">
                 <img src={yt} className="social-media-icon" alt="yt" />
               </Col>
-              <Col className="pl-3">
-                youtube
-              </Col>
+              <Col className="pl-3">youtube</Col>
             </a>
           </Row>
           <Row className="pt-3 social-media-row">
@@ -97,9 +95,7 @@ const Footer = () => {
               <Col className="p-0">
                 <img src={tt} className="social-media-icon" alt="tt" />
               </Col>
-              <Col className="pl-3">
-                twitter
-              </Col>
+              <Col className="pl-3">twitter</Col>
             </a>
           </Row>
           <Row className="pt-3 social-media-row">
@@ -112,9 +108,7 @@ const Footer = () => {
               <Col className="p-0">
                 <img src={fb} className="social-media-icon lol" alt="fb" />
               </Col>
-              <Col className="pl-3">
-                facebook
-              </Col>
+              <Col className="pl-3">facebook</Col>
             </a>
           </Row>
           <Row className="pt-3 social-media-row">
@@ -127,9 +121,7 @@ const Footer = () => {
               <Col className="p-0">
                 <img src={ig} className="social-media-icon" alt="ig" />
               </Col>
-              <Col className="pl-3">
-                instagram
-              </Col>
+              <Col className="pl-3">instagram</Col>
             </a>
           </Row>
         </Col>
