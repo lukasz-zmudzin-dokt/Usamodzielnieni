@@ -64,4 +64,10 @@ describe("CommentItem", () => {
     fireEvent.click(getByText("Usuń ✗", { exact: false }));
     await expect(props.onDeleteClick).toHaveBeenCalledTimes(1);
   });
+
+  it('should render placeholder when author is null', () => {
+    props.comment.author = null;
+    const { getByText } = render(<CommentItem {...props} />);
+    expect(getByText("Użytkownik nieaktywny")).toBeInTheDocument();
+  })
 });

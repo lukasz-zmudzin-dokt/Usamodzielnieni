@@ -10,7 +10,7 @@ import { renderWithTimeout } from "utils/renderWithTimeout/renderWithTimeout";
 const CommentItem = ({ comment, onDeleteClick, user, ...rest }) => {
   const canModifyComment = (user) =>
     user.data
-      ? comment.author.email === user.data.email ||
+      ? comment.author?.email === user.data.email ||
         (user.type === userTypes.STAFF &&
           user.data.group_type.includes(staffTypes.BLOG_MODERATOR))
       : false;
@@ -42,7 +42,7 @@ const CommentItem = ({ comment, onDeleteClick, user, ...rest }) => {
         delConfirmed={setDeletionConfirmed}
         question={"Czy na pewno chcesz usunąć ten komentarz?"}
       />
-      <h5 className="commentItem__header">{`${comment.author.username}`}</h5>
+      <h5 className="commentItem__header">{`${comment.author?.username || "Użytkownik nieaktywny"}`}</h5>
       <small className="commentItem__date">
         dodano: {comment.creationDate.toLocaleDateString(undefined, {})}
       </small>
