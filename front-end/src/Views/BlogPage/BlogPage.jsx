@@ -22,12 +22,14 @@ const BlogPage = () => {
         res = await getPosts(filter);
       } catch (e) {
         console.log(e);
-        res = [];
+        res = {
+          results: [],
+        };
         alertC.current.showAlert("Nie udało się załadować postów");
       }
       setIsLoading(false);
-      setCount(res.length);
-      setPosts(res);
+      setCount(res.results.length);
+      setPosts(res.results);
     };
 
     loadOffers();

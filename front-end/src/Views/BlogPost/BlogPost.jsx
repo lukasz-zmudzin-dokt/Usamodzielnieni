@@ -16,7 +16,7 @@ const mapPost = (res) => ({
     id: comment.id,
     content: comment.content,
     creationDate: new Date(comment.date_created),
-    author: mapAuthor(comment.author),
+    author: comment.author !== null && mapAuthor(comment.author),
   })),
   creationDate: res.date_created,
   author: mapAuthor(res.author),

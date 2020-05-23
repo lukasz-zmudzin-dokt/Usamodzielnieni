@@ -1,7 +1,7 @@
 import React from "react";
 import { render } from "@testing-library/react";
 import ProgressBarFragment from "./ProgressBarFragment";
-import { Bullet, StepInfo } from "../";
+import { Bullet, StepCard } from "../";
 
 jest.mock("../");
 
@@ -11,7 +11,7 @@ describe("ProgressBarFragment", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     Bullet.mockImplementation(() => <div>Bullet</div>);
-    StepInfo.mockImplementation(() => <div>StepInfo</div>);
+    StepCard.mockImplementation(() => <div>StepCard</div>);
     props = {
       step: {},
       current: true,

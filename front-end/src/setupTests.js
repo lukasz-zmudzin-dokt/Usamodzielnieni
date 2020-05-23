@@ -11,3 +11,18 @@ if (global.document) {
     },
   });
 }
+
+// eslint-disable-next-line no-extend-native
+Date.prototype.toLocaleString = function (locale = "en-US", ...args) {
+  return this.getTime() + `_${locale}_${JSON.stringify(args).length}_`;
+};
+
+// eslint-disable-next-line no-extend-native
+Date.prototype.toLocaleDateString = function (locale = "en-US", ...args) {
+  return this.getTime() + `_date_${locale}_${JSON.stringify(args).length}_`;
+};
+
+// eslint-disable-next-line no-extend-native
+Date.prototype.toLocaleTimeString = function (locale = "en-US", ...args) {
+  return this.getTime() + `_time_${locale}_${JSON.stringify(args).length}_`;
+};
