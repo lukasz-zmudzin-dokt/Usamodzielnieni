@@ -17,7 +17,7 @@ const CVApprovalPage = () => {
       let res;
       try {
         res = await getCVs(token);
-        setCvs(res);
+        setCvs(res.results);
         setLoading(false);
       } catch (e) {
         setCvs([]);
