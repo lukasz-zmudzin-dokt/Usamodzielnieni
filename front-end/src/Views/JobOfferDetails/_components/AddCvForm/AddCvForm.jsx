@@ -14,7 +14,7 @@ const getCvList = async (token) => {
   const response = await fetch(url, { method: "GET", headers });
 
   if (response.status === 200) {
-    return response.json().then((res) => mapCvList(res.results));
+    return response.json().then((res) => mapCvList(res));
   } else {
     throw response.status;
   }
