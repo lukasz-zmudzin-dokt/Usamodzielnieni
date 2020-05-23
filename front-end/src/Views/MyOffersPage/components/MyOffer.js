@@ -11,20 +11,27 @@ import "Views/MyOffersPage/style.css";
 import { UserContext, AlertContext } from "context";
 import { getOfferPeople } from "../functions/apiCalls";
 import MyOfferPerson from "./MyOfferPerson";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { Pagination } from "components";
+import qs from "query-string";
 
 const MyOffer = ({ offer, activeOffer, setActiveOffer }) => {
   const context = useContext(UserContext);
+  const location = useLocation();
   const [people, setPeople] = useState([]);
   const [loading, setLoading] = useState(false);
   const alertC = useRef(useContext(AlertContext));
+  const [filters, setFilters] = useState({
+    pageSize: 10,
+    page: 1,
+  });
 
   useEffect(() => {
     const loadOfferPeople = async (token, offerId) => {
       setLoading(true);
       try {
-        let res = await getOfferPeople(token, offerId);
-        if (res.length > 0) {
+        let res = await getOfferPeople(token, offerId, filters);
+        if (res.count > 0) {
           setPeople(res);
         }
       } catch (err) {
@@ -34,10 +41,10 @@ const MyOffer = ({ offer, activeOffer, setActiveOffer }) => {
       }
       setLoading(false);
     };
-    if (people.length === 0 && offer.id === activeOffer) {
+    if (offer.id === activeOffer) {
       loadOfferPeople(context.token, offer.id, activeOffer);
     }
-  }, [context.token, activeOffer, offer.id, people.length]);
+  }, [context.token, activeOffer, offer.id, filters]);
 
   const message = loading ? (
     <Alert variant="info">Ładuję...</Alert>
@@ -46,6 +53,14 @@ const MyOffer = ({ offer, activeOffer, setActiveOffer }) => {
       Brak zgłoszeń.
     </Alert>
   ) : null;
+
+  const queryParams = qs.parse(location.search, { parseNumbers: true });
+  if (
+    typeof queryParams.page === "number" &&
+    queryParams.page !== filters.page
+  ) {
+    setFilters({ ...filters, page: queryParams.page });
+  }
 
   return (
     <Card className="border-left-0 border-right-0 border-bottom-0">
@@ -58,11 +73,20 @@ const MyOffer = ({ offer, activeOffer, setActiveOffer }) => {
       </Accordion.Toggle>
       <Accordion.Collapse eventKey={offer.id}>
         <Card.Body className="p-0">
-          {message ? message : null}
           <ListGroup>
-            {people.map((value) => (
-              <MyOfferPerson person={value} key={value.user_id} />
-            ))}
+            {message ? (
+              message
+            ) : (
+              <>
+                {people.results?.map((value) => (
+                  <MyOfferPerson person={value} key={value.id} />
+                ))}
+                <Pagination
+                  current={filters.page}
+                  max={Math.ceil(people.count / filters.pageSize)}
+                />
+              </>
+            )}
             <ListGroup.Item>
               <Row className="justify-content-center">
                 <Link to={"/jobOffers/" + offer.id}>
