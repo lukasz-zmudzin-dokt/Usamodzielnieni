@@ -84,7 +84,7 @@ exports[`BlogPage should match snapshot 1`] = `
           <small
             class="blog__countText"
           >
-            Ilość znalezionych postów: undefined
+            Ilość znalezionych postów: 2
           </small>
         </div>
       </form>
@@ -171,8 +171,12 @@ exports[`BlogPage should match snapshot 1`] = `
             </div>
           </div>
         </a>
+      </div>
+      <div
+        class="py-0 card-footer"
+      >
         <ul
-          class="offersPagination mb-0 justify-content-center pagination"
+          class="offersPagination mb-0 my-3 justify-content-center pagination"
         >
           <li
             class="page-item disabled"
@@ -213,11 +217,25 @@ exports[`BlogPage should match snapshot 1`] = `
             </span>
           </li>
           <li
-            class="page-item"
+            class="page-item active"
           >
-            <a
+            <span
               class="page-link"
-              href="?page=2"
+            >
+              1
+              <span
+                class="sr-only"
+              >
+                (current)
+              </span>
+            </span>
+          </li>
+          <li
+            class="page-item disabled"
+          >
+            <span
+              class="page-link"
+              disabled=""
             >
               <span
                 aria-hidden="true"
@@ -229,14 +247,14 @@ exports[`BlogPage should match snapshot 1`] = `
               >
                 Next
               </span>
-            </a>
+            </span>
           </li>
           <li
-            class="page-item"
+            class="page-item disabled"
           >
-            <a
+            <span
               class="page-link"
-              href="?page=NaN"
+              disabled=""
             >
               <span
                 aria-hidden="true"
@@ -248,7 +266,7 @@ exports[`BlogPage should match snapshot 1`] = `
               >
                 Last
               </span>
-            </a>
+            </span>
           </li>
         </ul>
       </div>

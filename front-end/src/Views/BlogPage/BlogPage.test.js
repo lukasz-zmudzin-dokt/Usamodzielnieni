@@ -12,6 +12,7 @@ describe("BlogPage", () => {
   let failFetch;
   let apiFilters = ["abcd"];
   let apiPosts = {
+    count: 2,
     results: [
       {
         tags: ["tag"],
