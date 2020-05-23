@@ -3,11 +3,9 @@ import proxy from "config/api";
 const getPosts = async (filters) => {
   const enTags = encodeURIComponent(filters.tag);
   const enCategories = encodeURIComponent(filters.category);
-  const categoryQ = filters.category ? `?category=${enCategories}` : "";
-  const tagQ = filters.tag
-    ? `${categoryQ ? `&tag=${enTags}` : `?tag=${enTags}`}`
-    : "";
-  const url = `${proxy.blog}blogposts/${categoryQ}${tagQ}`;
+  const categoryQ = filters.category ? `&category=${enCategories}` : "";
+  const tagQ = filters.tag ? `&tag=${enTags}` : "";
+  const url = `${proxy.blog}blogposts/?page=${filters.page}&page_size=${filters.pageSize}${categoryQ}${tagQ}`;
   const headers = {
     "Content-Type": "application/json",
   };

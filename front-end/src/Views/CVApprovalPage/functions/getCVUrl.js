@@ -9,7 +9,6 @@ export const getCVUrl = async (token, cv_id) => {
       "Content-Type": "application/json",
     },
   });
-
   if (response.status === 200) {
     return await response.json();
   } else {

@@ -6,6 +6,9 @@ import { createMemoryHistory } from "history";
 import { UserContext, AlertContext } from "context";
 import { staffTypes } from "constants/staffTypes";
 import { userTypes } from "constants/userTypes";
+import UserBasicInfo from "./components/UserBasicInfo";
+
+jest.mock("./components/UserBasicInfo");
 
 const renderWithRouter = (
   type,
@@ -70,6 +73,7 @@ describe("UserProfile", () => {
   });
 
   beforeEach(() => {
+    UserBasicInfo.mockImplementation(() => <div>UserBasicInfo</div>);
     apiFail = false;
     contextA = {
       open: true,

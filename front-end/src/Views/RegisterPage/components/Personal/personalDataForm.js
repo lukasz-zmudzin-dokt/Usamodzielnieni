@@ -51,12 +51,12 @@ class PersonalDataForm extends React.Component {
               name="phone_number"
               type="tel"
               required
-              pattern="[+]{1}[4]{1}[8]{1}[0-9]{3}[0-9]{3}[0-9]{3}"
+              pattern="[0-9]{3}[0-9]{3}[0-9]{3}"
               placeholder="Numer telefonu"
               onChange={(e) => onChange(onBlur, data, e)}
             />
             <Form.Control.Feedback type="invalid">
-              Podaj numer telefonu w formacie: +48123123123
+              Podaj numer telefonu w formacie: 123123123
             </Form.Control.Feedback>
           </Form.Group>
         </Card.Body>

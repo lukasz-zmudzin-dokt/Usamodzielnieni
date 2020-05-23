@@ -4,8 +4,9 @@ import { withRouter } from "react-router-dom";
 
 import qs from "query-string";
 import { UserContext } from "context";
-import { JobOfferInfo, OffersPagination, Filter } from "./_components";
+import { JobOfferInfo, Filter } from "./_components";
 import proxy from "config/api";
+import { Pagination } from "components";
 
 const getOffers = async (filters, sort) => {
   const {
@@ -123,7 +124,7 @@ const JobOffersPage = (props) => {
               ))}
             </ListGroup>
             <Card.Body>
-              <OffersPagination
+              <Pagination
                 current={filters.page}
                 max={Math.ceil(count / filters.pageSize)}
               />
