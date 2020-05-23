@@ -61,7 +61,7 @@ describe("ChangeData", () => {
     global.fetch = jest.fn().mockImplementation((input, init) => {
       return new Promise((resolve, reject) => {
         switch (init.method) {
-          case "PUT":
+          case "PATCH":
             if (failPut) {
               resolve({ status: 500 });
             } else resolve({ status: 200 });
@@ -219,6 +219,7 @@ describe("ChangeData", () => {
       "Udało się przesłać poprawione dane.",
       "success"
     );
+
     expect(history.location.pathname).toEqual("/userList");
   });
 
@@ -282,9 +283,16 @@ describe("ChangeData", () => {
 
   it("should render fail send message if api fails", async () => {
     failPut = true;
-    const { getByText } = renderWithRouter(<ChangeData />, alertC);
+    const { getByText, getByLabelText } = renderWithRouter(
+      <ChangeData />,
+      alertC
+    );
 
     await waitForElement(() => getByText("Prześlij zmiany"));
+
+    fireEvent.change(getByLabelText("Kod pocztowy"), {
+      target: { value: "21-115" },
+    });
 
     fireEvent.click(getByText("Prześlij zmiany"));
 
