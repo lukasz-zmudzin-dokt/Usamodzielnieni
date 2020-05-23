@@ -55,7 +55,7 @@ const ChangePhotoModal = ({ show, setShow, user }) => {
         return;
       }
       user.changeData({ ...user.data, picture_url });
-      alertContext.showAlert("Pomyślnie przesłano nowe zdjęcie.");
+      alertContext.showAlert("Pomyślnie przesłano nowe zdjęcie.", "success");
       handleClose();
     }
   };
