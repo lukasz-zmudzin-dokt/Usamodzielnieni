@@ -9,7 +9,6 @@ export const acceptCV = async (token, cvId) => {
 
   const response = await fetch(url, { method: "POST", headers });
   if (response.status === 200) {
-    console.log(await response.json());
     return await response.json();
   } else {
     throw response.status;
