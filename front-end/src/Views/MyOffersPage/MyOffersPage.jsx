@@ -3,19 +3,29 @@ import { Accordion, Alert, Card, Container } from "react-bootstrap";
 import { UserContext } from "context/UserContext";
 import { getMyOffers } from "./functions/apiCalls";
 import MyOffer from "./components/MyOffer";
+import { useLocation } from "react-router-dom";
+import qs from "query-string";
+import { Pagination } from "components";
 
 const MyOffersPage = () => {
   const context = useContext(UserContext);
+  const location = useLocation();
   const [offers, setOffers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [activeOffer, setActiveOffer] = useState("");
+  const [filters, setFilters] = useState({
+    page: 1,
+    pageSize: 10,
+  });
+  const [count, setCount] = useState(0);
 
   useEffect(() => {
     const loadOffers = async (token, setOffers) => {
       setLoading(true);
       try {
-        let res = await getMyOffers(token);
+        let res = await getMyOffers(token, filters);
+        setCount(res.count);
         if (res.count > 0) {
           setOffers(res.results);
         }
@@ -25,7 +35,7 @@ const MyOffersPage = () => {
       setLoading(false);
     };
     loadOffers(context.token, setOffers);
-  }, [context.token]);
+  }, [context.token, filters]);
 
   const message = loading ? (
     <Alert variant="info" className="m-3">
@@ -40,6 +50,14 @@ const MyOffersPage = () => {
       Brak ofert
     </Alert>
   ) : null;
+
+  const queryParams = qs.parse(location.search, { parseNumbers: true });
+  if (
+    typeof queryParams.page === "number" &&
+    queryParams.page !== filters.page
+  ) {
+    setFilters({ ...filters, page: queryParams.page });
+  }
 
   return (
     <Container>
@@ -58,6 +76,12 @@ const MyOffersPage = () => {
             ))}
           </Accordion>
         </Card.Body>
+        <Card.Footer>
+          <Pagination
+            current={filters.page}
+            max={Math.ceil(count / filters.pageSize)}
+          />
+        </Card.Footer>
       </Card>
     </Container>
   );

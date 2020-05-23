@@ -1,7 +1,9 @@
 import proxy from "config/api";
 
-export const getMyOffers = async (token) => {
-  let url = proxy.job + "employer/job-offers/";
+export const getMyOffers = async (token, filters) => {
+  let url =
+    proxy.job +
+    `employer/job-offers/?page=${filters.page}&page_size=${filters.pageSize}`;
   const headers = {
     Authorization: "token " + token,
     "Content-Type": "application/json",
