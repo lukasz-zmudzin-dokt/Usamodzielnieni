@@ -24,7 +24,7 @@ const handleAcceptCV = async (e, cvId, cutCV, alertC) => {
     await cutCV(cvId);
     alertC.current.showAlert("Pomyślnie zaakceptowano CV.", "success");
   } catch (e) {
-    alertC.current.showAlert("Nie udało się zaakceptować użytkownika.");
+    alertC.current.showAlert("Nie udało się zaakceptować CV.");
   }
 };
 

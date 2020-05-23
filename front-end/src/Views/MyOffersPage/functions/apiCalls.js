@@ -15,8 +15,12 @@ export const getMyOffers = async (token) => {
   }
 };
 
-export const getOfferPeople = async (token, offerId) => {
-  let url = proxy.job + "employer/application_list/" + offerId + "/";
+export const getOfferPeople = async (token, offerId, filters) => {
+  let url =
+    proxy.job +
+    "employer/application_list/" +
+    offerId +
+    `/?page=${filters.page}&page_size=${filters.pageSize}`;
   const headers = {
     Authorization: "token " + token,
     "Content-Type": "application/json",

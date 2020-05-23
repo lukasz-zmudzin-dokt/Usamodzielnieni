@@ -34,14 +34,14 @@ exports[`MyOffers should match snapshot 1`] = `
                 class="p-0 card-body"
               >
                 <div
-                  class="fade mb-0 alert alert-info show"
-                  role="alert"
-                >
-                  Brak zgłoszeń.
-                </div>
-                <div
                   class="list-group"
                 >
+                  <div
+                    class="fade mb-0 alert alert-info show"
+                    role="alert"
+                  >
+                    Brak zgłoszeń.
+                  </div>
                   <div
                     class="list-group-item"
                   >
@@ -89,14 +89,14 @@ exports[`MyOffers should match snapshot 1`] = `
                 class="p-0 card-body"
               >
                 <div
-                  class="fade mb-0 alert alert-info show"
-                  role="alert"
-                >
-                  Brak zgłoszeń.
-                </div>
-                <div
                   class="list-group"
                 >
+                  <div
+                    class="fade mb-0 alert alert-info show"
+                    role="alert"
+                  >
+                    Brak zgłoszeń.
+                  </div>
                   <div
                     class="list-group-item"
                   >
@@ -144,14 +144,14 @@ exports[`MyOffers should match snapshot 1`] = `
                 class="p-0 card-body"
               >
                 <div
-                  class="fade mb-0 alert alert-info show"
-                  role="alert"
-                >
-                  Brak zgłoszeń.
-                </div>
-                <div
                   class="list-group"
                 >
+                  <div
+                    class="fade mb-0 alert alert-info show"
+                    role="alert"
+                  >
+                    Brak zgłoszeń.
+                  </div>
                   <div
                     class="list-group-item"
                   >

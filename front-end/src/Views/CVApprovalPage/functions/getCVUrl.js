@@ -11,6 +11,7 @@ export const getCVUrl = async (token, cv_id) => {
   });
   console.log(response);
   if (response.status === 200) {
+    console.log(await response.json());
     return await response.json();
   } else {
     throw response.status;
