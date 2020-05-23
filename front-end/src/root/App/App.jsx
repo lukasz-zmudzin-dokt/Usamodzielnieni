@@ -13,7 +13,6 @@ const App = () => {
       <AlertProvider>
         <BrowserRouter>
           <Header />
-          {/*<HeaderTemplate />*/}
           <div className="center-container">
             <Router />
             <AlertsContainer />

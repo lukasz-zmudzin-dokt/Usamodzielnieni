@@ -17,72 +17,12 @@ const Header = () => {
         try {
             const res = await logoutUser(context.token);
             context.logout();
-            return <Redirect to="/contacts" />;
+            setLogout(true);
         } catch (e) {
             console.log(e);
         }
     }
-
-
-    const main = {
-        notLogged: [
-            {
-                name: "START",
-                link: "/"
-            },
-            {
-                name: "KONTAKT",
-                link: "/contact"
-            },
-            {
-                name: "BLOG",
-                link: "/blog"
-            },
-            {
-                name: "OFERTY PRACY",
-                link: "/jobOffers"
-            }
-        ],
-        logged: {
-            standard: [
-                {
-                    name: "Kreator CV",
-                    link: "cvEditor"
-                },
-                {
-                    name: "Czat",
-                    link: "/chat"
-                }
-            ],
-            employer: [
-                {
-                    name: "Kreator Oferty pracy",
-                    link: "/offerForm"
-                }
-            ]
-
-        }
-    };
-    const loginButtons = {
-        notLogged: [
-            {
-                name: "Rejestracja",
-                link: "/newAccount"
-            },
-            {
-                name: "Logowanie",
-                link: "/login"
-            }
-        ],
-        logged: [
-            {
-                name: "Wyloguj",
-                link: "/logout"
-            }
-        ]
-    };
 /*
-
     useEffect(() => {
         console.log(context);
         if(context.token === undefined) {/!*
@@ -109,7 +49,34 @@ const Header = () => {
             </IndexLinkContainer>
         </Nav>
     );
+    console.log(context);
 
+    const staffNavs = [
+        {
+            id: 0,
+            link: "/newAccount/staff",
+            name: "ZAREJESTRUJ ADMINISTRATORA",
+            group_type: "staff_verification"
+        },
+        {
+            id: 1,
+            link: "/userApproval",
+            name: "AKCEPTUJ NOWYCH UŻYTKOWNIKÓW",
+            group_type: "staff_verification"
+        },
+        {
+            id: 2,
+            link: "/cvApproval",
+            name: "AKCEPTACJA CV",
+            group_type: "staff_cv"
+        },
+        {
+            id: 3,
+            link: "/offerApproval",
+            name: "AKCEPTUJ OFERTY PRACY",
+            group_type: "staff_jobs"
+        },
+    ];
 
 
     const accountDropdownNav = context.type === "standard" ? (
@@ -120,8 +87,20 @@ const Header = () => {
         <IndexLinkContainer to={"/myOffers"}>
             <NavDropdown.Item className="account-dropdown-button white">MOJE OFERTY</NavDropdown.Item>
         </IndexLinkContainer>
-    ) : context.type === "staff" ? (
-        <div />
+    ) : context.type === "staff" && context.data !== undefined ? (
+        <>
+            <IndexLinkContainer to={"/userList"}>
+                <NavDropdown.Item className="account-dropdown-button white">LISTA UŻYTKOWNIKÓW</NavDropdown.Item>
+            </IndexLinkContainer>
+            {staffNavs.map((nav) => {
+            if(context.data.group_type.includes(nav.group_type)) {
+            return <IndexLinkContainer to={nav.link} key={nav.id}>
+            <NavDropdown.Item className="account-dropdown-button white">{nav.name}</NavDropdown.Item>
+            </IndexLinkContainer>;
+        }
+        })}
+        </>
+
     ) : null;
 
     const rightNav = context.token === undefined ? (
@@ -136,9 +115,6 @@ const Header = () => {
     ) : (
         <Nav>
             <Nav.Link className="navbar-right-button notification-color">POWIADOMIENIA</Nav.Link>
-            {/*<IndexLinkContainer to={"/user"}>
-                <Nav.Link className="navbar-right-button register-color">MOJE KONTO</Nav.Link>
-            </IndexLinkContainer>*/}
             <NavDropdown id={"myAccDropdown"} title={<span className="white">MOJE KONTO</span>} className="navbar-right-button register-color"
                          onMouseEnter = { handleOpen }
                          onMouseLeave = { handleClose }
@@ -153,8 +129,6 @@ const Header = () => {
 
         </Nav>
     );
-
-
 
     return (
         <Navbar collapseOnSelect expand="lg" sticky="top" className="font p-3">
