@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { Container, ListGroup, Alert, Row } from "react-bootstrap";
 import { UserContext } from "context";
 import proxy from "config/api";
-import  Contact  from "./Contact";
+import Contact from "./Contact";
 
 const getContacts = async (token) => {
   let url = `${proxy.chat}/contacts`; // nie ma endpointu
