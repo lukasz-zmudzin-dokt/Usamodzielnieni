@@ -3,6 +3,7 @@ import { Accordion, Alert, Card, Container } from "react-bootstrap";
 import { UserContext } from "context/UserContext";
 import { getMyOffers } from "./functions/apiCalls";
 import MyOffer from "./components/MyOffer";
+import { IndexLinkContainer } from "react-router-bootstrap";
 
 const MyOffersPage = () => {
   const context = useContext(UserContext);
@@ -39,7 +40,13 @@ const MyOffersPage = () => {
     <Alert variant="info" className="m-3">
       Brak ofert
     </Alert>
-  ) : null;
+  ) : (
+      <Alert>
+        <IndexLinkContainer to={"/offerForm"}>
+          Stwórz nową ofertę
+        </IndexLinkContainer>
+      </Alert>
+  );
 
   return (
     <Container>
@@ -57,7 +64,9 @@ const MyOffersPage = () => {
               />
             ))}
           </Accordion>
+
         </Card.Body>
+
       </Card>
     </Container>
   );

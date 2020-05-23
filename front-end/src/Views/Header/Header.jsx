@@ -5,6 +5,7 @@ import { UserContext } from "context";
 import { logoutUser } from "./apiCalls";
 import "./style.css";
 import {Redirect} from "react-router-dom";
+import logo from "assets/logo-white.png";
 
 const Header = () => {
     const context = useContext(UserContext);
@@ -22,21 +23,12 @@ const Header = () => {
             console.log(e);
         }
     }
-/*
-    useEffect(() => {
-        console.log(context);
-        if(context.token === undefined) {/!*
-            setNavL(main.notLogged);
-            setNavR(loginButtons.notLogged);*!/
-        } else {
-
-        }
-    }, [context]);*/
-
     const leftNav = (
         <Nav className="mr-auto">
             <IndexLinkContainer to={"/"}>
-                <Nav.Link className="navbar-left-button ">START</Nav.Link>
+                <Nav.Link className="logo-button">
+                    <img src={logo} className="logo" />
+                </Nav.Link>
             </IndexLinkContainer>
             <IndexLinkContainer to={"/contact"}>
                 <Nav.Link className="navbar-left-button ">KONTAKT</Nav.Link>
