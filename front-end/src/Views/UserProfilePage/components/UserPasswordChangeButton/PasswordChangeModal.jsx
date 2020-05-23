@@ -45,6 +45,7 @@ const PasswordChangeModal = ({ user, show, setShow }) => {
         };
         await updatePassword(user.token, data);
         alertC.current.showAlert("Hasło zostało zmienione.", "success");
+        clearForm();
         setShow(false);
       } catch (e) {
         console.log(e);
@@ -57,8 +58,14 @@ const PasswordChangeModal = ({ user, show, setShow }) => {
     }
   };
 
+  const clearForm = () => {
+    setNewPassword("");
+    setNewPasswordR("");
+    setOldPassword("");
+  }
+
   return (
-    <Modal show={show} onHide={(e) => setShow(false)}>
+    <Modal show={show} onHide={(e) => {clearForm(); setShow(false)}}>
       <Modal.Header closeButton>
         <Modal.Title>Zmiana hasła</Modal.Title>
       </Modal.Header>
