@@ -10,7 +10,6 @@
 }
 .social-media-row {
   padding-left: 20%;
-  /*padding-left: 35%;*/
 }
 .company-title {
   height: 70px;
@@ -73,9 +72,6 @@ a:hover {
 
 @media (max-width: 767px) {
   .social-media-row {
-    /*padding-left: 0;*/
-    /*text-align: center;*/
-    /*justify-content: center;*/
     padding-left: calc(50vw - 105px);
   }
   .company-title {
