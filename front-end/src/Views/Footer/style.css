@@ -9,7 +9,8 @@
   width: 180px;
 }
 .social-media-row {
-  padding-left: 35%;
+  padding-left: 20%;
+  /*padding-left: 35%;*/
 }
 .company-title {
   height: 70px;
@@ -65,17 +66,21 @@ a:hover {
     padding-left: 0 !important;
   }
   .company-title {
-    margin-top: 65px;
+    margin-top: 60px;
+    margin-bottom: 20px;
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .social-media-row {
-    padding-left: 25%;
+    /*padding-left: 0;*/
+    /*text-align: center;*/
+    /*justify-content: center;*/
+    padding-left: calc(50vw - 105px);
   }
   .company-title {
     justify-content: center;
-    height: 90px;
+    height: 50px;
   }
   .company-logo-row {
     justify-content: center;

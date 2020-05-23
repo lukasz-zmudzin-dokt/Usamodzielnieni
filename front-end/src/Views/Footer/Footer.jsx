@@ -79,8 +79,12 @@ const Footer = () => {
               rel="noopener noreferrer"
               className="d-flex align-items-end"
             >
-              <img src={yt} className="social-media-icon" alt="yt" />
-              youtube
+              <Col className="p-0">
+                <img src={yt} className="social-media-icon" alt="yt" />
+              </Col>
+              <Col className="pl-3">
+                youtube
+              </Col>
             </a>
           </Row>
           <Row className="pt-3 social-media-row">
@@ -90,8 +94,12 @@ const Footer = () => {
               rel="noopener noreferrer"
               className="d-flex align-items-end"
             >
-              <img src={tt} className="social-media-icon" alt="tt" />
-              twitter
+              <Col className="p-0">
+                <img src={tt} className="social-media-icon" alt="tt" />
+              </Col>
+              <Col className="pl-3">
+                twitter
+              </Col>
             </a>
           </Row>
           <Row className="pt-3 social-media-row">
@@ -101,8 +109,12 @@ const Footer = () => {
               rel="noopener noreferrer"
               className="d-flex align-items-end"
             >
-              <img src={fb} className="social-media-icon lol" alt="fb" />
-              facebook
+              <Col className="p-0">
+                <img src={fb} className="social-media-icon lol" alt="fb" />
+              </Col>
+              <Col className="pl-3">
+                facebook
+              </Col>
             </a>
           </Row>
           <Row className="pt-3 social-media-row">
@@ -112,8 +124,12 @@ const Footer = () => {
               rel="noopener noreferrer"
               className="d-flex align-items-end"
             >
-              <img src={ig} className="social-media-icon" alt="ig" />
-              instagram
+              <Col className="p-0">
+                <img src={ig} className="social-media-icon" alt="ig" />
+              </Col>
+              <Col className="pl-3">
+                instagram
+              </Col>
             </a>
           </Row>
         </Col>
