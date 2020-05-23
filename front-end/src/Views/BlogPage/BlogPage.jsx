@@ -70,12 +70,14 @@ const BlogPage = () => {
             {posts.map((data) => (
               <BlogPost key={data.id} {...data} />
             ))}
-            <Pagination
-              current={filters.page}
-              max={Math.ceil(count / filters.pageSize)}
-            />
           </CardColumns>
         )}
+        <Card.Footer className="py-0">
+          <Pagination
+            current={filters.page}
+            max={Math.ceil(count / filters.pageSize)}
+          />
+        </Card.Footer>
       </Card>
     </Container>
   );
