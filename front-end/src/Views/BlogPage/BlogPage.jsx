@@ -23,7 +23,7 @@ const BlogPage = () => {
       } catch (e) {
         console.log(e);
         res = {
-          results: []
+          results: [],
         };
         alertC.current.showAlert("Nie udało się załadować postów");
       }

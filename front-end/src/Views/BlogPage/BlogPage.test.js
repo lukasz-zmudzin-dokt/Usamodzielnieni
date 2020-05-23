@@ -29,8 +29,8 @@ describe("BlogPage", () => {
         id: 2,
         title: "tytuł2",
       },
-    ]
-  }
+    ],
+  };
   beforeAll(() => {
     global.fetch = jest.fn().mockImplementation((input, init) => {
       return new Promise((resolve, reject) => {

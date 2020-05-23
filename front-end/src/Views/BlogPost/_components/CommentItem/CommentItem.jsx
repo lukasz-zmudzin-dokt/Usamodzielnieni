@@ -42,7 +42,9 @@ const CommentItem = ({ comment, onDeleteClick, user, ...rest }) => {
         delConfirmed={setDeletionConfirmed}
         question={"Czy na pewno chcesz usunąć ten komentarz?"}
       />
-      <h5 className="commentItem__header">{`${comment.author?.username || "Użytkownik nieaktywny"}`}</h5>
+      <h5 className="commentItem__header">{`${
+        comment.author?.username || "Użytkownik nieaktywny"
+      }`}</h5>
       <small className="commentItem__date">
         dodano: {comment.creationDate.toLocaleDateString(undefined, {})}
       </small>
