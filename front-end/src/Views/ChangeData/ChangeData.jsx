@@ -8,6 +8,7 @@ import { FacilityForm, CompanyForm } from "./components";
 
 const ChangeData = () => {
   const [data, setData] = useState({
+    username: "",
     email: "",
     first_name: "",
     last_name: "",
@@ -56,7 +57,7 @@ const ChangeData = () => {
     getData(user.token, id);
   }, [id, user.token]);
 
-  const { first_name, last_name, phone_number, email } = data;
+  const { first_name, last_name, phone_number, email, username } = data;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -157,6 +158,16 @@ const ChangeData = () => {
                       required
                       id="email"
                       incorrect="Podaj poprawny email użytkownika."
+                    />
+                    <FormGroup
+                      header="Login"
+                      type="text"
+                      setVal={(val) => setData({ ...data, username: val })}
+                      val={username}
+                      length={{ min: 1, max: 30 }}
+                      required
+                      id="username"
+                      incorrect="Podaj poprawny login użytkownika."
                     />
                   </Card.Body>
                 </Card>

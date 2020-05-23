@@ -14,7 +14,7 @@ const changeDataObject = (data) => {
       username,
       nip,
     };
-  } else {
+  } else if (data.facility_name) {
     const { facility_address, facility_name } = data;
     return {
       email,
@@ -24,6 +24,16 @@ const changeDataObject = (data) => {
       last_name,
       phone_number,
       username,
+    };
+  } else {
+    const { group_type, picture_url } = data;
+    return {
+      email,
+      first_name,
+      last_name,
+      username,
+      group_type,
+      picture_url,
     };
   }
 };
@@ -46,8 +56,11 @@ const getUserData = async (token, id) => {
 };
 
 const sendFixedData = async (token, id, data) => {
-  const url = `${proxy.account}admin/user_details/edit/${id}/`;
+  const url = data.group_type
+    ? `${proxy.account}admin/data/edit/${id}/`
+    : `${proxy.account}admin/user_details/edit/${id}/`;
   const changeData = changeDataObject(data);
+  console.log(data);
   const header = {
     method: "PUT",
     body: JSON.stringify(changeData),
