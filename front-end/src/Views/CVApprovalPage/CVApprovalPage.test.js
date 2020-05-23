@@ -155,7 +155,7 @@ describe("CVApproval", () => {
 
     await wait(() => expect(contextA.showAlert).toHaveBeenCalled());
     expect(contextA.showAlert).toHaveBeenCalledWith(
-      "Nie udało się zaakceptować użytkownika."
+      "Nie udało się zaakceptować CV."
     );
   });
 });
