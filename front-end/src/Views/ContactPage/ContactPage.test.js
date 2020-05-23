@@ -1,9 +1,10 @@
 import React from "react";
 import ContactPage from "./ContactPage";
-import { render, wait } from "@testing-library/react";
+import {fireEvent, render, wait} from "@testing-library/react";
 import { AlertContext } from "context/AlertContext";
 import { userTypes } from "constants/userTypes";
 import { staffTypes } from "constants/staffTypes";
+import {UserContext} from "context/UserContext";
 
 describe("ContactPage", () => {
   let apiFail, phoneList, user, alertC;
@@ -13,7 +14,13 @@ describe("ContactPage", () => {
         if (apiFail) {
           resolve({ status: 500 });
         } else {
-          resolve({ status: 200, json: () => Promise.resolve(phoneList) });
+          switch(init.method) {
+            case "GET":
+              resolve({ status: 200, json: () => Promise.resolve(phoneList) });
+              break;
+            case "DELETE":
+              resolve({status: 200, json: () => Promise.resolve("")});
+          }
         }
       });
     });
@@ -69,5 +76,21 @@ describe("ContactPage", () => {
     const { getByText } = render(<ContactPage />);
     await wait(() => expect(fetch).toHaveBeenCalled());
     expect(getByText("Brak kontaktów do wyświetlenia.")).toBeInTheDocument();
+  });
+
+  it('should delete card', async () => {
+    phoneList = [phoneList[0]];
+    const { getByText, queryByText } = render(
+        <UserContext.Provider value={user}>
+          <AlertContext.Provider value={alertC}>
+            <ContactPage />
+          </AlertContext.Provider>
+        </UserContext.Provider>
+        );
+    await wait(() => expect(fetch).toHaveBeenCalled());
+    fireEvent.click(getByText("X"));
+    fireEvent.click(getByText("Usuń ✗"));
+    await wait(() => expect(fetch).toHaveBeenCalled());
+    expect(queryByText("qwe")).not.toBeInTheDocument();
   });
 });

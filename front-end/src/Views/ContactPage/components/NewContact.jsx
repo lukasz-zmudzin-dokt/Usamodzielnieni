@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { Button, Modal } from "react-bootstrap";
+import { Button, Modal, Form } from "react-bootstrap";
 import { FormGroup } from "components";
-import Form from "react-bootstrap/Form";
 import proxy from "config/api";
 
 const submitContact = async (data, token) => {
@@ -27,9 +26,11 @@ const submitContact = async (data, token) => {
 export const NewContact = ({ user, show, setShow, setContacts, alertC }) => {
   const [phone, setPhone] = useState("");
   const [name, setName] = useState("");
+  const [validated, setValidated] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setValidated(true);
     if (event.currentTarget.checkValidity() === false) {
       event.stopPropagation();
     } else {
@@ -45,6 +46,7 @@ export const NewContact = ({ user, show, setShow, setContacts, alertC }) => {
           name: name,
           phone: phone,
         });
+        clearForm();
         setShow(false);
       } catch (e) {
         console.log(e);
@@ -53,12 +55,18 @@ export const NewContact = ({ user, show, setShow, setContacts, alertC }) => {
     }
   };
 
+  const clearForm = () => {
+    setValidated(false);
+    setName("");
+    setPhone("");
+  };
+
   return (
-    <Modal show={show} onHide={(e) => setShow(false)}>
+    <Modal show={show} onHide={(e) => {clearForm(); setShow(false);}}>
       <Modal.Header closeButton>
         <Modal.Title>Nowy kontakt</Modal.Title>
       </Modal.Header>
-      <Form onSubmit={handleSubmit}>
+      <Form noValidate validated={validated} onSubmit={handleSubmit}>
         <Modal.Body>
           <FormGroup
             header="Nazwa kontaktu"
