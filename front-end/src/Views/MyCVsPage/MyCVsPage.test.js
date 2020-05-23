@@ -48,7 +48,7 @@ describe("MyCVsPage", () => {
           case "GET":
             resolve({
               status: 200,
-              json: () => Promise.resolve({ results: myCVs }),
+              json: () => Promise.resolve( myCVs),
             });
             break;
           case "DELETE":
