@@ -20,6 +20,7 @@ const Filter = ({ setFilter, count }) => {
       let res;
       try {
         res = await getFilters();
+        res = {...res, categories: res.categories.map(item => item.name || item)}; //temp fix
       } catch (e) {
         res = { categories: [], tags: [] };
         setErr(true);

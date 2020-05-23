@@ -11,24 +11,26 @@ describe("BlogPage", () => {
   };
   let failFetch;
   let apiFilters = ["abcd"];
-  let apiPosts = [
-    {
-      tags: ["tag"],
-      summary: "summary",
-      category: "abcd",
-      header: "/media/example_img.jpg",
-      id: 1,
-      title: "tytuł",
-    },
-    {
-      tags: ["tag", "abcd"],
-      category: "abcd",
-      summary: "summary2",
-      header: null,
-      id: 2,
-      title: "tytuł2",
-    },
-  ];
+  let apiPosts = {
+    results: [
+      {
+        tags: ["tag"],
+        summary: "summary",
+        category: "abcd",
+        header: "/media/example_img.jpg",
+        id: 1,
+        title: "tytuł",
+      },
+      {
+        tags: ["tag", "abcd"],
+        category: "abcd",
+        summary: "summary2",
+        header: null,
+        id: 2,
+        title: "tytuł2",
+      },
+    ]
+  }
   beforeAll(() => {
     global.fetch = jest.fn().mockImplementation((input, init) => {
       return new Promise((resolve, reject) => {
@@ -172,7 +174,7 @@ describe("BlogPage", () => {
     });
 
     it("should render post with no tags", async () => {
-      apiPosts[0].tags = [];
+      apiPosts.results[0].tags = [];
       const { getByText, getAllByText } = render(
         <MemoryRouter>
           <BlogPage />
