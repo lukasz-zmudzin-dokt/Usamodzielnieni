@@ -46,7 +46,7 @@ const DeletePhotoButton = ({ user }) => {
       <Button
         variant="danger"
         onClick={onButtonClick}
-        disabled={disabled || user.data.picture_url === null}
+        disabled={disabled || (user.data && user.data.picture_url === null)}
       >
         Usuń
       </Button>
