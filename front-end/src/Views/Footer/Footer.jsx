@@ -14,7 +14,7 @@ import ig from "assets/footer/instagram-icon.png";
 const Footer = () => {
   return (
     <Container fluid className="font full-width">
-      <Row className="p-5">
+      <Row className="p-3">
         <Col
           xs={{ span: 12, order: 2 }}
           sm={{ span: 12, order: 2 }}
@@ -69,10 +69,10 @@ const Footer = () => {
         <Col
           xs={{ span: 12, order: 1 }}
           sm={{ span: 12, order: 1 }}
-          md={{ span: 2, order: 4, offset: 1 }}
-          className="social-media-col"
+          md={{ span: 3, order: 4 }}
+          className="p-4"
         >
-          <Row className="pt-3">
+          <Row className="pt-3 social-media-row">
             <a
               href="https://www.youtube.com/channel/UCbKE3BfzmHGfXbB9nmmswYw"
               target="_blank"
@@ -83,7 +83,7 @@ const Footer = () => {
               youtube
             </a>
           </Row>
-          <Row className="pt-3">
+          <Row className="pt-3 social-media-row">
             <a
               href="https://twitter.com/usamodzielnieni"
               target="_blank"
@@ -94,7 +94,7 @@ const Footer = () => {
               twitter
             </a>
           </Row>
-          <Row className="pt-3">
+          <Row className="pt-3 social-media-row">
             <a
               href="https://www.facebook.com/Usamodzielnieni-110914023943342"
               target="_blank"
@@ -105,7 +105,7 @@ const Footer = () => {
               facebook
             </a>
           </Row>
-          <Row className="pt-3">
+          <Row className="pt-3 social-media-row">
             <a
               href="https://www.instagram.com/_usamodzielnieni_"
               target="_blank"
