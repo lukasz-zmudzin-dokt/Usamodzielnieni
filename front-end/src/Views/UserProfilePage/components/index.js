@@ -25,5 +25,5 @@ export {
   UserProperty,
   ButtonsContainer,
   UserListButton,
-  UserPasswordChangeButton
+  UserPasswordChangeButton,
 };

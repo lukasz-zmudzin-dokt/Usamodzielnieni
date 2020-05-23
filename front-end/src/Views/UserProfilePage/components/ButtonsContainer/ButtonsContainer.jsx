@@ -7,7 +7,7 @@ import {
   AdminOfferApprovalButton,
   DeleteAccountButton,
   UserListButton,
-  UserPasswordChangeButton
+  UserPasswordChangeButton,
 } from "../";
 
 const ButtonsContainer = ({ user }) => {
