@@ -164,10 +164,6 @@ exports[`CVApproval should match snapshot 1`] = `
             </div>
           </div>
         </div>
-      </div>
-      <div
-        class="card-footer"
-      >
         <ul
           class="offersPagination mb-0 justify-content-center pagination"
         >
@@ -210,25 +206,11 @@ exports[`CVApproval should match snapshot 1`] = `
             </span>
           </li>
           <li
-            class="page-item active"
+            class="page-item"
           >
-            <span
+            <a
               class="page-link"
-            >
-              1
-              <span
-                class="sr-only"
-              >
-                (current)
-              </span>
-            </span>
-          </li>
-          <li
-            class="page-item disabled"
-          >
-            <span
-              class="page-link"
-              disabled=""
+              href="?page=2"
             >
               <span
                 aria-hidden="true"
@@ -240,14 +222,14 @@ exports[`CVApproval should match snapshot 1`] = `
               >
                 Next
               </span>
-            </span>
+            </a>
           </li>
           <li
-            class="page-item disabled"
+            class="page-item"
           >
-            <span
+            <a
               class="page-link"
-              disabled=""
+              href="?page=NaN"
             >
               <span
                 aria-hidden="true"
@@ -259,7 +241,7 @@ exports[`CVApproval should match snapshot 1`] = `
               >
                 Last
               </span>
-            </span>
+            </a>
           </li>
         </ul>
       </div>

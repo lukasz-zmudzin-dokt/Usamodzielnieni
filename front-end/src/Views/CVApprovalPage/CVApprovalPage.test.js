@@ -40,7 +40,6 @@ describe("CVApproval", () => {
 
   beforeEach(() => {
     apiCVs = {
-      count: 2,
       results: [
         {
           cv_id: 0,
@@ -102,7 +101,7 @@ describe("CVApproval", () => {
   });
 
   it("should view alert at api returning no cvs", async () => {
-    apiCVs = [];
+    apiCVs.results = [];
     const { getByText } = render(
       <MemoryRouter>
         <CVApprovalPage />
@@ -114,7 +113,7 @@ describe("CVApproval", () => {
   });
 
   it("should hide cv on accept", async () => {
-    apiCVs = { count: 1, results: [apiCVs.results[0]] };
+    apiCVs.results = [apiCVs.results[0]];
     const { getByText, queryByText } = render(
       <AlertContext.Provider value={contextA}>
         <MemoryRouter>
@@ -137,7 +136,7 @@ describe("CVApproval", () => {
   });
 
   it("should render alert on api fail while accepting", async () => {
-    apiCVs = { count: 1, results: [apiCVs.results[0]] };
+    apiCVs.results = [apiCVs.results[0]];
     const { getByText, queryByText } = render(
       <AlertContext.Provider value={contextA}>
         <MemoryRouter>
