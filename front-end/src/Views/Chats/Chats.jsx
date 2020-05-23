@@ -14,7 +14,6 @@ import ContactsModalContent from "./components/ContactsModalContent"
 import "./style.css";
 //import { ChatForm } from 'components';
 
-
 const getChats = async (token) => {
   let url = `${proxy.chat}/list`; // TODO
   const headers = {
@@ -48,7 +47,6 @@ const Chats = () => {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
 
   const user = useContext(UserContext);
 
@@ -87,8 +85,8 @@ const Chats = () => {
   ) : isChatsLoading ? (
     <Alert variant="info">Ładowanie wiadomości...</Alert>
   ) : (
-        chats.length === 0 && <Alert variant="info">Brak wiadomości.</Alert>
-      );
+    chats.length === 0 && <Alert variant="info">Brak wiadomości.</Alert>
+  );
 
   return (
     <Container>
@@ -96,21 +94,25 @@ const Chats = () => {
         <Card.Header as="h2">Najnowsze wiadomości</Card.Header>
         <Card.Body>
           {/* <CustomFAB /> */}
-          <Button className="float-right" variant="primary" onClick={handleShow}>
+          <Button
+            className="float-right"
+            variant="primary"
+            onClick={handleShow}
+          >
             Nowa wiadomość
           </Button>
         </Card.Body>
         {msg ? (
           <Card.Body className="chats__body">{msg}</Card.Body>
         ) : (
-            <ListGroup variant="flush">
-              {chats.map((chat) => (
-                <ListGroup.Item key={chat.id}>
-                  <ChatInfo chat={chat} />
-                </ListGroup.Item>
-              ))}
-            </ListGroup>
-          )}
+          <ListGroup variant="flush">
+            {chats.map((chat) => (
+              <ListGroup.Item key={chat.id}>
+                <ChatInfo chat={chat} />
+              </ListGroup.Item>
+            ))}
+          </ListGroup>
+        )}
       </Card>
       <Modal
         show={show}
