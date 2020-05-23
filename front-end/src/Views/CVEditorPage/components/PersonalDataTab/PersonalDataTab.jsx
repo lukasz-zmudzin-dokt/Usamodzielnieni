@@ -117,7 +117,7 @@ class PersonalDataTab extends React.Component {
                 minLength="1"
                 maxLength="12"
                 defaultValue={data.phoneNumber}
-                placeholder="+48123456789"
+                placeholder="123456789"
                 pattern="[0-9]{3}[0-9]{3}[0-9]{3}"
                 onChange={this.onChange}
               />
