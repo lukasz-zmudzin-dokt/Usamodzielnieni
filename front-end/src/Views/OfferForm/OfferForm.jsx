@@ -52,6 +52,7 @@ const OfferForm = () => {
         ]);
       } catch (err) {
         if (err.message === "getOffer") {
+          alertC.current.showAlert("Wystąpił błąd przy pobieraniu oferty.");
           history.push("/offerForm");
         } else {
           setDisabled(false);

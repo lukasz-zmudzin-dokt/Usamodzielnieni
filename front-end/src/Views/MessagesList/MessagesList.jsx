@@ -52,61 +52,6 @@ const sendMessage = async (token, id, msg, data, setData, alertC) => {
   }
 };
 
-const dataD = [
-  {
-    content:
-      "Info długa wiadomość bardzo jakaś dzień dobry i te sprawy co tam jak tam jeszcze trochę żeby się zawinęło albo jeszcze trochę",
-    send: "11:55 12.03.2020",
-    side: "left",
-    id: 0,
-  },
-  {
-    content:
-      "Info długa wiadomość bardzo jakaś dzień dobry i te sprawy co tam jak tam jeszcze trochę żeby się zawinęło albo jeszcze trochę",
-    send: "11:55 12.03.2020",
-    side: "right",
-    id: 1,
-  },
-  {
-    content: "a",
-    send: "11:55 12.03.2020",
-    side: "right",
-    id: 2,
-  },
-  {
-    content: "b",
-    send: "11:55 12.03.2020",
-    side: "left",
-    id: 3,
-  },
-  {
-    content:
-      "Info długa wiadomość bardzo jakaś dzień dobry i te sprawy co tam jak tam jeszcze trochę żeby się zawinęło albo jeszcze trochę",
-    send: "11:55 12.03.2020",
-    side: "left",
-    id: 0,
-  },
-  {
-    content:
-      "Info długa wiadomość bardzo jakaś dzień dobry i te sprawy co tam jak tam jeszcze trochę żeby się zawinęło albo jeszcze trochę",
-    send: "11:55 12.03.2020",
-    side: "right",
-    id: 1,
-  },
-  {
-    content: "a",
-    send: "11:55 12.03.2020",
-    side: "right",
-    id: 2,
-  },
-  {
-    content: "b",
-    send: "11:55 12.03.2020",
-    side: "left",
-    id: 3,
-  },
-]; // dane do testowania jak wygląda
-
 const MessagesList = () => {
   const [data, setData] = useState([]);
   const user = useContext(UserContext);
@@ -153,7 +98,7 @@ const MessagesList = () => {
         </Card.Header>
         <Card.Body className="messagesList__body">
           <ListGroup ref={messagesEl} className="messagesList__list">
-            {dataD.map(({ content, send, side, id }) => (
+            {data.map(({ content, send, side, id }) => (
               <MessageItem key={id} content={content} send={send} side={side} />
             ))}
           </ListGroup>

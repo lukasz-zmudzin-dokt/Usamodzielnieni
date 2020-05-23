@@ -25,10 +25,21 @@ describe("EditorForm", () => {
     props = {
       alerts: alerts,
       customRef: null,
-      state: createEditorState(),
+      state: createEditorState({
+        entityMap: {},
+        blocks: [
+          {
+            text: "",
+            key: "foo",
+            type: "unstyled",
+            entityRanges: [],
+          },
+        ],
+      }),
       onChange: onChange,
       id: "abc123",
       token: token,
+      editorKey: "123abc",
     };
     alerts = {
       showAlert: jest.fn(),

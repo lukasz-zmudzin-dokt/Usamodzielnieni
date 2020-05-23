@@ -3,7 +3,15 @@ import React from "react";
 import { uploadPhoto } from "../functions/apiCalls";
 import proxy from "config/api";
 
-const EditorForm = ({ alerts, onChange, customRef, state, id, token }) => {
+const EditorForm = ({
+  alerts,
+  onChange,
+  customRef,
+  state,
+  id,
+  token,
+  ...rest
+}) => {
   const ImgSideButton = () =>
     class extends ImageSideButton {
       onChange = async (e) => {
@@ -108,6 +116,7 @@ const EditorForm = ({ alerts, onChange, customRef, state, id, token }) => {
         inlineButtons={config.inline}
         blockButtons={config.block}
         sideButtons={config.side}
+        {...rest}
       />
     </div>
   );
