@@ -3,6 +3,7 @@ import { ProgressBarFragment } from "../";
 import proxy from "config/api";
 import { Alert } from "react-bootstrap";
 import { deleteStep, findParents } from "../../functions/deleteStep";
+import {DeletionModal} from "components";
 
 const tmpSteps = [
   {
@@ -64,7 +65,7 @@ const getSteps = async () => {
   const response = await fetch(url, { method: "GET", headers });
 
   if (response.status !== 200) {
-    //return tmpSteps;
+    return tmpSteps;
 
     // eslint-disable-next-line no-unreachable
     throw response.status;
@@ -83,12 +84,13 @@ const mapSteps = (steps) =>
   }));
 
 const ProgressBar = () => {
-  const [steps, setSteps] = useState(tmpSteps);
+  const [steps, setSteps] = useState();
   const [path, setPath] = useState(["1"]);
   //const [path, setPath] = useState([]);
   const [error, setError] = useState(false);
   const [wantsDelete, setWantsDelete] = useState(false);
-  /*
+  const [showModal, setShowModal] = useState(false);
+  
   useEffect(() => {
     const loadSteps = async () => {
       let res;
@@ -104,7 +106,7 @@ const ProgressBar = () => {
 
     loadSteps();
   }, []);
-*/
+
   const setCurrent = (id) => {
     const index = path.indexOf(id);
 
@@ -145,6 +147,12 @@ const ProgressBar = () => {
   return (
     msg || (
       <div>
+        <DeletionModal
+          show={showModal}
+          setShow={setShowModal}
+          delConfirmed={setWantsDelete}
+          question="Czy na pewno chcesz usunąć ten krok?"
+        />
         {path.map((stepId, i) => (
           <ProgressBarFragment
             key={stepId}
@@ -152,7 +160,7 @@ const ProgressBar = () => {
             step={steps.find((step) => step.id === stepId)}
             current={path.length - 1 === i}
             setCurrent={setCurrent}
-            wantsDelete={setWantsDelete}
+            wantsDelete={setShowModal}
           />
         ))}
         {steps.find((step) => step.id === path[path.length - 1])?.next && (
