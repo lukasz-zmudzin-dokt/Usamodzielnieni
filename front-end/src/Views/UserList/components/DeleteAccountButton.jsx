@@ -3,7 +3,7 @@ import { Button } from "react-bootstrap";
 import { DeletionModal } from "components";
 import proxy from "config/api";
 import { AlertContext, UserContext } from "context";
-import {staffTypes} from "constants/staffTypes";
+import { staffTypes } from "constants/staffTypes";
 
 const deleteAccount = async (token, user) => {
   let url = `${proxy.account}admin/user_details/edit/${user.id}/`;
@@ -41,23 +41,25 @@ const DeleteAccountButton = ({ user, afterDeletion, ...rest }) => {
     afterDeletion(user);
   };
 
-  return data.group_type.includes(staffTypes.VERIFICATION) && (
-    <>
-      <Button
-        variant="danger"
-        onClick={onButtonClick}
-        disabled={disabled}
-        {...rest}
-      >
-        {disabled ? "Ładowanie..." : "Usuń konto"}
-      </Button>
-      <DeletionModal
-        show={showModal}
-        setShow={setShowModal}
-        delConfirmed={onSuccess}
-        question={"Czy na pewno chcesz usunąć to konto?"}
-      />
-    </>
+  return (
+    data.group_type.includes(staffTypes.VERIFICATION) && (
+      <>
+        <Button
+          variant="danger"
+          onClick={onButtonClick}
+          disabled={disabled}
+          {...rest}
+        >
+          {disabled ? "Ładowanie..." : "Usuń konto"}
+        </Button>
+        <DeletionModal
+          show={showModal}
+          setShow={setShowModal}
+          delConfirmed={onSuccess}
+          question={"Czy na pewno chcesz usunąć to konto?"}
+        />
+      </>
+    )
   );
 };
 

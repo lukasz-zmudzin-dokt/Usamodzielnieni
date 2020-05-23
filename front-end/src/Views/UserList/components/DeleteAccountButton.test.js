@@ -2,9 +2,9 @@ import React from "react";
 import { render, fireEvent, wait, queries } from "@testing-library/react";
 import DeleteAccountButton from "./DeleteAccountButton";
 import { AlertContext } from "context";
-import {UserContext} from "context/UserContext";
-import {userTypes} from "constants/userTypes";
-import {staffTypes} from "constants/staffTypes";
+import { UserContext } from "context/UserContext";
+import { userTypes } from "constants/userTypes";
+import { staffTypes } from "constants/staffTypes";
 
 describe("DeleteAccountButton", () => {
   let apiShouldFail;
@@ -43,16 +43,16 @@ describe("DeleteAccountButton", () => {
     context = {
       type: userTypes.STAFF,
       data: {
-        group_type: [staffTypes.VERIFICATION, staffTypes.BLOG_MODERATOR]
-      }
-    }
+        group_type: [staffTypes.VERIFICATION, staffTypes.BLOG_MODERATOR],
+      },
+    };
   });
 
   it("should render without crashing", async () => {
     const { container } = render(
-        <UserContext.Provider value={context}>
-          <DeleteAccountButton user={user} />
-        </UserContext.Provider>
+      <UserContext.Provider value={context}>
+        <DeleteAccountButton user={user} />
+      </UserContext.Provider>
     );
 
     expect(container).toMatchSnapshot();
@@ -60,9 +60,9 @@ describe("DeleteAccountButton", () => {
 
   it("should open modal when button is clicked", async () => {
     const { getByText } = render(
-        <UserContext.Provider value={context}>
-          <DeleteAccountButton user={user} />
-        </UserContext.Provider>
+      <UserContext.Provider value={context}>
+        <DeleteAccountButton user={user} />
+      </UserContext.Provider>
     );
 
     fireEvent.click(getByText("Usuń konto", { exact: false }));

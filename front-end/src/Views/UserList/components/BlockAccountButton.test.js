@@ -2,8 +2,8 @@ import React from "react";
 import { render, fireEvent, wait, queries } from "@testing-library/react";
 import BlockAccountButton from "./BlockAccountButton";
 import { AlertContext, UserContext } from "context";
-import {userTypes} from "constants/userTypes";
-import {staffTypes} from "constants/staffTypes";
+import { userTypes } from "constants/userTypes";
+import { staffTypes } from "constants/staffTypes";
 
 describe("BlockAccountButton", () => {
   let apiShouldFail;
@@ -42,16 +42,16 @@ describe("BlockAccountButton", () => {
     context = {
       type: userTypes.STAFF,
       data: {
-        group_type: [staffTypes.VERIFICATION, staffTypes.BLOG_MODERATOR]
-      }
-    }
+        group_type: [staffTypes.VERIFICATION, staffTypes.BLOG_MODERATOR],
+      },
+    };
   });
 
   it("should render without crashing", async () => {
     const { container } = render(
-        <UserContext.Provider value={context}>
-          <BlockAccountButton user={user} />
-        </UserContext.Provider>
+      <UserContext.Provider value={context}>
+        <BlockAccountButton user={user} />
+      </UserContext.Provider>
     );
 
     expect(container).toMatchSnapshot();
@@ -59,9 +59,9 @@ describe("BlockAccountButton", () => {
 
   it("should open modal when button is clicked", async () => {
     const { getByText } = render(
-        <UserContext.Provider value={context}>
-          <BlockAccountButton user={user} />
-        </UserContext.Provider>
+      <UserContext.Provider value={context}>
+        <BlockAccountButton user={user} />
+      </UserContext.Provider>
     );
 
     fireEvent.click(getByText("Zablokuj konto", { exact: false }));
@@ -75,7 +75,7 @@ describe("BlockAccountButton", () => {
     const { getByText, getByRole, queryByText } = render(
       <AlertContext.Provider value={contextA}>
         <UserContext.Provider value={context}>
-          <BlockAccountButton user={user} setUser={setUser}/>
+          <BlockAccountButton user={user} setUser={setUser} />
         </UserContext.Provider>
       </AlertContext.Provider>
     );
@@ -106,7 +106,7 @@ describe("BlockAccountButton", () => {
     const { getByText, getByRole, queryByText } = render(
       <AlertContext.Provider value={contextA}>
         <UserContext.Provider value={context}>
-          <BlockAccountButton user={user} setUser={setUser}/>
+          <BlockAccountButton user={user} setUser={setUser} />
         </UserContext.Provider>
       </AlertContext.Provider>
     );
