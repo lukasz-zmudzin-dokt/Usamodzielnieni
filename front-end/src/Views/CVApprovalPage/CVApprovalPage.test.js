@@ -57,7 +57,7 @@ describe("CVApproval", () => {
             email: "malaala@lala.la",
           },
         },
-      ]
+      ],
     };
     failFetch = false;
     jest.clearAllMocks();
