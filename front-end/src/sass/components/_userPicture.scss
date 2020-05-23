@@ -47,5 +47,8 @@
   }
   &--img {
     background-color: var(--white);
+    img {
+      width: 100%;
+    }
   }
 }
