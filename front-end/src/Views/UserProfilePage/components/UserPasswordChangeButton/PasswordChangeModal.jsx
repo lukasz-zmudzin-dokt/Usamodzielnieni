@@ -54,7 +54,6 @@ const PasswordChangeModal = ({ user, show, setShow }) => {
         clearForm();
         setShow(false);
       } catch (e) {
-        console.log(e);
         alertC.current.showAlert(Object.values(e)[0]);
       }
     }
@@ -115,7 +114,7 @@ const PasswordChangeModal = ({ user, show, setShow }) => {
             validated && !matching && <h5 style={{color: "red"}}>Hasła muszą się zgadzać!</h5>
           }
           <div>
-            Nowe hasło musi zawierać przynajmniej jedną cyfrę, jedną wielką
+            Nowe hasło <b>musi</b> zawierać przynajmniej jedną cyfrę, jedną wielką
             literę i jeden znak specjalny !@#$%^&*. Hasło nie może być
             ciągiem samych cyfr.
           </div>

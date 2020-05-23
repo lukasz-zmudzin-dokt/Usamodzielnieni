@@ -9,9 +9,9 @@ describe("passwordModalTest", () => {
     global.fetch = jest.fn().mockImplementation(() => {
       return new Promise((resolve) => {
         if (apiFail) {
-          resolve({ status: 500 });
+          resolve({ status: 500, json: () => Promise.resolve({qwe: "fail"}) });
         } else if (wrongPass) {
-          resolve({ status: 403 });
+          resolve({ status: 403 , json: () => Promise.resolve({qwe: "dupa"})});
         } else {
           resolve({ status: 200, json: () => Promise.resolve("gituwa") });
         }
@@ -90,7 +90,7 @@ describe("passwordModalTest", () => {
     await wait(() => expect(fetch).toHaveBeenCalled());
 
     expect(alertC.showAlert).toHaveBeenCalledWith(
-      "Podano błędne poprzednie hasło."
+      "dupa"
     );
   });
 
@@ -117,7 +117,7 @@ describe("passwordModalTest", () => {
     await wait(() => expect(fetch).toHaveBeenCalled());
 
     expect(alertC.showAlert).toHaveBeenCalledWith(
-      "Wystąpił błąd podczas zmiany hasła."
+      "fail"
     );
   });
 });
