@@ -99,4 +99,17 @@ const getCVdata = async (token, id) => {
   }
 };
 
-export { sendData, getFeedback, getCVdata };
+const fetchTemplateList = async (token) => {
+  const url = `${domain}templates/`;
+  const headers = getHeaders(token);
+
+  const res = await fetch(url, {headers, method: "GET"});
+
+  if (res.status === 200) {
+    return await res.json();
+  } else {
+    throw res.status;
+  }
+};
+
+export { sendData, getFeedback, getCVdata, fetchTemplateList };
