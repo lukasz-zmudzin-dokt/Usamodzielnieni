@@ -17,7 +17,7 @@ const CVApprovalPage = () => {
   const [cvs, setCvs] = useState([]);
   const [filters, setFilters] = useState({
     page: 1,
-    pageSize: 2,
+    pageSize: 10,
   });
 
   useEffect(() => {

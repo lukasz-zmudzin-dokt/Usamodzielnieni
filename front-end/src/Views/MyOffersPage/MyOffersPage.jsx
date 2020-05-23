@@ -76,7 +76,7 @@ const MyOffersPage = () => {
             ))}
           </Accordion>
         </Card.Body>
-        <Card.Footer>
+        <Card.Footer className="py-0">
           <Pagination
             current={filters.page}
             max={Math.ceil(count / filters.pageSize)}
