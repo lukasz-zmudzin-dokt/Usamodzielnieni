@@ -3,7 +3,7 @@ import { ProgressBarFragment } from "../";
 import proxy from "config/api";
 import { Alert } from "react-bootstrap";
 import { deleteStep, findParents } from "../../functions/deleteStep";
-import {DeletionModal} from "components";
+import { DeletionModal } from "components";
 
 const tmpSteps = [
   {
@@ -90,7 +90,7 @@ const ProgressBar = () => {
   const [error, setError] = useState(false);
   const [wantsDelete, setWantsDelete] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  
+
   useEffect(() => {
     const loadSteps = async () => {
       let res;
