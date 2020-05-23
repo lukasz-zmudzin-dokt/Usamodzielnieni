@@ -62,7 +62,13 @@ export const NewContact = ({ user, show, setShow, setContacts, alertC }) => {
   };
 
   return (
-    <Modal show={show} onHide={(e) => {clearForm(); setShow(false);}}>
+    <Modal
+      show={show}
+      onHide={(e) => {
+        clearForm();
+        setShow(false);
+      }}
+    >
       <Modal.Header closeButton>
         <Modal.Title>Nowy kontakt</Modal.Title>
       </Modal.Header>

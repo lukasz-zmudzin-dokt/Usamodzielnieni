@@ -1,10 +1,10 @@
 import React from "react";
 import ContactPage from "./ContactPage";
-import {fireEvent, render, wait} from "@testing-library/react";
+import { fireEvent, render, wait } from "@testing-library/react";
 import { AlertContext } from "context/AlertContext";
 import { userTypes } from "constants/userTypes";
 import { staffTypes } from "constants/staffTypes";
-import {UserContext} from "context/UserContext";
+import { UserContext } from "context/UserContext";
 
 describe("ContactPage", () => {
   let apiFail, phoneList, user, alertC;
@@ -14,12 +14,12 @@ describe("ContactPage", () => {
         if (apiFail) {
           resolve({ status: 500 });
         } else {
-          switch(init.method) {
+          switch (init.method) {
             case "GET":
               resolve({ status: 200, json: () => Promise.resolve(phoneList) });
               break;
             case "DELETE":
-              resolve({status: 200, json: () => Promise.resolve("")});
+              resolve({ status: 200, json: () => Promise.resolve("") });
           }
         }
       });
@@ -78,15 +78,15 @@ describe("ContactPage", () => {
     expect(getByText("Brak kontaktów do wyświetlenia.")).toBeInTheDocument();
   });
 
-  it('should delete card', async () => {
+  it("should delete card", async () => {
     phoneList = [phoneList[0]];
     const { getByText, queryByText } = render(
-        <UserContext.Provider value={user}>
-          <AlertContext.Provider value={alertC}>
-            <ContactPage />
-          </AlertContext.Provider>
-        </UserContext.Provider>
-        );
+      <UserContext.Provider value={user}>
+        <AlertContext.Provider value={alertC}>
+          <ContactPage />
+        </AlertContext.Provider>
+      </UserContext.Provider>
+    );
     await wait(() => expect(fetch).toHaveBeenCalled());
     fireEvent.click(getByText("X"));
     fireEvent.click(getByText("Usuń ✗"));
