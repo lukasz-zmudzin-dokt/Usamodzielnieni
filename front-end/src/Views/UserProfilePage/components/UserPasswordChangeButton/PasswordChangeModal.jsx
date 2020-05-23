@@ -12,7 +12,7 @@ const updatePassword = async (token, data) => {
   };
 
   const res = await fetch(url, {
-    method: "PUT",
+    method: "PATCH",
     headers,
     body: JSON.stringify(data),
   });
@@ -20,7 +20,7 @@ const updatePassword = async (token, data) => {
   if (res.status === 200) {
     return await res.json();
   } else {
-    throw res.status;
+    throw await res.json();
   }
 };
 
@@ -28,14 +28,20 @@ const PasswordChangeModal = ({ user, show, setShow }) => {
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [newPasswordR, setNewPasswordR] = useState("");
+  const [validated, setValidated] = useState(false);
+  const [matching, setMatching] = useState(true);
   const alertC = useRef(useContext(AlertContext));
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setMatching(true);
+    setValidated(true);
     if (
-      event.currentTarget.checkValidity() === false ||
-      newPassword !== newPasswordR
+      event.currentTarget.checkValidity() === false
     ) {
+      event.stopPropagation();
+    } else if (newPassword !== newPasswordR) {
+      setMatching(false);
       event.stopPropagation();
     } else {
       try {
@@ -49,16 +55,14 @@ const PasswordChangeModal = ({ user, show, setShow }) => {
         setShow(false);
       } catch (e) {
         console.log(e);
-        if (e === 403) {
-          alertC.current.showAlert("Podano błędne poprzednie hasło.");
-        } else {
-          alertC.current.showAlert("Wystąpił błąd podczas zmiany hasła.");
-        }
+        alertC.current.showAlert(Object.values(e)[0]);
       }
     }
   };
 
   const clearForm = () => {
+    setMatching(true);
+    setValidated(false);
     setNewPassword("");
     setNewPasswordR("");
     setOldPassword("");
@@ -75,7 +79,7 @@ const PasswordChangeModal = ({ user, show, setShow }) => {
       <Modal.Header closeButton>
         <Modal.Title>Zmiana hasła</Modal.Title>
       </Modal.Header>
-      <Form onSubmit={handleSubmit}>
+      <Form noValidate validated={validated} onSubmit={handleSubmit}>
         <Modal.Body>
           <FormGroup
             header="Poprzednie hasło"
@@ -94,7 +98,7 @@ const PasswordChangeModal = ({ user, show, setShow }) => {
             id="newPassword"
             val={newPassword}
             required
-            incorrect="Hasła muszą się zgadzać."
+            incorrect="Pole musi mieć przynajmniej 8 znaków."
             length={{ min: 8, max: 120 }}
           />
           <FormGroup
@@ -104,12 +108,15 @@ const PasswordChangeModal = ({ user, show, setShow }) => {
             type="password"
             val={newPasswordR}
             required
-            incorrect="Hasła muszą się zgadzać."
+            incorrect="Pole musi mieć przynajmniej 8 znaków."
             length={{ min: 8, max: 120 }}
           />
+          {
+            validated && !matching && <h5 style={{color: "red"}}>Hasła muszą się zgadzać!</h5>
+          }
           <div>
-            Nowe hasło powinno zawierać przynajmniej jedną cyfrę, jedną wielką
-            literę i jeden znak specjalny (&, @, ?, ...). Hasło nie może być
+            Nowe hasło musi zawierać przynajmniej jedną cyfrę, jedną wielką
+            literę i jeden znak specjalny !@#$%^&*. Hasło nie może być
             ciągiem samych cyfr.
           </div>
         </Modal.Body>
