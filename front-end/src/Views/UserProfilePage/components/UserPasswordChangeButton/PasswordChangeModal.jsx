@@ -62,10 +62,16 @@ const PasswordChangeModal = ({ user, show, setShow }) => {
     setNewPassword("");
     setNewPasswordR("");
     setOldPassword("");
-  }
+  };
 
   return (
-    <Modal show={show} onHide={(e) => {clearForm(); setShow(false)}}>
+    <Modal
+      show={show}
+      onHide={(e) => {
+        clearForm();
+        setShow(false);
+      }}
+    >
       <Modal.Header closeButton>
         <Modal.Title>Zmiana hasła</Modal.Title>
       </Modal.Header>
