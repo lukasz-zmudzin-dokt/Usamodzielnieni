@@ -4,9 +4,7 @@ import DeletePhotoButton from "./DeletePhotoButton";
 import { AlertContext } from "context";
 
 describe("DeletePhotoButton", () => {
-  let apiShouldFail;
-  let user;
-  let contextA;
+  let apiShouldFail, user, contextAlert;
   beforeAll(() => {
     global.fetch = jest.fn().mockImplementation((input, init) => {
       return new Promise((resolve, reject) => {
@@ -29,9 +27,12 @@ describe("DeletePhotoButton", () => {
     apiShouldFail = false;
     user = {
       token: "123",
-      logout: jest.fn(),
+      changeData: jest.fn(),
+      data: {
+        picture_url: "/url",
+      },
     };
-    contextA = {
+    contextAlert = {
       showAlert: jest.fn(),
     };
   });
@@ -47,7 +48,7 @@ describe("DeletePhotoButton", () => {
 
     fireEvent.click(getByText("Usuń", { exact: false }));
 
-    expect(getByText("Czy chcesz usunąć swoje konto?")).toBeInTheDocument();
+    expect(getByText("Czy chcesz usunąć zdjęcie?")).toBeInTheDocument();
   });
 
   it("should logout user when confirmation button is clicked", async () => {
@@ -57,46 +58,34 @@ describe("DeletePhotoButton", () => {
 
     fireEvent.click(getByText("Usuń", { exact: false }));
 
-    const modal1 = getByRole("dialog");
-    fireEvent.click(queries.getByText(modal1, "Usuń", { exact: false }));
+    const modal = getByRole("dialog");
+    fireEvent.click(queries.getByText(modal, "Usuń", { exact: false }));
 
-    const modal2 = getByRole("dialog");
-    fireEvent.click(queries.getByText(modal2, "Usuń", { exact: false }));
+    await wait(() => expect(user.changeData).toHaveBeenCalledTimes(1));
 
-    expect(getByText("Ładowanie...")).toBeInTheDocument();
-    await wait(() => expect(user.logout).toHaveBeenCalledTimes(1));
-
-    expect(
-      queryByText("Czy na pewno chcesz usunąć swoje konto?", { exact: false })
-    ).not.toBeInTheDocument();
+    expect(queryByText("Czy chcesz usunąć zdjęcie?")).not.toBeInTheDocument();
   });
 
   it("should display error alert when api fails", async () => {
     apiShouldFail = true;
     const { getByText, getByRole, queryByText } = render(
-      <AlertContext.Provider value={contextA}>
+      <AlertContext.Provider value={contextAlert}>
         <DeletePhotoButton user={user} />
       </AlertContext.Provider>
     );
 
     fireEvent.click(getByText("Usuń", { exact: false }));
 
-    const modal1 = getByRole("dialog");
-    fireEvent.click(queries.getByText(modal1, "Usuń", { exact: false }));
+    const modal = getByRole("dialog");
+    fireEvent.click(queries.getByText(modal, "Usuń", { exact: false }));
 
-    const modal2 = getByRole("dialog");
-    fireEvent.click(queries.getByText(modal2, "Usuń", { exact: false }));
-
-    expect(getByText("Ładowanie...")).toBeInTheDocument();
     await wait(() =>
-      expect(
-        queryByText("Czy na pewno chcesz usunąć swoje konto?", { exact: false })
-      ).not.toBeInTheDocument()
+      expect(queryByText("Czy chcesz usunąć zdjęcie?")).not.toBeInTheDocument()
     );
 
-    expect(contextA.showAlert).toHaveBeenCalledWith(
-      "Wystąpił błąd podczas usuwania konta."
+    expect(contextAlert.showAlert).toHaveBeenCalledWith(
+      "Wystąpił błąd podczas usuwania zdjęcia."
     );
-    expect(getByText("Usuń konto")).toBeInTheDocument();
+    expect(getByText("Usuń")).toBeInTheDocument();
   });
 });

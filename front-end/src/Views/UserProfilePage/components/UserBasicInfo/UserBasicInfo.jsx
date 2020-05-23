@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Row, Col } from "react-bootstrap";
 import { PhotoButtonsContainer } from "../";
-import { UserPicture } from "components";
+import { UserPicture } from "../../../../components";
 import { UserContext } from "context";
 
 const UserBasicInfo = ({ user, names }) => {

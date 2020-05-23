@@ -40,7 +40,7 @@ const ChangePhotoModal = ({ show, setShow, user }) => {
   };
 
   const onSubmit = async (e) => {
-    console.log("onSubmit");
+    console.log("onSubmit", fileInput.current);
     e.preventDefault();
     if (!e.currentTarget.checkValidity()) {
       setValidated(true);
@@ -51,13 +51,17 @@ const ChangePhotoModal = ({ show, setShow, user }) => {
       } catch (e) {
         console.log(e);
         alertContext.showAlert("Wystąpił błąd podczas zmiany zdjęcia.");
+        handleClose();
+        return;
       }
       user.changeData({ ...user.data, picture_url });
+      alertContext.showAlert("Pomyślnie przesłano nowe zdjęcie.");
       handleClose();
     }
   };
 
   const onChange = () => {
+    console.log("onSubmit", fileInput.current);
     const filename = fileInput.current?.files?.[0]?.name;
     setLabel(filename);
   };
