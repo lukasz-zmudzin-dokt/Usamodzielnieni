@@ -135,7 +135,7 @@ describe("BlogPage", () => {
       await waitForElement(() => getAllByText("abcd"));
 
       await expect(fetch).toHaveBeenCalledWith(
-        `${proxy.blog}blogposts/?category=abcd&tag=abcd`,
+        `${proxy.blog}blogposts/?page=1&page_size=10&category=abcd&tag=abcd`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -163,7 +163,7 @@ describe("BlogPage", () => {
       await waitForElement(() => getAllByText("abcd"));
 
       await expect(fetch).toHaveBeenCalledWith(
-        `${proxy.blog}blogposts/?tag=abcd`,
+        `${proxy.blog}blogposts/?page=1&page_size=10&tag=abcd`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -203,7 +203,7 @@ describe("BlogPage", () => {
       await waitForElement(() => getAllByText("abcd"));
 
       await expect(fetch).toHaveBeenCalledWith(
-        `${proxy.blog}blogposts/?category=abcd`,
+        `${proxy.blog}blogposts/?page=1&page_size=10&category=abcd`,
         {
           headers: {
             "Content-Type": "application/json",

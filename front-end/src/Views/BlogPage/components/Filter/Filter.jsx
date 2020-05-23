@@ -8,7 +8,7 @@ import { IndexLinkContainer } from "react-router-bootstrap";
 import { staffTypes } from "constants/staffTypes";
 import { userTypes } from "constants/userTypes";
 
-const Filter = ({ setFilter, count }) => {
+const Filter = ({ setFilter, filtersBlog, count }) => {
   const [filters, setFilters] = useState({ categories: [], tags: [] });
   const [category, setCategory] = useState(DEFAULT_INPUT);
   const [tag, setTag] = useState(DEFAULT_INPUT);
@@ -38,6 +38,7 @@ const Filter = ({ setFilter, count }) => {
     const categoryV = category !== DEFAULT_INPUT ? category : undefined;
     const tagV = tag !== DEFAULT_INPUT ? tag : undefined;
     setFilter({
+      ...filtersBlog,
       category: categoryV,
       tag: tagV,
     });
@@ -47,6 +48,7 @@ const Filter = ({ setFilter, count }) => {
     setCategory(DEFAULT_INPUT);
     setTag(DEFAULT_INPUT);
     setFilter({
+      ...filtersBlog,
       category: undefined,
       tag: undefined,
     });
