@@ -1,10 +1,16 @@
 import React from "react";
 import { Row, Container } from "react-bootstrap";
-import { TilesContainer } from "./components";
+import { MainPhoto, TvContainer, TilesContainer } from "./components";
 
 const Menu = () => {
   return (
     <Container className="Menu" fluid={true}>
+      <Row>
+        <MainPhoto />
+      </Row>
+      <Row>
+        <TvContainer />
+      </Row>
       <Row>
         <TilesContainer />
       </Row>
