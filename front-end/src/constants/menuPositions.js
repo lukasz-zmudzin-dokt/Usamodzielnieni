@@ -65,9 +65,4 @@ export default [
     allowed: [userTypes.STANDARD, userTypes.STAFF, userTypes.EMPLOYER],
     verified: true,
   },
-  {
-    name: "Kroki",
-    path: paths.STEPS,
-    allowed: undefined, //wszyscy są upoważnieni - zalogowani i niezalogowani
-  },
 ];
