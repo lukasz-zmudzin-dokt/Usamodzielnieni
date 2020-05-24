@@ -1,7 +1,7 @@
 import PasswordChangeModal from "./PasswordChangeModal";
 import React from "react";
 import { fireEvent, render, wait } from "@testing-library/react";
-import { AlertContext } from "../../../../context/AlertContext";
+import { AlertContext } from "context";
 
 describe("passwordModalTest", () => {
   let apiFail, wrongPass, user, alertC, show, setShow;
