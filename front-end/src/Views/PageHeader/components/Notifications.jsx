@@ -43,19 +43,17 @@ const Notifications = ({ location, token, ...rest }) => {
   };
 
   return (
-    <Dropdown
-      as={Nav.Item}
-      alignRight
-      show={show}
-      onToggle={onToggle}
-      {...rest}
-    >
+    <Dropdown as={Nav.Item} show={show} onToggle={onToggle} {...rest}>
       <Dropdown.Toggle
         as={NotificationToggle}
         count={notifications === null || error ? 0 : count}
       />
-      <Dropdown.Menu data-testid="dropdownMenu">
-        {notifications === null ? (
+      <Dropdown.Menu data-testid="dropdownMenu" className="notifications">
+        {error ? (
+          <Dropdown.Item disabled="true">
+            <span>Wystąpił błąd w trakcie ładowania powiadomień</span>
+          </Dropdown.Item>
+        ) : notifications === null ? (
           <Dropdown.Item disabled="true">Ładowanie...</Dropdown.Item>
         ) : (
           <>
