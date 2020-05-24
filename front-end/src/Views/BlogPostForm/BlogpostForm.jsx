@@ -277,7 +277,9 @@ class BlogPostForm extends React.Component {
               block
               disabled={
                 this.context.data.group_type &&
-                this.context.data.group_type.includes("staff_guest") ? true : false
+                this.context.data.group_type.includes("staff_guest")
+                  ? true
+                  : false
               }
             >
               Opublikuj
