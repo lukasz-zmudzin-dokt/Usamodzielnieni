@@ -10,7 +10,7 @@ describe("Chats", () => {
   let failFetch = false;
   let apiChats = [];
   beforeAll(() => {
-    ChatInfo.mockImplementation((({ chat }) => <div> {chat.name} </div>))
+    ChatInfo.mockImplementation(({ chat }) => <div> {chat.name} </div>);
     global.fetch = jest.fn().mockImplementation((input, init) => {
       return new Promise((resolve, reject) => {
         if (failFetch) {
