@@ -20,13 +20,11 @@ const VideoField = ({ id = 1 }) => {
       let res;
       try {
         res = await getUrl(user.token, id);
-        console.log(res);
         let changeRes = res;
         const index = res.url.lastIndexOf("=");
         changeRes.url = res.url.slice(index + 1);
         setVideo(changeRes);
       } catch (e) {
-        console.log("błąd");
         setErr(true);
       }
       setLoading(false);

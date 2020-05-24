@@ -18,7 +18,6 @@ const ChangeVideo = ({ id, token }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const form = e.currentTarget;
-    console.log(newVideo);
     if (form.checkValidity() === true) {
       try {
         await changeUrl(token, newVideo);

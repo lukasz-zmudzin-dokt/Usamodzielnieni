@@ -11,8 +11,6 @@ const changeUrl = async (token, video) => {
     body: JSON.stringify(video),
     headers,
   });
-  console.log(res);
-
   if (res.status !== 200) {
     throw Error("changeUrl");
   }
