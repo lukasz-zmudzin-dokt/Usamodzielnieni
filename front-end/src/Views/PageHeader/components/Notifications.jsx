@@ -11,7 +11,7 @@ const Notifications = ({ location, token, ...rest }) => {
   const { notifications, count, error } = notificationsContext;
 
   useEffect(() => {
-    if (notifications && count) {
+    if (notifications) {
       const toRemove = notifications.filter(
         (notification) => notification.path === location.pathname
       );
@@ -19,7 +19,7 @@ const Notifications = ({ location, token, ...rest }) => {
         notificationsContext.deleteNotification(notification.id);
       });
     }
-  }, [notificationsContext, count, notifications, location.pathname]);
+  }, [notificationsContext, notifications, location.pathname]);
 
   const clearNotifications = async () => {
     setShow("prevent");

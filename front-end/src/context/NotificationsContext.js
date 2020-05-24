@@ -155,11 +155,13 @@ export const NotificationsProvider = (props) => {
         { notifications: loadedNotifications, next: loadedNext },
         loadedCount,
       ] = values;
-      setNotifications(loadedNotifications);
-      setNext(loadedNext);
       setCount(loadedCount);
+      setNext(loadedNext);
+      setNotifications(loadedNotifications);
     };
-    loadNotifications(user.token, user.type);
+    if (user.token && user.type) {
+      loadNotifications(user.token, user.type);
+    }
   }, [user.token, user.type]);
 
   useEffect(() => {
@@ -175,8 +177,8 @@ export const NotificationsProvider = (props) => {
       // socket.current.onopen = (e) => console.log("onopen", e);
       socket.current.onmessage = (e) => {
         const newNotification = mapNotification(JSON.parse(e.data), user.type);
-        setNotifications((prev) => [newNotification, ...prev]);
         setCount((prev) => prev + 1);
+        setNotifications((prev) => [newNotification, ...prev]);
       };
       socket.current.onerror = (e) => {
         console.log(e);
@@ -204,6 +206,7 @@ export const NotificationsProvider = (props) => {
       const notificationToRemove = notifications.find(
         (notification) => notification.id === id
       );
+      console.log(notificationToRemove, id);
       if (notificationToRemove?.unread && count > 0) {
         setCount((prev) => prev - 1);
       }
@@ -218,8 +221,8 @@ export const NotificationsProvider = (props) => {
       }
     },
     deleteNotifications: async () => {
-      setNotifications([]);
       setCount(0);
+      setNotifications([]);
       try {
         await deleteNotifications(user.token);
       } catch (e) {
@@ -236,8 +239,8 @@ export const NotificationsProvider = (props) => {
         setError(true);
         return;
       }
-      setNotifications((prev) => [...prev, ...res.notifications]);
       setNext(res.next);
+      setNotifications((prev) => [...prev, ...res.notifications]);
     },
   };
   return <NotificationsContext.Provider value={data} {...props} />;
