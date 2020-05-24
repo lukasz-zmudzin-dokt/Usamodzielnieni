@@ -79,6 +79,7 @@ const JobOfferDetails = (props) => {
                   <img
                     className="JobOffer__logo mr-3"
                     src={`${proxy.plain}${offer.companyLogo}`}
+                    alt="logo firmy"
                   />
                   <h3>{offer.title}</h3>
                 </Row>
@@ -116,6 +117,7 @@ const JobOfferDetails = (props) => {
                 <img
                   className="JobOffer__logo mr-3"
                   src={`${proxy.plain}${offer.offerImage}`}
+                  alt="obrazek główny oferty"
                 />
               ) : null}
             </div>
