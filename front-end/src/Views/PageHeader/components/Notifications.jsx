@@ -31,7 +31,8 @@ const Notifications = ({ location, token, ...rest }) => {
   };
 
   const onToggle = async (isOpen) => {
-    setShow((prev) => (prev !== "prevent" ? !prev : true));
+    console.log(isOpen);
+    setShow((prev) => (prev !== "prevent" ? isOpen : true));
     if (isOpen && count) {
       await notificationsContext.markAsRead();
     }
@@ -51,7 +52,7 @@ const Notifications = ({ location, token, ...rest }) => {
       <Dropdown.Menu data-testid="dropdownMenu" className="notifications">
         {error ? (
           <Dropdown.Item disabled="true">
-            <span>Wystąpił błąd w trakcie ładowania powiadomień</span>
+            Wystąpił błąd w trakcie ładowania powiadomień
           </Dropdown.Item>
         ) : notifications === null ? (
           <Dropdown.Item disabled="true">Ładowanie...</Dropdown.Item>

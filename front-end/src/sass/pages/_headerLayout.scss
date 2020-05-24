@@ -70,4 +70,8 @@
     right: 0;
     left: auto;
   }
+  .dropdown-item {
+    word-wrap: break-word;
+    white-space: pre-wrap;
+  }
 }
