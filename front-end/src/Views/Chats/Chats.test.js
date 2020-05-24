@@ -2,15 +2,15 @@ import React from "react";
 import { MemoryRouter } from "react-router-dom";
 import { render, waitForElement, fireEvent } from "@testing-library/react";
 import Chats from "Views/Chats";
+import ChatInfo from "./components/ChatInfo";
 
-jest.mock("./components/ChatInfo", () => ({
-  ChatInfo: ({ chat }) => <div> {chat.name} </div>,
-}));
+jest.mock("./components/ChatInfo");
 
 describe("Chats", () => {
   let failFetch = false;
   let apiChats = [];
   beforeAll(() => {
+    ChatInfo.mockImplementation((({ chat }) => <div> {chat.name} </div>))
     global.fetch = jest.fn().mockImplementation((input, init) => {
       return new Promise((resolve, reject) => {
         if (failFetch) {

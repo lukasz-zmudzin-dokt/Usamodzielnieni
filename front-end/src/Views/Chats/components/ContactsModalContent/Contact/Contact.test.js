@@ -4,17 +4,16 @@ import { render, fireEvent, waitForElement } from "@testing-library/react";
 import Contact from "./Contact";
 
 describe("Contact", () => {
+  const contact = {
+    first_name: "imie",
+    last_name: "nazwisko",
+    id: "1234",
+    role: "gościu"
+  };
   it("should render without crashing", () => {
-    const contact_example = {
-      first_name: "imie",
-      id: "1234",
-    };
     const { getByText } = render(
       <MemoryRouter>
-        <Contact
-          first_name={contact_example.first_name}
-          id={contact_example.id}
-        />
+        <Contact contact={contact} />
       </MemoryRouter>
     );
     expect(getByText("imie", { exact: false })).toBeInTheDocument();
@@ -23,7 +22,7 @@ describe("Contact", () => {
   it("should match snapshot", async () => {
     const { container } = render(
       <MemoryRouter>
-        <Contact />
+        <Contact contact={contact} />
       </MemoryRouter>
     );
     expect(container).toMatchSnapshot();
