@@ -107,14 +107,19 @@ const OfferForm = () => {
           context.token,
           id
         );
-        try {
-          await sendPhoto(context.token, res.offer_id, photoFile);
-          history.push("/myOffers");
-        } catch (e) {
-          alertC.current.showAlert("Nie udało się wysłać zdjęcia.");
+        if (photoFile) {
+          console.log("jestem", res.offer_id);
+          try {
+            await sendPhoto(context.token, res.offer_id, photoFile);
+            alertC.current.showAlert("Przesłano ofertę", "success");
+            return history.push(`/jobOffers/${id || res.offer_id}`);
+          } catch (e) {
+            alertC.current.showAlert("Nie udało się wysłać zdjęcia.");
+          }
+        } else {
+          alertC.current.showAlert("Przesłano ofertę", "success");
+          return history.push(`/jobOffers/${id || res.offer_id}`);
         }
-
-        return;
       } catch (e) {
         alertC.current.showAlert("Nie udało się wysłać oferty. Błąd serwera.");
       }
@@ -132,8 +137,7 @@ const OfferForm = () => {
   const onChange = () => {
     const photoNew = photo.current.files[0];
     const filename = photo.current?.files?.[0]?.name;
-    const formData = new FormData();
-    formData.append("picture", photoNew, photoNew.name);
+    console.log(photoNew);
     setPhotoFile(photoNew);
     setLabel(filename);
   };
@@ -229,7 +233,7 @@ const OfferForm = () => {
                 incorrect="Pole musi być większe od minimalnej stawki"
               />
               <Form.Group>
-                <Form.Label htmlFor="custom-file">Zdjęcie:</Form.Label>
+                <Form.Label htmlFor="custom-file">Zdjęcie</Form.Label>
                 <Form.File
                   className="text-nowrap text-truncate"
                   id="custom-file"

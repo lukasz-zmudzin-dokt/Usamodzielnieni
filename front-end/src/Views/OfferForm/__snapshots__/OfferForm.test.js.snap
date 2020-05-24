@@ -220,6 +220,33 @@ exports[`OfferForm renders correctly 1`] = `
               Pole musi być większe od minimalnej stawki
             </div>
           </div>
+          <div
+            class="form-group"
+          >
+            <label
+              class="form-label"
+              for="custom-file"
+            >
+              Zdjęcie
+            </label>
+            <div
+              class="text-nowrap text-truncate custom custom-file"
+            >
+              <input
+                accept="image/*"
+                class="custom-file-input"
+                id="custom-file"
+                type="file"
+              />
+              <label
+                class="custom-file-label"
+                data-browse="Wybierz plik"
+                for="custom-file"
+              >
+                Dodaj plik...
+              </label>
+            </div>
+          </div>
         </div>
         <div
           class="offerForm__wrapper"

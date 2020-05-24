@@ -11,6 +11,10 @@ const sendData = async (offer, token, id) => {
       Authorization: `Token ${token}`,
     },
   });
+
+  if (id) {
+    console.log(res.status);
+  }
   if (res.status !== 200) {
     throw Error("getSelects");
   }
@@ -32,6 +36,7 @@ const sendPhoto = async (token, id, photo) => {
     headers,
   });
 
+  console.log(response.status);
   if (response.status !== 200) {
     throw response.status;
   }
