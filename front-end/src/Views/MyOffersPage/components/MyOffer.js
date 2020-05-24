@@ -52,10 +52,10 @@ const MyOffer = ({ offer, activeOffer, setActiveOffer }) => {
       let res = await getZipUrl(context.token, offer.id);
       let url = proxy.plain + res.url;
       window.open(url, "_blank");
-    } catch(e) {
+    } catch (e) {
       console.log(e);
     }
-  }
+  };
 
   const message = loading ? (
     <Alert variant="info">Ładuję...</Alert>
@@ -106,7 +106,9 @@ const MyOffer = ({ offer, activeOffer, setActiveOffer }) => {
                 <Link to={"/offerForm/" + offer.id}>
                   <Button className="ml-3">Edytuj ofertę</Button>
                 </Link>
-                <Button className="ml-3" onClick={() => downloadApplications()}>Pobierz zgłoszenia</Button>
+                <Button className="ml-3" onClick={() => downloadApplications()}>
+                  Pobierz zgłoszenia
+                </Button>
               </Row>
             </ListGroup.Item>
           </ListGroup>
