@@ -36,7 +36,9 @@ describe("ChangeVideo", () => {
   });
 
   it("should render without crashing", () => {
-    const { container } = render(<ChangeVideo id={1} token="abc" />);
+    const { container } = render(
+      <ChangeVideo id={1} token="abc" setVideo={jest.fn()} />
+    );
 
     expect(container).toMatchSnapshot();
   });
@@ -44,7 +46,7 @@ describe("ChangeVideo", () => {
   it("should send data", async () => {
     const { getByText, getByLabelText } = render(
       <AlertContext.Provider value={alertC}>
-        <ChangeVideo id={1} token="abcxd" />
+        <ChangeVideo id={1} token="abcxd" setVideo={jest.fn()} />
       </AlertContext.Provider>
     );
 
@@ -78,7 +80,7 @@ describe("ChangeVideo", () => {
     failFetch = true;
     const { getByText, getByLabelText } = render(
       <AlertContext.Provider value={alertC}>
-        <ChangeVideo id={1} token="abcxd" />
+        <ChangeVideo id={1} token="abcxd" setVideo={jest.fn()} />
       </AlertContext.Provider>
     );
 
@@ -104,7 +106,7 @@ describe("ChangeVideo", () => {
   it("should close modal", async () => {
     const { getByText, queryByText } = render(
       <AlertContext.Provider value={alertC}>
-        <ChangeVideo id={1} token="abcxd" />
+        <ChangeVideo id={1} token="abcxd" setVideo={jest.fn()} />
       </AlertContext.Provider>
     );
 
@@ -122,7 +124,7 @@ describe("ChangeVideo", () => {
   it("should not send data if fields are empty", async () => {
     const { getByText } = render(
       <AlertContext.Provider value={alertC}>
-        <ChangeVideo id={1} token="abcxd" />
+        <ChangeVideo id={1} token="abcxd" setVideo={jest.fn()} />
       </AlertContext.Provider>
     );
 

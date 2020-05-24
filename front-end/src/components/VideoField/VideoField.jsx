@@ -82,6 +82,7 @@ const VideoField = ({ id, videoItem, errVid }) => {
           <ChangeVideo
             id={id || videoItem?.id}
             video={video}
+            setVideo={setVideo}
             token={user.token}
           />
         )}
