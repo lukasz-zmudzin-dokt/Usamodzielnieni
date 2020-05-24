@@ -9,7 +9,7 @@ import {
 } from "react-bootstrap";
 import "Views/MyOffersPage/style.css";
 import { UserContext, AlertContext } from "context";
-import { getOfferPeople } from "../functions/apiCalls";
+import { getOfferPeople, getZipUrl } from "../functions/apiCalls";
 import MyOfferPerson from "./MyOfferPerson";
 import { Link, useLocation } from "react-router-dom";
 import { Pagination } from "components";
@@ -45,6 +45,15 @@ const MyOffer = ({ offer, activeOffer, setActiveOffer }) => {
       loadOfferPeople(context.token, offer.id, activeOffer);
     }
   }, [context.token, activeOffer, offer.id, filters]);
+
+  const downloadApplications = async () => {
+    try {
+      let zipUrl = await getZipUrl(context.token, offer.id);
+      console.log(zipUrl);
+    } catch(e) {
+      console.log(e);
+    }
+  }
 
   const message = loading ? (
     <Alert variant="info">Ładuję...</Alert>
@@ -95,6 +104,7 @@ const MyOffer = ({ offer, activeOffer, setActiveOffer }) => {
                 <Link to={"/offerForm/" + offer.id}>
                   <Button className="ml-3">Edytuj ofertę</Button>
                 </Link>
+                <Button onClick={() => downloadApplications()}>Pobierz zgłoszenia</Button>
               </Row>
             </ListGroup.Item>
           </ListGroup>
