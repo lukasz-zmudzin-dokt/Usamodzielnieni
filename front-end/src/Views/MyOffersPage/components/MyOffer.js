@@ -72,7 +72,7 @@ const MyOffer = ({ offer, activeOffer, setActiveOffer }) => {
   ) {
     setFilters({ ...filters, page: queryParams.page });
   }
-
+  console.log(people.length);
   return (
     <Card className="border-left-0 border-right-0 border-bottom-0">
       <Accordion.Toggle
@@ -106,7 +106,7 @@ const MyOffer = ({ offer, activeOffer, setActiveOffer }) => {
                 <Link to={"/offerForm/" + offer.id}>
                   <Button className="ml-3">Edytuj ofertę</Button>
                 </Link>
-                {people.length > 0 && <Button className="ml-3" onClick={() => downloadApplications()}>Pobierz zgłoszenia</Button>}
+                <Button className="ml-3" onClick={() => downloadApplications()}>Pobierz zgłoszenia</Button>
               </Row>
             </ListGroup.Item>
           </ListGroup>
