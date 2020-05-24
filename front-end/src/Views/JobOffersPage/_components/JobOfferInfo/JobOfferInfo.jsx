@@ -5,7 +5,6 @@ import { DetailsItem } from "components";
 import proxy from "config/api";
 
 const JobOfferInfo = ({ context, offer, ...rest }) => {
-  console.log(offer);
   return (
     <Row {...rest}>
       <Col>
@@ -16,6 +15,7 @@ const JobOfferInfo = ({ context, offer, ...rest }) => {
               <img
                 className="JobOffer__logo"
                 src={`${proxy.plain}${offer.companyLogo}`}
+                alt="Logo firmy"
               />
             </DetailsItem>
           ) : null}

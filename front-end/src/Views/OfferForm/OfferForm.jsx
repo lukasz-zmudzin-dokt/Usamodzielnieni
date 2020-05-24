@@ -8,12 +8,12 @@ import {
   getCategories,
   getTypes,
   getOffer,
+  sendPhoto,
 } from "Views/OfferForm/functions/fetchData";
 import { UserContext, AlertContext } from "context";
 import polish from "date-fns/locale/pl";
 import { useHistory, useParams } from "react-router-dom";
 import { addressToString } from "utils/converters";
-import { userStatuses } from "constants/userStatuses";
 
 registerLocale("pl", polish);
 
@@ -25,8 +25,8 @@ const OfferForm = () => {
   const [err, setErr] = useState(false);
   let { id } = useParams();
   let photo = useRef(null);
-  const [label, setLabel] = useState();
-
+  const [label, setLabel] = useState("");
+  const [photoFile, setPhotoFile] = useState("");
   const [offer, setOffer] = useState({
     offer_name: "",
     company_name: "",
@@ -95,7 +95,7 @@ const OfferForm = () => {
     } else {
       setDisabled(true);
       try {
-        await sendData(
+        const res = await sendData(
           {
             ...offer,
             company_logo: context.data.picture_url,
@@ -107,7 +107,13 @@ const OfferForm = () => {
           context.token,
           id
         );
-        history.push("/myOffers");
+        try {
+          await sendPhoto(context.token, res.offer_id, photoFile);
+          history.push("/myOffers");
+        } catch (e) {
+          alertC.current.showAlert("Nie udało się wysłać zdjęcia.");
+        }
+
         return;
       } catch (e) {
         alertC.current.showAlert("Nie udało się wysłać oferty. Błąd serwera.");
@@ -124,7 +130,11 @@ const OfferForm = () => {
   ) : null;
 
   const onChange = () => {
+    const photoNew = photo.current.files[0];
     const filename = photo.current?.files?.[0]?.name;
+    const formData = new FormData();
+    formData.append("picture", photoNew, photoNew.name);
+    setPhotoFile(photoNew);
     setLabel(filename);
   };
 
@@ -139,7 +149,6 @@ const OfferForm = () => {
     type,
     salary_min,
     salary_max,
-    offer_image,
   } = offer;
 
   return (
@@ -222,6 +231,7 @@ const OfferForm = () => {
               <Form.Group>
                 <Form.Label htmlFor="custom-file">Zdjęcie:</Form.Label>
                 <Form.File
+                  className="text-nowrap text-truncate"
                   id="custom-file"
                   ref={photo}
                   custom

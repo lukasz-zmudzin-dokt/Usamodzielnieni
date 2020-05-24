@@ -74,10 +74,17 @@ const JobOfferDetails = (props) => {
         <Card.Body>
           {msg || (
             <div>
+              {offer.offerImage ? (
+                <img
+                  className="JobOffer__mainImage mb-3"
+                  src={`${proxy.plain}${offer.offerImage}`}
+                  alt="obrazek główny oferty"
+                />
+              ) : null}
               {offer.companyLogo ? (
-                <Row className="m-0 mb-2 align-items-center">
+                <Row className="m-0 mb-2 align-items-center justify-content-center justify-content-md-start">
                   <img
-                    className="JobOffer__logo mr-3"
+                    className="JobOffer__logo mb-3 mb-md-0 mr-md-3"
                     src={`${proxy.plain}${offer.companyLogo}`}
                     alt="logo firmy"
                   />
@@ -113,13 +120,6 @@ const JobOfferDetails = (props) => {
                 </DetailsItem>
               </Row>
               <p>{offer.description}</p>
-              {offer.offerImage ? (
-                <img
-                  className="JobOffer__logo mr-3"
-                  src={`${proxy.plain}${offer.offerImage}`}
-                  alt="obrazek główny oferty"
-                />
-              ) : null}
             </div>
           )}
           {user.type === userTypes.STANDARD &&

@@ -33,7 +33,9 @@ const getOffers = async (filters, sort) => {
 
   const response = await fetch(url, { method: "GET", headers });
   if (response.status === 200) {
-    return response.json().then((res) => mapGetOffersRes(res));
+    return response.json().then((res) => {
+      return mapGetOffersRes(res);
+    });
   } else {
     throw response.status;
   }
@@ -81,7 +83,6 @@ const JobOffersPage = (props) => {
       let res;
       try {
         res = await getOffers(filters, sort);
-        console.log(res);
       } catch (e) {
         console.log(e);
         res = { offers: [], count: 0 };

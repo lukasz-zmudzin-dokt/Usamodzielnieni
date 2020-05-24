@@ -1,15 +1,12 @@
 .JobOffer__logo{
-    max-height: 150px;
-    max-width: 150px;
+    height: 7em;
+    width: 7em;
+    position: relative;
+}
+
+.JobOffer__mainImage{
+    width: 100%;
     position: relative;
 }
 
 
-@media (min-width: 1200px){
-    .JobOffer__logo{
-    height: 200px;
-    width: 200px;
-    position: relative;
-}
-
-}
