@@ -170,9 +170,7 @@ export const NotificationsProvider = (props) => {
       socket.current = null;
     }
     if (user.token && user.type) {
-      const url =
-        process.env.REACT_APP_BACKEND_PATH_WEBSOCKET +
-        "/notification/count/unread";
+      const url = proxy.wsNotification + "ws";
       socket.current = new WebSocket(url, user.token);
       // socket.current.onopen = (e) => console.log("onopen", e);
       socket.current.onmessage = (e) => {
