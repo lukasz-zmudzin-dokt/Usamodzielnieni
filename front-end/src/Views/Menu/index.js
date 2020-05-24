@@ -6,8 +6,16 @@ import { Redirect } from "react-router-dom";
 import { UserContext } from "context/UserContext";
 import proxy from "config/api";
 import { TilesContainer } from "./components";
+import NewTileForm from "./components/NewTileForm/NewTileForm";
 
 class Menu extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      show: false
+    };
+  };
+
   userLogout = (e) => {
     const url = proxy.account + "logout/";
     fetch(url, {
@@ -96,6 +104,7 @@ class Menu extends React.Component {
                     Blogi
                   </Button>
                 </LinkContainer>
+                <Button variant="primary" onClick={e => this.setState({show: true})}>Dodaj kafelek</Button>
               </ButtonToolbar>
             </Col>
             <Col />
@@ -104,6 +113,7 @@ class Menu extends React.Component {
         <Row>
           <TilesContainer />
         </Row>
+        <NewTileForm user={this.context} show={this.state.show} setShow={e => this.setState({show: e})}/>
       </Container>
     );
   }
