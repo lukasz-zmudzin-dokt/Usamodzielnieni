@@ -9,7 +9,7 @@ class AccountForm extends React.Component {
   };
 
   render() {
-    let { data, onBlur, passwordOk, checked} = this.props;
+    let { data, onBlur, passwordOk, checked } = this.props;
     let { onChange } = this;
     return (
       <Card bg="light" className="loginPage__cardSection px-0 col-lg mr-lg-3">
@@ -80,10 +80,11 @@ class AccountForm extends React.Component {
             <Form.Control.Feedback type="invalid">
               Minimalna ilośc znaków: 8
             </Form.Control.Feedback>
-            {
-              checked && !passwordOk &&
-              <Card.Text style={{color: "red"}}>Hasła muszą się zgadzać</Card.Text>
-            }
+            {checked && !passwordOk && (
+              <Card.Text style={{ color: "red" }}>
+                Hasła muszą się zgadzać
+              </Card.Text>
+            )}
             <Form.Text className="text-muted">
               Hasło musi mieć min. 8 znaków i zawierać co najmniej jedną cyfrę,
               jedną wielką literę i jeden znak specjalny !@#$%^&*

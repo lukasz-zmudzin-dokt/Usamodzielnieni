@@ -38,12 +38,12 @@ class RegisterPage extends React.Component {
     const form = event.currentTarget;
     event.preventDefault();
     const { password, passwordR } = data.accountData || {};
-    this.setState({passwordOk: true, checked: true});
+    this.setState({ passwordOk: true, checked: true });
     if (form.checkValidity() === false) {
       event.stopPropagation();
       return false;
     } else if (password !== passwordR) {
-      this.setState({passwordOk: false});
+      this.setState({ passwordOk: false });
       event.stopPropagation();
       return false;
     } else return true;
