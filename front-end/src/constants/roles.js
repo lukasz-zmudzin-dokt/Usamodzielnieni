@@ -23,8 +23,8 @@ export const adminGroup = [
   },
   {
     name: staffTypes.GUEST,
-    placeholder: "Konto gościa"
-  }
+    placeholder: "Konto gościa",
+  },
 ];
 
 export const commonGroup = [
