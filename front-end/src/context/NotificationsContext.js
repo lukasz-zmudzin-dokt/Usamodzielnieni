@@ -7,8 +7,11 @@ import React, {
 } from "react";
 import { UserContext } from "context";
 import proxy from "config/api";
+import { paths } from "constants/paths";
+import { userTypes } from "constants/userTypes";
+import { compile } from "path-to-regexp";
 
-const getNotifications = async (token, next) => {
+const getNotifications = async (token, type, next) => {
   let url = proxy.notification + "list/all" + (next ? `?page=${next}` : "");
   const headers = {
     Authorization: "Token " + token,
@@ -23,7 +26,7 @@ const getNotifications = async (token, next) => {
 
   return response
     .json()
-    .then((notifications) => mapNotifications(notifications));
+    .then((notifications) => mapNotifications(notifications, type));
 };
 
 const getNotificationsCount = async (token) => {
@@ -90,29 +93,37 @@ const deleteNotifications = async (token) => {
   return;
 };
 
-const mapNotifications = (notifications) => ({
+const mapNotifications = (notifications, type) => ({
   notifications: notifications.results.map((notification) =>
-    mapNotification(notification)
+    mapNotification(notification, type)
   ),
   next: notifications.next?.replace(/.*page=/, "") || undefined,
 });
 
-const mapNotification = (notification) => ({
+const mapNotification = (notification, type) => ({
   id: notification.slug,
-  path: getPath(notification.app, notification.object_id),
+  path: getPath(notification.app, notification.object_id, type),
   title: notification.text,
   time: new Date(notification.timestamp),
   unread: notification.unread,
 });
 
-const getPath = (type, id) => {
-  switch (type) {
-    case "cv/generator/":
-      return "/cvEditor";
-    case "jobs":
-      return "/";
-    default:
-      return "/";
+const getPath = (appName, id, type) => {
+  const isStandard = type === userTypes.STANDARD;
+  if (appName.match(/^cv/)) {
+    return isStandard
+      ? compile(paths.MY_CVS)({})
+      : compile(paths.CV_APPROVAL)({});
+  } else if (appName.match(/^jobs/)) {
+    return isStandard
+      ? compile(paths.JOB_OFFERS)({})
+      : compile(paths.MY_OFFERS)({});
+  } else if (appName.match(/^account/)) {
+    return compile(paths.USER)({});
+  } else if (appName.match(/^blog/)) {
+    return compile(paths.BLOG_POST)({ id });
+  } else {
+    return compile(paths.DASHBOARD)({});
   }
 };
 
@@ -128,11 +139,11 @@ export const NotificationsProvider = (props) => {
   const user = useContext(UserContext);
 
   useEffect(() => {
-    const loadNotifications = async (token) => {
+    const loadNotifications = async (token, type) => {
       let values;
       try {
         values = await Promise.all([
-          getNotifications(token),
+          getNotifications(token, type),
           getNotificationsCount(token),
         ]);
       } catch (e) {
@@ -148,22 +159,22 @@ export const NotificationsProvider = (props) => {
       setNext(loadedNext);
       setCount(loadedCount);
     };
-    loadNotifications(user.token);
-  }, [user.token]);
+    loadNotifications(user.token, user.type);
+  }, [user.token, user.type]);
 
   useEffect(() => {
     if (socket.current) {
       socket.current.close();
       socket.current = null;
     }
-    if (user.token) {
+    if (user.token && user.type) {
       const url =
         process.env.REACT_APP_BACKEND_PATH_WEBSOCKET +
         "/notification/count/unread";
       socket.current = new WebSocket(url, user.token);
       socket.current.onopen = (e) => console.log("onopen", e);
       socket.current.onmessage = (e) => {
-        const newNotification = mapNotification(JSON.parse(e.data));
+        const newNotification = mapNotification(JSON.parse(e.data), user.type);
         console.log("onmessage", newNotification);
         setNotifications((prev) => [newNotification, ...prev]);
         setCount((prev) => prev + 1);
@@ -173,7 +184,7 @@ export const NotificationsProvider = (props) => {
         setError(true);
       };
     }
-  }, [user.token]);
+  }, [user.token, user.type]);
 
   const data = {
     notifications,
@@ -191,6 +202,18 @@ export const NotificationsProvider = (props) => {
       }
     },
     deleteNotification: async (id) => {
+      const notificationToRemove = notifications.find(
+        (notification) => notification.id === id
+      );
+      console.log(
+        notificationToRemove,
+        notificationToRemove?.unread,
+        count,
+        count > 0
+      );
+      if (notificationToRemove?.unread && count > 0) {
+        setCount((prev) => prev - 1);
+      }
       setNotifications((prev) =>
         prev.filter((notification) => notification.id !== id)
       );
@@ -203,6 +226,7 @@ export const NotificationsProvider = (props) => {
     },
     deleteNotifications: async () => {
       setNotifications([]);
+      setCount(0);
       try {
         await deleteNotifications(user.token);
       } catch (e) {
@@ -214,7 +238,7 @@ export const NotificationsProvider = (props) => {
       setNext(null);
       let res;
       try {
-        res = await getNotifications(user.token, next);
+        res = await getNotifications(user.token, user.type, next);
       } catch (e) {
         setError(true);
         return;

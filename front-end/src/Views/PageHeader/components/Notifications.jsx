@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Nav, Dropdown, Col } from "react-bootstrap";
 import NotificationItemContainer from "./NotificationItemContainer";
 import NotificationItem from "./NotificationItem";
@@ -10,14 +10,16 @@ const Notifications = ({ location, token, ...rest }) => {
   const notificationsContext = useContext(NotificationsContext);
   const { notifications, count, error } = notificationsContext;
 
-  if (notifications) {
-    const toRemove = notifications.filter(
-      (notification) => notification.path === location.pathname
-    );
-    toRemove.forEach((notification) => {
-      notificationsContext.deleteNotification(notification.id);
-    });
-  }
+  useEffect(() => {
+    if (notifications && count) {
+      const toRemove = notifications.filter(
+        (notification) => notification.path === location.pathname
+      );
+      toRemove.forEach((notification) => {
+        notificationsContext.deleteNotification(notification.id);
+      });
+    }
+  }, [notificationsContext, count, notifications, location.pathname]);
 
   const clearNotifications = async () => {
     setShow("prevent");
