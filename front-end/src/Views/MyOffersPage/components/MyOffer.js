@@ -9,11 +9,12 @@ import {
 } from "react-bootstrap";
 import "Views/MyOffersPage/style.css";
 import { UserContext, AlertContext } from "context";
-import { getOfferPeople } from "../functions/apiCalls";
+import { getOfferPeople, getZipUrl } from "../functions/apiCalls";
 import MyOfferPerson from "./MyOfferPerson";
 import { Link, useLocation } from "react-router-dom";
 import { Pagination } from "components";
 import qs from "query-string";
+import proxy from "config/api";
 
 const MyOffer = ({ offer, activeOffer, setActiveOffer }) => {
   const context = useContext(UserContext);
@@ -45,6 +46,17 @@ const MyOffer = ({ offer, activeOffer, setActiveOffer }) => {
       loadOfferPeople(context.token, offer.id, activeOffer);
     }
   }, [context.token, activeOffer, offer.id, filters]);
+
+  const downloadApplications = async () => {
+    try {
+      let res = await getZipUrl(context.token, offer.id);
+      let url = proxy.plain + res.url;
+      window.open(url, "_blank");
+    } catch (e) {
+      console.log(e);
+      alertC.current.showAlert("Wystąpił błąd podczas pobierania aplikacji na ofertę.");
+    }
+  };
 
   const message = loading ? (
     <Alert variant="info">Ładuję...</Alert>
@@ -95,6 +107,9 @@ const MyOffer = ({ offer, activeOffer, setActiveOffer }) => {
                 <Link to={"/offerForm/" + offer.id}>
                   <Button className="ml-3">Edytuj ofertę</Button>
                 </Link>
+                <Button className="ml-3" onClick={() => downloadApplications()}>
+                  Pobierz zgłoszenia
+                </Button>
               </Row>
             </ListGroup.Item>
           </ListGroup>
