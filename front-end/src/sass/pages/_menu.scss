@@ -40,7 +40,12 @@
     min-height: calc(100vh - #{$nav-marginM});
   }
 }
-
+.tilesGrid__container {
+background-color: #fff;
+display: flex;
+width: 100%;
+justify-content: center;
+font-family: "MonoType", serif;
 .tilesGrid {
   --tile-unit: calc((1vh + 0.56vw) / 2);
   --tile-height: calc(50 * var(--tile-unit));
@@ -49,6 +54,7 @@
   display: flex;
   flex-wrap: wrap;
   width: 100%;
+  max-width: calc((4 * var(--tiles-gap)) + (3 * var(--tile-width)));
   padding: var(--tiles-gap) 0 0 var(--tiles-gap);
   background-color: #fff;
   .tile__container {
@@ -138,8 +144,10 @@
         background-color: white;
         position: relative;
         z-index: 3;
-        font-weight: 600;
         text-transform: uppercase;
+        color: #000;
+        letter-spacing: 0.1rem;
+        font-size: calc(0.6rem + (0.8 * var(--tile-unit)));
       }
       .tile__fragment {
         &--show {
@@ -154,17 +162,16 @@
       }
       .tile_title {
         color: initial;
-        background-color: rgb(228, 228, 228);
         color: #000;
       }
     }
   }
 }
 
-// .tilesGrid {
-//   justify-content: center;
-//   .tile__container {
-//     flex: 0 0 auto;
-//     width: calc(0.75 * var(--tile-size));
-//   }
-// }
+.tilesGrid {
+  justify-content: center;
+  .tile__container {
+    width: var(--tile-width);
+  }
+}
+}
