@@ -1,16 +1,17 @@
 import proxy from "config/api";
 
-const changeUrl = async (token, url) => {
-  const urlChange = `${proxy.videos}/new-video`;
+const changeUrl = async (token, video) => {
+  const urlChange = `${proxy.videos}video/${video.id}/`;
   const headers = {
     Authorization: "token " + token,
     "Content-Type": "application/json",
   };
   const res = await fetch(urlChange, {
-    method: "POST",
-    body: JSON.stringify({ url }),
+    method: "PUT",
+    body: JSON.stringify(video),
     headers,
   });
+  console.log(res);
 
   if (res.status !== 200) {
     throw Error("changeUrl");

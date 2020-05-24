@@ -6,6 +6,7 @@ import proxy from "config/api";
 import { getUrl } from "./functions";
 import { Alert } from "react-bootstrap";
 import { staffTypes } from "constants/staffTypes";
+import { userTypes } from "constants/userTypes";
 
 const VideoField = ({ id = 1 }) => {
   const [video, setVideo] = useState({ id: 0 });
@@ -49,7 +50,9 @@ const VideoField = ({ id = 1 }) => {
     event.target.pauseVideo();
   };
 
-  const conditional = user.type === "Staff" && staffTypes.BLOG_MODERATOR;
+  const conditional =
+    user.type === userTypes.STAFF &&
+    user.data.group_type?.includes(staffTypes.BLOG_MODERATOR);
 
   const msg = err ? (
     <Alert variant="danger">Wystąpił błąd podczas wczytywania filmu.</Alert>
@@ -59,7 +62,7 @@ const VideoField = ({ id = 1 }) => {
 
   return (
     msg || (
-      <div className="videoField__container">
+      <div className="videoField__container my-3">
         {video.url && (
           <YouTube
             className="videoField__video"
@@ -68,7 +71,7 @@ const VideoField = ({ id = 1 }) => {
             onReady={onReady}
           />
         )}
-        <ChangeVideo id={id} token={user.token} />
+        {conditional && <ChangeVideo id={id} token={user.token} />}
       </div>
     )
   );

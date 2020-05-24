@@ -5,14 +5,18 @@ import { FormGroup } from "components";
 import { AlertContext } from "context";
 
 const ChangeVideo = ({ id, token }) => {
-  const [newVideo, setNewVideo] = useState({ id: id });
+  const [newVideo, setNewVideo] = useState({
+    id: id,
+    url: "",
+  });
   const alertC = useRef(useContext(AlertContext));
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      console.log(newVideo);
       await changeUrl(token, newVideo);
-      alertC.current.showAlert("Pomyślnie zmieniono film.");
+      alertC.current.showAlert("Pomyślnie zmieniono film.", "success");
     } catch (err) {
       alertC.current.showAlert("Nie udało się zmienić filmu.");
     }
@@ -28,18 +32,21 @@ const ChangeVideo = ({ id, token }) => {
           setVal={(val) => setNewVideo({ ...newVideo, url: val })}
           header="Podaj link do filmu"
           required
+          id="url"
         />
         <FormGroup
           type="textarea"
           val={newVideo.description}
           setVal={(val) => setNewVideo({ ...newVideo, description: val })}
           header="Opis(opcjonalne)"
+          id="description"
         />
         <FormGroup
           type="text"
-          val={newVideo.description}
+          val={newVideo.category}
           setVal={(val) => setNewVideo({ ...newVideo, category: val })}
           header="Kategoria(opcjonalne)"
+          id="category"
         />
 
         <Button type="submit" variant="primary" className="mt-2">
