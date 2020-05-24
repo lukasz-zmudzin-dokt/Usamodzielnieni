@@ -80,6 +80,9 @@ class AccountForm extends React.Component {
             <Form.Control.Feedback type="invalid">
               Minimalna ilośc znaków: 8
             </Form.Control.Feedback>
+            <Form.Text className="text-muted">
+              Hasło musi mieć min. 8 znaków i zawierać co najmniej jedną cyfrę, jedną wielką literę i jeden znak specjalny !@#$%^&*
+            </Form.Text>
           </Form.Group>
         </Card.Body>
       </Card>
