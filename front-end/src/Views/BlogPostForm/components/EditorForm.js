@@ -2,6 +2,7 @@ import { addNewBlock, Block, Editor, ImageSideButton } from "medium-draft";
 import React from "react";
 import { uploadPhoto } from "../functions/apiCalls";
 import proxy from "config/api";
+import {approveFileSize} from "utils/approveFile/approveFile";
 
 const EditorForm = ({
   alerts,
@@ -16,7 +17,7 @@ const EditorForm = ({
     class extends ImageSideButton {
       onChange = async (e) => {
         const file = e.target.files[0];
-        if (file.type.indexOf("image/") === 0) {
+        if (file.type.indexOf("image/") === 0 && approveFileSize(file)) {
           const formData = new FormData();
           formData.append("image", file);
           try {
@@ -30,6 +31,8 @@ const EditorForm = ({
             console.log(e);
             alerts.showAlert("Wystąpił błąd przy dodawaniu zdjęcia.");
           }
+        } else {
+          alerts.showAlert("Wybrany plik jest za duży. Maksymalny rozmiar pliku to 15 MB.");
         }
         this.props.close();
       };
