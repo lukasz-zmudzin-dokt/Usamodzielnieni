@@ -211,7 +211,6 @@ export const NotificationsProvider = (props) => {
       const notificationToRemove = notifications.find(
         (notification) => notification.id === id
       );
-      console.log(notificationToRemove, id);
       if (notificationToRemove?.unread && count > 0) {
         setCount((prev) => prev - 1);
       }
