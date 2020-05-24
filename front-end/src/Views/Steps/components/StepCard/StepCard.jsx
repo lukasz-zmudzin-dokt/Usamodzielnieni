@@ -29,7 +29,7 @@ const StepCard = ({ step, setCurrent, wantsDelete, path }) => {
           </Button>
         ))}
       </Card.Body>
-      {(path[path.length - 1] === step.id && user.type === userTypes.STAFF) ? (
+      {path[path.length - 1] === step.id && user.type === userTypes.STAFF ? (
         <Button variant="danger" onClick={() => wantsDelete(true)}>
           Usuń krok
         </Button>
