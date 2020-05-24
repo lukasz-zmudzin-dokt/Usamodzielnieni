@@ -17,9 +17,9 @@ const CVEditorTab = ({
 }) => (
   <div>
     <h3>{title}</h3>
-
-    <VideoField id={id} />
-
+    <div className="CVEditor__videoContainer">
+      <VideoField id={id} />
+    </div>
     {!showComments ? null : loading ? (
       <Alert variant="info">Wczytuję uwagi...</Alert>
     ) : error ? (

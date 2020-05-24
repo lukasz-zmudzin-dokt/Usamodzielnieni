@@ -21,6 +21,7 @@ const VideoField = ({ id = 1 }) => {
       try {
         res = await getUrl(user.token, id);
         let changeRes = res;
+
         const index = res.url.lastIndexOf("=");
         changeRes.url = res.url.slice(index + 1);
         setVideo(changeRes);
@@ -30,7 +31,6 @@ const VideoField = ({ id = 1 }) => {
       setLoading(false);
     };
     getVideos();
-    // setVideoID(url.slice(search + 1));
   }, [id, user.token]);
 
   const opts = {
@@ -38,7 +38,7 @@ const VideoField = ({ id = 1 }) => {
     width: "100%",
     playerVars: {
       // https://developers.google.com/youtube/player_parameters
-      autoplay: 0,
+      autoplay: 1,
     },
   };
 
@@ -68,7 +68,9 @@ const VideoField = ({ id = 1 }) => {
             onReady={onReady}
           />
         )}
-        {conditional && <ChangeVideo id={id} token={user.token} />}
+        {conditional && (
+          <ChangeVideo id={id} video={video} token={user.token} />
+        )}
       </div>
     )
   );

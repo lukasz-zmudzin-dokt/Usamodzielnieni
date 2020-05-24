@@ -1,10 +1,10 @@
-import React, { useState, useRef, useContext } from "react";
+import React, { useState, useRef, useContext, useEffect } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import { changeUrl } from "components/VideoField/functions";
 import { FormGroup } from "components";
 import { AlertContext } from "context";
 
-const ChangeVideo = ({ id, token }) => {
+const ChangeVideo = ({ id, token, video }) => {
   const [show, setShow] = useState(false);
   const [newVideo, setNewVideo] = useState({
     id: id,
@@ -15,6 +15,16 @@ const ChangeVideo = ({ id, token }) => {
   const [validated, setValidated] = useState(false);
   const alertC = useRef(useContext(AlertContext));
 
+  useEffect(() => {
+    if (video) {
+      setNewVideo({
+        ...video,
+        url: `https://www.youtube.com/watch?v=${video.url}`,
+        category: video.category?.id,
+      });
+    }
+  }, [video]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const form = e.currentTarget;
@@ -22,6 +32,7 @@ const ChangeVideo = ({ id, token }) => {
       try {
         await changeUrl(token, newVideo);
         alertC.current.showAlert("Pomyślnie zmieniono film.", "success");
+        setShow(false);
       } catch (err) {
         alertC.current.showAlert("Nie udało się zmienić filmu.");
       }
@@ -59,13 +70,6 @@ const ChangeVideo = ({ id, token }) => {
               setVal={(val) => setNewVideo({ ...newVideo, description: val })}
               header="Opis(opcjonalne)"
               id="description"
-            />
-            <FormGroup
-              type="number"
-              val={newVideo.category}
-              setVal={(val) => setNewVideo({ ...newVideo, category: val })}
-              header="Kategoria(opcjonalne)"
-              id="category"
             />
             <Button type="submit" variant="primary" className="mt-2">
               Prześlij
