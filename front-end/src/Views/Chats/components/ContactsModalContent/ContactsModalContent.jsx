@@ -18,7 +18,7 @@ const getContacts = async (token) => {
     return response.json().then((contacts) => mapContacts(contacts.results));
   } else if (response.status === 2137) {
     console.log("jest 2137");
-    return response.json().then((contacts) => mapContacts(contacts));
+    return response.json().then((contacts) => mapContacts(contacts.results));
   } else {
     throw response.status;
   }
