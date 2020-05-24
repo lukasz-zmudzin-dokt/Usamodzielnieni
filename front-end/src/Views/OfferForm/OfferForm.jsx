@@ -75,7 +75,6 @@ const OfferForm = () => {
       setDisabled(false);
     };
     loadData(context.token);
-    console.log(context.data.group_type)
   }, [
     context.data.company_address,
     context.data.company_name,
