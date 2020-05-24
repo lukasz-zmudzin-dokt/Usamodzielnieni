@@ -3,7 +3,6 @@ import { Container, Card, ListGroup, Alert } from "react-bootstrap";
 import { UserContext } from "context";
 import proxy from "config/api";
 import { ChatInfo } from "./components";
-import { VideoField } from "components";
 
 const getChats = async (token) => {
   let url = `${proxy.chat}/list`; // TODO
@@ -64,7 +63,6 @@ const Chats = () => {
   return (
     <Container>
       <Card>
-        <VideoField id={1} />
         <Card.Header as="h2">Najnowsze wiadomości</Card.Header>
         {msg ? (
           <Card.Body className="chats__body">{msg}</Card.Body>
