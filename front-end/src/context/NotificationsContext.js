@@ -171,17 +171,24 @@ export const NotificationsProvider = (props) => {
     }
     if (user.token && user.type) {
       const url = proxy.wsNotification + "ws";
-      socket.current = new WebSocket(url, user.token);
-      // socket.current.onopen = (e) => console.log("onopen", e);
-      socket.current.onmessage = (e) => {
-        const newNotification = mapNotification(JSON.parse(e.data), user.type);
-        setCount((prev) => prev + 1);
-        setNotifications((prev) => [newNotification, ...prev]);
-      };
-      socket.current.onerror = (e) => {
+      try {
+        socket.current = new WebSocket(url, user.token);
+        // socket.current.onopen = (e) => console.log("onopen", e);
+        socket.current.onmessage = (e) => {
+          const newNotification = mapNotification(
+            JSON.parse(e.data),
+            user.type
+          );
+          setCount((prev) => prev + 1);
+          setNotifications((prev) => [newNotification, ...prev]);
+        };
+        socket.current.onerror = (e) => {
+          console.log(e);
+          setError(true);
+        };
+      } catch (e) {
         console.log(e);
-        setError(true);
-      };
+      }
     }
   }, [user.token, user.type]);
 
