@@ -219,16 +219,18 @@ const OfferForm = () => {
                 }}
                 incorrect="Pole musi być większe od minimalnej stawki"
               />
-              <Form.Label htmlFor="custom-file">Zdjęcie:</Form.Label>
-              <Form.File
-                id="custom-file"
-                ref={photo}
-                custom
-                onChange={onChange}
-                label={label || "Dodaj plik..."}
-                accept="image/*"
-                data-browse="Wybierz plik"
-              />
+              <Form.Group>
+                <Form.Label htmlFor="custom-file">Zdjęcie:</Form.Label>
+                <Form.File
+                  id="custom-file"
+                  ref={photo}
+                  custom
+                  onChange={onChange}
+                  label={label || "Dodaj plik..."}
+                  accept="image/*"
+                  data-browse="Wybierz plik"
+                />
+              </Form.Group>
             </div>
             <div className="offerForm__wrapper">
               <FormGroup
