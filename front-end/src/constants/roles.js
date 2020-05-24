@@ -21,6 +21,10 @@ export const adminGroup = [
     name: staffTypes.BLOG_MODERATOR,
     placeholder: "Moderator bloga",
   },
+  {
+    name: staffTypes.GUEST,
+    placeholder: "Konto gościa"
+  }
 ];
 
 export const commonGroup = [

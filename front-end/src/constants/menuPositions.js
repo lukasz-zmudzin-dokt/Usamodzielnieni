@@ -6,7 +6,7 @@ export default [
   {
     name: "Kreator CV",
     path: paths.CV_CREATOR,
-    allowed: [userTypes.STANDARD],
+    allowed: [userTypes.STANDARD, staffTypes.GUEST],
     verified: true,
   },
   {
@@ -29,7 +29,7 @@ export default [
   {
     name: "Dodaj ofertę",
     path: paths.OFFER_FORM,
-    allowed: [userTypes.EMPLOYER],
+    allowed: [userTypes.EMPLOYER, staffTypes.GUEST],
     verified: true,
   },
   {
@@ -46,7 +46,7 @@ export default [
   {
     name: "Dodaj post",
     path: paths.BLOG_FORM,
-    allowed: [staffTypes.BLOG_CREATOR],
+    allowed: [staffTypes.BLOG_CREATOR, staffTypes.GUEST],
     verified: true,
   },
   {
