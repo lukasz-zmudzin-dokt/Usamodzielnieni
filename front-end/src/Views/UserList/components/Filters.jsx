@@ -5,7 +5,14 @@ import FormGroup from "components/FormGroup";
 import { userTypes } from "constants/userTypes";
 import { userStatuses } from "constants/userStatuses";
 
-const Filters = ({ setFilter, disabled, typeList, statusList, count }) => {
+const Filters = ({
+  setFilter,
+  disabled,
+  typeList,
+  statusList,
+  count,
+  filters,
+}) => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [type, setType] = useState(DEFAULT_INPUT);
@@ -18,6 +25,7 @@ const Filters = ({ setFilter, disabled, typeList, statusList, count }) => {
     const usernameFilter = username !== "" ? username : undefined;
     const emailFilter = email !== "" ? email : undefined;
     setFilter({
+      ...filters,
       username: usernameFilter,
       email: emailFilter,
       type: typeFilter,
@@ -30,7 +38,7 @@ const Filters = ({ setFilter, disabled, typeList, statusList, count }) => {
     setEmail("");
     setStatus(DEFAULT_INPUT);
     setType(DEFAULT_INPUT);
-    setFilter({});
+    setFilter({ ...filters, username: "", email: "", type: "", status: "" });
   };
 
   return (

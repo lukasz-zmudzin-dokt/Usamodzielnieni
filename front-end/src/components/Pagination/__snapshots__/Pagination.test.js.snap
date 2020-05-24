@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`OffersPagination should render without crashing 1`] = `
+exports[`Pagination should render without crashing 1`] = `
 <div>
   <ul
     class="offersPagination mb-0 justify-content-center pagination"

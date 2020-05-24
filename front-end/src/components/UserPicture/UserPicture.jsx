@@ -1,5 +1,6 @@
 import React from "react";
 import { userTypes } from "constants/userTypes";
+import proxy from "config/api";
 
 const UserPicture = ({ user, ...rest }) => {
   const getColorClassSuffix = () => {
@@ -19,10 +20,23 @@ const UserPicture = ({ user, ...rest }) => {
     return "?";
   };
 
+  const getClassName = () => {
+    return !user.data?.picture_url
+      ? `userPicture userPicture--${getColorClassSuffix()}`
+      : `userPicture userPicture--img`;
+  };
+
   return (
     <div className="userPicture__container" {...rest}>
-      <div className={`userPicture userPicture--${getColorClassSuffix()}`}>
-        <span>{getFirstLetters()}</span>
+      <div className={getClassName()}>
+        {user.data?.picture_url ? (
+          <img
+            alt="Zdjęcie profilowe"
+            src={proxy.plain + user.data.picture_url}
+          />
+        ) : (
+          <span>{getFirstLetters()}</span>
+        )}
       </div>
     </div>
   );

@@ -1,7 +1,9 @@
 import proxy from "config/api";
 
-export const getCVs = async (token) => {
-  let url = proxy.cv + "admin/list/unverified/";
+export const getCVs = async (token, filters) => {
+  let url =
+    proxy.cv +
+    `admin/list/unverified/?page=${filters.page}&page_size=${filters.pageSize}`;
   const headers = {
     Authorization: "token " + token,
     "Content-Type": "application/json",
