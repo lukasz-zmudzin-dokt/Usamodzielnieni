@@ -2,7 +2,7 @@ import React, { useState, useContext, useRef } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import { AlertContext } from "context";
 import proxy from "config/api";
-import {approveFileSize} from "utils/approveFile/approveFile";
+import { approveFileSize } from "utils/approveFile/approveFile";
 
 const addPhoto = async (token, photo) => {
   const formData = new FormData();
@@ -65,7 +65,9 @@ const ChangePhotoModal = ({ show, setShow, user }) => {
       const filename = fileInput.current?.files?.[0]?.name;
       setLabel(filename);
     } else {
-      alertContext.showAlert("Wybrany plik jest za duży. Maksymalny rozmiar pliku to 15 MB.");
+      alertContext.showAlert(
+        "Wybrany plik jest za duży. Maksymalny rozmiar pliku to 15 MB."
+      );
       setLabel(undefined);
     }
   };
