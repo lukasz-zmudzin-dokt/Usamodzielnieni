@@ -13,6 +13,7 @@ import { UserContext, AlertContext } from "context";
 import polish from "date-fns/locale/pl";
 import { useHistory, useParams } from "react-router-dom";
 import { addressToString } from "utils/converters";
+import { userStatuses } from "constants/userStatuses";
 
 registerLocale("pl", polish);
 
@@ -23,6 +24,8 @@ const OfferForm = () => {
   const [disabled, setDisabled] = useState(false);
   const [err, setErr] = useState(false);
   let { id } = useParams();
+  let photo = useRef(null);
+  const [label, setLabel] = useState();
 
   const [offer, setOffer] = useState({
     offer_name: "",
@@ -85,6 +88,7 @@ const OfferForm = () => {
 
   const submit = async (event) => {
     const form = event.currentTarget;
+    console.log(photo.files[0]);
     event.preventDefault();
     if (form.checkValidity() === false) {
       event.stopPropagation();
@@ -94,6 +98,7 @@ const OfferForm = () => {
         await sendData(
           {
             ...offer,
+            company_logo: context.data.picture_url,
             company_address: context.data.company_address,
             expiration_date: expiration_date.toISOString().substr(0, 10),
             salary_min: salary_min.replace(",", "."),
@@ -118,6 +123,11 @@ const OfferForm = () => {
     </Alert>
   ) : null;
 
+  const onChange = () => {
+    const filename = photo.current?.files?.[0]?.name;
+    setLabel(filename);
+  };
+
   const {
     offer_name,
     company_address,
@@ -129,6 +139,7 @@ const OfferForm = () => {
     type,
     salary_min,
     salary_max,
+    offer_image,
   } = offer;
 
   return (
@@ -207,6 +218,16 @@ const OfferForm = () => {
                   max: 999999,
                 }}
                 incorrect="Pole musi być większe od minimalnej stawki"
+              />
+              <Form.Label htmlFor="custom-file">Zdjęcie:</Form.Label>
+              <Form.File
+                id="custom-file"
+                ref={photo}
+                custom
+                onChange={onChange}
+                label={label || "Dodaj plik..."}
+                accept="image/*"
+                data-browse="Wybierz plik"
               />
             </div>
             <div className="offerForm__wrapper">
