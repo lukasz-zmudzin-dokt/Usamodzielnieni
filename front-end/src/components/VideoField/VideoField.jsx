@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from "react";
 import YouTube from "react-youtube";
 import { ChangeVideo } from "./components";
 import { UserContext } from "context";
-import proxy from "config/api";
 import { getUrl } from "./functions";
 import { Alert } from "react-bootstrap";
 import { staffTypes } from "constants/staffTypes";
