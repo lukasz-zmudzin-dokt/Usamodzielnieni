@@ -13,6 +13,7 @@ const EducationTab = ({
   validated,
   error,
   video,
+  errVid,
 }) => (
   <CVEditorTab
     title="Edukacja"
@@ -24,6 +25,7 @@ const EducationTab = ({
     loading={loading}
     error={error}
     showComments={showComments}
+    errVid={errVid}
   >
     <ActionWithDate
       data={data}

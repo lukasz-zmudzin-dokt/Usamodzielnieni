@@ -14,12 +14,13 @@ const CVEditorTab = ({
   showComments,
   isNew,
   disabled = false,
+  errVid,
 }) => {
   return (
     <div>
       <h3>{title}</h3>
       <div className="CVEditor__videoContainer">
-        <VideoField videoItem={video} />
+        <VideoField videoItem={video} errVid={errVid} />
       </div>
       {!showComments ? null : loading ? (
         <Alert variant="info">Wczytuję uwagi...</Alert>

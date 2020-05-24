@@ -43,6 +43,7 @@ class PersonalDataTab extends React.Component {
         loading={this.props.loading}
         error={this.props.error}
         showComments={this.props.showComments}
+        errVid={this.props.errVid}
       >
         <Form ref={this.props.refValue} noValidate validated={validated}>
           <Row>

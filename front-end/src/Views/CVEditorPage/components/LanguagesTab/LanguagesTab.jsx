@@ -46,6 +46,7 @@ class LanguagesTab extends React.Component {
         title="Języki obce"
         movie={movie_5}
         video={this.props.video}
+        errVid={this.props.errVid}
         onPrevClick={this.props.onPrevClick}
         onNextClick={this.props.onNextClick}
         comments={this.props.comments}

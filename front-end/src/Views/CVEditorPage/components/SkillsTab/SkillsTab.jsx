@@ -34,6 +34,7 @@ class SkillsTab extends React.Component {
         title="Umiejętności"
         movie={movie_4}
         video={this.props.video}
+        errVid={this.props.errVid}
         onPrevClick={this.props.onPrevClick}
         onNextClick={this.props.onNextClick}
         comments={this.props.comments}

@@ -49,6 +49,7 @@ class CVEditorPage extends React.Component {
       cv_id: undefined,
       has_photo: false,
       videos: { videos: [] },
+      errVid: false,
     };
     this.tabs = [];
   }
@@ -117,9 +118,9 @@ class CVEditorPage extends React.Component {
   };
 
   getTabs = () => {
-    const { videos } = this.state;
+    const { videos, errVid } = this.state;
     const getTabProps = (key, id) => {
-      if (videos.videos) {
+      if (videos.videos || errVid) {
         return {
           ...this.state.tabs[key],
           onChange: (data) =>
@@ -137,6 +138,7 @@ class CVEditorPage extends React.Component {
           validated: this.state.validated,
           isNew: this.state.method === "POST",
           video: videos.videos?.find((item) => item.id === id),
+          errVid,
         };
       }
     };
@@ -248,7 +250,9 @@ class CVEditorPage extends React.Component {
         videos: res,
       });
     } catch (err) {
-      console.log("err");
+      this.setState({
+        errVid: true,
+      });
     }
   };
 
