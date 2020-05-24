@@ -172,10 +172,9 @@ export const NotificationsProvider = (props) => {
         process.env.REACT_APP_BACKEND_PATH_WEBSOCKET +
         "/notification/count/unread";
       socket.current = new WebSocket(url, user.token);
-      socket.current.onopen = (e) => console.log("onopen", e);
+      // socket.current.onopen = (e) => console.log("onopen", e);
       socket.current.onmessage = (e) => {
         const newNotification = mapNotification(JSON.parse(e.data), user.type);
-        console.log("onmessage", newNotification);
         setNotifications((prev) => [newNotification, ...prev]);
         setCount((prev) => prev + 1);
       };
@@ -204,12 +203,6 @@ export const NotificationsProvider = (props) => {
     deleteNotification: async (id) => {
       const notificationToRemove = notifications.find(
         (notification) => notification.id === id
-      );
-      console.log(
-        notificationToRemove,
-        notificationToRemove?.unread,
-        count,
-        count > 0
       );
       if (notificationToRemove?.unread && count > 0) {
         setCount((prev) => prev - 1);
