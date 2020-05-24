@@ -36,9 +36,7 @@ const PasswordChangeModal = ({ user, show, setShow }) => {
     event.preventDefault();
     setMatching(true);
     setValidated(true);
-    if (
-      event.currentTarget.checkValidity() === false
-    ) {
+    if (event.currentTarget.checkValidity() === false) {
       event.stopPropagation();
     } else if (newPassword !== newPasswordR) {
       setMatching(false);
@@ -110,12 +108,12 @@ const PasswordChangeModal = ({ user, show, setShow }) => {
             incorrect="Pole musi mieć przynajmniej 8 znaków."
             length={{ min: 8, max: 120 }}
           />
-          {
-            validated && !matching && <h5 style={{color: "red"}}>Hasła muszą się zgadzać!</h5>
-          }
+          {validated && !matching && (
+            <h5 style={{ color: "red" }}>Hasła muszą się zgadzać!</h5>
+          )}
           <div>
-            Nowe hasło <b>musi</b> zawierać przynajmniej jedną cyfrę, jedną wielką
-            literę i jeden znak specjalny !@#$%^&*. Hasło nie może być
+            Nowe hasło <b>musi</b> zawierać przynajmniej jedną cyfrę, jedną
+            wielką literę i jeden znak specjalny !@#$%^&*. Hasło nie może być
             ciągiem samych cyfr.
           </div>
         </Modal.Body>

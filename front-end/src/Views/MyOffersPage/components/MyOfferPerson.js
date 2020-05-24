@@ -1,10 +1,13 @@
-import React, {useState, useContext} from "react";
+import React, { useState, useContext } from "react";
 import { Alert, Button, ListGroup, Row } from "react-bootstrap";
 import { DetailsItem } from "components";
 import { UserContext } from "context";
 import proxy from "config/api";
 import "Views/MyOffersPage/style.css";
-import {setReadStatus, setUnreadStatus} from "Views/MyOffersPage/functions/apiCalls";
+import {
+  setReadStatus,
+  setUnreadStatus,
+} from "Views/MyOffersPage/functions/apiCalls";
 
 const MyOfferPerson = ({ person }) => {
   const [error, setError] = useState(false);
@@ -22,20 +25,24 @@ const MyOfferPerson = ({ person }) => {
     setRead(newViewed);
     console.log(newViewed);
     try {
-      newViewed ? await setReadStatus(context.token, person.id) : await setUnreadStatus(context.token, person.id);
+      newViewed
+        ? await setReadStatus(context.token, person.id)
+        : await setUnreadStatus(context.token, person.id);
       setRead(newViewed);
     } catch (e) {
       setError(true);
     }
-  }
+  };
   const message = error ? (
-      <Alert variant="danger" className="w-100">
-        Ups, wystąpił błąd.
-      </Alert>
+    <Alert variant="danger" className="w-100">
+      Ups, wystąpił błąd.
+    </Alert>
   ) : null;
 
   return (
-    <ListGroup.Item className={`justify-content-end ${!read ? "not-read" : ""}`}>
+    <ListGroup.Item
+      className={`justify-content-end ${!read ? "not-read" : ""}`}
+    >
       {message ? message : null}
       <Row className="justify-content-end">
         <DetailsItem label="Imię i nazwisko">
