@@ -16,7 +16,7 @@ const Contact = ({ contact }) => {
         </Col>
         <Col>
           <IndexLinkContainer to={`/chats/${contact.id}`}>
-            <Button className="float-right">-></Button>
+            <Button className="float-right">→</Button>
           </IndexLinkContainer>
         </Col>
       </Row>
