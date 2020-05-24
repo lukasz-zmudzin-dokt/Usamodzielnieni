@@ -24,3 +24,6 @@
   border-left: none;
   border-right: none;
 }
+.not-read {
+  background-color: #e6e6fa;
+}
