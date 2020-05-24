@@ -75,6 +75,10 @@ const OfferForm = () => {
       setDisabled(false);
     };
     loadData(context.token);
+<<<<<<< HEAD
+=======
+    console.log(context.data.group_type);
+>>>>>>> f38b89800ede37a9e7e62f556408d7b08021a3f6
   }, [
     context.data.company_address,
     context.data.company_name,
@@ -254,7 +258,12 @@ const OfferForm = () => {
                 type="submit"
                 className=""
                 data-testid="submitBtn"
-                disabled={context.data.group_type && context.data.group_type.includes("staff_guest") ? true : disabled}
+                disabled={
+                  context.data.group_type &&
+                  context.data.group_type.includes("staff_guest")
+                    ? true
+                    : disabled
+                }
               >
                 {disabled ? "Ładowanie..." : "Dodaj"}
               </Button>
