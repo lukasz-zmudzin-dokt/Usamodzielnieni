@@ -54,6 +54,7 @@ const MyOffer = ({ offer, activeOffer, setActiveOffer }) => {
       window.open(url, "_blank");
     } catch (e) {
       console.log(e);
+      alertC.current.showAlert("Wystąpił błąd podczas pobierania aplikacji na ofertę.");
     }
   };
 
@@ -72,7 +73,7 @@ const MyOffer = ({ offer, activeOffer, setActiveOffer }) => {
   ) {
     setFilters({ ...filters, page: queryParams.page });
   }
-  console.log(people.length);
+
   return (
     <Card className="border-left-0 border-right-0 border-bottom-0">
       <Accordion.Toggle
