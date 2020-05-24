@@ -48,6 +48,7 @@ const mapGetOffersRes = (res) => ({
     voivodeship: offer.voivodeship,
     expirationDate: offer.expiration_date,
     description: offer.description,
+    companyLogo: offer.company_logo,
   })),
   count: res.count,
 });
@@ -80,6 +81,7 @@ const JobOffersPage = (props) => {
       let res;
       try {
         res = await getOffers(filters, sort);
+        console.log(res);
       } catch (e) {
         console.log(e);
         res = { offers: [], count: 0 };

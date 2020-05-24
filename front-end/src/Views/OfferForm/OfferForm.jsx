@@ -87,9 +87,9 @@ const OfferForm = () => {
   ]);
 
   const submit = async (event) => {
-    const form = event.currentTarget;
-    console.log(photo.files[0]);
     event.preventDefault();
+    const form = event.currentTarget;
+
     if (form.checkValidity() === false) {
       event.stopPropagation();
     } else {
