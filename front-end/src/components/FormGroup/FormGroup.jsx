@@ -14,6 +14,7 @@ const FormGroup = ({
   required,
   id,
   disabled,
+  pattern,
   step,
   ...rest
 }) => {
@@ -123,6 +124,16 @@ const FormGroup = ({
             step={step}
             data-testid="default"
             disabled={disabled}
+            pattern={pattern}
+          />
+        );
+      case "tel":
+        return (
+          <Form.Control
+            type={type}
+            value={val}
+            onChange={setInput}
+            required={required}
           />
         );
       default:
@@ -137,6 +148,7 @@ const FormGroup = ({
             maxLength={length.max}
             data-testid="default"
             disabled={disabled}
+            pattern={pattern}
           />
         );
     }

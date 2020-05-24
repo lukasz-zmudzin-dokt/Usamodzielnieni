@@ -7,7 +7,7 @@ import { userTypes } from "constants/userTypes";
 const AdminApproveUserButton = ({ user }) =>
   user.type === userTypes.STAFF &&
   user.data.group_type.includes(staffTypes.VERIFICATION) ? (
-    <LinkContainer to="/userApproval">
+    <LinkContainer className="my-2" to="/userApproval">
       <Button variant="primary">Akceptuj nowych użytkowników</Button>
     </LinkContainer>
   ) : null;
