@@ -58,7 +58,7 @@ exports[`PersonalDataForm should render correctly 1`] = `
           class="form-control"
           id="formGroupPhoneNumber"
           name="phone_number"
-          pattern="[+]{1}[4]{1}[8]{1}[0-9]{3}[0-9]{3}[0-9]{3}"
+          pattern="[0-9]{3}[0-9]{3}[0-9]{3}"
           placeholder="Numer telefonu"
           required=""
           type="tel"
@@ -66,8 +66,13 @@ exports[`PersonalDataForm should render correctly 1`] = `
         <div
           class="invalid-feedback"
         >
-          Podaj numer telefonu w formacie: +48123123123
+          Podaj numer telefonu
         </div>
+        <small
+          class="form-text"
+        >
+          Numer telefonu powinien być w formacie 123123123
+        </small>
       </div>
     </div>
   </div>

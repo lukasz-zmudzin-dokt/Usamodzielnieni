@@ -1,6 +1,11 @@
 import React from "react";
 import { render } from "@testing-library/react";
 import UserBasicInfo from "Views/UserProfilePage/components/UserBasicInfo";
+import { UserPicture } from "../../../../components";
+import { PhotoButtonsContainer } from "../";
+
+jest.mock("../");
+jest.mock("../../../../components");
 
 const user = {
   username: "user1",
@@ -28,10 +33,21 @@ const names = {
 };
 
 describe("UserBasicInfo ", () => {
+  let props;
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    UserPicture.mockImplementation(() => <div>UserPicture</div>);
+    PhotoButtonsContainer.mockImplementation(() => (
+      <div>PhotoButtonsContainer</div>
+    ));
+    props = {
+      user,
+      names,
+    };
+  });
   it("should render correctly", () => {
-    const { container } = render(
-      <UserBasicInfo error={false} user={user} names={names} />
-    );
+    const { container } = render(<UserBasicInfo {...props} />);
     expect(container).toMatchSnapshot();
   });
 });

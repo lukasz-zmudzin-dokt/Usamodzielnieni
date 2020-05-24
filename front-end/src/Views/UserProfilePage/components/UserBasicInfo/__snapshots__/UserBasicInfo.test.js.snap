@@ -3,44 +3,41 @@
 exports[`UserBasicInfo  should render correctly 1`] = `
 <div>
   <div
-    class="text-center text-sm-left row"
+    class="col"
   >
     <div
-      class="col-sm-auto col-12"
+      class="text-center text-sm-left row"
     >
-      <svg
-        height="80"
-        width="80"
+      <div
+        class="col-sm-auto col-12"
       >
-        <circle
-          cx="40"
-          cy="40"
-          fill="white"
-          r="37"
-          stroke="black"
-          stroke-width="3"
-        />
-        <circle
-          cx="40"
-          cy="30"
-          fill="black"
-          r="10"
-        />
-        <path
-          d="M 20 60 q 20 -30 40 0"
-          fill="black"
-        />
-      </svg>
-    </div>
-    <div
-      class="col"
-    >
-      <div>
-        <h5>
-          Jan Kowalski
-        </h5>
+        <div
+          class="justify-content-center row"
+        >
+          <h3>
+            <div>
+              UserPicture
+            </div>
+          </h3>
+        </div>
+        <div
+          class="justify-content-center mb-3 mb-sm-0 row"
+        >
+          <div>
+            PhotoButtonsContainer
+          </div>
+        </div>
       </div>
-      <div />
+      <div
+        class="col"
+      >
+        <div>
+          <h5>
+            Jan Kowalski
+          </h5>
+        </div>
+        <div />
+      </div>
     </div>
   </div>
 </div>

@@ -8,7 +8,7 @@ const EmployerMyOffersButton = ({ user }) =>
   user.type === userTypes.EMPLOYER &&
   user.data &&
   user.data.status === userStatuses.VERIFIED ? (
-    <LinkContainer to="/myOffers">
+    <LinkContainer className="my-2" to="/myOffers">
       <Button variant="primary">Zgłoszenia do moich ofert</Button>
     </LinkContainer>
   ) : null;

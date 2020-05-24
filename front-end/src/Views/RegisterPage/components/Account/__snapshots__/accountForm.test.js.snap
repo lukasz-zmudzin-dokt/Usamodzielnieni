@@ -92,6 +92,11 @@ exports[`AccountForm should render correctly 1`] = `
         >
           Minimalna ilośc znaków: 8
         </div>
+        <small
+          class="text-muted form-text"
+        >
+          Hasło musi mieć min. 8 znaków i zawierać co najmniej jedną cyfrę, jedną wielką literę i jeden znak specjalny !@#$%^&*
+        </small>
       </div>
     </div>
   </div>

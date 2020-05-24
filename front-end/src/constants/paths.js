@@ -25,6 +25,7 @@ const paths = {
   CHAT_DETAILS: "/chats/:id",
   USER_LIST: "/userList",
   OFFER_APPROVAL: "/offerApproval",
+  CHANGE_DATA: "/changeData/:id",
   PASSWORD_RESET: "/newPassword",
   NEW_PASSWORD: "/newPassword/:id",
 };
