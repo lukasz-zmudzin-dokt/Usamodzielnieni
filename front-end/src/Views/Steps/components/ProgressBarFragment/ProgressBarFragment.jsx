@@ -7,6 +7,7 @@ const ProgressBarFragment = ({
   index,
   setCurrent,
   wantsDelete,
+  path,
 }) => {
   const ref = useRef(null);
   const type = current ? "current" : step ? "visited" : "next";
@@ -32,6 +33,7 @@ const ProgressBarFragment = ({
           step={step}
           setCurrent={setCurrent}
           wantsDelete={wantsDelete}
+          path={path}
         />
       )}
     </div>

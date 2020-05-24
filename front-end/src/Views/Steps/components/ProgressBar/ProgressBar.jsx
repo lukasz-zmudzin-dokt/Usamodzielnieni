@@ -161,6 +161,7 @@ const ProgressBar = () => {
             current={path.length - 1 === i}
             setCurrent={setCurrent}
             wantsDelete={setShowModal}
+            path={path}
           />
         ))}
         {steps.find((step) => step.id === path[path.length - 1])?.next && (

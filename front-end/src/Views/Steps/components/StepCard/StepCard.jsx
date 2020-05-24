@@ -3,7 +3,7 @@ import { Button, Card } from "react-bootstrap";
 import Player from "components/Player";
 import { UserContext } from "context";
 import { userTypes } from "constants/userTypes";
-const StepCard = ({ step, setCurrent, wantsDelete }) => {
+const StepCard = ({ step, setCurrent, wantsDelete, path }) => {
   const user = useContext(UserContext);
   return (
     <Card className="stepCard">
@@ -29,7 +29,7 @@ const StepCard = ({ step, setCurrent, wantsDelete }) => {
           </Button>
         ))}
       </Card.Body>
-      {user.type === userTypes.STAFF ? (
+      {(path[path.length - 1] === step.id && user.type === userTypes.STAFF) ? (
         <Button variant="danger" onClick={() => wantsDelete(true)}>
           Usuń krok
         </Button>
