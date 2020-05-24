@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Container, Button } from "react-bootstrap";
 import { ProgressBar } from "./components";
 import { NewStep, EditStep } from "./components";
+import { staffTypes } from "constants/staffTypes";
+import { UserContext } from "context";
 
 const Steps = () => {
   const [showEdit, setShowEdit] = useState(false);
   const [showNew, setShowNew] = useState(false);
+  const user = useContext(UserContext);
   const [steps, setSteps] = useState({
     children: [
       {
@@ -66,18 +69,26 @@ const Steps = () => {
   return (
     <Container>
       <h1>Kroki usamodzielnienia</h1>
-      <Button onClick={() => setShowEdit(true)}>Edytuj ten krok</Button>
-      <Button onClick={() => setShowNew(true)}>Dodaj nowy krok</Button>
-      <NewStep
-        steps={steps}
-        show={showNew}
-        handleClose={() => setShowNew(false)}
-      />
-      <EditStep
-        step={steps.children.find((item) => item.id === path[path.length - 1])}
-        show={showEdit}
-        handleClose={() => setShowEdit(false)}
-      />
+      {user.data.group_type.includes(staffTypes.BLOG_MODERATOR) ? (
+        <>
+          <Button onClick={() => setShowEdit(true)}>Edytuj ten krok</Button>
+          <Button className="ml-3" onClick={() => setShowNew(true)}>
+            Dodaj nowy krok
+          </Button>
+          <NewStep
+            steps={steps}
+            show={showNew}
+            handleClose={() => setShowNew(false)}
+          />
+          <EditStep
+            step={steps.children.find(
+              (item) => item.id === path[path.length - 1]
+            )}
+            show={showEdit}
+            handleClose={() => setShowEdit(false)}
+          />
+        </>
+      ) : null}
       <ProgressBar steps={steps} path={path} setCurrent={setCurrent} />
     </Container>
   );
