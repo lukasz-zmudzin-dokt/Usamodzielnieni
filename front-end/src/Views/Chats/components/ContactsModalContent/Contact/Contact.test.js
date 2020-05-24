@@ -8,7 +8,7 @@ describe("Contact", () => {
     first_name: "imie",
     last_name: "nazwisko",
     id: "1234",
-    role: "gościu"
+    role: "gościu",
   };
   it("should render without crashing", () => {
     const { getByText } = render(
