@@ -56,8 +56,11 @@ class PersonalDataForm extends React.Component {
               onChange={(e) => onChange(onBlur, data, e)}
             />
             <Form.Control.Feedback type="invalid">
-              Podaj numer telefonu w formacie: 123123123
+              Podaj numer telefonu
             </Form.Control.Feedback>
+            <Form.Text>
+              Numer telefonu powinien być w formacie 123123123
+            </Form.Text>
           </Form.Group>
         </Card.Body>
       </Card>

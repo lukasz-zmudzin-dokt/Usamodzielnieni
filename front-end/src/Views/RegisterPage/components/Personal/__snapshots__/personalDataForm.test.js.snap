@@ -66,8 +66,13 @@ exports[`PersonalDataForm should render correctly 1`] = `
         <div
           class="invalid-feedback"
         >
-          Podaj numer telefonu w formacie: 123123123
+          Podaj numer telefonu
         </div>
+        <small
+          class="form-text"
+        >
+          Numer telefonu powinien być w formacie 123123123
+        </small>
       </div>
     </div>
   </div>
