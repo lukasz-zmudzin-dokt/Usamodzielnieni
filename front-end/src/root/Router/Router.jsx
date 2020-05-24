@@ -8,7 +8,7 @@ const Router = () => {
   const location = useLocation();
   const history = useHistory();
   const alertC = useRef(useContext(AlertContext));
-  const user = UserContext;
+  const user = useContext(UserContext);
 
   const handleRedirect = () => {
     const msg = `Nie ma takiej strony. Nastąpiło przekierowanie do ${
