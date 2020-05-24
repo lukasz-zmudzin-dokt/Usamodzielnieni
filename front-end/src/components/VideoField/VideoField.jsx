@@ -26,8 +26,7 @@ const VideoField = ({ id, videoItem, errVid }) => {
       let res;
       try {
         res = await getUrl(user.token, id);
-
-        setVideo(sliceUrl(res));
+        setVideo({ ...res, url: sliceUrl(res.url) });
       } catch (e) {
         setErr(true);
       }
@@ -35,8 +34,6 @@ const VideoField = ({ id, videoItem, errVid }) => {
     };
     if (!videoItem && id) {
       getVideos();
-    } else if (videoItem && videoItem.err) {
-      setErr(true);
     } else if (videoItem) {
       setVideo({ ...videoItem, url: sliceUrl(videoItem.url) });
       setLoading(false);

@@ -64,12 +64,6 @@ describe("ChangeVideo", () => {
       },
     });
 
-    fireEvent.change(getByLabelText("Kategoria(opcjonalne)"), {
-      target: {
-        value: 1,
-      },
-    });
-
     fireEvent.click(getByText("Prześlij"));
 
     await wait(() => expect(alertC.showAlert).toHaveBeenCalled());
@@ -108,7 +102,7 @@ describe("ChangeVideo", () => {
   });
 
   it("should close modal", async () => {
-    const { getByText, getByLabelText, queryByText } = render(
+    const { getByText, queryByText } = render(
       <AlertContext.Provider value={alertC}>
         <ChangeVideo id={1} token="abcxd" />
       </AlertContext.Provider>
@@ -126,7 +120,7 @@ describe("ChangeVideo", () => {
   });
 
   it("should not send data if fields are empty", async () => {
-    const { getByText, getByLabelText, queryByText } = render(
+    const { getByText } = render(
       <AlertContext.Provider value={alertC}>
         <ChangeVideo id={1} token="abcxd" />
       </AlertContext.Provider>

@@ -1,5 +1,5 @@
 import React from "react";
-import { render, wait } from "@testing-library/react";
+import { render, wait, waitForElement } from "@testing-library/react";
 import VideoField from "./VideoField";
 import { UserContext } from "context";
 
@@ -7,7 +7,8 @@ describe("VideoField", () => {
   let failFetch;
   let apiVideo = {
     id: 1,
-    url: "https://www.youtube.com/watch?v=q6EoRBvdVPQ",
+    url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    category: { id: 1, name: "xd" },
   };
   beforeAll(() => {
     global.fetch = jest.fn().mockImplementation((input, init) => {
@@ -67,5 +68,48 @@ describe("VideoField", () => {
     await wait(() => expect(fetch).toHaveBeenCalled());
 
     expect(getByText("Zmień film")).toBeInTheDocument();
+  });
+
+  it("should render err when videoErr", async () => {
+    let apiVideo = {
+      errVid: true,
+    };
+    const { getByText } = render(
+      <UserContext.Provider
+        value={{
+          type: "staff",
+          data: { group_type: ["staff_blog_moderator"] },
+        }}
+      >
+        <VideoField {...apiVideo} />
+      </UserContext.Provider>
+    );
+
+    await waitForElement(() =>
+      getByText("Wystąpił błąd podczas wczytywania filmu.")
+    );
+  });
+
+  it("should render render video and button for staff", async () => {
+    let apiVideo = {
+      videoItem: {
+        url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        id: 1,
+        description: "haha",
+        category: { id: 1, name: "xd" },
+      },
+    };
+    const { getByText } = render(
+      <UserContext.Provider
+        value={{
+          type: "staff",
+          data: { group_type: ["staff_blog_moderator"] },
+        }}
+      >
+        <VideoField {...apiVideo} />
+      </UserContext.Provider>
+    );
+
+    await waitForElement(() => getByText("Zmień film"));
   });
 });
