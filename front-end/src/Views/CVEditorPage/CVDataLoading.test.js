@@ -32,7 +32,13 @@ const renderWithRouterMatch = (
 };
 
 describe("load cv data", () => {
-  let dataFail, feedbackFail, data, feedback, contextA, templates, templatesFail;
+  let dataFail,
+    feedbackFail,
+    data,
+    feedback,
+    contextA,
+    templates,
+    templatesFail;
   let props = {
     match: {
       params: {
@@ -50,16 +56,22 @@ describe("load cv data", () => {
           case "GET":
             if (dataFail && input === `${proxy.cv}data/123/`) {
               resolve({ status: 500 });
-            } else if ( !dataFail && input === proxy.cv + "data/123/" ) {
+            } else if (!dataFail && input === proxy.cv + "data/123/") {
               resolve({ status: 200, json: () => Promise.resolve(data) });
             } else if (feedbackFail && input === `${proxy.cv}admin/feedback/`) {
               resolve({ status: 500 });
-            } else if (!feedbackFail && input === `${proxy.cv}admin/feedback/`) {
+            } else if (
+              !feedbackFail &&
+              input === `${proxy.cv}admin/feedback/`
+            ) {
               resolve({ status: 200, json: () => Promise.resolve(feedback) });
-            } else if ( templatesFail && input === proxy.cv + "templates/" ) {
-              resolve({status: 500});
-            } else if (!templatesFail && input === proxy.cv + "templates/" ) {
-              resolve({status: 200, json: () => Promise.resolve({templates: templates})})
+            } else if (templatesFail && input === proxy.cv + "templates/") {
+              resolve({ status: 500 });
+            } else if (!templatesFail && input === proxy.cv + "templates/") {
+              resolve({
+                status: 200,
+                json: () => Promise.resolve({ templates: templates }),
+              });
             } else {
               reject({});
             }
@@ -123,9 +135,7 @@ describe("load cv data", () => {
       showAlert: jest.fn(),
     };
 
-    templates = [
-        "qwe", "asd", "zxc"
-    ];
+    templates = ["qwe", "asd", "zxc"];
   });
 
   it("should load correct data on personal tab", async () => {
@@ -230,17 +240,14 @@ describe("load cv data", () => {
     fireEvent.change(getByLabelText("Imię:"), { target: { value: "janusz" } });
     fireEvent.click(getByText("Zapisz zmiany i generuj CV"));
 
-    expect(fetch).toHaveBeenCalledWith(
-      proxy.cv + "data/123/",
-      {
-        body:
-          '{"template":"mistyrose","basic_info":{"first_name":"janusz","last_name":"dsfdsfs","date_of_birth":"14-5-2020","phone_number":"+48123456789","email":"dsfsdf@gsddf.fd"},"schools":[{"year_start":2019,"year_end":2019,"name":"asdasdsad","additional_info":"sadasdas"}],"experiences":[],"skills":[{"description":"taniec"},{"description":"śpiew"}],"languages":[{"name":"angielski","level":"A2"},{"name":"niemiecki","level":"biegły"}]}',
-        headers: {
-          Authorization: "Token 123",
-          "Content-Type": "application/json",
-        },
-        method: "PUT",
-      }
-    );
+    expect(fetch).toHaveBeenCalledWith(proxy.cv + "data/123/", {
+      body:
+        '{"template":"mistyrose","basic_info":{"first_name":"janusz","last_name":"dsfdsfs","date_of_birth":"14-5-2020","phone_number":"+48123456789","email":"dsfsdf@gsddf.fd"},"schools":[{"year_start":2019,"year_end":2019,"name":"asdasdsad","additional_info":"sadasdas"}],"experiences":[],"skills":[{"description":"taniec"},{"description":"śpiew"}],"languages":[{"name":"angielski","level":"A2"},{"name":"niemiecki","level":"biegły"}]}',
+      headers: {
+        Authorization: "Token 123",
+        "Content-Type": "application/json",
+      },
+      method: "PUT",
+    });
   });
 });

@@ -14,7 +14,7 @@ import { UserContext } from "context";
 import { sendData, getFeedback } from "Views/CVEditorPage/functions/other.js";
 import { createCVObject } from "Views/CVEditorPage/functions/createCVObject.js";
 import { withRouter } from "react-router-dom";
-import {fetchTemplateList, getCVdata} from "./functions/other";
+import { fetchTemplateList, getCVdata } from "./functions/other";
 import { mapData, mapFeedback } from "./functions/mapData";
 import { withAlertContext } from "components";
 
@@ -45,7 +45,7 @@ class CVEditorPage extends React.Component {
       cv_id: undefined,
       has_photo: false,
       template: "bisque",
-      templateList: []
+      templateList: [],
     };
     this.tabs = [];
   }
@@ -98,7 +98,7 @@ class CVEditorPage extends React.Component {
         this.state.tabs.skills.data,
         this.state.tabs.languages.data
       );
-      cv = {...cv, template: this.state.template};
+      cv = { ...cv, template: this.state.template };
       try {
         await sendData(
           cv,
@@ -171,7 +171,7 @@ class CVEditorPage extends React.Component {
             disabled={this.state.disabled}
             hasPhoto={this.state.has_photo}
             template={this.state.template}
-            setTemplate={(t) => this.setState({template: t})}
+            setTemplate={(t) => this.setState({ template: t })}
             templateList={this.state.templateList}
           />
         ),
@@ -239,13 +239,15 @@ class CVEditorPage extends React.Component {
     try {
       const { templates } = await fetchTemplateList(token);
       res = templates;
-    } catch(e) {
+    } catch (e) {
       console.log(e);
-      this.props.alertContext.showAlert("Wystąpił błąd podczas pobierania wzorów CV.");
+      this.props.alertContext.showAlert(
+        "Wystąpił błąd podczas pobierania wzorów CV."
+      );
       res = [];
     }
     this.setState({
-      templateList: res
+      templateList: res,
     });
   };
 
