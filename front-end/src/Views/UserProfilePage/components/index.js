@@ -13,3 +13,4 @@ export { default as PhotoButtonsContainer } from "./PhotoButtonsContainer/PhotoB
 export { default as DeletePhotoButton } from "./DeletePhotoButton/DeletePhotoButton";
 export { default as ChangePhotoButton } from "./ChangePhotoButton/ChangePhotoButton";
 export { default as ChangePhotoModal } from "./ChangePhotoModal/ChangePhotoModal";
+export { default as UserPasswordChangeButton } from "./UserPasswordChangeButton/UserPasswordChangeButton";
