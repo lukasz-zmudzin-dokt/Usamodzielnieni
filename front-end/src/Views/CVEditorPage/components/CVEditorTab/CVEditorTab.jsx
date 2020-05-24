@@ -14,6 +14,7 @@ const CVEditorTab = ({
   showComments,
   isNew,
   disabled = false,
+  group_type,
 }) => (
   <div>
     <h3>{title}</h3>
@@ -62,7 +63,7 @@ const CVEditorTab = ({
               type="submit"
               id="saveButton"
               block
-              disabled={disabled}
+              disabled={group_type && group_type.includes("staff_guest") ? true : disabled}
             >
               {disabled
                 ? "Ładowanie..."

@@ -41,7 +41,7 @@ export default [
     component: CVEditorPage,
     isPrivate: true,
     type: [userTypes.STANDARD, userTypes.STAFF],
-    group: staffTypes.GUEST,
+    group: [staffTypes.GUEST],
     exact: true,
     userVerified: true,
   },
@@ -100,7 +100,7 @@ export default [
     component: OfferForm,
     isPrivate: true,
     type: [userTypes.EMPLOYER, userTypes.STAFF],
-    group: staffTypes.GUEST,
+    group: [staffTypes.GUEST],
     userVerified: true,
   },
   {

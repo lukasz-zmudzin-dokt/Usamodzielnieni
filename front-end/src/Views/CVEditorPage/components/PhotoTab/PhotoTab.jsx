@@ -2,6 +2,7 @@ import React from "react";
 import { Form } from "react-bootstrap";
 import { CVEditorTab } from "..";
 import movie_1 from "assets/movie_1.png";
+import { UserContext } from "context";
 
 class PhotoTab extends React.Component {
   constructor(props) {
@@ -36,6 +37,7 @@ class PhotoTab extends React.Component {
         showComments={this.props.showComments}
         disabled={this.props.disabled}
         isNew={this.props.isNew}
+        group_type={this.context.data.group_type}
       >
         <Form>
           <Form.Group>
@@ -56,5 +58,7 @@ class PhotoTab extends React.Component {
     );
   }
 }
+
+PhotoTab.contextType = UserContext;
 
 export default PhotoTab;

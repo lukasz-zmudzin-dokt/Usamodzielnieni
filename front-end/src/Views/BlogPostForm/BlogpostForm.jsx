@@ -270,7 +270,16 @@ class BlogPostForm extends React.Component {
             />
           </Card.Body>
           <Card.Footer className="">
-            <Button variant="primary" size="lg" onClick={this.submitPost} block>
+            <Button
+              variant="primary"
+              size="lg"
+              onClick={this.submitPost}
+              block
+              disabled={
+                this.context.data.group_type &&
+                this.context.data.group_type.includes("staff_guest") ? true : false
+              }
+            >
               Opublikuj
             </Button>
           </Card.Footer>
