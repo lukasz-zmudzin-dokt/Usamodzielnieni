@@ -5,7 +5,7 @@ import NotificationItem from "./NotificationItem";
 import NotificationToggle from "./NotificationToggle";
 import { NotificationsContext } from "context";
 
-const Notifications = ({ location, token, ...rest }) => {
+const Notifications = ({ location, ...rest }) => {
   const [show, setShow] = useState(false);
   const notificationsContext = useContext(NotificationsContext);
   const { notifications, count, error } = notificationsContext;
