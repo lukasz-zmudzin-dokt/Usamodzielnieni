@@ -39,24 +39,26 @@ describe("CVApproval", () => {
   });
 
   beforeEach(() => {
-    apiCVs = [
-      {
-        cv_id: 0,
-        basic_info: {
-          first_name: "Jarek",
-          last_name: "Arek",
-          email: "jamjestjarek@arek.pp",
+    apiCVs = {
+      results: [
+        {
+          cv_id: 0,
+          basic_info: {
+            first_name: "Jarek",
+            last_name: "Arek",
+            email: "jamjestjarek@arek.pp",
+          },
         },
-      },
-      {
-        cv_id: 1,
-        basic_info: {
-          first_name: "Ala",
-          last_name: "Mala",
-          email: "malaala@lala.la",
+        {
+          cv_id: 1,
+          basic_info: {
+            first_name: "Ala",
+            last_name: "Mala",
+            email: "malaala@lala.la",
+          },
         },
-      },
-    ];
+      ],
+    };
     failFetch = false;
     jest.clearAllMocks();
   });
@@ -99,7 +101,7 @@ describe("CVApproval", () => {
   });
 
   it("should view alert at api returning no cvs", async () => {
-    apiCVs = [];
+    apiCVs.results = [];
     const { getByText } = render(
       <MemoryRouter>
         <CVApprovalPage />
@@ -111,7 +113,7 @@ describe("CVApproval", () => {
   });
 
   it("should hide cv on accept", async () => {
-    apiCVs = [apiCVs[0]];
+    apiCVs.results = [apiCVs.results[0]];
     const { getByText, queryByText } = render(
       <AlertContext.Provider value={contextA}>
         <MemoryRouter>
@@ -134,7 +136,7 @@ describe("CVApproval", () => {
   });
 
   it("should render alert on api fail while accepting", async () => {
-    apiCVs = [apiCVs[0]];
+    apiCVs.results = [apiCVs.results[0]];
     const { getByText, queryByText } = render(
       <AlertContext.Provider value={contextA}>
         <MemoryRouter>
@@ -153,7 +155,7 @@ describe("CVApproval", () => {
 
     await wait(() => expect(contextA.showAlert).toHaveBeenCalled());
     expect(contextA.showAlert).toHaveBeenCalledWith(
-      "Nie udało się zaakceptować użytkownika."
+      "Nie udało się zaakceptować CV."
     );
   });
 });

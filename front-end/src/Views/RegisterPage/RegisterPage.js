@@ -124,7 +124,12 @@ class RegisterPage extends React.Component {
   handleResponse = async (e) => {
     this.setState({ disabled: true });
     const data = {
-      personalData: this.state.personalData,
+      personalData: {
+        ...this.state.personalData,
+        phone_number:
+          this.state.personalData?.phone_number &&
+          "+48" + this.state.personalData.phone_number,
+      },
       homeData: this.state.homeData,
       companyData: this.state.companyData,
       accountData: this.state.accountData,
