@@ -117,7 +117,7 @@ const Chats = () => {
       <Modal
         show={show}
         onHide={handleClose}
-        dialogClassName="newmsg-modal"
+        dialogClassName="contacts-modal"
         scrollable="true"
       >
         <Modal.Header closeButton>

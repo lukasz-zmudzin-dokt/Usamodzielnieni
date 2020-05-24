@@ -31,3 +31,8 @@
 .floating-menu-icon:hover {
   background-color: #a066e2;
 }
+
+.contacts-modal {
+  min-height: 90vh;
+  justify-content: space-between;
+}

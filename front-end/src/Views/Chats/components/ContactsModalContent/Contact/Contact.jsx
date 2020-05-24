@@ -2,18 +2,30 @@ import React from "react";
 import { Row, Col, Button } from "react-bootstrap";
 import { IndexLinkContainer } from "react-router-bootstrap";
 
-const Contact = ({ first_name, id }) => {
+const Contact = ({ contact }) => {
   return (
-    <Row>
-      <Col>
-        <h5>{first_name}</h5>
-      </Col>
-      <Col>
-        <IndexLinkContainer to={`/chats/${id}`}>
-          <Button>Nowa wiadomość</Button>
-        </IndexLinkContainer>
-      </Col>
-    </Row>
+    <div>
+      <Row>
+        <Col>
+          <h5>{contact.first_name}</h5>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <h5>{contact.last_name}</h5>
+        </Col>
+        <Col>
+          <IndexLinkContainer to={`/chats/${contact.id}`}>
+            <Button className="float-right">-></Button>
+          </IndexLinkContainer>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <em>{contact.role}</em>
+        </Col>
+      </Row>
+    </div>
   );
 };
 
