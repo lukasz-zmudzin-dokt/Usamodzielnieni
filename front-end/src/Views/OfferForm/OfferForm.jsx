@@ -108,7 +108,6 @@ const OfferForm = () => {
           id
         );
         if (photoFile) {
-          console.log("jestem", res.offer_id);
           try {
             await sendPhoto(context.token, res.offer_id, photoFile);
             alertC.current.showAlert("Przesłano ofertę", "success");
@@ -137,7 +136,6 @@ const OfferForm = () => {
   const onChange = () => {
     const photoNew = photo.current.files[0];
     const filename = photo.current?.files?.[0]?.name;
-    console.log(photoNew);
     setPhotoFile(photoNew);
     setLabel(filename);
   };
