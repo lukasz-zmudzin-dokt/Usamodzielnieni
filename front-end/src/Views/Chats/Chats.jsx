@@ -15,7 +15,7 @@ import "./style.css";
 //import { ChatForm } from 'components';
 
 const getChats = async (token) => {
-  let url = `${proxy.chat}/list`; // TODO
+  let url = `${proxy.chat}`; // TODO
   const headers = {
     Authorization: "Token " + token,
     "Content-Type": "application/json",
@@ -24,6 +24,7 @@ const getChats = async (token) => {
   const response = await fetch(url, { method: "GET", headers });
 
   if (response.status === 200) {
+    console.log("jest 200");
     return response.json().then((chats) => mapChats(chats));
   } else {
     throw response.status;

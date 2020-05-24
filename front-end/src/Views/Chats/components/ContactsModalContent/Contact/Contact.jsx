@@ -15,14 +15,14 @@ const Contact = ({ contact }) => {
           <h5>{contact.last_name}</h5>
         </Col>
         <Col>
-          <IndexLinkContainer to={`/chats/${contact.id}`}>
+          <IndexLinkContainer to={`/chat/${contact.username}`}>
             <Button className="float-right">→</Button>
           </IndexLinkContainer>
         </Col>
       </Row>
       <Row>
         <Col>
-          <em>{contact.role}</em>
+          <em>{contact.type}</em>
         </Col>
       </Row>
     </div>
