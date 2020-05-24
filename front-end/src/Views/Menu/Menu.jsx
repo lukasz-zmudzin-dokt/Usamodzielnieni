@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Row, Col, Container, Button, ButtonToolbar } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import logo from "assets/logo.png";
@@ -7,27 +7,29 @@ import { UserContext } from "context/UserContext";
 import proxy from "config/api";
 import { TilesContainer } from "./components";
 
-class Menu extends React.Component {
-  userLogout = (e) => {
+const Menu = () => {
+  const user = useContext(UserContext);
+
+  const userLogout = (e) => {
     const url = proxy.account + "logout/";
     fetch(url, {
       method: "POST",
       headers: {
-        Authorization: "token " + this.context.token,
+        Authorization: "token " + user.token,
       },
       body: {},
     }).then((res) => {
       if (res.status === 200 || res.status === 401) {
         res.json().then((responseValue) => {
-          this.context.logout();
+          user.logout();
           return <Redirect to="/" />;
         });
       }
     });
   };
 
-  displayButtonToolbar() {
-    if (this.context.token === undefined)
+  const displayButtonToolbar = () => {
+    if (user.token === undefined)
       return (
         <ButtonToolbar>
           <LinkContainer to="/newAccount">
@@ -44,71 +46,62 @@ class Menu extends React.Component {
           <LinkContainer to="/user">
             <Button className="menu-button-big">Profil</Button>
           </LinkContainer>
-          <Button
-            className="menu-button-big"
-            onClick={(e) => this.userLogout(e)}
-          >
+          <Button className="menu-button-big" onClick={userLogout}>
             Wyloguj się
           </Button>
         </ButtonToolbar>
       );
-  }
+  };
 
-  render() {
-    return (
-      <Container className="Menu" fluid={true}>
-        <div className="menu-background d-flex justify-content-center align-items-center">
-          <Row>
-            <Col />
-            <Col xs={7}>
-              <img src={logo} className="menu-logo" alt="Menu logo" />
-            </Col>
-            <Col />
-          </Row>
-          <Row className="menu-button-row">
-            <Col />
-            <Col>{this.displayButtonToolbar()}</Col>
-            <Col />
-          </Row>
-          <Row className="menu-button-row">
-            <Col />
-            <Col>
-              <ButtonToolbar>
-                <LinkContainer
-                  to={!this.context.token ? "/login" : "/cvEditor"}
-                >
-                  <Button className="menu-button-small menu-button-white">
-                    Kreator CV
-                  </Button>
-                </LinkContainer>
-                <LinkContainer to={"/myCVs"}>
-                  <Button className="menu-button-small menu-button-white">
-                    Moje CV
-                  </Button>
-                </LinkContainer>
-                <LinkContainer to={"/jobOffers"}>
-                  <Button className="menu-button-small menu-button-white">
-                    Oferty pracy
-                  </Button>
-                </LinkContainer>
-                <LinkContainer to="/blog">
-                  <Button className="menu-button-small menu-button-white">
-                    Blogi
-                  </Button>
-                </LinkContainer>
-              </ButtonToolbar>
-            </Col>
-            <Col />
-          </Row>
-        </div>
+  return (
+    <Container className="Menu" fluid={true}>
+      <div className="menu-background d-flex justify-content-center align-items-center">
         <Row>
-          <TilesContainer />
+          <Col />
+          <Col xs={7}>
+            <img src={logo} className="menu-logo" alt="Menu logo" />
+          </Col>
+          <Col />
         </Row>
-      </Container>
-    );
-  }
-}
-
-Menu.contextType = UserContext;
+        <Row className="menu-button-row">
+          <Col />
+          <Col>{displayButtonToolbar()}</Col>
+          <Col />
+        </Row>
+        <Row className="menu-button-row">
+          <Col />
+          <Col>
+            <ButtonToolbar>
+              <LinkContainer to={!user.token ? "/login" : "/cvEditor"}>
+                <Button className="menu-button-small menu-button-white">
+                  Kreator CV
+                </Button>
+              </LinkContainer>
+              <LinkContainer to={"/myCVs"}>
+                <Button className="menu-button-small menu-button-white">
+                  Moje CV
+                </Button>
+              </LinkContainer>
+              <LinkContainer to={"/jobOffers"}>
+                <Button className="menu-button-small menu-button-white">
+                  Oferty pracy
+                </Button>
+              </LinkContainer>
+              <LinkContainer to="/blog">
+                <Button className="menu-button-small menu-button-white">
+                  Blogi
+                </Button>
+              </LinkContainer>
+            </ButtonToolbar>
+          </Col>
+          <Col />
+        </Row>
+      </div>
+      <Row>
+        <TilesContainer />
+      </Row>
+    </Container>
+  );
+};
 
 export default Menu;
