@@ -23,7 +23,6 @@ const MyOfferPerson = ({ person }) => {
   const checkViewed = async () => {
     let newViewed = !read;
     setRead(newViewed);
-    console.log(newViewed);
     try {
       newViewed
         ? await setReadStatus(context.token, person.id)
