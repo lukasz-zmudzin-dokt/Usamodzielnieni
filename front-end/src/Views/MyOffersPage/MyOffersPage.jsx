@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
+import { IndexLinkContainer } from "react-router-bootstrap";
 import { Accordion, Alert, Card, Container } from "react-bootstrap";
 import { UserContext } from "context/UserContext";
 import { getMyOffers } from "./functions/apiCalls";
 import MyOffer from "./components/MyOffer";
-import { IndexLinkContainer } from "react-router-bootstrap";
 
 const MyOffersPage = () => {
   const context = useContext(UserContext);
@@ -11,6 +11,15 @@ const MyOffersPage = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [activeOffer, setActiveOffer] = useState("");
+
+
+  const addNewOffer = () =>
+      <IndexLinkContainer to={"/offerForm"} className="mb-0 mouse-hand-pointer">
+        <Alert variant="primary" className="text-center">
+          <b>Dodaj ofertę pracy</b>
+        </Alert>
+      </IndexLinkContainer>
+  ;
 
   useEffect(() => {
     const loadOffers = async (token, setOffers) => {
@@ -40,13 +49,9 @@ const MyOffersPage = () => {
     <Alert variant="info" className="m-3">
       Brak ofert
     </Alert>
-  ) : (
-      <Alert>
-        <IndexLinkContainer to={"/offerForm"}>
-          Stwórz nową ofertę
-        </IndexLinkContainer>
-      </Alert>
-  );
+  ) : null;
+
+
 
   return (
     <Container>
@@ -64,9 +69,8 @@ const MyOffersPage = () => {
               />
             ))}
           </Accordion>
-
+          {addNewOffer()}
         </Card.Body>
-
       </Card>
     </Container>
   );

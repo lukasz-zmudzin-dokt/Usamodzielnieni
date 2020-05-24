@@ -1,5 +1,4 @@
 import React from "react";
-import HeaderTemplate from "Views/PageHeader/headerTemplate";
 import { BrowserRouter } from "react-router-dom";
 import { UserProvider, AlertProvider } from "context";
 import Router from "root/Router";

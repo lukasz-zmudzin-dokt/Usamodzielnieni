@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useState} from "react";
 import {Nav, Navbar, NavDropdown} from "react-bootstrap";
 import { IndexLinkContainer } from "react-router-bootstrap";
 import { UserContext } from "context";
@@ -16,7 +16,7 @@ const Header = () => {
     const handleClose = () => { setIsOpen(false); };
     const handleLogout = async () => {
         try {
-            const res = await logoutUser(context.token);
+            await logoutUser(context.token);
             context.logout();
             setLogout(true);
         } catch (e) {
@@ -27,7 +27,7 @@ const Header = () => {
         <Nav className="mr-auto">
             <IndexLinkContainer to={"/"}>
                 <Nav.Link className="logo-button">
-                    <img src={logo} className="logo" />
+                    <img src={logo} className="logo" alt={"logo"}/>
                 </Nav.Link>
             </IndexLinkContainer>
             <IndexLinkContainer to={"/contact"}>
@@ -113,7 +113,7 @@ const Header = () => {
                          show={ isOpen }
                          >
                 <IndexLinkContainer to={"/user"}>
-                    <NavDropdown.Item className="account-dropdown-button white">MÓJ PROFIL</NavDropdown.Item>
+                    <NavDropdown.Item className="account-dropdown-button white mt-2">MÓJ PROFIL</NavDropdown.Item>
                 </IndexLinkContainer>
                 { accountDropdownNav }
             </NavDropdown>
