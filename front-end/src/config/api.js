@@ -6,7 +6,7 @@ const proxy = {
   cv: domain + "/cv/",
   job: domain + "/job/",
   blog: domain + "/blog/",
-  notifications: domain + "/notifications/",
+  notification: domain + "/notification/",
   chat: domain + "/chat/",
   steps: domain + "/steps/",
 };
