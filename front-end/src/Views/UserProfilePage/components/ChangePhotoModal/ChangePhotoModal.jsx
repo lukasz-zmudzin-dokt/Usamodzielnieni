@@ -41,7 +41,6 @@ const ChangePhotoModal = ({ show, setShow, user }) => {
   };
 
   const onSubmit = async (e) => {
-    console.log("onSubmit", fileInput.current);
     e.preventDefault();
     if (!e.currentTarget.checkValidity()) {
       setValidated(true);
