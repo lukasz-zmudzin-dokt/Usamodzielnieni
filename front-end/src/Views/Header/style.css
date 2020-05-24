@@ -2,28 +2,8 @@
     font-family: "MonoType", serif;
     font-size: 16px;
 }
-.navbar-left-button {
-    background-color: #A63A53;
-    color: white!important;
-    padding-left: 20px!important;
-    padding-right: 20px!important;
-    text-align: center;
-}
-.logo-button {
-    background-color: #A63A53;
-    padding-left: 20px!important;
-    padding-right: 20px!important;
-}
-.navbar-right-button {
-    color: white!important;
-    padding-left: 20px!important;
-    padding-right: 20px!important;
-    margin-left: 20px;
-    text-align: center;
-}
 .register-color {
     background-color: #42B4A8;
-    width: 160px;
 }
 .login-color {
     background-color: #4F74C6;
@@ -31,19 +11,72 @@
 .notification-color {
     background-color: #ff884d;
 }
-.account-dropdown-button {
-    background-color: #6ac8bf!important;
+.white {
+    color: white!important;
 }
-
 .dropdown-menu {
     border-style: none;
     margin: 0;
     padding: 0;
 }
-.white {
-    color: white!important;
+
+@media(min-width: 992px) {
+    .account-dropdown-button {
+        background-color: #6ac8bf!important;
+        max-width: 303px;
+        padding-left: 12px;
+    }
+    .navbar-left-button {
+        background-color: #A63A53;
+        color: white!important;
+        padding-left: 20px!important;
+        padding-right: 20px!important;
+        text-align: center;
+    }
+    .logo-button {
+        background-color: #A63A53;
+        padding-left: 20px!important;
+        padding-right: 20px!important;
+    }
+    .navbar-right-button {
+        color: white!important;
+        padding-left: 20px!important;
+        padding-right: 20px!important;
+        margin-left: 20px;
+        text-align: center;
+    }
+    .logo {
+        width: 200px;
+        padding-bottom: 3px;
+    }
+    .account-dropdown-button-first {
+        margin-top: 5px;
+    }
 }
-.logo {
-    width: 200px;
-    padding-bottom: 3px;
+@media(max-width: 991px) {
+    .account-dropdown-button {
+        background-color: #6ac8bf!important;
+        text-align: center;
+        margin-top: 0;
+    }
+    .navbar-left-button {
+        background-color: #A63A53;
+        color: white!important;
+        padding-left: 20px!important;
+        padding-right: 20px!important;
+        text-align: center;
+    }
+    .logo-button {
+        background-color: #A63A53;
+        padding-left: 20px!important;
+        padding-right: 20px!important;
+    }
+    .navbar-right-button {
+        color: white!important;
+        text-align: center;
+    }
+    .logo {
+        width: 200px;
+        padding-bottom: 3px;
+    }
 }

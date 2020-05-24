@@ -113,7 +113,7 @@ const Header = () => {
                          show={ isOpen }
                          >
                 <IndexLinkContainer to={"/user"}>
-                    <NavDropdown.Item className="account-dropdown-button white mt-2">MÓJ PROFIL</NavDropdown.Item>
+                    <NavDropdown.Item className="account-dropdown-button account-dropdown-button-first white">MÓJ PROFIL</NavDropdown.Item>
                 </IndexLinkContainer>
                 { accountDropdownNav }
             </NavDropdown>
