@@ -11,24 +11,27 @@ describe("BlogPage", () => {
   };
   let failFetch;
   let apiFilters = ["abcd"];
-  let apiPosts = [
-    {
-      tags: ["tag"],
-      summary: "summary",
-      category: "abcd",
-      header: "/media/example_img.jpg",
-      id: 1,
-      title: "tytuł",
-    },
-    {
-      tags: ["tag", "abcd"],
-      category: "abcd",
-      summary: "summary2",
-      header: null,
-      id: 2,
-      title: "tytuł2",
-    },
-  ];
+  let apiPosts = {
+    count: 2,
+    results: [
+      {
+        tags: ["tag"],
+        summary: "summary",
+        category: "abcd",
+        header: "/media/example_img.jpg",
+        id: 1,
+        title: "tytuł",
+      },
+      {
+        tags: ["tag", "abcd"],
+        category: "abcd",
+        summary: "summary2",
+        header: null,
+        id: 2,
+        title: "tytuł2",
+      },
+    ],
+  };
   beforeAll(() => {
     global.fetch = jest.fn().mockImplementation((input, init) => {
       return new Promise((resolve, reject) => {
@@ -133,7 +136,7 @@ describe("BlogPage", () => {
       await waitForElement(() => getAllByText("abcd"));
 
       await expect(fetch).toHaveBeenCalledWith(
-        `${proxy.blog}blogposts/?category=abcd&tag=abcd`,
+        `${proxy.blog}blogposts/?page=1&page_size=10&category=abcd&tag=abcd`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -161,7 +164,7 @@ describe("BlogPage", () => {
       await waitForElement(() => getAllByText("abcd"));
 
       await expect(fetch).toHaveBeenCalledWith(
-        `${proxy.blog}blogposts/?tag=abcd`,
+        `${proxy.blog}blogposts/?page=1&page_size=10&tag=abcd`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -172,7 +175,7 @@ describe("BlogPage", () => {
     });
 
     it("should render post with no tags", async () => {
-      apiPosts[0].tags = [];
+      apiPosts.results[0].tags = [];
       const { getByText, getAllByText } = render(
         <MemoryRouter>
           <BlogPage />
@@ -201,7 +204,7 @@ describe("BlogPage", () => {
       await waitForElement(() => getAllByText("abcd"));
 
       await expect(fetch).toHaveBeenCalledWith(
-        `${proxy.blog}blogposts/?category=abcd`,
+        `${proxy.blog}blogposts/?page=1&page_size=10&category=abcd`,
         {
           headers: {
             "Content-Type": "application/json",

@@ -1,0 +1,151 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CompanyForm should match snapshot 1`] = `
+<div>
+  <div
+    class="changeData__wrapper__card card bg-light"
+  >
+    <div
+      class="card-header"
+    >
+      Adres firmy
+    </div>
+    <div
+      class="card-body"
+    >
+      <div
+        class="form-group"
+      >
+        <label
+          class="form-label"
+          for="companyName"
+        >
+          Nazwa firmy
+        </label>
+        <input
+          class="form-control"
+          data-testid="default"
+          id="companyName"
+          maxlength="100"
+          minlength="1"
+          placeholder="Nazwa firmy"
+          required=""
+          type="text"
+          value="abc"
+        />
+        <div
+          class="invalid-feedback"
+        >
+          Podaj poprawną nazwę firmy.
+        </div>
+      </div>
+      <div
+        class="form-group"
+      >
+        <label
+          class="form-label"
+          for="streetC"
+        >
+          Ulica
+        </label>
+        <input
+          class="form-control"
+          data-testid="default"
+          id="streetC"
+          maxlength="120"
+          minlength="1"
+          placeholder="Ulica"
+          required=""
+          type="text"
+          value="city"
+        />
+        <div
+          class="invalid-feedback"
+        >
+          Podaj poprawną nazwę ulicy.
+        </div>
+      </div>
+      <div
+        class="form-group"
+      >
+        <label
+          class="form-label"
+          for="streetNumberC"
+        >
+          Numer budynku
+        </label>
+        <input
+          class="form-control"
+          data-testid="default"
+          id="streetNumberC"
+          maxlength="20"
+          minlength="1"
+          pattern="^([0-9]{1})[\\\\s\\\\S]*"
+          placeholder="Numer budynku"
+          required=""
+          type="text"
+          value="12"
+        />
+        <div
+          class="invalid-feedback"
+        >
+          Podaj poprawny numer budynku.
+        </div>
+      </div>
+      <div
+        class="form-group"
+      >
+        <label
+          class="form-label"
+          for="cityC"
+        >
+          Nazwa miasta
+        </label>
+        <input
+          class="form-control"
+          data-testid="default"
+          id="cityC"
+          maxlength="40"
+          minlength="1"
+          placeholder="Nazwa miasta"
+          required=""
+          type="text"
+          value="new"
+        />
+        <div
+          class="invalid-feedback"
+        >
+          Podaj poprawną nazwę miasta.
+        </div>
+      </div>
+      <div
+        class="form-group"
+      >
+        <label
+          class="form-label"
+          for="postalCodeC"
+        >
+          Kod pocztowy
+        </label>
+        <input
+          class="form-control"
+          data-testid="default"
+          id="postalCodeC"
+          maxlength="6"
+          minlength="1"
+          pattern="[0-9]{2}[-][0-9]{3}"
+          placeholder="Kod pocztowy"
+          required=""
+          type="text"
+          value="12-123"
+        />
+        <div
+          class="invalid-feedback"
+        >
+          Podaj poprawny kod pocztowy.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

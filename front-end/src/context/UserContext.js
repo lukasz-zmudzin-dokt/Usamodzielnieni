@@ -5,6 +5,9 @@ export const UserContext = React.createContext({
   type: undefined,
   token: undefined,
   data: undefined,
+  changeToken: () => {},
+  changeType: () => {},
+  changeData: () => {},
   login: () => {},
   logout: () => {},
 });
@@ -19,25 +22,34 @@ export const UserProvider = (props) => {
     token,
     type,
     data,
-    login: (newToken, newType, newData) => {
+    changeToken: (newToken) => {
       cookies.set("token", newToken, {
         path: "/",
         expires: setCookieDate(),
         secure: process.env.REACT_APP_SECURE_COOKIES === "on",
       });
+      setToken(newToken);
+    },
+    changeType: (newType) => {
       cookies.set("type", newType, {
         path: "/",
         expires: setCookieDate(),
         secure: process.env.REACT_APP_SECURE_COOKIES === "on",
       });
+      setType(newType);
+    },
+    changeData: (newData) => {
       cookies.set("data", newData, {
         path: "/",
         expires: setCookieDate(),
         secure: process.env.REACT_APP_SECURE_COOKIES === "on",
       });
-      setToken(newToken);
-      setType(newType);
       setData(newData);
+    },
+    login: (newToken, newType, newData) => {
+      user.changeToken(newToken);
+      user.changeType(newType);
+      user.changeData(newData);
     },
     logout: () => {
       cookies.remove("token", { path: "/" });

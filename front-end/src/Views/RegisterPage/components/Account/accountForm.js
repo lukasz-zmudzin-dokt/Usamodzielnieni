@@ -9,7 +9,7 @@ class AccountForm extends React.Component {
   };
 
   render() {
-    let { data, onBlur } = this.props;
+    let { data, onBlur, passwordOk, checked } = this.props;
     let { onChange } = this;
     return (
       <Card bg="light" className="loginPage__cardSection px-0 col-lg mr-lg-3">
@@ -41,11 +41,13 @@ class AccountForm extends React.Component {
               minLength="6"
               maxLength="30"
             />
-            <Form.Text className="text-muted">
-              Nazwa użytkownika będzie widoczna dla innych użytkowników przy
-              Twoich komentarzach. Twoje imię i nazwisko są widoczne tylko dla
-              pracowników.
-            </Form.Text>
+            {!this.props.isAdmin ? (
+              <Form.Text className="text-muted">
+                Nazwa użytkownika będzie widoczna dla innych użytkowników przy
+                Twoich komentarzach. Twoje imię i nazwisko są widoczne tylko dla
+                pracowników i pracodawców.
+              </Form.Text>
+            ) : null}
             <Form.Control.Feedback type="invalid">
               Minimalna ilośc znaków: 6
             </Form.Control.Feedback>
@@ -54,15 +56,15 @@ class AccountForm extends React.Component {
             <Form.Control
               name="password"
               type="password"
-              placeholder="Hasło"
+              placeholder="Hasło (min. 8 znaków)"
               onChange={(e) => onChange(onBlur, data, e)}
               required
-              minLength="6"
+              minLength="8"
               maxLength="128"
             />
 
             <Form.Control.Feedback type="invalid">
-              Minimalna ilośc znaków: 6
+              Minimalna ilośc znaków: 8
             </Form.Control.Feedback>
           </Form.Group>
           <Form.Group controlId="formGroupPasswordRepeat">
@@ -72,12 +74,21 @@ class AccountForm extends React.Component {
               placeholder="Powtórz hasło"
               onChange={(e) => onChange(onBlur, data, e)}
               required
-              minLength="6"
+              minLength="8"
               maxLength="128"
             />
             <Form.Control.Feedback type="invalid">
-              Minimalna ilośc znaków: 6
+              Minimalna ilośc znaków: 8
             </Form.Control.Feedback>
+            {checked && !passwordOk && (
+              <Card.Text style={{ color: "red" }}>
+                Hasła muszą się zgadzać
+              </Card.Text>
+            )}
+            <Form.Text className="text-muted">
+              Hasło musi mieć min. 8 znaków i zawierać co najmniej jedną cyfrę,
+              jedną wielką literę i jeden znak specjalny !@#$%^&*
+            </Form.Text>
           </Form.Group>
         </Card.Body>
       </Card>

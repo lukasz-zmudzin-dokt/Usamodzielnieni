@@ -26,7 +26,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --env=jest-environment-jsdom-sixteen",
     "eject": "react-scripts eject",
     "postinstall": "cp node_modules/pdfjs-dist/build/pdf.worker.min.js public/pdf.worker.min.js"
   },
@@ -47,7 +47,8 @@
   },
   "proxy": "https://usamo-back.herokuapp.com/",
   "devDependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.4.0"
+    "@testing-library/jest-dom": "^5.8.0",
+    "@testing-library/react": "^9.4.0",
+    "jest-environment-jsdom-sixteen": "^1.0.3"
   }
 }

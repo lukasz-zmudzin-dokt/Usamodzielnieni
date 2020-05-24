@@ -22,6 +22,7 @@ import {
   Chats,
   UserList,
   OfferApprovalPage,
+  ChangeData,
   PasswordResetPrompt,
   NewPasswordPage,
 } from "Views";
@@ -204,6 +205,13 @@ export default [
     isPrivate: true,
     type: userTypes.STAFF,
     group: staffTypes.JOBS,
+  },
+  {
+    path: paths.CHANGE_DATA,
+    component: ChangeData,
+    isPrivate: true,
+    type: userTypes.STAFF,
+    group: staffTypes.VERIFICATION,
   },
   {
     path: paths.PASSWORD_RESET,

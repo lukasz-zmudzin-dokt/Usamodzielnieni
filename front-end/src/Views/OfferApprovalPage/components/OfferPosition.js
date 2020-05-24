@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { UserContext, AlertContext } from "context";
 import { Button, Card, ListGroup, Row } from "react-bootstrap";
 import { DetailsItem } from "components";
@@ -8,18 +8,16 @@ import {
 } from "Views/OfferApprovalPage/apiCalls";
 
 const OfferPosition = ({ offer }) => {
+  const [actionTaken, setActionTaken] = useState(false);
   const context = useContext(UserContext);
   const alertC = useRef(useContext(AlertContext));
 
   const approveOffer = async (e) => {
     e.preventDefault();
     try {
-      let res = await setOfferApproved(context.token, offer.id);
-      if (res.message === "Ustawiono potwierdzenie oferty pracy") {
-        alertC.current.showAlert("Pomyślnie potwierdzono ofertę", "success");
-      } else {
-        alertC.current.showAlert("Nie udało się potwierdzić oferty.");
-      }
+      await setOfferApproved(context.token, offer.id);
+      alertC.current.showAlert("Pomyślnie potwierdzono ofertę", "success");
+      setActionTaken(true);
     } catch (err) {
       alertC.current.showAlert("Nie udało się potwierdzić oferty.");
     }
@@ -28,12 +26,9 @@ const OfferPosition = ({ offer }) => {
   const rejectOffer = async (e) => {
     e.preventDefault();
     try {
-      let res = await setOfferRejected(context.token, offer.id);
-      if (res.message === "Offer removed successfully") {
-        alertC.current.showAlert("Pomyślnie odrzucono ofertę.", "success");
-      } else {
-        alertC.current.showAlert("Nie udało się odrzucić oferty.");
-      }
+      await setOfferRejected(context.token, offer.id);
+      alertC.current.showAlert("Pomyślnie odrzucono ofertę.", "success");
+      setActionTaken(true);
     } catch (e) {
       alertC.current.showAlert("Nie udało się odrzucić oferty.");
     }
@@ -66,7 +61,10 @@ const OfferPosition = ({ offer }) => {
               {offer.category}
             </DetailsItem>
             <DetailsItem md={4} xl={2} label="Data wygaśnięcia">
-              {offer.expiration_date}
+              {new Date(offer.expiration_date).toLocaleDateString(
+                undefined,
+                {}
+              )}
             </DetailsItem>
           </Row>
           <Row>
@@ -78,20 +76,22 @@ const OfferPosition = ({ offer }) => {
         <ListGroup.Item>
           <DetailsItem label="Opis">{offer.description}</DetailsItem>
         </ListGroup.Item>
-        <ListGroup.Item>
-          <Row className="justify-content-center">
-            <Button onClick={(e) => approveOffer(e)} variant="primary">
-              Akceptuj
-            </Button>
-            <Button
-              onClick={(e) => rejectOffer(e)}
-              variant="danger"
-              className="ml-3"
-            >
-              Odrzuć
-            </Button>
-          </Row>
-        </ListGroup.Item>
+        {!actionTaken ? (
+          <ListGroup.Item>
+            <Row className="justify-content-center">
+              <Button onClick={(e) => approveOffer(e)} variant="primary">
+                Akceptuj
+              </Button>
+              <Button
+                onClick={(e) => rejectOffer(e)}
+                variant="danger"
+                className="ml-3"
+              >
+                Odrzuć
+              </Button>
+            </Row>
+          </ListGroup.Item>
+        ) : null}
       </ListGroup>
     </Card.Body>
   );

@@ -103,7 +103,7 @@ exports[`RegisterPage RegisterPageTest should match snapshot 1`] = `
                     class="form-control"
                     id="formGroupPhoneNumber"
                     name="phone_number"
-                    pattern="[+]{1}[4]{1}[8]{1}[0-9]{3}[0-9]{3}[0-9]{3}"
+                    pattern="[0-9]{3}[0-9]{3}[0-9]{3}"
                     placeholder="Numer telefonu"
                     required=""
                     type="tel"
@@ -111,8 +111,13 @@ exports[`RegisterPage RegisterPageTest should match snapshot 1`] = `
                   <div
                     class="invalid-feedback"
                   >
-                    Podaj numer telefonu w formacie: +48123123123
+                    Podaj numer telefonu
                   </div>
+                  <small
+                    class="form-text"
+                  >
+                    Numer telefonu powinien być w formacie 123123123
+                  </small>
                 </div>
               </div>
             </div>
@@ -271,7 +276,7 @@ exports[`RegisterPage RegisterPageTest should match snapshot 1`] = `
                   <small
                     class="text-muted form-text"
                   >
-                    Nazwa użytkownika będzie widoczna dla innych użytkowników przy Twoich komentarzach. Twoje imię i nazwisko są widoczne tylko dla pracowników.
+                    Nazwa użytkownika będzie widoczna dla innych użytkowników przy Twoich komentarzach. Twoje imię i nazwisko są widoczne tylko dla pracowników i pracodawców.
                   </small>
                   <div
                     class="invalid-feedback"
@@ -286,16 +291,16 @@ exports[`RegisterPage RegisterPageTest should match snapshot 1`] = `
                     class="form-control"
                     id="formGroupPassword"
                     maxlength="128"
-                    minlength="6"
+                    minlength="8"
                     name="password"
-                    placeholder="Hasło"
+                    placeholder="Hasło (min. 8 znaków)"
                     required=""
                     type="password"
                   />
                   <div
                     class="invalid-feedback"
                   >
-                    Minimalna ilośc znaków: 6
+                    Minimalna ilośc znaków: 8
                   </div>
                 </div>
                 <div
@@ -305,7 +310,7 @@ exports[`RegisterPage RegisterPageTest should match snapshot 1`] = `
                     class="form-control"
                     id="formGroupPasswordRepeat"
                     maxlength="128"
-                    minlength="6"
+                    minlength="8"
                     name="passwordR"
                     placeholder="Powtórz hasło"
                     required=""
@@ -314,8 +319,13 @@ exports[`RegisterPage RegisterPageTest should match snapshot 1`] = `
                   <div
                     class="invalid-feedback"
                   >
-                    Minimalna ilośc znaków: 6
+                    Minimalna ilośc znaków: 8
                   </div>
+                  <small
+                    class="text-muted form-text"
+                  >
+                    Hasło musi mieć min. 8 znaków i zawierać co najmniej jedną cyfrę, jedną wielką literę i jeden znak specjalny !@#$%^&*
+                  </small>
                 </div>
               </div>
             </div>

@@ -46,7 +46,10 @@ describe("MyCVsPage", () => {
         }
         switch (init.method) {
           case "GET":
-            resolve({ status: 200, json: () => Promise.resolve(myCVs) });
+            resolve({
+              status: 200,
+              json: () => Promise.resolve(myCVs),
+            });
             break;
           case "DELETE":
             resolve({ status: 200 });

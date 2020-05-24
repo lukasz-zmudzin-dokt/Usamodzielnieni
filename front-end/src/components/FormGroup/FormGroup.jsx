@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Form } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import PropTypes from "prop-types";
@@ -14,12 +14,29 @@ const FormGroup = ({
   required,
   id,
   disabled,
+  pattern,
   step,
   ...rest
 }) => {
+  const [checked, setChecked] = useState(-1);
   const setInput = (e) => {
     const value = e.target.value;
     setVal(value);
+  };
+
+  const changeChecked = (newId) => {
+    const value = id.split("--sort");
+    if (newId === checked) {
+      setChecked(-1);
+    } else {
+      if (newId === 0) {
+        setChecked(newId);
+        setVal(`-${value[0]}`);
+      } else {
+        setChecked(newId);
+        setVal(`${value[0]}`);
+      }
+    }
   };
 
   const setDate = (date) => {
@@ -27,6 +44,29 @@ const FormGroup = ({
   };
   const setFormType = () => {
     switch (type) {
+      case "check--sort":
+        return (
+          <div key={`inline-checkbox`}>
+            <Form.Check
+              inline
+              label="Rosnąco"
+              type="checkbox"
+              checked={checked === 1 && val === `${id.split("--sort")[0]}`}
+              onChange={() => changeChecked(1)}
+              id={`inline-checkbox-${header}1`}
+              data-testid={`checkUp-${id}`}
+            />
+            <Form.Check
+              inline
+              label="Malejąco"
+              type="checkbox"
+              checked={checked === 0 && val === `-${id.split("--sort")[0]}`}
+              onChange={() => changeChecked(0)}
+              id={`inline-checkbox-${header}2`}
+              data-testid={`checkDown-${id}`}
+            />
+          </div>
+        );
       case "select":
         return (
           <Form.Control
@@ -84,12 +124,22 @@ const FormGroup = ({
             step={step}
             data-testid="default"
             disabled={disabled}
+            pattern={pattern}
+          />
+        );
+      case "tel":
+        return (
+          <Form.Control
+            type={type}
+            value={val}
+            onChange={setInput}
+            required={required}
           />
         );
       default:
         return (
           <Form.Control
-            type="text"
+            type={type || "text"}
             placeholder={header}
             onChange={setInput}
             value={val}
@@ -98,6 +148,7 @@ const FormGroup = ({
             maxLength={length.max}
             data-testid="default"
             disabled={disabled}
+            pattern={pattern}
           />
         );
     }

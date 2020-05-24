@@ -44,6 +44,11 @@ exports[`AccountForm should render correctly 1`] = `
           required=""
           type="text"
         />
+        <small
+          class="text-muted form-text"
+        >
+          Nazwa użytkownika będzie widoczna dla innych użytkowników przy Twoich komentarzach. Twoje imię i nazwisko są widoczne tylko dla pracowników i pracodawców.
+        </small>
         <div
           class="invalid-feedback"
         >
@@ -57,16 +62,16 @@ exports[`AccountForm should render correctly 1`] = `
           class="form-control"
           id="formGroupPassword"
           maxlength="128"
-          minlength="6"
+          minlength="8"
           name="password"
-          placeholder="Hasło"
+          placeholder="Hasło (min. 8 znaków)"
           required=""
           type="password"
         />
         <div
           class="invalid-feedback"
         >
-          Minimalna ilośc znaków: 6
+          Minimalna ilośc znaków: 8
         </div>
       </div>
       <div
@@ -76,7 +81,7 @@ exports[`AccountForm should render correctly 1`] = `
           class="form-control"
           id="formGroupPasswordRepeat"
           maxlength="128"
-          minlength="6"
+          minlength="8"
           name="passwordR"
           placeholder="Powtórz hasło"
           required=""
@@ -85,8 +90,13 @@ exports[`AccountForm should render correctly 1`] = `
         <div
           class="invalid-feedback"
         >
-          Minimalna ilośc znaków: 6
+          Minimalna ilośc znaków: 8
         </div>
+        <small
+          class="text-muted form-text"
+        >
+          Hasło musi mieć min. 8 znaków i zawierać co najmniej jedną cyfrę, jedną wielką literę i jeden znak specjalny !@#$%^&*
+        </small>
       </div>
     </div>
   </div>

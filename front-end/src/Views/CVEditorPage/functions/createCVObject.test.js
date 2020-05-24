@@ -8,7 +8,7 @@ describe("createCVObject", () => {
       firstName: "Jan",
       lastName: "Kowalski",
       birthDate: new Date(2000, 10, 4),
-      phoneNumber: "+48123123123",
+      phoneNumber: "123123123",
       email: "jan.kowalski@mail.com",
     };
     education = [

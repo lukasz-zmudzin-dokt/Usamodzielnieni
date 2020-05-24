@@ -3,23 +3,29 @@
 exports[`PhoneCard should match snapshot 1`] = `
 <div>
   <div
-    class="my-3 card bg-primary text-light"
+    class="my-3 card bg-outline-primary text-dark"
   >
     <div
       class="card-body"
     >
-      <div
-        class="card-title h5"
-      />
+      <h2
+        class="d-flex justify-content-between card-title"
+      >
+        123
+        <button
+          class="btn btn-light btn-sm"
+          type="button"
+        >
+          X
+        </button>
+      </h2>
       <p
         class="card-text"
-      />
-    </div>
-    <div
-      class="card-footer"
-    >
+      >
+        qwe
+      </p>
       <button
-        class="btn btn-light btn-block btn-sm"
+        class="btn btn-primary btn-block btn-sm"
         type="button"
       >
         Skopiuj ten numer
