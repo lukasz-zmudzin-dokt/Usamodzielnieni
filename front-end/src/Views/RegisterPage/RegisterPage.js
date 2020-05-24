@@ -27,6 +27,8 @@ class RegisterPage extends React.Component {
           ? "Podopiecznym"
           : [staffTypes.VERIFICATION],
       validated: false,
+      checked: false,
+      passwordOK: true,
       redirect: false,
       disabled: false,
     };
@@ -36,8 +38,12 @@ class RegisterPage extends React.Component {
     const form = event.currentTarget;
     event.preventDefault();
     const { password, passwordR } = data.accountData || {};
-
-    if (form.checkValidity() === false || password !== passwordR) {
+    this.setState({passwordOk: true, checked: true});
+    if (form.checkValidity() === false) {
+      event.stopPropagation();
+      return false;
+    } else if (password !== passwordR) {
+      this.setState({passwordOk: false});
       event.stopPropagation();
       return false;
     } else return true;
@@ -181,6 +187,8 @@ class RegisterPage extends React.Component {
                   data={accountData}
                   onBlur={(accountData) => this.setState({ accountData })}
                   isAdmin={this.props.match.params.role === "staff"}
+                  passwordOk={this.state.passwordOk}
+                  checked={this.state.checked}
                 />
               </section>
               <Button
