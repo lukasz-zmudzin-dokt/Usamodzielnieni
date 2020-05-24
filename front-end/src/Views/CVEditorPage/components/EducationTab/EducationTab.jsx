@@ -12,10 +12,12 @@ const EducationTab = ({
   showComments,
   validated,
   error,
+  video,
 }) => (
   <CVEditorTab
     title="Edukacja"
     movie={movie_2}
+    video={video}
     onPrevClick={onPrevClick}
     onNextClick={onNextClick}
     comments={comments}

@@ -12,6 +12,7 @@ const WorkExperienceTab = ({
   error,
   showComments,
   validated,
+  video,
 }) => (
   <CVEditorTab
     title="Doświadczenie zawodowe"
@@ -22,6 +23,7 @@ const WorkExperienceTab = ({
     loading={loading}
     error={error}
     showComments={showComments}
+    video={video}
   >
     <ActionWithDate
       data={data}

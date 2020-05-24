@@ -33,6 +33,7 @@ class SkillsTab extends React.Component {
       <CVEditorTab
         title="Umiejętności"
         movie={movie_4}
+        video={this.props.video}
         onPrevClick={this.props.onPrevClick}
         onNextClick={this.props.onNextClick}
         comments={this.props.comments}

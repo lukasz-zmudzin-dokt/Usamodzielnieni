@@ -7,31 +7,39 @@ import { Alert } from "react-bootstrap";
 import { staffTypes } from "constants/staffTypes";
 import { userTypes } from "constants/userTypes";
 
-const VideoField = ({ id = 1 }) => {
+const VideoField = ({ id, videoItem }) => {
   const [video, setVideo] = useState({ id: 0 });
   const [err, setErr] = useState(false);
   const [loading, setLoading] = useState(false);
   const user = useContext(UserContext);
+  const sliceUrl = (url) => {
+    let changeRes = url;
+
+    const index = url.lastIndexOf("=");
+    changeRes = url.slice(index + 1);
+    return changeRes;
+  };
 
   useEffect(() => {
-    // const search = url.lastIndexOf("=");
     setLoading(true);
     const getVideos = async () => {
       let res;
       try {
         res = await getUrl(user.token, id);
-        let changeRes = res;
 
-        const index = res.url.lastIndexOf("=");
-        changeRes.url = res.url.slice(index + 1);
-        setVideo(changeRes);
+        setVideo(sliceUrl(res));
       } catch (e) {
         setErr(true);
       }
       setLoading(false);
     };
-    getVideos();
-  }, [id, user.token]);
+    if (!videoItem && id) {
+      getVideos();
+    } else if (videoItem) {
+      setVideo({ ...videoItem, url: sliceUrl(videoItem.url) });
+      setLoading(false);
+    }
+  }, [id, user.token, videoItem]);
 
   const opts = {
     height: "100%",
@@ -69,7 +77,11 @@ const VideoField = ({ id = 1 }) => {
           />
         )}
         {conditional && (
-          <ChangeVideo id={id} video={video} token={user.token} />
+          <ChangeVideo
+            id={id || videoItem?.id}
+            video={video}
+            token={user.token}
+          />
         )}
       </div>
     )

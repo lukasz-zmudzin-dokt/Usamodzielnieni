@@ -45,6 +45,7 @@ class LanguagesTab extends React.Component {
       <CVEditorTab
         title="Języki obce"
         movie={movie_5}
+        video={this.props.video}
         onPrevClick={this.props.onPrevClick}
         onNextClick={this.props.onNextClick}
         comments={this.props.comments}
