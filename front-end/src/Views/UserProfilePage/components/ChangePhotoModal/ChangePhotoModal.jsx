@@ -40,7 +40,6 @@ const ChangePhotoModal = ({ show, setShow, user }) => {
   };
 
   const onSubmit = async (e) => {
-    console.log("onSubmit", fileInput.current);
     e.preventDefault();
     if (!e.currentTarget.checkValidity()) {
       setValidated(true);
@@ -61,7 +60,6 @@ const ChangePhotoModal = ({ show, setShow, user }) => {
   };
 
   const onChange = () => {
-    console.log("onSubmit", fileInput.current);
     const filename = fileInput.current?.files?.[0]?.name;
     setLabel(filename);
   };
