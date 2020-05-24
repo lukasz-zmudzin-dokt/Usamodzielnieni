@@ -75,10 +75,6 @@ const OfferForm = () => {
       setDisabled(false);
     };
     loadData(context.token);
-<<<<<<< HEAD
-=======
-    console.log(context.data.group_type);
->>>>>>> f38b89800ede37a9e7e62f556408d7b08021a3f6
   }, [
     context.data.company_address,
     context.data.company_name,
