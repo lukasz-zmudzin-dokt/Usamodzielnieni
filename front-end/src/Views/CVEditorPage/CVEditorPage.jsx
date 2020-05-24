@@ -167,6 +167,7 @@ class CVEditorPage extends React.Component {
             onSubmit={this.handleCVSubmit}
             disabled={this.state.disabled}
             hasPhoto={this.state.has_photo}
+            alertContext={this.props.alertContext}
           />
         ),
       },
