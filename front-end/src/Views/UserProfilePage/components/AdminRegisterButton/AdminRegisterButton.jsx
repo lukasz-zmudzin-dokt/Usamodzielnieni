@@ -7,7 +7,7 @@ import { userTypes } from "constants/userTypes";
 const AdminRegisterButton = ({ user }) =>
   user.type === userTypes.STAFF &&
   user.data.group_type.includes(staffTypes.VERIFICATION) ? (
-    <LinkContainer to="/newAccount/staff">
+    <LinkContainer className="my-2" to="/newAccount/staff">
       <Button variant="primary">Zarejestruj administratora</Button>
     </LinkContainer>
   ) : null;

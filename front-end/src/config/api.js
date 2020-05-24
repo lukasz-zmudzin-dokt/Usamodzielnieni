@@ -10,6 +10,7 @@ const proxy = {
   chat: domain + "/chat/",
   steps: domain + "/steps/",
   videos: domain + "/videos/",
+  contact: domain + "/helpline/",
 };
 
 export default proxy;
