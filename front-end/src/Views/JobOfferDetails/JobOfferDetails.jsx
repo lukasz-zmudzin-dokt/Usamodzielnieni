@@ -37,6 +37,8 @@ const mapOffer = (offer) => ({
   description: offer.description,
   pay_from: offer.salary_min,
   pay_to: offer.salary_max,
+  companyLogo: offer.company_logo,
+  offerImage: offer.offer_image,
 });
 
 const JobOfferDetails = (props) => {
@@ -72,7 +74,17 @@ const JobOfferDetails = (props) => {
         <Card.Body>
           {msg || (
             <div>
-              <h3>{offer.title}</h3>
+              {offer.companyLogo ? (
+                <Row className="m-0 mb-2 align-items-center">
+                  <img
+                    className="JobOffer__logo mr-3"
+                    src={`${proxy.plain}${offer.companyLogo}`}
+                  />
+                  <h3>{offer.title}</h3>
+                </Row>
+              ) : (
+                <h3>{offer.title}</h3>
+              )}
               <Row>
                 <DetailsItem md="6" xl="4" label="Nazwa firmy">
                   {offer.companyName}
@@ -100,6 +112,12 @@ const JobOfferDetails = (props) => {
                 </DetailsItem>
               </Row>
               <p>{offer.description}</p>
+              {offer.offerImage ? (
+                <img
+                  className="JobOffer__logo mr-3"
+                  src={`${proxy.plain}${offer.offerImage}`}
+                />
+              ) : null}
             </div>
           )}
           {user.type === userTypes.STANDARD &&
