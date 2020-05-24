@@ -92,11 +92,11 @@ describe("OfferForm", () => {
             break;
           case "POST":
             if (failPost) resolve({ status: 500 });
-            else if (input === `${proxy.job}job-offer/abc/image/`)
+            else if (input === `${proxy.job}job-offer/abc/image/`) {
               resolve({
                 status: 200,
               });
-            else {
+            } else {
               resolve({
                 status: 200,
                 json: () => Promise.resolve({ offer_id: "abc" }),
@@ -381,7 +381,7 @@ describe("OfferForm", () => {
       getByPlaceholderText,
       getByLabelText,
       getByText,
-    } = renderWithRouter(<OfferForm />, {
+    } = renderWithRouter(<OfferForm />, contextA, {
       route: "/offerForm/abc",
     });
 
@@ -499,7 +499,6 @@ describe("OfferForm", () => {
         .stepMismatch
     ).toBe(false);
     await wait(() => expect(fetch).toHaveBeenCalledTimes(4));
-
     expect(contextA.showAlert).toHaveBeenCalledWith(
       "Przesłano ofertę",
       "success"

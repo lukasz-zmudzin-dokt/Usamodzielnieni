@@ -5,8 +5,11 @@
 }
 
 .JobOffer__mainImage{
-    width: 100%;
-    position: relative;
+  position: relative;
+  max-width:100%;
+  max-height: 50vh;
+  width: auto;
+  height: auto;
 }
 
 

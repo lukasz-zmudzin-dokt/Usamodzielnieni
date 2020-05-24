@@ -75,16 +75,18 @@ const JobOfferDetails = (props) => {
           {msg || (
             <div>
               {offer.offerImage ? (
-                <img
-                  className="JobOffer__mainImage mb-3"
-                  src={`${proxy.plain}${offer.offerImage}`}
-                  alt="obrazek główny oferty"
-                />
+                <Row className="m-0 justify-content-center">
+                  <img
+                    className="JobOffer__mainImage mb-3"
+                    src={`${proxy.plain}${offer.offerImage}`}
+                    alt="obrazek główny oferty"
+                  />
+                </Row>
               ) : null}
               {offer.companyLogo ? (
                 <Row className="m-0 mb-2 align-items-center justify-content-center justify-content-md-start">
                   <img
-                    className="JobOffer__logo mb-3 mb-md-0 mr-md-3"
+                    className="JobOffer__logo mb-3 mb-md-0 mr-3 mr-md-3"
                     src={`${proxy.plain}${offer.companyLogo}`}
                     alt="logo firmy"
                   />
