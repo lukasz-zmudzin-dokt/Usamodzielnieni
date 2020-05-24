@@ -9,9 +9,15 @@ describe("passwordModalTest", () => {
     global.fetch = jest.fn().mockImplementation(() => {
       return new Promise((resolve) => {
         if (apiFail) {
-          resolve({ status: 500, json: () => Promise.resolve({qwe: "fail"}) });
+          resolve({
+            status: 500,
+            json: () => Promise.resolve({ qwe: "fail" }),
+          });
         } else if (wrongPass) {
-          resolve({ status: 403 , json: () => Promise.resolve({qwe: "dupa"})});
+          resolve({
+            status: 403,
+            json: () => Promise.resolve({ qwe: "dupa" }),
+          });
         } else {
           resolve({ status: 200, json: () => Promise.resolve("gituwa") });
         }
@@ -30,6 +36,7 @@ describe("passwordModalTest", () => {
     };
     show = true;
     setShow = jest.fn();
+    jest.clearAllMocks();
   });
 
   it("should match snapshot", () => {
@@ -89,9 +96,7 @@ describe("passwordModalTest", () => {
 
     await wait(() => expect(fetch).toHaveBeenCalled());
 
-    expect(alertC.showAlert).toHaveBeenCalledWith(
-      "dupa"
-    );
+    expect(alertC.showAlert).toHaveBeenCalledWith("dupa");
   });
 
   it("should render error on api fail", async () => {
@@ -116,8 +121,42 @@ describe("passwordModalTest", () => {
 
     await wait(() => expect(fetch).toHaveBeenCalled());
 
-    expect(alertC.showAlert).toHaveBeenCalledWith(
-      "fail"
+    expect(alertC.showAlert).toHaveBeenCalledWith("fail");
+  });
+
+  it("should show error message if passwords aren't equal", async () => {
+    const { getByLabelText, getByText } = render(
+      <AlertContext.Provider value={alertC}>
+        <PasswordChangeModal setShow={setShow} show={show} user={user} />
+      </AlertContext.Provider>
     );
+
+    fireEvent.change(getByLabelText("Poprzednie hasło"), {
+      target: { value: "qwe123qwe" },
+    });
+    fireEvent.change(getByLabelText("Nowe hasło (min. 8 znaków)"), {
+      target: { value: "qweasdqwex" },
+    });
+    fireEvent.change(getByLabelText("Powtórz nowe hasło"), {
+      target: { value: "qweasdqwe" },
+    });
+
+    fireEvent.click(getByText("Zmień hasło"));
+
+    expect(fetch).not.toHaveBeenCalled();
+
+    expect(getByText("Hasła muszą się zgadzać!")).toBeInTheDocument();
+  });
+
+  it("should block fetch if user dont fulfill inputs", async () => {
+    const { getByText } = render(
+      <AlertContext.Provider value={alertC}>
+        <PasswordChangeModal setShow={setShow} show={show} user={user} />
+      </AlertContext.Provider>
+    );
+
+    fireEvent.click(getByText("Zmień hasło"));
+
+    expect(fetch).not.toHaveBeenCalled();
   });
 });
