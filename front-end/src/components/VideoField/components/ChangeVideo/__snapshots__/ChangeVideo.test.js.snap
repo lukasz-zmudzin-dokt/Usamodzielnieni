@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ChangeVideo should render without crashing 1`] = `
+<div>
+  <button
+    class="videoField__button btn btn-primary"
+    type="button"
+  >
+    Zmień film
+  </button>
+</div>
+`;

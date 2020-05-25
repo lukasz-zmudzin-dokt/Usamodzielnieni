@@ -12,16 +12,22 @@ const EducationTab = ({
   showComments,
   validated,
   error,
+  video,
+  errVid,
+  formTab,
 }) => (
   <CVEditorTab
     title="Edukacja"
     movie={movie_2}
+    video={video}
     onPrevClick={onPrevClick}
     onNextClick={onNextClick}
     comments={comments}
     loading={loading}
     error={error}
     showComments={showComments}
+    errVid={errVid}
+    formTab={formTab}
   >
     <ActionWithDate
       data={data}

@@ -1,0 +1,25 @@
+.videoField__container {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  min-height: 100px;
+
+  & div:first-child{
+    position: relative;
+    padding-bottom: 56.25%;
+  }
+}
+
+
+.videoField__button {
+  margin-top: 1rem;
+}
+
+.videoField__video{
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+

@@ -68,6 +68,12 @@ exports[`MyOffers should match snapshot 1`] = `
                           Edytuj ofertę
                         </button>
                       </a>
+                      <button
+                        class="ml-3 btn btn-primary"
+                        type="button"
+                      >
+                        Pobierz zgłoszenia
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -123,6 +129,12 @@ exports[`MyOffers should match snapshot 1`] = `
                           Edytuj ofertę
                         </button>
                       </a>
+                      <button
+                        class="ml-3 btn btn-primary"
+                        type="button"
+                      >
+                        Pobierz zgłoszenia
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -178,6 +190,12 @@ exports[`MyOffers should match snapshot 1`] = `
                           Edytuj ofertę
                         </button>
                       </a>
+                      <button
+                        class="ml-3 btn btn-primary"
+                        type="button"
+                      >
+                        Pobierz zgłoszenia
+                      </button>
                     </div>
                   </div>
                 </div>
