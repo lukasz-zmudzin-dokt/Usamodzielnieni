@@ -79,6 +79,14 @@ const Header = () => {
       name: "AKCEPTUJ OFERTY PRACY",
       group_type: staffTypes.JOBS,
     },
+      {
+          id: 4,
+          link: paths.CHATS,
+          name: "CZAT",
+          group_type: staffTypes.STAFF_CHAT
+      }
+
+
   ];
 
   const accountDropdownNav =
