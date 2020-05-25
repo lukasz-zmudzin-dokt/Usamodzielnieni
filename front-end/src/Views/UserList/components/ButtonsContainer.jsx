@@ -16,7 +16,7 @@ const ButtonsContainer = ({ user, setUser, deleteUser }) => {
       {disableButtons ? (
         <Button disabled={disableButtons}>Wyślij wiadomość</Button>
       ) : (
-        <IndexLinkContainer to={`/chats/${user.id}`}>
+        <IndexLinkContainer to={`/chats/${user.username}`}>
           <Button>Wyślij wiadomość</Button>
         </IndexLinkContainer>
       )}
