@@ -1,111 +1,116 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { ProgressBarFragment } from "../";
 import proxy from "config/api";
-import { Alert } from "react-bootstrap";
+import { Alert, Button } from "react-bootstrap";
 import { deleteStep, findParents } from "../../functions/deleteStep";
 import { DeletionModal } from "components";
+import { staffTypes } from "constants/staffTypes";
+import { UserContext } from "context";
+import { NewStep, EditStep } from "../";
 
-const tmpSteps = [
-  {
-    id: "1",
-    type: "main",
-    title:
-      "Tytuł głównego kroku 1 123 123 123 123 123 123 123 123 123 123 123 123 ",
-    description: "Opis kroku 1 wraz z filmikami.",
-    next: [
-      { id: "2", choiceName: "Tak" },
-      { id: "5", choiceName: "Nie" },
-    ],
-  },
-  {
-    id: "2",
-    type: "main",
-    title:
-      "Tytuł głównego kroku 2 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123",
-    description: "Opis kroku 2 wraz z filmikami.",
-    next: [{ id: "3", choiceName: "Dalej" }],
-  },
-  {
-    id: "3",
-    type: "sub",
-    title:
-      "Tytuł podkroku 2.1 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123",
-    description: "Opis kroku 2.1 wraz z filmikami.",
-    next: [{ id: "4", choiceName: "Dalej" }],
-  },
-  {
-    id: "4",
-    type: "sub",
-    title: "Tytuł podkroku 2.2",
-    description: "Opis kroku 2.2 wraz z filmikami.",
-    next: [{ id: "5", choiceName: "Dalej" }],
-  },
-  {
-    id: "5",
-    type: "main",
-    title: "Tytuł głównego kroku 3",
-    description: "Opis kroku 3 wraz z filmikami.",
-    next: [{ id: "6", choiceName: "Dalej" }],
-  },
-  {
-    id: "6",
-    type: "sub",
-    title: "Tytuł podkroku 3.1",
-    description: "Opis kroku 3.1 wraz z filmikami.",
-    next: [{ id: "1", choiceName: "początek" }],
-  },
-];
-
-const getSteps = async () => {
-  let url = `${proxy.steps}/list`; // TODO
+const getRoot = async () => {
+  let url = `${proxy.steps}root`; // TODO
   const headers = {
     "Content-Type": "application/json",
   };
-
   const response = await fetch(url, { method: "GET", headers });
-
   if (response.status !== 200) {
-    //return tmpSteps;
-
-    // eslint-disable-next-line no-unreachable
     throw response.status;
   }
-  return response.json().then((chats) => mapSteps(chats));
+  return await response.json();
 };
 
-const mapSteps = (steps) =>
-  steps.map((step) => ({
-    id: step.id,
-    type: step.type,
-    title: step.title,
-    value: step.value,
-    next: step.next,
-    // TODO
-  }));
+const createRoot = async (token) => {
+  let url = `${proxy.steps}root/`;
+
+  const root = {
+    title: "Korzeń",
+    description: "Korzeń drzewa",
+  };
+
+  const headers = {
+    "Content-Type": "application/json",
+    Origin: null,
+  };
+
+  const response = await fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(root),
+  });
+
+  if (response.status !== 200) {
+    throw await response.json();
+  }
+  return await response.json();
+};
+
+const getStep = async (id) => {
+  let url = `${proxy.steps}step/${id}`; // TODO
+  const headers = {
+    "Content-Type": "application/json",
+  };
+  const response = await fetch(url, { method: "GET", headers });
+  if (response.status !== 200) {
+    throw response.status;
+  }
+  return await response.json();
+};
+
+const getChildren = async (step, mainSteps) => {
+  // console.log(step, " step ", steps, " steps ");
+  if (step.children.length > 0) {
+    const childrens = await Promise.all(
+      step.children.map((item) => getStep(item.id))
+    ).then((values) => values);
+
+    childrens.forEach((item) => mainSteps.push(item));
+
+    childrens.forEach(async (item) => {
+      if (item.children.length > 0) {
+        mainSteps = await getChildren(item, mainSteps);
+      }
+    });
+  }
+  return mainSteps;
+};
 
 const ProgressBar = () => {
-  const [steps, setSteps] = useState();
+  const [steps, setSteps] = useState([]);
+  const [root, setRoot] = useState();
   const [path, setPath] = useState(["1"]);
   //const [path, setPath] = useState([]);
   const [error, setError] = useState(false);
   const [wantsDelete, setWantsDelete] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const user = useContext(UserContext);
+  const [showNew, setShowNew] = useState(false);
+  const [showEdit, setShowEdit] = useState(false);
 
   useEffect(() => {
     const loadSteps = async () => {
       let res;
       try {
-        res = await getSteps();
+        res = await getRoot();
+        // console.log(res);
+        setRoot(res);
+        if (res) {
+          let mainSteps = [];
+          mainSteps = await getChildren(res, mainSteps);
+          setSteps(mainSteps);
+        } else {
+          await createRoot();
+        }
       } catch (e) {
-        console.log(e);
         setError(true);
         return;
       }
-      setSteps(res);
     };
 
     loadSteps();
   }, []);
+
+  const mapStaps = () => {};
 
   const setCurrent = (id) => {
     const index = path.indexOf(id);
@@ -133,26 +138,37 @@ const ProgressBar = () => {
     newPath.pop();
     setPath(newPath);
   }
-  /*
-  if(path.length === 0) {
-    steps.forEach(step => {
-        if(findParents(steps, step).length === 0) {
-            let newPath = [];
-            newPath.push(step.id);
-            setPath(newPath);
-        }
-    });
-  }
-*/
+
   return (
     msg || (
       <div>
-        <DeletionModal
+        {/* <DeletionModal
           show={showModal}
           setShow={setShowModal}
           delConfirmed={setWantsDelete}
           question="Czy na pewno chcesz usunąć ten krok?"
         />
+        {user.data.group_type.includes(staffTypes.BLOG_MODERATOR) ? (
+          <>
+            <div className="mb-3">
+              <Button onClick={() => setShowEdit(true)}>Edytuj ten krok</Button>
+              <Button className="ml-3" onClick={() => setShowNew(true)}>
+                Dodaj nowy krok
+              </Button>
+            </div>
+            <NewStep
+              steps={steps}
+              show={showNew}
+              handleClose={() => setShowNew(false)}
+            />
+            <EditStep
+              steps={steps}
+              step={steps.find((item) => item.id === path[path.length - 1])}
+              show={showEdit}
+              handleClose={() => setShowEdit(false)}
+            />
+          </>
+        ) : null}
         {path.map((stepId, i) => (
           <ProgressBarFragment
             key={stepId}
@@ -166,10 +182,61 @@ const ProgressBar = () => {
         ))}
         {steps.find((step) => step.id === path[path.length - 1])?.next && (
           <ProgressBarFragment />
-        )}
+        )}*/}
       </div>
     )
   );
 };
 
 export default ProgressBar;
+
+// const tmpSteps = [
+//   {
+//     id: "1",
+//     type: "main",
+//     title:
+//       "Tytuł głównego kroku 1 123 123 123 123 123 123 123 123 123 123 123 123 ",
+//     description: "Opis kroku 1 wraz z filmikami.",
+//     next: [
+//       { id: "2", choiceName: "Tak" },
+//       { id: "5", choiceName: "Nie" },
+//     ],
+//   },
+//   {
+//     id: "2",
+//     type: "main",
+//     title:
+//       "Tytuł głównego kroku 2 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123",
+//     description: "Opis kroku 2 wraz z filmikami.",
+//     next: [{ id: "3", choiceName: "Dalej" }],
+//   },
+//   {
+//     id: "3",
+//     type: "sub",
+//     title:
+//       "Tytuł podkroku 2.1 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123",
+//     description: "Opis kroku 2.1 wraz z filmikami.",
+//     next: [{ id: "4", choiceName: "Dalej" }],
+//   },
+//   {
+//     id: "4",
+//     type: "sub",
+//     title: "Tytuł podkroku 2.2",
+//     description: "Opis kroku 2.2 wraz z filmikami.",
+//     next: [{ id: "5", choiceName: "Dalej" }],
+//   },
+//   {
+//     id: "5",
+//     type: "main",
+//     title: "Tytuł głównego kroku 3",
+//     description: "Opis kroku 3 wraz z filmikami.",
+//     next: [{ id: "6", choiceName: "Dalej" }],
+//   },
+//   {
+//     id: "6",
+//     type: "sub",
+//     title: "Tytuł podkroku 3.1",
+//     description: "Opis kroku 3.1 wraz z filmikami.",
+//     next: [{ id: "1", choiceName: "początek" }],
+//   },
+// ];
