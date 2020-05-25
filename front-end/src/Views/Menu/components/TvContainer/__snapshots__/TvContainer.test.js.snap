@@ -32,6 +32,21 @@ exports[`TvContainer should render without crashing 1`] = `
         alt=""
         src="/tv.png"
       />
+      <div
+        class="tvContainer__tv__video__container"
+      >
+        <div
+          class="tvContainer__tv__video"
+        >
+          <div
+            class="tvContainer__tv__video__space"
+          >
+            <div>
+              VideoField
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

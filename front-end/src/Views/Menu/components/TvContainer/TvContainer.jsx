@@ -1,4 +1,5 @@
 import React from "react";
+import { VideoField } from "components";
 
 const TvContainer = () => {
   return (
@@ -13,6 +14,13 @@ const TvContainer = () => {
       </div>
       <div className="tvContainer__tv">
         <img alt="" src="/tv.png" />
+        <div className="tvContainer__tv__video__container">
+          <div className="tvContainer__tv__video">
+            <div className="tvContainer__tv__video__space">
+              <VideoField id="1" />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

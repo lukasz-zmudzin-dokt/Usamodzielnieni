@@ -55,6 +55,30 @@
       img {
         max-width: 1000px;
       }
+      &__video__container {
+        display: flex;
+        justify-content: center;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        .tvContainer__tv__video {
+          margin: 1rem calc(1rem + 20vw);
+          max-width: 1000px;
+          width: 100%; 
+          .tvContainer__tv__video__space {
+            padding: 7% 20% 13% 7%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            .videoField__container {
+              height: auto;
+            }
+          }
+        }
+      }
     }
   }
 
