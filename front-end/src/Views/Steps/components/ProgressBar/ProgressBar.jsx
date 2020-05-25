@@ -7,9 +7,10 @@ import { DeletionModal } from "components";
 import { staffTypes } from "constants/staffTypes";
 import { UserContext } from "context";
 import { NewStep, EditStep } from "../";
+import { getDefaultNormalizer } from "@testing-library/react";
 
-const getRoot = async () => {
-  let url = `${proxy.steps}root`; // TODO
+const getSteps = async () => {
+  let url = `${proxy.steps}`; // TODO
   const headers = {
     "Content-Type": "application/json",
   };
@@ -17,71 +18,59 @@ const getRoot = async () => {
   if (response.status !== 200) {
     throw response.status;
   }
-  return await response.json();
+  let list = await response.json();
+  list = mapSteps(list);
+
+  return list;
 };
 
-const createRoot = async (token) => {
-  let url = `${proxy.steps}root/`;
+const mapSteps = (list) => {
+  let unpacked = [];
 
-  const root = {
-    title: "Korzeń",
-    description: "Korzeń drzewa",
-  };
-
-  const headers = {
-    "Content-Type": "application/json",
-    Origin: null,
-  };
-
-  const response = await fetch(url, {
-    method: "POST",
-    headers,
-    body: JSON.stringify(root),
-  });
-
-  if (response.status !== 200) {
-    throw await response.json();
-  }
-  return await response.json();
-};
-
-const getStep = async (id) => {
-  let url = `${proxy.steps}step/${id}`; // TODO
-  const headers = {
-    "Content-Type": "application/json",
-  };
-  const response = await fetch(url, { method: "GET", headers });
-  if (response.status !== 200) {
-    throw response.status;
-  }
-  return await response.json();
-};
-
-const getChildren = async (step, mainSteps) => {
-  // console.log(step, " step ", steps, " steps ");
-  if (step.children.length > 0) {
-    const childrens = await Promise.all(
-      step.children.map((item) => getStep(item.id))
-    );
-
-    mainSteps = childrens.concat(mainSteps);
-    // childrens.forEach((item) => mainSteps.push(item));
-
-    childrens.forEach(async (item) => {
-      if (item.children.length > 0) {
-        mainSteps = await getChildren(item, mainSteps);
-      }
+  list.forEach((main) => {
+    main.type = "main";
+    unpacked.push(main);
+    main.substeps.forEach((sub) => {
+      sub.type = "sub";
+      unpacked.push(sub);
     });
-  }
-  console.log(mainSteps);
-  return mainSteps;
+  });
+  return unpacked.map((step) => {
+    return {
+      id: step.id,
+      type: step.type,
+      title: step.title,
+      description: step.description,
+      next: getNext(step, unpacked),
+    }
+  });
 };
+
+const getNext = (step, list) => {
+  let next = [];
+  if(step.type === "main") {
+    if(step.substeps.length > 0) {
+      next.push({id: step.substeps[0].id, choiceName: "Dalej"});
+    }
+    step.children.forEach((child) => {
+      next.push({id: child.id, choiceName: child.title});
+    });
+  } else {
+    let parent = list.find((s) => s.id === step.parent);
+    if(step.order + 1 < parent.substeps.length) {
+      next = [{id: parent.substeps[step.order + 1].id, choiceName: "Dalej"}];
+    } else {
+      next = getNext(parent, list);
+      next.splice(0, 1);
+    }
+  }
+  return next;
+}
 
 const ProgressBar = () => {
   const [steps, setSteps] = useState([]);
   const [root, setRoot] = useState();
-  const [path, setPath] = useState(["1"]);
-  //const [path, setPath] = useState([]);
+  const [path, setPath] = useState([]);
   const [error, setError] = useState(false);
   const [wantsDelete, setWantsDelete] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -93,17 +82,11 @@ const ProgressBar = () => {
     const loadSteps = async () => {
       let res;
       try {
-        res = await getRoot();
-        // console.log(res);
-        setRoot(res);
-        if (res) {
-          let mainSteps = [];
-          mainSteps = await getChildren(res, mainSteps);
-          console.log(mainSteps);
-          extractSteps(mainSteps);
-        } else {
-          await createRoot();
-        }
+        res = await getSteps();
+        let root = res[0];
+        res.splice(0, 1);
+        setPath([root.next[0].id]);
+        setSteps(res);
       } catch (e) {
         setError(true);
         return;
@@ -111,21 +94,10 @@ const ProgressBar = () => {
     };
 
     loadSteps();
-  }, []);
+  }, [setSteps, setPath]);
 
-  // console.log(steps);
+  console.log(steps);
 
-  const extractSteps = (steps) => {
-    let children = [];
-    steps.forEach((step) => {
-      step.type = "main";
-      step.substeps.forEach((substep) =>
-        children.push({ ...substep, type: "sub" })
-      );
-    });
-    // console.log(steps.length, children);
-    setSteps(...steps, ...children);
-  };
 
   const setCurrent = (id) => {
     const index = path.indexOf(id);
@@ -147,7 +119,8 @@ const ProgressBar = () => {
 
   if (wantsDelete) {
     let step = steps.find((s) => s.id === path[path.length - 1]);
-    deleteStep(steps, step, setSteps);
+    //deleteStep(steps, step, setSteps);
+    res = await fetch(`https://usamo-back.herokuapp.com/steps/step/${id}/delete/`, {});
     setWantsDelete(false);
     let newPath = path;
     newPath.pop();
@@ -157,7 +130,7 @@ const ProgressBar = () => {
   return (
     msg || (
       <div>
-        {/* <DeletionModal
+        <DeletionModal
           show={showModal}
           setShow={setShowModal}
           delConfirmed={setWantsDelete}
@@ -171,7 +144,7 @@ const ProgressBar = () => {
                 Dodaj nowy krok
               </Button>
             </div>
-            <NewStep
+            {/*<NewStep
               steps={steps}
               show={showNew}
               handleClose={() => setShowNew(false)}
@@ -181,7 +154,7 @@ const ProgressBar = () => {
               step={steps.find((item) => item.id === path[path.length - 1])}
               show={showEdit}
               handleClose={() => setShowEdit(false)}
-            />
+            />*/}
           </>
         ) : null}
         {path.map((stepId, i) => (
@@ -197,61 +170,10 @@ const ProgressBar = () => {
         ))}
         {steps.find((step) => step.id === path[path.length - 1])?.next && (
           <ProgressBarFragment />
-        )}*/}
+        )}
       </div>
     )
   );
 };
 
 export default ProgressBar;
-
-// const tmpSteps = [
-//   {
-//     id: "1",
-//     type: "main",
-//     title:
-//       "Tytuł głównego kroku 1 123 123 123 123 123 123 123 123 123 123 123 123 ",
-//     description: "Opis kroku 1 wraz z filmikami.",
-//     next: [
-//       { id: "2", choiceName: "Tak" },
-//       { id: "5", choiceName: "Nie" },
-//     ],
-//   },
-//   {
-//     id: "2",
-//     type: "main",
-//     title:
-//       "Tytuł głównego kroku 2 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123",
-//     description: "Opis kroku 2 wraz z filmikami.",
-//     next: [{ id: "3", choiceName: "Dalej" }],
-//   },
-//   {
-//     id: "3",
-//     type: "sub",
-//     title:
-//       "Tytuł podkroku 2.1 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123",
-//     description: "Opis kroku 2.1 wraz z filmikami.",
-//     next: [{ id: "4", choiceName: "Dalej" }],
-//   },
-//   {
-//     id: "4",
-//     type: "sub",
-//     title: "Tytuł podkroku 2.2",
-//     description: "Opis kroku 2.2 wraz z filmikami.",
-//     next: [{ id: "5", choiceName: "Dalej" }],
-//   },
-//   {
-//     id: "5",
-//     type: "main",
-//     title: "Tytuł głównego kroku 3",
-//     description: "Opis kroku 3 wraz z filmikami.",
-//     next: [{ id: "6", choiceName: "Dalej" }],
-//   },
-//   {
-//     id: "6",
-//     type: "sub",
-//     title: "Tytuł podkroku 3.1",
-//     description: "Opis kroku 3.1 wraz z filmikami.",
-//     next: [{ id: "1", choiceName: "początek" }],
-//   },
-// ];
