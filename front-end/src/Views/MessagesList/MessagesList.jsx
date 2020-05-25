@@ -64,11 +64,10 @@ const sendMessage = async (
   });
   setData(newData);
 
-  console.log(newData);
   socket.current.send(JSON.stringify(message));
 
   socket.current.onerror = (e) => {
-    console.log(e);
+    alertC.current.showAlert("Wystąpił błąd.");
   };
 };
 
@@ -76,7 +75,6 @@ const MessagesList = () => {
   const [data, setData] = useState([]);
   const user = useContext(UserContext);
   const alertC = useRef(useContext(AlertContext));
-  const [contact, setContact] = useState("");
   const history = useHistory();
   const { id } = useParams();
   const messagesEl = useRef(null);
@@ -99,9 +97,19 @@ const MessagesList = () => {
     [user.data.username]
   );
 
-  useEffect(() => {
-    // zmienić date
+  const mapAnswer = useCallback(
+    (answer) => {
+      return {
+        content: answer.message,
+        side: answer.username === user.data.username ? "right" : "left",
+        send: answer.timestamp,
+        id: answer.timestamp,
+      };
+    },
+    [user.data.username]
+  );
 
+  useEffect(() => {
     const loadMessages = async (token, id) => {
       let res;
       try {
@@ -128,16 +136,14 @@ const MessagesList = () => {
         socket.current = new WebSocket(url, user.token);
         socket.current.onopen = (e) => console.log("onopen", e);
         socket.current.onmessage = (object) => {
-          setData([...data, mapRes(JSON.parse(object))]);
+          setData([...data, mapAnswer(JSON.parse(JSON.parse(object.data)))]);
         };
         socket.current.onclose = (e) => console.log("koniec", e);
       } catch (e) {
         console.log(e);
       }
     }
-  }, [data, id, mapRes, user.token, user.type]);
-
-  //console.log(data);
+  }, [data, id, mapAnswer, mapRes, user.token, user.type]);
 
   return (
     <Container className="messagesList">
@@ -160,7 +166,6 @@ const MessagesList = () => {
             ))}
           </ListGroup>
         </Card.Body>
-        {/*<ChatForm sendMessage={msg => console.log(msg)}/>*/}
         <ChatForm
           sendMessage={(msg) =>
             sendMessage(
