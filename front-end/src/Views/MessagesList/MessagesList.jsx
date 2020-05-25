@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
+import React, {
+  useState,
+  useEffect,
+  useContext,
+  useRef,
+  useCallback,
+} from "react";
 import { ListGroup, Container, Card, Button } from "react-bootstrap";
 import MessageItem from "./components/MessageItem";
 import { ChatForm } from "./components";
@@ -54,7 +60,7 @@ const sendMessage = async (
     content: msg,
     send: date,
     side: "right",
-    id: 0, //odpowiednie id
+    id,
   });
   setData(newData);
 
@@ -80,8 +86,8 @@ const MessagesList = () => {
     history.push("/chats");
   };
 
-  useEffect(() => {
-    const mapRes = (res) => {
+  const mapRes = useCallback(
+    (res) => {
       const array = res.map((item) => ({
         content: item.message,
         side: item.user.username === user.data.username ? "right" : "left",
@@ -89,13 +95,17 @@ const MessagesList = () => {
         id: item.timestamp,
       }));
       return array;
-    };
+    },
+    [user.data.username]
+  );
+
+  useEffect(() => {
+    // zmienić date
+
     const loadMessages = async (token, id) => {
       let res;
       try {
         res = await getMessages(token, id);
-        console.log(res);
-        console.log(mapRes(res));
         setData(mapRes(res));
       } catch (e) {
         console.log(e);
@@ -105,7 +115,7 @@ const MessagesList = () => {
     };
     loadMessages(user.token, id);
     messagesEl.current.scrollTop = messagesEl.current.scrollHeight;
-  }, [id, user.data.username, user.token]);
+  }, [id, mapRes, user.data.username, user.token]);
 
   useEffect(() => {
     if (socket.current) {
@@ -118,14 +128,14 @@ const MessagesList = () => {
         socket.current = new WebSocket(url, user.token);
         socket.current.onopen = (e) => console.log("onopen", e);
         socket.current.onmessage = (object) => {
-          console.log("Server: " + object);
+          setData([...data, mapRes(JSON.parse(object))]);
         };
         socket.current.onclose = (e) => console.log("koniec", e);
       } catch (e) {
         console.log(e);
       }
     }
-  }, [id, user.token, user.type]);
+  }, [data, id, mapRes, user.token, user.type]);
 
   //console.log(data);
 
@@ -155,7 +165,7 @@ const MessagesList = () => {
           sendMessage={(msg) =>
             sendMessage(
               user.token,
-              id,
+              data.length,
               msg,
               data,
               setData,
