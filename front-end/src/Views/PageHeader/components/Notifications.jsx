@@ -1,131 +1,59 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Nav, Dropdown, Col } from "react-bootstrap";
 import NotificationItemContainer from "./NotificationItemContainer";
 import NotificationItem from "./NotificationItem";
 import NotificationToggle from "./NotificationToggle";
-import proxy from "config/api";
+import { NotificationsContext } from "context";
 
-const getNotifications = async (token) => {
-  let url = proxy.notifications + ".../"; // TODO
-  const headers = {
-    Authorization: "Token " + token,
-    "Content-Type": "application/json",
-  };
-
-  const response = await fetch(url, { method: "GET", headers });
-
-  if (response.status === 200) {
-    return response
-      .json()
-      .then((notifications) => mapNotifications(notifications));
-  } else {
-    throw response.status;
-  }
-};
-
-const mapNotifications = (notifications) =>
-  notifications.map((not) => ({
-    id: not.id,
-    path: getPath(not.type),
-    title: not.title,
-    time: new Date(not.time),
-    // TODO
-  }));
-
-const getPath = (type) => {
-  switch (type) {
-    case "cv":
-      return "/cvEditor";
-    case "jobs":
-      return "/";
-    default:
-      return "/";
-  }
-};
-
-const deleteNotification = async (id, token) => {
-  let url = proxy.notifications + ".../"; // TODO
-  const headers = {
-    Authorization: "Token " + token,
-    "Content-Type": "application/json",
-  };
-
-  const response = await fetch(url, {
-    method: "DELETE",
-    body: {
-      notifications: { id },
-    },
-    headers,
-  });
-
-  if (response.status === 200) {
-    return response.status;
-  } else {
-    throw response.status;
-  }
-};
-const deleteNotifications = async (notifications, token) => {
-  await Promise.all(
-    notifications.map(async (not) => {
-      try {
-        await deleteNotification(not, token);
-      } catch (e) {
-        console.log(e);
-      }
-    })
-  );
-};
-
-const Notifications = ({ location, token, ...rest }) => {
-  const [notifications, setNotifications] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+const Notifications = ({ location, ...rest }) => {
+  const [show, setShow] = useState(false);
+  const notificationsContext = useContext(NotificationsContext);
+  const { notifications, count, error } = notificationsContext;
 
   useEffect(() => {
-    const loadNotifications = async (token) => {
-      setIsLoading(true);
-      let loadedNotifications;
-      try {
-        loadedNotifications = await getNotifications(token);
-      } catch {
-        loadedNotifications = [];
-      }
-      setNotifications(loadedNotifications);
-      setIsLoading(false);
-    };
-    loadNotifications(token);
-  }, [token]);
+    if (notifications) {
+      const toRemove = notifications.filter(
+        (notification) => notification.path === location.pathname
+      );
+      toRemove.forEach((notification) => {
+        notificationsContext.deleteNotification(notification.id);
+      });
+    }
+  }, [notificationsContext, notifications, location.pathname]);
 
-  const toRemove = notifications.filter(
-    (not) => not.path === location.pathname
-  );
-  if (toRemove.length) {
-    setNotifications(
-      notifications.filter((not) => not.path !== location.pathname)
-    );
-    deleteNotifications(toRemove, token);
-  }
-
-  const clearNotifications = (e) => {
-    setNotifications([]);
-    deleteNotifications(notifications, token);
+  const clearNotifications = async () => {
+    setShow("prevent");
+    await notificationsContext.deleteNotifications();
   };
 
-  const removeNotification = (id) => {
-    setNotifications(notifications.filter((not) => not.id !== id));
-    deleteNotifications(
-      notifications.filter((not) => not.id === id),
-      token
-    );
+  const removeNotification = async (id) => {
+    await notificationsContext.deleteNotification(id);
+  };
+
+  const onToggle = async (isOpen) => {
+    setShow((prev) => (prev !== "prevent" ? isOpen : true));
+    if (isOpen && count) {
+      await notificationsContext.markAsRead();
+    }
+  };
+
+  const loadMoreNotifications = async () => {
+    setShow("prevent");
+    await notificationsContext.loadMoreNotifications();
   };
 
   return (
-    <Dropdown as={Nav.Item} {...rest}>
+    <Dropdown as={Nav.Item} show={show} onToggle={onToggle} {...rest}>
       <Dropdown.Toggle
         as={NotificationToggle}
-        count={isLoading ? 0 : notifications.length}
+        count={notifications === null || error ? 0 : count}
       />
-      <Dropdown.Menu data-testid="dropdownMenu">
-        {isLoading ? (
+      <Dropdown.Menu data-testid="dropdownMenu" className="notifications">
+        {error ? (
+          <Dropdown.Item disabled="true">
+            Wystąpił błąd w trakcie ładowania powiadomień
+          </Dropdown.Item>
+        ) : notifications === null ? (
           <Dropdown.Item disabled="true">Ładowanie...</Dropdown.Item>
         ) : (
           <>
@@ -148,6 +76,15 @@ const Notifications = ({ location, token, ...rest }) => {
                     />
                   </NotificationItemContainer>
                 ))}
+                {notificationsContext.next !== undefined && (
+                  <Dropdown.Item
+                    key="loadButton"
+                    onClick={loadMoreNotifications}
+                    disabled={notificationsContext.next === null}
+                  >
+                    Załaduj kolejne
+                  </Dropdown.Item>
+                )}
               </div>
             )}
             <Dropdown.Divider />

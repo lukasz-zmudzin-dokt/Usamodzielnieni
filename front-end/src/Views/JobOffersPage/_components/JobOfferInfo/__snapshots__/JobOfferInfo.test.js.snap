@@ -15,7 +15,7 @@ exports[`JobOfferInfo should render without crashing 1`] = `
         class="row"
       >
         <div
-          class="detailsItem col-xl-3 col-md-4"
+          class="detailsItem col-xl-3 col-md-3"
         >
           <div
             class="detailsItem__label"
@@ -29,7 +29,7 @@ exports[`JobOfferInfo should render without crashing 1`] = `
           </div>
         </div>
         <div
-          class="detailsItem col-xl-3 col-md-4"
+          class="detailsItem col-xl-3 col-md-3"
         >
           <div
             class="detailsItem__label"
@@ -43,7 +43,7 @@ exports[`JobOfferInfo should render without crashing 1`] = `
           </div>
         </div>
         <div
-          class="detailsItem col-xl-3 col-md-4"
+          class="detailsItem col-xl-3 col-md-3"
         >
           <div
             class="detailsItem__label"

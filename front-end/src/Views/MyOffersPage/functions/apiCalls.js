@@ -70,3 +70,19 @@ export const setUnreadStatus = async (token, offerPersonId) => {
     throw response.status;
   }
 };
+
+export const getZipUrl = async (token, offerId) => {
+  let url = proxy.job + `employer/application_list/zip/${offerId}/`;
+
+  const headers = {
+    Authorization: "token " + token,
+    "Content-Type": "application/json",
+  };
+
+  const response = await fetch(url, { method: "GET", headers });
+  if (response.status === 200) {
+    return await response.json();
+  } else {
+    throw response.status;
+  }
+};

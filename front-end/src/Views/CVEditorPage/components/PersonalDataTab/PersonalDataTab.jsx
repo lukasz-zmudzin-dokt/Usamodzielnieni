@@ -37,11 +37,14 @@ class PersonalDataTab extends React.Component {
       <CVEditorTab
         title="Dane osobowe"
         movie={movie_1}
+        video={this.props.video}
         onNextClick={this.props.onNextClick}
         comments={this.props.comments}
         loading={this.props.loading}
         error={this.props.error}
         showComments={this.props.showComments}
+        errVid={this.props.errVid}
+        formTab={this.props.formTab}
       >
         <Form ref={this.props.refValue} noValidate validated={validated}>
           <Row>
