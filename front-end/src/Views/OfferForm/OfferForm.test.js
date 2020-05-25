@@ -23,6 +23,7 @@ const reactRouterDom = require("react-router-dom");
 
 const renderWithRouter = (
   ui,
+  contextA,
   {
     route = "/offerForm",
     history = createMemoryHistory({ initialEntries: [route] }),
@@ -39,13 +40,6 @@ const renderWithRouter = (
         postal_code: "00-000",
       },
     },
-  };
-  let contextA = {
-    open: true,
-    changeVisibility: jest.fn(),
-    message: "abc",
-    changeMessage: jest.fn(),
-    showAlert: jest.fn(),
   };
   return {
     ...render(
@@ -84,6 +78,7 @@ describe("OfferForm", () => {
     type: "IT",
     salary_min: "1",
     salary_max: "420",
+    offer_image: null,
   };
   beforeAll(() => {
     global.fetch = jest.fn().mockImplementation((input, init) => {
@@ -97,7 +92,17 @@ describe("OfferForm", () => {
             break;
           case "POST":
             if (failPost) resolve({ status: 500 });
-            else resolve({ status: 200 });
+            else if (input === `${proxy.job}job-offer/abc/image/`) {
+              resolve({
+                status: 200,
+              });
+            } else {
+              resolve({
+                status: 200,
+                json: () => Promise.resolve({ offer_id: "abc" }),
+              });
+            }
+
             break;
           case "GET":
             if (proxy.job + "job-offer/abc/" === input && failOffer) {
@@ -250,7 +255,7 @@ describe("OfferForm", () => {
       getByLabelText,
       getByPlaceholderText,
       getByText,
-    } = renderWithRouter(<OfferForm />);
+    } = renderWithRouter(<OfferForm />, contextA);
 
     await waitForElement(() => getByText("Dodaj"));
 
@@ -293,7 +298,12 @@ describe("OfferForm", () => {
     ).toBe(false);
     expect(fetch).toHaveBeenCalledTimes(3);
 
-    expect(history.location.pathname).toEqual("/myOffers");
+    expect(contextA.showAlert).toHaveBeenCalledWith(
+      "Przesłano ofertę",
+      "success"
+    );
+
+    expect(history.location.pathname).toEqual("/jobOffers/abc");
   });
 
   it("should redirect when offer id isnt valid", async () => {
@@ -301,7 +311,7 @@ describe("OfferForm", () => {
     reactRouterDom.useParams = () => ({
       id: "abc",
     });
-    const { history, getByText } = renderWithRouter(<OfferForm />, {
+    const { history, getByText } = renderWithRouter(<OfferForm />, contextA, {
       route: "/offerForm/abc",
     });
 
@@ -371,7 +381,7 @@ describe("OfferForm", () => {
       getByPlaceholderText,
       getByLabelText,
       getByText,
-    } = renderWithRouter(<OfferForm />, {
+    } = renderWithRouter(<OfferForm />, contextA, {
       route: "/offerForm/abc",
     });
 
@@ -403,6 +413,7 @@ describe("OfferForm", () => {
     });
     const { getByPlaceholderText, history, getByText } = renderWithRouter(
       <OfferForm />,
+      contextA,
       {
         route: "/offerForm/abc",
       }
@@ -426,10 +437,73 @@ describe("OfferForm", () => {
 
     fireEvent.click(getByText("Dodaj"));
 
+    await wait(() =>
+      expect(contextA.showAlert).toHaveBeenCalledWith("Przesłano ofertę")
+    );
+
+    expect(history.location.pathname).toEqual("/myOffers");
+  });
+
+  it("should redirect when offer is sent(with photo)", async () => {
+    // jest.resetModules();
+
+    const {
+      history,
+      getByLabelText,
+      getByPlaceholderText,
+      getByText,
+    } = renderWithRouter(<OfferForm />, contextA);
+
+    await waitForElement(() => getByText("Dodaj"));
+
+    fireEvent.change(getByPlaceholderText("Nazwa stanowiska"), {
+      target: { value: "abcd" },
+    });
+    fireEvent.change(getByLabelText("Województwo"), {
+      target: { value: "lubelskie" },
+    });
+    fireEvent.change(getByLabelText("Opis stanowiska"), {
+      target: { value: "abcd" },
+    });
+    fireEvent.change(getByLabelText("Branża"), {
+      target: { value: "xd" },
+    });
+    fireEvent.change(getByLabelText("Wymiar pracy"), {
+      target: { value: "IT" },
+    });
+    fireEvent.change(getByLabelText("Ważne do"), {
+      target: {
+        value: new Date("2024-12-04"),
+      },
+    });
+    fireEvent.change(getByPlaceholderText("Wynagrodzenie od (zł / miesiąc)"), {
+      target: { value: 1 },
+    });
+    fireEvent.change(getByPlaceholderText("Wynagrodzenie do (zł / miesiąc)"), {
+      target: { value: 420 },
+    });
+    fireEvent.change(getByLabelText("Zdjęcie"), {
+      target: {
+        files: [{ name: "dummyValue.something" }],
+      },
+    });
+
+    fireEvent.click(getByText("Dodaj"));
+
     await wait(() => {
       expect(fetch).toHaveBeenCalled();
     });
 
-    expect(history.location.pathname).toEqual("/myOffers");
+    expect(
+      getByPlaceholderText("Wynagrodzenie do (zł / miesiąc)").validity
+        .stepMismatch
+    ).toBe(false);
+    await wait(() => expect(fetch).toHaveBeenCalledTimes(4));
+    expect(contextA.showAlert).toHaveBeenCalledWith(
+      "Przesłano ofertę",
+      "success"
+    );
+
+    expect(history.location.pathname).toEqual("/jobOffers/abc");
   });
 });
