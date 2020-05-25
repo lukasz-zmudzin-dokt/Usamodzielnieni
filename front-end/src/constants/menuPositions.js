@@ -6,11 +6,7 @@ export default [
   {
     name: "Kreator CV",
     path: paths.CV_CREATOR,
-<<<<<<< HEAD
-    allowed: [userTypes.STANDARD, staffTypes.GUEST],
-=======
-    allowed: [userTypes.STANDARD, staffTypes.BLOG_MODERATOR],
->>>>>>> master
+    allowed: [userTypes.STANDARD, staffTypes.BLOG_MODERATOR, staffTypes.GUEST],
     verified: true,
   },
   {
