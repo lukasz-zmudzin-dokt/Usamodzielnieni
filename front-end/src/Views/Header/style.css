@@ -123,11 +123,16 @@
     border-radius: 0 !important;
     box-shadow: none !important;
     width: 100%;
+    border: none;
   }
   .notifications-button:focus {
     background-color: #ff884d !important;
   }
   .notifications-button:hover {
     background-color: #ff884d !important;
+  }
+  .notifications {
+    border-radius: 0;
+    text-align: center;
   }
 }
