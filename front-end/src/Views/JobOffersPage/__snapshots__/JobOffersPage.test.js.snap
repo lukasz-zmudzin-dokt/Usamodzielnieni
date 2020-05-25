@@ -583,7 +583,7 @@ exports[`JobOffersPage main component tests should render without crashing 1`] =
                 class="row"
               >
                 <div
-                  class="detailsItem col-xl-3 col-md-4"
+                  class="detailsItem col-xl-3 col-md-3"
                 >
                   <div
                     class="detailsItem__label"
@@ -597,7 +597,7 @@ exports[`JobOffersPage main component tests should render without crashing 1`] =
                   </div>
                 </div>
                 <div
-                  class="detailsItem col-xl-3 col-md-4"
+                  class="detailsItem col-xl-3 col-md-3"
                 >
                   <div
                     class="detailsItem__label"
@@ -611,7 +611,7 @@ exports[`JobOffersPage main component tests should render without crashing 1`] =
                   </div>
                 </div>
                 <div
-                  class="detailsItem col-xl-3 col-md-4"
+                  class="detailsItem col-xl-3 col-md-3"
                 >
                   <div
                     class="detailsItem__label"
@@ -639,7 +639,7 @@ exports[`JobOffersPage main component tests should render without crashing 1`] =
         class="card-body"
       >
         <ul
-          class="offersPagination mb-0 justify-content-center pagination"
+          class="offersPagination mb-0 my-3 justify-content-center pagination"
         >
           <li
             class="page-item disabled"

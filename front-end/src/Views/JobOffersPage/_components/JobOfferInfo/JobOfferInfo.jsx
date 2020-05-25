@@ -2,6 +2,7 @@ import React from "react";
 import { Row, Col, Button } from "react-bootstrap";
 import { IndexLinkContainer } from "react-router-bootstrap";
 import { DetailsItem } from "components";
+import proxy from "config/api";
 
 const JobOfferInfo = ({ context, offer, ...rest }) => {
   return (
@@ -9,13 +10,22 @@ const JobOfferInfo = ({ context, offer, ...rest }) => {
       <Col>
         <h5>{offer.title}</h5>
         <Row>
-          <DetailsItem md="4" xl="3" label="Nazwa firmy">
+          {offer.companyLogo ? (
+            <DetailsItem md="3" xl="3" label="Logo firmy">
+              <img
+                className="JobOffer__logo"
+                src={`${proxy.plain}${offer.companyLogo}`}
+                alt="Logo firmy"
+              />
+            </DetailsItem>
+          ) : null}
+          <DetailsItem md="3" xl="3" label="Nazwa firmy">
             {offer.companyName}
           </DetailsItem>
-          <DetailsItem md="4" xl="3" label="Lokalizacja">
+          <DetailsItem md="3" xl="3" label="Lokalizacja">
             {offer.voivodeship}
           </DetailsItem>
-          <DetailsItem md="4" xl="3" label="Ważne do">
+          <DetailsItem md="3" xl="3" label="Ważne do">
             {new Date(offer.expirationDate).toLocaleDateString(undefined, {})}
           </DetailsItem>
         </Row>
