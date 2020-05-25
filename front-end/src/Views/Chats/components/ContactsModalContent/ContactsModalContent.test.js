@@ -7,11 +7,7 @@ import { UserContext, AlertContext } from "context";
 
 jest.mock("./Contact/Contact");
 
-const renderWithRouter = (
-  ui,
-  contextA,
-  {} = {}
-) => {
+const renderWithRouter = (ui, contextA, {} = {}) => {
   let context = {
     token: 123,
     data: {
@@ -31,7 +27,7 @@ const renderWithRouter = (
           <Router>{ui}</Router>
         </AlertContext.Provider>
       </UserContext.Provider>
-    )
+    ),
   };
 };
 
@@ -44,7 +40,8 @@ describe("ContactsModalContent", () => {
   beforeAll(() => {
     Contact.mockImplementation(({ contact }) => (
       <div>
-        {contact.first_name} {contact.last_name} {contact.role} {contact.username}
+        {contact.first_name} {contact.last_name} {contact.role}{" "}
+        {contact.username}
       </div>
     ));
     global.fetch = jest.fn().mockImplementation((input, init) => {
