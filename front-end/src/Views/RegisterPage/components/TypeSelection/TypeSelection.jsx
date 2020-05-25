@@ -37,7 +37,6 @@ const onChange = (e, cutType, selectType, current) => {
       selectType(e);
     }
   }
-  console.log(current);
 };
 
 const renderAdmin = (selectType, cutType, current) => (

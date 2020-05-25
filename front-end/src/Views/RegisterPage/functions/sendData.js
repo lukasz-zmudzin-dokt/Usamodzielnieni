@@ -63,7 +63,6 @@ export const sendData = async (token, source) => {
     ...source.accountData,
     ...adjustObject(account_type, source.homeData, source.companyData),
   };
-  console.log(object);
   const header =
     token !== undefined
       ? {
