@@ -4,5 +4,5 @@ export const staffTypes = {
   JOBS: "staff_jobs",
   BLOG_CREATOR: "staff_blog_creator",
   BLOG_MODERATOR: "staff_blog_moderator",
-  STAFF_CHAT: "staff_chat_access",
+  CHAT: "staff_chat_access",
 };
