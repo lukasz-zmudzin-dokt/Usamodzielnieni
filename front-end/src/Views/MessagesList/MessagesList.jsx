@@ -12,7 +12,7 @@ const getMessages = async (token, id) => {
     Authorization: "Token " + token,
     "Content-Type": "application/json",
   };
-  const url = `${proxy.chat}/messages/${id}`;
+  const url = `${proxy.chat}${id}`;
   const response = await fetch(url, { method: "GET", headers });
 
   if (response.status === 200) {
@@ -22,63 +22,106 @@ const getMessages = async (token, id) => {
   }
 };
 
-const sendMessage = async (token, id, msg, data, setData, alertC) => {
-  const url = proxy.chat + `${id}/`;
-  const headers = {
-    Authorization: "token " + token,
-    "Content-Type": "application/json",
+const sendMessage = async (
+  token,
+  id,
+  msg,
+  data,
+  setData,
+  alertC,
+  socket,
+  user
+) => {
+  console.log(user);
+  const { username, first_name, last_name } = user.data;
+  const message = {
+    user: {
+      username,
+      first_name,
+      last_name,
+    },
+    message: msg,
+    timestamp: new Date(),
   };
-  const response = await fetch(url, { method: "POST", body: msg, headers });
-  //const response = {status: 200};
+  let newData = data.slice();
+  const now = new Date();
+  const date = `${now.getHours()}:${
+    now.getMinutes() < 10 ? "0" : ""
+  }${now.getMinutes()} ${now.getDate()}.${
+    now.getMonth() < 10 ? "0" : ""
+  }${now.getMonth()}.${now.getFullYear()}`;
+  newData.push({
+    content: msg,
+    send: date,
+    side: "right",
+    id: 0, //odpowiednie id
+  });
+  setData(newData);
 
-  if (response.status === 200) {
-    let newData = data.slice();
-    const now = new Date();
-    const date = `${now.getHours()}:${
-      now.getMinutes() < 10 ? "0" : ""
-    }${now.getMinutes()} ${now.getDate()}.${
-      now.getMonth() < 10 ? "0" : ""
-    }${now.getMonth()}.${now.getFullYear()}`;
-    newData.push({
-      content: msg,
-      send: date,
-      side: "right",
-      id: 0, //odpowiednie id
-    });
-    setData(newData);
-  } else {
-    alertC.current.showAlert("Nie udało się wysłać wiadomości.");
-    throw response.status;
-  }
+  console.log(newData);
+  socket.current.send(JSON.stringify(message));
+
+  socket.current.onerror = (e) => {
+    console.log(e);
+  };
 };
 
 const MessagesList = () => {
   const [data, setData] = useState([]);
   const user = useContext(UserContext);
   const alertC = useRef(useContext(AlertContext));
+  const [contact, setContact] = useState("");
   const history = useHistory();
   const { id } = useParams();
   const messagesEl = useRef(null);
+  const socket = useRef(null);
 
   const backToChats = () => {
     history.push("/chats");
   };
 
   useEffect(() => {
+    const mapRes = (res) => {
+      const array = res.map((item) => ({
+        content: item.message,
+        side: item.user.username === user.data.username ? "right" : "left",
+        send: item.timestamp,
+      }));
+      return array;
+    };
     const loadMessages = async (token, id) => {
       let res;
       try {
         res = await getMessages(token, id);
+        console.log(res);
+        console.log(mapRes(res));
+        setData(mapRes(res));
       } catch (e) {
         console.log(e);
         alertC.current.showAlert("Nie udało się załadować wiadomości.");
         res = [];
       }
-      setData(res);
     };
     loadMessages(user.token, id);
     messagesEl.current.scrollTop = messagesEl.current.scrollHeight;
-  }, [id, user.token]);
+  }, [id, user.data.username, user.token]);
+
+  useEffect(() => {
+    if (socket.current) {
+      socket.current.close();
+      socket.current = null;
+    }
+    if (user.token && user.type) {
+      const url = proxy.wsChat + id + "/";
+      try {
+        socket.current = new WebSocket(url, user.token);
+        socket.current.onopen = (e) => console.log("onopen", e);
+        socket.current.onclose = (e) => console.log("koniec", e);
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  }, [id, user.token, user.type]);
 
   //console.log(data);
 
@@ -106,7 +149,16 @@ const MessagesList = () => {
         {/*<ChatForm sendMessage={msg => console.log(msg)}/>*/}
         <ChatForm
           sendMessage={(msg) =>
-            sendMessage(user.token, id, msg, data, setData, alertC)
+            sendMessage(
+              user.token,
+              id,
+              msg,
+              data,
+              setData,
+              alertC,
+              socket,
+              user
+            )
           }
         />
       </Card>
