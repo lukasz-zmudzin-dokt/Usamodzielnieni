@@ -30,12 +30,11 @@ const adjustObject = (account_type, home, company, role) => {
       };
     }
     default:
-      if(role !== null) {
+      if (role !== null) {
         return { group_type: account_type, role: role };
       } else {
         return { group_type: account_type };
       }
-
   }
 };
 
