@@ -12,11 +12,15 @@ import Alert from "react-bootstrap/Alert";
 const Header = () => {
     const context = useContext(UserContext);
     const [isOpen, setIsOpen] = useState(false);
+    const [isOpenNotifications, setIsOpenNotifications] = useState(false);
     const [logout, setLogout] = useState(false);
     const [error, setError] = useState(false);
 
     const handleOpen = () => { setIsOpen(true); };
     const handleClose = () => { setIsOpen(false); };
+    const handleOpenNotifications = () => { setIsOpenNotifications(true); };
+    const handleCloseNotifications = () => { setIsOpenNotifications(false); };
+
     const handleLogout = async () => {
         try {
             await logoutUser(context.token);
@@ -109,7 +113,14 @@ console.log(context);
         </Nav>
     ) : (
         <Nav>
-            <Nav.Link className="navbar-right-button notification-color">POWIADOMIENIA</Nav.Link>
+            {/*<Nav.Link className="navbar-right-button notification-color">POWIADOMIENIA</Nav.Link>*/}
+            <NavDropdown id={"myNotificationsDropdown"} title={<span className="white">POWIADOMIENIA</span>} className="navbar-right-button notification-color"
+                         onMouseEnter = { handleOpenNotifications }
+                         onMouseLeave = { handleCloseNotifications }
+                         show={ isOpenNotifications }
+            >
+            {/*    NOTYFIKACJE    */}
+            </NavDropdown>
             <NavDropdown id={"myAccDropdown"} title={<span className="white">MOJE KONTO</span>} className="navbar-right-button register-color"
                          onMouseEnter = { handleOpen }
                          onMouseLeave = { handleClose }

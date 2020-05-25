@@ -145,6 +145,7 @@ describe('Header', () => {
         fireEvent.click(getByText("WYLOGUJ"));
         expect(fetch).toHaveBeenCalled();
     });
+
     it('should logout user - error', async () => {
         fetchCheck = "fail";
         const { getByText } = render (
