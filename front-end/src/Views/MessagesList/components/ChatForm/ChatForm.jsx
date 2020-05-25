@@ -26,9 +26,10 @@ const ChatForm = ({ sendMessage }) => {
   const [message, setMessage] = useState("");
 
   return (
-    <Form onSubmit={(e) => handleSubmit(e)}>
+    <Form onSubmit={(e) => handleSubmit(e)} className="m-3">
       <InputGroup className="mb-3">
         <FormControl
+          className="overflow-auto"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           onKeyDown={(e) => keyPressed(e)}

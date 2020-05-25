@@ -86,12 +86,15 @@ const MessagesList = () => {
 
   const mapRes = useCallback(
     (res) => {
-      const array = res.map((item) => ({
-        content: item.message,
-        side: item.user.username === user.data.username ? "right" : "left",
-        send: item.timestamp,
-        id: item.timestamp,
-      }));
+      const array = res.map((item) => {
+        const time = new Date(item.timestamp);
+        return {
+          content: item.message,
+          side: item.user.username === user.data.username ? "right" : "left",
+          send: time.toLocaleString(),
+          id: item.timestamp,
+        };
+      });
       return array;
     },
     [user.data.username]
