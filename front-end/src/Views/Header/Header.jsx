@@ -83,7 +83,7 @@ const Header = () => {
       id: 4,
       link: paths.CHATS,
       name: "CZAT",
-      group_type: staffTypes.STAFF_CHAT,
+      group_type: staffTypes.CHAT,
     },
   ];
 
@@ -142,7 +142,7 @@ const Header = () => {
         <Notifications location={useLocation} token={context.token} />
         <NavDropdown
           id={"myAccDropdown"}
-          title={<span className="white">MOJE KONTO</span>}
+          title={<span className="white" onClick={isOpen ? handleClose : handleOpen}>MOJE KONTO</span>}
           className="navbar-right-button register-color"
           onMouseEnter={handleOpen}
           onMouseLeave={handleClose}
