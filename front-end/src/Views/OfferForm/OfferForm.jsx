@@ -13,7 +13,7 @@ import { UserContext, AlertContext } from "context";
 import polish from "date-fns/locale/pl";
 import { useHistory, useParams } from "react-router-dom";
 import { addressToString } from "utils/converters";
-import {staffTypes} from "constants/staffTypes";
+import { staffTypes } from "constants/staffTypes";
 
 registerLocale("pl", polish);
 
@@ -256,7 +256,8 @@ const OfferForm = () => {
                 className=""
                 data-testid="submitBtn"
                 disabled={
-                  context.data.group_type?.includes(staffTypes.GUEST) || disabled
+                  context.data.group_type?.includes(staffTypes.GUEST) ||
+                  disabled
                 }
               >
                 {disabled ? "Ładowanie..." : "Dodaj"}

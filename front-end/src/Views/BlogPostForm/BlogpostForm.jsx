@@ -17,7 +17,7 @@ import { convertToRaw } from "draft-js";
 import { Redirect } from "react-router-dom";
 import EditorForm from "./components/EditorForm";
 import { withAlertContext } from "components";
-import {staffTypes} from "constants/staffTypes";
+import { staffTypes } from "constants/staffTypes";
 
 class BlogPostForm extends React.Component {
   constructor(props) {
@@ -276,9 +276,7 @@ class BlogPostForm extends React.Component {
               size="lg"
               onClick={this.submitPost}
               block
-              disabled={
-                this.context.data.group_type.includes(staffTypes.GUEST)
-              }
+              disabled={this.context.data.group_type.includes(staffTypes.GUEST)}
             >
               Opublikuj
             </Button>
