@@ -43,10 +43,10 @@ const VideoField = ({ id, videoItem, errVid, activeTab }) => {
       setLoading(false);
       setErr(true);
     }
-    if (activeTab.active !== activeTab.your && player.current !== null) {
+    if (activeTab?.active !== activeTab?.your && player.current !== null) {
       player.current.resetPlayer();
     }
-  }, [activeTab.active, activeTab.your, errVid, id, user.token, videoItem]);
+  }, [activeTab, errVid, id, user.token, videoItem]);
 
   const opts = {
     height: "100%",
