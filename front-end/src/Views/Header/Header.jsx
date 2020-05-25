@@ -10,7 +10,7 @@ import menu from "assets/hamburger-menu-icon.svg";
 import Alert from "react-bootstrap/Alert";
 import Notifications from "./components/Notifications";
 import { paths } from "constants/paths";
-import {staffTypes} from "constants/staffTypes";
+import { staffTypes } from "constants/staffTypes";
 
 const Header = () => {
   const context = useContext(UserContext);
