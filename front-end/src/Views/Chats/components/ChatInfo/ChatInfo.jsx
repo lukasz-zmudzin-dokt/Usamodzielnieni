@@ -4,7 +4,6 @@ import { IndexLinkContainer } from "react-router-bootstrap";
 import { UserPicture } from "components";
 
 const ChatInfo = ({ chat, ...rest }) => {
-  console.log(chat);
   return (
     <Row {...rest} className="chatInfo">
       <Col xs="auto" className="chatInfo__picture">
@@ -15,7 +14,7 @@ const ChatInfo = ({ chat, ...rest }) => {
         <small>{`Ostatnia wiadomość: ${new Date(
           chat.updated
         ).toLocaleString()}`}</small>
-      </Col>{" "}
+      </Col>
       <IndexLinkContainer
         className="align-self-center"
         to={`/chats/${chat.first.username}`}

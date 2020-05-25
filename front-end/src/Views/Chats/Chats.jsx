@@ -13,22 +13,12 @@ const getChats = async (token) => {
 
   const response = await fetch(url, { method: "GET", headers });
 
-  console.log(response);
-
   if (response.status === 200) {
     return response.json().then((chats) => chats);
   } else {
     throw response.status;
   }
 };
-
-// const mapChats = (chats) =>
-//   chats.map((chat) => ({
-//     id: chat.id,
-//     name: chat.name,
-//     user: chat.user,
-//     // TODO
-//   }));
 
 const Chats = () => {
   const [chats, setChats] = useState([]);
@@ -44,7 +34,6 @@ const Chats = () => {
       let loadedChats;
       try {
         loadedChats = await getChats(token);
-        console.log(loadedChats);
       } catch (e) {
         console.log(e);
         loadedChats = [];
