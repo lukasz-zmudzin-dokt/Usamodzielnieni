@@ -1,14 +1,21 @@
 import React from "react";
-import { render, wait, fireEvent } from "@testing-library/react";
+import {
+  render,
+  wait,
+  fireEvent,
+  waitForElement,
+} from "@testing-library/react";
 import MessagesList from "Views/MessagesList";
 import { createMemoryHistory } from "history";
 import { Router } from "react-router-dom";
 import { AlertContext, UserContext } from "context";
-import { ChatForm } from "./components";
+
+const WebSocket = require("websocket-driver");
 
 global.WebSocket = WebSocket;
 
-jest.mock("./components");
+jest.mock("websocket-driver");
+
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
   useParams: () => ({
@@ -25,13 +32,15 @@ const renderWithRouter = (
 ) => {
   return {
     ...render(
-      <UserContext.Provider
-        value={{
-          data: { username: "xd" },
-        }}
-      >
-        <Router history={history}>{ui}</Router>
-      </UserContext.Provider>
+      <AlertContext.Provider value={{ showAlert: jest.fn() }}>
+        <UserContext.Provider
+          value={{
+            data: { username: "standard1" },
+          }}
+        >
+          <Router history={history}>{ui}</Router>
+        </UserContext.Provider>
+      </AlertContext.Provider>
     ),
     history,
   };
@@ -39,21 +48,27 @@ const renderWithRouter = (
 
 describe("MessagesList", () => {
   let user = {
-    data: { username: "xd" },
+    data: { username: "standard1" },
   };
   let failFetch = false;
   let apiMessages = [
     {
-      content: "b",
-      send: "11:55 12.03.2020",
-      side: "left",
-      id: 0,
+      message: "gitówa",
+      timestamp: "2020-05-25T21:48:18.965719+02:00",
+      user: {
+        username: "standard1",
+        first_name: "standard1",
+        last_name: "standard1",
+      },
     },
     {
-      content: "a",
-      send: "11:55 12.03.2020",
-      side: "right",
-      id: 1,
+      message: "gitówa2",
+      timestamp: "2020-06-25T21:48:18.965719+02:00",
+      user: {
+        username: "standard2",
+        first_name: "standard2",
+        last_name: "standard2",
+      },
     },
   ];
 
@@ -82,7 +97,6 @@ describe("MessagesList", () => {
   beforeEach(() => {
     failFetch = false;
     jest.clearAllMocks();
-    ChatForm.mockImplementation(() => <div>ChatForm</div>);
   });
   it("should match snapshot", async () => {
     const { container } = renderWithRouter(<MessagesList />);
@@ -114,5 +128,43 @@ describe("MessagesList", () => {
     fireEvent.click(getByText("<"));
     await wait(() => expect(fetch).toHaveBeenCalled());
     expect(history.location.pathname).toEqual("/chats");
+  });
+
+  it("should renders [] if api fails", async () => {
+    failFetch = true;
+    const { queryByText } = renderWithRouter(
+      <AlertContext.Provider value={alertC}>
+        <MessagesList />
+      </AlertContext.Provider>
+    );
+
+    await wait(() => expect(alertC.showAlert).toHaveBeenCalled());
+
+    expect(alertC.showAlert).toHaveBeenCalledWith(
+      "Nie udało się załadować wiadomości."
+    );
+    expect(queryByText("b")).not.toBeInTheDocument();
+  });
+
+  it("should send message", async () => {
+    const { getByText, getByPlaceholderText, getByTestId } = renderWithRouter(
+      <AlertContext.Provider value={alertC}>
+        <MessagesList />
+      </AlertContext.Provider>
+    );
+
+    fireEvent.change(getByPlaceholderText("Napisz wiadomość..."), {
+      target: {
+        value: "test",
+      },
+    });
+
+    fireEvent.click(getByTestId("button"));
+
+    await waitForElement(() => getByText("test"));
+
+    // expect(alertC.showAlert).toHaveBeenCalledWith(
+    //   "Nie udało się załadować wiadomości."
+    // );
   });
 });

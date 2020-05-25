@@ -62,7 +62,7 @@ export default [
   {
     name: "Chat",
     path: paths.CHATS,
-    allowed: [userTypes.STANDARD, userTypes.STAFF, userTypes.EMPLOYER],
+    allowed: [userTypes.STANDARD, staffTypes.CHAT, userTypes.EMPLOYER],
     verified: true,
   },
 ];

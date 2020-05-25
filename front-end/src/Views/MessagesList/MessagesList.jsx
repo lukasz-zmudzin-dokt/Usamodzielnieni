@@ -38,7 +38,6 @@ const sendMessage = async (
   socket,
   user
 ) => {
-  console.log(user);
   const { username, first_name, last_name } = user.data;
   const message = {
     user: {
@@ -117,6 +116,7 @@ const MessagesList = () => {
       let res;
       try {
         res = await getMessages(token, id);
+        console.log(res);
         setData(mapRes(res));
       } catch (e) {
         console.log(e);

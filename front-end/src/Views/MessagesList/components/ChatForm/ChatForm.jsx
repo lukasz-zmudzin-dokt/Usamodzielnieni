@@ -34,10 +34,10 @@ const ChatForm = ({ sendMessage }) => {
           onChange={(e) => setMessage(e.target.value)}
           onKeyDown={(e) => keyPressed(e)}
           as="textarea"
-          placeholder="Aa"
+          placeholder="Napisz wiadomość..."
         />
         <InputGroup.Append>
-          <Button type="submit" variant="light">
+          <Button data-testid="button" type="submit" variant="light">
             <img src={sendMessageIcon} alt="send message" />
           </Button>
         </InputGroup.Append>

@@ -10,13 +10,14 @@ exports[`chat form tests should render without crashing 1`] = `
     >
       <textarea
         class="overflow-auto form-control"
-        placeholder="Aa"
+        placeholder="Napisz wiadomość..."
       />
       <div
         class="input-group-append"
       >
         <button
           class="btn btn-light"
+          data-testid="button"
           type="submit"
         >
           <img

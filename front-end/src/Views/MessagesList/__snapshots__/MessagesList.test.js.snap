@@ -29,9 +29,9 @@ exports[`MessagesList should match snapshot 1`] = `
           </div>
         </div>
         <span
-          class="ml-2"
+          class="ml-2 messagesList__user"
         >
-          Piotr Kowalski
+          abc
         </span>
       </h3>
       <div
@@ -41,23 +41,44 @@ exports[`MessagesList should match snapshot 1`] = `
           class="messagesList__list list-group"
         >
           <div
-            class="messagesList__item messagesList__item--left list-group-item list-group-item-primary"
-          >
-            b
-          </div>
-          <div
             class="messagesList__item messagesList__item--right list-group-item list-group-item-info"
           >
-            a
+            gitówa
+          </div>
+          <div
+            class="messagesList__item messagesList__item--left list-group-item list-group-item-primary"
+          >
+            gitówa2
           </div>
         </div>
       </div>
-      <div>
-        ChatForm
-      </div>
+      <form
+        class="m-3"
+      >
+        <div
+          class="mb-3 input-group"
+        >
+          <textarea
+            class="overflow-auto form-control"
+            placeholder="Napisz wiadomość..."
+          />
+          <div
+            class="input-group-append"
+          >
+            <button
+              class="btn btn-light"
+              data-testid="button"
+              type="submit"
+            >
+              <img
+                alt="send message"
+                src="sendMessageIcon.svg"
+              />
+            </button>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
 </div>
 `;
-
-exports[`MessagesList should renders [] if api fails 1`] = `<div />`;
