@@ -1,7 +1,7 @@
 import { staffTypes } from "constants/staffTypes";
 import proxy from "config/api";
 
-const adjustObject = (account_type, home, company, specialistRole) => {
+const adjustObject = (account_type, home, company) => {
   let source;
   switch (account_type) {
     case "Podopiecznym": {
@@ -30,7 +30,7 @@ const adjustObject = (account_type, home, company, specialistRole) => {
       };
     }
     default:
-      return { group_type: account_type, role: specialistRole};
+      return { group_type: account_type};
   }
 };
 
@@ -61,7 +61,7 @@ export const sendData = async (token, source) => {
   const object = {
     ...source.personalData,
     ...source.accountData,
-    ...adjustObject(account_type, source.homeData, source.companyData, source.specialistRole),
+    ...adjustObject(account_type, source.homeData, source.companyData),
   };
   console.log(object);
   const header =

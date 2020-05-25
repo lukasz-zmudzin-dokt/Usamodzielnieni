@@ -22,10 +22,6 @@ export const adminGroup = [
     placeholder: "Moderator bloga",
   },
   {
-    name: staffTypes.SPECIALIST,
-    placeholder: "Specjalista"
-  },
-  {
     name: staffTypes.CHAT,
     placeholder: "Moderator czatu"
   }

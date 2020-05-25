@@ -1,5 +1,5 @@
 import React from "react";
-import {Form, Row} from "react-bootstrap";
+import {Form} from "react-bootstrap";
 import { adminGroup, commonGroup } from "constants/roles";
 
 const renderCommon = (selectType) => (
@@ -19,39 +19,28 @@ const renderCommon = (selectType) => (
     </Form.Control>
   </Form.Group>
 );
-console.log(adminGroup);
 
-const renderAdmin = (selectType, cutType, current, setSpecialistRole) => (
+const renderAdmin = (selectType, cutType, current) => (
   <Form.Group className="register_account_type">
     <Form.Label>{"Nowa rola:"}</Form.Label>
     {adminGroup.map((item) => (
-        <>
-            <Form.Check
-                data-testid="typeSelector"
-                className="register_radio_type"
-                type="checkbox"
-                label={item.placeholder}
-                checked={current.includes(item.name)}
-                onChange={current.includes(item.name) ? cutType : selectType}
-                key={item.name}
-                name={item.name}
-            />
-            {item.name === "staff_specialist" ? (
-                <Form.Control
-                    type="text"
-                    placeholder="rola specjalisty"
-                    className="w-50 ml-3"
-                    onChange={setSpecialistRole} />
-            ) : null}
-        </>
-
+        <Form.Check
+            data-testid="typeSelector"
+            className="register_radio_type"
+            type="checkbox"
+            label={item.placeholder}
+            checked={current.includes(item.name)}
+            onChange={current.includes(item.name) ? cutType : selectType}
+            key={item.name}
+            name={item.name}
+        />
     ))}
   </Form.Group>
 );
 
-const TypeSelection = ({ isAdmin, selectType, cutType, current, setSpecialistRole }) => {
+const TypeSelection = ({ isAdmin, selectType, cutType, current }) => {
   return isAdmin
-    ? renderAdmin(selectType, cutType, current, setSpecialistRole)
+    ? renderAdmin(selectType, cutType, current)
     : renderCommon(selectType);
 };
 
