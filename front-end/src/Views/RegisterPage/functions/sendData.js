@@ -66,7 +66,12 @@ export const sendData = async (token, source) => {
   const object = {
     ...source.personalData,
     ...source.accountData,
-    ...adjustObject(account_type, source.homeData, source.companyData, source.role),
+    ...adjustObject(
+      account_type,
+      source.homeData,
+      source.companyData,
+      source.role
+    ),
   };
   const header =
     token !== undefined
