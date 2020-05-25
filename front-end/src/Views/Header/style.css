@@ -12,7 +12,7 @@
   background-color: #ff884d;
 }
 .notification-color-light {
-  background-color: #ffbb99!important;
+  background-color: #ffbb99 !important;
 }
 .white {
   color: white !important;
@@ -130,5 +130,4 @@
   .notifications-button:hover {
     background-color: #ff884d !important;
   }
-
 }

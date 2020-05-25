@@ -15,7 +15,11 @@ const NotificationItemContainer = ({
   return (
     <ButtonGroup className="notificationItemContainer" {...rest}>
       {children}
-      <Button onClick={onButtonClick} variant="light" className="notification-color-light border-0">
+      <Button
+        onClick={onButtonClick}
+        variant="light"
+        className="notification-color-light border-0"
+      >
         X
       </Button>
     </ButtonGroup>
