@@ -23,7 +23,7 @@ export const adminGroup = [
   },
   {
     name: staffTypes.CHAT,
-    placeholder: "Moderator czatu",
+    placeholder: "Dostęp do czatu",
   },
 ];
 
