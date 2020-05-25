@@ -15,8 +15,8 @@ import {Redirect} from "react-router-dom";
 const handleVideoBlogAddition = async (token, data, head) => {
     try {
         const { id } = await reserveSpace(token);
-        head && await uploadPhoto(id, head, token, "header");
         await postBlogPost(data, token, "POST", id);
+        head && await uploadPhoto(id, head, token, "header");
         return id;
     } catch(e) {
         throw e;

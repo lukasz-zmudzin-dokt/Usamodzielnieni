@@ -1,5 +1,5 @@
 import React, {useContext, useRef, useState} from "react";
-import {Button, Card, CardColumns, CardDeck, Form, Modal} from "react-bootstrap";
+import {Button, Card, CardColumns, Form, Modal} from "react-bootstrap";
 import VideoCard from "../VideoCard/VideoCard";
 import {FormGroup} from "components";
 import {staffTypes} from "constants/staffTypes";
@@ -12,12 +12,11 @@ const approveChanges = async (id, token, data) => {
         Authorization: "Token " + token,
         "Content-type": "application/json"
     };
-    console.log(data);
 
     const res = await fetch(url, {
         method: "PUT",
         headers,
-        body: JSON.stringify( data ) //lol to chyba działa xDD
+        body: JSON.stringify( data ) //lol to działa xDD
     });
 
     if (res.status === 200) {
@@ -38,9 +37,8 @@ const VideoBlog = ({user, postString}) => {
     const alertC = useRef(useContext(AlertContext));
 
     const cutItem = async (id) => {
-        let newContent = content;
-        newContent.filter((item) => item.id !== id);
-        await updateBlog(newContent);
+        let tmp = content.filter((item) => item.id !== id);
+        await updateBlog(tmp);
     };
 
     const appendItem = async (data) => {
@@ -131,6 +129,7 @@ const VideoBlog = ({user, postString}) => {
                             id="description"
                             required
                             type="textarea"
+                            length={{min: 1, max: 500}}
                             incorrect="To pole jest wymagane"
                         />
                     </Modal.Body>

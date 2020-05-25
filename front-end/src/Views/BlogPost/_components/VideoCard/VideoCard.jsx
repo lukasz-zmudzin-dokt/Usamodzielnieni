@@ -3,9 +3,18 @@ import {Button, Card} from "react-bootstrap";
 import {DeletionModal} from "components";
 import {userTypes} from "constants/userTypes";
 import {staffTypes} from "constants/staffTypes";
+import {Player} from "../../../../components";
 
 const VideoCard = ({content, user, cutCard}) => {
     const [toDelete, setToDelete] = useState(false);
+
+    const sliceUrl = (url) => {
+        let changeRes = url;
+
+        const index = url.lastIndexOf("=");
+        changeRes = url.slice(index + 1);
+        return changeRes;
+    };
 
     return (
         <Card border="primary">
@@ -17,11 +26,10 @@ const VideoCard = ({content, user, cutCard}) => {
                     </div>
                 )
             }
-            <div>wideo</div> {/*url*/}
-            <Card.Text>
-                <Card.Subtitle className="text-right">
-
-                </Card.Subtitle>
+            <div>
+                <Player src={sliceUrl(content.url)} />
+            </div> {/*url*/}
+            <Card.Text className="text-justify text-muted mx-2 my-3">
                 {content.description}
             </Card.Text>
             <DeletionModal
