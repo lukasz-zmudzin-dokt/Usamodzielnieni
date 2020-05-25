@@ -73,7 +73,7 @@ a:hover {
 @media (max-width: 767px) {
   .social-media-row {
     padding-left: calc(50vw - 105px);
-    padding-top: 5px!important;
+    padding-top: 5px !important;
   }
   .company-title {
     justify-content: center;
@@ -88,6 +88,6 @@ a:hover {
     padding-bottom: 30px;
   }
   .mobile-col {
-    padding-bottom: 0!important;
+    padding-bottom: 0 !important;
   }
 }
