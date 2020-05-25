@@ -7,7 +7,7 @@ import { userTypes } from "constants/userTypes";
 const AdminOfferApprovalButton = ({ user }) =>
   user.type === userTypes.STAFF &&
   user.data.group_type.includes(staffTypes.JOBS) ? (
-    <LinkContainer className="my-2" to="/offerApproval">
+    <LinkContainer to="/offerApproval">
       <Button variant="primary">Akceptuj oferty pracy</Button>
     </LinkContainer>
   ) : null;
