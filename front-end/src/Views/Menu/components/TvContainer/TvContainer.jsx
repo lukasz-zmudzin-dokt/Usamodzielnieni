@@ -4,12 +4,12 @@ const TvContainer = () => {
   return (
     <div className="tvContainer">
       <div className="tvContainer__shapes">
-        <img className="tvContainer__shapes__left" alt="" src="/left_tv.svg" />
-        <img
-          className="tvContainer__shapes__right"
-          alt=""
-          src="/right_tv.svg"
-        />
+        <div className="tvContainer__shapes__left">
+          <img alt="" src="/left_tv.svg" />
+        </div>
+        <div className="tvContainer__shapes__right">
+          <img alt="" src="/right_tv.svg" />
+        </div>
       </div>
       <div className="tvContainer__tv">
         <img alt="" src="/tv.png" />
