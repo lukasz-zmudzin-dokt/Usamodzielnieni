@@ -8,13 +8,11 @@ import { Redirect, useLocation } from "react-router-dom";
 import logo from "assets/logo-white.png";
 import menu from "assets/hamburger-menu-icon.svg";
 import Alert from "react-bootstrap/Alert";
-// import Notifications from "../PageHeader/components/Notifications";
 import Notifications from "./components/Notifications";
 
 const Header = () => {
   const context = useContext(UserContext);
   const [isOpen, setIsOpen] = useState(false);
-  // const [isOpenNotifications, setIsOpenNotifications] = useState(false);
   const [logout, setLogout] = useState(false);
   const [error, setError] = useState(false);
 
@@ -23,19 +21,13 @@ const Header = () => {
   };
   const handleClose = () => {
     setIsOpen(false);
-  }; /*
-  const handleOpenNotifications = () => {
-    setIsOpenNotifications(true);
   };
-  const handleCloseNotifications = () => {
-    setIsOpenNotifications(false);
-  };*/
 
   const handleLogout = async () => {
     try {
       await logoutUser(context.token);
-      context.logout();
       setLogout(true);
+      context.logout();
     } catch (e) {
       console.log(e);
       setError(true);
@@ -86,7 +78,6 @@ const Header = () => {
       group_type: "staff_jobs",
     },
   ];
-  console.log(context);
 
   const accountDropdownNav =
     context.type === "standard" ? (
@@ -148,7 +139,6 @@ const Header = () => {
           onMouseEnter={handleOpen}
           onMouseLeave={handleClose}
           show={isOpen}
-          // onClick={handleOpen}
         >
           <IndexLinkContainer to={"/user"}>
             <NavDropdown.Item className="account-dropdown-button account-dropdown-button-first white">
