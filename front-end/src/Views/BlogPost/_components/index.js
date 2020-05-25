@@ -5,4 +5,11 @@ import BlogContent from "./BlogContent/BlogContent";
 import VideoCard from "./VideoCard/VideoCard";
 import VideoBlog from "./VideoBlog/VideoBlog";
 
-export { CommentForm, CommentsList, CommentItem, BlogContent, VideoCard, VideoBlog };
+export {
+  CommentForm,
+  CommentsList,
+  CommentItem,
+  BlogContent,
+  VideoCard,
+  VideoBlog,
+};

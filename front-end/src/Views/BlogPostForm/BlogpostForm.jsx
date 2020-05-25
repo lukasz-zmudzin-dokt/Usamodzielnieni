@@ -200,9 +200,11 @@ class BlogPostForm extends React.Component {
   };
 
   nullifyCategory = () => {
-    this.props.alertContext.showAlert("Niedozwolona kategoria. Aby stworzyć wideoblog przejdź do zakładki Mój profil.");
+    this.props.alertContext.showAlert(
+      "Niedozwolona kategoria. Aby stworzyć wideoblog przejdź do zakładki Mój profil."
+    );
     this.setState({
-      category: ""
+      category: "",
     });
   };
 
