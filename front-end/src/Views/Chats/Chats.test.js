@@ -3,6 +3,10 @@ import { MemoryRouter } from "react-router-dom";
 import { render, waitForElement } from "@testing-library/react";
 import Chats from "./Chats";
 
+jest.mock("./components", () => ({
+  ChatInfo: ({ chat }) => <div>{chat.first.username}</div>,
+}));
+
 describe("Chats", () => {
   let failFetch = false;
   let apiChats = [];
