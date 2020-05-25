@@ -9,6 +9,8 @@ import logo from "assets/logo-white.png";
 import menu from "assets/hamburger-menu-icon.svg";
 import Alert from "react-bootstrap/Alert";
 import Notifications from "./components/Notifications";
+import { paths } from "constants/paths";
+import {staffTypes} from "constants/staffTypes";
 
 const Header = () => {
   const context = useContext(UserContext);
@@ -35,18 +37,18 @@ const Header = () => {
   };
   const leftNav = (
     <Nav className="mr-auto">
-      <IndexLinkContainer to={"/"}>
+      <IndexLinkContainer to={paths.DASHBOARD}>
         <Nav.Link className="logo-button">
           <img src={logo} className="logo" alt={"logo"} />
         </Nav.Link>
       </IndexLinkContainer>
-      <IndexLinkContainer to={"/contact"}>
+      <IndexLinkContainer to={paths.CONTACT_PAGE}>
         <Nav.Link className="navbar-left-button ">KONTAKT</Nav.Link>
       </IndexLinkContainer>
-      <IndexLinkContainer to={"/blog"}>
+      <IndexLinkContainer to={paths.BLOG_PAGE}>
         <Nav.Link className="navbar-left-button ">BLOG</Nav.Link>
       </IndexLinkContainer>
-      <IndexLinkContainer to={"/jobOffers"}>
+      <IndexLinkContainer to={paths.JOB_OFFERS}>
         <Nav.Link className="navbar-left-button ">OFERTY PRACY</Nav.Link>
       </IndexLinkContainer>
     </Nav>
@@ -55,46 +57,46 @@ const Header = () => {
   const staffNavs = [
     {
       id: 0,
-      link: "/newAccount/staff",
+      link: paths.REGISTER_ADMIN,
       name: "ZAREJESTRUJ ADMINISTRATORA",
-      group_type: "staff_verification",
+      group_type: staffTypes.VERIFICATION,
     },
     {
       id: 1,
-      link: "/userApproval",
+      link: paths.USER_APPROVAL,
       name: "AKCEPTUJ NOWYCH UŻYTKOWNIKÓW",
-      group_type: "staff_verification",
+      group_type: staffTypes.VERIFICATION,
     },
     {
       id: 2,
-      link: "/cvApproval",
+      link: paths.CV_APPROVAL,
       name: "AKCEPTACJA CV",
-      group_type: "staff_cv",
+      group_type: staffTypes.CV,
     },
     {
       id: 3,
-      link: "/offerApproval",
+      link: paths.OFFER_APPROVAL,
       name: "AKCEPTUJ OFERTY PRACY",
-      group_type: "staff_jobs",
+      group_type: staffTypes.JOBS,
     },
   ];
 
   const accountDropdownNav =
     context.type === "standard" ? (
-      <IndexLinkContainer to={"/myCVs"}>
+      <IndexLinkContainer to={paths.MY_CVS}>
         <NavDropdown.Item className="account-dropdown-button white">
           MOJE CV
         </NavDropdown.Item>
       </IndexLinkContainer>
     ) : context.type === "employer" ? (
-      <IndexLinkContainer to={"/myOffers"}>
+      <IndexLinkContainer to={paths.MY_OFFERS}>
         <NavDropdown.Item className="account-dropdown-button white">
           MOJE OFERTY
         </NavDropdown.Item>
       </IndexLinkContainer>
     ) : context.type === "staff" && context.data !== undefined ? (
       <>
-        <IndexLinkContainer to={"/userList"}>
+        <IndexLinkContainer to={paths.USER_LIST}>
           <NavDropdown.Item className="account-dropdown-button white">
             LISTA UŻYTKOWNIKÓW
           </NavDropdown.Item>
@@ -118,12 +120,12 @@ const Header = () => {
   const rightNav =
     context.token === undefined ? (
       <Nav>
-        <IndexLinkContainer to={"/newAccount"}>
+        <IndexLinkContainer to={paths.REGISTER}>
           <Nav.Link className="navbar-right-button register-color">
             REJESTRACJA
           </Nav.Link>
         </IndexLinkContainer>
-        <IndexLinkContainer to={"/login"}>
+        <IndexLinkContainer to={paths.LOGIN}>
           <Nav.Link className="navbar-right-button login-color">
             LOGOWANIE
           </Nav.Link>
@@ -140,7 +142,7 @@ const Header = () => {
           onMouseLeave={handleClose}
           show={isOpen}
         >
-          <IndexLinkContainer to={"/user"}>
+          <IndexLinkContainer to={paths.USER}>
             <NavDropdown.Item className="account-dropdown-button account-dropdown-button-first white">
               MÓJ PROFIL
             </NavDropdown.Item>
@@ -185,7 +187,7 @@ const Header = () => {
         {leftNav}
         {rightNav}
       </Navbar.Collapse>
-      {logout ? <Redirect to={"/"} /> : null}
+      {logout ? <Redirect to={paths.DASHBOARD} /> : null}
       {error ? errMsg : null}
     </Navbar>
   );
