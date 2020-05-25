@@ -1,3 +1,3 @@
-export const VIDEOBLOG_CATEGORY = "videoblog";
-export const VEDEOBLOG_INITIAL_CONTENT = "początek";
-export const VIDEOBLOG_TAGS = ["usamodzielnieni".reverse()];
+export const VIDEOBLOG_CATEGORY = "wideoblogi";
+export const VIDEOBLOG_INITIAL_CONTENT = JSON.stringify([]);
+export const VIDEOBLOG_TAGS = [];

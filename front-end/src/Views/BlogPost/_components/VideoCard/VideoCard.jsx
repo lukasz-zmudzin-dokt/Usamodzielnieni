@@ -17,7 +17,7 @@ const VideoCard = ({content, user, cutCard}) => {
                     </Card.Subtitle>
                 )
             }
-            <div>wideo</div> //url
+            <div>wideo</div> {/*url*/}
             <Card.Text>
                 {content.description}
             </Card.Text>
@@ -25,7 +25,7 @@ const VideoCard = ({content, user, cutCard}) => {
                 show={toDelete}
                 setShow={setToDelete}
                 question="Czy na pewno chcesz usunąć tę kartę?"
-                delConfirmed={cutCard(content.id)}
+                delConfirmed={() => cutCard(content.id)}
             />
         </Card>
     )

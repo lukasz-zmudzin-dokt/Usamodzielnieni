@@ -1,8 +1,10 @@
-import React, {useState} from "react";
+import React, {useContext, useRef, useState} from "react";
 import {Button, Card, CardDeck, Form, Modal} from "react-bootstrap";
 import VideoCard from "../VideoCard/VideoCard";
 import {FormGroup} from "components";
 import {staffTypes} from "constants/staffTypes";
+import proxy from "config/api";
+import {AlertContext} from "context/AlertContext";
 
 const approveChanges = async (id, token, data) => {
     const url = proxy.blog + "blogpost/" + id + "/";
@@ -10,47 +12,54 @@ const approveChanges = async (id, token, data) => {
         Authorization: "Token " + token,
         "Content-type": "application/json"
     };
+    console.log(data);
 
     const res = await fetch(url, {
         method: "PUT",
         headers,
-        body: JSON.stringify(data)
+        body: JSON.stringify( data ) //lol to chyba działa xDD
     });
 
     if (res.status === 200) {
         return;
     } else {
-        throw await res.json();
+        throw res.status;
     }
 };
 
-const VideoBlog = ({user, post, setPost, alertC}) => {
+const VideoBlog = ({user, postString}) => {
     const [showModal, setShowModal] = useState(false);
     const [validated, setValidated] = useState(false);
     const [data, setData] = useState({
         url: "",
         description: ""
     });
+    const [content, setContent] = useState(JSON.parse(postString.content));
+    const alertC = useRef(useContext(AlertContext));
 
     const cutItem = async (id) => {
-        const newContent = post.content.filter((item) => item.id !== id);
+        let newContent = content;
+        newContent.filter((item) => item.id !== id);
         await updateBlog(newContent);
     };
 
     const appendItem = async (data) => {
-        const newContent = post.content.append({id: data.description + data.url, ...data});
+        let newContent = content;
+        newContent.push({id: data.description + data.url, ...data});
         await updateBlog(newContent);
     };
 
     const updateBlog = async (newContent) => {
         try {
-            const data = { ...post, content:  newContent};
-            await approveChanges(post.id, user?.token, data);
+            const obj = { ...postString, content: JSON.stringify(newContent)};
+            await approveChanges(postString.id, user?.token, obj);
             clearData();
-            setPost({...post, content: newContent});
-            alertC.current.showAlert("Karta została pomyślnie dodana.", "success");
+            setContent(newContent);
+            //setPost(obj);
+            clearData();
+            alertC.current.showAlert("Zmiany zostały pomyślnie wprowadzone.", "success");
         } catch(e) {
-            alertC.current.showAlert(Object.values(e)[0]);
+            alertC.current.showAlert("Wystąpił błąd podczas dodawania nowej karty");
         }
     };
 
@@ -66,24 +75,24 @@ const VideoBlog = ({user, post, setPost, alertC}) => {
         if (event.currentTarget.checkValidity() === false) {
             event.stopPropagation();
         } else {
-            await appendItem();
+            await appendItem(data);
         }
     };
 
     return (
         <Card>
             {
-                post.header !== null && (
+                postString.header !== null && (
                     <Card.Img
                         variant="top"
-                        src={`${proxy.plain}${post.header}`}
+                        src={`${proxy.plain}${postString.header}`}
                         alt="Nagłówek posta"
                     />
                 )
             }
             <Card.Body>
-                <Card.Title>
-                    {post.title}
+                <Card.Title as="h2">
+                    {postString.title}
                 </Card.Title>
                 {
                     user?.data?.group_type?.includes(staffTypes.BLOG_CREATOR) && (
@@ -91,7 +100,7 @@ const VideoBlog = ({user, post, setPost, alertC}) => {
                     )
                 }
                 <CardDeck>
-                    {post.content !== "początek" && post.content.map(item => (
+                    {content.map(item => (
                         <VideoCard
                             key={item.id}
                             content={item}
@@ -101,7 +110,7 @@ const VideoBlog = ({user, post, setPost, alertC}) => {
                     ))}
                 </CardDeck>
             </Card.Body>
-            <Modal show={showModal} onHide={e => setShowModal(false)}>
+            <Modal show={showModal} onHide={e => clearData()}>
                 <Modal.Header closeButton>
                     <Modal.Title>Nowa karta wideo</Modal.Title>
                 </Modal.Header>
