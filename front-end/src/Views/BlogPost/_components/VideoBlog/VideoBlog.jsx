@@ -89,7 +89,7 @@ const VideoBlog = ({user, postString}) => {
                 )
             }
             <Card.Body>
-                <Card.Title as="h2">
+                <Card.Title as="h2" className="mb-4">
                     {postString.title}
                     {
                         user?.data?.group_type?.includes(staffTypes.BLOG_CREATOR) && (

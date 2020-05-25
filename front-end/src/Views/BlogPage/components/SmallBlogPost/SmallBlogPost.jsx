@@ -2,7 +2,7 @@ import React from "react";
 import { Card, Badge } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import proxy from "config/api";
-import {VIDEOBLOG_CATEGORY} from "../../../../constants/videoBlogInitialValues";
+import {VIDEOBLOG_CATEGORY} from "constants/videoBlogInitialValues";
 
 const stripFromTags = (str) => {
   str = str.replace(/(<([^>]+)>)|(<([^>]+)\.\.\.)/gi, "");
