@@ -19,7 +19,7 @@ export const adminGroup = [
   },
   {
     name: staffTypes.BLOG_MODERATOR,
-    placeholder: "Moderator bloga",
+    placeholder: "Moderator bloga / designer",
   },
 ];
 
