@@ -12,12 +12,14 @@ const UserDetails = (props) => {
     ) : null;
   });
 
-  return <ListGroup className="list-group-flush">
-    {userProperties}
-    {user.chat_role !== undefined ? (
+  return (
+    <ListGroup className="list-group-flush">
+      {userProperties}
+      {user.chat_role !== undefined ? (
         <UserProperty user={user} property={"chat_role"} names={names} />
-        ) : null}
-  </ListGroup>;
+      ) : null}
+    </ListGroup>
+  );
 };
 
 export default UserDetails;

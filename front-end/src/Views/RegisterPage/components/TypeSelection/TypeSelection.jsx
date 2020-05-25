@@ -1,7 +1,7 @@
 import React from "react";
 import { Form } from "react-bootstrap";
 import { adminGroup, commonGroup } from "constants/roles";
-import {staffTypes} from "constants/staffTypes";
+import { staffTypes } from "constants/staffTypes";
 
 const renderCommon = (selectType) => (
   <Form.Group className="register_account_type">
@@ -36,7 +36,12 @@ const renderAdmin = (selectType, cutType, current, setRole) => (
         name={item.name}
       />
     ))}
-    <Form.Control type="text" disabled={!current.includes(staffTypes.CHAT)} placeholder="Pełniona rola na czacie (opcjonalne)" onChange={setRole} />
+    <Form.Control
+      type="text"
+      disabled={!current.includes(staffTypes.CHAT)}
+      placeholder="Pełniona rola na czacie (opcjonalne)"
+      onChange={setRole}
+    />
   </Form.Group>
 );
 

@@ -1,5 +1,5 @@
 import React from "react";
-import {Alert, Card, Container} from "react-bootstrap";
+import { Alert, Card, Container } from "react-bootstrap";
 import { UserContext } from "context";
 import { getUserData } from "Views/UserProfilePage/functions/getUserData.js";
 import UserBasicInfo from "./components/UserBasicInfo";
@@ -20,7 +20,7 @@ const names = {
     lastName: "Nazwisko",
     email: "E-mail",
     phoneNumber: "Numer telefonu",
-    chat_role: "Rola na czacie"
+    chat_role: "Rola na czacie",
   },
 };
 
@@ -54,7 +54,7 @@ class UserProfilePage extends React.Component {
           lastName: res.data.last_name,
           email: res.data.email,
           role: res.type,
-          chat_role: res.data.role
+          chat_role: res.data.role,
         },
       });
     } catch (res) {
