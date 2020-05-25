@@ -15,12 +15,11 @@ const ChatInfo = ({ chat, ...rest }) => {
           chat.updated
         ).toLocaleString()}`}</small>
       </Col>
-      <IndexLinkContainer
-        className="align-self-center"
-        to={`/chats/${chat.first.username}`}
-      >
-        <Button>Pokaż szczegóły</Button>
-      </IndexLinkContainer>
+      <Col xs="auto" className="align-self-center">
+        <IndexLinkContainer to={`/chats/${chat.first.username}`}>
+          <Button>Pokaż szczegóły</Button>
+        </IndexLinkContainer>
+      </Col>
     </Row>
   );
 };

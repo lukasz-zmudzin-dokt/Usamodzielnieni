@@ -22,12 +22,16 @@ exports[`ChatInfo should render without crashing 1`] = `
         Ostatnia wiadomość: 1590436098965_en-US_2_
       </small>
     </div>
-    <a
-      class="align-self-center btn btn-primary"
-      href="/chats/czesiek"
+    <div
+      class="align-self-center col-auto"
     >
-      Pokaż szczegóły
-    </a>
+      <a
+        class="btn btn-primary"
+        href="/chats/czesiek"
+      >
+        Pokaż szczegóły
+      </a>
+    </div>
   </div>
 </div>
 `;
