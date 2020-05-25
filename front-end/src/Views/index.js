@@ -53,5 +53,5 @@ export {
   Chats,
   ChangeData,
   UserList,
-    Header
+  Header,
 };
