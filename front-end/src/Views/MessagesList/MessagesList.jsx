@@ -86,6 +86,7 @@ const MessagesList = () => {
         content: item.message,
         side: item.user.username === user.data.username ? "right" : "left",
         send: item.timestamp,
+        id: item.timestamp,
       }));
       return array;
     };
@@ -116,6 +117,9 @@ const MessagesList = () => {
       try {
         socket.current = new WebSocket(url, user.token);
         socket.current.onopen = (e) => console.log("onopen", e);
+        socket.current.onmessage = (object) => {
+          console.log("Server: " + object);
+        };
         socket.current.onclose = (e) => console.log("koniec", e);
       } catch (e) {
         console.log(e);
