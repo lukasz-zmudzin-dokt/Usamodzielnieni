@@ -4,10 +4,11 @@ import { IndexLinkContainer } from "react-router-bootstrap";
 import { UserContext } from "context";
 import { logoutUser } from "./apiCalls";
 import "./style.css";
-import {Redirect} from "react-router-dom";
+import {Redirect, useLocation} from "react-router-dom";
 import logo from "assets/logo-white.png";
 import menu from "assets/hamburger-menu-icon.svg";
 import Alert from "react-bootstrap/Alert";
+import Notifications from "../PageHeader/components/Notifications";
 
 const Header = () => {
     const context = useContext(UserContext);
@@ -113,15 +114,9 @@ console.log(context);
         </Nav>
     ) : (
         <Nav>
-            {/*<Nav.Link className="navbar-right-button notification-color">POWIADOMIENIA</Nav.Link>*/}
-            <NavDropdown id={"myNotificationsDropdown"} title={<span className="white">POWIADOMIENIA</span>} className="navbar-right-button notification-color"
-                         onMouseEnter = { handleOpenNotifications }
-                         onMouseLeave = { handleCloseNotifications }
-                         show={ isOpenNotifications }
-            >
-            {/*    NOTYFIKACJE    */}
-            </NavDropdown>
-            <NavDropdown id={"myAccDropdown"} title={<span className="white">MOJE KONTO</span>} className="navbar-right-button register-color"
+            <Notifications location={useLocation} token={context.token} />
+            <NavDropdown id={"myAccDropdown"} title={<span className="white">MOJE KONTO</span>}
+                         className="navbar-right-button register-color"
                          onMouseEnter = { handleOpen }
                          onMouseLeave = { handleClose }
                          show={ isOpen }

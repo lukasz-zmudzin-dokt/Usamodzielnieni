@@ -55,6 +55,10 @@
     .hamburger-toggle {
         display: none;
     }
+    .notifications-button {
+        height: 40px;
+        padding-top: 9px;
+    }
 }
 @media(max-width: 991px) {
     .account-dropdown-button {

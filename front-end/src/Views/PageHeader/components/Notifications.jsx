@@ -4,6 +4,7 @@ import NotificationItemContainer from "./NotificationItemContainer";
 import NotificationItem from "./NotificationItem";
 import NotificationToggle from "./NotificationToggle";
 import { NotificationsContext } from "context";
+import "Views/Header/style.css";
 
 const Notifications = ({ location, ...rest }) => {
   const [show, setShow] = useState(false);
@@ -47,6 +48,7 @@ const Notifications = ({ location, ...rest }) => {
       <Dropdown.Toggle
         as={NotificationToggle}
         count={notifications === null || error ? 0 : count}
+        className="notifications-button"
       />
       <Dropdown.Menu data-testid="dropdownMenu" className="notifications">
         {error ? (
