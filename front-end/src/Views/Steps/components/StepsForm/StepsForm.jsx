@@ -9,6 +9,7 @@ const StepsForm = ({
   newStep,
   steps,
   isEdit,
+  root
 }) => {
   const stepsTypes = ["Krok główny", "Podkrok"];
   const isStep = type === stepsTypes[0];
@@ -35,7 +36,7 @@ const StepsForm = ({
         } `}
         id="stepParent"
         required
-        array={steps.children.map((item) => item.title)}
+        array={steps.map((item) => item.title)}
         val={newStep.parent}
         setVal={(val) =>
           setNewStep({
@@ -65,7 +66,7 @@ const StepsForm = ({
           })
         }
       />
-      {isStep ? (
+      
         <FormGroup
           type="textarea"
           header="Opis kroku"
@@ -80,7 +81,6 @@ const StepsForm = ({
             })
           }
         />
-      ) : null}
     </>
   );
 };

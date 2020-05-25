@@ -13,14 +13,19 @@ const EditStep = ({ step, steps, show, handleClose }) => {
     title: "",
     description: "",
     video: "",
-    parent: steps.children[0].title,
+    parent: steps[0].title,
   });
   const user = useContext(UserContext);
   const alertC = useRef(useContext(AlertContext));
   const [validated, setValidated] = useState(false);
 
   useEffect(() => {
-    setNewStep(step);
+    setNewStep({
+      title: step.title,
+      description: step.description,
+      video: "",
+      parent: steps[0].title,
+    });
   }, [step]);
 
   const isStep = type === stepsTypes[0];
@@ -30,7 +35,7 @@ const EditStep = ({ step, steps, show, handleClose }) => {
     const form = e.currentTarget;
     if (form.checkValidity() !== false) {
       let res;
-      const object = steps.children.find(
+      const object = steps.find(
         (item) => item.title === newStep.parent
       );
       const data = {

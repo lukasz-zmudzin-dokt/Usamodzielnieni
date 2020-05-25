@@ -7,7 +7,6 @@ import { DeletionModal } from "components";
 import { staffTypes } from "constants/staffTypes";
 import { UserContext } from "context";
 import { NewStep, EditStep } from "../";
-import { getDefaultNormalizer } from "@testing-library/react";
 
 const getSteps = async () => {
   let url = `${proxy.steps}`; // TODO
@@ -78,8 +77,6 @@ const ProgressBar = () => {
   const [showNew, setShowNew] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
 
-
-
   useEffect(() => {
     loadSteps();
   }, []);
@@ -88,9 +85,16 @@ const ProgressBar = () => {
     let res;
     try {
       res = await getSteps();
-      let root = res[0];
+      if(res.length === 1) {
+        setPath([]);
+        setSteps([]);
+        setRoot(res[0]);
+        return;
+      }
+      let r = res[0];
       res.splice(0, 1);
-      setPath([root.next[0].id]);
+      setRoot(r);
+      setPath([r.next[0].id]);
       setSteps(res);
     } catch (e) {
       setError(true);
@@ -106,9 +110,6 @@ const ProgressBar = () => {
       await loadSteps();
     }
   }
-
-  console.log(steps);
-
 
   const setCurrent = (id) => {
     const index = path.indexOf(id);
@@ -131,7 +132,7 @@ const ProgressBar = () => {
   if (wantsDelete) {
     deletion();
   }
-
+  console.log(steps.length);
   return (
     msg || (
       <div>
@@ -149,17 +150,20 @@ const ProgressBar = () => {
                 Dodaj nowy krok
               </Button>
             </div>
-            {/*<NewStep
+            <NewStep
               steps={steps}
               show={showNew}
               handleClose={() => setShowNew(false)}
+              root={root}
             />
-            <EditStep
-              steps={steps}
-              step={steps.find((item) => item.id === path[path.length - 1])}
-              show={showEdit}
-              handleClose={() => setShowEdit(false)}
-            />*/}
+            {(steps.length > 0) &&
+              <EditStep
+                steps={steps}
+                step={steps.find((item) => item.id === path[path.length - 1])}
+                show={showEdit}
+                handleClose={() => setShowEdit(false)}
+              />
+            }
           </>
         ) : null}
         {path.map((stepId, i) => (

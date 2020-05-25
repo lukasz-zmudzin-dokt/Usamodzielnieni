@@ -3,28 +3,40 @@ import { Button, Form, Modal } from "react-bootstrap";
 import { AlertContext, UserContext } from "context";
 import { sendNewStep } from "./functions/sendNewStep";
 import { StepsForm } from "../";
+import { useEffect } from "react";
 
-const NewStep = ({ steps, show, handleClose }) => {
+const NewStep = ({ steps, show, handleClose, root }) => {
   const stepsTypes = ["Krok główny", "Podkrok"];
   const [type, setType] = useState(stepsTypes[0]);
   const [newStep, setNewStep] = useState({
     title: "",
     description: "",
     video: "",
-    parent: steps.children[0].title,
+    parent: steps[0]?.title,
   });
   const user = useContext(UserContext);
   const alertC = useRef(useContext(AlertContext));
   const [validated, setValidated] = useState(false);
+  console.log(newStep);
+
+  useEffect(() => {
+    setNewStep({
+      title: "",
+      description: "",
+      video: "",
+      parent: steps[0]?.title,
+    })
+  }, [steps])
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const form = e.currentTarget;
     if (form.checkValidity() !== false) {
       let res;
-      const object = steps.children.find(
+      const object = steps.find(
         (item) => item.title === newStep.parent
       );
+//      console.log(newStep);
       const data = {
         ...newStep,
         parent: object.id,
@@ -57,6 +69,7 @@ const NewStep = ({ steps, show, handleClose }) => {
             setType={setType}
             steps={steps}
             setValidated={setValidated}
+            root={root}
           />
         </Modal.Body>
         <Modal.Footer>
