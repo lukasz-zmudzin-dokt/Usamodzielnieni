@@ -12,7 +12,6 @@ import proxy from "config/api";
 import ChatInfo from "./components/ChatInfo";
 import ContactsModalContent from "./components/ContactsModalContent";
 import "./style.css";
-//import { ChatForm } from 'components';
 
 const getChats = async (token) => {
   let url = `${proxy.chat}`; // TODO
@@ -24,7 +23,6 @@ const getChats = async (token) => {
   const response = await fetch(url, { method: "GET", headers });
 
   if (response.status === 200) {
-    console.log("jest 200");
     return response.json().then((chats) => mapChats(chats));
   } else {
     throw response.status;
@@ -50,19 +48,6 @@ const Chats = () => {
   const handleShow = () => setShow(true);
 
   const user = useContext(UserContext);
-
-  // const CustomFAB = () => {
-  //   const icon = "+";
-  //   return (
-  //     <div className={"floating-menu"}>
-  //       <div className="floating-menu-item" onClick={() => handleShow()}> {/* nie wiem czemu ale zrobienie tak zamiast*/}
-  //         <div className="floating-menu-icon">                            {/*onclick={handleShow()} rozwiązuje problem z ciągłym klikaniem*/}
-  //           <div className="floating-menu-text">{icon}</div>
-  //         </div>
-  //       </div>
-  //     </div >
-  //   );
-  // };
 
   useEffect(() => {
     const loadChats = async (token) => {

@@ -5,7 +5,7 @@ import proxy from "config/api";
 import Contact from "./Contact";
 
 const getContacts = async (token) => {
-  let url = `${proxy.chat}contacts/`; // nie ma endpointu
+  let url = `${proxy.chat}contacts/`;
   const headers = {
     Authorization: "Token " + token,
     "Content-Type": "application/json",
@@ -14,10 +14,8 @@ const getContacts = async (token) => {
   const response = await fetch(url, { method: "GET", headers });
 
   if (response.status === 200) {
-    console.log("jest 200");
     return response.json().then((contacts) => mapContacts(contacts.results));
   } else if (response.status === 2137) {
-    console.log("jest 2137");
     return response.json().then((contacts) => mapContacts(contacts.results));
   } else {
     throw response.status;
@@ -31,15 +29,6 @@ const mapContacts = (contacts) =>
     last_name: contact.last_name,
     type: contact.type,
   }));
-
-// const mapContacts = (contacts) =>
-//   contacts.map((contact) => ({
-//     username: contact.username,
-//     first_name: contact.first_name,
-//     last_name: contact.last_name,
-//     //role: contact.role,
-//     // tu nie ma modelu
-//   }));
 
 const ContactsModalContent = () => {
   const [contacts, setContacts] = useState([]);

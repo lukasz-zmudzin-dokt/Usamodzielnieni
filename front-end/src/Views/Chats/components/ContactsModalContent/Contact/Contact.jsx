@@ -15,7 +15,7 @@ const Contact = ({ contact }) => {
           <h5>{contact.last_name}</h5>
         </Col>
         <Col>
-          <IndexLinkContainer to={`/chat/${contact.username}`}>
+          <IndexLinkContainer to={`/chats/${contact.username}`}>
             <Button className="float-right">→</Button>
           </IndexLinkContainer>
         </Col>
