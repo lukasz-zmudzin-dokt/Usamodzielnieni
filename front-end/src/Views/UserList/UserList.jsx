@@ -6,6 +6,9 @@ import UserInfo from "./components/UserInfo";
 import Filters from "./components/Filters";
 import { userTypes } from "constants/userTypes";
 import { userStatuses } from "constants/userStatuses";
+import { useLocation } from "react-router-dom";
+import qs from "query-string";
+import { Pagination } from "components";
 
 const getUsers = async (token, filters) => {
   const { type, status, email, username } = filters;
@@ -14,7 +17,7 @@ const getUsers = async (token, filters) => {
   const emailQ = email ? "&email=" + email : "";
   const usernameQ = username ? "&username=" + username : "";
 
-  const query = `?${typeQ}${statusQ}${emailQ}${usernameQ}`;
+  const query = `?page=${filters.page}&page_size=${filters.pageSize}${typeQ}${statusQ}${emailQ}${usernameQ}`;
 
   const url = proxy.account + "admin/user_list/all/" + query;
   const headers = {
@@ -31,13 +34,18 @@ const getUsers = async (token, filters) => {
 };
 
 const UserList = () => {
-  const [filters, setFilters] = useState({});
+  const [filters, setFilters] = useState({
+    page: 1,
+    pageSize: 10,
+  });
   const [loading, setLoading] = useState(false);
   const [users, setUsers] = useState([]);
   const [error, setError] = useState(false);
+  const [count, setCount] = useState(0);
   const context = useContext(UserContext);
   const [disabled, setDisabled] = useState(false);
 
+  const location = useLocation();
   useEffect(() => {
     const mapUsers = (list) => {
       return list.map((user) => ({
@@ -56,6 +64,7 @@ const UserList = () => {
       setError(false);
       try {
         const res = await getUsers(token, filters);
+        setCount(res.count);
         setUsers(mapUsers(res.results));
       } catch (e) {
         console.log(e);
@@ -98,6 +107,14 @@ const UserList = () => {
     }
   };
 
+  const queryParams = qs.parse(location.search, { parseNumbers: true });
+  if (
+    typeof queryParams.page === "number" &&
+    queryParams.page !== filters.page
+  ) {
+    setFilters({ ...filters, page: queryParams.page });
+  }
+
   const msg = error ? (
     <Alert variant="danger">
       Wystąpił błąd podczas ładowania listy użytkowników.
@@ -132,6 +149,7 @@ const UserList = () => {
           disabled={disabled}
           typeList={mapType}
           statusList={mapStatus}
+          filters={filters}
         />
         {msg ? (
           <Card.Body>{msg}</Card.Body>
@@ -148,6 +166,10 @@ const UserList = () => {
                 />
               </ListGroup.Item>
             ))}
+            <Pagination
+              current={filters.page}
+              max={Math.ceil(count / filters.pageSize)}
+            />
           </ListGroup>
         )}
       </Card>

@@ -45,12 +45,15 @@ class LanguagesTab extends React.Component {
       <CVEditorTab
         title="Języki obce"
         movie={movie_5}
+        video={this.props.video}
+        errVid={this.props.errVid}
         onPrevClick={this.props.onPrevClick}
         onNextClick={this.props.onNextClick}
         comments={this.props.comments}
         loading={this.props.loading}
         error={this.props.error}
         showComments={this.props.showComments}
+        formTab={this.props.formTab}
       >
         <ItemsList
           getItemId={this.getLanguageId}

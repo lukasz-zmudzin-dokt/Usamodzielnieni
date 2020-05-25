@@ -13,13 +13,13 @@ import ig from "assets/footer/instagram-icon.png";
 
 const Footer = () => {
   return (
-    <Container fluid className="font full-width">
-      <Row className="p-5">
+    <Container className="font full-width">
+      <Row className="p-3">
         <Col
           xs={{ span: 12, order: 2 }}
           sm={{ span: 12, order: 2 }}
           md={{ span: 3, order: 1 }}
-          className="p-4"
+          className="p-4 mobile-col"
         >
           <Row className="company-title">Partner</Row>
           <Row className="company-logo-row">
@@ -36,7 +36,7 @@ const Footer = () => {
           xs={{ span: 12, order: 3 }}
           sm={{ span: 12, order: 3 }}
           md={{ span: 3, order: 2 }}
-          className="p-4"
+          className="p-4 mobile-col"
         >
           <Row className="company-title">Twórca strony - studenci</Row>
           <Row className="company-logo-row">
@@ -53,7 +53,7 @@ const Footer = () => {
           xs={{ span: 12, order: 4 }}
           sm={{ span: 12, order: 4 }}
           md={{ span: 3, order: 3 }}
-          className="p-4"
+          className="p-4 mobile-col"
         >
           <Row className="company-title">Pomysłodawca, twórca treści</Row>
           <Row className="company-logo-row">
@@ -69,51 +69,59 @@ const Footer = () => {
         <Col
           xs={{ span: 12, order: 1 }}
           sm={{ span: 12, order: 1 }}
-          md={{ span: 2, order: 4, offset: 1 }}
-          className="social-media-col"
+          md={{ span: 3, order: 4 }}
+          className="p-4 mobile-col"
         >
-          <Row className="pt-3">
+          <Row className="pt-3 social-media-row social-media-row-first">
             <a
               href="https://www.youtube.com/channel/UCbKE3BfzmHGfXbB9nmmswYw"
               target="_blank"
               rel="noopener noreferrer"
-              className="d-flex align-items-end"
+              className="d-flex align-items-end social-media-icon"
             >
-              <img src={yt} className="social-media-icon" alt="yt" />
-              youtube
+              <Col className="p-0">
+                <img src={yt} className="social-media-icon" alt="yt" />
+              </Col>
+              <Col className="pl-3 a">youtube</Col>
             </a>
           </Row>
-          <Row className="pt-3">
+          <Row className="pt-3 social-media-row">
             <a
               href="https://twitter.com/usamodzielnieni"
               target="_blank"
               rel="noopener noreferrer"
-              className="d-flex align-items-end"
+              className="d-flex align-items-end social-media-icon"
             >
-              <img src={tt} className="social-media-icon" alt="tt" />
-              twitter
+              <Col className="p-0">
+                <img src={tt} className="social-media-icon" alt="tt" />
+              </Col>
+              <Col className="pl-3 a">twitter</Col>
             </a>
           </Row>
-          <Row className="pt-3">
+          <Row className="pt-3 social-media-row">
             <a
               href="https://www.facebook.com/Usamodzielnieni-110914023943342"
               target="_blank"
               rel="noopener noreferrer"
-              className="d-flex align-items-end"
+              className="d-flex align-items-end social-media-icon"
             >
-              <img src={fb} className="social-media-icon lol" alt="fb" />
-              facebook
+              <Col className="p-0">
+                <img src={fb} className="social-media-icon lol" alt="fb" />
+              </Col>
+              <Col className="pl-3 a">facebook</Col>
             </a>
           </Row>
-          <Row className="pt-3">
+          <Row className="pt-3 social-media-row">
             <a
               href="https://www.instagram.com/_usamodzielnieni_"
               target="_blank"
               rel="noopener noreferrer"
-              className="d-flex align-items-end"
+              className="d-flex align-items-end social-media-icon"
             >
-              <img src={ig} className="social-media-icon" alt="ig" />
-              instagram
+              <Col className="p-0">
+                <img src={ig} className="social-media-icon" alt="ig" />
+              </Col>
+              <Col className="pl-3 a">instagram</Col>
             </a>
           </Row>
         </Col>

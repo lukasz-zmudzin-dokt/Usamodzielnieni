@@ -20,7 +20,7 @@ exports[`MyOffers should match snapshot 1`] = `
           class="list-group"
         >
           <div
-            class="list-group-item"
+            class="justify-content-end not-read list-group-item"
           >
             <div
               class="justify-content-end row"
@@ -56,13 +56,113 @@ exports[`MyOffers should match snapshot 1`] = `
                 </div>
               </div>
               <button
-                class="mr-2 btn btn-primary"
+                class="m-2 btn btn-primary"
                 type="button"
               >
                 Pokaż CV
               </button>
+              <button
+                class="m-2 btn btn-outline-primary"
+                type="button"
+              >
+                Oznacz jako przeczytane
+              </button>
             </div>
           </div>
+          <ul
+            class="offersPagination mb-0 my-3 justify-content-center pagination"
+          >
+            <li
+              class="page-item disabled"
+            >
+              <span
+                class="page-link"
+                disabled=""
+              >
+                <span
+                  aria-hidden="true"
+                >
+                  «
+                </span>
+                <span
+                  class="sr-only"
+                >
+                  First
+                </span>
+              </span>
+            </li>
+            <li
+              class="page-item disabled"
+            >
+              <span
+                class="page-link"
+                disabled=""
+              >
+                <span
+                  aria-hidden="true"
+                >
+                  ‹
+                </span>
+                <span
+                  class="sr-only"
+                >
+                  Previous
+                </span>
+              </span>
+            </li>
+            <li
+              class="page-item active"
+            >
+              <span
+                class="page-link"
+              >
+                1
+                <span
+                  class="sr-only"
+                >
+                  (current)
+                </span>
+              </span>
+            </li>
+            <li
+              class="page-item disabled"
+            >
+              <span
+                class="page-link"
+                disabled=""
+              >
+                <span
+                  aria-hidden="true"
+                >
+                  ›
+                </span>
+                <span
+                  class="sr-only"
+                >
+                  Next
+                </span>
+              </span>
+            </li>
+            <li
+              class="page-item disabled"
+            >
+              <span
+                class="page-link"
+                disabled=""
+              >
+                <span
+                  aria-hidden="true"
+                >
+                  »
+                </span>
+                <span
+                  class="sr-only"
+                >
+                  Last
+                </span>
+              </span>
+            </li>
+          </ul>
           <div
             class="list-group-item"
           >
@@ -89,6 +189,12 @@ exports[`MyOffers should match snapshot 1`] = `
                   Edytuj ofertę
                 </button>
               </a>
+              <button
+                class="ml-3 btn btn-primary"
+                type="button"
+              >
+                Pobierz zgłoszenia
+              </button>
             </div>
           </div>
         </div>

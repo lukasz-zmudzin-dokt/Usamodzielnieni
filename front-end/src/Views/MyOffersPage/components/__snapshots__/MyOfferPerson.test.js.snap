@@ -3,7 +3,7 @@
 exports[`MyOffersPerson should match snapshot 1`] = `
 <div>
   <div
-    class="list-group-item"
+    class="justify-content-end not-read list-group-item"
   >
     <div
       class="justify-content-end row"
@@ -39,10 +39,16 @@ exports[`MyOffersPerson should match snapshot 1`] = `
         </div>
       </div>
       <button
-        class="mr-2 btn btn-primary"
+        class="m-2 btn btn-primary"
         type="button"
       >
         Pokaż CV
+      </button>
+      <button
+        class="m-2 btn btn-outline-primary"
+        type="button"
+      >
+        Oznacz jako przeczytane
       </button>
     </div>
   </div>

@@ -20,27 +20,23 @@ exports[`ContactPage should match snapshot 1`] = `
           class="card-columns"
         >
           <div
-            class="my-3 card bg-primary text-light"
+            class="my-3 card bg-outline-primary text-dark"
           >
             <div
               class="card-body"
             >
-              <div
-                class="card-title h5"
+              <h2
+                class="d-flex justify-content-between card-title"
               >
-                Telefon Zaufania Dla Dzieci i Młodzieży
-              </div>
+                123123123
+              </h2>
               <p
                 class="card-text"
               >
-                116 111
+                qwe
               </p>
-            </div>
-            <div
-              class="card-footer"
-            >
               <button
-                class="btn btn-light btn-block btn-sm"
+                class="btn btn-primary btn-block btn-sm"
                 type="button"
               >
                 Skopiuj ten numer
@@ -48,111 +44,23 @@ exports[`ContactPage should match snapshot 1`] = `
             </div>
           </div>
           <div
-            class="my-3 card bg-primary text-light"
+            class="my-3 card bg-outline-primary text-dark"
           >
             <div
               class="card-body"
             >
-              <div
-                class="card-title h5"
+              <h2
+                class="d-flex justify-content-between card-title"
               >
-                Telefon Zaufania dla Osób Dorosłych w Kryzysie Emocjonalnym
-              </div>
+                321321321
+              </h2>
               <p
                 class="card-text"
               >
-                116 123
+                asd
               </p>
-            </div>
-            <div
-              class="card-footer"
-            >
               <button
-                class="btn btn-light btn-block btn-sm"
-                type="button"
-              >
-                Skopiuj ten numer
-              </button>
-            </div>
-          </div>
-          <div
-            class="my-3 card bg-primary text-light"
-          >
-            <div
-              class="card-body"
-            >
-              <div
-                class="card-title h5"
-              >
-                Ogólnopolski Telefon Zaufania "Narkotyki – Narkomania"
-              </div>
-              <p
-                class="card-text"
-              >
-                801 199 990
-              </p>
-            </div>
-            <div
-              class="card-footer"
-            >
-              <button
-                class="btn btn-light btn-block btn-sm"
-                type="button"
-              >
-                Skopiuj ten numer
-              </button>
-            </div>
-          </div>
-          <div
-            class="my-3 card bg-primary text-light"
-          >
-            <div
-              class="card-body"
-            >
-              <div
-                class="card-title h5"
-              >
-                Telefon Zaufania "Uzależnienia behawioralne"
-              </div>
-              <p
-                class="card-text"
-              >
-                801 889 880
-              </p>
-            </div>
-            <div
-              class="card-footer"
-            >
-              <button
-                class="btn btn-light btn-block btn-sm"
-                type="button"
-              >
-                Skopiuj ten numer
-              </button>
-            </div>
-          </div>
-          <div
-            class="my-3 card bg-primary text-light"
-          >
-            <div
-              class="card-body"
-            >
-              <div
-                class="card-title h5"
-              >
-                Linia wsparcia dla osób w stanie kryzysu psychicznego
-              </div>
-              <p
-                class="card-text"
-              >
-                800 70 22 22
-              </p>
-            </div>
-            <div
-              class="card-footer"
-            >
-              <button
-                class="btn btn-light btn-block btn-sm"
+                class="btn btn-primary btn-block btn-sm"
                 type="button"
               >
                 Skopiuj ten numer

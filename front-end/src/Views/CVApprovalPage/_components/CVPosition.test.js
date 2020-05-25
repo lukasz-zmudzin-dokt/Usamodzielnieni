@@ -118,11 +118,21 @@ describe("CVPosition", () => {
     await waitForElement(() => getByText("Jarek"));
     fireEvent.click(getByText("Pokaż CV", { exact: false }));
 
-    await waitForElement(() =>
-      fetch(proxy.cv + "generator/" + apiCV.cv_id + "/", {
+    await wait(() =>
+      expect(fetch).toHaveBeenCalledWith(proxy.cv + "generator/0/", {
+        headers: {
+          Authorization: "token undefined",
+          "Content-Type": "application/json",
+        },
         method: "GET",
       })
     );
+
+    // await waitForElement(() =>
+    //   fetch(proxy.cv + "generator/" + apiCV.cv_id + "/", {
+    //     method: "GET",
+    //   })
+    // );
     expect(global.open).toHaveBeenCalledWith(
       proxy.plain + "/media/cv/0",
       "_blank"

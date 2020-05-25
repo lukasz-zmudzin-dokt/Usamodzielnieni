@@ -1,6 +1,7 @@
 import proxy from "config/api";
 
 const domain = proxy.cv;
+
 const url = {
   generate: (id) => `${domain}generator/${id ? id + "/" : ""}`,
   picture: (id) => `${domain}picture/${id}/`,
@@ -9,6 +10,18 @@ const getHeaders = (token) => ({
   Authorization: "Token " + token,
   "Content-Type": "application/json",
 });
+
+const getVideos = async (token, id) => {
+  const url = `${proxy.videos}category/${id}/`;
+
+  const res = await fetch(url, { method: "GET", getHeaders });
+
+  if (res.status === 200) {
+    return await res.json();
+  } else {
+    throw res.status;
+  }
+};
 
 const generateCv = async (token, object, method, id) => {
   const headers = getHeaders(token);
@@ -99,6 +112,7 @@ const getCVdata = async (token, id) => {
   }
 };
 
+<<<<<<< HEAD
 const fetchTemplateList = async (token) => {
   const url = `${domain}templates/`;
   const headers = getHeaders(token);
@@ -113,3 +127,6 @@ const fetchTemplateList = async (token) => {
 };
 
 export { sendData, getFeedback, getCVdata, fetchTemplateList };
+=======
+export { sendData, getFeedback, getCVdata, getVideos };
+>>>>>>> master

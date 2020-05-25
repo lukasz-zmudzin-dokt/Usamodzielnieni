@@ -150,9 +150,7 @@ describe("load cv data", () => {
     );
     expect(getByLabelText("Nazwisko:").value).toBe(data.basic_info.last_name);
     expect(getByLabelText("Adres email:").value).toBe(data.basic_info.email);
-    expect(getByLabelText("Numer telefonu:").value).toBe(
-      data.basic_info.phone_number
-    );
+    expect(getByLabelText("Numer telefonu:").value).toBe("123456789");
   });
 
   it("should load and display correct date", async () => {

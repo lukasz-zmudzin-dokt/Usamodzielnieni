@@ -12,7 +12,7 @@ const mapBasicInfo = (data) => ({
   firstName: data.first_name,
   lastName: data.last_name,
   birthDate: mapBirthDate(data.date_of_birth),
-  phoneNumber: data.phone_number,
+  phoneNumber: data.phone_number.replace(/^\+48/, ""),
   email: data.email,
 });
 

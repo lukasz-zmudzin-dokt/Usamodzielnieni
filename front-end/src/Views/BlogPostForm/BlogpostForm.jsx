@@ -17,6 +17,7 @@ import { convertToRaw } from "draft-js";
 import { Redirect } from "react-router-dom";
 import EditorForm from "./components/EditorForm";
 import { withAlertContext } from "components";
+import { approveFileSize } from "utils/approveFile/approveFile";
 
 class BlogPostForm extends React.Component {
   constructor(props) {
@@ -107,6 +108,10 @@ class BlogPostForm extends React.Component {
     let res;
     try {
       res = await getFilters(this.context.token);
+      res = {
+        ...res,
+        categories: res.categories.map((item) => item.name || item),
+      }; //temp fix
     } catch (e) {
       console.log(e);
       res = { categories: [], tags: [] };
@@ -115,9 +120,16 @@ class BlogPostForm extends React.Component {
   };
 
   onPhotoChange = () => {
-    this.setState({
-      photo: this.fileInput.files[0],
-    });
+    if (approveFileSize(this.fileInput.files[0])) {
+      this.setState({
+        photo: this.fileInput.files[0],
+      });
+    } else {
+      this.props.alertContext.showAlert(
+        "Wybrany plik jest za duży. Maksymalny rozmiar pliku to 15 MB."
+      );
+      this.fileInput = React.createRef();
+    }
   };
 
   onChange = (e) => {

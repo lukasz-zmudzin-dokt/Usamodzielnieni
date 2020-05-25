@@ -1,0 +1,49 @@
+.changeData__back {
+  position: absolute;
+  left: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.card-header.changeData__header {
+  position: relative;
+  padding: 0.75rem 41px;
+}
+
+  .changeData__wrapper__card--account {
+    margin: 1rem 0;
+   
+  }
+
+
+.changeData__button{
+  margin-top: 1rem;
+}
+
+@media (min-width: 768px) {
+  .changeData__wrapper {
+    display: flex;
+    flex-direction: row;
+  }
+  .changeData__wrapper__card {
+    flex-grow: 1;
+  }
+
+    .changeData__wrapper__card--account {
+    margin: 0 1rem;
+   
+  }
+
+  .changeData__wrapper__card:nth-child(1) {
+    margin-bottom: 0;
+  }
+
+  .changeData__loading {
+    flex-grow: 1;
+    align-self: flex-start;
+  }
+  .changeData__button{
+  margin-top: 0rem;
+  margin-left: 1rem;
+}
+}
