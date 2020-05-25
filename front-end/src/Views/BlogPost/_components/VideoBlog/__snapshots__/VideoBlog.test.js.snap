@@ -1,0 +1,77 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`VideoBlog should match snapshot 1`] = `
+<div>
+  <div
+    class="card"
+  >
+    <div
+      class="card-body"
+    >
+      <h2
+        class="mb-4 card-title"
+      >
+        tytuł
+        <button
+          class="mx-3 btn btn-primary"
+          type="button"
+        >
+          Dodaj kartę
+        </button>
+      </h2>
+      <div
+        class="card-columns"
+      >
+        <div
+          class="card border-dark"
+        >
+          <div
+            class="text-right"
+          >
+            <button
+              class="btn btn-light btn-sm"
+              type="button"
+            >
+              X
+            </button>
+          </div>
+          <div>
+            <div>
+              Player
+            </div>
+          </div>
+          <p
+            class="text-justify mx-2 my-3 card-text"
+          >
+            jeden
+          </p>
+        </div>
+        <div
+          class="card border-dark"
+        >
+          <div
+            class="text-right"
+          >
+            <button
+              class="btn btn-light btn-sm"
+              type="button"
+            >
+              X
+            </button>
+          </div>
+          <div>
+            <div>
+              Player
+            </div>
+          </div>
+          <p
+            class="text-justify mx-2 my-3 card-text"
+          >
+            dwa
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

@@ -140,7 +140,7 @@ const VideoBlog = ({ user, postString }) => {
           </Modal.Body>
           <Modal.Footer>
             <Button type="submit" variant="primary">
-              Dodaj kartę
+              Zatwierdź kartę
             </Button>
           </Modal.Footer>
         </Form>

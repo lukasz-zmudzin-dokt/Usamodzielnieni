@@ -75,13 +75,13 @@ exports[`UserProfile should render correctly 1`] = `
           class="buttonsContainer"
         >
           <button
-            class="btn btn-danger"
+            class="my-2 btn btn-danger"
             type="button"
           >
             Usuń konto
           </button>
           <button
-            class="btn btn-info"
+            class="my-2 btn btn-info"
             type="button"
           >
             Zmień hasło
