@@ -62,7 +62,7 @@ a:hover {
     height: 36px;
   }
 }
-@media(min-width: 951px) and (max-width: 991px) {
+@media (min-width: 951px) and (max-width: 991px) {
   .company-title {
     margin-top: 70px;
   }
@@ -120,9 +120,9 @@ a:hover {
   }
 }
 
-@media(min-width: 576px) and (max-width: 767px) {
+@media (min-width: 576px) and (max-width: 767px) {
   .social-media-row {
-    padding-left: 163px!important;
+    padding-left: 163px !important;
     padding-top: 5px !important;
   }
 }
