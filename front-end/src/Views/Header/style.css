@@ -19,6 +19,13 @@
     margin: 0;
     padding: 0;
 }
+.hamburger-toggle {
+    border-style: none;
+    background-color: transparent;
+}
+.hamburger-toggle:focus {
+    outline: none;
+}
 .hamburger-menu-text {
     color: #5073C5!important;
     vertical-align: middle;

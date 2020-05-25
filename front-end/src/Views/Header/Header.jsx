@@ -7,11 +7,13 @@ import "./style.css";
 import {Redirect} from "react-router-dom";
 import logo from "assets/logo-white.png";
 import menu from "assets/hamburger-menu-icon.svg";
+import Alert from "react-bootstrap/Alert";
 
 const Header = () => {
     const context = useContext(UserContext);
     const [isOpen, setIsOpen] = useState(false);
     const [logout, setLogout] = useState(false);
+    const [error, setError] = useState(false);
 
     const handleOpen = () => { setIsOpen(true); };
     const handleClose = () => { setIsOpen(false); };
@@ -22,6 +24,7 @@ const Header = () => {
             setLogout(true);
         } catch (e) {
             console.log(e);
+            setError(true);
         }
     }
     const leftNav = (
@@ -42,7 +45,6 @@ const Header = () => {
             </IndexLinkContainer>
         </Nav>
     );
-    console.log(context);
 
     const staffNavs = [
         {
@@ -70,7 +72,7 @@ const Header = () => {
             group_type: "staff_jobs"
         },
     ];
-
+console.log(context);
 
     const accountDropdownNav = context.type === "standard" ? (
         <IndexLinkContainer to={"/myCVs"}>
@@ -123,9 +125,11 @@ const Header = () => {
         </Nav>
     );
 
+    const errMsg = <Alert variant="danger" className="w-100 mt-2">Wystąpił błąd.</Alert>
+
     return (
         <Navbar collapseOnSelect expand="lg" sticky="top" className="font p-3 justify-content-end">
-            <Navbar.Toggle aria-controls="responsive-navbar-nav" >
+            <Navbar.Toggle aria-controls="responsive-navbar-nav" bsPrefix="hamburger-toggle">
                 <a className="hamburger-menu-text">MENU</a>
                 <img src={menu} id={"menu"} alt={"menu"} className="hamburger-menu-logo" />
             </Navbar.Toggle>
@@ -134,6 +138,7 @@ const Header = () => {
                 {rightNav}
             </Navbar.Collapse>
             {logout ? <Redirect to={"/"} /> : null }
+            { error ? errMsg: null}
         </Navbar>
     );
 };
