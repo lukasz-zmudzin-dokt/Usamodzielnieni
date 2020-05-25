@@ -61,10 +61,7 @@
 }
 
 .notifications.dropdown-menu {
-  @include media-breakpoint-down(sm) {
-    width: calc(100vw - 2rem);
-  }
-  @include media-breakpoint-up(sm) {
+  @include media-breakpoint-up(lg) {
     width: 50vw;
     max-width: 27rem;
     right: 0;

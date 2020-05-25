@@ -8,7 +8,8 @@ import { Redirect, useLocation } from "react-router-dom";
 import logo from "assets/logo-white.png";
 import menu from "assets/hamburger-menu-icon.svg";
 import Alert from "react-bootstrap/Alert";
-import Notifications from "../PageHeader/components/Notifications";
+// import Notifications from "../PageHeader/components/Notifications";
+import Notifications from "./components/Notifications";
 
 const Header = () => {
   const context = useContext(UserContext);
@@ -116,6 +117,8 @@ const Header = () => {
                 </NavDropdown.Item>
               </IndexLinkContainer>
             );
+          } else {
+              return null;
           }
         })}
       </>
@@ -145,6 +148,7 @@ const Header = () => {
           onMouseEnter={handleOpen}
           onMouseLeave={handleClose}
           show={isOpen}
+          // onClick={handleOpen}
         >
           <IndexLinkContainer to={"/user"}>
             <NavDropdown.Item className="account-dropdown-button account-dropdown-button-first white">

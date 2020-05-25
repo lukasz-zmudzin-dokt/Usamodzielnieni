@@ -123,12 +123,4 @@
   .notifications-button:hover {
     background-color: #ff884d!important;
   }
-  .notifications {
-    min-width: 100vh!important;
-    max-width: 100vh!important;
-  }
-  .notifications-container {
-    min-width: 100vh!important;
-    max-width: 100vh!important;
-  }
 }
