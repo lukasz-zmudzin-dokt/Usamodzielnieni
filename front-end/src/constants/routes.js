@@ -41,7 +41,7 @@ export default [
     component: CVEditorPage,
     isPrivate: true,
     type: [userTypes.STANDARD, userTypes.STAFF],
-    group: [staffTypes.GUEST],
+    group: [staffTypes.GUEST, staffTypes.BLOG_MODERATOR],
     exact: true,
     userVerified: true,
   },

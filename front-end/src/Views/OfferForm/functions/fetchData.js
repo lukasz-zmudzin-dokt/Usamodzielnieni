@@ -11,10 +11,33 @@ const sendData = async (offer, token, id) => {
       Authorization: `Token ${token}`,
     },
   });
+
   if (res.status !== 200) {
     throw Error("getSelects");
   }
-  return res.status;
+  return await res.json();
+};
+
+const sendPhoto = async (token, id, photo) => {
+  const formData = new FormData();
+  formData.append("file", photo, photo.name);
+
+  const url = `${proxy.job}job-offer/${id}/image/`;
+  const headers = {
+    Authorization: "Token " + token,
+  };
+
+  const response = await fetch(url, {
+    method: "POST",
+    body: formData,
+    headers,
+  });
+
+  if (response.status !== 200) {
+    throw response.status;
+  }
+
+  return (await response.json()).picture_url;
 };
 
 const getCategories = async () => {
@@ -73,4 +96,4 @@ const getOffer = async (token, id) => {
   }));
 };
 
-export { sendData, getSelects, getCategories, getTypes, getOffer };
+export { sendData, getSelects, getCategories, getTypes, getOffer, sendPhoto };
