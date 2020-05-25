@@ -51,7 +51,7 @@ const Chats = () => {
         loadedChats = await getChats(token, filters);
       } catch (e) {
         console.log(e);
-        loadedChats = [];
+        loadedChats = { count: 0, results: [] };
         setError(true);
       }
       setChats(loadedChats.results);
@@ -68,12 +68,11 @@ const Chats = () => {
   ) : (
     chats.length === 0 && <Alert variant="info">Brak wiadomości.</Alert>
   );
-
   return (
     <Container>
       <Card>
         <Card.Header as="h2">Najnowsze wiadomości</Card.Header>
-        {msg ? (
+        {msg && chats ? (
           <Card.Body className="chats__body">{msg}</Card.Body>
         ) : (
           <ListGroup variant="flush">

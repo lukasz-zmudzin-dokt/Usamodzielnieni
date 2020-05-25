@@ -3,10 +3,6 @@ import { MemoryRouter } from "react-router-dom";
 import { render, waitForElement } from "@testing-library/react";
 import Chats from "./Chats";
 
-jest.mock("./components", () => ({
-  ChatInfo: ({ chat }) => <div>{chat.name}</div>,
-}));
-
 describe("Chats", () => {
   let failFetch = false;
   let apiChats = [];
@@ -29,11 +25,25 @@ describe("Chats", () => {
 
   beforeEach(() => {
     failFetch = false;
-    apiChats = [
-      { id: 1, name: "Wiadomość 1", user: {} },
-      { id: 2, name: "Wiadomość 2", user: {} },
-      { id: 3, name: "Wiadomość 3", user: {} },
-    ];
+    apiChats = {
+      count: 2,
+      next: null,
+      previous: null,
+      results: [
+        {
+          id: "12",
+          first: { username: "xd", first_name: "czesiek", last_name: "xd" },
+          second: { username: "xd2", first_name: "czesiek2", last_name: "xd2" },
+          updated: "2020-05-25T19:22:37.720364+02:00",
+        },
+        {
+          id: "13",
+          first: { username: "xd1", first_name: "czesiek", last_name: "xd" },
+          second: { username: "xd2", first_name: "czesiek2", last_name: "xd2" },
+          updated: "2020-06-25T19:22:37.720364+02:00",
+        },
+      ],
+    };
     jest.clearAllMocks();
   });
 
@@ -44,7 +54,7 @@ describe("Chats", () => {
       </MemoryRouter>
     );
 
-    await waitForElement(() => getByText("Wiadomość 1"));
+    await waitForElement(() => getByText("xd"));
 
     expect(container).toMatchSnapshot();
   });
@@ -59,8 +69,8 @@ describe("Chats", () => {
     expect(
       getByText("Ładowanie wiadomości", { exact: false })
     ).toBeInTheDocument();
-    expect(queryByText("Wiadomość 1")).not.toBeInTheDocument();
-    await waitForElement(() => getByText("Wiadomość 1"));
+    expect(queryByText("xd")).not.toBeInTheDocument();
+    await waitForElement(() => getByText("xd"));
   });
 
   it("should render error alert when api returns error", async () => {
@@ -73,11 +83,11 @@ describe("Chats", () => {
 
     await waitForElement(() => getByText("Wystąpił błąd", { exact: false }));
     expect(getByText("Wystąpił błąd", { exact: false })).toBeInTheDocument();
-    expect(queryByText("Wiadomość 1")).not.toBeInTheDocument();
+    expect(queryByText("xd")).not.toBeInTheDocument();
   });
 
   it("should render info alert when api returns empty list", async () => {
-    apiChats = [];
+    apiChats = { count: 0, results: [] };
     const { getByText, queryByText } = render(
       <MemoryRouter>
         <Chats />
@@ -86,6 +96,6 @@ describe("Chats", () => {
 
     await waitForElement(() => getByText("Brak wiadomości", { exact: false }));
     expect(getByText("Brak wiadomości", { exact: false })).toBeInTheDocument();
-    expect(queryByText("Wiadomość 1")).not.toBeInTheDocument();
+    expect(queryByText("xd")).not.toBeInTheDocument();
   });
 });

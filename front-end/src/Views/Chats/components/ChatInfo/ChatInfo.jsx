@@ -10,7 +10,7 @@ const ChatInfo = ({ chat, ...rest }) => {
         <UserPicture user={chat.first} />
       </Col>
       <Col>
-        <h5>{`${chat.first.first_name} ${chat.first.last_name}`}</h5>
+        <h5>{`${chat.first.username}`}</h5>
         <small>{`Ostatnia wiadomość: ${new Date(
           chat.updated
         ).toLocaleString()}`}</small>

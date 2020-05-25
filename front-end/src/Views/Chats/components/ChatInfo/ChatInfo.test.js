@@ -10,9 +10,8 @@ jest.mock("components", () => ({
 describe("ChatInfo", () => {
   it("should render without crashing", () => {
     const chat = {
-      id: "123",
-      name: "Nazwa chatu",
-      user: {},
+      first: { first_name: "xd", last_name: "dx", username: "czesiek" },
+      updated: "2020-05-25T21:48:18.965719+02:00",
     };
 
     const { container } = render(
