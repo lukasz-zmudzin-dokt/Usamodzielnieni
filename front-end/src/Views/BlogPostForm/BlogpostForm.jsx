@@ -1,5 +1,5 @@
 import React from "react";
-import { Alert, Button, Card, Container, Form } from "react-bootstrap";
+import { Alert, Button, Card, Form } from "react-bootstrap";
 import { createEditorState } from "medium-draft";
 import {
   getFilters,
@@ -215,70 +215,68 @@ class BlogPostForm extends React.Component {
         ) : null}
       </Card.Body>
     ) : (
-      <Container>
-        <Card>
-          <Card.Header>
-            <Form.Group controlId="blogpost_photo">
-              <Form.File
-                name="photo"
-                id="blogspot_header_photo"
-                label={
-                  this.state.photo !== null
-                    ? this.state.photo.name
-                    : "Wybierz zdjęcie na nagłówek posta"
-                }
-                custom
-                ref={(ref) => (this.fileInput = ref)}
-                onChange={this.onPhotoChange}
-                accept="image/*"
-                data-browse="Dodaj"
-              />
-            </Form.Group>
-          </Card.Header>
-          <Card.Body>
-            <Form.Group controlId="blogpost_title" className="mx-3 mb-4">
-              <Form.Control
-                name="title"
-                className="blogpost_title_form block"
-                defaultValue={this.state.title}
-                placeholder="Wpisz tytuł posta..."
-                size="lg"
-                onChange={this.onChange}
-              />
-            </Form.Group>
-            <SelectionRow
-              name="category"
-              arrayType={this.state.filters.categories}
-              current={this.state.category}
+      <>
+        <Card.Header>
+          <Form.Group controlId="blogpost_photo">
+            <Form.File
+              name="photo"
+              id="blogspot_header_photo"
+              label={
+                this.state.photo !== null
+                  ? this.state.photo.name
+                  : "Wybierz zdjęcie na nagłówek posta"
+              }
+              custom
+              ref={(ref) => (this.fileInput = ref)}
+              onChange={this.onPhotoChange}
+              accept="image/*"
+              data-browse="Dodaj"
+            />
+          </Form.Group>
+        </Card.Header>
+        <Card.Body>
+          <Form.Group controlId="blogpost_title" className="mx-3 mb-4">
+            <Form.Control
+              name="title"
+              className="blogpost_title_form block"
+              defaultValue={this.state.title}
+              placeholder="Wpisz tytuł posta..."
+              size="lg"
               onChange={this.onChange}
             />
-            <EditorForm
-              alerts={this.props.alertContext}
-              onChange={this.onEditorChange}
-              state={this.state.editorState}
-              customRef={this.refsEditor}
-              id={this.state.post_id}
-              token={this.context.token}
-            />
-            <SelectionRow
-              className="mt-4"
-              name="tags"
-              arrayType={this.state.filters.tags}
-              onChange={this.onArrayChange}
-              current={this.state.tags}
-              onCut={this.cutFromArray}
-            />
-          </Card.Body>
-          <Card.Footer className="">
-            <Button variant="primary" size="lg" onClick={this.submitPost} block>
-              Opublikuj
-            </Button>
-          </Card.Footer>
-        </Card>
+          </Form.Group>
+          <SelectionRow
+            name="category"
+            arrayType={this.state.filters.categories}
+            current={this.state.category}
+            onChange={this.onChange}
+          />
+          <EditorForm
+            alerts={this.props.alertContext}
+            onChange={this.onEditorChange}
+            state={this.state.editorState}
+            customRef={this.refsEditor}
+            id={this.state.post_id}
+            token={this.context.token}
+          />
+          <SelectionRow
+            className="mt-4"
+            name="tags"
+            arrayType={this.state.filters.tags}
+            onChange={this.onArrayChange}
+            current={this.state.tags}
+            onCut={this.cutFromArray}
+          />
+        </Card.Body>
+        <Card.Footer className="">
+          <Button variant="primary" size="lg" onClick={this.submitPost} block>
+            Opublikuj
+          </Button>
+        </Card.Footer>
         {this.state.redirect ? (
           <Redirect to={`/blog/blogpost/${this.state.post_id}`} />
         ) : null}
-      </Container>
+      </>
     );
   }
 }

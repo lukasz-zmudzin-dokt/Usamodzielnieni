@@ -6,9 +6,11 @@ import { Router } from "react-router-dom";
 import { UserContext } from "context";
 
 jest.mock("./_components", () => ({
-  CVRender: ({ url }) => <div>{`render${url}`}</div>,
   CorrectionForm: () => <div>correction</div>,
 }));
+jest.mock("./_components/CVRender", () => ({ url }) => (
+  <div>{`render${url}`}</div>
+));
 
 let context = { token: "abc" };
 let id = "abcdef";
@@ -58,7 +60,7 @@ describe("CVCorrection", () => {
 
   it("should match snapshot", async () => {
     const { container, getByText } = renderWithRouter(<CVCorrection />);
-    await waitForElement(() => getByText("Uwagi do CV"));
+    await waitForElement(() => getByText("render/media/blank_test_cv"));
     expect(container).toMatchSnapshot();
   });
 
