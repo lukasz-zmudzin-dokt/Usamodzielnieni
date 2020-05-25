@@ -142,7 +142,11 @@ const Header = () => {
         <Notifications location={useLocation} token={context.token} />
         <NavDropdown
           id={"myAccDropdown"}
-          title={<span className="white" onClick={isOpen ? handleClose : handleOpen}>MOJE KONTO</span>}
+          title={
+            <span className="white" onClick={isOpen ? handleClose : handleOpen}>
+              MOJE KONTO
+            </span>
+          }
           className="navbar-right-button register-color"
           onMouseEnter={handleOpen}
           onMouseLeave={handleClose}
