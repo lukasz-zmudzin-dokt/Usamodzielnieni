@@ -3,7 +3,7 @@
 exports[`Notifications should open notifications list when toggle is clicked and api returns list with 2 objects 1`] = `
 <div
   aria-labelledby=""
-  class="dropdown-menu show"
+  class="notifications dropdown-menu show"
   data-testid="dropdownMenu"
   style="position: absolute; top: 0px; left: 0px; transform: translate(0px, 0px);"
   x-placement="bottom-start"
@@ -18,7 +18,7 @@ exports[`Notifications should open notifications list when toggle is clicked and
     >
       <a
         class="dropdown-item"
-        href="/cvEditor"
+        href="/cv"
       >
         <div>
           Rozpatrzono CV
@@ -41,7 +41,7 @@ exports[`Notifications should open notifications list when toggle is clicked and
     >
       <a
         class="dropdown-item"
-        href="/"
+        href="/jobs"
       >
         <div>
           Dostępne nowe oferty pracy

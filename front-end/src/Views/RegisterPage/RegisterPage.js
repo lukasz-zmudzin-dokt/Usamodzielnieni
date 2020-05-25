@@ -27,34 +27,23 @@ class RegisterPage extends React.Component {
           ? "Podopiecznym"
           : [staffTypes.VERIFICATION],
       validated: false,
+      checked: false,
+      passwordOK: true,
       redirect: false,
       disabled: false,
     };
   }
 
-  handleIncorrectResponse = (status) => {
-    switch (status) {
-      case 400:
-        this.props.alertContext.showAlert(
-          "Niepoprawne dane. Spróbuj jeszcze raz."
-        );
-        break;
-      case 500:
-        this.props.alertContext.showAlert(
-          "Błąd serwera. Spróbuj ponownie za jakiś czas."
-        );
-        break;
-      default:
-        this.props.alertContext.showAlert("Nieznany błąd");
-    }
-  };
-
   handleSubmit = (data, event) => {
     const form = event.currentTarget;
     event.preventDefault();
     const { password, passwordR } = data.accountData || {};
-
-    if (form.checkValidity() === false || password !== passwordR) {
+    this.setState({ passwordOk: true, checked: true });
+    if (form.checkValidity() === false) {
+      event.stopPropagation();
+      return false;
+    } else if (password !== passwordR) {
+      this.setState({ passwordOk: false });
       event.stopPropagation();
       return false;
     } else return true;
@@ -154,7 +143,7 @@ class RegisterPage extends React.Component {
           return this.setRedirect();
         }
       } catch (error) {
-        this.handleIncorrectResponse(error.status);
+        this.props.alertContext.showAlert(Object.values(error)[0]);
       }
     }
     this.setState({ disabled: false });
@@ -198,6 +187,8 @@ class RegisterPage extends React.Component {
                   data={accountData}
                   onBlur={(accountData) => this.setState({ accountData })}
                   isAdmin={this.props.match.params.role === "staff"}
+                  passwordOk={this.state.passwordOk}
+                  checked={this.state.checked}
                 />
               </section>
               <Button

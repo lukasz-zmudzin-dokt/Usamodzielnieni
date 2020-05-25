@@ -45,6 +45,9 @@ class PhotoTab extends React.Component {
         showComments={this.props.showComments}
         disabled={this.props.disabled}
         isNew={this.props.isNew}
+        video={this.props.video}
+        errVid={this.props.errVid}
+        formTab={this.props.formTab}
       >
         <Form>
           <Form.Group>

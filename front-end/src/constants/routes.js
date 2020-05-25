@@ -22,6 +22,7 @@ import {
   Chats,
   UserList,
   OfferApprovalPage,
+  ChangeData,
   PasswordResetPrompt,
   NewPasswordPage,
 } from "Views";
@@ -39,7 +40,8 @@ export default [
     path: paths.CV_CREATOR,
     component: CVEditorPage,
     isPrivate: true,
-    type: userTypes.STANDARD,
+    type: [userTypes.STANDARD, userTypes.STAFF],
+    group: [staffTypes.BLOG_MODERATOR],
     exact: true,
     userVerified: true,
   },
@@ -204,6 +206,13 @@ export default [
     isPrivate: true,
     type: userTypes.STAFF,
     group: staffTypes.JOBS,
+  },
+  {
+    path: paths.CHANGE_DATA,
+    component: ChangeData,
+    isPrivate: true,
+    type: userTypes.STAFF,
+    group: staffTypes.VERIFICATION,
   },
   {
     path: paths.PASSWORD_RESET,

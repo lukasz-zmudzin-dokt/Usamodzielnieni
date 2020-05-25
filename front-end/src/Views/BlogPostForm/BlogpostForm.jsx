@@ -108,6 +108,10 @@ class BlogPostForm extends React.Component {
     let res;
     try {
       res = await getFilters(this.context.token);
+      res = {
+        ...res,
+        categories: res.categories.map((item) => item.name || item),
+      }; //temp fix
     } catch (e) {
       console.log(e);
       res = { categories: [], tags: [] };
