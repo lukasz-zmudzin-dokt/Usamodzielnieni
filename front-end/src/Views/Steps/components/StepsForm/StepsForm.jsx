@@ -8,23 +8,26 @@ const StepsForm = ({
   setNewStep,
   newStep,
   steps,
+  isEdit,
 }) => {
   const stepsTypes = ["Krok główny", "Podkrok"];
   const isStep = type === stepsTypes[0];
   return (
     <>
-      <FormGroup
-        type="select"
-        header="Rodzaj kroku"
-        id="stepType"
-        array={stepsTypes}
-        required
-        val={type}
-        setVal={(val) => {
-          setType(val);
-          setValidated(false);
-        }}
-      />
+      {!isEdit ? (
+        <FormGroup
+          type="select"
+          header="Rodzaj kroku"
+          id="stepType"
+          array={stepsTypes}
+          required
+          val={type}
+          setVal={(val) => {
+            setType(val);
+            setValidated(false);
+          }}
+        />
+      ) : null}
       <FormGroup
         type="select"
         header={`${

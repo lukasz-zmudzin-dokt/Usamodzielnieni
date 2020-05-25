@@ -174,3 +174,155 @@ exports[`NewStep should match snapshot(step) 1`] = `
   </div>
 </div>
 `;
+
+exports[`NewStep should send substep 1`] = `
+<div
+  aria-modal="true"
+  class="fade modal show"
+  role="dialog"
+  style="display: block;"
+  tabindex="-1"
+>
+  <div
+    class="modal-dialog"
+    role="document"
+  >
+    <div
+      class="modal-content"
+    >
+      <form
+        class="was-validated"
+        novalidate=""
+      >
+        <div
+          as="h2"
+          class="modal-header"
+        >
+          <div
+            class="modal-title h4"
+          >
+            Dodaj nowy 
+            podkrok
+          </div>
+          <button
+            class="close"
+            type="button"
+          >
+            <span
+              aria-hidden="true"
+            >
+              ×
+            </span>
+            <span
+              class="sr-only"
+            >
+              Close
+            </span>
+          </button>
+        </div>
+        <div
+          class="modal-body"
+        >
+          <div
+            class="form-group"
+          >
+            <label
+              class="form-label"
+              for="stepType"
+            >
+              Rodzaj kroku
+            </label>
+            <select
+              class="form-control"
+              id="stepType"
+              required=""
+            >
+              <option>
+                Krok główny
+              </option>
+              <option>
+                Podkrok
+              </option>
+            </select>
+          </div>
+          <div
+            class="form-group"
+          >
+            <label
+              class="form-label"
+              for="stepParent"
+            >
+              Wybierz rodzica podkroku 
+            </label>
+            <select
+              class="form-control"
+              id="stepParent"
+              required=""
+            >
+              <option>
+                abc
+              </option>
+            </select>
+          </div>
+          <div
+            class="form-group"
+          >
+            <label
+              class="form-label"
+              for="stepTitle"
+            >
+              Tytuł podkroku
+            </label>
+            <input
+              class="form-control"
+              data-testid="default"
+              id="stepTitle"
+              maxlength="50"
+              minlength="1"
+              placeholder="Tytuł podkroku"
+              required=""
+              type="text"
+              value="siema"
+            />
+            <div
+              class="invalid-feedback"
+            >
+              Podaj tytuł podkroku.
+            </div>
+          </div>
+          <div
+            class="form-group"
+          >
+            <label
+              class="form-label"
+              for="stepVideo"
+            >
+              Film (link youtube)
+            </label>
+            <input
+              class="form-control"
+              data-testid="default"
+              id="stepVideo"
+              maxlength="50"
+              minlength="1"
+              placeholder="Film (link youtube)"
+              type="text"
+              value=""
+            />
+          </div>
+        </div>
+        <div
+          class="modal-footer"
+        >
+          <button
+            class="btn btn-primary"
+            type="submit"
+          >
+            Dodaj podkrok
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+`;

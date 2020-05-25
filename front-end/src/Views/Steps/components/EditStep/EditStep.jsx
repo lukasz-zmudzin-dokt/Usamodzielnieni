@@ -6,7 +6,9 @@ import { editStep } from "./functions/editStep";
 
 const EditStep = ({ step, steps, show, handleClose }) => {
   const stepsTypes = ["Krok główny", "Podkrok"];
-  const [type, setType] = useState(stepsTypes[0]);
+  const [type, setType] = useState(
+    step.description ? stepsTypes[0] : stepsTypes[1]
+  );
   const [newStep, setNewStep] = useState({
     title: "",
     description: "",
@@ -28,11 +30,9 @@ const EditStep = ({ step, steps, show, handleClose }) => {
     const form = e.currentTarget;
     if (form.checkValidity() !== false) {
       let res;
-      console.log(newStep);
-      const object = steps.children.find((item) => {
-        console.log(item.title, newStep.parent);
-        return item.title === newStep.parent;
-      });
+      const object = steps.children.find(
+        (item) => item.title === newStep.parent
+      );
       const data = {
         ...newStep,
         parent: object.id,
@@ -62,6 +62,7 @@ const EditStep = ({ step, steps, show, handleClose }) => {
             setType={setType}
             steps={steps}
             setValidated={setValidated}
+            isEdit={true}
           />
         </Modal.Body>
         <Modal.Footer>
@@ -73,21 +74,3 @@ const EditStep = ({ step, steps, show, handleClose }) => {
 };
 
 export default EditStep;
-
-//  {
-//    newStep.next.map((val, i) => (
-//      <FormGroup
-//        type="text"
-//        header={`Zmień zawartość przycisku ${i + 1}`}
-//        id={`next${i + 1}_change`}
-//        required
-//        val={newStep.next[i]}
-//        setVal={(val) =>
-//          setNewStep({
-//            ...newStep,
-//            next: [val, newStep.next[i]],
-//          })
-//        }
-//      />
-//    ));
-//  }

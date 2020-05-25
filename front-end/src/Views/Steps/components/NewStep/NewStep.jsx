@@ -20,7 +20,6 @@ const NewStep = ({ steps, show, handleClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const form = e.currentTarget;
-    console.log(newStep, type);
     if (form.checkValidity() !== false) {
       let res;
       const object = steps.children.find(
@@ -30,9 +29,9 @@ const NewStep = ({ steps, show, handleClose }) => {
         ...newStep,
         parent: object.id,
       };
-      console.log(data);
       try {
         res = await sendNewStep(user.token, isStep, data);
+
         alertC.current.showAlert(res.message, "success");
         handleClose();
       } catch (e) {
