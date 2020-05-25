@@ -15,9 +15,9 @@ const ChatInfo = ({ chat, ...rest }) => {
           chat.updated
         ).toLocaleString()}`}</small>
       </Col>
-      <Col xs="auto" className="align-self-center">
+      <Col xs="12" md="auto" className="align-self-center text-center">
         <IndexLinkContainer to={`/chats/${chat.first.username}`}>
-          <Button>Pokaż szczegóły</Button>
+          <Button className="mt-2 mt-md-0">Pokaż szczegóły</Button>
         </IndexLinkContainer>
       </Col>
     </Row>
