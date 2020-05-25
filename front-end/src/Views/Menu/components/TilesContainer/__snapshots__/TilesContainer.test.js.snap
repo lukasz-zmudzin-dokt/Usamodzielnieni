@@ -3,13 +3,17 @@
 exports[`TilesContainer should render without crashing 1`] = `
 <div>
   <div
-    class="tilesGrid"
+    class="tilesGrid__container"
   >
-    <div>
-      Telefon zaufania
-    </div>
-    <div>
-      Zapytaj
+    <div
+      class="tilesGrid"
+    >
+      <div>
+        Telefon zaufania
+      </div>
+      <div>
+        Zapytaj
+      </div>
     </div>
   </div>
 </div>

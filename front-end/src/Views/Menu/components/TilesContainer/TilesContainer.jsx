@@ -159,17 +159,19 @@ const TilesContainer = () => {
 
   return (
     msg || (
-      <div className="tilesGrid">
-        {tiles.map((tile) => (
-          <Tile
-            key={tile.id}
-            color={tile.color}
-            imageUrl={tile.imageUrl}
-            showImage={tile.show}
-            title={tile.title}
-            destination={tile.destination}
-          />
-        ))}
+      <div className="tilesGrid__container">
+        <div className="tilesGrid">
+          {tiles.map((tile) => (
+            <Tile
+              key={tile.id}
+              color={tile.color}
+              imageUrl={tile.imageUrl}
+              showImage={tile.show}
+              title={tile.title}
+              destination={tile.destination}
+            />
+          ))}
+        </div>
       </div>
     )
   );

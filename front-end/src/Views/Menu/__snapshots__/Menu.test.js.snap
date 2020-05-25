@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Menu should render without crashing 1`] = `
+<div>
+  <div
+    class="Menu container-fluid"
+  >
+    <div
+      class="row"
+    >
+      <div>
+        MainPhoto
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div>
+        TvContainer
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div>
+        TilesContainer
+      </div>
+    </div>
+  </div>
+</div>
+`;
