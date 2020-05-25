@@ -53,6 +53,8 @@
       justify-content: center;
       padding: 1rem calc(1rem + 20vw);
       img {
+        min-width: 300px;
+        width: 100%;
         max-width: 1000px;
       }
       &__video__container {
@@ -65,12 +67,14 @@
         right: 0;
         .tvContainer__tv__video {
           margin: 1rem calc(1rem + 20vw);
+          min-width: 250px;
           max-width: 1000px;
           width: 100%; 
           .tvContainer__tv__video__space {
-            padding: 7% 20% 13% 7%;
+            padding: 7% 20% 7% 7%;
             height: 100%;
             display: flex;
+            position: relative;
             justify-content: center;
             align-items: center;
             .videoField__container {
