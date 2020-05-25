@@ -1,7 +1,14 @@
 import React, { useEffect, useRef } from "react";
 import { Bullet, StepCard } from "../";
 
-const ProgressBarFragment = ({ step, current, index, setCurrent }) => {
+const ProgressBarFragment = ({
+  step,
+  current,
+  index,
+  setCurrent,
+  wantsDelete,
+  path,
+}) => {
   const ref = useRef(null);
   const type = current ? "current" : step ? "visited" : "next";
 
@@ -21,7 +28,14 @@ const ProgressBarFragment = ({ step, current, index, setCurrent }) => {
       <div className={`progressBarFragment progressBarFragment--${type}`}>
         <div className="progressBarFragment__state"></div>
       </div>
-      {step && <StepCard step={step} setCurrent={setCurrent} />}
+      {step && (
+        <StepCard
+          step={step}
+          setCurrent={setCurrent}
+          wantsDelete={wantsDelete}
+          path={path}
+        />
+      )}
     </div>
   );
 };

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { ProgressBarFragment } from "../";
 import proxy from "config/api";
 import { Alert } from "react-bootstrap";
+import { deleteStep, findParents } from "../../functions/deleteStep";
+import { DeletionModal } from "components";
 
 const tmpSteps = [
   {
@@ -84,7 +86,10 @@ const mapSteps = (steps) =>
 const ProgressBar = () => {
   const [steps, setSteps] = useState();
   const [path, setPath] = useState(["1"]);
+  //const [path, setPath] = useState([]);
   const [error, setError] = useState(false);
+  const [wantsDelete, setWantsDelete] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const loadSteps = async () => {
@@ -120,9 +125,34 @@ const ProgressBar = () => {
     !steps && <Alert variant="info">Ładowanie...</Alert>
   );
 
+  if (wantsDelete) {
+    let step = steps.find((s) => s.id === path[path.length - 1]);
+    deleteStep(steps, step, setSteps);
+    setWantsDelete(false);
+    let newPath = path;
+    newPath.pop();
+    setPath(newPath);
+  }
+  /*
+  if(path.length === 0) {
+    steps.forEach(step => {
+        if(findParents(steps, step).length === 0) {
+            let newPath = [];
+            newPath.push(step.id);
+            setPath(newPath);
+        }
+    });
+  }
+*/
   return (
     msg || (
       <div>
+        <DeletionModal
+          show={showModal}
+          setShow={setShowModal}
+          delConfirmed={setWantsDelete}
+          question="Czy na pewno chcesz usunąć ten krok?"
+        />
         {path.map((stepId, i) => (
           <ProgressBarFragment
             key={stepId}
@@ -130,6 +160,8 @@ const ProgressBar = () => {
             step={steps.find((step) => step.id === stepId)}
             current={path.length - 1 === i}
             setCurrent={setCurrent}
+            wantsDelete={setShowModal}
+            path={path}
           />
         ))}
         {steps.find((step) => step.id === path[path.length - 1])?.next && (
