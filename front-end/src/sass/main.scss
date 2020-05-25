@@ -15,7 +15,8 @@
 @import "pages/jobOfferDetails";
 @import "pages/messagesList";
 @import "pages/chats";
-
+@import "pages/changeData";
+@import "pages/jobOffersPage";
 
 @import "components/detailsItem";
 @import "components/CVEditorTab";
@@ -27,4 +28,6 @@
 @import "components/alertMessage";
 @import "components/formGroup";
 @import "components/userPicture";
-@import "components/Player";
+@import "components/videoField";
+
+@import "components/player";

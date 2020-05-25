@@ -5,7 +5,7 @@ const mapPersonalData = (personalData) => ({
   first_name: personalData.firstName,
   last_name: personalData.lastName,
   date_of_birth: mapDate(personalData.birthDate),
-  phone_number: personalData.phoneNumber,
+  phone_number: "+48" + personalData.phoneNumber,
   email: personalData.email,
 });
 const mapEducation = (education) =>

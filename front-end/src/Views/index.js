@@ -22,6 +22,7 @@ import MessagesList from "Views/MessagesList";
 import Chats from "Views/Chats";
 import UserList from "Views/UserList/UserList";
 import OfferApprovalPage from "Views/OfferApprovalPage";
+import ChangeData from "Views/ChangeData";
 import PasswordResetPrompt from "Views/PasswordResetPrompt";
 import NewPasswordPage from "Views/NewPasswordPage";
 
@@ -51,5 +52,6 @@ export {
   OfferApprovalPage,
   MessagesList,
   Chats,
+  ChangeData,
   UserList,
 };
