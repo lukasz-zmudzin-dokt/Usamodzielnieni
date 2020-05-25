@@ -13,7 +13,7 @@ import Notifications from "../PageHeader/components/Notifications";
 const Header = () => {
   const context = useContext(UserContext);
   const [isOpen, setIsOpen] = useState(false);
-  const [isOpenNotifications, setIsOpenNotifications] = useState(false);
+  // const [isOpenNotifications, setIsOpenNotifications] = useState(false);
   const [logout, setLogout] = useState(false);
   const [error, setError] = useState(false);
 
@@ -22,13 +22,13 @@ const Header = () => {
   };
   const handleClose = () => {
     setIsOpen(false);
-  };
+  };/*
   const handleOpenNotifications = () => {
     setIsOpenNotifications(true);
   };
   const handleCloseNotifications = () => {
     setIsOpenNotifications(false);
-  };
+  };*/
 
   const handleLogout = async () => {
     try {

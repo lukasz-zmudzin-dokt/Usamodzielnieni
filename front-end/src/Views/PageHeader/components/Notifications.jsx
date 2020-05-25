@@ -48,7 +48,6 @@ const Notifications = ({ location, ...rest }) => {
       <Dropdown.Toggle
         as={NotificationToggle}
         count={notifications === null || error ? 0 : count}
-        className="notifications-button"
       />
       <Dropdown.Menu data-testid="dropdownMenu" className="notifications">
         {error ? (

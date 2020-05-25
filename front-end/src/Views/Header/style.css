@@ -58,6 +58,14 @@
   .notifications-button {
     height: 40px;
     padding-top: 9px;
+    border-radius: 0!important;
+    box-shadow: none!important;
+  }
+  .notifications-button:focus {
+    background-color: #ff884d!important;
+  }
+  .notifications-button:hover {
+    background-color: #ff884d!important;
   }
 }
 @media (max-width: 991px) {
@@ -101,5 +109,26 @@
   .hamburger-menu-logo {
     width: 35px;
     margin-left: 15px;
+  }
+  .notifications-button {
+    height: 40px;
+    padding-top: 9px;
+    border-radius: 0!important;
+    box-shadow: none!important;
+    width: 100%;
+  }
+  .notifications-button:focus {
+    background-color: #ff884d!important;
+  }
+  .notifications-button:hover {
+    background-color: #ff884d!important;
+  }
+  .notifications {
+    min-width: 100vh!important;
+    max-width: 100vh!important;
+  }
+  .notifications-container {
+    min-width: 100vh!important;
+    max-width: 100vh!important;
   }
 }

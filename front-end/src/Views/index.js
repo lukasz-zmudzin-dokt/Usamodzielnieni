@@ -25,6 +25,7 @@ import ChangeData from "Views/ChangeData";
 import PasswordResetPrompt from "Views/PasswordResetPrompt";
 import NewPasswordPage from "Views/NewPasswordPage";
 import Header from "./Header";
+import headerTemplate from "./PageHeader";
 
 export {
   UserProfilePage,
@@ -54,4 +55,5 @@ export {
   ChangeData,
   UserList,
   Header,
+  headerTemplate
 };
