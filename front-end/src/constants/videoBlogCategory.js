@@ -1,1 +1,0 @@
-export const VIDEOBLOG_CATEGORY = "videoblog";

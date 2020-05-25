@@ -91,7 +91,7 @@ const VideoBlog = ({user, post, setPost, alertC}) => {
                     )
                 }
                 <CardDeck>
-                    {post.content.map(item => (
+                    {post.content !== "początek" && post.content.map(item => (
                         <VideoCard
                             key={item.id}
                             content={item}
