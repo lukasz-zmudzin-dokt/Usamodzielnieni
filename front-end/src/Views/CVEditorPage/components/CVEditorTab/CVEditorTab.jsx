@@ -1,5 +1,6 @@
 import React from "react";
 import { Button, Row, Col, Alert, Form } from "react-bootstrap";
+import {staffTypes} from "constants/staffTypes";
 
 const CVEditorTab = ({
   title,
@@ -64,9 +65,7 @@ const CVEditorTab = ({
               id="saveButton"
               block
               disabled={
-                group_type && group_type.includes("staff_guest")
-                  ? true
-                  : disabled
+                group_type?.includes(staffTypes.GUEST) || disabled
               }
             >
               {disabled
