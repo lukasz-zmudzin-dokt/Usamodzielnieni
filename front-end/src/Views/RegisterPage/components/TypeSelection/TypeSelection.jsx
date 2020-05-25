@@ -1,7 +1,7 @@
 import React from "react";
 import { Form } from "react-bootstrap";
 import { adminGroup, commonGroup } from "constants/roles";
-import { staffTypes } from "constants/staffTypes"
+import { staffTypes } from "constants/staffTypes";
 
 const renderCommon = (selectType) => (
   <Form.Group className="register_account_type">
