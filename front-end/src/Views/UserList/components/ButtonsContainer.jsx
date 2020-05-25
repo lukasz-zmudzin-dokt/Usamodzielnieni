@@ -15,10 +15,12 @@ const ButtonsContainer = ({ user, setUser, deleteUser }) => {
     <div className="buttonsContainer">
       {disableButtons ? (
         <Button disabled={disableButtons}>Wyślij wiadomość</Button>
-      ) : userCon.data?.group_type?.includes(staffTypes.CHAT) && (
-        <IndexLinkContainer to={`/chats/${user.username}`}>
-          <Button>Wyślij wiadomość</Button>
-        </IndexLinkContainer>
+      ) : (
+        userCon.data?.group_type?.includes(staffTypes.CHAT) && (
+          <IndexLinkContainer to={`/chats/${user.username}`}>
+            <Button>Wyślij wiadomość</Button>
+          </IndexLinkContainer>
+        )
       )}
       {user.type !== userTypes.STAFF && (
         <>
@@ -29,13 +31,12 @@ const ButtonsContainer = ({ user, setUser, deleteUser }) => {
           ) : (
             <UnblockAccountButton user={user} setUser={setUser} />
           )}
-          {
-            userCon.data.group_type.includes(staffTypes.VERIFICATION) && (
-              <DeleteAccountButton
-                  disabled={disableButtons}
-                  user={user}
-                  afterDeletion={deleteUser}
-              />
+          {userCon.data.group_type.includes(staffTypes.VERIFICATION) && (
+            <DeleteAccountButton
+              disabled={disableButtons}
+              user={user}
+              afterDeletion={deleteUser}
+            />
           )}
         </>
       )}
