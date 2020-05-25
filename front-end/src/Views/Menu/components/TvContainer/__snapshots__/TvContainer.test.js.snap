@@ -1,0 +1,53 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TvContainer should render without crashing 1`] = `
+<div>
+  <div
+    class="tvContainer"
+  >
+    <div
+      class="tvContainer__shapes"
+    >
+      <div
+        class="tvContainer__shapes__left"
+      >
+        <img
+          alt=""
+          src="/left_tv.svg"
+        />
+      </div>
+      <div
+        class="tvContainer__shapes__right"
+      >
+        <img
+          alt=""
+          src="/right_tv.svg"
+        />
+      </div>
+    </div>
+    <div
+      class="tvContainer__tv"
+    >
+      <img
+        alt=""
+        src="/tv.png"
+      />
+      <div
+        class="tvContainer__tv__video__container"
+      >
+        <div
+          class="tvContainer__tv__video"
+        >
+          <div
+            class="tvContainer__tv__video__space"
+          >
+            <div>
+              VideoField
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
