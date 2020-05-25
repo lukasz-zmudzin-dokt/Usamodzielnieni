@@ -25,8 +25,8 @@ const NewStep = ({ steps, show, handleClose, root }) => {
       description: "",
       video: "",
       parent: steps[0]?.title,
-    })
-  }, [steps])
+    });
+  }, [steps]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
