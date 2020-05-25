@@ -13,7 +13,6 @@ const StepsForm = ({
   const isStep = type === stepsTypes[0];
   return (
     <>
-      {" "}
       <FormGroup
         type="select"
         header="Rodzaj kroku"
@@ -43,12 +42,12 @@ const StepsForm = ({
         }
       />
       <FormGroup
-        header={`Tytuł ${isStep ? "kroku." : "podkroku."}`}
+        header={`Tytuł ${isStep ? "kroku" : "podkroku"}`}
         setVal={(val) => setNewStep({ ...newStep, title: val })}
         val={newStep.title || ""}
         incorrect={`Podaj tytuł ${isStep ? "kroku." : "podkroku."}`}
         length={{ min: 1, max: 50 }}
-        id="stepTitlee"
+        id="stepTitle"
         required
       />
       <FormGroup

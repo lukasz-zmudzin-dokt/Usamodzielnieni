@@ -20,14 +20,12 @@ exports[`NewStep should match snapshot(step) 1`] = `
         novalidate=""
       >
         <div
-          as="h2"
           class="modal-header"
         >
           <div
             class="modal-title h4"
           >
-            Dodaj nowy 
-            krok
+            Edytuj krok
           </div>
           <button
             class="close"
@@ -107,7 +105,7 @@ exports[`NewStep should match snapshot(step) 1`] = `
               placeholder="Tytuł kroku"
               required=""
               type="text"
-              value=""
+              value="Tytuł głównego kroku 1"
             />
             <div
               class="invalid-feedback"
@@ -151,7 +149,9 @@ exports[`NewStep should match snapshot(step) 1`] = `
               minlength="1"
               placeholder="Wpisz treść... "
               required=""
-            />
+            >
+              xDD
+            </textarea>
             <div
               class="invalid-feedback"
             >
@@ -166,7 +166,7 @@ exports[`NewStep should match snapshot(step) 1`] = `
             class="btn btn-primary"
             type="submit"
           >
-            Dodaj krok
+            Prześlij zmiany
           </button>
         </div>
       </form>

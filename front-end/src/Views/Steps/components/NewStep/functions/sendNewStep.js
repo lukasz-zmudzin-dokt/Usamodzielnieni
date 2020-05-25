@@ -14,6 +14,8 @@ const sendNewStep = async (token, isStep, data) => {
     headers,
   });
 
+  console.log(res);
+
   if (res.status !== 201) {
     throw await res.json();
   }

@@ -27,6 +27,30 @@ describe("NewStep", () => {
       ],
     },
   };
+  let failFetch = false;
+
+  beforeAll(() => {
+    global.fetch = jest.fn().mockImplementation((input, init) => {
+      return new Promise((resolve, reject) => {
+        if (failFetch) {
+          resolve({ status: 500 });
+        }
+        switch (init.method) {
+          case "POST":
+            resolve({ status: 201 });
+            break;
+          default:
+            reject({});
+            break;
+        }
+      });
+    });
+  });
+
+  beforeEach(() => {
+    failFetch = false;
+  });
+
   it("should match snapshot(step)", async () => {
     const { getByRole } = render(
       <UserContext.Provider value={user}>
@@ -40,28 +64,55 @@ describe("NewStep", () => {
     expect(modal).toMatchSnapshot();
   });
 
-  it("should match snapshot(substep)", async () => {
-    const { getByRole } = render(
+  it("should send data", async () => {
+    const { getByRole, getByLabelText, getByText } = render(
       <UserContext.Provider value={user}>
         <AlertContext.Provider value={alertC}>
           <NewStep {...props} />
         </AlertContext.Provider>
       </UserContext.Provider>
     );
-    const modal = getByRole("dialog");
+
+    await waitForElement(() => getByLabelText("Wybierz krok poprzedzający"));
+    fireEvent.change(
+      getByLabelText("Wybierz krok poprzedzający", {
+        target: { value: "abc" },
+      })
+    );
 
     fireEvent.change(
-      queries.getByLabelText(modal, "Rodzaj kroku", {
+      getByLabelText("Opis kroku", {
         target: {
-          value: "Podkrok",
+          value: "siema",
         },
       })
     );
 
-    await waitForElement(() =>
-      queries.getByText(modal, "Wybierz rodzica podkroku")
-    );
+    fireEvent.click(getByText("Dodaj krok"));
 
-    expect(modal).toMatchSnapshot();
+    expect(alertC.showAlert).toHaveBeenCalledWith("xd");
   });
+
+  //   it("should match snapshot(substep)", async () => {
+  //     const { getByRole } = render(
+  //       <UserContext.Provider value={user}>
+  //         <AlertContext.Provider value={alertC}>
+  //           <NewStep {...props} />
+  //         </AlertContext.Provider>
+  //       </UserContext.Provider>
+  //     );
+  //     const modal = getByRole("dialog");
+
+  //     fireEvent.change(
+  //       queries.getByLabelText(modal, "Rodzaj kroku", {
+  //         target: {
+  //           value: "Podkrok",
+  //         },
+  //       })
+  //     );
+
+  //     await waitForElement(() => queries.getByText(modal, "Dodaj nowy podkrok"));
+
+  //     expect(modal).toMatchSnapshot();
+  //   });
 });
