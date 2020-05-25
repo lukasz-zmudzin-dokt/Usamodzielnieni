@@ -5,7 +5,7 @@ import React, {
   useRef,
   useCallback,
 } from "react";
-import { ListGroup, Container, Card, Button, Row } from "react-bootstrap";
+import { ListGroup, Container, Card, Button } from "react-bootstrap";
 import MessageItem from "./components/MessageItem";
 import { ChatForm } from "./components";
 import proxy from "config/api";
