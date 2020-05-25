@@ -268,7 +268,7 @@ class CVEditorPage extends React.Component {
       templateList: res,
     });
   };
-  
+
   getVideosData = async () => {
     try {
       const res = await getVideos(this.context.token, 1);
