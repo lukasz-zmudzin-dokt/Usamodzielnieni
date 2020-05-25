@@ -1,5 +1,5 @@
 import React, {useContext, useRef, useState} from "react";
-import {Button, Card, CardDeck, Form, Modal} from "react-bootstrap";
+import {Button, Card, CardColumns, CardDeck, Form, Modal} from "react-bootstrap";
 import VideoCard from "../VideoCard/VideoCard";
 import {FormGroup} from "components";
 import {staffTypes} from "constants/staffTypes";
@@ -93,13 +93,13 @@ const VideoBlog = ({user, postString}) => {
             <Card.Body>
                 <Card.Title as="h2">
                     {postString.title}
+                    {
+                        user?.data?.group_type?.includes(staffTypes.BLOG_CREATOR) && (
+                            <Button variant="primary" className="mx-3" onClick={e => setShowModal(true)}>Dodaj kartę</Button>
+                        )
+                    }
                 </Card.Title>
-                {
-                    user?.data?.group_type?.includes(staffTypes.BLOG_CREATOR) && (
-                        <Button variant="primary" onClick={e => setShowModal(true)}>Dodaj kartę</Button>
-                    )
-                }
-                <CardDeck>
+                <CardColumns>
                     {content.map(item => (
                         <VideoCard
                             key={item.id}
@@ -108,7 +108,7 @@ const VideoBlog = ({user, postString}) => {
                             user={user}
                         />
                     ))}
-                </CardDeck>
+                </CardColumns>
             </Card.Body>
             <Modal show={showModal} onHide={e => clearData()}>
                 <Modal.Header closeButton>

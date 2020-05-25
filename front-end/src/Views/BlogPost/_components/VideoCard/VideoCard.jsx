@@ -12,13 +12,16 @@ const VideoCard = ({content, user, cutCard}) => {
             {
                 user?.type === userTypes.STAFF &&
                     user?.data?.group_type.includes(staffTypes.BLOG_CREATOR) && (
-                    <Card.Subtitle className="justify-content-end">
-                        <Button variant="light" onClick={e => setToDelete(true)}>X</Button>
-                    </Card.Subtitle>
+                    <div className="text-right">
+                        <Button variant="light" size="sm" onClick={e => setToDelete(true)}>X</Button>
+                    </div>
                 )
             }
             <div>wideo</div> {/*url*/}
             <Card.Text>
+                <Card.Subtitle className="text-right">
+
+                </Card.Subtitle>
                 {content.description}
             </Card.Text>
             <DeletionModal
