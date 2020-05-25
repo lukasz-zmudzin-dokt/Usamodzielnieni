@@ -62,9 +62,10 @@ const getChildren = async (step, mainSteps) => {
   if (step.children.length > 0) {
     const childrens = await Promise.all(
       step.children.map((item) => getStep(item.id))
-    ).then((values) => values);
+    );
 
-    childrens.forEach((item) => mainSteps.push(item));
+    mainSteps = childrens.concat(mainSteps);
+    // childrens.forEach((item) => mainSteps.push(item));
 
     childrens.forEach(async (item) => {
       if (item.children.length > 0) {
@@ -72,6 +73,7 @@ const getChildren = async (step, mainSteps) => {
       }
     });
   }
+  console.log(mainSteps);
   return mainSteps;
 };
 
@@ -97,7 +99,8 @@ const ProgressBar = () => {
         if (res) {
           let mainSteps = [];
           mainSteps = await getChildren(res, mainSteps);
-          setSteps(mainSteps);
+          console.log(mainSteps);
+          extractSteps(mainSteps);
         } else {
           await createRoot();
         }
@@ -110,7 +113,19 @@ const ProgressBar = () => {
     loadSteps();
   }, []);
 
-  const mapStaps = () => {};
+  // console.log(steps);
+
+  const extractSteps = (steps) => {
+    let children = [];
+    steps.forEach((step) => {
+      step.type = "main";
+      step.substeps.forEach((substep) =>
+        children.push({ ...substep, type: "sub" })
+      );
+    });
+    // console.log(steps.length, children);
+    setSteps(...steps, ...children);
+  };
 
   const setCurrent = (id) => {
     const index = path.indexOf(id);
