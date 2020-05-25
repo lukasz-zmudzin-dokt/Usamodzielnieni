@@ -29,7 +29,7 @@ exports[`Contact should match snapshot 1`] = `
       >
         <a
           class="float-right btn btn-primary"
-          href="/chats/1234"
+          href="/chats/undefined"
         >
           →
         </a>
@@ -41,9 +41,7 @@ exports[`Contact should match snapshot 1`] = `
       <div
         class="col"
       >
-        <em>
-          gościu
-        </em>
+        <em />
       </div>
     </div>
   </div>
