@@ -22,7 +22,7 @@ const Header = () => {
   };
   const handleClose = () => {
     setIsOpen(false);
-  };/*
+  }; /*
   const handleOpenNotifications = () => {
     setIsOpenNotifications(true);
   };

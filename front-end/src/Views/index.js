@@ -55,5 +55,5 @@ export {
   ChangeData,
   UserList,
   Header,
-  headerTemplate
+  headerTemplate,
 };
