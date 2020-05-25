@@ -1,7 +1,7 @@
-import React, {useState} from "react";
-import {userTypes} from "constants/userTypes";
-import {staffTypes} from "constants/staffTypes";
-import {Button} from "react-bootstrap";
+import React, { useState } from "react";
+import { userTypes } from "constants/userTypes";
+import { staffTypes } from "constants/staffTypes";
+import { Button } from "react-bootstrap";
 import NewVideoBlogModal from "components/NewVideoBlogModal/NewVideoBlogModal";
 
 const NewVideoblogButton = ({ user }) => {
