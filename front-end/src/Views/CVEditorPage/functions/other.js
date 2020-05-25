@@ -112,7 +112,6 @@ const getCVdata = async (token, id) => {
   }
 };
 
-<<<<<<< HEAD
 const fetchTemplateList = async (token) => {
   const url = `${domain}templates/`;
   const headers = getHeaders(token);
@@ -127,6 +126,3 @@ const fetchTemplateList = async (token) => {
 };
 
 export { sendData, getFeedback, getCVdata, fetchTemplateList };
-=======
-export { sendData, getFeedback, getCVdata, getVideos };
->>>>>>> master

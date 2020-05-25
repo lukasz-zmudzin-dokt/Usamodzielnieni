@@ -2,11 +2,8 @@ import React from "react";
 import { Form } from "react-bootstrap";
 import { CVEditorTab } from "..";
 import movie_1 from "assets/movie_1.png";
-<<<<<<< HEAD
 import proxy from "config/api";
-=======
 import { approveFileSize } from "utils/approveFile/approveFile";
->>>>>>> master
 
 class PhotoTab extends React.Component {
   constructor(props) {

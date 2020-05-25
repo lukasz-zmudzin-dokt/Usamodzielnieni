@@ -48,13 +48,10 @@ class CVEditorPage extends React.Component {
       method: "POST",
       cv_id: undefined,
       has_photo: false,
-<<<<<<< HEAD
       template: "bisque",
       templateList: [],
-=======
       videos: { videos: [] },
       errVid: false,
->>>>>>> master
     };
     this.tabs = [];
   }
@@ -190,13 +187,10 @@ class CVEditorPage extends React.Component {
             onSubmit={this.handleCVSubmit}
             disabled={this.state.disabled}
             hasPhoto={this.state.has_photo}
-<<<<<<< HEAD
             template={this.state.template}
             setTemplate={(t) => this.setState({ template: t })}
             templateList={this.state.templateList}
-=======
             alertContext={this.props.alertContext}
->>>>>>> master
           />
         ),
       },
@@ -258,7 +252,6 @@ class CVEditorPage extends React.Component {
     }
   };
 
-<<<<<<< HEAD
   getTemplates = async (token) => {
     let res;
     try {
@@ -274,7 +267,8 @@ class CVEditorPage extends React.Component {
     this.setState({
       templateList: res,
     });
-=======
+  };
+  
   getVideosData = async () => {
     try {
       const res = await getVideos(this.context.token, 1);
@@ -286,7 +280,6 @@ class CVEditorPage extends React.Component {
         errVid: true,
       });
     }
->>>>>>> master
   };
 
   componentDidMount() {
