@@ -33,12 +33,10 @@ const NewStep = ({ steps, show, handleClose, root }) => {
     const form = e.currentTarget;
     if (form.checkValidity() !== false) {
       let res;
-      const object = steps.find(
-        (item) => item.title === newStep.parent
-      );
-//      console.log(newStep);
+      const object = steps.find((item) => item.title === newStep.parent);
+      //      console.log(newStep);
       let data = {};
-      if(object) {
+      if (object) {
         data = {
           ...newStep,
           parent: object.id,
