@@ -54,7 +54,9 @@ const MyOffer = ({ offer, activeOffer, setActiveOffer }) => {
       window.open(url, "_blank");
     } catch (e) {
       console.log(e);
-      alertC.current.showAlert("Wystąpił błąd podczas pobierania aplikacji na ofertę.");
+      alertC.current.showAlert(
+        "Wystąpił błąd podczas pobierania aplikacji na ofertę."
+      );
     }
   };
 
