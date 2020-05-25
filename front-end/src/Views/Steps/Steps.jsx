@@ -71,10 +71,12 @@ const Steps = () => {
       <h1>Kroki usamodzielnienia</h1>
       {user.data.group_type.includes(staffTypes.BLOG_MODERATOR) ? (
         <>
-          <Button onClick={() => setShowEdit(true)}>Edytuj ten krok</Button>
-          <Button className="ml-3" onClick={() => setShowNew(true)}>
-            Dodaj nowy krok
-          </Button>
+          <div className="mb-3">
+            <Button onClick={() => setShowEdit(true)}>Edytuj ten krok</Button>
+            <Button className="ml-3" onClick={() => setShowNew(true)}>
+              Dodaj nowy krok
+            </Button>
+          </div>
           <NewStep
             steps={steps}
             show={showNew}
