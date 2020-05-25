@@ -1,7 +1,5 @@
-export const deleteStep = (steps, step, setSteps) => {
-
-}
-  /*let parents = findParents(steps, step);
+export const deleteStep = (steps, step, setSteps) => {};
+/*let parents = findParents(steps, step);
 
   if (step.type === "main") {
     deleteSubsteps(steps, step, setSteps);
