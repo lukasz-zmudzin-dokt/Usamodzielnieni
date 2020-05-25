@@ -58,7 +58,6 @@ const CVEditorTab = ({
               className="form_navigation_next"
               onClick={(e) => onNextClick(e)}
               block
-              disabled={group_type?.includes(staffTypes.GUEST) || disabled}
             >
               Dalej →
             </Button>
@@ -69,7 +68,7 @@ const CVEditorTab = ({
                 type="submit"
                 id="saveButton"
                 block
-                disabled={disabled}
+                disabled={group_type?.includes(staffTypes.GUEST) || disabled}
               >
                 {disabled
                   ? "Ładowanie..."

@@ -25,6 +25,10 @@ export const adminGroup = [
     name: staffTypes.GUEST,
     placeholder: "Konto gościa",
   },
+  {
+    name: staffTypes.CHAT,
+    placeholder: "Dostęp do czatu",
+  },
 ];
 
 export const commonGroup = [

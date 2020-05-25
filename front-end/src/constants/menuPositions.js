@@ -46,7 +46,7 @@ export default [
   {
     name: "Dodaj post",
     path: paths.BLOG_FORM,
-    allowed: [staffTypes.BLOG_CREATOR, staffTypes.GUEST],
+    allowed: [staffTypes.BLOG_CREATOR],
     verified: true,
   },
   {
@@ -62,7 +62,7 @@ export default [
   {
     name: "Chat",
     path: paths.CHATS,
-    allowed: [userTypes.STANDARD, userTypes.STAFF, userTypes.EMPLOYER],
+    allowed: [userTypes.STANDARD, staffTypes.CHAT, userTypes.EMPLOYER],
     verified: true,
   },
 ];
