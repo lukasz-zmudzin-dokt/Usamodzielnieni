@@ -1,6 +1,7 @@
 import React from "react";
 import { Form } from "react-bootstrap";
 import { adminGroup, commonGroup } from "constants/roles";
+import {staffTypes} from "constants/staffTypes";
 
 const renderCommon = (selectType) => (
   <Form.Group className="register_account_type">
@@ -20,9 +21,9 @@ const renderCommon = (selectType) => (
   </Form.Group>
 );
 
-const renderAdmin = (selectType, cutType, current) => (
+const renderAdmin = (selectType, cutType, current, setRole) => (
   <Form.Group className="register_account_type">
-    <Form.Label>{"Nowa rola:"}</Form.Label>
+    <Form.Label>{"Uprawnienia nowego administratora:"}</Form.Label>
     {adminGroup.map((item) => (
       <Form.Check
         data-testid="typeSelector"
@@ -35,12 +36,13 @@ const renderAdmin = (selectType, cutType, current) => (
         name={item.name}
       />
     ))}
+    <Form.Control type="text" disabled={!current.includes(staffTypes.CHAT)} placeholder="Pełniona rola na czacie (opcjonalne)" onChange={setRole} />
   </Form.Group>
 );
 
-const TypeSelection = ({ isAdmin, selectType, cutType, current }) => {
+const TypeSelection = ({ isAdmin, selectType, cutType, current, setRole }) => {
   return isAdmin
-    ? renderAdmin(selectType, cutType, current)
+    ? renderAdmin(selectType, cutType, current, setRole)
     : renderCommon(selectType);
 };
 

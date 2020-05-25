@@ -31,6 +31,7 @@ class RegisterPage extends React.Component {
       passwordOK: true,
       redirect: false,
       disabled: false,
+      role: null
     };
   }
 
@@ -110,6 +111,10 @@ class RegisterPage extends React.Component {
     }
   };
 
+  setRole = (e) => {
+    this.setState({ role: e.target.value });
+  }
+
   handleResponse = async (e) => {
     this.setState({ disabled: true });
     const data = {
@@ -123,6 +128,7 @@ class RegisterPage extends React.Component {
       companyData: this.state.companyData,
       accountData: this.state.accountData,
       account_type: this.state.account_type,
+      role: this.state.role
     };
 
     const isOK = this.handleSubmit(data, e);
@@ -170,6 +176,7 @@ class RegisterPage extends React.Component {
               selectType={this.selectType}
               cutType={this.cutType}
               current={this.state.account_type}
+              setRole={this.setRole}
             />
             <Form
               noValidate
