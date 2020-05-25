@@ -68,6 +68,7 @@ class UserProfilePage extends React.Component {
   };
 
   render() {
+    console.log(this.context);
     return (
       <Container>
         <Card className="user_profile_card">

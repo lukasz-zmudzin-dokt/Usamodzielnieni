@@ -31,10 +31,17 @@ class RegisterPage extends React.Component {
       passwordOK: true,
       redirect: false,
       disabled: false,
+      specialistRole: null,
     };
   }
 
+
+
   handleSubmit = (data, event) => {
+    if(this.state.specialistRole !== null) {
+      data.specialistRole = this.state.specialistRole
+    }
+    console.log(data);
     const form = event.currentTarget;
     event.preventDefault();
     const { password, passwordR } = data.accountData || {};
@@ -73,6 +80,10 @@ class RegisterPage extends React.Component {
       });
     }
   };
+
+  setSpecialistRole = (e) => {
+    this.setState({specialistRole: e.target.value});
+  }
 
   renderSection = () => {
     if (this.state.account_type === "Podopiecznym") {
@@ -170,6 +181,7 @@ class RegisterPage extends React.Component {
               selectType={this.selectType}
               cutType={this.cutType}
               current={this.state.account_type}
+              setSpecialistRole={this.setSpecialistRole}
             />
             <Form
               noValidate
