@@ -78,23 +78,34 @@ const ProgressBar = () => {
   const [showNew, setShowNew] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
 
-  useEffect(() => {
-    const loadSteps = async () => {
-      let res;
-      try {
-        res = await getSteps();
-        let root = res[0];
-        res.splice(0, 1);
-        setPath([root.next[0].id]);
-        setSteps(res);
-      } catch (e) {
-        setError(true);
-        return;
-      }
-    };
 
+
+  useEffect(() => {
     loadSteps();
-  }, [setSteps, setPath]);
+  }, []);
+
+  const loadSteps = async () => {
+    let res;
+    try {
+      res = await getSteps();
+      let root = res[0];
+      res.splice(0, 1);
+      setPath([root.next[0].id]);
+      setSteps(res);
+    } catch (e) {
+      setError(true);
+      return;
+    }
+  };
+
+  const deletion = async () => {
+    setWantsDelete(false);
+    let stepId = path[path.length - 1];
+    let res = await deleteStep(steps, stepId, user.token);
+    if(res.status === 204) {
+      await loadSteps();
+    }
+  }
 
   console.log(steps);
 
@@ -118,13 +129,7 @@ const ProgressBar = () => {
   );
 
   if (wantsDelete) {
-    let step = steps.find((s) => s.id === path[path.length - 1]);
-    //deleteStep(steps, step, setSteps);
-    res = await fetch(`https://usamo-back.herokuapp.com/steps/step/${id}/delete/`, {});
-    setWantsDelete(false);
-    let newPath = path;
-    newPath.pop();
-    setPath(newPath);
+    deletion();
   }
 
   return (
