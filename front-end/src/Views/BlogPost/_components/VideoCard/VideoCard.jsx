@@ -9,7 +9,7 @@ const VideoCard = ({content, user, cutCard}) => {
     const [toDelete, setToDelete] = useState(false);
 
     const sliceUrl = (url) => {
-        let changeRes = url;
+        let changeRes;
 
         const index = url.lastIndexOf("=");
         changeRes = url.slice(index + 1);
@@ -17,7 +17,7 @@ const VideoCard = ({content, user, cutCard}) => {
     };
 
     return (
-        <Card border="primary">
+        <Card border="dark">
             {
                 user?.type === userTypes.STAFF &&
                     user?.data?.group_type.includes(staffTypes.BLOG_CREATOR) && (
@@ -28,8 +28,8 @@ const VideoCard = ({content, user, cutCard}) => {
             }
             <div>
                 <Player src={sliceUrl(content.url)} />
-            </div> {/*url*/}
-            <Card.Text className="text-justify text-muted mx-2 my-3">
+            </div>
+            <Card.Text className="text-justify mx-2 my-3">
                 {content.description}
             </Card.Text>
             <DeletionModal
