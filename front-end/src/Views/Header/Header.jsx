@@ -6,6 +6,7 @@ import { logoutUser } from "./apiCalls";
 import "./style.css";
 import {Redirect} from "react-router-dom";
 import logo from "assets/logo-white.png";
+import menu from "assets/hamburger-menu-icon.svg";
 
 const Header = () => {
     const context = useContext(UserContext);
@@ -123,8 +124,11 @@ const Header = () => {
     );
 
     return (
-        <Navbar collapseOnSelect expand="lg" sticky="top" className="font p-3">
-            <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        <Navbar collapseOnSelect expand="lg" sticky="top" className="font p-3 justify-content-end">
+            <Navbar.Toggle aria-controls="responsive-navbar-nav" >
+                <a className="hamburger-menu-text">MENU</a>
+                <img src={menu} id={"menu"} alt={"menu"} className="hamburger-menu-logo" />
+            </Navbar.Toggle>
             <Navbar.Collapse id="responsive-navbar-nav">
                 {leftNav}
                 {rightNav}
