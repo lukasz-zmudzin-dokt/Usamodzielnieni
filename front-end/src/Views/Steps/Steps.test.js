@@ -12,8 +12,8 @@ describe("Steps", () => {
   });
 
   it("should render without crashing", async () => {
-    const { container } = render(<Steps />);
-
-    expect(container).toMatchSnapshot();
+    const { container, getByRole } = render(<Steps />);
+    const modal = getByRole("dialog");
+    expect(modal).toMatchSnapshot();
   });
 });

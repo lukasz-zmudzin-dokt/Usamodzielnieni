@@ -1,20 +1,23 @@
 import proxy from "config/api";
 
-const sendData = async (token,id step) => {
-  const url = `${proxy.steps}edit/${id}`;
+const editStep = async (token, isStep, data, id) => {
+  const url = `${proxy.steps}${isStep ? "step" : "substep"}/${id}/update/`;
+  const headers = {
+    "Content-Type": "application/json",
+    Origin: null,
+    Authorization: `Token ${token}`,
+  };
+
   const res = await fetch(url, {
     method: "PUT",
-    body: JSON.stringify(step),
-    headers: {
-      "Content-Type": "application/json",
-      Origin: null,
-      Authorization: `Token ${token}`,
-    },
+    body: JSON.stringify(data),
+    headers,
   });
+
   if (res.status !== 200) {
-    throw Error("editSteps");
+    throw await res.json();
   }
-  return res.status;
+  return await res.json();
 };
 
-export default {sendData};
+export { editStep };

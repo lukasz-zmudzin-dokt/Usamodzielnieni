@@ -1,91 +1,72 @@
 import React, { useState, useContext, useRef, useEffect } from "react";
-import { Button, Form, Modal, Col, Row } from "react-bootstrap";
+import { Button, Form, Modal } from "react-bootstrap";
 import { AlertContext, UserContext } from "context";
-import { FormGroup } from "components";
+import { StepsForm } from "../";
+import { editStep } from "./functions/editStep";
 
-const EditStep = ({ step, show, handleClose }) => {
-  const [newStep, setNewStep] = useState(step);
+const EditStep = ({ step, steps, show, handleClose }) => {
+  const stepsTypes = ["Krok główny", "Podkrok"];
+  const [type, setType] = useState(stepsTypes[0]);
+  const [newStep, setNewStep] = useState({
+    title: "",
+    description: "",
+    video: "",
+    parent: steps.children[0].title,
+  });
   const user = useContext(UserContext);
   const alertC = useRef(useContext(AlertContext));
-  const [buttonVal, setButtonVal] = useState("");
+  const [validated, setValidated] = useState(false);
+
   useEffect(() => {
     setNewStep(step);
   }, [step]);
-  const handleSubmit = () => {};
 
-  const addNewButton = (e) => {
-    if (
-      newStep.next.findIndex((item) => item === buttonVal) &&
-      buttonVal !== ""
-    ) {
-      setNewStep({
-        ...newStep,
-        next: [...newStep.next, buttonVal],
+  const isStep = type === stepsTypes[0];
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    if (form.checkValidity() !== false) {
+      let res;
+      console.log(newStep);
+      const object = steps.children.find((item) => {
+        console.log(item.title, newStep.parent);
+        return item.title === newStep.parent;
       });
-      setButtonVal("");
-    } else {
-      alertC.current.showAlert(
-        "Dodaj treść przycisku bądź sprawdź czy taki przycisk już istnieje."
-      );
+      const data = {
+        ...newStep,
+        parent: object.id,
+      };
+      try {
+        res = await editStep(user.token, isStep, data, step.id);
+        alertC.current.showAlert(res.message, "success");
+        handleClose();
+      } catch (e) {
+        alertC.current.showAlert(Object.values(e)[0]);
+      }
     }
-  };
-
-  const deleteButton = (val) => {
-    const index = newStep.next.findIndex((item) => item === val);
-    const newArr = newStep.next;
-    newArr.splice(index, 1);
-    setNewStep({ ...newStep, next: newArr });
+    setValidated(true);
   };
 
   return (
     <Modal show={show} onHide={handleClose}>
-      <Form onSubmit={handleSubmit}>
+      <Form validated={validated} noValidate onSubmit={handleSubmit}>
         <Modal.Header closeButton>
           <Modal.Title>Edytuj krok</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <FormGroup
-            type="text"
-            header="Zmień tytuł"
-            id="title_change"
-            required
-            val={newStep.title}
-            setVal={(val) => setNewStep({ ...newStep, title: val })}
-            incorrect="Krok musi mieć tytuł."
+          <StepsForm
+            newStep={newStep}
+            setNewStep={setNewStep}
+            type={type}
+            setType={setType}
+            steps={steps}
+            setValidated={setValidated}
           />
-          <FormGroup
-            type="textarea"
-            header="Zmień zawartość kroku"
-            id="value_change"
-            required
-            val={newStep.value}
-            setVal={(val) => setNewStep({ ...newStep, value: val })}
-          />
-          <Col className="p-0 mb-3">
-            <p>Lista przycisków:</p>
-            {newStep.next.map((val) => (
-              <Row className="mr-0 ml-0 mb-3 align-items-center">
-                <p className="font-weight-bold mb-0 mr-3">{val}</p>
-                <Button onClick={() => deleteButton(val)} variant="danger">
-                  Usuń
-                </Button>
-              </Row>
-            ))}
-            <FormGroup
-              type="text"
-              header={`Dodaj ${newStep.next.length + 1} przycisk `}
-              id={`next${newStep.length}_change`}
-              val={buttonVal}
-              setVal={(val) => setButtonVal(val)}
-            />
-
-            <Button onClick={addNewButton}>Dodaj przycisk</Button>
-          </Col>
-
-          <Modal.Footer>
-            <Button type="submit">Prześlij zmiany</Button>
-          </Modal.Footer>
         </Modal.Body>
+        <Modal.Footer>
+          <Button type="submit">Prześlij zmiany</Button>
+        </Modal.Footer>
       </Form>
     </Modal>
   );

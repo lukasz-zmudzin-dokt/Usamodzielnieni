@@ -13,10 +13,10 @@ const Steps = () => {
     children: [
       {
         id: "1",
-        type: "main",
         title: "Tytuł głównego kroku 1",
-        value: "Opis kroku 1 wraz z filmikami.",
-        next: ["2", "5"],
+        description: "xDD",
+        video: "",
+        parent: "Tytuł głównego kroku 2",
       },
       {
         id: "2",
@@ -81,6 +81,7 @@ const Steps = () => {
             handleClose={() => setShowNew(false)}
           />
           <EditStep
+            steps={steps}
             step={steps.children.find(
               (item) => item.id === path[path.length - 1]
             )}
