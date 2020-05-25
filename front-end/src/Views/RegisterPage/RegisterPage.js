@@ -34,8 +34,6 @@ class RegisterPage extends React.Component {
     };
   }
 
-
-
   handleSubmit = (data, event) => {
     const form = event.currentTarget;
     event.preventDefault();

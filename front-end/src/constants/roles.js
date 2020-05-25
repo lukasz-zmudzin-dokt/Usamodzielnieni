@@ -23,8 +23,8 @@ export const adminGroup = [
   },
   {
     name: staffTypes.CHAT,
-    placeholder: "Moderator czatu"
-  }
+    placeholder: "Moderator czatu",
+  },
 ];
 
 export const commonGroup = [

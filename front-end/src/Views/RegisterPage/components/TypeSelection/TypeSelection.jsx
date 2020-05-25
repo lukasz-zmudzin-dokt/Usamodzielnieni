@@ -1,5 +1,5 @@
 import React from "react";
-import {Form} from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import { adminGroup, commonGroup } from "constants/roles";
 
 const renderCommon = (selectType) => (
@@ -24,16 +24,16 @@ const renderAdmin = (selectType, cutType, current) => (
   <Form.Group className="register_account_type">
     <Form.Label>{"Nowa rola:"}</Form.Label>
     {adminGroup.map((item) => (
-        <Form.Check
-            data-testid="typeSelector"
-            className="register_radio_type"
-            type="checkbox"
-            label={item.placeholder}
-            checked={current.includes(item.name)}
-            onChange={current.includes(item.name) ? cutType : selectType}
-            key={item.name}
-            name={item.name}
-        />
+      <Form.Check
+        data-testid="typeSelector"
+        className="register_radio_type"
+        type="checkbox"
+        label={item.placeholder}
+        checked={current.includes(item.name)}
+        onChange={current.includes(item.name) ? cutType : selectType}
+        key={item.name}
+        name={item.name}
+      />
     ))}
   </Form.Group>
 );

@@ -30,7 +30,7 @@ const adjustObject = (account_type, home, company) => {
       };
     }
     default:
-      return { group_type: account_type};
+      return { group_type: account_type };
   }
 };
 
