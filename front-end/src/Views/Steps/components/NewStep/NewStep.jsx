@@ -25,18 +25,16 @@ const NewStep = ({ steps, show, handleClose, root }) => {
       description: "",
       video: "",
       parent: steps[0]?.title,
-    })
-  }, [steps])
+    });
+  }, [steps]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const form = e.currentTarget;
     if (form.checkValidity() !== false) {
       let res;
-      const object = steps.find(
-        (item) => item.title === newStep.parent
-      );
-//      console.log(newStep);
+      const object = steps.find((item) => item.title === newStep.parent);
+      //      console.log(newStep);
       const data = {
         ...newStep,
         parent: object.id,

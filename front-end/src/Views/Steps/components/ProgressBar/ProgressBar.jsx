@@ -41,30 +41,30 @@ const mapSteps = (list) => {
       title: step.title,
       description: step.description,
       next: getNext(step, unpacked),
-    }
+    };
   });
 };
 
 const getNext = (step, list) => {
   let next = [];
-  if(step.type === "main") {
-    if(step.substeps.length > 0) {
-      next.push({id: step.substeps[0].id, choiceName: "Dalej"});
+  if (step.type === "main") {
+    if (step.substeps.length > 0) {
+      next.push({ id: step.substeps[0].id, choiceName: "Dalej" });
     }
     step.children.forEach((child) => {
-      next.push({id: child.id, choiceName: child.title});
+      next.push({ id: child.id, choiceName: child.title });
     });
   } else {
     let parent = list.find((s) => s.id === step.parent);
-    if(step.order + 1 < parent.substeps.length) {
-      next = [{id: parent.substeps[step.order + 1].id, choiceName: "Dalej"}];
+    if (step.order + 1 < parent.substeps.length) {
+      next = [{ id: parent.substeps[step.order + 1].id, choiceName: "Dalej" }];
     } else {
       next = getNext(parent, list);
       next.splice(0, 1);
     }
   }
   return next;
-}
+};
 
 const ProgressBar = () => {
   const [steps, setSteps] = useState([]);
@@ -85,7 +85,7 @@ const ProgressBar = () => {
     let res;
     try {
       res = await getSteps();
-      if(res.length === 1) {
+      if (res.length === 1) {
         setPath([]);
         setSteps([]);
         setRoot(res[0]);
@@ -106,10 +106,10 @@ const ProgressBar = () => {
     setWantsDelete(false);
     let stepId = path[path.length - 1];
     let res = await deleteStep(steps, stepId, user.token);
-    if(res.status === 204) {
+    if (res.status === 204) {
       await loadSteps();
     }
-  }
+  };
 
   const setCurrent = (id) => {
     const index = path.indexOf(id);
@@ -156,14 +156,14 @@ const ProgressBar = () => {
               handleClose={() => setShowNew(false)}
               root={root}
             />
-            {(steps.length > 0) &&
+            {steps.length > 0 && (
               <EditStep
                 steps={steps}
                 step={steps.find((item) => item.id === path[path.length - 1])}
                 show={showEdit}
                 handleClose={() => setShowEdit(false)}
               />
-            }
+            )}
           </>
         ) : null}
         {path.map((stepId, i) => (

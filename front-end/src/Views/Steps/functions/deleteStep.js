@@ -1,4 +1,4 @@
-import proxy from "config/api"
+import proxy from "config/api";
 
 export const deleteStep = async (steps, stepId, token) => {
   console.log(stepId);
@@ -9,7 +9,7 @@ export const deleteStep = async (steps, stepId, token) => {
     "Content-Type": "application/json",
   };
 
-  if(toDelete.type === "main") {
+  if (toDelete.type === "main") {
     url = `${proxy.steps}step/${stepId}/delete/`;
   } else {
     url = `${proxy.steps}substep/${stepId}/delete/`;
@@ -18,4 +18,4 @@ export const deleteStep = async (steps, stepId, token) => {
   const response = await fetch(url, { method: "DELETE", headers });
 
   return response;
-}
+};

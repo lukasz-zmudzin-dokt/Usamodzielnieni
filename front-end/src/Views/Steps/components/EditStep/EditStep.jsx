@@ -35,9 +35,7 @@ const EditStep = ({ step, steps, show, handleClose }) => {
     const form = e.currentTarget;
     if (form.checkValidity() !== false) {
       let res;
-      const object = steps.find(
-        (item) => item.title === newStep.parent
-      );
+      const object = steps.find((item) => item.title === newStep.parent);
       const data = {
         ...newStep,
         parent: object.id,

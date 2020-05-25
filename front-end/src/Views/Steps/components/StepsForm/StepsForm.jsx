@@ -9,7 +9,7 @@ const StepsForm = ({
   newStep,
   steps,
   isEdit,
-  root
+  root,
 }) => {
   const stepsTypes = ["Krok główny", "Podkrok"];
   const isStep = type === stepsTypes[0];
@@ -66,21 +66,21 @@ const StepsForm = ({
           })
         }
       />
-      
-        <FormGroup
-          type="textarea"
-          header="Opis kroku"
-          id="stepDescription"
-          required
-          incorrect="Podaj opis kroku."
-          val={newStep.description}
-          setVal={(val) =>
-            setNewStep({
-              ...newStep,
-              description: val,
-            })
-          }
-        />
+
+      <FormGroup
+        type="textarea"
+        header="Opis kroku"
+        id="stepDescription"
+        required
+        incorrect="Podaj opis kroku."
+        val={newStep.description}
+        setVal={(val) =>
+          setNewStep({
+            ...newStep,
+            description: val,
+          })
+        }
+      />
     </>
   );
 };
