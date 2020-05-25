@@ -3,8 +3,10 @@ import { render, wait, fireEvent } from "@testing-library/react";
 import MessagesList from "Views/MessagesList";
 import { createMemoryHistory } from "history";
 import { Router } from "react-router-dom";
-import { AlertContext } from "context";
+import { AlertContext, UserContext } from "context";
 import { ChatForm } from "./components";
+
+global.WebSocket = WebSocket;
 
 jest.mock("./components");
 jest.mock("react-router-dom", () => ({
@@ -22,12 +24,23 @@ const renderWithRouter = (
   } = {}
 ) => {
   return {
-    ...render(<Router history={history}>{ui}</Router>),
+    ...render(
+      <UserContext.Provider
+        value={{
+          data: { username: "xd" },
+        }}
+      >
+        <Router history={history}>{ui}</Router>
+      </UserContext.Provider>
+    ),
     history,
   };
 };
 
 describe("MessagesList", () => {
+  let user = {
+    data: { username: "xd" },
+  };
   let failFetch = false;
   let apiMessages = [
     {

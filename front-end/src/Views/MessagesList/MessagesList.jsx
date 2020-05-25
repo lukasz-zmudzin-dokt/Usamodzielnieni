@@ -5,7 +5,7 @@ import React, {
   useRef,
   useCallback,
 } from "react";
-import { ListGroup, Container, Card, Button } from "react-bootstrap";
+import { ListGroup, Container, Card, Button, Row } from "react-bootstrap";
 import MessageItem from "./components/MessageItem";
 import { ChatForm } from "./components";
 import proxy from "config/api";
@@ -135,9 +135,12 @@ const MessagesList = () => {
     }
     if (user.token && user.type) {
       const url = proxy.wsChat + id + "/";
+
       try {
         socket.current = new WebSocket(url, user.token);
-        socket.current.onopen = (e) => console.log("onopen", e);
+        socket.current.onopen = (e) => {
+          messagesEl.current.scrollTop = messagesEl.current.scrollHeight;
+        };
         socket.current.onmessage = (object) => {
           setData([...data, mapAnswer(JSON.parse(JSON.parse(object.data)))]);
         };
@@ -146,6 +149,7 @@ const MessagesList = () => {
         console.log(e);
       }
     }
+    messagesEl.current.scrollTop = messagesEl.current.scrollHeight;
   }, [data, id, mapAnswer, mapRes, user.token, user.type]);
 
   return (
@@ -160,7 +164,7 @@ const MessagesList = () => {
             {"<"}
           </Button>
           <UserPicture user={user} />
-          <span className="ml-2">Piotr Kowalski</span>
+          <span className="ml-2 messagesList__user">{id}</span>
         </Card.Header>
         <Card.Body className="messagesList__body">
           <ListGroup ref={messagesEl} className="messagesList__list">

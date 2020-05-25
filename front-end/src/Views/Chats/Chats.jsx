@@ -5,7 +5,7 @@ import proxy from "config/api";
 import { ChatInfo } from "./components";
 
 const getChats = async (token) => {
-  let url = `${proxy.chat}/list`; // TODO
+  let url = `${proxy.chat}`; // TODO
   const headers = {
     Authorization: "Token " + token,
     "Content-Type": "application/json",
@@ -13,25 +13,28 @@ const getChats = async (token) => {
 
   const response = await fetch(url, { method: "GET", headers });
 
+  console.log(response);
+
   if (response.status === 200) {
-    return response.json().then((chats) => mapChats(chats));
+    return response.json().then((chats) => chats);
   } else {
     throw response.status;
   }
 };
 
-const mapChats = (chats) =>
-  chats.map((chat) => ({
-    id: chat.id,
-    name: chat.name,
-    user: chat.user,
-    // TODO
-  }));
+// const mapChats = (chats) =>
+//   chats.map((chat) => ({
+//     id: chat.id,
+//     name: chat.name,
+//     user: chat.user,
+//     // TODO
+//   }));
 
 const Chats = () => {
   const [chats, setChats] = useState([]);
   const [isChatsLoading, setIsChatsLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [count, setCount] = useState(0);
 
   const user = useContext(UserContext);
 
@@ -41,12 +44,14 @@ const Chats = () => {
       let loadedChats;
       try {
         loadedChats = await getChats(token);
+        console.log(loadedChats);
       } catch (e) {
         console.log(e);
         loadedChats = [];
         setError(true);
       }
-      setChats(loadedChats);
+      setChats(loadedChats.results);
+      setCount(loadedChats.count);
       setIsChatsLoading(false);
     };
     loadChats(user.token);

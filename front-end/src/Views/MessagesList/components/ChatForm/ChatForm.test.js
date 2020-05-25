@@ -20,20 +20,6 @@ describe("chat form tests", () => {
     expect(container).toMatchSnapshot();
   });
 
-  it("should call send message method and clear input value on send click", () => {
-    const { getByPlaceholderText, getByAltText } = render(
-      <ChatForm {...props} />
-    );
-    const button = getByAltText("send message");
-    const input = getByPlaceholderText("Aa");
-
-    fireEvent.change(input, { target: { value: "test message" } });
-    fireEvent.click(button);
-
-    expect(props.sendMessage).toHaveBeenCalledWith("test message");
-    expect(input.value).toBe("");
-  });
-
   it("should call send message method and clear input value on enter click", () => {
     const { getByPlaceholderText, getByAltText } = render(
       <ChatForm {...props} />
