@@ -4,7 +4,7 @@ import {DeletionModal} from "components";
 import {userTypes} from "constants/userTypes";
 import {staffTypes} from "constants/staffTypes";
 
-const VideoCard = ({content, alertC, user, cutCard}) => {
+const VideoCard = ({content, user, cutCard}) => {
     const [toDelete, setToDelete] = useState(false);
 
     return (
@@ -17,7 +17,7 @@ const VideoCard = ({content, alertC, user, cutCard}) => {
                     </Card.Subtitle>
                 )
             }
-            <div>wideo</div> //wideo
+            <div>wideo</div> //url
             <Card.Text>
                 {content.description}
             </Card.Text>
@@ -25,6 +25,7 @@ const VideoCard = ({content, alertC, user, cutCard}) => {
                 show={toDelete}
                 setShow={setToDelete}
                 question="Czy na pewno chcesz usunąć tę kartę?"
+                delConfirmed={cutCard(content.id)}
             />
         </Card>
     )
