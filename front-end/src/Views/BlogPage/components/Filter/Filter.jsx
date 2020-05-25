@@ -67,26 +67,26 @@ const Filter = ({ setFilter, filtersBlog, count }) => {
       <Form className="ml-3 mr-3 mb-3" onSubmit={filter}>
         <Form.Row>
           <FormGroup
-              as={Col}
-              xs={12}
-              md={6}
-              header="Kategoria"
-              array={filters.categories}
-              val={category}
-              setVal={setCategory}
-              type="select"
-              id="category"
+            as={Col}
+            xs={12}
+            md={6}
+            header="Kategoria"
+            array={filters.categories}
+            val={category}
+            setVal={setCategory}
+            type="select"
+            id="category"
           />
           <FormGroup
-              as={Col}
-              xs={12}
-              md={6}
-              header="Tag"
-              array={filters.tags}
-              val={tag}
-              setVal={setTag}
-              type="select"
-              id="tag"
+            as={Col}
+            xs={12}
+            md={6}
+            header="Tag"
+            array={filters.tags}
+            val={tag}
+            setVal={setTag}
+            type="select"
+            id="tag"
           />
         </Form.Row>
         <div>
@@ -94,9 +94,9 @@ const Filter = ({ setFilter, filtersBlog, count }) => {
             Filtruj posty
           </Button>
           <Button
-              variant="outline-primary"
-              className="mr-3"
-              onClick={clearFilter}
+            variant="outline-primary"
+            className="mr-3"
+            onClick={clearFilter}
           >
             Wyczyść filtry
           </Button>
@@ -105,20 +105,24 @@ const Filter = ({ setFilter, filtersBlog, count }) => {
         {user &&
         user.type === userTypes.STAFF &&
         user.data.group_type.includes(staffTypes.BLOG_CREATOR) ? (
-            <>
-              <IndexLinkContainer as={Button} to="/blog/newPost">
-                <Button variant="success" className="mt-2">
-                  Stwórz nowy post
-                </Button>
-              </IndexLinkContainer>
-              <Button variant="success" className="mt-2 mx-3" onClick={() => setShowModal(true)}>
-                Stwórz nowy wideoblog
+          <>
+            <IndexLinkContainer as={Button} to="/blog/newPost">
+              <Button variant="success" className="mt-2">
+                Stwórz nowy post
               </Button>
-            </>
+            </IndexLinkContainer>
+            <Button
+              variant="success"
+              className="mt-2 mx-3"
+              onClick={() => setShowModal(true)}
+            >
+              Stwórz nowy wideoblog
+            </Button>
+          </>
         ) : null}
         <div>
           {count !== 0 && (
-              <small className="blog__countText">{`Ilość znalezionych postów: ${count}`}</small>
+            <small className="blog__countText">{`Ilość znalezionych postów: ${count}`}</small>
           )}
         </div>
       </Form>
