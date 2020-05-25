@@ -5,6 +5,7 @@ import logo from "assets/logo.png";
 import { Redirect } from "react-router-dom";
 import { UserContext } from "context/UserContext";
 import proxy from "config/api";
+import { TilesContainer } from "./components";
 
 class Menu extends React.Component {
   userLogout = (e) => {
@@ -18,7 +19,6 @@ class Menu extends React.Component {
     }).then((res) => {
       if (res.status === 200 || res.status === 401) {
         res.json().then((responseValue) => {
-          console.log(responseValue);
           this.context.logout();
           return <Redirect to="/" />;
         });
@@ -101,6 +101,9 @@ class Menu extends React.Component {
             <Col />
           </Row>
         </div>
+        <Row>
+          <TilesContainer />
+        </Row>
       </Container>
     );
   }

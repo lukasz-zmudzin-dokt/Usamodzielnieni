@@ -20,17 +20,21 @@ describe("MyOffers", () => {
     type: "Staż",
     voivodeship: "mazowieckie",
   };
-  let apiPeople = [
-    {
-      cv_url: "/media/test_cv",
-      date_posted: "2020-04-06T01:34:27.899000+02:00",
-      email: "standard1@standard1.com",
-      first_name: "standard1",
-      job_offer: "47991e86-4b42-4507-b154-1548bf8a3bd3",
-      last_name: "standard1",
-      user_id: "b582b042-d6d8-4e57-9447-564a6748b4f7",
-    },
-  ];
+  let apiPeople = {
+    count: 1,
+    results: [
+      {
+        cv_url: "/media/test_cv",
+        date_posted: "2020-04-06T01:34:27.899000+02:00",
+        email: "standard1@standard1.com",
+        first_name: "standard1",
+        job_offer: "47991e86-4b42-4507-b154-1548bf8a3bd3",
+        last_name: "standard1",
+        user_id: "b582b042-d6d8-4e57-9447-564a6748b4f7",
+        id: "abc",
+      },
+    ],
+  };
 
   beforeAll(() => {
     global.fetch = jest.fn().mockImplementation((input, init) => {
@@ -130,6 +134,7 @@ describe("MyOffers", () => {
       </MemoryRouter>
     );
     await waitForElement(() => getByText("standard1 standard1"));
+
     expect(fetch).toHaveBeenCalledTimes(1);
   });
 

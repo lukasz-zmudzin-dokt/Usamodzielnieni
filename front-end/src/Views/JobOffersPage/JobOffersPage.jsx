@@ -4,8 +4,9 @@ import { withRouter } from "react-router-dom";
 
 import qs from "query-string";
 import { UserContext } from "context";
-import { JobOfferInfo, OffersPagination, Filter } from "./_components";
+import { JobOfferInfo, Filter } from "./_components";
 import proxy from "config/api";
+import { Pagination } from "components";
 
 const getOffers = async (filters, sort) => {
   const {
@@ -32,7 +33,9 @@ const getOffers = async (filters, sort) => {
 
   const response = await fetch(url, { method: "GET", headers });
   if (response.status === 200) {
-    return response.json().then((res) => mapGetOffersRes(res));
+    return response.json().then((res) => {
+      return mapGetOffersRes(res);
+    });
   } else {
     throw response.status;
   }
@@ -47,6 +50,7 @@ const mapGetOffersRes = (res) => ({
     voivodeship: offer.voivodeship,
     expirationDate: offer.expiration_date,
     description: offer.description,
+    companyLogo: offer.company_logo,
   })),
   count: res.count,
 });
@@ -123,7 +127,7 @@ const JobOffersPage = (props) => {
               ))}
             </ListGroup>
             <Card.Body>
-              <OffersPagination
+              <Pagination
                 current={filters.page}
                 max={Math.ceil(count / filters.pageSize)}
               />

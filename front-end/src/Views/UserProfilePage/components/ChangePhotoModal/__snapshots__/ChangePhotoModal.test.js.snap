@@ -1,0 +1,149 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ChangePhotoModal should render invalid feedback when submit button is clicked and input is empty 1`] = `
+<div
+  aria-modal="true"
+  class="fade modal show"
+  role="dialog"
+  style="display: block;"
+  tabindex="-1"
+>
+  <div
+    class="modal-dialog"
+    role="document"
+  >
+    <div
+      class="modal-content"
+    >
+      <form
+        class="was-validated"
+        novalidate=""
+      >
+        <div
+          class="modal-body"
+        >
+          <label
+            class="is-invalid form-label"
+            for="custom-file"
+          >
+            Zdjęcie:
+          </label>
+          <div
+            class="custom custom-file"
+          >
+            <input
+              accept="image/*"
+              class="custom-file-input"
+              id="custom-file"
+              required=""
+              type="file"
+            />
+            <label
+              class="custom-file-label"
+              data-browse="Wybierz plik"
+              for="custom-file"
+            >
+              Dodaj swoje zdjęcie...
+            </label>
+          </div>
+          <div
+            class="invalid-feedback"
+          >
+            Wybierz zdjęcie.
+          </div>
+        </div>
+        <div
+          class="modal-footer"
+        >
+          <button
+            class="btn btn-outline-primary"
+            type="button"
+          >
+            Anuluj
+          </button>
+          <button
+            class="btn btn-primary"
+            type="submit"
+          >
+            Prześlij
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ChangePhotoModal should render without crashing 1`] = `
+<div
+  aria-modal="true"
+  class="fade modal show"
+  role="dialog"
+  style="display: block;"
+  tabindex="-1"
+>
+  <div
+    class="modal-dialog"
+    role="document"
+  >
+    <div
+      class="modal-content"
+    >
+      <form
+        class=""
+        novalidate=""
+      >
+        <div
+          class="modal-body"
+        >
+          <label
+            class="form-label"
+            for="custom-file"
+          >
+            Zdjęcie:
+          </label>
+          <div
+            class="custom custom-file"
+          >
+            <input
+              accept="image/*"
+              class="custom-file-input"
+              id="custom-file"
+              required=""
+              type="file"
+            />
+            <label
+              class="custom-file-label"
+              data-browse="Wybierz plik"
+              for="custom-file"
+            >
+              Dodaj swoje zdjęcie...
+            </label>
+          </div>
+          <div
+            class="invalid-feedback"
+          >
+            Wybierz zdjęcie.
+          </div>
+        </div>
+        <div
+          class="modal-footer"
+        >
+          <button
+            class="btn btn-outline-primary"
+            type="button"
+          >
+            Anuluj
+          </button>
+          <button
+            class="btn btn-primary"
+            type="submit"
+          >
+            Prześlij
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+`;
