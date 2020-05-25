@@ -11,6 +11,9 @@
 .notification-color {
   background-color: #ff884d;
 }
+.notification-color-light {
+  background-color: #ffbb99!important;
+}
 .white {
   color: white !important;
 }
@@ -66,6 +69,10 @@
   }
   .notifications-button:hover {
     background-color: #ff884d !important;
+  }
+  .notifications {
+    margin-top: 5px;
+    border-radius: 0;
   }
 }
 @media (max-width: 991px) {
@@ -123,4 +130,5 @@
   .notifications-button:hover {
     background-color: #ff884d !important;
   }
+
 }

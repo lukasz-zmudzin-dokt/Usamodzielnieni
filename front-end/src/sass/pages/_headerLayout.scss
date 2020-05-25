@@ -61,6 +61,7 @@
 }
 
 .notifications.dropdown-menu {
+  background-color: #ffbb99;
   @include media-breakpoint-up(lg) {
     width: 50vw;
     max-width: 27rem;
