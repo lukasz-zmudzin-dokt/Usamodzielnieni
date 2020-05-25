@@ -21,6 +21,10 @@ export const adminGroup = [
     name: staffTypes.BLOG_MODERATOR,
     placeholder: "Moderator bloga",
   },
+  {
+    name: staffTypes.CHAT,
+    placeholder: "Dostęp do czatu",
+  },
 ];
 
 export const commonGroup = [
