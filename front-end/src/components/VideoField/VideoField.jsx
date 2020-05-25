@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import YouTube from "react-youtube";
 import { ChangeVideo } from "./components";
 import { UserContext } from "context";
@@ -7,11 +7,13 @@ import { Alert } from "react-bootstrap";
 import { staffTypes } from "constants/staffTypes";
 import { userTypes } from "constants/userTypes";
 
-const VideoField = ({ id, videoItem, errVid }) => {
+const VideoField = ({ id, videoItem, errVid, activeTab }) => {
   const [video, setVideo] = useState({ id: 0 });
   const [err, setErr] = useState(false);
   const [loading, setLoading] = useState(false);
   const user = useContext(UserContext);
+  const player = useRef(null);
+
   const sliceUrl = (url) => {
     let changeRes = url;
 
@@ -41,7 +43,10 @@ const VideoField = ({ id, videoItem, errVid }) => {
       setLoading(false);
       setErr(true);
     }
-  }, [errVid, id, user.token, videoItem]);
+    if (activeTab.active !== activeTab.your && player.current !== null) {
+      player.current.resetPlayer();
+    }
+  }, [activeTab.active, activeTab.your, errVid, id, user.token, videoItem]);
 
   const opts = {
     height: "100%",
@@ -76,6 +81,7 @@ const VideoField = ({ id, videoItem, errVid }) => {
             videoId={video.url}
             opts={opts}
             onReady={onReady}
+            ref={player}
           />
         )}
         {conditional && (

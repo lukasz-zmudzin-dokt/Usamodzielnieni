@@ -53,6 +53,7 @@ class LanguagesTab extends React.Component {
         loading={this.props.loading}
         error={this.props.error}
         showComments={this.props.showComments}
+        formTab={this.props.formTab}
       >
         <ItemsList
           getItemId={this.getLanguageId}

@@ -139,6 +139,7 @@ class CVEditorPage extends React.Component {
           isNew: this.state.method === "POST",
           video: videos.videos?.find((item) => item.id === id),
           errVid,
+          formTab: { active: this.state.formTab, your: key },
         };
       }
     };
@@ -277,7 +278,9 @@ class CVEditorPage extends React.Component {
             <Tabs
               transition={false}
               activeKey={this.state.formTab}
-              onSelect={(e) => this.setState({ formTab: e })}
+              onSelect={(e) => {
+                this.setState({ formTab: e });
+              }}
               className="CVEditorPage_tabs mb-1" // https://github.com/react-bootstrap/react-bootstrap/issues/4771
             >
               {this.tabs.map((tab) => (
