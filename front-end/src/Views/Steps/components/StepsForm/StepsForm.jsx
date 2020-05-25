@@ -13,6 +13,13 @@ const StepsForm = ({
 }) => {
   const stepsTypes = ["Krok główny", "Podkrok"];
   const isStep = type === stepsTypes[0];
+  console.log(steps);
+  const parTitles = [];
+  steps.forEach((s) => {
+    if(s.type === "main") {
+      parTitles.push(s.title);
+    }
+  });
   return (
     <>
       {!isEdit ? (
@@ -36,7 +43,7 @@ const StepsForm = ({
         } `}
         id="stepParent"
         required
-        array={steps.map((item) => item.title)}
+        array={(parTitles.length > 0) ? parTitles : ["Jako pierwszy krok"]}
         val={newStep.parent}
         setVal={(val) =>
           setNewStep({

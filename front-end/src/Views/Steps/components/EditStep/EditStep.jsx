@@ -7,7 +7,7 @@ import { editStep } from "./functions/editStep";
 const EditStep = ({ step, steps, show, handleClose }) => {
   const stepsTypes = ["Krok główny", "Podkrok"];
   const [type, setType] = useState(
-    step.description ? stepsTypes[0] : stepsTypes[1]
+    step.type === "main" ? stepsTypes[0] : stepsTypes[1]
   );
   const [newStep, setNewStep] = useState({
     title: "",
@@ -18,7 +18,7 @@ const EditStep = ({ step, steps, show, handleClose }) => {
   const user = useContext(UserContext);
   const alertC = useRef(useContext(AlertContext));
   const [validated, setValidated] = useState(false);
-
+  console.log(step);
   useEffect(() => {
     setNewStep({
       title: step.title,
@@ -26,10 +26,11 @@ const EditStep = ({ step, steps, show, handleClose }) => {
       video: "",
       parent: steps[0].title,
     });
+    setType(step.type === "main" ? stepsTypes[0] : stepsTypes[1]);
   }, [step]);
 
   const isStep = type === stepsTypes[0];
-
+  console.log(isStep);
   const handleSubmit = async (e) => {
     e.preventDefault();
     const form = e.currentTarget;

@@ -37,13 +37,20 @@ const NewStep = ({ steps, show, handleClose, root }) => {
         (item) => item.title === newStep.parent
       );
 //      console.log(newStep);
-      const data = {
-        ...newStep,
-        parent: object.id,
-      };
+      let data = {};
+      if(object) {
+        data = {
+          ...newStep,
+          parent: object.id,
+        };
+      } else {
+        data = {
+          ...newStep,
+          parent: root.id,
+        };
+      }
       try {
         res = await sendNewStep(user.token, isStep, data);
-
         alertC.current.showAlert(res.message, "success");
         handleClose();
       } catch (e) {
