@@ -120,6 +120,7 @@ const MessagesList = () => {
         console.log(res);
         setData(mapRes(res.messages));
         checkPhoto(res);
+        messagesEl.current.scrollTop = messagesEl.current.scrollHeight;
       } catch (e) {
         console.log(e);
         alertC.current.showAlert("Nie udało się załadować wiadomości.");
@@ -148,7 +149,9 @@ const MessagesList = () => {
             ...prevState,
             mapAnswer(JSON.parse(JSON.parse(object.data))),
           ]);
-          messagesEl.current.scrollTop = messagesEl.current.scrollHeight;
+          if (messagesEl.current) {
+            messagesEl.current.scrollTop = messagesEl.current.scrollHeight;
+          }
         };
       } catch (e) {
         console.log(e);

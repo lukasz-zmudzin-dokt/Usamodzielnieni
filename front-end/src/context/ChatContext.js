@@ -39,21 +39,24 @@ export const ChatProvider = (props) => {
   const socket = useRef(null);
 
   useEffect(() => {
-    const loadChats = async (token) => {
-      setIsChatsLoading(true);
-      let loadedChats;
-      try {
-        loadedChats = await getChats(token, filters);
-      } catch (e) {
-        console.log(e);
-        loadedChats = { count: 0, results: [] };
-        setError(true);
-      }
-      setChats(loadedChats.results);
-      setCount(loadedChats.count);
-      setIsChatsLoading(false);
-    };
-    loadChats(user.token);
+    if (user.token) {
+      const loadChats = async (token) => {
+        setError(false);
+        setIsChatsLoading(true);
+        let loadedChats;
+        try {
+          loadedChats = await getChats(token, filters);
+        } catch (e) {
+          console.log(e);
+          loadedChats = { count: 0, results: [] };
+          setError(true);
+        }
+        setChats(loadedChats.results);
+        setCount(loadedChats.count);
+        setIsChatsLoading(false);
+      };
+      loadChats(user.token);
+    }
   }, [filters, user.token]);
 
   console.log(chats);
@@ -73,7 +76,7 @@ export const ChatProvider = (props) => {
         socket.current.onopen = (e) => {
           console.log("udało się", e);
           console.log(JSON.stringify({ message: "threads" }));
-          // socket.current.send(JSON.stringify({ message: "threads" }));
+          socket.current.send(JSON.stringify({ message: "threads" }));
         };
 
         socket.current.onmessage = (msg) => {
@@ -104,7 +107,7 @@ export const ChatProvider = (props) => {
     setChats([...chats, ...res.results]);
   };
 
-  const data = { chats, error, count, loadMoreMessages };
+  const data = { chats, error, count, socket, loadMoreMessages };
 
   return <ChatContext.Provider value={data} {...props} />;
 };
