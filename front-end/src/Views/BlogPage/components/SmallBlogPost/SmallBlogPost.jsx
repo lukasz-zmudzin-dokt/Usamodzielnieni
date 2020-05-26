@@ -33,20 +33,20 @@ const BlogPost = (data) => {
             )}
           </Card.Text>
         </Card.Body>
-        <Card.Footer>
-          {data.category !== VIDEOBLOG_CATEGORY && (
-            <>
-              <small>Tagi:</small>
-              {data.tags.length > 0
-                ? data.tags.map((tag) => (
-                    <Badge variant="info" key={tag} className="ml-1">
-                      {tag}
-                    </Badge>
-                  ))
-                : "Brak tagów"}
-            </>
-          )}
-        </Card.Footer>
+        {
+          data.category !== VIDEOBLOG_CATEGORY && (
+              <Card.Footer>
+                <small>Tagi:</small>
+                {data.tags.length > 0
+                    ? data.tags.map((tag) => (
+                        <Badge variant="info" key={tag} className="ml-1">
+                          {tag}
+                        </Badge>
+                    ))
+                    : <small className="mx-2">Brak tagów</small>}
+              </Card.Footer>
+          )
+        }
       </Card>
     </Link>
   );

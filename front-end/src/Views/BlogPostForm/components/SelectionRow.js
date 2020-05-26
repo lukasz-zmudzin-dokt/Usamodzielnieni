@@ -23,7 +23,6 @@ const SelectionRow = ({
       });
 
   const array = arrayType.filter((name) => name !== VIDEOBLOG_CATEGORY);
-  const nullifyInput = () => {};
 
   return (
     <div>
