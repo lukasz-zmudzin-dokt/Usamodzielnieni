@@ -2,9 +2,15 @@ import React, { useState, useEffect, useContext } from "react";
 import { Container, Card, Alert } from "react-bootstrap";
 import { UserContext } from "context";
 
-import { CommentForm, CommentsList, BlogContent } from "./_components";
+import {
+  CommentForm,
+  CommentsList,
+  BlogContent,
+  VideoBlog,
+} from "./_components";
 import { getPost } from "./functions/apiCalls";
 import { userStatuses } from "constants/userStatuses";
+import { VIDEOBLOG_CATEGORY } from "constants/videoBlogInitialValues";
 
 const mapPost = (res) => ({
   header: res.header,
@@ -69,7 +75,11 @@ const BlogPost = () => {
     <Card.Body>{msg}</Card.Body>
   ) : (
     <Container className="blogpost_container">
-      <BlogContent post={post} user={user} />
+      {post.category === VIDEOBLOG_CATEGORY ? (
+        <VideoBlog user={user} postString={post} />
+      ) : (
+        <BlogContent post={post} user={user} />
+      )}
       <Card className="blogpost_comment_card">
         <Card.Body>
           <CommentsList

@@ -50,38 +50,44 @@ class MyCVsPage extends React.Component {
     }
   };
 
-  showAlert = (show) => {
-    return show ? (
-      <Card.Body>
-        {this.state.loading ? (
-          <Alert variant="primary" className="mb-0">
-            Ładuję...
-          </Alert>
-        ) : this.state.errors ? (
-          <Alert variant="danger" className="mb-0">
-            Ups, coś poszło nie tak. Nie można pobrać listy CV.
-          </Alert>
-        ) : this.state.cvs.length === 5 ? (
-          <Alert variant="info" className="mb-0">
-            Osiągnięto maksymalną liczbę CV. Jeżeli chcesz dodać nowe, usuń CV z
-            listy powyżej.
-          </Alert>
-        ) : this.state.cvs.length === 0 ? (
-          <Alert variant="info" className="mb-0">
-            Nie masz jeszcze żadnych CV. Utwórz nowe w zakładce "
-            <IndexLinkContainer to="/cvEditor">
-              <Alert.Link>Kreator CV</Alert.Link>
-            </IndexLinkContainer>
-            "!
-          </Alert>
-        ) : null}
-      </Card.Body>
-    ) : null;
-  };
+  showAlert = () => (
+    <Card.Body>
+      {this.state.loading ? (
+        <Alert variant="primary" className="mb-0">
+          Ładuję...
+        </Alert>
+      ) : this.state.errors ? (
+        <Alert variant="danger" className="mb-0">
+          Ups, coś poszło nie tak. Nie można pobrać listy CV.
+        </Alert>
+      ) : this.state.cvs.length === 5 ? (
+        <Alert variant="info" className="mb-0">
+          Osiągnięto maksymalną liczbę CV. Jeżeli chcesz dodać nowe, usuń CV z
+          listy powyżej.
+        </Alert>
+      ) : this.state.cvs.length === 0 ? (
+        <Alert variant="info" className="mb-0">
+          Nie masz jeszcze żadnych CV. Utwórz nowe w zakładce "
+          <IndexLinkContainer to="/cvEditor">
+            <Alert.Link>Kreator CV</Alert.Link>
+          </IndexLinkContainer>
+          "!
+        </Alert>
+      ) : (
+        <Alert variant="primary" className="mb-0">
+          <IndexLinkContainer
+            to="/cvEditor"
+            className="d-flex justify-content-center"
+          >
+            <Alert.Link>Stwórz kolejne CV</Alert.Link>
+          </IndexLinkContainer>
+        </Alert>
+      )}
+    </Card.Body>
+  );
 
   render() {
     const { cvs, loading, errors } = this.state;
-    let showBody = loading || errors || cvs.length === 0 || cvs.length === 5;
     return (
       <Container className="mt-4">
         <Card>
@@ -113,7 +119,7 @@ class MyCVsPage extends React.Component {
                 ))
               : null}
           </ListGroup>
-          {this.showAlert(showBody)}
+          {this.showAlert()}
         </Card>
       </Container>
     );

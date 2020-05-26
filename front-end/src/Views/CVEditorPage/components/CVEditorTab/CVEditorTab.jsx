@@ -1,5 +1,6 @@
 import React from "react";
 import { Button, Row, Col, Alert, Form } from "react-bootstrap";
+import { staffTypes } from "constants/staffTypes";
 import { VideoField } from "components";
 const CVEditorTab = ({
   title,
@@ -14,6 +15,7 @@ const CVEditorTab = ({
   showComments,
   isNew,
   disabled = false,
+  group_type,
   formTab,
   errVid,
 }) => {
@@ -66,7 +68,7 @@ const CVEditorTab = ({
                 type="submit"
                 id="saveButton"
                 block
-                disabled={disabled}
+                disabled={group_type?.includes(staffTypes.GUEST) || disabled}
               >
                 {disabled
                   ? "Ładowanie..."
