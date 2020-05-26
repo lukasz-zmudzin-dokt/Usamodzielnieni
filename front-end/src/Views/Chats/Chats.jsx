@@ -9,8 +9,7 @@ import {
 } from "react-bootstrap";
 import { UserContext } from "context";
 import proxy from "config/api";
-import ChatInfo from "./components/ChatInfo";
-import ContactsModalContent from "./components/ContactsModalContent";
+import { ChatInfo, ContactsModalContent } from "./components";
 import "./style.css";
 
 const getChats = async (token) => {
