@@ -3,7 +3,6 @@ import { Nav, Navbar, NavDropdown } from "react-bootstrap";
 import { IndexLinkContainer } from "react-router-bootstrap";
 import { UserContext } from "context";
 import { logoutUser } from "./apiCalls";
-import "./style.css";
 import { Redirect, useLocation } from "react-router-dom";
 import logo from "assets/logo-white.png";
 import menu from "assets/hamburger-menu-icon.svg";
