@@ -109,9 +109,13 @@ const MyOffer = ({ offer, activeOffer, setActiveOffer }) => {
                 <Link to={"/offerForm/" + offer.id}>
                   <Button className="ml-3">Edytuj ofertę</Button>
                 </Link>
-                <Button className="ml-3" onClick={() => downloadApplications()}>
-                  Pobierz zgłoszenia
-                </Button>
+                {
+                  people.count > 0 && (
+                      <Button className="ml-3" onClick={() => downloadApplications()}>
+                        Pobierz zgłoszenia
+                      </Button>
+                  )
+                }
               </Row>
             </ListGroup.Item>
           </ListGroup>
