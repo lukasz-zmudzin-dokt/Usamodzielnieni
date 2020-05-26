@@ -11,10 +11,7 @@ const NewVideoblogButton = ({ user }) => {
     user.type === userTypes.STAFF &&
     user.data.group_type?.includes(staffTypes.BLOG_CREATOR) && (
       <>
-        <Button
-          variant="primary"
-          onClick={(e) => setShow(true)}
-        >
+        <Button variant="primary" onClick={(e) => setShow(true)}>
           Załóż nowy wideoblog
         </Button>
         <NewVideoBlogModal show={show} setShow={setShow} user={user} />
