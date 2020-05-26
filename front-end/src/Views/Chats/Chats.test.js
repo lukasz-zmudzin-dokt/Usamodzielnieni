@@ -32,6 +32,7 @@ describe("Chats", () => {
     error: false,
     count: 2,
     loadMoreMessages: jest.fn(),
+    isChatLoading: false,
   };
 
   beforeEach(() => {
@@ -52,6 +53,7 @@ describe("Chats", () => {
       ],
       error: false,
       count: 2,
+      isChatsLoading: false,
       loadMoreMessages: jest.fn(),
     };
 
@@ -73,7 +75,9 @@ describe("Chats", () => {
   });
 
   it("should render loading alert when component is waiting for api response", async () => {
-    chatC.loading = true;
+    chatC.isChatsLoading = true;
+    chatC.chats = [];
+    console.log(chatC);
     const { getByText, queryByText } = render(
       <ChatContext.Provider value={chatC}>
         <MemoryRouter>
@@ -85,28 +89,13 @@ describe("Chats", () => {
     expect(
       getByText("Ładowanie wiadomości.", { exact: false })
     ).toBeInTheDocument();
-    expect(queryByText("xd")).not.toBeInTheDocument();
-    await waitForElement(() => getByText("xd"));
-  });
-
-  it("should render error alert when api returns error", async () => {
-    chatC.error = true;
-    const { getByText, queryByText } = render(
-      <ChatContext.Provider value={chatC}>
-        <MemoryRouter>
-          <Chats />
-        </MemoryRouter>
-      </ChatContext.Provider>
-    );
-
-    await waitForElement(() => getByText("Wystąpił błąd", { exact: false }));
-    expect(getByText("Wystąpił błąd", { exact: false })).toBeInTheDocument();
-    expect(queryByText("xd")).not.toBeInTheDocument();
   });
 
   it("should render info alert when api returns empty list", async () => {
     chatC.count = 0;
     chatC.results = [];
+    chatC.isChatsLoading = false;
+
     const { getByText, queryByText } = render(
       <ChatContext.Provider value={chatC}>
         <MemoryRouter>
@@ -132,5 +121,21 @@ describe("Chats", () => {
     fireEvent.click(getByText("Nowa wiadomość"));
 
     await waitForElement(() => getByText("Wybierz osobę"));
+  });
+
+  it("should render error alert when api returns error", async () => {
+    chatC.error = true;
+    chatC.chats = [];
+    const { getByText, queryByText } = render(
+      <ChatContext.Provider value={chatC}>
+        <MemoryRouter>
+          <Chats />
+        </MemoryRouter>
+      </ChatContext.Provider>
+    );
+
+    await waitForElement(() => getByText("Wystąpił błąd", { exact: false }));
+    expect(getByText("Wystąpił błąd", { exact: false })).toBeInTheDocument();
+    expect(queryByText("xd")).not.toBeInTheDocument();
   });
 });
