@@ -12,6 +12,9 @@ const WorkExperienceTab = ({
   error,
   showComments,
   validated,
+  video,
+  errVid,
+  formTab,
 }) => (
   <CVEditorTab
     title="Doświadczenie zawodowe"
@@ -22,6 +25,9 @@ const WorkExperienceTab = ({
     loading={loading}
     error={error}
     showComments={showComments}
+    video={video}
+    errVid={errVid}
+    formTab={formTab}
   >
     <ActionWithDate
       data={data}

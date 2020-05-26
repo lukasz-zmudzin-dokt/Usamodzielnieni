@@ -2,6 +2,8 @@ import React from "react";
 import { Form } from "react-bootstrap";
 import { CVEditorTab } from "..";
 import movie_1 from "assets/movie_1.png";
+import { UserContext } from "context";
+import { approveFileSize } from "utils/approveFile/approveFile";
 
 class PhotoTab extends React.Component {
   constructor(props) {
@@ -10,7 +12,15 @@ class PhotoTab extends React.Component {
   }
 
   onChange = (e) => {
-    this.props.onChange(this.fileInput.files[0]);
+    const file = this.fileInput.files[0];
+    if (approveFileSize(file) === true) {
+      this.props.onChange(this.fileInput.files[0]);
+    } else {
+      this.props.alertContext.showAlert(
+        "Wybrany plik jest za duży. Maksymalny rozmiar pliku to 15 MB."
+      );
+      this.fileInput = React.createRef();
+    }
   };
 
   setLabel = () => {
@@ -36,6 +46,10 @@ class PhotoTab extends React.Component {
         showComments={this.props.showComments}
         disabled={this.props.disabled}
         isNew={this.props.isNew}
+        group_type={this.context.data.group_type}
+        video={this.props.video}
+        errVid={this.props.errVid}
+        formTab={this.props.formTab}
       >
         <Form>
           <Form.Group>
@@ -56,5 +70,7 @@ class PhotoTab extends React.Component {
     );
   }
 }
+
+PhotoTab.contextType = UserContext;
 
 export default PhotoTab;

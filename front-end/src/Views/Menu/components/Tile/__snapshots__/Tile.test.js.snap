@@ -1,0 +1,111 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Tile should render without crashing 1`] = `
+<div>
+  <a
+    class="tile__container"
+    href="/blog/abc123"
+    style="background-color: rgb(255, 255, 255);"
+  >
+    <div
+      class="tile"
+    >
+      <div
+        class="tile__bg tile__bg--left tile__fragment--show"
+        style="background-color: rgb(255, 255, 255);"
+      />
+      <div
+        class="tile__bg tile__bg--top tile__fragment--show"
+        style="background-color: rgb(255, 255, 255);"
+      />
+      <div
+        class="tile__bg tile__bg--right tile__fragment--show"
+        style="background-color: rgb(255, 255, 255);"
+      />
+      <div
+        class="tile_content"
+      >
+        <div
+          class="tile__border tile__border--left tile__fragment--show"
+        />
+        <div
+          class="tile__border tile__border--top tile__fragment--show"
+        />
+        <div
+          class="tile__border tile__border--right tile__fragment--show"
+        />
+        <div
+          class="tile__image"
+        >
+          <img
+            alt=""
+            src="/foo_bar.jpg"
+          />
+        </div>
+        <div
+          class="tile_title"
+        >
+          <span>
+            Tytuł kafelka
+          </span>
+        </div>
+      </div>
+    </div>
+  </a>
+</div>
+`;
+
+exports[`Tile should render without crashing when showImage object is empty 1`] = `
+<div>
+  <a
+    class="tile__container"
+    href="/blog/abc123"
+    style="background-color: rgb(255, 255, 255);"
+  >
+    <div
+      class="tile"
+    >
+      <div
+        class="tile__bg tile__bg--left "
+        style="background-color: rgb(255, 255, 255);"
+      />
+      <div
+        class="tile__bg tile__bg--top "
+        style="background-color: rgb(255, 255, 255);"
+      />
+      <div
+        class="tile__bg tile__bg--right "
+        style="background-color: rgb(255, 255, 255);"
+      />
+      <div
+        class="tile_content"
+      >
+        <div
+          class="tile__border tile__border--left "
+        />
+        <div
+          class="tile__border tile__border--top "
+        />
+        <div
+          class="tile__border tile__border--right "
+        />
+        <div
+          class="tile__image"
+        >
+          <img
+            alt=""
+            src="/foo_bar.jpg"
+          />
+        </div>
+        <div
+          class="tile_title"
+        >
+          <span>
+            Tytuł kafelka
+          </span>
+        </div>
+      </div>
+    </div>
+  </a>
+</div>
+`;

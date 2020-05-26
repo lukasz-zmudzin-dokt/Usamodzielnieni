@@ -8,11 +8,13 @@ import {
   getCategories,
   getTypes,
   getOffer,
+  sendPhoto,
 } from "Views/OfferForm/functions/fetchData";
 import { UserContext, AlertContext } from "context";
 import polish from "date-fns/locale/pl";
 import { useHistory, useParams } from "react-router-dom";
 import { addressToString } from "utils/converters";
+import { staffTypes } from "constants/staffTypes";
 
 registerLocale("pl", polish);
 
@@ -23,7 +25,9 @@ const OfferForm = () => {
   const [disabled, setDisabled] = useState(false);
   const [err, setErr] = useState(false);
   let { id } = useParams();
-
+  let photo = useRef(null);
+  const [label, setLabel] = useState("");
+  const [photoFile, setPhotoFile] = useState("");
   const [offer, setOffer] = useState({
     offer_name: "",
     company_name: "",
@@ -84,16 +88,18 @@ const OfferForm = () => {
   ]);
 
   const submit = async (event) => {
-    const form = event.currentTarget;
     event.preventDefault();
+    const form = event.currentTarget;
+
     if (form.checkValidity() === false) {
       event.stopPropagation();
     } else {
       setDisabled(true);
       try {
-        await sendData(
+        const res = await sendData(
           {
             ...offer,
+            company_logo: context.data.picture_url,
             company_address: context.data.company_address,
             expiration_date: expiration_date.toISOString().substr(0, 10),
             salary_min: salary_min.replace(",", "."),
@@ -102,8 +108,18 @@ const OfferForm = () => {
           context.token,
           id
         );
-        history.push("/myOffers");
-        return;
+        if (photoFile) {
+          try {
+            await sendPhoto(context.token, res.offer_id, photoFile);
+            alertC.current.showAlert("Przesłano ofertę", "success");
+            return history.push(`/jobOffers/${id || res.offer_id}`);
+          } catch (e) {
+            alertC.current.showAlert("Nie udało się wysłać zdjęcia.");
+          }
+        } else {
+          alertC.current.showAlert("Przesłano ofertę", "success");
+          return history.push(`/jobOffers/${id || res.offer_id}`);
+        }
       } catch (e) {
         alertC.current.showAlert("Nie udało się wysłać oferty. Błąd serwera.");
       }
@@ -117,6 +133,13 @@ const OfferForm = () => {
       Wystąpił błąd w trakcie ładowania formularza.
     </Alert>
   ) : null;
+
+  const onChange = () => {
+    const photoNew = photo.current.files[0];
+    const filename = photo.current?.files?.[0]?.name;
+    setPhotoFile(photoNew);
+    setLabel(filename);
+  };
 
   const {
     offer_name,
@@ -208,6 +231,19 @@ const OfferForm = () => {
                 }}
                 incorrect="Pole musi być większe od minimalnej stawki"
               />
+              <Form.Group>
+                <Form.Label htmlFor="custom-file">Zdjęcie</Form.Label>
+                <Form.File
+                  className="text-nowrap text-truncate"
+                  id="custom-file"
+                  ref={photo}
+                  custom
+                  onChange={onChange}
+                  label={label || "Dodaj plik..."}
+                  accept="image/*"
+                  data-browse="Wybierz plik"
+                />
+              </Form.Group>
             </div>
             <div className="offerForm__wrapper">
               <FormGroup
@@ -254,7 +290,10 @@ const OfferForm = () => {
                 type="submit"
                 className=""
                 data-testid="submitBtn"
-                disabled={disabled}
+                disabled={
+                  context.data.group_type?.includes(staffTypes.GUEST) ||
+                  disabled
+                }
               >
                 {disabled ? "Ładowanie..." : "Dodaj"}
               </Button>

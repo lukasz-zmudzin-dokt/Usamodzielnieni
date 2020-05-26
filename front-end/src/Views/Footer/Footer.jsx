@@ -13,13 +13,13 @@ import ig from "assets/footer/instagram-icon.png";
 
 const Footer = () => {
   return (
-    <Container fluid className="font full-width">
+    <Container className="font full-width">
       <Row className="p-3">
         <Col
           xs={{ span: 12, order: 2 }}
           sm={{ span: 12, order: 2 }}
           md={{ span: 3, order: 1 }}
-          className="p-4"
+          className="p-4 mobile-col"
         >
           <Row className="company-title">Partner</Row>
           <Row className="company-logo-row">
@@ -36,7 +36,7 @@ const Footer = () => {
           xs={{ span: 12, order: 3 }}
           sm={{ span: 12, order: 3 }}
           md={{ span: 3, order: 2 }}
-          className="p-4"
+          className="p-4 mobile-col"
         >
           <Row className="company-title">Twórca strony - studenci</Row>
           <Row className="company-logo-row">
@@ -53,7 +53,7 @@ const Footer = () => {
           xs={{ span: 12, order: 4 }}
           sm={{ span: 12, order: 4 }}
           md={{ span: 3, order: 3 }}
-          className="p-4"
+          className="p-4 mobile-col"
         >
           <Row className="company-title">Pomysłodawca, twórca treści</Row>
           <Row className="company-logo-row">
@@ -70,14 +70,14 @@ const Footer = () => {
           xs={{ span: 12, order: 1 }}
           sm={{ span: 12, order: 1 }}
           md={{ span: 3, order: 4 }}
-          className="p-4"
+          className="p-4 mobile-col"
         >
-          <Row className="pt-3 social-media-row">
+          <Row className="pt-3 social-media-row social-media-row-first">
             <a
               href="https://www.youtube.com/channel/UCbKE3BfzmHGfXbB9nmmswYw"
               target="_blank"
               rel="noopener noreferrer"
-              className="d-flex align-items-end"
+              className="d-flex align-items-end social-media-icon"
             >
               <Col className="p-0">
                 <img src={yt} className="social-media-icon" alt="yt" />
@@ -90,7 +90,7 @@ const Footer = () => {
               href="https://twitter.com/usamodzielnieni"
               target="_blank"
               rel="noopener noreferrer"
-              className="d-flex align-items-end"
+              className="d-flex align-items-end social-media-icon"
             >
               <Col className="p-0">
                 <img src={tt} className="social-media-icon" alt="tt" />
@@ -103,7 +103,7 @@ const Footer = () => {
               href="https://www.facebook.com/Usamodzielnieni-110914023943342"
               target="_blank"
               rel="noopener noreferrer"
-              className="d-flex align-items-end"
+              className="d-flex align-items-end social-media-icon"
             >
               <Col className="p-0">
                 <img src={fb} className="social-media-icon lol" alt="fb" />
@@ -116,7 +116,7 @@ const Footer = () => {
               href="https://www.instagram.com/_usamodzielnieni_"
               target="_blank"
               rel="noopener noreferrer"
-              className="d-flex align-items-end"
+              className="d-flex align-items-end social-media-icon"
             >
               <Col className="p-0">
                 <img src={ig} className="social-media-icon" alt="ig" />

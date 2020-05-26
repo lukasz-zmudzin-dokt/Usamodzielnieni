@@ -11,7 +11,11 @@ import {
 } from "./components";
 import { UserContext } from "context";
 
-import { sendData, getFeedback } from "Views/CVEditorPage/functions/other.js";
+import {
+  sendData,
+  getFeedback,
+  getVideos,
+} from "Views/CVEditorPage/functions/other.js";
 import { createCVObject } from "Views/CVEditorPage/functions/createCVObject.js";
 import { withRouter } from "react-router-dom";
 import { getCVdata } from "./functions/other";
@@ -44,6 +48,8 @@ class CVEditorPage extends React.Component {
       method: "POST",
       cv_id: undefined,
       has_photo: false,
+      videos: { videos: [] },
+      errVid: false,
     };
     this.tabs = [];
   }
@@ -112,27 +118,38 @@ class CVEditorPage extends React.Component {
   };
 
   getTabs = () => {
-    const getTabProps = (key) => ({
-      ...this.state.tabs[key],
-      onChange: (data) =>
-        this.setState((prevState) => ({
-          tabs: { ...prevState.tabs, [key]: { ...prevState.tabs[key], data } },
-        })),
-      onPrevClick: this.onPrevClick,
-      onNextClick: this.onNextClick,
-      loading: this.state.loading,
-      error: this.state.commentsError,
-      showComments: this.state.showComments,
-      validated: this.state.validated,
-      isNew: this.state.method === "POST",
-    });
+    const { videos, errVid } = this.state;
+    const getTabProps = (key, id) => {
+      if (videos.videos || errVid) {
+        return {
+          ...this.state.tabs[key],
+          onChange: (data) =>
+            this.setState((prevState) => ({
+              tabs: {
+                ...prevState.tabs,
+                [key]: { ...prevState.tabs[key], data },
+              },
+            })),
+          onPrevClick: this.onPrevClick,
+          onNextClick: this.onNextClick,
+          loading: this.state.loading,
+          error: this.state.commentsError,
+          showComments: this.state.showComments,
+          validated: this.state.validated,
+          isNew: this.state.method === "POST",
+          video: videos.videos?.find((item) => item.id === id),
+          errVid,
+          formTab: { active: this.state.formTab, your: key },
+        };
+      }
+    };
     return [
       {
         id: "personalData",
         name: "Dane osobowe",
         component: (
           <PersonalDataTab
-            {...getTabProps("personalData")}
+            {...getTabProps("personalData", 1)}
             onPrevClick={undefined}
           />
         ),
@@ -140,33 +157,34 @@ class CVEditorPage extends React.Component {
       {
         id: "education",
         name: "Edukacja",
-        component: <EducationTab {...getTabProps("education")} />,
+        component: <EducationTab {...getTabProps("education", 2)} />,
       },
       {
         id: "workExperience",
         name: "Doświadczenie zawodowe",
-        component: <WorkExperienceTab {...getTabProps("workExperience")} />,
+        component: <WorkExperienceTab {...getTabProps("workExperience", 3)} />,
       },
       {
         id: "skills",
         name: "Umiejętności",
-        component: <SkillsTab {...getTabProps("skills")} />,
+        component: <SkillsTab {...getTabProps("skills", 3)} />,
       },
       {
         id: "languages",
         name: "Języki obce",
-        component: <LanguagesTab {...getTabProps("languages")} />,
+        component: <LanguagesTab {...getTabProps("languages", 2)} />,
       },
       {
         id: "photo",
         name: "Zdjęcie",
         component: (
           <PhotoTab
-            {...getTabProps("photo")}
+            {...getTabProps("photo", 1)}
             onNextClick={undefined}
             onSubmit={this.handleCVSubmit}
             disabled={this.state.disabled}
             hasPhoto={this.state.has_photo}
+            alertContext={this.props.alertContext}
           />
         ),
       },
@@ -227,6 +245,19 @@ class CVEditorPage extends React.Component {
     }
   };
 
+  getVideosData = async () => {
+    try {
+      const res = await getVideos(this.context.token, 1);
+      this.setState({
+        videos: res,
+      });
+    } catch (err) {
+      this.setState({
+        errVid: true,
+      });
+    }
+  };
+
   componentDidMount() {
     let cvId = this.props.match.params.id;
     if (cvId) {
@@ -234,6 +265,7 @@ class CVEditorPage extends React.Component {
     } else {
       this.setState({ showComments: false });
     }
+    this.getVideosData();
   }
 
   render() {
@@ -247,7 +279,9 @@ class CVEditorPage extends React.Component {
             <Tabs
               transition={false}
               activeKey={this.state.formTab}
-              onSelect={(e) => this.setState({ formTab: e })}
+              onSelect={(e) => {
+                this.setState({ formTab: e });
+              }}
               className="CVEditorPage_tabs mb-1" // https://github.com/react-bootstrap/react-bootstrap/issues/4771
             >
               {this.tabs.map((tab) => (

@@ -37,6 +37,8 @@ const mapOffer = (offer) => ({
   description: offer.description,
   pay_from: offer.salary_min,
   pay_to: offer.salary_max,
+  companyLogo: offer.company_logo,
+  offerImage: offer.offer_image,
 });
 
 const JobOfferDetails = (props) => {
@@ -72,7 +74,27 @@ const JobOfferDetails = (props) => {
         <Card.Body>
           {msg || (
             <div>
-              <h3>{offer.title}</h3>
+              {offer.offerImage ? (
+                <Row className="m-0 justify-content-center">
+                  <img
+                    className="JobOffer__mainImage mb-3"
+                    src={`${proxy.plain}${offer.offerImage}`}
+                    alt="obrazek główny oferty"
+                  />
+                </Row>
+              ) : null}
+              {offer.companyLogo ? (
+                <Row className="m-0 mb-2 align-items-center justify-content-center justify-content-md-start">
+                  <img
+                    className="JobOffer__logo mb-3 mb-md-0 mr-3 mr-md-3"
+                    src={`${proxy.plain}${offer.companyLogo}`}
+                    alt="logo firmy"
+                  />
+                  <h3>{offer.title}</h3>
+                </Row>
+              ) : (
+                <h3>{offer.title}</h3>
+              )}
               <Row>
                 <DetailsItem md="6" xl="4" label="Nazwa firmy">
                   {offer.companyName}
