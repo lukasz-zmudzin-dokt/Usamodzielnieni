@@ -1,5 +1,5 @@
 import React, { useState, useRef, useContext } from "react";
-import { Alert, Button } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import { deleteOffer } from "../../functions/deleteOffer";
 import { AlertContext } from "context";
 import { DeletionModal } from "components";

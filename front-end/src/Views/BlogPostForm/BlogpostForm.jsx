@@ -1,5 +1,5 @@
 import React from "react";
-import { Alert, Button, Card, Container, Form } from "react-bootstrap";
+import { Alert, Button, Card, Form } from "react-bootstrap";
 import { createEditorState } from "medium-draft";
 import {
   getFilters,
@@ -233,8 +233,8 @@ class BlogPostForm extends React.Component {
         ) : null}
       </Card.Body>
     ) : (
-      <Container>
-        <Card>
+      <>
+        <>
           <Card.Header>
             <Form.Group controlId="blogpost_photo">
               <Form.File
@@ -299,11 +299,11 @@ class BlogPostForm extends React.Component {
               Opublikuj
             </Button>
           </Card.Footer>
-        </Card>
+        </>
         {this.state.redirect ? (
           <Redirect to={`/blog/blogpost/${this.state.post_id}`} />
         ) : null}
-      </Container>
+      </>
     );
   }
 }

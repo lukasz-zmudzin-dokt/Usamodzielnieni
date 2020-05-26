@@ -1,10 +1,9 @@
 import React, { forwardRef } from "react";
 import { Button, Badge } from "react-bootstrap";
-import "Views/Header/style.css";
 
 const NotificationToggle = forwardRef(({ count, ...rest }, ref) => {
   const badge = count > 0 && (
-    <Badge variant="secondary">{count > 9 ? "9+" : count}</Badge>
+    <span className="font">{count > 9 ? "9+" : count}</span>
   );
   return (
     <Button
@@ -13,7 +12,7 @@ const NotificationToggle = forwardRef(({ count, ...rest }, ref) => {
       {...rest}
       className="notifications-button notification-color navbar-right-button border-0"
     >
-      POWIADOMIENIA {badge}
+      <img alt="Ikona dzwonka" src="/bell.svg" /> {badge}
     </Button>
   );
 });
