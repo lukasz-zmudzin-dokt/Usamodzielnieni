@@ -13,6 +13,7 @@ import {
 } from "constants/videoBlogInitialValues";
 import FormGroup from "../FormGroup";
 import { AlertContext } from "context/AlertContext";
+import {approveFileSize} from "../../utils/approveFile/approveFile";
 
 const handleVideoBlogAddition = async (token, data, head) => {
   try {
@@ -30,9 +31,10 @@ const NewVideoBlogModal = ({ show, setShow, user }) => {
   const [validated, setValidated] = useState(false);
   const [redirect, setRedirect] = useState(false);
   const [id, setId] = useState(null);
+  const [label,setLabel] = useState("");
 
   const alertC = useRef(useContext(AlertContext));
-  const fileInput = useRef(null);
+  let fileInput = useRef(null);
 
   const clearInput = () => {
     setNewTitle("");
@@ -41,7 +43,13 @@ const NewVideoBlogModal = ({ show, setShow, user }) => {
   };
 
   const onChange = () => {
-    // + sprawdzanie wielkości pliku
+    const file = fileInput.current?.files?.[0];
+    if (!approveFileSize(file)) {
+      alertC.current.showAlert("Wybrany plik jest za duży. Maksymanly rozmiar pliku to 15 MB.");
+      fileInput = null;
+    } else {
+      setLabel(file.name);
+    }
   };
 
   const onSubmit = async (e) => {
@@ -88,7 +96,7 @@ const NewVideoBlogModal = ({ show, setShow, user }) => {
               ref={fileInput}
               custom
               onChange={onChange}
-              label={"Dodaj zdjęcie..."}
+              label={label || "Dodaj zdjęcie..."}
               accept="image/*"
               data-browse="Wybierz plik"
               className="mb-2"
