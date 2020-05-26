@@ -4,8 +4,9 @@ import { AlertContext, UserContext } from "context";
 import { sendNewStep } from "./functions/sendNewStep";
 import { StepsForm } from "../";
 import { useEffect } from "react";
+import { loadSteps } from "Views/Steps/functions/loadSteps";
 
-const NewStep = ({ steps, show, handleClose, root }) => {
+const NewStep = ({ steps, show, handleClose, root, setSteps, setPath, setRoot, setError }) => {
   const stepsTypes = ["Krok główny", "Podkrok"];
   const [type, setType] = useState(stepsTypes[0]);
   const [newStep, setNewStep] = useState({
@@ -36,7 +37,6 @@ const NewStep = ({ steps, show, handleClose, root }) => {
       const object = steps.find(
         (item) => item.title === newStep.parent
       );
-//      console.log(newStep);
       let data = {};
       if(object) {
         data = {
@@ -53,6 +53,7 @@ const NewStep = ({ steps, show, handleClose, root }) => {
         res = await sendNewStep(user.token, isStep, data);
         alertC.current.showAlert(res.message, "success");
         handleClose();
+        await loadSteps(setSteps, setPath, setRoot, setError);
       } catch (e) {
         alertC.current.showAlert(Object.values(e)[0]);
       }

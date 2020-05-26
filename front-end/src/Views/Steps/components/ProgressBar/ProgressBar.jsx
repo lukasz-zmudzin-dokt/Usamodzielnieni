@@ -7,8 +7,9 @@ import { DeletionModal } from "components";
 import { staffTypes } from "constants/staffTypes";
 import { UserContext } from "context";
 import { NewStep, EditStep } from "../";
+import {loadSteps} from "../../functions/loadSteps";
 
-const getSteps = async () => {
+/*const getSteps = async () => {
   let url = `${proxy.steps}`; // TODO
   const headers = {
     "Content-Type": "application/json",
@@ -65,7 +66,7 @@ const getNext = (step, list) => {
   }
   return next;
 };
-
+*/
 const ProgressBar = () => {
   const [steps, setSteps] = useState([]);
   const [root, setRoot] = useState();
@@ -78,10 +79,10 @@ const ProgressBar = () => {
   const [showEdit, setShowEdit] = useState(false);
 
   useEffect(() => {
-    loadSteps();
-  }, []);
+    loadSteps(setSteps, setPath, setRoot, setError);
+  }, [setSteps, setRoot, setPath, setError]);
 
-  const loadSteps = async () => {
+  /*const loadSteps = async () => {
     let res;
     try {
       res = await getSteps();
@@ -100,14 +101,14 @@ const ProgressBar = () => {
       setError(true);
       return;
     }
-  };
+  };*/
 
   const deletion = async () => {
     setWantsDelete(false);
     let stepId = path[path.length - 1];
     let res = await deleteStep(steps, stepId, user.token);
     if (res.status === 204) {
-      await loadSteps();
+      await loadSteps(setSteps, setPath, setRoot, setError);
     }
   };
 
@@ -145,7 +146,7 @@ const ProgressBar = () => {
         {user.data.group_type.includes(staffTypes.BLOG_MODERATOR) ? (
           <>
             <div className="mb-3">
-              <Button onClick={() => setShowEdit(true)}>Edytuj ten krok</Button>
+              {steps.length > 0 ? <Button onClick={() => setShowEdit(true)}>Edytuj ten krok</Button> : null}
               <Button className="ml-3" onClick={() => setShowNew(true)}>
                 Dodaj nowy krok
               </Button>
@@ -155,15 +156,29 @@ const ProgressBar = () => {
               show={showNew}
               handleClose={() => setShowNew(false)}
               root={root}
+              setRoot={setRoot}
+              setSteps={setSteps}
+              setPath={setPath}
+              setError={setError}
             />
-            {steps.length > 0 && (
+            <EditStep
+                steps={steps}
+                step={steps.find((item) => item.id === path[path.length - 1])}
+                show={showEdit}
+                handleClose={() => setShowEdit(false)}
+                setRoot={setRoot}
+                setSteps={setSteps}
+                setPath={setPath}
+                setError={setError}
+              />
+            {/*steps.length > 0 ? (
               <EditStep
                 steps={steps}
                 step={steps.find((item) => item.id === path[path.length - 1])}
                 show={showEdit}
                 handleClose={() => setShowEdit(false)}
               />
-            )}
+            ) : null*/}
           </>
         ) : null}
         {path.map((stepId, i) => (

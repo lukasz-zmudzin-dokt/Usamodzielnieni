@@ -3,17 +3,18 @@ import { Button, Form, Modal } from "react-bootstrap";
 import { AlertContext, UserContext } from "context";
 import { StepsForm } from "../";
 import { editStep } from "./functions/editStep";
+import { loadSteps } from "Views/Steps/functions/loadSteps"
 
-const EditStep = ({ step, steps, show, handleClose }) => {
+const EditStep = ({ step, steps, show, handleClose, setSteps, setPath, setRoot, setError }) => {
   const stepsTypes = ["Krok główny", "Podkrok"];
   const [type, setType] = useState(
-    step.type === "main" ? stepsTypes[0] : stepsTypes[1]
+    step?.type === "main" ? stepsTypes[0] : stepsTypes[1]
   );
   const [newStep, setNewStep] = useState({
     title: "",
     description: "",
     video: "",
-    parent: steps[0].title,
+    parent: steps[0]?.title,
   });
   const user = useContext(UserContext);
   const alertC = useRef(useContext(AlertContext));
@@ -21,12 +22,12 @@ const EditStep = ({ step, steps, show, handleClose }) => {
   console.log(step);
   useEffect(() => {
     setNewStep({
-      title: step.title,
-      description: step.description,
+      title: step?.title,
+      description: step?.description,
       video: "",
-      parent: steps[0].title,
+      parent: steps[0]?.title,
     });
-    setType(step.type === "main" ? stepsTypes[0] : stepsTypes[1]);
+    setType(step?.type === "main" ? stepsTypes[0] : stepsTypes[1]);
   }, [step]);
 
   const isStep = type === stepsTypes[0];
@@ -45,6 +46,7 @@ const EditStep = ({ step, steps, show, handleClose }) => {
         res = await editStep(user.token, isStep, data, step.id);
         alertC.current.showAlert(res.message, "success");
         handleClose();
+        await loadSteps(setSteps, setPath, setRoot, setError);
       } catch (e) {
         alertC.current.showAlert(Object.values(e)[0]);
       }
