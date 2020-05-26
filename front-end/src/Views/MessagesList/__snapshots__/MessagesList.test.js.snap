@@ -39,18 +39,7 @@ exports[`MessagesList should match snapshot 1`] = `
       >
         <div
           class="messagesList__list list-group"
-        >
-          <div
-            class="messagesList__item messagesList__item--right list-group-item list-group-item-info"
-          >
-            gitówa
-          </div>
-          <div
-            class="messagesList__item messagesList__item--left list-group-item list-group-item-primary"
-          >
-            gitówa2
-          </div>
-        </div>
+        />
       </div>
       <form
         class="m-3"
