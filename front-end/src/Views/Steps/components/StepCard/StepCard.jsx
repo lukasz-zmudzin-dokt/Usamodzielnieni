@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Button, Card } from "react-bootstrap";
 import Player from "components/Player";
 import { UserContext } from "context";
-import {staffTypes} from "constants/staffTypes";
+import { staffTypes } from "constants/staffTypes";
 
 const StepCard = ({ step, setCurrent, wantsDelete, wantsEdit, path }) => {
   const user = useContext(UserContext);
@@ -29,7 +29,7 @@ const StepCard = ({ step, setCurrent, wantsDelete, wantsEdit, path }) => {
             {child.choiceName}
           </Button>
         ))}
-        {path[path.length - 1] === step.id &&
+        {path[path.length - 1] === step.id && (
           <Button
             variant="secondary"
             block
@@ -37,16 +37,18 @@ const StepCard = ({ step, setCurrent, wantsDelete, wantsEdit, path }) => {
           >
             Początek
           </Button>
-        }
-        {path[path.length - 1] === step.id && user.data.group_type.includes(staffTypes.BLOG_MODERATOR) ? (
-          <Button variant="warning" block onClick={()=>wantsEdit(true)}>
+        )}
+        {path[path.length - 1] === step.id &&
+        user.data.group_type.includes(staffTypes.BLOG_MODERATOR) ? (
+          <Button variant="warning" block onClick={() => wantsEdit(true)}>
             Edytuj krok
           </Button>
         ) : null}
-        {path[path.length - 1] === step.id && user.data.group_type.includes(staffTypes.BLOG_MODERATOR) ? (
+        {path[path.length - 1] === step.id &&
+        user.data.group_type.includes(staffTypes.BLOG_MODERATOR) ? (
           <Button variant="danger" block onClick={() => wantsDelete(true)}>
             Usuń krok
-          </Button>  
+          </Button>
         ) : null}
       </Card.Body>
     </Card>
