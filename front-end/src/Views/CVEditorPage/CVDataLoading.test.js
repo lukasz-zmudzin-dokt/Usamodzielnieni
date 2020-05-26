@@ -24,6 +24,7 @@ const renderWithRouterMatch = (
   let context = {
     type: userTypes.STANDARD,
     token: "123",
+    data: {}
   };
   return {
     ...render(
@@ -43,7 +44,8 @@ describe("load cv data", () => {
     feedback,
     contextA,
     templates,
-    templatesFail;
+    templatesFail,
+    user;
   let props = {
     match: {
       params: {
@@ -129,6 +131,7 @@ describe("load cv data", () => {
       ],
     };
     feedback = {
+      cv_id: 123,
       basic_info: "dane osobowe ok",
       schools: "dd",
       experiences: "pracy bra",
@@ -139,15 +142,19 @@ describe("load cv data", () => {
     contextA = {
       showAlert: jest.fn(),
     };
-
+    user = {
+      token: 123,
+      type: userTypes.STANDARD,
+      data: {}
+    };
     templates = ["qwe", "asd", "zxc"];
   });
 
   it("should load correct data on personal tab", async () => {
     const { getByLabelText } = renderWithRouterMatch(
-      <AlertContext.Provider value={contextA}>
-        <CVEditorPage {...props} />
-      </AlertContext.Provider>
+        <AlertContext.Provider value={contextA}>
+          <CVEditorPage {...props} />
+        </AlertContext.Provider>
     );
     await wait(() => expect(fetch).toHaveBeenCalled());
     await expect(getByLabelText("Imię:").value).toBe(

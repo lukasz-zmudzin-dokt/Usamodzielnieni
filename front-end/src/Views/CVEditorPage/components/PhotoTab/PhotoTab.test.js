@@ -4,7 +4,6 @@ import PhotoTab from "./PhotoTab";
 import { UserContext } from "context/UserContext";
 import { userTypes } from "constants/userTypes";
 import { VideoField } from "components";
-import { AlertContext } from "context/AlertContext";
 
 jest.mock("components");
 
@@ -68,21 +67,5 @@ describe("photo tab tests", () => {
       </UserContext.Provider>
     );
     expect(getByText("Poprzednie zdjęcie")).toBeInTheDocument();
-  });
-
-  it("too big... too small... size does matter after all", () => {
-    const { getByText } = render(
-      <AlertContext.Provider value={alertContext}>
-        <UserContext.Provider value={user}>
-          <PhotoTab {...props} />
-        </UserContext.Provider>
-      </AlertContext.Provider>
-    );
-    fireEvent.change(getByText("Wybierz zdjęcie"), {
-      target: { files: [{ size: 123, name: "duży string większy niż 1" }] },
-    });
-    expect(alertContext.showAlert).toHaveBeenCalledWith(
-      "Wybrany plik jest za duży. Maksymalny rozmiar pliku to 15 MB."
-    );
   });
 });
