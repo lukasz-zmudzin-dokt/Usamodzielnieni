@@ -208,6 +208,15 @@ class BlogPostForm extends React.Component {
     }
   };
 
+  nullifyCategory = () => {
+    this.props.alertContext.showAlert(
+      "Niedozwolona kategoria. Aby stworzyć wideoblog przejdź do zakładki Mój profil."
+    );
+    this.setState({
+      category: "",
+    });
+  };
+
   render() {
     return this.state.isLoading || this.state.error === "reservation" ? (
       <Card.Body>
@@ -260,6 +269,7 @@ class BlogPostForm extends React.Component {
               arrayType={this.state.filters.categories}
               current={this.state.category}
               onChange={this.onChange}
+              nullCat={this.nullifyCategory}
             />
             <EditorForm
               alerts={this.props.alertContext}

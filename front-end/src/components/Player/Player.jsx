@@ -3,7 +3,7 @@ import React from "react";
 
 const Player = ({ src }) => {
   const _onReady = (event) => {
-    event.target.pauseVideo();
+    event.target.stopVideo();
   };
 
   const videoProps = {

@@ -12,6 +12,7 @@ import {
 import { Button } from "react-bootstrap";
 import { IndexLinkContainer } from "react-router-bootstrap";
 import { userTypes } from "constants/userTypes";
+import NewVideoblogButton from "../NewVideoblogButton/NewVideoblogButton";
 import { staffTypes } from "constants/staffTypes";
 
 const ButtonsContainer = ({ user }) => {
@@ -24,10 +25,11 @@ const ButtonsContainer = ({ user }) => {
       <AdminRegisterButton user={user} />
       <AdminApproveUserButton user={user} />
       <AdminOfferApprovalButton user={user} />
+      <NewVideoblogButton user={user} />
       <UserListButton user={user} />
       {user.type === userTypes.STAFF &&
       !user.data.group_type.includes(staffTypes.GUEST) ? (
-        <IndexLinkContainer className="my-2" to={`/changeData/${user.data.id}`}>
+        <IndexLinkContainer to={`/changeData/${user.data.id}`}>
           <Button>Zmień swoje dane</Button>
         </IndexLinkContainer>
       ) : null}
