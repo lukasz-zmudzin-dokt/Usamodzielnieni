@@ -185,7 +185,7 @@ const Header = () => {
         aria-controls="responsive-navbar-nav"
         bsPrefix="hamburger-toggle"
       >
-        <a className="hamburger-menu-text">MENU</a>
+        <p className="hamburger-menu-text">MENU</p>
         <img
           src={menu}
           id={"menu"}

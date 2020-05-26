@@ -44,7 +44,7 @@ const CVApprovalPage = () => {
       await acceptCV(context.token, id);
       setCvs(cvs.filter((cv) => cv.cv_id !== id));
     } catch (e) {
-      throw false;
+      throw e;
     }
   };
 

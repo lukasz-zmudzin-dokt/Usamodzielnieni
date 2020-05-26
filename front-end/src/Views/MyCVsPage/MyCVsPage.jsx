@@ -87,7 +87,7 @@ class MyCVsPage extends React.Component {
   );
 
   render() {
-    const { cvs, loading, errors } = this.state;
+    const { cvs, loading } = this.state;
     return (
       <Container className="mt-4">
         <Card>
