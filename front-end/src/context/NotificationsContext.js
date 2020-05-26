@@ -104,14 +104,6 @@ const mapNotifications = (notifications, type) => ({
 });
 
 const mapNotification = (notification, type) => {
-  console.log(notification.event === "Nowa wiadomość", notification);
-  if (notification.event === "Nowe wiadomość") {
-    console.log("tu");
-    return {
-      sender: notification.sender,
-      time: new Date(notification.timestamp),
-    };
-  }
   return {
     id: notification.slug,
     path: getPath(notification.app, notification.object_id, type),
@@ -123,7 +115,6 @@ const mapNotification = (notification, type) => {
 
 const getPath = (appName, id, type) => {
   const isStandard = type === userTypes.STANDARD;
-  console.log(appName);
   if (appName.match(/^cv/)) {
     return isStandard
       ? compile(paths.MY_CVS)({})
@@ -189,7 +180,6 @@ export const NotificationsProvider = (props) => {
       const url = proxy.wsNotification + "ws";
       try {
         socket.current = new WebSocket(url, user.token);
-        // socket.current.onopen = (e) => console.log("onopen", e);
         socket.current.onmessage = (e) => {
           const newNotification = mapNotification(
             JSON.parse(e.data),
@@ -197,7 +187,7 @@ export const NotificationsProvider = (props) => {
           );
           const parsedNotification = JSON.parse(e.data);
 
-          if (parsedNotification.event === "Nowe wiadomość") {
+          if (parsedNotification.app === "chat") {
             chatC.socket.current.send(JSON.stringify({ message: "threads" }));
           }
           setCount((prev) => prev + 1);

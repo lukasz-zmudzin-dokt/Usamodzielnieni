@@ -62,6 +62,7 @@ const MessagesList = () => {
   const socket = useRef(null);
   const [contact, setContact] = useState({});
   const chatC = useContext(ChatContext);
+  const [loading, setLoading] = useState(false);
 
   const backToChats = () => {
     if (chatC.socket.current.readyState === WebSocket.CLOSED) {
@@ -109,21 +110,22 @@ const MessagesList = () => {
     [user.data.username]
   );
 
-  console.log(contact);
-
   useEffect(() => {
     const loadMessages = async (token, id) => {
       let res;
+      setLoading(true);
       try {
         res = await getMessages(token, id);
-        console.log(res);
+
         setData(mapRes(res.messages));
         checkPhoto(res);
         messagesEl.current.scrollTop = messagesEl.current.scrollHeight;
+        setLoading(false);
       } catch (e) {
         console.log(e);
         alertC.current.showAlert("Nie udało się załadować wiadomości.");
         res = [];
+        setLoading(false);
       }
     };
     loadMessages(user.token, id);
@@ -180,6 +182,7 @@ const MessagesList = () => {
           </ListGroup>
         </Card.Body>
         <ChatForm
+          loading={loading}
           sendMessage={(msg) =>
             sendMessage(
               user.token,

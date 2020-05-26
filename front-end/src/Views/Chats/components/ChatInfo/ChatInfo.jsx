@@ -6,8 +6,6 @@ import { UserPicture } from "components";
 const ChatInfo = ({ chat, user, ...rest }) => {
   const [contact, setContact] = useState({ data: {} });
 
-  console.log(contact);
-
   useEffect(() => {
     const mapUser = () => {
       if (chat.first.username === user.data.username) {

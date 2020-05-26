@@ -59,36 +59,23 @@ export const ChatProvider = (props) => {
     }
   }, [filters, user.token]);
 
-  console.log(chats);
-
   useEffect(() => {
     if (socket.current) {
       socket.current.close();
       socket.current = null;
-      //   console.log("xd");
     }
     if (user.token && user.type) {
       const url = proxy.wsChat;
-      console.log(url);
-      console.log("xd2");
+
       try {
         socket.current = new WebSocket(url, user.token);
         socket.current.onopen = (e) => {
-          console.log("udało się", e);
-          console.log(JSON.stringify({ message: "threads" }));
           socket.current.send(JSON.stringify({ message: "threads" }));
         };
 
         socket.current.onmessage = (msg) => {
           setChats(JSON.parse(msg.data));
         };
-        // socket.current.onerror = (e) => {
-        //   console.log(e);
-        //   setError(true);
-        // };
-        // socket.current.onclose = (e) => {
-        //   console.log(e);
-        // };
       } catch (e) {
         console.log(e);
       }
@@ -103,7 +90,7 @@ export const ChatProvider = (props) => {
       setError(true);
       return;
     }
-    console.log([...chats, ...res.results]);
+
     setChats([...chats, ...res.results]);
   };
 

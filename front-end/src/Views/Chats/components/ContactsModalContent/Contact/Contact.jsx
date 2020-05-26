@@ -4,8 +4,6 @@ import { IndexLinkContainer } from "react-router-bootstrap";
 import { UserPicture } from "components";
 
 const Contact = ({ contact }) => {
-  console.log(contact);
-
   return (
     <div>
       <Row className="align-items-center">

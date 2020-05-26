@@ -2,12 +2,11 @@ import React, { useState } from "react";
 import { Form, Button, InputGroup, FormControl } from "react-bootstrap";
 import sendMessageIcon from "assets/sendMessageIcon.svg";
 
-const ChatForm = ({ sendMessage }) => {
+const ChatForm = ({ sendMessage, loading }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (message !== "") {
       try {
-        //console.log(message);
         await sendMessage(message);
         setMessage("");
       } catch (e) {
@@ -37,7 +36,12 @@ const ChatForm = ({ sendMessage }) => {
           placeholder="Napisz wiadomość..."
         />
         <InputGroup.Append>
-          <Button data-testid="button" type="submit" variant="light">
+          <Button
+            disabled={loading}
+            data-testid="button"
+            type="submit"
+            variant="light"
+          >
             <img src={sendMessageIcon} alt="send message" />
           </Button>
         </InputGroup.Append>
