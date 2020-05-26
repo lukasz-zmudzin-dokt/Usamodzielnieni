@@ -1,9 +1,11 @@
-import React, { useEffect, useContext, useState } from "react";
-import { Container, Card, Row } from "react-bootstrap";
+import React, { useEffect, useContext, useState, Suspense } from "react";
+import { Container, Card, Row, Alert } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { getCV } from "Views/CVCorrection/functions";
 import { UserContext } from "context";
-import { CVRender, CorrectionForm } from "./_components";
+import { CorrectionForm } from "./_components";
+
+const CVRender = React.lazy(() => import("./_components/CVRender"));
 
 const CVCorrection = () => {
   const { id } = useParams();
@@ -33,7 +35,15 @@ const CVCorrection = () => {
         </Card.Header>
         <Card.Body>
           <Row className="m-0">
-            <CVRender url={url} msg={msg} />
+            <Suspense
+              fallback={
+                <div>
+                  <Alert variant="info">Ładowanie...</Alert>
+                </div>
+              }
+            >
+              <CVRender url={url} msg={msg} />
+            </Suspense>
             <CorrectionForm id={id} token={token} />
           </Row>
         </Card.Body>
