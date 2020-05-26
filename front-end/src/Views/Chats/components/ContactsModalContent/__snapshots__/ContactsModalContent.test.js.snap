@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ContactsModalContent should match snapshot 1`] = `
+<div>
+  <div
+    class="container"
+  >
+    <div
+      class="row"
+    >
+      <div
+        class="fade alert alert-info show"
+        role="alert"
+      >
+        Ładowanie listy kontaktów
+      </div>
+    </div>
+  </div>
+</div>
+`;
