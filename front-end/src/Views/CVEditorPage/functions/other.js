@@ -125,4 +125,4 @@ const fetchTemplateList = async (token) => {
   }
 };
 
-export { sendData, getFeedback, getCVdata, fetchTemplateList };
+export { sendData, getFeedback, getCVdata, fetchTemplateList, getVideos };

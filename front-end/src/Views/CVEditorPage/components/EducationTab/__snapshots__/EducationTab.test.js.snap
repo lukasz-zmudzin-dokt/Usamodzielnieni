@@ -6,11 +6,16 @@ exports[`EducationTab should render without crashing 1`] = `
     <h3>
       Edukacja
     </h3>
-    <img
-      alt=""
-      class="CVEditorTab__img"
-      src="movie_2.png"
-    />
+    <div
+      class="CVEditor__videoContainer"
+    >
+      <div
+        class="fade alert alert-info show"
+        role="alert"
+      >
+        Ładowanie...
+      </div>
+    </div>
     <form
       class=""
       novalidate=""

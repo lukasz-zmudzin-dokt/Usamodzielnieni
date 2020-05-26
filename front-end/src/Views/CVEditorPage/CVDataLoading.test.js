@@ -1,5 +1,5 @@
 import React from "react";
-import { render, wait, fireEvent } from "@testing-library/react";
+import { render, wait, waitForElement, fireEvent } from "@testing-library/react";
 import CVEditorPage from "./CVEditorPage";
 import { Router, Route } from "react-router-dom";
 import { createMemoryHistory } from "history";
@@ -175,7 +175,7 @@ describe("load cv data", () => {
       </AlertContext.Provider>
     );
 
-    await wait(() => expect(fetch).toHaveBeenCalledTimes(3));
+    await wait(() => expect(fetch).toHaveBeenCalledTimes(4));
 
     expect(getByLabelText("Imię:").value).toBe("Jan");
     expect(getByText("dane osobowe ok")).toBeInTheDocument();
@@ -219,7 +219,7 @@ describe("load cv data", () => {
       </AlertContext.Provider>
     );
 
-    await wait(() => expect(fetch).toHaveBeenCalledTimes(2));
+    await wait(() => expect(fetch).toHaveBeenCalledTimes(4));
     expect(contextA.showAlert).toHaveBeenCalledWith(
       "Nie udało się załadować uwag."
     );
