@@ -7,7 +7,7 @@ import { DeletionModal } from "components";
 import { staffTypes } from "constants/staffTypes";
 import { UserContext } from "context";
 import { NewStep, EditStep } from "../";
-import {loadSteps} from "../../functions/loadSteps";
+import { loadSteps } from "../../functions/loadSteps";
 
 /*const getSteps = async () => {
   let url = `${proxy.steps}`; // TODO
@@ -146,7 +146,11 @@ const ProgressBar = () => {
         {user.data.group_type.includes(staffTypes.BLOG_MODERATOR) ? (
           <>
             <div className="mb-3">
-              {steps.length > 0 ? <Button onClick={() => setShowEdit(true)}>Edytuj ten krok</Button> : null}
+              {steps.length > 0 ? (
+                <Button onClick={() => setShowEdit(true)}>
+                  Edytuj ten krok
+                </Button>
+              ) : null}
               <Button className="ml-3" onClick={() => setShowNew(true)}>
                 Dodaj nowy krok
               </Button>
