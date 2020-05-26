@@ -22,7 +22,7 @@ const Contact = ({ contact }) => {
       </Row>
       <Row>
         <Col>
-          <em>{contact.type}</em>
+          <em>{contact.role}</em>
         </Col>
       </Row>
     </div>
