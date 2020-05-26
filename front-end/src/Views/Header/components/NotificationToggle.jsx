@@ -11,7 +11,7 @@ const NotificationToggle = forwardRef(({ count, ...rest }, ref) => {
       ref={ref}
       variant="light"
       {...rest}
-      className="notifications-button notification-color navbar-right-button"
+      className="notifications-button notification-color navbar-right-button border-0"
     >
       POWIADOMIENIA {badge}
     </Button>
