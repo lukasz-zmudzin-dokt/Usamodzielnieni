@@ -2,8 +2,8 @@ import React, { useContext } from "react";
 import { Button, Card } from "react-bootstrap";
 import Player from "components/Player";
 import { UserContext } from "context";
-import { userTypes } from "constants/userTypes";
 import {staffTypes} from "constants/staffTypes";
+
 const StepCard = ({ step, setCurrent, wantsDelete, wantsEdit, path }) => {
   const user = useContext(UserContext);
   return (
@@ -49,20 +49,6 @@ const StepCard = ({ step, setCurrent, wantsDelete, wantsEdit, path }) => {
           </Button>  
         ) : null}
       </Card.Body>
-      {/*path[path.length - 1] === step.id && user.data.group_type.includes(staffTypes.BLOG_MODERATOR) ? (
-        <div>
-          <Button variant="danger" onClick={() => wantsDelete(true)}>
-            Usuń krok
-          </Button>
-          <Button variant="primary" onClick={()=>wantsEdit(true)}>
-            Edytuj krok
-          </Button>
-        </div>) : null}
-        {/*<Button variant="danger" onClick={() => wantsDelete(true)}>
-          Usuń krok
-        </Button>
-        <Button variant="primary" onClick={(wantsEdit(true))}>Edytuj krok</Button>
-      */}
     </Card>
   );
 };
