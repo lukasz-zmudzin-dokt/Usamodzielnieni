@@ -138,7 +138,11 @@ const Header = () => {
       </Nav>
     ) : (
       <Nav>
-        <Notifications location={useLocation} token={context.token} />
+        <Notifications
+          className="desktopNotifications"
+          location={useLocation}
+          token={context.token}
+        />
         <NavDropdown
           id={"myAccDropdown"}
           title={
@@ -174,12 +178,12 @@ const Header = () => {
   );
 
   return (
-    <Navbar
-      collapseOnSelect
-      expand="lg"
-      sticky="top"
-      className="font p-3 justify-content-end"
-    >
+    <Navbar collapseOnSelect expand="lg" sticky="top" className="font p-3">
+      <Notifications
+        className="mobileNotifications"
+        location={useLocation}
+        token={context.token}
+      />
       <Navbar.Toggle
         aria-controls="responsive-navbar-nav"
         bsPrefix="hamburger-toggle"
