@@ -4,10 +4,15 @@ import { IndexLinkContainer } from "react-router-bootstrap";
 import { UserPicture } from "components";
 
 const ChatInfo = ({ chat, ...rest }) => {
+  const mapUser = () => ({
+    data: {
+      ...chat.first,
+    },
+  });
   return (
     <Row {...rest} className="chatInfo">
       <Col xs="auto" className="chatInfo__picture">
-        <UserPicture user={chat.first} />
+        <UserPicture user={mapUser()} />
       </Col>
       <Col>
         <h5>{`${chat.first.username}`}</h5>

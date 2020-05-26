@@ -117,7 +117,7 @@ const MessagesList = () => {
       try {
         res = await getMessages(token, id);
         console.log(res);
-        setData(mapRes(res));
+        setData(mapRes(res.messages));
       } catch (e) {
         console.log(e);
         alertC.current.showAlert("Nie udało się załadować wiadomości.");
@@ -144,7 +144,6 @@ const MessagesList = () => {
         socket.current.onmessage = (object) => {
           setData([...data, mapAnswer(JSON.parse(JSON.parse(object.data)))]);
         };
-        socket.current.onclose = (e) => console.log("koniec", e);
       } catch (e) {
         console.log(e);
       }
