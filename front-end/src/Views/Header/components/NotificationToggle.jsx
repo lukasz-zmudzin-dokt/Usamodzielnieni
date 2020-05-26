@@ -1,6 +1,5 @@
 import React, { forwardRef } from "react";
 import { Button, Badge } from "react-bootstrap";
-import "Views/Header/style.css";
 
 const NotificationToggle = forwardRef(({ count, ...rest }, ref) => {
   const badge = count > 0 && (
@@ -11,7 +10,7 @@ const NotificationToggle = forwardRef(({ count, ...rest }, ref) => {
       ref={ref}
       variant="light"
       {...rest}
-      className="notifications-button notification-color navbar-right-button"
+      className="notifications-button notification-color navbar-right-button border-0"
     >
       POWIADOMIENIA {badge}
     </Button>

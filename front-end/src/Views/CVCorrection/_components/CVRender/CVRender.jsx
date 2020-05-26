@@ -2,7 +2,7 @@ import React, { useState, useMemo } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 import proxy from "config/api";
 import { Alert, Row } from "react-bootstrap";
-import { PaginationCV } from "Views/CVCorrection/_components";
+import PaginationCV from "../PaginationCV";
 
 pdfjs.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.js";
 
