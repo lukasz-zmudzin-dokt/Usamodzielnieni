@@ -3,13 +3,13 @@
 exports[`Footer should match snapshot 1`] = `
 <div>
   <div
-    class="font full-width container-fluid"
+    class="font full-width container"
   >
     <div
-      class="p-5 row"
+      class="p-3 row"
     >
       <div
-        class="p-4 col-md-3 col-sm-12 col-12 order-md-1 order-sm-2 order-2"
+        class="p-4 mobile-col col-md-3 col-sm-12 col-12 order-md-1 order-sm-2 order-2"
       >
         <div
           class="company-title row"
@@ -33,7 +33,7 @@ exports[`Footer should match snapshot 1`] = `
         </div>
       </div>
       <div
-        class="p-4 col-md-3 col-sm-12 col-12 order-md-2 order-sm-3 order-3"
+        class="p-4 mobile-col col-md-3 col-sm-12 col-12 order-md-2 order-sm-3 order-3"
       >
         <div
           class="company-title row"
@@ -57,7 +57,7 @@ exports[`Footer should match snapshot 1`] = `
         </div>
       </div>
       <div
-        class="p-4 col-md-3 col-sm-12 col-12 order-md-3 order-sm-4 order-4"
+        class="p-4 mobile-col col-md-3 col-sm-12 col-12 order-md-3 order-sm-4 order-4"
       >
         <div
           class="company-title row"
@@ -81,74 +81,106 @@ exports[`Footer should match snapshot 1`] = `
         </div>
       </div>
       <div
-        class="social-media-col col-md-2 col-sm-12 col-12 order-md-4 offset-md-1 order-sm-1 order-1"
+        class="p-4 mobile-col col-md-3 col-sm-12 col-12 order-md-4 order-sm-1 order-1"
       >
         <div
-          class="pt-3 row"
+          class="pt-3 social-media-row social-media-row-first row"
         >
           <a
-            class="d-flex align-items-end"
+            class="d-flex align-items-end social-media-icon"
             href="https://www.youtube.com/channel/UCbKE3BfzmHGfXbB9nmmswYw"
             rel="noopener noreferrer"
             target="_blank"
           >
-            <img
-              alt="yt"
-              class="social-media-icon"
-              src="youtube-icon.png"
-            />
-            youtube
+            <div
+              class="p-0 col"
+            >
+              <img
+                alt="yt"
+                class="social-media-icon"
+                src="youtube-icon.png"
+              />
+            </div>
+            <div
+              class="pl-3 a col"
+            >
+              youtube
+            </div>
           </a>
         </div>
         <div
-          class="pt-3 row"
+          class="pt-3 social-media-row row"
         >
           <a
-            class="d-flex align-items-end"
+            class="d-flex align-items-end social-media-icon"
             href="https://twitter.com/usamodzielnieni"
             rel="noopener noreferrer"
             target="_blank"
           >
-            <img
-              alt="tt"
-              class="social-media-icon"
-              src="twitter-icon.png"
-            />
-            twitter
+            <div
+              class="p-0 col"
+            >
+              <img
+                alt="tt"
+                class="social-media-icon"
+                src="twitter-icon.png"
+              />
+            </div>
+            <div
+              class="pl-3 a col"
+            >
+              twitter
+            </div>
           </a>
         </div>
         <div
-          class="pt-3 row"
+          class="pt-3 social-media-row row"
         >
           <a
-            class="d-flex align-items-end"
+            class="d-flex align-items-end social-media-icon"
             href="https://www.facebook.com/Usamodzielnieni-110914023943342"
             rel="noopener noreferrer"
             target="_blank"
           >
-            <img
-              alt="fb"
-              class="social-media-icon lol"
-              src="facebook-icon.png"
-            />
-            facebook
+            <div
+              class="p-0 col"
+            >
+              <img
+                alt="fb"
+                class="social-media-icon lol"
+                src="facebook-icon.png"
+              />
+            </div>
+            <div
+              class="pl-3 a col"
+            >
+              facebook
+            </div>
           </a>
         </div>
         <div
-          class="pt-3 row"
+          class="pt-3 social-media-row row"
         >
           <a
-            class="d-flex align-items-end"
+            class="d-flex align-items-end social-media-icon"
             href="https://www.instagram.com/_usamodzielnieni_"
             rel="noopener noreferrer"
             target="_blank"
           >
-            <img
-              alt="ig"
-              class="social-media-icon"
-              src="instagram-icon.png"
-            />
-            instagram
+            <div
+              class="p-0 col"
+            >
+              <img
+                alt="ig"
+                class="social-media-icon"
+                src="instagram-icon.png"
+              />
+            </div>
+            <div
+              class="pl-3 a col"
+            >
+              instagram
+            </div>
           </a>
         </div>
       </div>

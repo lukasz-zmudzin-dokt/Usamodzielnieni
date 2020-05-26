@@ -1,9 +1,9 @@
 import React from "react";
-import HeaderTemplate from "Views/PageHeader/headerTemplate";
 import { BrowserRouter } from "react-router-dom";
 import { UserProvider, AlertProvider, NotificationsProvider } from "context";
 import Router from "root/Router";
 import { AlertsContainer } from "components";
+import Header from "Views/Header";
 import Footer from "Views/Footer";
 
 const App = () => {
@@ -12,7 +12,7 @@ const App = () => {
       <AlertProvider>
         <NotificationsProvider>
           <BrowserRouter>
-            <HeaderTemplate />
+            <Header />
             <div className="center-container">
               <Router />
               <AlertsContainer />

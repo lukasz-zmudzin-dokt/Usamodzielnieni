@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NotificationItem should render without crashing 1`] = `
+<div>
+  <a
+    href="/"
+  >
+    <div>
+      Tytuł powiadomienia
+    </div>
+    <small>
+      1584207570892_date_en-US_4_
+    </small>
+  </a>
+</div>
+`;
