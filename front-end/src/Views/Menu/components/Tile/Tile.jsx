@@ -18,16 +18,16 @@ const Tile = ({ title, showImage, imageUrl, color, destination }) => {
         {positions.map((position) => (
           <div
             key={`bg_${position}`}
-            style={{ backgroundColor: color }}
+            style={{backgroundColor: color}}
             className={getClassNames("bg", position)}
-          ></div>
+          />
         ))}
         <div className="tile_content">
           {positions.map((position) => (
             <div
               key={`border_${position}`}
               className={getClassNames("border", position)}
-            ></div>
+            />
           ))}
           <div className="tile__image">
             <img alt="" src={imageUrl} />

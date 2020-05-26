@@ -34,7 +34,6 @@ const fetchPosts = async () => {
 };
 
 const addTile = async (token, tile, mode, id) => {
-  console.log("heree");
   let url = proxy.menu + "tile/";
   console.log(url);
   url = mode === "PUT" ? url + id + "/" : url;
@@ -42,13 +41,12 @@ const addTile = async (token, tile, mode, id) => {
     Authorization: "Token " + token,
     "Content-Type": "application/json",
   };
-  console.log(url);
+  console.log(tile);
   const res = await fetch(url, {
     method: mode,
     headers,
     body: JSON.stringify(tile),
   });
-  console.log("fecz");
   const status = mode === "POST" ? 201 : 200;
   if (res.status === status) {
     return await res.json();
@@ -58,14 +56,13 @@ const addTile = async (token, tile, mode, id) => {
 };
 
 const postPhoto = async (token, id, photo) => {
-  console.log("elo");
   const url = proxy.menu + "tile/" + id + "/photo/";
-  console.log(url);
   const headers = {
     Authorization: "Token " + token,
     //"Content-Type": "application/x-www-form-urlencoded"
   };
   const pic = new FormData();
+  console.log(photo);
   pic.append("photo", photo, photo.name);
 
   const res = await fetch(url, { method: "POST", headers, body: pic });
@@ -73,7 +70,7 @@ const postPhoto = async (token, id, photo) => {
   if (res.status === 200) {
     return;
   } else {
-    throw res.status;
+    throw await res.json();
   }
 };
 
@@ -103,7 +100,7 @@ const NewTileForm = ({ show, setShow, user, appendTile, tileData }) => {
   const [loading, setLoading] = useState(false);
 
   let fileInput = useRef(null);
-  const alertContext = useContext(AlertContext);
+  const alertContext = useRef(useContext(AlertContext));
 
   useEffect(() => {
     setLoading(true);
@@ -114,7 +111,7 @@ const NewTileForm = ({ show, setShow, user, appendTile, tileData }) => {
         setPath(res[0].id);
       } catch (e) {
         console.log(e);
-        alertContext.showAlert(
+        alertContext.current.showAlert(
           "Wystąpił błąd podczas pobierania danych o postach."
         );
         res = [];
@@ -133,7 +130,7 @@ const NewTileForm = ({ show, setShow, user, appendTile, tileData }) => {
     };
     loadPostList();
     setLoading(false);
-  }, [alertContext]);
+  }, [alertContext, tileData]);
 
   const onChange = async () => {
     const file = fileInput.current?.files?.[0];
@@ -143,12 +140,12 @@ const NewTileForm = ({ show, setShow, user, appendTile, tileData }) => {
         setPhotoB64(b64);
         setLabel(file.name);
       } catch (e) {
-        alertContext.showAlert(
+        alertContext.current.showAlert(
           "Wystąpił błąd podczas wyświetlania wybranego zdjęcia."
         );
       }
     } else {
-      alertContext.showAlert(
+      alertContext.current.showAlert(
         "Wybrany plik jest za duży. Maksymalna wielkość załącznika to 15 MB."
       );
       fileInput = null;
@@ -181,25 +178,23 @@ const NewTileForm = ({ show, setShow, user, appendTile, tileData }) => {
         color: background,
         photo_layer: imgOverFlow,
       };
-      console.log(data);
       try {
         const res = await addTile(user.token, data, method, tileId);
-        console.log(res.id);
-        setTileId(res);
-        console.log(tileId);
+        setTileId(res.id);
         await postPhoto(user.token, res.id, fileInput.current.files[0]);
-        alertContext.showAlert("Kafelek dodany pomyślnie.", "success");
+        alertContext.current.showAlert("Kafelek dodany pomyślnie.", "success");
         appendTile({
           id: res.id,
           title: title,
           color: background,
           show: imgOverFlow,
-          imageURL: photoB64,
+          imageUrl: photoB64,
           destination: path,
         });
+        clearInput();
       } catch (e) {
         console.log(e);
-        alertContext.showAlert(Object.values(e)[0]);
+        alertContext.current.showAlert(Object.values(e)[0]);
       }
     }
   };
@@ -227,7 +222,6 @@ const NewTileForm = ({ show, setShow, user, appendTile, tileData }) => {
             incorrect="Tytuł kafelka nie może być pusty"
             required
           />
-          {console.log(path)}
           <Form.Label>Ścieżka do kafelka</Form.Label>
           <Form.Control
             as="select"

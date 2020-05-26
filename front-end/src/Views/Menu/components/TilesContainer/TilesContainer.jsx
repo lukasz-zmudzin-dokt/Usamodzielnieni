@@ -164,21 +164,20 @@ const TilesContainer = () => {
   );
 
   const appendTile = (newTile) => {
-    let current = tiles;
-    const idx = current.findIndex((tile) => tile.id === newTile.id);
+    const idx = tiles.findIndex((tile) => tile.id === newTile.id);
     if (idx > -1) {
-      current[idx] = newTile;
+      let newTileList = [...tiles];
+      newTileList[idx] = newTile;
+      setTiles(newTileList);
     } else {
-      current.append(newTile);
+      setTiles(tiles => [...tiles, newTile]);
     }
-    setTiles(current);
   };
 
   return (
     (
       <div className="tilesGrid__container">
         <div className="tilesGrid">
-          {console.log(tiles)}
           {tiles.map((tile) => (
             <Tile
               key={tile.id}
