@@ -37,23 +37,73 @@ a:hover {
     margin-top: 50px;
     margin-bottom: 20px;
   }
+  .social-media-row {
+    height: 41px;
+  }
+  .social-media-row-first {
+    margin-top: 36px;
+  }
+  .social-media-icon {
+    height: 41px;
+  }
 }
 
 @media (min-width: 951px) and (max-width: 1139px) {
   .company-title {
     margin-top: 70px;
   }
+  .social-media-row {
+    height: 36px;
+  }
+  .social-media-row-first {
+    margin-top: 50px;
+  }
+  .social-media-icon {
+    height: 36px;
+  }
 }
-
-@media (min-width: 769px) and (max-width: 950px) {
+@media (min-width: 951px) and (max-width: 991px) {
+  .company-title {
+    margin-top: 70px;
+  }
+  .social-media-row {
+    height: 31px;
+  }
+  .social-media-row-first {
+    margin-top: 57px;
+  }
+  .social-media-icon {
+    height: 31px;
+  }
   .company-logo {
-    width: 139px;
+    width: 140px;
   }
   .social-media-col {
     margin-left: 50px;
   }
   .company-title {
     margin-top: 73px;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 950px) {
+  .social-media-row-first {
+    margin-top: 55px;
+  }
+  .company-logo {
+    width: 130px;
+  }
+  .social-media-col {
+    margin-left: 50px;
+  }
+  .company-title {
+    margin-top: 73px;
+  }
+  .social-media-row {
+    height: 30px;
+  }
+  .social-media-icon {
+    height: 30px;
   }
 }
 
@@ -67,6 +117,13 @@ a:hover {
   .company-title {
     margin-top: 60px;
     margin-bottom: 20px;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 767px) {
+  .social-media-row {
+    padding-left: 163px !important;
+    padding-top: 5px !important;
   }
 }
 

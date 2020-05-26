@@ -2,12 +2,16 @@ import React from "react";
 import { render, fireEvent, wait, queries } from "@testing-library/react";
 import DeleteAccountButton from "./DeleteAccountButton";
 import { AlertContext } from "context";
+import { UserContext } from "context/UserContext";
+import { userTypes } from "constants/userTypes";
+import { staffTypes } from "constants/staffTypes";
 
 describe("DeleteAccountButton", () => {
   let apiShouldFail;
   let user;
   let contextA;
   let afterDeletion;
+  let context;
   beforeAll(() => {
     global.fetch = jest.fn().mockImplementation((input, init) => {
       return new Promise((resolve, reject) => {
@@ -36,16 +40,30 @@ describe("DeleteAccountButton", () => {
       showAlert: jest.fn(),
     };
     afterDeletion = jest.fn();
+    context = {
+      type: userTypes.STAFF,
+      data: {
+        group_type: [staffTypes.VERIFICATION, staffTypes.BLOG_MODERATOR],
+      },
+    };
   });
 
   it("should render without crashing", async () => {
-    const { container } = render(<DeleteAccountButton user={user} />);
+    const { container } = render(
+      <UserContext.Provider value={context}>
+        <DeleteAccountButton user={user} />
+      </UserContext.Provider>
+    );
 
     expect(container).toMatchSnapshot();
   });
 
   it("should open modal when button is clicked", async () => {
-    const { getByText } = render(<DeleteAccountButton user={user} />);
+    const { getByText } = render(
+      <UserContext.Provider value={context}>
+        <DeleteAccountButton user={user} />
+      </UserContext.Provider>
+    );
 
     fireEvent.click(getByText("Usuń konto", { exact: false }));
 
@@ -57,7 +75,9 @@ describe("DeleteAccountButton", () => {
   it("should display success alert when confirmation button is clicked", async () => {
     const { getByText, getByRole, queryByText } = render(
       <AlertContext.Provider value={contextA}>
-        <DeleteAccountButton user={user} afterDeletion={afterDeletion} />
+        <UserContext.Provider value={context}>
+          <DeleteAccountButton user={user} afterDeletion={afterDeletion} />
+        </UserContext.Provider>
       </AlertContext.Provider>
     );
 
@@ -84,7 +104,9 @@ describe("DeleteAccountButton", () => {
     apiShouldFail = true;
     const { getByText, getByRole, queryByText } = render(
       <AlertContext.Provider value={contextA}>
-        <DeleteAccountButton user={user} />
+        <UserContext.Provider value={context}>
+          <DeleteAccountButton user={user} />
+        </UserContext.Provider>
       </AlertContext.Provider>
     );
 
