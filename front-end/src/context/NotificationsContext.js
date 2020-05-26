@@ -119,7 +119,7 @@ const getPath = (appName, id, type) => {
     return isStandard
       ? compile(paths.MY_CVS)({})
       : compile(paths.CV_APPROVAL)({});
-  } else if (appName.match(/^jobs/)) {
+  } else if (appName.match(/^jobs.*/)) {
     return isStandard
       ? compile(paths.JOB_OFFERS)({})
       : compile(paths.MY_OFFERS)({});
@@ -127,6 +127,8 @@ const getPath = (appName, id, type) => {
     return compile(paths.USER)({});
   } else if (appName.match(/^blog/)) {
     return compile(paths.BLOG_POST)({ id });
+  } else if (appName.match(/^chat/)) {
+    return compile(paths.CHATS)({});
   } else {
     return compile(paths.DASHBOARD)({});
   }
