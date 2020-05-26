@@ -9,7 +9,7 @@ const editStep = async (token, isStep, data, id) => {
   };
 
   const res = await fetch(url, {
-    method: "PUT",
+    method: "PATCH",
     body: JSON.stringify(data),
     headers,
   });

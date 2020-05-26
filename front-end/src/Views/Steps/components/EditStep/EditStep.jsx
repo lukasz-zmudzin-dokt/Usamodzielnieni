@@ -4,31 +4,49 @@ import { AlertContext, UserContext } from "context";
 import { StepsForm } from "../";
 import { editStep } from "./functions/editStep";
 import { loadSteps } from "Views/Steps/functions/loadSteps";
-import { roundToNearestMinutes } from "date-fns/esm";
 
 const EditStep = ({ step, steps, show, handleClose, setSteps, setPath, setRoot, setError, root }) => {
   const stepsTypes = ["Krok główny", "Podkrok"];
-  const [type, setType] = useState(
-    step?.type === "main" ? stepsTypes[0] : stepsTypes[1]
-  );
-  const [newStep, setNewStep] = useState({
+  const [type, setType] = useState();
+  //  step?.type === "main" ? stepsTypes[0] : stepsTypes[1]);
+  const [newStep, setNewStep] = useState();
+    /*{
     title: "",
     description: "",
     video: "",
     parent: steps[0]?.title,
-  });
+  });*/
   const user = useContext(UserContext);
   const alertC = useRef(useContext(AlertContext));
   const [validated, setValidated] = useState(false);
   console.log(step);
+
+  const findMain = (sub) => {
+    let parent = steps.find((s) => s.next.map((n) => n.id).includes(sub.id));
+    if (parent.type === "main") {
+      return parent.id;
+    } else {
+      return findMain(parent);
+    }
+  }
+
   useEffect(() => {
     console.log(root);
-    setNewStep({
-      title: step?.title,
-      description: step?.description,
-      video: "",
-      parent: steps.find((s) => s.type === 'main' && s.next.map((n) => n.id).includes(step?.id))?.id || root?.id,
-    });
+    if(step?.type === "main") {
+      setNewStep({
+        title: step?.title,
+        description: step?.description,
+        video: "",
+        parent: steps.find((s) => s.type === 'main' && s.next.map((n) => n.id).includes(step?.id))?.id || root?.id,
+      });
+    } else {
+      setNewStep({
+        title: step?.title,
+        description: step?.description,
+        video: "",
+        parent: step? findMain(step) : undefined
+      });
+    }
     setType(step?.type === "main" ? stepsTypes[0] : stepsTypes[1]);
   }, [step]);
 
@@ -46,7 +64,7 @@ const EditStep = ({ step, steps, show, handleClose, setSteps, setPath, setRoot, 
       };
       try {
         res = await editStep(user.token, isStep, data, step.id);
-        alertC.current.showAlert(res.message, "success");
+        alertC.current.showAlert("Pomyślnie zmieniono krok.", "success");
         handleClose();
         await loadSteps(setSteps, setPath, setRoot, setError);
       } catch (e) {

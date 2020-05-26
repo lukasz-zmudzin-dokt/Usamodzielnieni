@@ -51,7 +51,7 @@ const NewStep = ({ steps, show, handleClose, root, setSteps, setPath, setRoot, s
       }
       try {
         res = await sendNewStep(user.token, isStep, data);
-        alertC.current.showAlert(res.message, "success");
+        alertC.current.showAlert("Pomyślnie dodano krok.", "success");
         handleClose();
         await loadSteps(setSteps, setPath, setRoot, setError);
       } catch (e) {
