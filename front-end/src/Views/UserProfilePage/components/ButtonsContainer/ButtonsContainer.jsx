@@ -29,7 +29,7 @@ const ButtonsContainer = ({ user }) => {
       <UserListButton user={user} />
       {user.type === userTypes.STAFF &&
       !user.data.group_type.includes(staffTypes.GUEST) ? (
-        <IndexLinkContainer className="my-2" to={`/changeData/${user.data.id}`}>
+        <IndexLinkContainer to={`/changeData/${user.data.id}`}>
           <Button>Zmień swoje dane</Button>
         </IndexLinkContainer>
       ) : null}
