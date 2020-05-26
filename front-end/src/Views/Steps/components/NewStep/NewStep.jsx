@@ -27,7 +27,7 @@ const NewStep = ({
   const user = useContext(UserContext);
   const alertC = useRef(useContext(AlertContext));
   const [validated, setValidated] = useState(false);
-  console.log(newStep);
+  //console.log(newStep);
 
   useEffect(() => {
     setNewStep({

@@ -13,7 +13,7 @@ const StepsForm = ({
 }) => {
   const stepsTypes = ["Krok główny", "Podkrok"];
   const isStep = type === stepsTypes[0];
-  console.log(steps);
+  //console.log(steps);
   const parTitles = [];
   steps.forEach((s) => {
     if (s.type === "main") {

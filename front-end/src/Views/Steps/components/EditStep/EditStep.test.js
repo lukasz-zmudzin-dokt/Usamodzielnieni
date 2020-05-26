@@ -17,23 +17,48 @@ describe("NewStep", () => {
   };
   let props = {
     show: true,
-    handleClose: jest.fn(),
     step: {
-      id: "1",
-      title: "Tytuł głównego kroku 1",
-      description: "xDD",
-      video: "",
-      parent: "Tytuł głównego kroku 2",
-      substeps: [{ title: "xd" }],
+      id: "2",
+      title: "Krok 2",
+      description: "Opis 2",
+      type: "main",
+      next: [],
     },
-    steps: {
-      children: [
-        {
-          title: "abc",
-          id: "1",
-        },
-      ],
+    handleClose: jest.fn(),
+    root: {
+      id: "0",
+      title: "root",
+      type: "main",
+      next: [{title: "Krok 1", id: "1"}]
     },
+    steps: [
+      {
+        id: "1",
+        title: "Krok 1",
+        description: "Opis 1",
+        type: "main",
+        next: [
+          {title: "Dalej", id: "1.1"},
+          {title: "Krok2", id: "2"}
+        ],
+      },
+      {
+        id: "1.1",
+        title: "Krok 1.1",
+        description: "Opis 1.1",
+        type: "sub",
+        next: [
+          {title: "Krok 2", id: "2"},
+        ],
+      },
+      {
+        id: "2",
+        title: "Krok 2",
+        description: "Opis 2",
+        type: "main",
+        next: [],
+      },
+    ]
   };
   let failFetch = false;
 
@@ -70,7 +95,7 @@ describe("NewStep", () => {
     const { getByRole } = render(
       <UserContext.Provider value={user}>
         <AlertContext.Provider value={alertC}>
-          <EditStep {...props} />
+          <EditStep {...props}  />
         </AlertContext.Provider>
       </UserContext.Provider>
     );

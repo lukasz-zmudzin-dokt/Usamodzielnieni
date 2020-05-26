@@ -53,7 +53,7 @@ const ProgressBar = () => {
   if (wantsDelete) {
     deletion();
   }
-  console.log(steps.length);
+  
   return (
     msg || (
       <div>
@@ -66,11 +66,6 @@ const ProgressBar = () => {
         {user.data.group_type.includes(staffTypes.BLOG_MODERATOR) ? (
           <>
             <div className="mb-3">
-              {/*steps.length > 0 ? (
-                <Button onClick={() => setShowEdit(true)}>
-                  Edytuj ten krok
-                </Button>
-              ) : null*/}
               <Button className="ml-3" onClick={() => setShowNew(true)}>
                 Dodaj nowy krok
               </Button>
