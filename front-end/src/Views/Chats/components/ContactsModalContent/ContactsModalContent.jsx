@@ -14,6 +14,7 @@ const getContacts = async (token) => {
   const response = await fetch(url, { method: "GET", headers });
 
   if (response.status === 200) {
+    //console.log( await response.json());
     return response.json().then((contacts) => mapContacts(contacts.results));
   } else if (response.status === 2137) {
     return response.json().then((contacts) => mapContacts(contacts.results));
@@ -27,7 +28,7 @@ const mapContacts = (contacts) =>
     username: contact.username,
     first_name: contact.first_name,
     last_name: contact.last_name,
-    type: contact.type,
+    role: contact.role,
   }));
 
 const ContactsModalContent = () => {
