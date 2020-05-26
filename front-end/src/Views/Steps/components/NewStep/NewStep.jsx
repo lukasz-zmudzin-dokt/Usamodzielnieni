@@ -6,7 +6,16 @@ import { StepsForm } from "../";
 import { useEffect } from "react";
 import { loadSteps } from "Views/Steps/functions/loadSteps";
 
-const NewStep = ({ steps, show, handleClose, root, setSteps, setPath, setRoot, setError }) => {
+const NewStep = ({
+  steps,
+  show,
+  handleClose,
+  root,
+  setSteps,
+  setPath,
+  setRoot,
+  setError,
+}) => {
   const stepsTypes = ["Krok główny", "Podkrok"];
   const [type, setType] = useState(stepsTypes[0]);
   const [newStep, setNewStep] = useState({
@@ -34,9 +43,7 @@ const NewStep = ({ steps, show, handleClose, root, setSteps, setPath, setRoot, s
     const form = e.currentTarget;
     if (form.checkValidity() !== false) {
       let res;
-      const object = steps.find(
-        (item) => item.title === newStep.parent
-      );
+      const object = steps.find((item) => item.title === newStep.parent);
       let data = {};
       if (object) {
         data = {

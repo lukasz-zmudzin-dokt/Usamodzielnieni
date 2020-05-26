@@ -6,7 +6,17 @@ import { editStep } from "./functions/editStep";
 import { loadSteps } from "Views/Steps/functions/loadSteps";
 import { roundToNearestMinutes } from "date-fns/esm";
 
-const EditStep = ({ step, steps, show, handleClose, setSteps, setPath, setRoot, setError, root }) => {
+const EditStep = ({
+  step,
+  steps,
+  show,
+  handleClose,
+  setSteps,
+  setPath,
+  setRoot,
+  setError,
+  root,
+}) => {
   const stepsTypes = ["Krok główny", "Podkrok"];
   const [type, setType] = useState(
     step?.type === "main" ? stepsTypes[0] : stepsTypes[1]
@@ -27,7 +37,10 @@ const EditStep = ({ step, steps, show, handleClose, setSteps, setPath, setRoot, 
       title: step?.title,
       description: step?.description,
       video: "",
-      parent: steps.find((s) => s.type === 'main' && s.next.map((n) => n.id).includes(step?.id))?.id || root?.id,
+      parent:
+        steps.find(
+          (s) => s.type === "main" && s.next.map((n) => n.id).includes(step?.id)
+        )?.id || root?.id,
     });
     setType(step?.type === "main" ? stepsTypes[0] : stepsTypes[1]);
   }, [step]);

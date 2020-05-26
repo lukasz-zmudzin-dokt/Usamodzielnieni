@@ -166,16 +166,16 @@ const ProgressBar = () => {
               setError={setError}
             />
             <EditStep
-                steps={steps}
-                step={steps.find((item) => item.id === path[path.length - 1])}
-                show={showEdit}
-                handleClose={() => setShowEdit(false)}
-                setRoot={setRoot}
-                setSteps={setSteps}
-                setPath={setPath}
-                setError={setError}
-                root={root}
-              />
+              steps={steps}
+              step={steps.find((item) => item.id === path[path.length - 1])}
+              show={showEdit}
+              handleClose={() => setShowEdit(false)}
+              setRoot={setRoot}
+              setSteps={setSteps}
+              setPath={setPath}
+              setError={setError}
+              root={root}
+            />
             {/*steps.length > 0 ? (
               <EditStep
                 steps={steps}
