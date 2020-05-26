@@ -160,18 +160,18 @@ describe("MyOffers", () => {
     expect(getByText("offer2")).toBeInTheDocument();
   });
 
-  it('should not render download button', async () => {
+  it("should not render download button", async () => {
     apiPeople.results = [];
-    const {queryByText} = render(
-        <AlertContext.Provider value={alertC}>
-          <MemoryRouter>
-            <MyOffer
-                offer={testOffer}
-                activeOffer={testOffer.id}
-                setActiveOffer={(e) => {}}
-            />
-          </MemoryRouter>
-        </AlertContext.Provider>
+    const { queryByText } = render(
+      <AlertContext.Provider value={alertC}>
+        <MemoryRouter>
+          <MyOffer
+            offer={testOffer}
+            activeOffer={testOffer.id}
+            setActiveOffer={(e) => {}}
+          />
+        </MemoryRouter>
+      </AlertContext.Provider>
     );
     await wait(() => expect(fetch).toHaveBeenCalled());
     expect(queryByText("Pobierz zgłoszenia")).not.toBeInTheDocument();
