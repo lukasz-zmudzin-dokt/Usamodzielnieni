@@ -13,7 +13,7 @@ describe("Steps", () => {
 
   it("should render without crashing", async () => {
     const { container, getByRole } = render(<Steps />);
-  //  const modal = getByRole("dialog");
+    //  const modal = getByRole("dialog");
     expect(container).toMatchSnapshot();
   });
 });

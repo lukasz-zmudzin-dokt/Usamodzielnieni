@@ -2,7 +2,7 @@ import StepCard from "./StepCard";
 import React from "react";
 import { render, fireEvent } from "@testing-library/react";
 import { UserContext } from "context/UserContext";
-import {staffTypes} from "constants/staffTypes";
+import { staffTypes } from "constants/staffTypes";
 
 describe("StepCardTest", () => {
   let setCurrent, wantsDelete, wantsEdit, step, path, user;
@@ -15,16 +15,16 @@ describe("StepCardTest", () => {
       video: "rickrolltylkozahaszowany",
       next: [{ id: "3", choiceName: "Dalej" }],
     };
-    path=["1", "2", "3", "4"];
+    path = ["1", "2", "3", "4"];
     setCurrent = jest.fn();
     wantsDelete = jest.fn();
     wantsEdit = jest.fn();
     user = {
       token: "123",
       data: {
-        group_type: []
-      }
-    }
+        group_type: [],
+      },
+    };
   });
 
   it("should match snapshot", () => {
@@ -36,7 +36,7 @@ describe("StepCardTest", () => {
   });
 
   it("should contain beginning button when last card and no edition options", () => {
-    path=["1", "3", "4", "2"];
+    path = ["1", "3", "4", "2"];
     const { getByText, queryByText } = render(
       <UserContext.Provider value={user}>
         <StepCard step={step} setCurrent={setCurrent} path={path} />
@@ -48,8 +48,8 @@ describe("StepCardTest", () => {
   });
 
   it("should contain beginning button and edition options", () => {
-    path=["1", "3", "4", "2"];
-    user.data.group_type=[staffTypes.BLOG_MODERATOR];
+    path = ["1", "3", "4", "2"];
+    user.data.group_type = [staffTypes.BLOG_MODERATOR];
 
     const { getByText } = render(
       <UserContext.Provider value={user}>
@@ -62,7 +62,7 @@ describe("StepCardTest", () => {
   });
 
   it("should call setCurrent when beginning clicked", () => {
-    path=["1", "3", "4", "2"];
+    path = ["1", "3", "4", "2"];
     const { getByText } = render(
       <UserContext.Provider value={user}>
         <StepCard step={step} setCurrent={setCurrent} path={path} />
@@ -75,11 +75,17 @@ describe("StepCardTest", () => {
   });
 
   it("should call edition and deletion methods", () => {
-    path=["1", "3", "4", "2"];
-    user.data.group_type=[staffTypes.BLOG_MODERATOR];
+    path = ["1", "3", "4", "2"];
+    user.data.group_type = [staffTypes.BLOG_MODERATOR];
     const { getByText } = render(
       <UserContext.Provider value={user}>
-        <StepCard step={step} setCurrent={setCurrent} path={path} wantsDelete={wantsDelete} wantsEdit={wantsEdit} />
+        <StepCard
+          step={step}
+          setCurrent={setCurrent}
+          path={path}
+          wantsDelete={wantsDelete}
+          wantsEdit={wantsEdit}
+        />
       </UserContext.Provider>
     );
 

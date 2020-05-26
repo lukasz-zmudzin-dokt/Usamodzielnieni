@@ -3,7 +3,7 @@ import { render, waitForElement, fireEvent } from "@testing-library/react";
 import ProgressBar from "./ProgressBar";
 import { ProgressBarFragment } from "../";
 import { UserContext } from "context/UserContext";
-import {staffTypes} from "constants/staffTypes"; 
+import { staffTypes } from "constants/staffTypes";
 
 jest.mock("../");
 
@@ -13,9 +13,9 @@ describe("ProgressBar", () => {
     user = {
       token: "123",
       data: {
-        group_type: []
-      }
-    }
+        group_type: [],
+      },
+    };
     global.fetch = jest.fn().mockImplementation((input, init) => {
       return new Promise((resolve, reject) => {
         if (apiShouldFail) {
@@ -41,13 +41,13 @@ describe("ProgressBar", () => {
     apiShouldFail = false;
     steps = [
       {
-          id: "0",
-          parent: null,
-          title: "root",
-          description: "",
-          video: null,
-          children: [{id: "1", title: "Krok 1"}],
-          substeps: []
+        id: "0",
+        parent: null,
+        title: "root",
+        description: "",
+        video: null,
+        children: [{ id: "1", title: "Krok 1" }],
+        substeps: [],
       },
       {
         id: "1",
@@ -55,23 +55,27 @@ describe("ProgressBar", () => {
         title: "Krok 1",
         description: "To jeden z możliwych drugich kroków, jakie możesz wybrać",
         video: null,
-        children: [{id: "2", title: "Krok 2"}],
-        substeps: [{
-          id: "1.1",
-          order: 0,
-          title: "Podkrok 1.1",
-          description: "To jest pierwszy podkrok pierwszego kroku, który wyjaśnia, jak masz ten krok ukończyć",
-          video: null,
-          parent: "1"
-        },
-        {
-          id: "1.2",
-          order: 1,
-          title: "Podkrok 1.2",
-          description: "To jest pierwszy podkrok pierwszego kroku, który wyjaśnia, jak masz ten krok ukończyć",
-          video: null,
-          parent: "1"
-        }]
+        children: [{ id: "2", title: "Krok 2" }],
+        substeps: [
+          {
+            id: "1.1",
+            order: 0,
+            title: "Podkrok 1.1",
+            description:
+              "To jest pierwszy podkrok pierwszego kroku, który wyjaśnia, jak masz ten krok ukończyć",
+            video: null,
+            parent: "1",
+          },
+          {
+            id: "1.2",
+            order: 1,
+            title: "Podkrok 1.2",
+            description:
+              "To jest pierwszy podkrok pierwszego kroku, który wyjaśnia, jak masz ten krok ukończyć",
+            video: null,
+            parent: "1",
+          },
+        ],
       },
       {
         id: "2",
@@ -80,16 +84,16 @@ describe("ProgressBar", () => {
         description: "To jeden z możliwych drugich kroków, jakie możesz wybrać",
         video: null,
         children: [],
-        substeps: []
+        substeps: [],
       },
     ];
   });
 
   it("should render without crashing", async () => {
     const { container, getByText } = render(
-    <UserContext.Provider value={user}>
-      <ProgressBar />
-    </UserContext.Provider>
+      <UserContext.Provider value={user}>
+        <ProgressBar />
+      </UserContext.Provider>
     );
 
     await waitForElement(() => getByText("Krok 1"));
@@ -99,9 +103,11 @@ describe("ProgressBar", () => {
 
   it("should render error alert when api fails", async () => {
     apiShouldFail = true;
-    const { getByText } = render(<UserContext.Provider value={user}>
-      <ProgressBar />
-    </UserContext.Provider>);
+    const { getByText } = render(
+      <UserContext.Provider value={user}>
+        <ProgressBar />
+      </UserContext.Provider>
+    );
 
     await waitForElement(() => getByText("Wystąpił błąd", { exact: false }));
 

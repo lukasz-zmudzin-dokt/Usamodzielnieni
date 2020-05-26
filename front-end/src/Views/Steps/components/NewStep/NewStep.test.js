@@ -22,7 +22,7 @@ describe("NewStep", () => {
       id: "0",
       title: "root",
       type: "main",
-      next: [{title: "Krok 1", id: "1"}]
+      next: [{ title: "Krok 1", id: "1" }],
     },
     steps: [
       {
@@ -31,8 +31,8 @@ describe("NewStep", () => {
         description: "Opis 1",
         type: "main",
         next: [
-          {title: "Dalej", id: "1.1"},
-          {title: "Krok 2", id: "2"}
+          { title: "Dalej", id: "1.1" },
+          { title: "Krok 2", id: "2" },
         ],
       },
       {
@@ -40,9 +40,7 @@ describe("NewStep", () => {
         title: "Krok 1.1",
         description: "Opis 1.1",
         type: "sub",
-        next: [
-          {title: "Krok 2", id: "2"},
-        ],
+        next: [{ title: "Krok 2", id: "2" }],
       },
       {
         id: "2",
@@ -51,7 +49,7 @@ describe("NewStep", () => {
         type: "main",
         next: [],
       },
-    ]
+    ],
   };
   let failFetch = false;
 
@@ -133,7 +131,10 @@ describe("NewStep", () => {
 
     await wait(() => expect(alertC.showAlert).toHaveBeenCalled());
 
-    expect(alertC.showAlert).toHaveBeenCalledWith("Pomyślnie dodano krok.", "success");
+    expect(alertC.showAlert).toHaveBeenCalledWith(
+      "Pomyślnie dodano krok.",
+      "success"
+    );
   });
 
   it("should not send data if api fail", async () => {

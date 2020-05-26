@@ -53,7 +53,7 @@ const ProgressBar = () => {
   if (wantsDelete) {
     deletion();
   }
-  
+
   return (
     msg || (
       <div>

@@ -29,7 +29,7 @@ describe("NewStep", () => {
       id: "0",
       title: "root",
       type: "main",
-      next: [{title: "Krok 1", id: "1"}]
+      next: [{ title: "Krok 1", id: "1" }],
     },
     steps: [
       {
@@ -38,8 +38,8 @@ describe("NewStep", () => {
         description: "Opis 1",
         type: "main",
         next: [
-          {title: "Dalej", id: "1.1"},
-          {title: "Krok2", id: "2"}
+          { title: "Dalej", id: "1.1" },
+          { title: "Krok2", id: "2" },
         ],
       },
       {
@@ -47,9 +47,7 @@ describe("NewStep", () => {
         title: "Krok 1.1",
         description: "Opis 1.1",
         type: "sub",
-        next: [
-          {title: "Krok 2", id: "2"},
-        ],
+        next: [{ title: "Krok 2", id: "2" }],
       },
       {
         id: "2",
@@ -58,7 +56,7 @@ describe("NewStep", () => {
         type: "main",
         next: [],
       },
-    ]
+    ],
   };
   let failFetch = false;
 
@@ -95,7 +93,7 @@ describe("NewStep", () => {
     const { getByRole } = render(
       <UserContext.Provider value={user}>
         <AlertContext.Provider value={alertC}>
-          <EditStep {...props}  />
+          <EditStep {...props} />
         </AlertContext.Provider>
       </UserContext.Provider>
     );
