@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`VideoCard should match snapshot 1`] = `
+<div>
+  <div
+    class="card border-dark"
+  >
+    <div
+      class="text-right"
+    >
+      <button
+        class="btn btn-light btn-sm"
+        type="button"
+      >
+        X
+      </button>
+    </div>
+    <div>
+      <div
+        class=""
+      >
+        <div
+          class="yt_player"
+        />
+      </div>
+    </div>
+    <p
+      class="text-justify mx-2 my-3 card-text"
+    >
+      opis
+    </p>
+  </div>
+</div>
+`;

@@ -8,9 +8,7 @@ const CVApprovalButton = ({ user }) =>
   user.type === userTypes.STAFF &&
   user.data.group_type.includes(staffTypes.CV) ? (
     <LinkContainer to="/cvApproval">
-      <Button variant="primary" className="my-2">
-        Zobacz CV do akceptacji
-      </Button>
+      <Button variant="primary">Zobacz CV do akceptacji</Button>
     </LinkContainer>
   ) : null;
 

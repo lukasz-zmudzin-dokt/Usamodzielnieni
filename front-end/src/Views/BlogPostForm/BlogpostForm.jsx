@@ -17,6 +17,8 @@ import { convertToRaw } from "draft-js";
 import { Redirect } from "react-router-dom";
 import EditorForm from "./components/EditorForm";
 import { withAlertContext } from "components";
+import { staffTypes } from "constants/staffTypes";
+import { approveFileSize } from "utils/approveFile/approveFile";
 
 class BlogPostForm extends React.Component {
   constructor(props) {
@@ -119,9 +121,16 @@ class BlogPostForm extends React.Component {
   };
 
   onPhotoChange = () => {
-    this.setState({
-      photo: this.fileInput.files[0],
-    });
+    if (approveFileSize(this.fileInput.files[0])) {
+      this.setState({
+        photo: this.fileInput.files[0],
+      });
+    } else {
+      this.props.alertContext.showAlert(
+        "Wybrany plik jest za duży. Maksymalny rozmiar pliku to 15 MB."
+      );
+      this.fileInput = React.createRef();
+    }
   };
 
   onChange = (e) => {
@@ -199,6 +208,15 @@ class BlogPostForm extends React.Component {
     }
   };
 
+  nullifyCategory = () => {
+    this.props.alertContext.showAlert(
+      "Niedozwolona kategoria. Aby stworzyć wideoblog przejdź do zakładki Mój profil."
+    );
+    this.setState({
+      category: "",
+    });
+  };
+
   render() {
     return this.state.isLoading || this.state.error === "reservation" ? (
       <Card.Body>
@@ -216,63 +234,72 @@ class BlogPostForm extends React.Component {
       </Card.Body>
     ) : (
       <>
-        <Card.Header>
-          <Form.Group controlId="blogpost_photo">
-            <Form.File
-              name="photo"
-              id="blogspot_header_photo"
-              label={
-                this.state.photo !== null
-                  ? this.state.photo.name
-                  : "Wybierz zdjęcie na nagłówek posta"
-              }
-              custom
-              ref={(ref) => (this.fileInput = ref)}
-              onChange={this.onPhotoChange}
-              accept="image/*"
-              data-browse="Dodaj"
-            />
-          </Form.Group>
-        </Card.Header>
-        <Card.Body>
-          <Form.Group controlId="blogpost_title" className="mx-3 mb-4">
-            <Form.Control
-              name="title"
-              className="blogpost_title_form block"
-              defaultValue={this.state.title}
-              placeholder="Wpisz tytuł posta..."
-              size="lg"
+        <>
+          <Card.Header>
+            <Form.Group controlId="blogpost_photo">
+              <Form.File
+                name="photo"
+                id="blogspot_header_photo"
+                label={
+                  this.state.photo !== null
+                    ? this.state.photo.name
+                    : "Wybierz zdjęcie na nagłówek posta"
+                }
+                custom
+                ref={(ref) => (this.fileInput = ref)}
+                onChange={this.onPhotoChange}
+                accept="image/*"
+                data-browse="Dodaj"
+              />
+            </Form.Group>
+          </Card.Header>
+          <Card.Body>
+            <Form.Group controlId="blogpost_title" className="mx-3 mb-4">
+              <Form.Control
+                name="title"
+                className="blogpost_title_form block"
+                defaultValue={this.state.title}
+                placeholder="Wpisz tytuł posta..."
+                size="lg"
+                onChange={this.onChange}
+              />
+            </Form.Group>
+            <SelectionRow
+              name="category"
+              arrayType={this.state.filters.categories}
+              current={this.state.category}
               onChange={this.onChange}
+              nullCat={this.nullifyCategory}
             />
-          </Form.Group>
-          <SelectionRow
-            name="category"
-            arrayType={this.state.filters.categories}
-            current={this.state.category}
-            onChange={this.onChange}
-          />
-          <EditorForm
-            alerts={this.props.alertContext}
-            onChange={this.onEditorChange}
-            state={this.state.editorState}
-            customRef={this.refsEditor}
-            id={this.state.post_id}
-            token={this.context.token}
-          />
-          <SelectionRow
-            className="mt-4"
-            name="tags"
-            arrayType={this.state.filters.tags}
-            onChange={this.onArrayChange}
-            current={this.state.tags}
-            onCut={this.cutFromArray}
-          />
-        </Card.Body>
-        <Card.Footer className="">
-          <Button variant="primary" size="lg" onClick={this.submitPost} block>
-            Opublikuj
-          </Button>
-        </Card.Footer>
+            <EditorForm
+              alerts={this.props.alertContext}
+              onChange={this.onEditorChange}
+              state={this.state.editorState}
+              customRef={this.refsEditor}
+              id={this.state.post_id}
+              token={this.context.token}
+            />
+            <SelectionRow
+              className="mt-4"
+              name="tags"
+              arrayType={this.state.filters.tags}
+              onChange={this.onArrayChange}
+              current={this.state.tags}
+              onCut={this.cutFromArray}
+            />
+          </Card.Body>
+          <Card.Footer className="">
+            <Button
+              variant="primary"
+              size="lg"
+              onClick={this.submitPost}
+              block
+              disabled={this.context.data.group_type.includes(staffTypes.GUEST)}
+            >
+              Opublikuj
+            </Button>
+          </Card.Footer>
+        </>
         {this.state.redirect ? (
           <Redirect to={`/blog/blogpost/${this.state.post_id}`} />
         ) : null}
