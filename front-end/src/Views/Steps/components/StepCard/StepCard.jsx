@@ -33,19 +33,22 @@ const StepCard = ({ step, setCurrent, wantsDelete, wantsEdit, path }) => {
           <Button
             variant="secondary"
             block
-            onClick={(e) => setCurrent(path[0])}
+            onClick={(e) => {
+              setCurrent(path[0]);
+              window.scrollTo(0, 0);
+            }}
           >
             Początek
           </Button>
         )}
         {path[path.length - 1] === step.id &&
-        user.data.group_type.includes(staffTypes.BLOG_MODERATOR) ? (
+        user.data.group_type?.includes(staffTypes.BLOG_MODERATOR) ? (
           <Button variant="warning" block onClick={() => wantsEdit(true)}>
             Edytuj krok
           </Button>
         ) : null}
         {path[path.length - 1] === step.id &&
-        user.data.group_type.includes(staffTypes.BLOG_MODERATOR) ? (
+        user.data.group_type?.includes(staffTypes.BLOG_MODERATOR) ? (
           <Button variant="danger" block onClick={() => wantsDelete(true)}>
             Usuń krok
           </Button>

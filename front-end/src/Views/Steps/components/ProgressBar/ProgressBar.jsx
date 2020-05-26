@@ -63,7 +63,7 @@ const ProgressBar = () => {
           delConfirmed={setWantsDelete}
           question="Czy na pewno chcesz usunąć ten krok?"
         />
-        {user.data.group_type.includes(staffTypes.BLOG_MODERATOR) ? (
+        {user.data.group_type?.includes(staffTypes.BLOG_MODERATOR) ? (
           <>
             <div className="mb-3">
               <Button className="ml-3" onClick={() => setShowNew(true)}>
