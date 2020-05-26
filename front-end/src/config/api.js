@@ -14,6 +14,7 @@ const proxy = {
   steps: domain + "/steps/",
   videos: domain + "/videos/",
   contact: domain + "/helpline/",
+  menu: domain + "/tiles/"
 };
 
 export default proxy;

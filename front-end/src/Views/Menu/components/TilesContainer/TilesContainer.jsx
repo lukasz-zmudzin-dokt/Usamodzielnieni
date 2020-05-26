@@ -1,7 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { Alert } from "react-bootstrap";
+import React, {useState, useEffect, useContext} from "react";
+import {Alert, Button} from "react-bootstrap";
 import { Tile } from "../";
 import proxy from "config/api";
+import {UserContext} from "context/UserContext";
+import {staffTypes} from "constants/staffTypes";
+import NewTileForm from "../NewTileForm/NewTileForm";
 
 const tmpTiles = [
   {
@@ -103,7 +106,7 @@ const tmpTiles = [
 ];
 
 const getTiles = async () => {
-  let url = `${proxy.plain}/list`; // TODO
+  let url = `${proxy.menu}`;
   const headers = {
     "Content-Type": "application/json",
   };
@@ -125,8 +128,8 @@ const mapTiles = (tiles) =>
     id: tile.id,
     title: tile.title,
     color: tile.color,
-    show: tile.show,
-    imageUrl: tile.url,
+    show: tile.photo_layer,
+    imageUrl: tile.photo,
     destination: mapDestination(tile.destination),
     // TODO
   }));
@@ -134,8 +137,10 @@ const mapTiles = (tiles) =>
 const mapDestination = (destination) => destination; // TODO
 
 const TilesContainer = () => {
-  const [tiles, setTiles] = useState();
+  const [tiles, setTiles] = useState([]);
   const [error, setError] = useState(false);
+  const [showModal, setShow] = useState(false);
+  const user = useContext(UserContext);
 
   useEffect(() => {
     const loadTiles = async () => {
@@ -144,6 +149,7 @@ const TilesContainer = () => {
         res = await getTiles();
       } catch (e) {
         console.log(e);
+        res = tmpTiles;
         setError(true);
       }
       setTiles(res);
@@ -157,20 +163,42 @@ const TilesContainer = () => {
     !tiles && <Alert variant="info">Ładowanie menu...</Alert>
   );
 
+  const appendTile = (newTile) => {
+    let current = tiles;
+    const idx = current.findIndex((tile) => tile.id === newTile.id);
+    if (idx > -1) {
+      current[idx] = newTile;
+    } else {
+      current.append(newTile);
+    }
+    setTiles(current);
+  };
+
   return (
-    msg || (
+    (
       <div className="tilesGrid__container">
         <div className="tilesGrid">
+          {console.log(tiles)}
           {tiles.map((tile) => (
             <Tile
               key={tile.id}
               color={tile.color}
-              imageUrl={tile.imageUrl}
+              imageUrl={tile.imageUrl || ""}
               showImage={tile.show}
               title={tile.title}
               destination={tile.destination}
             />
           ))}
+          {
+            user?.data?.group_type?.includes(staffTypes.BLOG_MODERATOR) && (
+                <>
+                  <Button variant="primary" size="lg" block onClick={() => setShow(true)}>
+                    Dupnij kafla
+                  </Button>
+                  <NewTileForm show={showModal} setShow={setShow} user={user} appendTile={appendTile} />
+                </>
+            )
+          }
         </div>
       </div>
     )
