@@ -52,7 +52,8 @@ const StepsForm = ({
               parent: val,
             })
           }
-        />) : null}
+        />
+      ) : null}
       <FormGroup
         header={`Tytuł ${isStep ? "kroku" : "podkroku"}`}
         setVal={(val) => setNewStep({ ...newStep, title: val })}
