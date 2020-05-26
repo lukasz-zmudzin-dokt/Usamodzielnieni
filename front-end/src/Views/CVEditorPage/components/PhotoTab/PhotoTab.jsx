@@ -2,6 +2,7 @@ import React from "react";
 import { Form } from "react-bootstrap";
 import { CVEditorTab } from "..";
 import movie_1 from "assets/movie_1.png";
+import proxy from "config/api";
 import { UserContext } from "context";
 import { approveFileSize } from "utils/approveFile/approveFile";
 
@@ -65,6 +66,38 @@ class PhotoTab extends React.Component {
               // value="this.props.data"
             />
           </Form.Group>
+          {this.props.templateList?.length > 0 && (
+            <Form.Group>
+              <Form.Label>
+                Kolor CV: (
+                <a
+                  target="_blank"
+                  href={proxy.plain + "/static/" + this.props.template + ".pdf"}
+                  rel="noopener noreferrer"
+                >
+                  Kliknij <u>tutaj</u> żeby zobaczyć przykładowe CV w tym
+                  kolorze
+                </a>
+                )
+              </Form.Label>
+              <Form.Control
+                as="select"
+                id="template"
+                value={this.props.template}
+                onChange={(e) => this.props.setTemplate(e.target.value)}
+              >
+                {this.props.templateList.map((item) => (
+                  <option
+                    key={item}
+                    value={item}
+                    style={{ backgroundColor: item }}
+                  >
+                    {item}
+                  </option>
+                ))}
+              </Form.Control>
+            </Form.Group>
+          )}
         </Form>
       </CVEditorTab>
     );
