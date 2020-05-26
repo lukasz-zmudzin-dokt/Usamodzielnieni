@@ -140,6 +140,7 @@ export const NotificationsProvider = (props) => {
 
   useEffect(() => {
     const loadNotifications = async (token, type) => {
+      setError(false);
       let values;
       try {
         values = await Promise.all([
