@@ -1,6 +1,15 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Container, Card, ListGroup, Alert, Button } from "react-bootstrap";
-import { UserContext, ChatContext } from "context";
+import {
+  Container,
+  Card,
+  ListGroup,
+  Alert,
+  Modal,
+  Button,
+} from "react-bootstrap";
+import { UserContext } from "context";
+import proxy from "config/api";
+import { ChatInfo, ContactsModalContent } from "./components";
 
 import { ChatInfo } from "./components";
 import { Pagination } from "components";
@@ -49,6 +58,24 @@ const Chats = () => {
           ) : null}
         </Card.Footer>
       </Card>
+      <Modal
+        show={show}
+        onHide={handleClose}
+        dialogClassName="contacts-modal"
+        scrollable="true"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Wybierz osobę</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <ContactsModalContent />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Anuluj
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </Container>
   );
 };

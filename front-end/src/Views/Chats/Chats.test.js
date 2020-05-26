@@ -1,7 +1,8 @@
 import React from "react";
 import { MemoryRouter } from "react-router-dom";
-import { render, waitForElement } from "@testing-library/react";
-import Chats from "./Chats";
+import { render, waitForElement, fireEvent } from "@testing-library/react";
+import Chats from "Views/Chats";
+import ChatInfo from "./components/ChatInfo";
 
 jest.mock("./components", () => ({
   ChatInfo: ({ chat }) => <div>{chat.first.username}</div>,
@@ -14,6 +15,7 @@ describe("Chats", () => {
   let failFetch = false;
   let apiChats = [];
   beforeAll(() => {
+    ChatInfo.mockImplementation(({ chat }) => <div> {chat.name} </div>);
     global.fetch = jest.fn().mockImplementation((input, init) => {
       return new Promise((resolve, reject) => {
         if (failFetch) {
@@ -104,5 +106,17 @@ describe("Chats", () => {
     await waitForElement(() => getByText("Brak wiadomości", { exact: false }));
     expect(getByText("Brak wiadomości", { exact: false })).toBeInTheDocument();
     expect(queryByText("xd")).not.toBeInTheDocument();
+  });
+
+  it("should open contacts modal when button is clicked", async () => {
+    const { getByText } = render(
+      <MemoryRouter>
+        <Chats />
+      </MemoryRouter>
+    );
+    await waitForElement(() => getByText("Nowa wiadomość"));
+    fireEvent.click(getByText("Nowa wiadomość"));
+
+    await waitForElement(() => getByText("Wybierz osobę"));
   });
 });

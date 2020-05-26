@@ -1,5 +1,4 @@
 import React from "react";
-import HeaderTemplate from "Views/PageHeader/headerTemplate";
 import { BrowserRouter } from "react-router-dom";
 import {
   UserProvider,
@@ -9,24 +8,25 @@ import {
 } from "context";
 import Router from "root/Router";
 import { AlertsContainer } from "components";
+import Header from "Views/Header";
 import Footer from "Views/Footer";
 
 const App = () => {
   return (
     <UserProvider>
       <AlertProvider>
-        <NotificationsProvider>
-          <ChatProvider>
+        <ChatProvider>
+          <NotificationsProvider>
             <BrowserRouter>
-              <HeaderTemplate />
+              <Header />
               <div className="center-container">
                 <Router />
                 <AlertsContainer />
               </div>
               <Footer />
             </BrowserRouter>
-          </ChatProvider>
-        </NotificationsProvider>
+          </NotificationsProvider>
+        </ChatProvider>
       </AlertProvider>
     </UserProvider>
   );

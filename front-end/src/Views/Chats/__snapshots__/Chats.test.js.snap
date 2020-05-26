@@ -14,6 +14,16 @@ exports[`Chats should render without crashing 1`] = `
         Najnowsze wiadomości
       </h2>
       <div
+        class="card-body"
+      >
+        <button
+          class="float-right btn btn-primary"
+          type="button"
+        >
+          Nowa wiadomość
+        </button>
+      </div>
+      <div
         class="list-group list-group-flush"
       >
         <div
