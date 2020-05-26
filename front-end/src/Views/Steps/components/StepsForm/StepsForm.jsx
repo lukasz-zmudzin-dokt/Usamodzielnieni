@@ -16,7 +16,7 @@ const StepsForm = ({
   console.log(steps);
   const parTitles = [];
   steps.forEach((s) => {
-    if(s.type === "main") {
+    if (s.type === "main") {
       parTitles.push(s.title);
     }
   });
@@ -43,7 +43,7 @@ const StepsForm = ({
         } `}
         id="stepParent"
         required
-        array={(parTitles.length > 0) ? parTitles : ["Jako pierwszy krok"]}
+        array={parTitles.length > 0 ? parTitles : ["Jako pierwszy krok"]}
         val={newStep.parent}
         setVal={(val) =>
           setNewStep({
