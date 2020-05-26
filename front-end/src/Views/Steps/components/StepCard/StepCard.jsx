@@ -3,7 +3,8 @@ import { Button, Card } from "react-bootstrap";
 import Player from "components/Player";
 import { UserContext } from "context";
 import { userTypes } from "constants/userTypes";
-const StepCard = ({ step, setCurrent, wantsDelete, path }) => {
+import {staffTypes} from "constants/staffTypes";
+const StepCard = ({ step, setCurrent, wantsDelete, wantsEdit, path }) => {
   const user = useContext(UserContext);
   return (
     <Card className="stepCard">
@@ -28,12 +29,40 @@ const StepCard = ({ step, setCurrent, wantsDelete, path }) => {
             {child.choiceName}
           </Button>
         ))}
+        {path[path.length - 1] === step.id &&
+          <Button
+            variant="secondary"
+            block
+            onClick={(e) => setCurrent(path[0])}
+          >
+            Początek
+          </Button>
+        }
+        {path[path.length - 1] === step.id && user.data.group_type.includes(staffTypes.BLOG_MODERATOR) ? (
+          <Button variant="warning" block onClick={()=>wantsEdit(true)}>
+            Edytuj krok
+          </Button>
+        ) : null}
+        {path[path.length - 1] === step.id && user.data.group_type.includes(staffTypes.BLOG_MODERATOR) ? (
+          <Button variant="danger" block onClick={() => wantsDelete(true)}>
+            Usuń krok
+          </Button>  
+        ) : null}
       </Card.Body>
-      {path[path.length - 1] === step.id && user.type === userTypes.STAFF ? (
-        <Button variant="danger" onClick={() => wantsDelete(true)}>
+      {/*path[path.length - 1] === step.id && user.data.group_type.includes(staffTypes.BLOG_MODERATOR) ? (
+        <div>
+          <Button variant="danger" onClick={() => wantsDelete(true)}>
+            Usuń krok
+          </Button>
+          <Button variant="primary" onClick={()=>wantsEdit(true)}>
+            Edytuj krok
+          </Button>
+        </div>) : null}
+        {/*<Button variant="danger" onClick={() => wantsDelete(true)}>
           Usuń krok
         </Button>
-      ) : null}
+        <Button variant="primary" onClick={(wantsEdit(true))}>Edytuj krok</Button>
+      */}
     </Card>
   );
 };

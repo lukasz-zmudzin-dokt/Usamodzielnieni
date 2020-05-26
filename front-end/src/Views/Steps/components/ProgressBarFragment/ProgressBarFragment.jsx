@@ -7,6 +7,7 @@ const ProgressBarFragment = ({
   index,
   setCurrent,
   wantsDelete,
+  wantsEdit,
   path,
 }) => {
   const ref = useRef(null);
@@ -33,6 +34,7 @@ const ProgressBarFragment = ({
           step={step}
           setCurrent={setCurrent}
           wantsDelete={wantsDelete}
+          wantsEdit={wantsEdit}
           path={path}
         />
       )}
