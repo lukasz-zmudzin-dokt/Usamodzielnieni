@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { Row, Col, Button } from "react-bootstrap";
 import { IndexLinkContainer } from "react-router-bootstrap";
 import { UserPicture } from "components";

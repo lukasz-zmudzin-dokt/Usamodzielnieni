@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import {
   Container,
   Card,
@@ -8,21 +8,12 @@ import {
   Button,
 } from "react-bootstrap";
 import { UserContext, ChatContext } from "context";
-import proxy from "config/api";
 import { ChatInfo, ContactsModalContent } from "./components";
-import { Pagination } from "components";
-import { useLocation } from "react-router-dom";
-import qs from "query-string";
 
 const Chats = () => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const [filters, setFilters] = useState({
-    page: 1,
-    pageSize: 10,
-  });
-  const location = useLocation();
   const user = useContext(UserContext);
   const chatC = useContext(ChatContext);
 

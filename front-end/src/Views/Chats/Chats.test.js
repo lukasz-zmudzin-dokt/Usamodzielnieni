@@ -2,7 +2,7 @@ import React from "react";
 import { MemoryRouter } from "react-router-dom";
 import { render, waitForElement, fireEvent } from "@testing-library/react";
 import Chats from "Views/Chats";
-import { ContactsModalContent, ChatInfo } from "./components/ChatInfo";
+
 import { ChatContext } from "context";
 
 jest.mock("./components", () => ({
@@ -36,7 +36,7 @@ describe("Chats", () => {
   };
 
   beforeEach(() => {
-    let chatC = {
+    chatC = {
       chats: [
         {
           id: "12",
@@ -77,8 +77,7 @@ describe("Chats", () => {
   it("should render loading alert when component is waiting for api response", async () => {
     chatC.isChatsLoading = true;
     chatC.chats = [];
-    console.log(chatC);
-    const { getByText, queryByText } = render(
+    const { getByText } = render(
       <ChatContext.Provider value={chatC}>
         <MemoryRouter>
           <Chats />
@@ -92,9 +91,13 @@ describe("Chats", () => {
   });
 
   it("should render info alert when api returns empty list", async () => {
-    chatC.count = 0;
-    chatC.results = [];
-    chatC.isChatsLoading = false;
+    chatC = {
+      chats: [],
+      error: false,
+      count: 0,
+      isChatsLoading: false,
+      loadMoreMessages: jest.fn(),
+    };
 
     const { getByText, queryByText } = render(
       <ChatContext.Provider value={chatC}>
@@ -126,6 +129,7 @@ describe("Chats", () => {
   it("should render error alert when api returns error", async () => {
     chatC.error = true;
     chatC.chats = [];
+    chatC.count = 0;
     const { getByText, queryByText } = render(
       <ChatContext.Provider value={chatC}>
         <MemoryRouter>

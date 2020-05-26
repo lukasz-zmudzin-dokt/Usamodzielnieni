@@ -1,41 +1,14 @@
 import React from "react";
-import { render, fireEvent, waitForElement } from "@testing-library/react";
+import { render, waitForElement } from "@testing-library/react";
 import ContactsModalContent from "./ContactsModalContent";
-import { MemoryRouter, Router } from "react-router-dom";
+import { MemoryRouter } from "react-router-dom";
 import Contact from "./Contact/Contact";
-import { UserContext, AlertContext } from "context";
 
 jest.mock("./Contact/Contact");
-
-const renderWithRouter = (ui, contextA, {} = {}) => {
-  let context = {
-    token: 123,
-    data: {
-      company_name: "abc",
-      company_address: {
-        street: "def",
-        street_number: "1",
-        city: "abc",
-        postal_code: "00-000",
-      },
-    },
-  };
-  return {
-    ...render(
-      <UserContext.Provider value={context}>
-        <AlertContext.Provider value={contextA}>
-          <Router>{ui}</Router>
-        </AlertContext.Provider>
-      </UserContext.Provider>
-    ),
-  };
-};
 
 describe("ContactsModalContent", () => {
   let failFetch = false;
   let fetchedContacts = [];
-  let context;
-  let contextA;
 
   beforeAll(() => {
     Contact.mockImplementation(({ contact }) => (
