@@ -36,7 +36,8 @@ const sendMessage = async (
   setData,
   alertC,
   socket,
-  user
+  user,
+  messagesEl
 ) => {
   const { username, first_name, last_name } = user.data;
   const message = {
@@ -48,23 +49,9 @@ const sendMessage = async (
     message: msg,
     timestamp: new Date(),
   };
-  let newData = data.slice();
-  const now = new Date();
-  const date = `${now.getHours()}:${
-    now.getMinutes() < 10 ? "0" : ""
-  }${now.getMinutes()} ${now.getDate()}.${
-    now.getMonth() < 10 ? "0" : ""
-  }${now.getMonth()}.${now.getFullYear()}`;
-  newData.push({
-    content: msg,
-    send: date,
-    side: "right",
-    id,
-  });
-  setData(newData);
 
   socket.current.send(JSON.stringify(message));
-
+  messagesEl.current.scrollTop = messagesEl.current.scrollHeight;
   socket.current.onerror = (e) => {
     alertC.current.showAlert("Wystąpił błąd.");
   };
@@ -161,12 +148,12 @@ const MessagesList = () => {
             ...prevState,
             mapAnswer(JSON.parse(JSON.parse(object.data))),
           ]);
+          messagesEl.current.scrollTop = messagesEl.current.scrollHeight;
         };
       } catch (e) {
         console.log(e);
       }
     }
-    messagesEl.current.scrollTop = messagesEl.current.scrollHeight;
   }, [id, mapAnswer, mapRes, user.token, user.type]);
 
   return (
@@ -200,7 +187,8 @@ const MessagesList = () => {
               setData,
               alertC,
               socket,
-              user
+              user,
+              messagesEl
             )
           }
         />

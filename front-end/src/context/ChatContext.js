@@ -66,26 +66,26 @@ export const ChatProvider = (props) => {
     }
     if (user.token && user.type) {
       const url = proxy.wsChat;
-      //   console.log(url);
-      //   console.log("xd2");
+      console.log(url);
+      console.log("xd2");
       try {
         socket.current = new WebSocket(url, user.token);
         socket.current.onopen = (e) => {
-          //   console.log("udało się", e);
-          //   console.log(JSON.stringify({ message: "threads" }));
-          socket.current.send(JSON.stringify({ message: "threads" }));
+          console.log("udało się", e);
+          console.log(JSON.stringify({ message: "threads" }));
+          // socket.current.send(JSON.stringify({ message: "threads" }));
         };
 
         socket.current.onmessage = (msg) => {
-          //   console.log(msg, JSON.parse(msg.data));
+          console.log(msg, JSON.parse(msg.data));
         };
-        socket.current.onerror = (e) => {
-          console.log(e);
-          setError(true);
-        };
-        socket.current.onclose = (e) => {
-          console.log(e);
-        };
+        // socket.current.onerror = (e) => {
+        //   console.log(e);
+        //   setError(true);
+        // };
+        // socket.current.onclose = (e) => {
+        //   console.log(e);
+        // };
       } catch (e) {
         console.log(e);
       }
