@@ -1,7 +1,7 @@
 import proxy from "config/api";
 
 const getSteps = async () => {
-  let url = `${proxy.steps}`; // TODO
+  let url = `${proxy.steps}`;
   const headers = {
     "Content-Type": "application/json",
   };

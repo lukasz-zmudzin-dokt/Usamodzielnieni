@@ -18,27 +18,12 @@ const EditStep = ({
 }) => {
   const stepsTypes = ["Krok główny", "Podkrok"];
   const [type, setType] = useState();
-  //  step?.type === "main" ? stepsTypes[0] : stepsTypes[1]);
   const [newStep, setNewStep] = useState();
-  /*{
-    title: "",
-    description: "",
-    video: "",
-    parent: steps[0]?.title,
-  });*/
   const user = useContext(UserContext);
   const alertC = useRef(useContext(AlertContext));
   const [validated, setValidated] = useState(false);
   console.log(step);
 
-  const findMain = (sub) => {
-    let parent = steps.find((s) => s.next.map((n) => n.id).includes(sub.id));
-    if (parent.type === "main") {
-      return parent.id;
-    } else {
-      return findMain(parent);
-    }
-  };
 
   useEffect(() => {
     console.log(root);
@@ -47,18 +32,12 @@ const EditStep = ({
         title: step?.title,
         description: step?.description,
         video: "",
-        parent:
-          steps.find(
-            (s) =>
-              s.type === "main" && s.next.map((n) => n.id).includes(step?.id)
-          )?.id || root?.id,
       });
     } else {
       setNewStep({
         title: step?.title,
         description: step?.description,
         video: "",
-        parent: step ? findMain(step) : undefined,
       });
     }
     setType(step?.type === "main" ? stepsTypes[0] : stepsTypes[1]);
@@ -71,10 +50,8 @@ const EditStep = ({
     const form = e.currentTarget;
     if (form.checkValidity() !== false) {
       let res;
-      //const object = steps.find((item) => item.title === newStep.parent);
       const data = {
         ...newStep,
-        //parent: object.id,
       };
       try {
         res = await editStep(user.token, isStep, data, step.id);
