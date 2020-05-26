@@ -2,6 +2,7 @@ import React from "react";
 import { Card, Badge } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import proxy from "config/api";
+import { VIDEOBLOG_CATEGORY } from "constants/videoBlogInitialValues";
 
 const stripFromTags = (str) => {
   str = str.replace(/(<([^>]+)>)|(<([^>]+)\.\.\.)/gi, "");
@@ -22,18 +23,30 @@ const BlogPost = (data) => {
         ) : null}
         <Card.Body>
           <Card.Title as="h3">{data.title}</Card.Title>
-          <Card.Text>{stripped_str}</Card.Text>
+          <Card.Text>
+            {data.category !== VIDEOBLOG_CATEGORY ? (
+              stripped_str
+            ) : (
+              <div className="text-center">
+                <b>Wideoblog</b>
+              </div>
+            )}
+          </Card.Text>
         </Card.Body>
-        <Card.Footer>
-          <small>Tagi:</small>
-          {data.tags.length > 0
-            ? data.tags.map((tag) => (
+        {data.category !== VIDEOBLOG_CATEGORY && (
+          <Card.Footer>
+            <small>Tagi:</small>
+            {data.tags.length > 0 ? (
+              data.tags.map((tag) => (
                 <Badge variant="info" key={tag} className="ml-1">
                   {tag}
                 </Badge>
               ))
-            : "Brak tagów"}
-        </Card.Footer>
+            ) : (
+              <small className="mx-2">Brak tagów</small>
+            )}
+          </Card.Footer>
+        )}
       </Card>
     </Link>
   );

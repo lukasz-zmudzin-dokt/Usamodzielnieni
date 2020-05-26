@@ -4,7 +4,7 @@ import UserProperty from "Views/UserProfilePage/components/UserProperty";
 
 const UserDetails = (props) => {
   const { user, names } = props;
-  const ignore = ["firstName", "lastName", "role"];
+  const ignore = ["firstName", "lastName", "role", "chat_role"];
 
   const userProperties = Object.keys(user).map((key) => {
     return !ignore.find((i) => i === key) ? (
@@ -12,7 +12,14 @@ const UserDetails = (props) => {
     ) : null;
   });
 
-  return <ListGroup className="list-group-flush">{userProperties}</ListGroup>;
+  return (
+    <ListGroup className="list-group-flush">
+      {userProperties}
+      {user.chat_role !== undefined ? (
+        <UserProperty user={user} property={"chat_role"} names={names} />
+      ) : null}
+    </ListGroup>
+  );
 };
 
 export default UserDetails;

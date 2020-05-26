@@ -3,6 +3,7 @@ import { Form } from "react-bootstrap";
 import { CVEditorTab } from "..";
 import movie_1 from "assets/movie_1.png";
 import proxy from "config/api";
+import { UserContext } from "context";
 import { approveFileSize } from "utils/approveFile/approveFile";
 
 class PhotoTab extends React.Component {
@@ -46,6 +47,7 @@ class PhotoTab extends React.Component {
         showComments={this.props.showComments}
         disabled={this.props.disabled}
         isNew={this.props.isNew}
+        group_type={this.context.data.group_type}
         video={this.props.video}
         errVid={this.props.errVid}
         formTab={this.props.formTab}
@@ -71,6 +73,7 @@ class PhotoTab extends React.Component {
                 <a
                   target="_blank"
                   href={proxy.plain + "/static/" + this.props.template + ".pdf"}
+                  rel="noopener noreferrer"
                 >
                   Kliknij <u>tutaj</u> żeby zobaczyć przykładowe CV w tym
                   kolorze
@@ -100,5 +103,7 @@ class PhotoTab extends React.Component {
     );
   }
 }
+
+PhotoTab.contextType = UserContext;
 
 export default PhotoTab;
