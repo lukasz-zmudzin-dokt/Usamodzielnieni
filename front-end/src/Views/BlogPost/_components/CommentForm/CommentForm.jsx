@@ -3,7 +3,7 @@ import { Form, Button } from "react-bootstrap";
 import { UserContext, AlertContext } from "context";
 import proxy from "config/api";
 import { userStatuses } from "../../../../constants/userStatuses";
-import { staffTypes } from "constants/staffTypes"
+import { staffTypes } from "constants/staffTypes";
 
 const addComment = async (token, content, blogId) => {
   let url = `${proxy.blog}${blogId}/comment/`;
@@ -81,7 +81,12 @@ const CommentForm = ({ blogId, afterSubmit, ...rest }) => {
           </Form.Control.Feedback>
         </Form.Group>
         <Form.Group className="CommentForm__submitGroup mb-0">
-          <Button type="submit" disabled={user.data.group_type?.includes(staffTypes.GUEST)}>Prześlij</Button>
+          <Button
+            type="submit"
+            disabled={user.data.group_type?.includes(staffTypes.GUEST)}
+          >
+            Prześlij
+          </Button>
         </Form.Group>
       </Form>
     </div>
