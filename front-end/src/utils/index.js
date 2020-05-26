@@ -1,5 +1,5 @@
-import {approveFileSize} from "./approveFile/approveFile";
-import {addressToString} from "./converters";
-import {renderWithTimeout} from "./renderWithTimeout/renderWithTimeout";
+import { approveFileSize } from "./approveFile/approveFile";
+import { addressToString } from "./converters";
+import { renderWithTimeout } from "./renderWithTimeout/renderWithTimeout";
 
-export {addressToString, renderWithTimeout, approveFileSize};
+export { addressToString, renderWithTimeout, approveFileSize };
