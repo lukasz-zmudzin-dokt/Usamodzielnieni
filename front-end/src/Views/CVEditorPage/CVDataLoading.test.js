@@ -1,5 +1,10 @@
 import React from "react";
-import { render, wait, waitForElement, fireEvent } from "@testing-library/react";
+import {
+  render,
+  wait,
+  waitForElement,
+  fireEvent,
+} from "@testing-library/react";
 import CVEditorPage from "./CVEditorPage";
 import { Router, Route } from "react-router-dom";
 import { createMemoryHistory } from "history";
