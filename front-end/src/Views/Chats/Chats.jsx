@@ -38,7 +38,7 @@ const Chats = () => {
           <ListGroup variant="flush">
             {chats.map((chat) => (
               <ListGroup.Item key={chat.id}>
-                <ChatInfo chat={chat} />
+                <ChatInfo chat={chat} user={user} />
               </ListGroup.Item>
             ))}
           </ListGroup>

@@ -78,6 +78,7 @@ const MessagesList = () => {
   const { id } = useParams();
   const messagesEl = useRef(null);
   const socket = useRef(null);
+  const [contact, setContact] = useState({});
 
   const backToChats = () => {
     history.push("/chats");
@@ -111,10 +112,18 @@ const MessagesList = () => {
     [user.data.username]
   );
 
-  // const checkPhoto = (res) => {
-  //   if (first.username === user.data.username) {
-  //   }
-  // };
+  const checkPhoto = useCallback(
+    (res) => {
+      if (res.first.username === user.data.username) {
+        setContact({ data: { ...res.second } });
+      } else {
+        setContact({ data: { ...res.first } });
+      }
+    },
+    [user.data.username]
+  );
+
+  console.log(contact);
 
   useEffect(() => {
     const loadMessages = async (token, id) => {
@@ -123,7 +132,7 @@ const MessagesList = () => {
         res = await getMessages(token, id);
         console.log(res);
         setData(mapRes(res.messages));
-        // checkPhoto(res);
+        checkPhoto(res);
       } catch (e) {
         console.log(e);
         alertC.current.showAlert("Nie udało się załadować wiadomości.");
@@ -132,7 +141,7 @@ const MessagesList = () => {
     };
     loadMessages(user.token, id);
     messagesEl.current.scrollTop = messagesEl.current.scrollHeight;
-  }, [id, mapRes, user.data.username, user.token]);
+  }, [checkPhoto, id, mapRes, user.data.username, user.token]);
 
   useEffect(() => {
     if (socket.current) {
@@ -171,7 +180,7 @@ const MessagesList = () => {
           >
             {"<"}
           </Button>
-          <UserPicture user={user} />
+          <UserPicture user={contact} />
           <span className="ml-2 messagesList__user">{id}</span>
         </Card.Header>
         <Card.Body className="messagesList__body">
