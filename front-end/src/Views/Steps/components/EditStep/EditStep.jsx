@@ -3,9 +3,10 @@ import { Button, Form, Modal } from "react-bootstrap";
 import { AlertContext, UserContext } from "context";
 import { StepsForm } from "../";
 import { editStep } from "./functions/editStep";
-import { loadSteps } from "Views/Steps/functions/loadSteps"
+import { loadSteps } from "Views/Steps/functions/loadSteps";
+import { roundToNearestMinutes } from "date-fns/esm";
 
-const EditStep = ({ step, steps, show, handleClose, setSteps, setPath, setRoot, setError }) => {
+const EditStep = ({ step, steps, show, handleClose, setSteps, setPath, setRoot, setError, root }) => {
   const stepsTypes = ["Krok główny", "Podkrok"];
   const [type, setType] = useState(
     step?.type === "main" ? stepsTypes[0] : stepsTypes[1]
@@ -21,11 +22,12 @@ const EditStep = ({ step, steps, show, handleClose, setSteps, setPath, setRoot, 
   const [validated, setValidated] = useState(false);
   console.log(step);
   useEffect(() => {
+    console.log(root);
     setNewStep({
       title: step?.title,
       description: step?.description,
       video: "",
-      parent: steps[0]?.title,
+      parent: steps.find((s) => s.type === 'main' && s.next.map((n) => n.id).includes(step?.id))?.id || root?.id,
     });
     setType(step?.type === "main" ? stepsTypes[0] : stepsTypes[1]);
   }, [step]);
@@ -37,10 +39,10 @@ const EditStep = ({ step, steps, show, handleClose, setSteps, setPath, setRoot, 
     const form = e.currentTarget;
     if (form.checkValidity() !== false) {
       let res;
-      const object = steps.find((item) => item.title === newStep.parent);
+      //const object = steps.find((item) => item.title === newStep.parent);
       const data = {
         ...newStep,
-        parent: object.id,
+        //parent: object.id,
       };
       try {
         res = await editStep(user.token, isStep, data, step.id);

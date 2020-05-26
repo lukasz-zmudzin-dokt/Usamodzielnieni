@@ -170,6 +170,7 @@ const ProgressBar = () => {
                 setSteps={setSteps}
                 setPath={setPath}
                 setError={setError}
+                root={root}
               />
             {/*steps.length > 0 ? (
               <EditStep

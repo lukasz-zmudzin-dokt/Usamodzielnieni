@@ -36,22 +36,23 @@ const StepsForm = ({
           }}
         />
       ) : null}
-      <FormGroup
-        type="select"
-        header={`${
-          isStep ? "Wybierz krok poprzedzający" : "Wybierz rodzica podkroku"
-        } `}
-        id="stepParent"
-        required
-        array={parTitles.length > 0 ? parTitles : ["Jako pierwszy krok"]}
-        val={newStep.parent}
-        setVal={(val) =>
-          setNewStep({
-            ...newStep,
-            parent: val,
-          })
-        }
-      />
+      {!isEdit ? (
+        <FormGroup
+          type="select"
+          header={`${
+            isStep ? "Wybierz krok poprzedzający" : "Wybierz rodzica podkroku"
+          } `}
+          id="stepParent"
+          required
+          array={parTitles.length > 0 ? parTitles : ["Jako pierwszy krok"]}
+          val={newStep.parent}
+          setVal={(val) =>
+            setNewStep({
+              ...newStep,
+              parent: val,
+            })
+          }
+        />) : null}
       <FormGroup
         header={`Tytuł ${isStep ? "kroku" : "podkroku"}`}
         setVal={(val) => setNewStep({ ...newStep, title: val })}
