@@ -7,7 +7,7 @@ const UserPasswordChangeButton = ({ user }) => {
 
   return (
     <>
-      <Button variant="info" className="my-2" onClick={(e) => setShow(true)}>
+      <Button variant="info" onClick={(e) => setShow(true)}>
         Zmień hasło
       </Button>
       <PasswordChangeModal user={user} show={show} setShow={setShow} />

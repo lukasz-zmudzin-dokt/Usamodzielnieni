@@ -1,0 +1,396 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header should match snapshot - logged in employer 1`] = `
+<div>
+  <nav
+    class="font p-3 justify-content-end navbar navbar-expand-lg navbar-light sticky-top"
+  >
+    <button
+      aria-controls="responsive-navbar-nav"
+      aria-label="Toggle navigation"
+      class="hamburger-toggle collapsed"
+      type="button"
+    >
+      <a
+        class="hamburger-menu-text"
+      >
+        MENU
+      </a>
+      <img
+        alt="menu"
+        class="hamburger-menu-logo"
+        id="menu"
+        src="hamburger-menu-icon.svg"
+      />
+    </button>
+    <div
+      class="navbar-collapse collapse"
+      id="responsive-navbar-nav"
+    >
+      <div
+        class="mr-auto navbar-nav"
+      >
+        <a
+          class="logo-button active nav-link"
+          data-rb-event-key="/"
+          href="/"
+        >
+          <img
+            alt="logo"
+            class="logo"
+            src="logo-white.png"
+          />
+        </a>
+        <a
+          class="navbar-left-button nav-link"
+          data-rb-event-key="/contact"
+          href="/contact"
+        >
+          KONTAKT
+        </a>
+        <a
+          class="navbar-left-button nav-link"
+          data-rb-event-key="/blog"
+          href="/blog"
+        >
+          BLOG
+        </a>
+        <a
+          class="navbar-left-button nav-link"
+          data-rb-event-key="/jobOffers"
+          href="/jobOffers"
+        >
+          OFERTY PRACY
+        </a>
+      </div>
+      <div
+        class="navbar-nav"
+      >
+        <a
+          class="navbar-right-button notification-color nav-link"
+          href="#"
+          role="button"
+        >
+          POWIADOMIENIA
+        </a>
+        <div
+          class="navbar-right-button register-color dropdown nav-item"
+        >
+          <a
+            aria-expanded="false"
+            aria-haspopup="true"
+            class="dropdown-toggle nav-link"
+            href="#"
+            role="button"
+          >
+            <span
+              class="white"
+            >
+              MOJE KONTO
+            </span>
+          </a>
+        </div>
+        <a
+          class="navbar-right-button login-color nav-link"
+          href="#"
+          role="button"
+        >
+          WYLOGUJ
+        </a>
+      </div>
+    </div>
+  </nav>
+</div>
+`;
+
+exports[`Header should match snapshot - logged in staff 1`] = `
+<div>
+  <nav
+    class="font p-3 justify-content-end navbar navbar-expand-lg navbar-light sticky-top"
+  >
+    <button
+      aria-controls="responsive-navbar-nav"
+      aria-label="Toggle navigation"
+      class="hamburger-toggle collapsed"
+      type="button"
+    >
+      <a
+        class="hamburger-menu-text"
+      >
+        MENU
+      </a>
+      <img
+        alt="menu"
+        class="hamburger-menu-logo"
+        id="menu"
+        src="hamburger-menu-icon.svg"
+      />
+    </button>
+    <div
+      class="navbar-collapse collapse"
+      id="responsive-navbar-nav"
+    >
+      <div
+        class="mr-auto navbar-nav"
+      >
+        <a
+          class="logo-button active nav-link"
+          data-rb-event-key="/"
+          href="/"
+        >
+          <img
+            alt="logo"
+            class="logo"
+            src="logo-white.png"
+          />
+        </a>
+        <a
+          class="navbar-left-button nav-link"
+          data-rb-event-key="/contact"
+          href="/contact"
+        >
+          KONTAKT
+        </a>
+        <a
+          class="navbar-left-button nav-link"
+          data-rb-event-key="/blog"
+          href="/blog"
+        >
+          BLOG
+        </a>
+        <a
+          class="navbar-left-button nav-link"
+          data-rb-event-key="/jobOffers"
+          href="/jobOffers"
+        >
+          OFERTY PRACY
+        </a>
+      </div>
+      <div
+        class="navbar-nav"
+      >
+        <a
+          class="navbar-right-button notification-color nav-link"
+          href="#"
+          role="button"
+        >
+          POWIADOMIENIA
+        </a>
+        <div
+          class="navbar-right-button register-color dropdown nav-item"
+        >
+          <a
+            aria-expanded="false"
+            aria-haspopup="true"
+            class="dropdown-toggle nav-link"
+            href="#"
+            role="button"
+          >
+            <span
+              class="white"
+            >
+              MOJE KONTO
+            </span>
+          </a>
+        </div>
+        <a
+          class="navbar-right-button login-color nav-link"
+          href="#"
+          role="button"
+        >
+          WYLOGUJ
+        </a>
+      </div>
+    </div>
+  </nav>
+</div>
+`;
+
+exports[`Header should match snapshot - logged in standard 1`] = `
+<div>
+  <nav
+    class="font p-3 justify-content-end navbar navbar-expand-lg navbar-light sticky-top"
+  >
+    <button
+      aria-controls="responsive-navbar-nav"
+      aria-label="Toggle navigation"
+      class="hamburger-toggle collapsed"
+      type="button"
+    >
+      <a
+        class="hamburger-menu-text"
+      >
+        MENU
+      </a>
+      <img
+        alt="menu"
+        class="hamburger-menu-logo"
+        id="menu"
+        src="hamburger-menu-icon.svg"
+      />
+    </button>
+    <div
+      class="navbar-collapse collapse"
+      id="responsive-navbar-nav"
+    >
+      <div
+        class="mr-auto navbar-nav"
+      >
+        <a
+          class="logo-button active nav-link"
+          data-rb-event-key="/"
+          href="/"
+        >
+          <img
+            alt="logo"
+            class="logo"
+            src="logo-white.png"
+          />
+        </a>
+        <a
+          class="navbar-left-button nav-link"
+          data-rb-event-key="/contact"
+          href="/contact"
+        >
+          KONTAKT
+        </a>
+        <a
+          class="navbar-left-button nav-link"
+          data-rb-event-key="/blog"
+          href="/blog"
+        >
+          BLOG
+        </a>
+        <a
+          class="navbar-left-button nav-link"
+          data-rb-event-key="/jobOffers"
+          href="/jobOffers"
+        >
+          OFERTY PRACY
+        </a>
+      </div>
+      <div
+        class="navbar-nav"
+      >
+        <a
+          class="navbar-right-button notification-color nav-link"
+          href="#"
+          role="button"
+        >
+          POWIADOMIENIA
+        </a>
+        <div
+          class="navbar-right-button register-color dropdown nav-item"
+        >
+          <a
+            aria-expanded="false"
+            aria-haspopup="true"
+            class="dropdown-toggle nav-link"
+            href="#"
+            role="button"
+          >
+            <span
+              class="white"
+            >
+              MOJE KONTO
+            </span>
+          </a>
+        </div>
+        <a
+          class="navbar-right-button login-color nav-link"
+          href="#"
+          role="button"
+        >
+          WYLOGUJ
+        </a>
+      </div>
+    </div>
+  </nav>
+</div>
+`;
+
+exports[`Header should match snapshot - not logged in 1`] = `
+<div>
+  <nav
+    class="font p-3 justify-content-end navbar navbar-expand-lg navbar-light sticky-top"
+  >
+    <button
+      aria-controls="responsive-navbar-nav"
+      aria-label="Toggle navigation"
+      class="hamburger-toggle collapsed"
+      type="button"
+    >
+      <a
+        class="hamburger-menu-text"
+      >
+        MENU
+      </a>
+      <img
+        alt="menu"
+        class="hamburger-menu-logo"
+        id="menu"
+        src="hamburger-menu-icon.svg"
+      />
+    </button>
+    <div
+      class="navbar-collapse collapse"
+      id="responsive-navbar-nav"
+    >
+      <div
+        class="mr-auto navbar-nav"
+      >
+        <a
+          class="logo-button active nav-link"
+          data-rb-event-key="/"
+          href="/"
+        >
+          <img
+            alt="logo"
+            class="logo"
+            src="logo-white.png"
+          />
+        </a>
+        <a
+          class="navbar-left-button nav-link"
+          data-rb-event-key="/contact"
+          href="/contact"
+        >
+          KONTAKT
+        </a>
+        <a
+          class="navbar-left-button nav-link"
+          data-rb-event-key="/blog"
+          href="/blog"
+        >
+          BLOG
+        </a>
+        <a
+          class="navbar-left-button nav-link"
+          data-rb-event-key="/jobOffers"
+          href="/jobOffers"
+        >
+          OFERTY PRACY
+        </a>
+      </div>
+      <div
+        class="navbar-nav"
+      >
+        <a
+          class="navbar-right-button register-color nav-link"
+          data-rb-event-key="/newAccount"
+          href="/newAccount"
+        >
+          REJESTRACJA
+        </a>
+        <a
+          class="navbar-right-button login-color nav-link"
+          data-rb-event-key="/login"
+          href="/login"
+        >
+          LOGOWANIE
+        </a>
+      </div>
+    </div>
+  </nav>
+</div>
+`;

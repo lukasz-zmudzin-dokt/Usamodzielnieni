@@ -3,7 +3,7 @@
 exports[`DeleteAccountButton should render without crashing 1`] = `
 <div>
   <button
-    class="my-2 btn btn-danger"
+    class="btn btn-danger"
     type="button"
   >
     Usuń konto

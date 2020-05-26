@@ -13,7 +13,6 @@ const NewVideoblogButton = ({ user }) => {
       <>
         <Button
           variant="primary"
-          className="my-2"
           onClick={(e) => setShow(true)}
         >
           Załóż nowy wideoblog
