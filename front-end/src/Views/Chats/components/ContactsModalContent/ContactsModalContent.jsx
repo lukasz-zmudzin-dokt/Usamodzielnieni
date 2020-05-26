@@ -28,10 +28,13 @@ const getContacts = async (token, filters) => {
 
 const mapContacts = (contacts) =>
   contacts.map((contact) => ({
-    username: contact.username,
-    first_name: contact.first_name,
-    last_name: contact.last_name,
-    role: contact.role,
+    data: {
+      username: contact.username,
+      first_name: contact.first_name,
+      last_name: contact.last_name,
+      role: contact.role,
+      picture_url: contact.picture_url,
+    },
   }));
 
 const ContactsModalContent = () => {
