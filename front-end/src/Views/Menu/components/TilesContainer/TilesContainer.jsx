@@ -1,9 +1,9 @@
-import React, {useState, useEffect, useContext} from "react";
-import {Alert, Button} from "react-bootstrap";
+import React, { useState, useEffect, useContext } from "react";
+import { Alert, Button } from "react-bootstrap";
 import { Tile } from "../";
 import proxy from "config/api";
-import {UserContext} from "context/UserContext";
-import {staffTypes} from "constants/staffTypes";
+import { UserContext } from "context/UserContext";
+import { staffTypes } from "constants/staffTypes";
 import NewTileForm from "../NewTileForm/NewTileForm";
 
 const tmpTiles = [
@@ -175,33 +175,40 @@ const TilesContainer = () => {
   };
 
   return (
-    (
-      <div className="tilesGrid__container">
-        <div className="tilesGrid">
-          {console.log(tiles)}
-          {tiles.map((tile) => (
-            <Tile
-              key={tile.id}
-              color={tile.color}
-              imageUrl={tile.imageUrl || ""}
-              showImage={tile.show}
-              title={tile.title}
-              destination={tile.destination}
+    <div className="tilesGrid__container">
+      <div className="tilesGrid">
+        {console.log(tiles)}
+        {tiles.map((tile) => (
+          <Tile
+            key={tile.id}
+            color={tile.color}
+            imageUrl={tile.imageUrl || ""}
+            showImage={tile.show}
+            title={tile.title}
+            destination={tile.destination}
+            user={user}
+          />
+        ))}
+        {user?.data?.group_type?.includes(staffTypes.BLOG_MODERATOR) && (
+          <>
+            <Button
+              variant="primary"
+              size="lg"
+              block
+              onClick={() => setShow(true)}
+            >
+              Dupnij kafla
+            </Button>
+            <NewTileForm
+              show={showModal}
+              setShow={setShow}
+              user={user}
+              appendTile={appendTile}
             />
-          ))}
-          {
-            user?.data?.group_type?.includes(staffTypes.BLOG_MODERATOR) && (
-                <>
-                  <Button variant="primary" size="lg" block onClick={() => setShow(true)}>
-                    Dupnij kafla
-                  </Button>
-                  <NewTileForm show={showModal} setShow={setShow} user={user} appendTile={appendTile} />
-                </>
-            )
-          }
-        </div>
+          </>
+        )}
       </div>
-    )
+    </div>
   );
 };
 
