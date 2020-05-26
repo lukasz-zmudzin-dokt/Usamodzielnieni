@@ -17,6 +17,7 @@ import { convertToRaw } from "draft-js";
 import { Redirect } from "react-router-dom";
 import EditorForm from "./components/EditorForm";
 import { withAlertContext } from "components";
+import { staffTypes } from "constants/staffTypes";
 import { approveFileSize } from "utils/approveFile/approveFile";
 
 class BlogPostForm extends React.Component {
@@ -278,7 +279,13 @@ class BlogPostForm extends React.Component {
             />
           </Card.Body>
           <Card.Footer className="">
-            <Button variant="primary" size="lg" onClick={this.submitPost} block>
+            <Button
+              variant="primary"
+              size="lg"
+              onClick={this.submitPost}
+              block
+              disabled={this.context.data.group_type.includes(staffTypes.GUEST)}
+            >
               Opublikuj
             </Button>
           </Card.Footer>

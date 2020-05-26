@@ -21,6 +21,24 @@ const renderCommon = (selectType) => (
   </Form.Group>
 );
 
+const onChange = (e, cutType, selectType, current) => {
+  if (e.target.name === staffTypes.GUEST) {
+    if (current.includes(e.target.name)) {
+      cutType(e);
+    } else {
+      adminGroup.forEach((item) => cutType({ target: { name: item.name } }));
+      selectType(e);
+    }
+  } else {
+    if (current.includes(e.target.name)) {
+      cutType(e);
+    } else {
+      cutType({ target: { name: staffTypes.GUEST } });
+      selectType(e);
+    }
+  }
+};
+
 const renderAdmin = (selectType, cutType, current, setRole) => (
   <Form.Group className="register_account_type">
     <Form.Label>{"Uprawnienia nowego administratora:"}</Form.Label>
@@ -31,7 +49,7 @@ const renderAdmin = (selectType, cutType, current, setRole) => (
         type="checkbox"
         label={item.placeholder}
         checked={current.includes(item.name)}
-        onChange={current.includes(item.name) ? cutType : selectType}
+        onChange={(e) => onChange(e, cutType, selectType, current)}
         key={item.name}
         name={item.name}
       />

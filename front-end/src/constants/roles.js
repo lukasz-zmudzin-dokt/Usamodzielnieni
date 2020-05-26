@@ -22,6 +22,10 @@ export const adminGroup = [
     placeholder: "Moderator bloga",
   },
   {
+    name: staffTypes.GUEST,
+    placeholder: "Konto gościa",
+  },
+  {
     name: staffTypes.CHAT,
     placeholder: "Dostęp do czatu",
   },
