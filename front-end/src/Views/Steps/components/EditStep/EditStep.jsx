@@ -24,7 +24,6 @@ const EditStep = ({
   const [validated, setValidated] = useState(false);
   console.log(step);
 
-
   useEffect(() => {
     console.log(root);
     if (step?.type === "main") {
