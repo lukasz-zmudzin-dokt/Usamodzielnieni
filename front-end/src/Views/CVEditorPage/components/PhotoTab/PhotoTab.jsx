@@ -66,7 +66,7 @@ class PhotoTab extends React.Component {
               // value="this.props.data"
             />
           </Form.Group>
-          {this.props.templateList.length > 0 && (
+          {this.props.templateList?.length > 0 && (
             <Form.Group>
               <Form.Label>
                 Kolor CV: (
