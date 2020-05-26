@@ -20,7 +20,7 @@ const EditStep = ({
   const [type, setType] = useState();
   //  step?.type === "main" ? stepsTypes[0] : stepsTypes[1]);
   const [newStep, setNewStep] = useState();
-    /*{
+  /*{
     title: "",
     description: "",
     video: "",
@@ -38,23 +38,27 @@ const EditStep = ({
     } else {
       return findMain(parent);
     }
-  }
+  };
 
   useEffect(() => {
     console.log(root);
-    if(step?.type === "main") {
+    if (step?.type === "main") {
       setNewStep({
         title: step?.title,
         description: step?.description,
         video: "",
-        parent: steps.find((s) => s.type === 'main' && s.next.map((n) => n.id).includes(step?.id))?.id || root?.id,
+        parent:
+          steps.find(
+            (s) =>
+              s.type === "main" && s.next.map((n) => n.id).includes(step?.id)
+          )?.id || root?.id,
       });
     } else {
       setNewStep({
         title: step?.title,
         description: step?.description,
         video: "",
-        parent: step? findMain(step) : undefined
+        parent: step ? findMain(step) : undefined,
       });
     }
     setType(step?.type === "main" ? stepsTypes[0] : stepsTypes[1]);
