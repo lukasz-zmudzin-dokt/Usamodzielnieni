@@ -119,7 +119,7 @@ const getPath = (appName, id, type) => {
     return isStandard
       ? compile(paths.MY_CVS)({})
       : compile(paths.CV_APPROVAL)({});
-  } else if (appName.match(/^jobs.*/)) {
+  } else if (appName.match(/^job/)) {
     return isStandard
       ? compile(paths.JOB_OFFERS)({})
       : compile(paths.MY_OFFERS)({});
