@@ -80,7 +80,7 @@ export const ChatProvider = (props) => {
         };
 
         socket.current.onmessage = (msg) => {
-          console.log(msg, JSON.parse(msg.data));
+          setChats(JSON.parse(msg.data));
         };
         // socket.current.onerror = (e) => {
         //   console.log(e);
@@ -107,7 +107,14 @@ export const ChatProvider = (props) => {
     setChats([...chats, ...res.results]);
   };
 
-  const data = { chats, error, count, socket, loadMoreMessages };
+  const data = {
+    chats,
+    error,
+    count,
+    socket,
+    loadMoreMessages,
+    isChatsLoading,
+  };
 
   return <ChatContext.Provider value={data} {...props} />;
 };

@@ -16,7 +16,7 @@ describe("ChatInfo", () => {
 
     const { container } = render(
       <MemoryRouter>
-        <ChatInfo chat={chat} />
+        <ChatInfo chat={chat} user={{ data: { username: "xd" } }} />
       </MemoryRouter>
     );
 

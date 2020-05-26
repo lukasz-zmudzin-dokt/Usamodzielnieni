@@ -7,18 +7,17 @@ import {
   Modal,
   Button,
 } from "react-bootstrap";
-import { UserContext } from "context";
+import { UserContext, ChatContext } from "context";
 import proxy from "config/api";
 import { ChatInfo, ContactsModalContent } from "./components";
-
-import { ChatInfo } from "./components";
 import { Pagination } from "components";
 import { useLocation } from "react-router-dom";
 import qs from "query-string";
 
 const Chats = () => {
-  const [isChatsLoading, setIsChatsLoading] = useState(false);
-
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   const [filters, setFilters] = useState({
     page: 1,
     pageSize: 10,
@@ -27,7 +26,7 @@ const Chats = () => {
   const user = useContext(UserContext);
   const chatC = useContext(ChatContext);
 
-  const { chats, error, count, loadMoreMessages } = chatC;
+  const { chats, error, count, loadMoreMessages, isChatsLoading } = chatC;
 
   const msg = error ? (
     <Alert variant="danger">Wystąpił błąd podczas ładowania wiadomości.</Alert>
@@ -41,6 +40,15 @@ const Chats = () => {
     <Container>
       <Card>
         <Card.Header as="h2">Najnowsze wiadomości</Card.Header>
+        <Card.Body>
+          <Button
+            className="float-right"
+            variant="primary"
+            onClick={handleShow}
+          >
+            Nowa wiadomość
+          </Button>
+        </Card.Body>
         {msg && chats ? (
           <Card.Body className="chats__body">{msg}</Card.Body>
         ) : (

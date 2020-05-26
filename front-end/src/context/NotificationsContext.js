@@ -5,7 +5,7 @@ import React, {
   useRef,
   createContext,
 } from "react";
-import { UserContext } from "context";
+import { UserContext, ChatContext } from "context";
 import proxy from "config/api";
 import { paths } from "constants/paths";
 import { userTypes } from "constants/userTypes";
@@ -94,22 +94,36 @@ const deleteNotifications = async (token) => {
 };
 
 const mapNotifications = (notifications, type) => ({
-  notifications: notifications.results.map((notification) =>
-    mapNotification(notification, type)
-  ),
+  notifications: notifications.results.map((notification) => {
+    if (notification.event === "Nowa wiadomość") {
+      return null;
+    }
+    return mapNotification(notification, type);
+  }),
   next: notifications.next?.replace(/.*page=/, "") || undefined,
 });
 
-const mapNotification = (notification, type) => ({
-  id: notification.slug,
-  path: getPath(notification.app, notification.object_id, type),
-  title: notification.text,
-  time: new Date(notification.timestamp),
-  unread: notification.unread,
-});
+const mapNotification = (notification, type) => {
+  console.log(notification.event === "Nowa wiadomość", notification);
+  if (notification.event === "Nowe wiadomość") {
+    console.log("tu");
+    return {
+      sender: notification.sender,
+      time: new Date(notification.timestamp),
+    };
+  }
+  return {
+    id: notification.slug,
+    path: getPath(notification.app, notification.object_id, type),
+    title: notification.text,
+    time: new Date(notification.timestamp),
+    unread: notification.unread,
+  };
+};
 
 const getPath = (appName, id, type) => {
   const isStandard = type === userTypes.STANDARD;
+  console.log(appName);
   if (appName.match(/^cv/)) {
     return isStandard
       ? compile(paths.MY_CVS)({})
@@ -137,6 +151,7 @@ export const NotificationsProvider = (props) => {
   const socket = useRef();
 
   const user = useContext(UserContext);
+  const chatC = useContext(ChatContext);
 
   useEffect(() => {
     const loadNotifications = async (token, type) => {
@@ -180,6 +195,11 @@ export const NotificationsProvider = (props) => {
             JSON.parse(e.data),
             user.type
           );
+          const parsedNotification = JSON.parse(e.data);
+
+          if (parsedNotification.event === "Nowe wiadomość") {
+            chatC.socket.current.send(JSON.stringify({ message: "threads" }));
+          }
           setCount((prev) => prev + 1);
           setNotifications((prev) => [newNotification, ...prev]);
         };
@@ -191,7 +211,7 @@ export const NotificationsProvider = (props) => {
         console.log(e);
       }
     }
-  }, [user.token, user.type]);
+  }, [chatC.socket, user.token, user.type]);
 
   const data = {
     notifications,

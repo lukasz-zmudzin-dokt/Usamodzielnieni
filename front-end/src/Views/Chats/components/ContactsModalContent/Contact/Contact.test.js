@@ -5,10 +5,12 @@ import Contact from "./Contact";
 
 describe("Contact", () => {
   const contact = {
-    first_name: "imie",
-    last_name: "nazwisko",
-    id: "1234",
-    role: "gościu",
+    data: {
+      first_name: "imie",
+      last_name: "nazwisko",
+      id: "1234",
+      role: "gościu",
+    },
   };
   it("should render without crashing", () => {
     const { getByText } = render(

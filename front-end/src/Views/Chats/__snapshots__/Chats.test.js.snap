@@ -43,11 +43,7 @@ exports[`Chats should render without crashing 1`] = `
       </div>
       <div
         class="card-footer"
-      >
-        <div>
-          Pagination
-        </div>
-      </div>
+      />
     </div>
   </div>
 </div>

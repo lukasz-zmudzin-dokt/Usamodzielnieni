@@ -40,8 +40,8 @@ describe("ContactsModalContent", () => {
   beforeAll(() => {
     Contact.mockImplementation(({ contact }) => (
       <div>
-        {contact.first_name} {contact.last_name} {contact.role}{" "}
-        {contact.username}
+        {contact.data.first_name} {contact.data.last_name} {contact.data.role}
+        {contact.data.username}
       </div>
     ));
     global.fetch = jest.fn().mockImplementation((input, init) => {
@@ -87,23 +87,13 @@ describe("ContactsModalContent", () => {
     jest.clearAllMocks();
   });
 
-  // it("should render without crashing", async () => {
-  //   const { getByText } = renderWithRouter(<ContactsModalContent />, contextA);
-  //   // expect(
-  //   //   getByText("Ładowanie listy kontaktów", { exact: false })
-  //   // ).toBeInTheDocument();
-
-  //   await waitForElement(() => getByText("Stachu"));
-
-  //   expect(getByText("Żabson", { exact: false })).toBeInTheDocument();
-  // });
-
   it("should match snapshot", async () => {
-    const { container } = render(
+    const { container, getByText } = render(
       <MemoryRouter>
         <ContactsModalContent />
       </MemoryRouter>
     );
+    await waitForElement(() => getByText("1"));
     expect(container).toMatchSnapshot();
   });
 });

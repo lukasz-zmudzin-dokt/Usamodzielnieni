@@ -9,7 +9,7 @@ import { ListGroup, Container, Card, Button } from "react-bootstrap";
 import MessageItem from "./components/MessageItem";
 import { ChatForm } from "./components";
 import proxy from "config/api";
-import { UserContext, AlertContext } from "context";
+import { UserContext, AlertContext, ChatContext } from "context";
 import { useParams, useHistory } from "react-router-dom";
 import { UserPicture } from "components";
 
@@ -39,19 +39,14 @@ const sendMessage = async (
   user,
   messagesEl
 ) => {
-  const { username, first_name, last_name } = user.data;
   const message = {
-    user: {
-      username,
-      first_name,
-      last_name,
-    },
     message: msg,
-    timestamp: new Date(),
+    recipient: user.data.username,
   };
 
   socket.current.send(JSON.stringify(message));
   messagesEl.current.scrollTop = messagesEl.current.scrollHeight;
+
   socket.current.onerror = (e) => {
     alertC.current.showAlert("Wystąpił błąd.");
   };
@@ -66,8 +61,12 @@ const MessagesList = () => {
   const messagesEl = useRef(null);
   const socket = useRef(null);
   const [contact, setContact] = useState({});
+  const chatC = useContext(ChatContext);
 
   const backToChats = () => {
+    if (chatC.socket.current.readyState === WebSocket.CLOSED) {
+      chatC.socket.current.send(JSON.stringify({ message: "threads" }));
+    }
     history.push("/chats");
   };
 
@@ -77,7 +76,7 @@ const MessagesList = () => {
         const time = new Date(item.timestamp);
         return {
           content: item.message,
-          side: item.user.username === user.data.username ? "right" : "left",
+          side: item.sender.username === user.data.username ? "right" : "left",
           send: time.toLocaleString(),
           id: item.timestamp,
         };
@@ -190,7 +189,7 @@ const MessagesList = () => {
               setData,
               alertC,
               socket,
-              user,
+              contact,
               messagesEl
             )
           }
