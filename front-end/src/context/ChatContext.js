@@ -34,7 +34,7 @@ export const ChatProvider = (props) => {
   const [count, setCount] = useState(0);
   const [filters, setFilters] = useState({
     page: 1,
-    pageSize: 1,
+    pageSize: 10,
   });
   const socket = useRef(null);
 
@@ -62,25 +62,29 @@ export const ChatProvider = (props) => {
     if (socket.current) {
       socket.current.close();
       socket.current = null;
-      console.log("xd");
+      //   console.log("xd");
     }
     if (user.token && user.type) {
       const url = proxy.wsChat;
-      console.log(url);
-      console.log("xd2");
+      //   console.log(url);
+      //   console.log("xd2");
       try {
         socket.current = new WebSocket(url, user.token);
         socket.current.onopen = (e) => {
-          console.log("udało się", e);
-          socket.current.send("get_threads");
+          //   console.log("udało się", e);
+          //   console.log(JSON.stringify({ message: "threads" }));
+          socket.current.send(JSON.stringify({ message: "threads" }));
         };
 
         socket.current.onmessage = (msg) => {
-          setChats(JSON.parse(msg));
+          //   console.log(msg, JSON.parse(msg.data));
         };
         socket.current.onerror = (e) => {
           console.log(e);
           setError(true);
+        };
+        socket.current.onclose = (e) => {
+          console.log(e);
         };
       } catch (e) {
         console.log(e);
@@ -90,7 +94,6 @@ export const ChatProvider = (props) => {
 
   const loadMoreMessages = async () => {
     let res;
-    setFilters({ ...filters, page: filters.page + 1 });
     try {
       res = await getChats(user.token, { ...filters, page: filters.page + 1 });
     } catch (e) {

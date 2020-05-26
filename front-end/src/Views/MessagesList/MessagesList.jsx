@@ -111,6 +111,11 @@ const MessagesList = () => {
     [user.data.username]
   );
 
+  // const checkPhoto = (res) => {
+  //   if (first.username === user.data.username) {
+  //   }
+  // };
+
   useEffect(() => {
     const loadMessages = async (token, id) => {
       let res;
@@ -118,6 +123,7 @@ const MessagesList = () => {
         res = await getMessages(token, id);
         console.log(res);
         setData(mapRes(res.messages));
+        // checkPhoto(res);
       } catch (e) {
         console.log(e);
         alertC.current.showAlert("Nie udało się załadować wiadomości.");
@@ -142,14 +148,17 @@ const MessagesList = () => {
           messagesEl.current.scrollTop = messagesEl.current.scrollHeight;
         };
         socket.current.onmessage = (object) => {
-          setData([...data, mapAnswer(JSON.parse(JSON.parse(object.data)))]);
+          setData((prevState) => [
+            ...prevState,
+            mapAnswer(JSON.parse(JSON.parse(object.data))),
+          ]);
         };
       } catch (e) {
         console.log(e);
       }
     }
     messagesEl.current.scrollTop = messagesEl.current.scrollHeight;
-  }, [data, id, mapAnswer, mapRes, user.token, user.type]);
+  }, [id, mapAnswer, mapRes, user.token, user.type]);
 
   return (
     <Container className="messagesList">
