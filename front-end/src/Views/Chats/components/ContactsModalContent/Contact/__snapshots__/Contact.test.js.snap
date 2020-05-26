@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Contact should match snapshot 1`] = `
+<div>
+  <div>
+    <div
+      class="row"
+    >
+      <div
+        class="col"
+      >
+        <h5>
+          imie
+        </h5>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col"
+      >
+        <h5>
+          nazwisko
+        </h5>
+      </div>
+      <div
+        class="col"
+      >
+        <a
+          class="float-right btn btn-primary"
+          href="/chats/undefined"
+        >
+          →
+        </a>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col"
+      >
+        <em />
+      </div>
+    </div>
+  </div>
+</div>
+`;

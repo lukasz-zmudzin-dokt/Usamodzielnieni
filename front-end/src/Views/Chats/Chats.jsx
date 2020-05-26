@@ -1,11 +1,18 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Container, Card, ListGroup, Alert } from "react-bootstrap";
+import {
+  Container,
+  Card,
+  ListGroup,
+  Alert,
+  Modal,
+  Button,
+} from "react-bootstrap";
 import { UserContext } from "context";
 import proxy from "config/api";
-import { ChatInfo } from "./components";
+import { ChatInfo, ContactsModalContent } from "./components";
 
 const getChats = async (token) => {
-  let url = `${proxy.chat}/list`; // TODO
+  let url = `${proxy.chat}`; // TODO
   const headers = {
     Authorization: "Token " + token,
     "Content-Type": "application/json",
@@ -32,6 +39,11 @@ const Chats = () => {
   const [chats, setChats] = useState([]);
   const [isChatsLoading, setIsChatsLoading] = useState(false);
   const [error, setError] = useState(false);
+
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   const user = useContext(UserContext);
 
@@ -64,6 +76,16 @@ const Chats = () => {
     <Container>
       <Card>
         <Card.Header as="h2">Najnowsze wiadomości</Card.Header>
+        <Card.Body>
+          {/* <CustomFAB /> */}
+          <Button
+            className="float-right"
+            variant="primary"
+            onClick={handleShow}
+          >
+            Nowa wiadomość
+          </Button>
+        </Card.Body>
         {msg ? (
           <Card.Body className="chats__body">{msg}</Card.Body>
         ) : (
@@ -76,6 +98,24 @@ const Chats = () => {
           </ListGroup>
         )}
       </Card>
+      <Modal
+        show={show}
+        onHide={handleClose}
+        dialogClassName="contacts-modal"
+        scrollable="true"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Wybierz osobę</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <ContactsModalContent />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Anuluj
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </Container>
   );
 };
