@@ -3,9 +3,18 @@ import { Button, Form, Modal } from "react-bootstrap";
 import { AlertContext, UserContext } from "context";
 import { StepsForm } from "../";
 import { editStep } from "./functions/editStep";
-import { loadSteps } from "Views/Steps/functions/loadSteps"
+import { loadSteps } from "Views/Steps/functions/loadSteps";
 
-const EditStep = ({ step, steps, show, handleClose, setSteps, setPath, setRoot, setError }) => {
+const EditStep = ({
+  step,
+  steps,
+  show,
+  handleClose,
+  setSteps,
+  setPath,
+  setRoot,
+  setError,
+}) => {
   const stepsTypes = ["Krok główny", "Podkrok"];
   const [type, setType] = useState(
     step?.type === "main" ? stepsTypes[0] : stepsTypes[1]
