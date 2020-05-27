@@ -262,11 +262,9 @@ export const NotificationsProvider = (props) => {
         setNotifications(
           notifications.filter((notification) => {
             const check = !ids.find((id) => notification.id === id);
-            console.log(check, notification);
             return check;
           })
         );
-        console.log(ids);
         try {
           await Promise.all(
             ids.map(async (id) => {
