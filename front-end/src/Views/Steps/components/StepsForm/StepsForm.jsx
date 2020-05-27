@@ -83,7 +83,7 @@ const StepsForm = ({
         id="stepDescription"
         required
         incorrect="Podaj opis kroku."
-        length={{min: 1, max: 1000}}
+        length={{ min: 1, max: 1000 }}
         val={newStep.description}
         setVal={(val) =>
           setNewStep({

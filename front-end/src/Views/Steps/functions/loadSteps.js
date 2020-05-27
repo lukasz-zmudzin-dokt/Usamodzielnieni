@@ -33,7 +33,7 @@ const mapSteps = (list) => {
       title: step.title,
       description: step.description,
       next: getNext(step, unpacked),
-      video: step.video?.split('=')[step.video.split('=').length - 1],
+      video: step.video?.split("=")[step.video.split("=").length - 1],
     };
   });
 };
