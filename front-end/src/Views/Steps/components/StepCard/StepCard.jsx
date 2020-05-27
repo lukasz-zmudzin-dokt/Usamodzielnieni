@@ -16,9 +16,11 @@ const StepCard = ({ step, setCurrent, wantsDelete, wantsEdit, path }) => {
           Opis kroku:
         </Card.Text>
         {step.description}
-        <Card.Text className="mt-3" as="h4" text-muted="true">
-          Akcje:
-        </Card.Text>
+        {((step.next && step.next.length > 0) || step.id === path[path.length - 1]) && 
+          <Card.Text className="mt-3" as="h4" text-muted="true">
+            Akcje:
+          </Card.Text>
+        }
         {step.next?.map((child) => (
           <Button
             variant="primary"
