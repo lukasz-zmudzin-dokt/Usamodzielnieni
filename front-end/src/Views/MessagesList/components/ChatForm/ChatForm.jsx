@@ -2,12 +2,11 @@ import React, { useState } from "react";
 import { Form, Button, InputGroup, FormControl } from "react-bootstrap";
 import sendMessageIcon from "assets/sendMessageIcon.svg";
 
-const ChatForm = ({ sendMessage }) => {
+const ChatForm = ({ sendMessage, loading }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (message !== "") {
       try {
-        //console.log(message);
         await sendMessage(message);
         setMessage("");
       } catch (e) {
@@ -26,17 +25,23 @@ const ChatForm = ({ sendMessage }) => {
   const [message, setMessage] = useState("");
 
   return (
-    <Form onSubmit={(e) => handleSubmit(e)}>
+    <Form onSubmit={(e) => handleSubmit(e)} className="m-3">
       <InputGroup className="mb-3">
         <FormControl
+          className="overflow-auto"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           onKeyDown={(e) => keyPressed(e)}
           as="textarea"
-          placeholder="Aa"
+          placeholder="Napisz wiadomość..."
         />
         <InputGroup.Append>
-          <Button type="submit" variant="light">
+          <Button
+            disabled={loading}
+            data-testid="button"
+            type="submit"
+            variant="light"
+          >
             <img src={sendMessageIcon} alt="send message" />
           </Button>
         </InputGroup.Append>

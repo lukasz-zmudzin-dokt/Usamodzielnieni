@@ -1,6 +1,5 @@
 import React from "react";
 import { Col, Container, Row } from "react-bootstrap";
-import "./style.css";
 
 import kulczyk from "assets/footer/kulczyk-foundation-logo.png";
 import pw from "assets/footer/politechnika-warszawska-logo.png";

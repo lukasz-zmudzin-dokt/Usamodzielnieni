@@ -29,9 +29,9 @@ exports[`MessagesList should match snapshot 1`] = `
           </div>
         </div>
         <span
-          class="ml-2"
+          class="ml-2 messagesList__user"
         >
-          Piotr Kowalski
+          abc
         </span>
       </h3>
       <div
@@ -39,22 +39,34 @@ exports[`MessagesList should match snapshot 1`] = `
       >
         <div
           class="messagesList__list list-group"
+        />
+      </div>
+      <form
+        class="m-3"
+      >
+        <div
+          class="mb-3 input-group"
         >
+          <textarea
+            class="overflow-auto form-control"
+            placeholder="Napisz wiadomość..."
+          />
           <div
-            class="messagesList__item messagesList__item--left list-group-item list-group-item-primary"
+            class="input-group-append"
           >
-            b
-          </div>
-          <div
-            class="messagesList__item messagesList__item--right list-group-item list-group-item-info"
-          >
-            a
+            <button
+              class="btn btn-light"
+              data-testid="button"
+              type="submit"
+            >
+              <img
+                alt="send message"
+                src="sendMessageIcon.svg"
+              />
+            </button>
           </div>
         </div>
-      </div>
-      <div>
-        ChatForm
-      </div>
+      </form>
     </div>
   </div>
 </div>

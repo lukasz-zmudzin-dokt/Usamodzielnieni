@@ -47,7 +47,12 @@
 .card-header.messagesList__header {
   position: relative;
   padding: 0.75rem 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
+
 
 @media (min-width: 768px) {
   .list-group-item.messagesList__item {

@@ -30,30 +30,20 @@ exports[`Chats should render without crashing 1`] = `
           class="list-group-item"
         >
           <div>
-             
-            Wiadomość 1
-             
+            xd
           </div>
         </div>
         <div
           class="list-group-item"
         >
           <div>
-             
-            Wiadomość 2
-             
-          </div>
-        </div>
-        <div
-          class="list-group-item"
-        >
-          <div>
-             
-            Wiadomość 3
-             
+            xd1
           </div>
         </div>
       </div>
+      <div
+        class="card-footer"
+      />
     </div>
   </div>
 </div>

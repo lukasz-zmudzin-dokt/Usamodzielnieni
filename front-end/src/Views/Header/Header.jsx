@@ -3,7 +3,6 @@ import { Nav, Navbar, NavDropdown } from "react-bootstrap";
 import { IndexLinkContainer } from "react-router-bootstrap";
 import { UserContext } from "context";
 import { logoutUser } from "./apiCalls";
-import "./style.css";
 import { Redirect, useLocation } from "react-router-dom";
 import logo from "assets/logo-white.png";
 import menu from "assets/hamburger-menu-icon.svg";
@@ -17,7 +16,7 @@ const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [logout, setLogout] = useState(false);
   const [error, setError] = useState(false);
-
+  const location = useLocation();
   const handleOpen = () => {
     setIsOpen(true);
   };
@@ -139,7 +138,11 @@ const Header = () => {
       </Nav>
     ) : (
       <Nav>
-        <Notifications location={useLocation} token={context.token} />
+        <Notifications
+          className="desktopNotifications"
+          location={location}
+          token={context.token}
+        />
         <NavDropdown
           id={"myAccDropdown"}
           title={
@@ -175,17 +178,17 @@ const Header = () => {
   );
 
   return (
-    <Navbar
-      collapseOnSelect
-      expand="lg"
-      sticky="top"
-      className="font p-3 justify-content-end"
-    >
+    <Navbar collapseOnSelect expand="lg" sticky="top" className="font p-3">
+      <Notifications
+        className="mobileNotifications"
+        location={location}
+        token={context.token}
+      />
       <Navbar.Toggle
         aria-controls="responsive-navbar-nav"
         bsPrefix="hamburger-toggle"
       >
-        <a className="hamburger-menu-text">MENU</a>
+        <p className="hamburger-menu-text">MENU</p>
         <img
           src={menu}
           id={"menu"}

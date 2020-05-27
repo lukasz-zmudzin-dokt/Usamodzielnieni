@@ -2,102 +2,144 @@ import React from "react";
 import { MemoryRouter } from "react-router-dom";
 import { render, waitForElement, fireEvent } from "@testing-library/react";
 import Chats from "Views/Chats";
-import ChatInfo from "./components/ChatInfo";
 
-jest.mock("./components/ChatInfo");
+import { ChatContext } from "context";
+
+jest.mock("./components", () => ({
+  ChatInfo: ({ chat }) => <div>{chat.first.username}</div>,
+  ContactsModalContent: () => <div>Modal</div>,
+}));
+jest.mock("components", () => ({
+  Pagination: () => <div>Pagination</div>,
+}));
 
 describe("Chats", () => {
-  let failFetch = false;
-  let apiChats = [];
-  beforeAll(() => {
-    ChatInfo.mockImplementation(({ chat }) => <div> {chat.name} </div>);
-    global.fetch = jest.fn().mockImplementation((input, init) => {
-      return new Promise((resolve, reject) => {
-        if (failFetch) {
-          resolve({ status: 500 });
-        } else if (init.method === "GET") {
-          resolve({
-            status: 200,
-            json: () => Promise.resolve(apiChats),
-          });
-        } else {
-          reject({});
-        }
-      });
-    });
-  });
+  let chatC = {
+    chats: [
+      {
+        id: "12",
+        first: { username: "xd", first_name: "czesiek", last_name: "xd" },
+        second: { username: "xd2", first_name: "czesiek2", last_name: "xd2" },
+        updated: "2020-05-25T19:22:37.720364+02:00",
+      },
+      {
+        id: "13",
+        first: { username: "xd1", first_name: "czesiek", last_name: "xd" },
+        second: { username: "xd2", first_name: "czesiek2", last_name: "xd2" },
+        updated: "2020-06-25T19:22:37.720364+02:00",
+      },
+    ],
+    error: false,
+    count: 2,
+    loadMoreMessages: jest.fn(),
+    isChatLoading: false,
+  };
 
   beforeEach(() => {
-    failFetch = false;
-    apiChats = [
-      { id: 1, name: "Wiadomość 1", user: {} },
-      { id: 2, name: "Wiadomość 2", user: {} },
-      { id: 3, name: "Wiadomość 3", user: {} },
-    ];
+    chatC = {
+      chats: [
+        {
+          id: "12",
+          first: { username: "xd", first_name: "czesiek", last_name: "xd" },
+          second: { username: "xd2", first_name: "czesiek2", last_name: "xd2" },
+          updated: "2020-05-25T19:22:37.720364+02:00",
+        },
+        {
+          id: "13",
+          first: { username: "xd1", first_name: "czesiek", last_name: "xd" },
+          second: { username: "xd2", first_name: "czesiek2", last_name: "xd2" },
+          updated: "2020-06-25T19:22:37.720364+02:00",
+        },
+      ],
+      error: false,
+      count: 2,
+      isChatsLoading: false,
+      loadMoreMessages: jest.fn(),
+    };
+
     jest.clearAllMocks();
   });
 
   it("should render without crashing", async () => {
     const { container, getByText } = render(
-      <MemoryRouter>
-        <Chats />
-      </MemoryRouter>
+      <ChatContext.Provider value={chatC}>
+        <MemoryRouter>
+          <Chats />
+        </MemoryRouter>
+      </ChatContext.Provider>
     );
 
-    await waitForElement(() => getByText("Wiadomość 1"));
+    await waitForElement(() => getByText("xd"));
 
     expect(container).toMatchSnapshot();
   });
 
   it("should render loading alert when component is waiting for api response", async () => {
-    const { getByText, queryByText } = render(
-      <MemoryRouter>
-        <Chats />
-      </MemoryRouter>
+    chatC.isChatsLoading = true;
+    chatC.chats = [];
+    const { getByText } = render(
+      <ChatContext.Provider value={chatC}>
+        <MemoryRouter>
+          <Chats />
+        </MemoryRouter>
+      </ChatContext.Provider>
     );
 
     expect(
-      getByText("Ładowanie wiadomości", { exact: false })
+      getByText("Ładowanie wiadomości.", { exact: false })
     ).toBeInTheDocument();
-    expect(queryByText("Wiadomość 1")).not.toBeInTheDocument();
-    await waitForElement(() => getByText("Wiadomość 1"));
-  });
-
-  it("should render error alert when api returns error", async () => {
-    failFetch = true;
-    const { getByText, queryByText } = render(
-      <MemoryRouter>
-        <Chats />
-      </MemoryRouter>
-    );
-
-    await waitForElement(() => getByText("Wystąpił błąd", { exact: false }));
-    expect(getByText("Wystąpił błąd", { exact: false })).toBeInTheDocument();
-    expect(queryByText("Wiadomość 1")).not.toBeInTheDocument();
   });
 
   it("should render info alert when api returns empty list", async () => {
-    apiChats = [];
+    chatC = {
+      chats: [],
+      error: false,
+      count: 0,
+      isChatsLoading: false,
+      loadMoreMessages: jest.fn(),
+    };
+
     const { getByText, queryByText } = render(
-      <MemoryRouter>
-        <Chats />
-      </MemoryRouter>
+      <ChatContext.Provider value={chatC}>
+        <MemoryRouter>
+          <Chats />
+        </MemoryRouter>
+      </ChatContext.Provider>
     );
 
     await waitForElement(() => getByText("Brak wiadomości", { exact: false }));
     expect(getByText("Brak wiadomości", { exact: false })).toBeInTheDocument();
-    expect(queryByText("Wiadomość 1")).not.toBeInTheDocument();
+    expect(queryByText("xd")).not.toBeInTheDocument();
   });
 
   it("should open contacts modal when button is clicked", async () => {
     const { getByText } = render(
-      <MemoryRouter>
-        <Chats />
-      </MemoryRouter>
+      <ChatContext.Provider value={chatC}>
+        <MemoryRouter>
+          <Chats />
+        </MemoryRouter>
+      </ChatContext.Provider>
     );
     await waitForElement(() => getByText("Nowa wiadomość"));
     fireEvent.click(getByText("Nowa wiadomość"));
 
     await waitForElement(() => getByText("Wybierz osobę"));
+  });
+
+  it("should render error alert when api returns error", async () => {
+    chatC.error = true;
+    chatC.chats = [];
+    chatC.count = 0;
+    const { getByText, queryByText } = render(
+      <ChatContext.Provider value={chatC}>
+        <MemoryRouter>
+          <Chats />
+        </MemoryRouter>
+      </ChatContext.Provider>
+    );
+
+    await waitForElement(() => getByText("Wystąpił błąd", { exact: false }));
+    expect(getByText("Wystąpił błąd", { exact: false })).toBeInTheDocument();
+    expect(queryByText("xd")).not.toBeInTheDocument();
   });
 });

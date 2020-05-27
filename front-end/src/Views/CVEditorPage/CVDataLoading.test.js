@@ -1,12 +1,17 @@
 import React from "react";
-import { render, wait, fireEvent } from "@testing-library/react";
+import {
+  render,
+  wait,
+  waitForElement,
+  fireEvent,
+} from "@testing-library/react";
 import CVEditorPage from "./CVEditorPage";
 import { Router, Route } from "react-router-dom";
 import { createMemoryHistory } from "history";
 import { UserContext } from "context/UserContext";
 import proxy from "config/api";
 import { userTypes } from "constants/userTypes";
-import { AlertContext } from "../../context/AlertContext";
+import { AlertContext } from "context/AlertContext";
 
 const renderWithRouterMatch = (
   ui,
@@ -19,6 +24,7 @@ const renderWithRouterMatch = (
   let context = {
     type: userTypes.STANDARD,
     token: "123",
+    data: {},
   };
   return {
     ...render(
@@ -32,7 +38,14 @@ const renderWithRouterMatch = (
 };
 
 describe("load cv data", () => {
-  let dataFail, feedbackFail, data, feedback, contextA;
+  let dataFail,
+    feedbackFail,
+    data,
+    feedback,
+    contextA,
+    templates,
+    templatesFail,
+    user;
   let props = {
     match: {
       params: {
@@ -50,14 +63,24 @@ describe("load cv data", () => {
           case "GET":
             if (dataFail && input === `${proxy.cv}data/123/`) {
               resolve({ status: 500 });
-            } else if (
-              input === "https://usamo-back.herokuapp.com/cv/data/123/"
-            ) {
+            } else if (!dataFail && input === proxy.cv + "data/123/") {
               resolve({ status: 200, json: () => Promise.resolve(data) });
-            } else if (feedbackFail && `${proxy.cv}admin/feedback/`) {
+            } else if (feedbackFail && input === `${proxy.cv}admin/feedback/`) {
               resolve({ status: 500 });
-            } else {
+            } else if (
+              !feedbackFail &&
+              input === `${proxy.cv}admin/feedback/`
+            ) {
               resolve({ status: 200, json: () => Promise.resolve(feedback) });
+            } else if (templatesFail && input === proxy.cv + "templates/") {
+              resolve({ status: 500 });
+            } else if (!templatesFail && input === proxy.cv + "templates/") {
+              resolve({
+                status: 200,
+                json: () => Promise.resolve({ templates: templates }),
+              });
+            } else {
+              reject({});
             }
             break;
           default:
@@ -71,11 +94,13 @@ describe("load cv data", () => {
     jest.clearAllMocks();
     dataFail = false;
     feedbackFail = false;
+    templatesFail = false;
     data = {
       has_photo: false,
       is_verified: false,
       was_reviewed: false,
       cv_id: 123,
+      template: "mistyrose",
       basic_info: {
         date_of_birth: "14-5-2020",
         email: "dsfsdf@gsddf.fd",
@@ -106,6 +131,7 @@ describe("load cv data", () => {
       ],
     };
     feedback = {
+      cv_id: 123,
       basic_info: "dane osobowe ok",
       schools: "dd",
       experiences: "pracy bra",
@@ -116,6 +142,12 @@ describe("load cv data", () => {
     contextA = {
       showAlert: jest.fn(),
     };
+    user = {
+      token: 123,
+      type: userTypes.STANDARD,
+      data: {},
+    };
+    templates = ["qwe", "asd", "zxc"];
   });
 
   it("should load correct data on personal tab", async () => {
@@ -155,7 +187,7 @@ describe("load cv data", () => {
       </AlertContext.Provider>
     );
 
-    await wait(() => expect(fetch).toHaveBeenCalledTimes(2));
+    await wait(() => expect(fetch).toHaveBeenCalledTimes(4));
 
     expect(getByLabelText("Imię:").value).toBe("Jan");
     expect(getByText("dane osobowe ok")).toBeInTheDocument();
@@ -199,7 +231,7 @@ describe("load cv data", () => {
       </AlertContext.Provider>
     );
 
-    await wait(() => expect(fetch).toHaveBeenCalledTimes(2));
+    await wait(() => expect(fetch).toHaveBeenCalledTimes(4));
     expect(contextA.showAlert).toHaveBeenCalledWith(
       "Nie udało się załadować uwag."
     );
@@ -213,22 +245,19 @@ describe("load cv data", () => {
       </AlertContext.Provider>
     );
 
-    await wait(() => expect(fetch).toHaveBeenCalled());
+    await wait(() => expect(fetch).toHaveBeenCalledTimes(3));
 
     fireEvent.change(getByLabelText("Imię:"), { target: { value: "janusz" } });
     fireEvent.click(getByText("Zapisz zmiany i generuj CV"));
 
-    expect(fetch).toHaveBeenCalledWith(
-      "https://usamo-back.herokuapp.com/cv/data/123/",
-      {
-        body:
-          '{"basic_info":{"first_name":"janusz","last_name":"dsfdsfs","date_of_birth":"14-5-2020","phone_number":"+48123456789","email":"dsfsdf@gsddf.fd"},"schools":[{"year_start":2019,"year_end":2019,"name":"asdasdsad","additional_info":"sadasdas"}],"experiences":[],"skills":[{"description":"taniec"},{"description":"śpiew"}],"languages":[{"name":"angielski","level":"A2"},{"name":"niemiecki","level":"biegły"}]}',
-        headers: {
-          Authorization: "Token 123",
-          "Content-Type": "application/json",
-        },
-        method: "PUT",
-      }
-    );
+    expect(fetch).toHaveBeenCalledWith(proxy.cv + "data/123/", {
+      body:
+        '{"template":"mistyrose","basic_info":{"first_name":"janusz","last_name":"dsfdsfs","date_of_birth":"14-5-2020","phone_number":"+48123456789","email":"dsfsdf@gsddf.fd"},"schools":[{"year_start":2019,"year_end":2019,"name":"asdasdsad","additional_info":"sadasdas"}],"experiences":[],"skills":[{"description":"taniec"},{"description":"śpiew"}],"languages":[{"name":"angielski","level":"A2"},{"name":"niemiecki","level":"biegły"}]}',
+      headers: {
+        Authorization: "Token 123",
+        "Content-Type": "application/json",
+      },
+      method: "PUT",
+    });
   });
 });

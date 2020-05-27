@@ -1,6 +1,5 @@
 import React from "react";
 import { Button, ButtonGroup } from "react-bootstrap";
-import "Views/Header/style.css";
 
 const NotificationItemContainer = ({
   notification,
