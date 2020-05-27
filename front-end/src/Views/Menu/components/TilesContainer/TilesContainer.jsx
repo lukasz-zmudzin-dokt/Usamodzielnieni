@@ -1,11 +1,11 @@
-import React, {useState, useEffect, useContext, useRef} from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { Alert, Button } from "react-bootstrap";
 import { Tile } from "../";
 import proxy from "config/api";
 import { UserContext } from "context/UserContext";
 import { staffTypes } from "constants/staffTypes";
 import NewTileForm from "../NewTileForm/NewTileForm";
-import {AlertContext} from "../../../../context/AlertContext";
+import { AlertContext } from "../../../../context/AlertContext";
 
 const tmpTiles = [
   {
@@ -164,7 +164,7 @@ const TilesContainer = () => {
       newTileList[idx] = newTile;
       setTiles(newTileList);
     } else {
-      setTiles(tiles => [...tiles, newTile]);
+      setTiles((tiles) => [...tiles, newTile]);
     }
   };
 
@@ -174,43 +174,45 @@ const TilesContainer = () => {
     setTiles(newTiles);
   };
 
-  return msg || (
-    <div className="tilesGrid__container">
-      <div className="tilesGrid">
-        {tiles.map((tile) => (
-          <Tile
-            key={tile.id}
-            id={tile.id}
-            color={tile.color}
-            imageUrl={tile.imageUrl || ""}
-            showImage={tile.show}
-            title={tile.title}
-            destination={tile.destination}
-            user={user}
-            cutTile={cutTile}
-            appendTile={appendTile}
-          />
-        ))}
-        {user?.data?.group_type?.includes(staffTypes.BLOG_MODERATOR) && (
-          <>
-            <Button
-              variant="primary"
-              size="lg"
-              block
-              onClick={() => setShow(true)}
-            >
-              Dodaj kafelek
-            </Button>
-            <NewTileForm
-              show={showModal}
-              setShow={setShow}
+  return (
+    msg || (
+      <div className="tilesGrid__container">
+        <div className="tilesGrid">
+          {tiles.map((tile) => (
+            <Tile
+              key={tile.id}
+              id={tile.id}
+              color={tile.color}
+              imageUrl={tile.imageUrl || ""}
+              showImage={tile.show}
+              title={tile.title}
+              destination={tile.destination}
               user={user}
+              cutTile={cutTile}
               appendTile={appendTile}
             />
-          </>
-        )}
+          ))}
+          {user?.data?.group_type?.includes(staffTypes.BLOG_MODERATOR) && (
+            <>
+              <Button
+                variant="primary"
+                size="lg"
+                block
+                onClick={() => setShow(true)}
+              >
+                Dodaj kafelek
+              </Button>
+              <NewTileForm
+                show={showModal}
+                setShow={setShow}
+                user={user}
+                appendTile={appendTile}
+              />
+            </>
+          )}
+        </div>
       </div>
-    </div>
+    )
   );
 };
 

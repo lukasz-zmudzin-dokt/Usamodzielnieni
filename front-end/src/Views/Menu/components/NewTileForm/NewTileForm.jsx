@@ -74,7 +74,7 @@ const postPhoto = async (token, id, photo) => {
 const mapPosts = (posts) => {
   return posts.map((item) => ({
     id: "/blog/blogpost/" + item.id,
-    name: item.title + " (Kategoria: " + item.category + ")"
+    name: item.title + " (Kategoria: " + item.category + ")",
   }));
 };
 
@@ -178,7 +178,8 @@ const NewTileForm = ({ show, setShow, user, appendTile, tileData }) => {
       try {
         const res = await addTile(user.token, data, method, tileId);
         setTileId(res.id);
-        !tileData && await postPhoto(user.token, res.id, fileInput.current.files[0]);
+        !tileData &&
+          (await postPhoto(user.token, res.id, fileInput.current.files[0]));
         alertContext.current.showAlert("Kafelek dodany pomyślnie.", "success");
         appendTile({
           id: res.id || tileId,
