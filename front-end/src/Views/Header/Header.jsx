@@ -16,7 +16,7 @@ const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [logout, setLogout] = useState(false);
   const [error, setError] = useState(false);
-
+  const location = useLocation();
   const handleOpen = () => {
     setIsOpen(true);
   };
@@ -140,7 +140,7 @@ const Header = () => {
       <Nav>
         <Notifications
           className="desktopNotifications"
-          location={useLocation}
+          location={location}
           token={context.token}
         />
         <NavDropdown
@@ -181,7 +181,7 @@ const Header = () => {
     <Navbar collapseOnSelect expand="lg" sticky="top" className="font p-3">
       <Notifications
         className="mobileNotifications"
-        location={useLocation}
+        location={location}
         token={context.token}
       />
       <Navbar.Toggle

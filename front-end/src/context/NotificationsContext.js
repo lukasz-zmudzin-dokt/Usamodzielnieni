@@ -247,6 +247,40 @@ export const NotificationsProvider = (props) => {
         return;
       }
     },
+    deleteNotificationsArray: async (ids) => {
+      const notificationsToRemove = notifications.filter((notification) =>
+        ids.find((id) => notification.id === id)
+      );
+      if (notificationsToRemove.length > 0) {
+        let unreadCount = 0;
+        notificationsToRemove.forEach((not) => {
+          unreadCount += not.unread ? 1 : 0;
+        });
+        if (unreadCount && count > 0) {
+          setCount((prev) => Math.max(prev - unreadCount, 0));
+        }
+        setNotifications(
+          notifications.filter((notification) => {
+            const check = !ids.find((id) => notification.id === id);
+            console.log(check, notification);
+            return check;
+          })
+        );
+        console.log(ids);
+        try {
+          await Promise.all(
+            ids.map(async (id) => {
+              await deleteNotification(user.token, id);
+            })
+          );
+        } catch (e) {
+          if (e !== 404) {
+            setError(true);
+          }
+          return;
+        }
+      }
+    },
     loadMoreNotifications: async () => {
       setNext(null);
       let res;
