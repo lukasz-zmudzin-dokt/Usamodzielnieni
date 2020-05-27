@@ -160,6 +160,16 @@ const Header = () => {
               MÓJ PROFIL
             </NavDropdown.Item>
           </IndexLinkContainer>
+            <IndexLinkContainer to={paths.CHATS}>
+                <NavDropdown.Item className="account-dropdown-button white">
+                    CHAT
+                </NavDropdown.Item>
+            </IndexLinkContainer>
+            <IndexLinkContainer to={paths.STEPS}>
+                <NavDropdown.Item className="account-dropdown-button white">
+                    KROKI USAMODZIELNIENIA
+                </NavDropdown.Item>
+            </IndexLinkContainer>
           {accountDropdownNav}
         </NavDropdown>
         <Nav.Link
