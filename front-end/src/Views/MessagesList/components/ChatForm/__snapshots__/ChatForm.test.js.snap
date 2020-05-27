@@ -3,20 +3,21 @@
 exports[`chat form tests should render without crashing 1`] = `
 <div>
   <form
-    class=""
+    class="m-3"
   >
     <div
       class="mb-3 input-group"
     >
       <textarea
-        class="form-control"
-        placeholder="Aa"
+        class="overflow-auto form-control"
+        placeholder="Napisz wiadomość..."
       />
       <div
         class="input-group-append"
       >
         <button
           class="btn btn-light"
+          data-testid="button"
           type="submit"
         >
           <img

@@ -26,8 +26,8 @@ const getContacts = async (token, filters) => {
   }
 };
 
-const mapContacts = (contacts) =>
-  contacts.map((contact) => ({
+const mapContacts = (contacts) => {
+  return contacts.map((contact) => ({
     data: {
       username: contact.username,
       first_name: contact.first_name,
@@ -36,6 +36,7 @@ const mapContacts = (contacts) =>
       picture_url: contact.picture_url,
     },
   }));
+};
 
 const ContactsModalContent = () => {
   const [contacts, setContacts] = useState([]);
@@ -55,6 +56,7 @@ const ContactsModalContent = () => {
       let loadedContacts;
       try {
         loadedContacts = await getContacts(token, filters);
+        console.log(loadedContacts);
       } catch (e) {
         loadedContacts = [];
         setError(true);
@@ -88,7 +90,7 @@ const ContactsModalContent = () => {
       ) : (
         <ListGroup variant="flush">
           {contacts.map((contact) => (
-            <ListGroup.Item key={contact.username}>
+            <ListGroup.Item key={contact.data.username}>
               <Contact contact={contact} />
             </ListGroup.Item>
           ))}

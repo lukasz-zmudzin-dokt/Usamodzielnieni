@@ -4,45 +4,42 @@ exports[`Contact should match snapshot 1`] = `
 <div>
   <div>
     <div
-      class="row"
+      class="align-items-center row"
     >
+      <div
+        class="align-self-start"
+      >
+        <div
+          class="userPicture__container"
+        >
+          <div
+            class="userPicture userPicture--standard"
+          >
+            <span>
+              in
+            </span>
+          </div>
+        </div>
+      </div>
       <div
         class="col"
       >
         <h5>
           imie
         </h5>
-      </div>
-    </div>
-    <div
-      class="row"
-    >
-      <div
-        class="col"
-      >
         <h5>
           nazwisko
         </h5>
+        <em>
+          gościu
+        </em>
       </div>
-      <div
-        class="col"
+      <a
+        class="float-right btn btn-primary"
+        href="/chats/undefined"
       >
-        <a
-          class="float-right btn btn-primary"
-          href="/chats/undefined"
-        >
-          →
-        </a>
-      </div>
-    </div>
-    <div
-      class="row"
-    >
-      <div
-        class="col"
-      >
-        <em />
-      </div>
+        →
+      </a>
     </div>
   </div>
 </div>

@@ -1,6 +1,11 @@
 import React from "react";
 import { BrowserRouter } from "react-router-dom";
-import { UserProvider, AlertProvider, NotificationsProvider } from "context";
+import {
+  UserProvider,
+  AlertProvider,
+  NotificationsProvider,
+  ChatProvider,
+} from "context";
 import Router from "root/Router";
 import { AlertsContainer, ScrollToTop } from "components";
 import Header from "Views/Header";
@@ -10,17 +15,19 @@ const App = () => {
   return (
     <UserProvider>
       <AlertProvider>
-        <NotificationsProvider>
-          <BrowserRouter>
-            <Header />
-            <ScrollToTop />
-            <div className="center-container">
-              <Router />
-              <AlertsContainer />
-            </div>
-            <Footer />
-          </BrowserRouter>
-        </NotificationsProvider>
+        <ChatProvider>
+          <NotificationsProvider>
+            <BrowserRouter>
+              <Header />
+              <ScrollToTop />
+              <div className="center-container">
+                <Router />
+                <AlertsContainer />
+              </div>
+              <Footer />
+            </BrowserRouter>
+          </NotificationsProvider>
+        </ChatProvider>
       </AlertProvider>
     </UserProvider>
   );
