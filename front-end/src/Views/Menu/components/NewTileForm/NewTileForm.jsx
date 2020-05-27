@@ -223,29 +223,29 @@ const NewTileForm = ({ show, setShow, user, appendTile, tileData }) => {
           <Form.Group controlId="path">
             <Form.Label>Ścieżka do kafelka</Form.Label>
             <Form.Control
-                as="select"
-                value={path}
-                onChange={(v) => setPath(v.target.value)}
-                required
+              as="select"
+              value={path}
+              onChange={(v) => setPath(v.target.value)}
+              required
             >
               {pathArray.map((val) => (
-                  <option key={val.id} value={val.id}>
-                    {val.name}
-                  </option>
+                <option key={val.id} value={val.id}>
+                  {val.name}
+                </option>
               ))}
             </Form.Control>
           </Form.Group>
           <Form.Group controlId="custom-file">
             <Form.Label>Zdjęcie kafelka</Form.Label>
             <Form.File
-                className="text-nowrap text-truncate"
-                ref={fileInput}
-                custom
-                onChange={onChange}
-                label={label || "Dodaj zdjęcie..."}
-                accept="image/*"
-                data-browse="Wybierz plik"
-                required={!tileData}
+              className="text-nowrap text-truncate"
+              ref={fileInput}
+              custom
+              onChange={onChange}
+              label={label || "Dodaj zdjęcie..."}
+              accept="image/*"
+              data-browse="Wybierz plik"
+              required={!tileData}
             />
             <Form.Control.Feedback type="invalid">
               Podaj zdjęcie kafelka

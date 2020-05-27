@@ -2,7 +2,7 @@ import React from "react";
 import { render, wait } from "@testing-library/react";
 import TilesContainer from "./TilesContainer";
 import { Tile } from "../";
-import {AlertContext} from "context/AlertContext";
+import { AlertContext } from "context/AlertContext";
 
 jest.mock("../");
 
@@ -49,16 +49,16 @@ describe("TilesContainer", () => {
       },
     ];
     alertC = {
-      showAlert: jest.fn()
+      showAlert: jest.fn(),
     };
   });
 
   it("should render without crashing", async () => {
     const { container, getByText } = render(
-        <AlertContext.Provider value={alertC}>
-          <TilesContainer />
-        </AlertContext.Provider>
-        );
+      <AlertContext.Provider value={alertC}>
+        <TilesContainer />
+      </AlertContext.Provider>
+    );
 
     //expect(getByText("Ładowanie menu...")).toBeInTheDocument();
     await wait(() => getByText("Telefon zaufania"));
@@ -69,13 +69,15 @@ describe("TilesContainer", () => {
   it("should render error alert when api fails", async () => {
     apiShouldFail = true;
     const { getAllByText } = render(
-        <AlertContext.Provider value={alertC}>
-          <TilesContainer />
-        </AlertContext.Provider>
+      <AlertContext.Provider value={alertC}>
+        <TilesContainer />
+      </AlertContext.Provider>
     );
 
     await wait(() => expect(fetch).toHaveBeenCalled());
-    expect(alertC.showAlert).toHaveBeenCalledWith("Wystąpił błąd podczas pobierania menu.");
+    expect(alertC.showAlert).toHaveBeenCalledWith(
+      "Wystąpił błąd podczas pobierania menu."
+    );
     //expect(getAllByText("Warsztaty")).toBeInTheDocument();
   });
 });
