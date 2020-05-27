@@ -30,13 +30,13 @@ const EditStep = ({
       setNewStep({
         title: step?.title,
         description: step?.description,
-        video: "",
+        video: step?.video? "https://www.youtube.com/watch?v=" + step.video : "",
       });
     } else {
       setNewStep({
         title: step?.title,
         description: step?.description,
-        video: "",
+        video: step?.video? "https://www.youtube.com/watch?v=" + step.video : "",
       });
     }
     setType(step?.type === "main" ? stepsTypes[0] : stepsTypes[1]);

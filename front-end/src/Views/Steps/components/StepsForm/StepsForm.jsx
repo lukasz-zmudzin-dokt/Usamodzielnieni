@@ -67,6 +67,7 @@ const StepsForm = ({
         type="text"
         header="Film (link youtube)"
         id="stepVideo"
+        required
         val={newStep.video || ""}
         setVal={(val) =>
           setNewStep({
@@ -82,6 +83,7 @@ const StepsForm = ({
         id="stepDescription"
         required
         incorrect="Podaj opis kroku."
+        length={{min: 1, max: 1000}}
         val={newStep.description}
         setVal={(val) =>
           setNewStep({
