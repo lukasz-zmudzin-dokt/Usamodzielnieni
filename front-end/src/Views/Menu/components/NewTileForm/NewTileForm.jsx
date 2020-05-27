@@ -178,7 +178,7 @@ const NewTileForm = ({ show, setShow, user, appendTile, tileData }) => {
       try {
         const res = await addTile(user.token, data, method, tileId);
         setTileId(res.id);
-        !tileData &&
+        tileData?.imageUrl !== photoB64 &&
           (await postPhoto(user.token, res.id, fileInput.current.files[0]));
         alertContext.current.showAlert("Kafelek dodany pomyślnie.", "success");
         appendTile({
@@ -220,35 +220,37 @@ const NewTileForm = ({ show, setShow, user, appendTile, tileData }) => {
             incorrect="Tytuł kafelka nie może być pusty"
             required
           />
-          <Form.Label>Ścieżka do kafelka</Form.Label>
-          <Form.Control
-            as="select"
-            value={path}
-            id="path"
-            onChange={(v) => setPath(v.target.value)}
-            required
-          >
-            {pathArray.map((val) => (
-              <option key={val.id} value={val.id}>
-                {val.name}
-              </option>
-            ))}
-          </Form.Control>
-          <Form.Label>Zdjęcie kafelka</Form.Label>
-          <Form.File
-            className="text-nowrap text-truncate"
-            id="custom-file"
-            ref={fileInput}
-            custom
-            onChange={onChange}
-            label={label || "Dodaj zdjęcie..."}
-            accept="image/*"
-            data-browse="Wybierz plik"
-            required={!tileData}
-          />
-          <Form.Control.Feedback type="invalid">
-            Podaj zdjęcie kafelka
-          </Form.Control.Feedback>
+          <Form.Group controlId="path">
+            <Form.Label>Ścieżka do kafelka</Form.Label>
+            <Form.Control
+                as="select"
+                value={path}
+                onChange={(v) => setPath(v.target.value)}
+                required
+            >
+              {pathArray.map((val) => (
+                  <option key={val.id} value={val.id}>
+                    {val.name}
+                  </option>
+              ))}
+            </Form.Control>
+          </Form.Group>
+          <Form.Group controlId="custom-file">
+            <Form.Label>Zdjęcie kafelka</Form.Label>
+            <Form.File
+                className="text-nowrap text-truncate"
+                ref={fileInput}
+                custom
+                onChange={onChange}
+                label={label || "Dodaj zdjęcie..."}
+                accept="image/*"
+                data-browse="Wybierz plik"
+                required={!tileData}
+            />
+            <Form.Control.Feedback type="invalid">
+              Podaj zdjęcie kafelka
+            </Form.Control.Feedback>
+          </Form.Group>
           <CheckBoxList overlay={imgOverFlow} setOverlay={setImgOverflow} />
           <Row>
             <Col>

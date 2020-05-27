@@ -5,7 +5,7 @@ import proxy from "config/api";
 import { UserContext } from "context/UserContext";
 import { staffTypes } from "constants/staffTypes";
 import NewTileForm from "../NewTileForm/NewTileForm";
-import { AlertContext } from "../../../../context/AlertContext";
+import { AlertContext } from "context/AlertContext";
 
 const tmpTiles = [
   {
