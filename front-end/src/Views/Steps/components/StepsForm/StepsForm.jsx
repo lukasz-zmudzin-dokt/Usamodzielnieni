@@ -69,7 +69,7 @@ const StepsForm = ({
         id="stepVideo"
         required
         val={newStep?.video || ""}
-        length={{min: 1, max: 100}}
+        length={{ min: 1, max: 100 }}
         setVal={(val) =>
           setNewStep({
             ...newStep,
