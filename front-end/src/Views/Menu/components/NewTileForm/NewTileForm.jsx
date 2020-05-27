@@ -14,6 +14,8 @@ import { toBase64 } from "utils/converters/fileToBase64";
 import CheckBoxList from "./CheckBoxList";
 import { approveFileSize } from "utils/approveFile/approveFile";
 import proxy from "config/api";
+import menuPositions from "constants/menuPositions";
+import {userTypes} from "constants/userTypes";
 const ColorPicker = React.lazy(() =>
   import("components/ColorPicker/ColorPicker")
 );
@@ -74,7 +76,7 @@ const postPhoto = async (token, id, photo) => {
 const mapPosts = (posts) => {
   return posts.map((item) => ({
     id: "/blog/blogpost/" + item.id,
-    name: item.title + " (Kategoria: " + item.category + ")",
+    name: "*Post* " + item.title + " (Kategoria: " + item.category + ")",
   }));
 };
 
@@ -100,11 +102,15 @@ const NewTileForm = ({ show, setShow, user, appendTile, tileData }) => {
 
   useEffect(() => {
     setLoading(true);
+    let paths = menuPositions.filter((item) => !item.allowed || item.allowed?.includes(userTypes.STANDARD));
+    paths = paths.map((item) => ({
+      id: item.path,
+      name: item.name
+    }));
     const loadPostList = async () => {
       let res;
       try {
         res = await fetchPosts();
-        setPath(res[0].id);
       } catch (e) {
         console.log(e);
         alertContext.current.showAlert(
@@ -112,7 +118,8 @@ const NewTileForm = ({ show, setShow, user, appendTile, tileData }) => {
         );
         res = [];
       }
-      setPathArray(res);
+      setPathArray([...paths, ...res]);
+      setPath(pathArray[0]);
       if (tileData) {
         const { id, title, color, show, imageUrl, destination } = tileData;
         setTileId(id);
