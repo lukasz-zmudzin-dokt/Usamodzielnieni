@@ -9,4 +9,5 @@ export { default as AlertMessage } from "./AlertMessage";
 export { default as AlertsContainer } from "./AlertsContainer";
 export { default as withAlertContext } from "./withAlertContext";
 export { default as Pagination } from "./Pagination";
+export { default as ScrollToTop } from "./ScrollToTop";
 export { DetailsItem, UserPicture, DeletionModal, VideoField, Player };
