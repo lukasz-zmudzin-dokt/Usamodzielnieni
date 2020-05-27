@@ -45,14 +45,14 @@ const mapLanguages = (data) =>
 
 const mapDate = (date) => {
   if (date !== null) {
-    const val = date.split("-");
+    const val = date.split(".");
     return new Date(val[1], val[0] - 1, 0);
   }
   return undefined;
 };
 
 const mapBirthDate = (date) => {
-  const dateArray = date.split("-");
+  const dateArray = date.split(".");
   return new Date(dateArray[2], dateArray[1] - 1, dateArray[0]);
 };
 

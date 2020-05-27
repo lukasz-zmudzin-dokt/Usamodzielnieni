@@ -3,7 +3,7 @@
 exports[`createCVObject should create cv object 1`] = `
 Object {
   "basic_info": Object {
-    "date_of_birth": "4-11-2000",
+    "date_of_birth": "4.11.2000",
     "email": "jan.kowalski@mail.com",
     "first_name": "Jan",
     "last_name": "Kowalski",
@@ -11,8 +11,8 @@ Object {
   },
   "experiences": Array [
     Object {
-      "date_end": "06-2003",
-      "date_start": "05-2002",
+      "date_end": "06.2003",
+      "date_start": "05.2002",
       "description": "Jakiś opis",
       "title": "Warszawa",
     },
@@ -26,8 +26,8 @@ Object {
   "schools": Array [
     Object {
       "additional_info": "Jakiś opis",
-      "date_end": "06-2003",
-      "date_start": "05-2002",
+      "date_end": "06.2003",
+      "date_start": "05.2002",
       "name": "Warszawa",
     },
   ],
@@ -42,7 +42,7 @@ Object {
 exports[`createCVObject should create cv object when education endTime is undefined 1`] = `
 Object {
   "basic_info": Object {
-    "date_of_birth": "4-11-2000",
+    "date_of_birth": "4.11.2000",
     "email": "jan.kowalski@mail.com",
     "first_name": "Jan",
     "last_name": "Kowalski",
@@ -50,8 +50,8 @@ Object {
   },
   "experiences": Array [
     Object {
-      "date_end": "06-2003",
-      "date_start": "05-2002",
+      "date_end": "06.2003",
+      "date_start": "05.2002",
       "description": "Jakiś opis",
       "title": "Warszawa",
     },
@@ -66,7 +66,7 @@ Object {
     Object {
       "additional_info": "Jakiś opis",
       "date_end": undefined,
-      "date_start": "05-2002",
+      "date_start": "05.2002",
       "name": "Warszawa",
     },
   ],
@@ -81,7 +81,7 @@ Object {
 exports[`createCVObject should create cv object when workExperience endTime is undefined 1`] = `
 Object {
   "basic_info": Object {
-    "date_of_birth": "4-11-2000",
+    "date_of_birth": "4.11.2000",
     "email": "jan.kowalski@mail.com",
     "first_name": "Jan",
     "last_name": "Kowalski",
@@ -90,7 +90,7 @@ Object {
   "experiences": Array [
     Object {
       "date_end": undefined,
-      "date_start": "05-2002",
+      "date_start": "05.2002",
       "description": "Jakiś opis",
       "title": "Warszawa",
     },
@@ -104,8 +104,8 @@ Object {
   "schools": Array [
     Object {
       "additional_info": "Jakiś opis",
-      "date_end": "06-2003",
-      "date_start": "05-2002",
+      "date_end": "06.2003",
+      "date_start": "05.2002",
       "name": "Warszawa",
     },
   ],

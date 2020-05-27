@@ -1,10 +1,12 @@
+const getMonthString = (month) => (month < 9 ? `0${month + 1}` : month + 1);
 const mapDate = (date) =>
-  date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
+  date.getDate() +
+  "." +
+  getMonthString(date.getMonth()) +
+  "." +
+  date.getFullYear();
 const mapMonthDate = (date) =>
-  date &&
-  (date.getMonth() < 9 ? `0${date.getMonth() + 1}` : date.getMonth() + 1) +
-    "-" +
-    date.getFullYear();
+  date && getMonthString(date.getMonth()) + "." + date.getFullYear();
 
 const mapPersonalData = (personalData) => ({
   first_name: personalData.firstName,

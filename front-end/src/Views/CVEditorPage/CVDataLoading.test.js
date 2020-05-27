@@ -102,7 +102,7 @@ describe("load cv data", () => {
       cv_id: 123,
       template: "mistyrose",
       basic_info: {
-        date_of_birth: "14-5-2020",
+        date_of_birth: "14.05.2020",
         email: "dsfsdf@gsddf.fd",
         first_name: "Jan",
         last_name: "dsfdsfs",
@@ -113,8 +113,8 @@ describe("load cv data", () => {
         {
           additional_info: "sadasdas",
           name: "asdasdsad",
-          date_end: "01-2020",
-          date_start: "12-2020",
+          date_end: "01.2020",
+          date_start: "12.2020",
         },
       ],
       experiences: [],
@@ -252,7 +252,7 @@ describe("load cv data", () => {
 
     expect(fetch).toHaveBeenCalledWith(proxy.cv + "data/123/", {
       body:
-        '{"template":"mistyrose","basic_info":{"first_name":"janusz","last_name":"dsfdsfs","date_of_birth":"14-5-2020","phone_number":"+48123456789","email":"dsfsdf@gsddf.fd"},"schools":[{"date_start":"01-2019","date_end":"12-2019","name":"asdasdsad","additional_info":"sadasdas"}],"experiences":[],"skills":[{"description":"taniec"},{"description":"śpiew"}],"languages":[{"name":"angielski","level":"A2"},{"name":"niemiecki","level":"biegły"}]}',
+        '{"template":"mistyrose","basic_info":{"first_name":"janusz","last_name":"dsfdsfs","date_of_birth":"14.05.2020","phone_number":"+48123456789","email":"dsfsdf@gsddf.fd"},"schools":[{"date_start":"01.2019","date_end":"12.2019","name":"asdasdsad","additional_info":"sadasdas"}],"experiences":[],"skills":[{"description":"taniec"},{"description":"śpiew"}],"languages":[{"name":"angielski","level":"A2"},{"name":"niemiecki","level":"biegły"}]}',
       headers: {
         Authorization: "Token 123",
         "Content-Type": "application/json",
