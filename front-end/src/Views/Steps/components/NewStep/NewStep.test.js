@@ -163,6 +163,11 @@ describe("NewStep", () => {
         value: "siema",
       },
     });
+    fireEvent.change(getByLabelText("Film (link youtube)"), {
+      target: {
+        value: "https://www.youtube.com/watch?v=JRz2FU3jUzA",
+      },
+    });
 
     fireEvent.click(getByText("Dodaj krok"));
 

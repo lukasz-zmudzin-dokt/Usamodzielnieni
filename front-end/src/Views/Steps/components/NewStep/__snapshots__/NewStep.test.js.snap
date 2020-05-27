@@ -134,6 +134,7 @@ exports[`NewStep should match snapshot(step) 1`] = `
               maxlength="50"
               minlength="1"
               placeholder="Film (link youtube)"
+              required=""
               type="text"
               value=""
             />
@@ -150,7 +151,7 @@ exports[`NewStep should match snapshot(step) 1`] = `
             <textarea
               class="offerForm__textarea form-control"
               id="stepDescription"
-              maxlength="50"
+              maxlength="1000"
               minlength="1"
               placeholder="Wpisz treść... "
               required=""
