@@ -103,6 +103,19 @@
       max-width: calc((4 * var(--tiles-gap)) + (3 * var(--tile-width)));
       padding: var(--tiles-gap) 0 0 var(--tiles-gap);
       background-color: #fff;
+      .tile__button {
+        &__container {
+          position: absolute;
+          z-index: 1;
+          right: 0;
+        }
+        &__edit {
+          margin-right: 0.25rem;
+        }
+        &__delete {
+          margin-left: 0.25rem;
+        }
+      }
       .tile__container {
         display: flex;
         flex: 1 0 auto;
@@ -160,21 +173,6 @@
             span {
               text-align: center;
               line-height: calc(0.8rem + (0.8 * var(--tile-unit)));
-            }
-          }
-          .tile__button {
-            &__container {
-              grid-area: bg-top;
-              z-index: 10;
-              position: absolute;
-              right: var(--tile-width);
-              height: calc(10% * var(--tile-height));
-            }
-            &__edit {
-              margin-right: 0.25rem;
-            }
-            &__delete {
-              margin-left: 0.25rem;
             }
           }
           .tile__border {

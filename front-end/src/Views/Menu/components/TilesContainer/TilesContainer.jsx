@@ -130,11 +130,9 @@ const mapTiles = (tiles) =>
     color: tile.color,
     show: tile.photo_layer,
     imageUrl: tile.photo,
-    destination: mapDestination(tile.destination),
+    destination: proxy.plain + tile.destination,
     // TODO
   }));
-
-const mapDestination = (destination) => destination; // TODO
 
 const TilesContainer = () => {
   const [tiles, setTiles] = useState([]);
@@ -174,6 +172,12 @@ const TilesContainer = () => {
     }
   };
 
+  const cutTile = (oldTile) => {
+    const newTileList = [...tiles];
+    newTileList.filter((tile) => tile.id !== oldTile.id);
+    setTiles(newTileList);
+  };
+
   return (
     <div className="tilesGrid__container">
       <div className="tilesGrid">
@@ -186,6 +190,7 @@ const TilesContainer = () => {
             title={tile.title}
             destination={tile.destination}
             user={user}
+            cutTile={cutTile}
           />
         ))}
         {user?.data?.group_type?.includes(staffTypes.BLOG_MODERATOR) && (
@@ -196,7 +201,7 @@ const TilesContainer = () => {
               block
               onClick={() => setShow(true)}
             >
-              Dupnij kafla
+              Dodaj kafelek
             </Button>
             <NewTileForm
               show={showModal}
