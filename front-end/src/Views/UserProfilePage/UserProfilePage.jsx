@@ -20,6 +20,7 @@ const names = {
     lastName: "Nazwisko",
     email: "E-mail",
     phoneNumber: "Numer telefonu",
+    chat_role: "Rola na czacie",
   },
 };
 
@@ -33,6 +34,7 @@ class UserProfilePage extends React.Component {
         firstName: "",
         lastName: "",
         email: "",
+        chat_role: null,
       },
       error: false,
     };
@@ -52,6 +54,7 @@ class UserProfilePage extends React.Component {
           lastName: res.data.last_name,
           email: res.data.email,
           role: res.type,
+          chat_role: res.data.role,
         },
       });
     } catch (res) {

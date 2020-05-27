@@ -6,11 +6,16 @@ exports[`CVEditorTab should render without crashing 1`] = `
     <h3>
       Tytuł karty
     </h3>
-    <img
-      alt=""
-      class="CVEditorTab__img"
-      src="./ścieżka_do_pliku.png"
-    />
+    <div
+      class="CVEditor__videoContainer"
+    >
+      <div
+        class="fade alert alert-info show"
+        role="alert"
+      >
+        Ładowanie...
+      </div>
+    </div>
     <div
       class="fade alert alert-success show"
       role="alert"

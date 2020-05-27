@@ -44,12 +44,7 @@ const DeleteAccountButton = ({ user }) => {
 
   return (
     <>
-      <Button
-        className="my-2"
-        variant="danger"
-        onClick={onButtonClick}
-        disabled={disabled}
-      >
+      <Button variant="danger" onClick={onButtonClick} disabled={disabled}>
         {disabled ? "Ładowanie..." : "Usuń konto"}
       </Button>
       <DeletionModal

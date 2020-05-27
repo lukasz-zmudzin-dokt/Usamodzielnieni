@@ -1,0 +1,171 @@
+.font {
+  font-family: "MonoType", serif;
+  font-size: 16px;
+}
+.register-color {
+  background-color: #42b4a8;
+}
+.login-color {
+  background-color: #4f74c6;
+}
+.notification-color {
+  background-color: #ff884d;
+}
+.notification-color-light {
+  background-color: #ffbb99 !important;
+}
+.white {
+  color: white !important;
+}
+.dropdown-menu {
+  border-style: none;
+  margin: 0;
+  padding: 0;
+}
+.notifications-button {
+  min-width: 65px;
+  img {
+    height: 100%;
+  }
+  .badge {
+    background-color: transparent;
+  }
+}
+.notifications-button:focus {
+  background-color: #ff884d !important;
+}
+.notifications-button:hover {
+  background-color: #d2703f;
+}
+
+.account-dropdown-button:hover {
+  background-color: darken(#6ac8bf, 8%);
+}
+.navbar-left-button:hover {
+  background-color: darken(#a63a53, 8%);
+}
+.logo-button:hover {
+  background-color: darken(#a63a53, 8%);
+}
+.register-color:hover {
+  background-color: darken(#42b4a8, 8%);
+}
+.login-color:hover {
+  background-color: darken(#4f74c6, 8%);
+}
+.account-dropdown-button,
+.navbar-left-button,
+.logo-button,
+.register-color,
+.login-color {
+  transition: background-color 0.1s ease-in-out;
+}
+@media (min-width: 992px) {
+  .account-dropdown-button {
+    background-color: #6ac8bf !important;
+    max-width: 303px;
+    padding-left: 12px;
+  }
+  .navbar-left-button {
+    background-color: #a63a53;
+    color: white !important;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    text-align: center;
+  }
+  .logo-button {
+    background-color: #a63a53;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+  .navbar-right-button {
+    color: white !important;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    margin-left: 20px;
+    text-align: center;
+  }
+  .logo {
+    width: 200px;
+    padding-bottom: 3px;
+  }
+  .account-dropdown-button-first {
+    margin-top: 5px;
+  }
+  .hamburger-toggle {
+    display: none;
+  }
+  .notifications-button {
+    height: 40px;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+  .notifications {
+    margin-top: 5px;
+    border-radius: 0;
+  }
+  .mobileNotifications {
+    display: none;
+  }
+}
+@media (max-width: 991px) {
+  #responsive-navbar-nav {
+    margin-top: 0.5rem;
+  }
+  .desktopNotifications {
+    display: none;
+  }
+  .account-dropdown-button {
+    background-color: #6ac8bf !important;
+    text-align: center;
+    margin-top: 0;
+  }
+  .navbar-left-button {
+    background-color: #a63a53;
+    color: white !important;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    text-align: center;
+  }
+  .logo-button {
+    background-color: #a63a53;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    text-align: center;
+  }
+  .navbar-right-button {
+    color: white !important;
+    text-align: center;
+  }
+  .logo {
+    width: 200px;
+    padding-bottom: 3px;
+  }
+  .hamburger-toggle {
+    border-style: none;
+    background-color: transparent;
+  }
+  .hamburger-toggle:focus {
+    outline: none;
+  }
+  .hamburger-menu-text {
+    color: #5073c5 !important;
+    vertical-align: middle;
+    display: inline;
+  }
+  .hamburger-menu-logo {
+    width: 35px;
+    margin-left: 15px;
+  }
+  .notifications-button {
+    height: 40px;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    width: 100%;
+    border: none;
+  }
+  .notifications {
+    border-radius: 0;
+    text-align: center;
+  }
+}

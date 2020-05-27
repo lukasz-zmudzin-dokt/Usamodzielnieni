@@ -2,6 +2,9 @@ import React from "react";
 import { Form } from "react-bootstrap";
 import { CVEditorTab } from "..";
 import movie_1 from "assets/movie_1.png";
+import proxy from "config/api";
+import { UserContext } from "context";
+import { approveFileSize } from "utils/approveFile/approveFile";
 
 class PhotoTab extends React.Component {
   constructor(props) {
@@ -10,7 +13,15 @@ class PhotoTab extends React.Component {
   }
 
   onChange = (e) => {
-    this.props.onChange(this.fileInput.files[0]);
+    const file = this.fileInput.files[0];
+    if (approveFileSize(file) === true) {
+      this.props.onChange(this.fileInput.files[0]);
+    } else {
+      this.props.alertContext.showAlert(
+        "Wybrany plik jest za duży. Maksymalny rozmiar pliku to 15 MB."
+      );
+      this.fileInput = React.createRef();
+    }
   };
 
   setLabel = () => {
@@ -36,6 +47,7 @@ class PhotoTab extends React.Component {
         showComments={this.props.showComments}
         disabled={this.props.disabled}
         isNew={this.props.isNew}
+        group_type={this.context.data.group_type}
         video={this.props.video}
         errVid={this.props.errVid}
         formTab={this.props.formTab}
@@ -54,10 +66,44 @@ class PhotoTab extends React.Component {
               // value="this.props.data"
             />
           </Form.Group>
+          {this.props.templateList?.length > 0 && (
+            <Form.Group>
+              <Form.Label>
+                Kolor CV: (
+                <a
+                  target="_blank"
+                  href={proxy.plain + "/static/" + this.props.template + ".pdf"}
+                  rel="noopener noreferrer"
+                >
+                  Kliknij <u>tutaj</u> żeby zobaczyć przykładowe CV w tym
+                  kolorze
+                </a>
+                )
+              </Form.Label>
+              <Form.Control
+                as="select"
+                id="template"
+                value={this.props.template}
+                onChange={(e) => this.props.setTemplate(e.target.value)}
+              >
+                {this.props.templateList.map((item) => (
+                  <option
+                    key={item}
+                    value={item}
+                    style={{ backgroundColor: item }}
+                  >
+                    {item}
+                  </option>
+                ))}
+              </Form.Control>
+            </Form.Group>
+          )}
         </Form>
       </CVEditorTab>
     );
   }
 }
+
+PhotoTab.contextType = UserContext;
 
 export default PhotoTab;

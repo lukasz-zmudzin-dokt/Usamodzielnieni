@@ -1,3 +1,3 @@
-import BlogPostForm from "./BlogpostForm";
+import BlogpostFormContainer from "./BlogpostFormContainer";
 
-export default BlogPostForm;
+export default BlogpostFormContainer;

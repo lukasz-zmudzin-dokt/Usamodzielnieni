@@ -6,8 +6,13 @@ const NotificationToggle = forwardRef(({ count, ...rest }, ref) => {
     <Badge variant="secondary">{count > 9 ? "9+" : count}</Badge>
   );
   return (
-    <Button ref={ref} variant="light" {...rest}>
-      Powiadomienia {badge}
+    <Button
+      ref={ref}
+      variant="light"
+      {...rest}
+      className="notifications-button notification-color navbar-right-button"
+    >
+      POWIADOMIENIA {badge}
     </Button>
   );
 });

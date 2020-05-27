@@ -1,7 +1,6 @@
 import UserProfilePage from "Views/UserProfilePage";
 import LoginPage from "Views/LoginPage";
 import RegisterPage from "Views/RegisterPage";
-import HeaderTemplate from "Views/PageHeader";
 import CVEditorPage from "Views/CVEditorPage";
 import Footer from "Views/Footer";
 import Menu from "Views/Menu";
@@ -25,12 +24,13 @@ import OfferApprovalPage from "Views/OfferApprovalPage";
 import ChangeData from "Views/ChangeData";
 import PasswordResetPrompt from "Views/PasswordResetPrompt";
 import NewPasswordPage from "Views/NewPasswordPage";
+import Header from "./Header";
+import headerTemplate from "./PageHeader";
 
 export {
   UserProfilePage,
   LoginPage,
   RegisterPage,
-  HeaderTemplate,
   CVEditorPage,
   Footer,
   Menu,
@@ -54,4 +54,6 @@ export {
   Chats,
   ChangeData,
   UserList,
+  Header,
+  headerTemplate,
 };

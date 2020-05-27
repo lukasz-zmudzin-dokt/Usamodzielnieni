@@ -18,7 +18,7 @@ import {
 } from "Views/CVEditorPage/functions/other.js";
 import { createCVObject } from "Views/CVEditorPage/functions/createCVObject.js";
 import { withRouter } from "react-router-dom";
-import { getCVdata } from "./functions/other";
+import { fetchTemplateList, getCVdata } from "./functions/other";
 import { mapData, mapFeedback } from "./functions/mapData";
 import { withAlertContext } from "components";
 
@@ -48,6 +48,8 @@ class CVEditorPage extends React.Component {
       method: "POST",
       cv_id: undefined,
       has_photo: false,
+      template: "bisque",
+      templateList: [],
       videos: { videos: [] },
       errVid: false,
     };
@@ -95,13 +97,14 @@ class CVEditorPage extends React.Component {
       e.stopPropagation();
       this.setState({ disabled: false });
     } else {
-      const cv = createCVObject(
+      let cv = createCVObject(
         this.state.tabs.personalData.data,
         this.state.tabs.education.data,
         this.state.tabs.workExperience.data,
         this.state.tabs.skills.data,
         this.state.tabs.languages.data
       );
+      cv = { ...cv, template: this.state.template };
       try {
         await sendData(
           cv,
@@ -184,6 +187,10 @@ class CVEditorPage extends React.Component {
             onSubmit={this.handleCVSubmit}
             disabled={this.state.disabled}
             hasPhoto={this.state.has_photo}
+            template={this.state.template}
+            setTemplate={(t) => this.setState({ template: t })}
+            templateList={this.state.templateList}
+            alertContext={this.props.alertContext}
           />
         ),
       },
@@ -234,6 +241,7 @@ class CVEditorPage extends React.Component {
         }));
       });
       this.setState({
+        template: cvRes.template,
         has_photo: cvRes.has_picture,
       });
     } catch (e) {
@@ -242,6 +250,23 @@ class CVEditorPage extends React.Component {
       });
       this.props.alertContext.showAlert("Nie udało się załadować CV.");
     }
+  };
+
+  getTemplates = async (token) => {
+    let res;
+    try {
+      const { templates } = await fetchTemplateList(token);
+      res = templates;
+    } catch (e) {
+      console.log(e);
+      this.props.alertContext.showAlert(
+        "Wystąpił błąd podczas pobierania wzorów CV."
+      );
+      res = [];
+    }
+    this.setState({
+      templateList: res,
+    });
   };
 
   getVideosData = async () => {
@@ -259,6 +284,7 @@ class CVEditorPage extends React.Component {
 
   componentDidMount() {
     let cvId = this.props.match.params.id;
+    this.getTemplates(this.context.token);
     if (cvId) {
       this.autofillEditor(cvId);
     } else {

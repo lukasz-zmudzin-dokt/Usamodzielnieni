@@ -4,6 +4,7 @@ import { DeletionModal } from "components";
 import proxy from "config/api";
 import { AlertContext, UserContext } from "context";
 import { userStatuses } from "constants/userStatuses";
+import { staffTypes } from "constants/staffTypes";
 
 const blockAccount = async (token, user) => {
   let url = `${proxy.account}admin/user_block/${user.id}/`;
@@ -23,7 +24,7 @@ const BlockAccountButton = ({ user, setUser, ...rest }) => {
   const [showModal, setShowModal] = useState(false);
   const [disabled, setDisabled] = useState(false);
 
-  const { token } = useContext(UserContext);
+  const { token, data } = useContext(UserContext);
   const alertContext = useContext(AlertContext);
 
   const onButtonClick = () => setShowModal(true);
@@ -46,24 +47,27 @@ const BlockAccountButton = ({ user, setUser, ...rest }) => {
   };
 
   return (
-    <>
-      <Button
-        variant="secondary"
-        onClick={onButtonClick}
-        disabled={disabled}
-        {...rest}
-      >
-        {disabled ? "Ładowanie..." : "Zablokuj konto"}
-      </Button>
-      <DeletionModal
-        show={showModal}
-        setShow={setShowModal}
-        delConfirmed={onSuccess}
-        question="Czy na pewno chcesz zablokować to konto?"
-        confirmLabel="Zablokuj"
-        cancelLabel="Anuluj"
-      />
-    </>
+    (data.group_type.includes(staffTypes.BLOG_MODERATOR) ||
+      data.group_type.includes(staffTypes.VERIFICATION)) && (
+      <>
+        <Button
+          variant="secondary"
+          onClick={onButtonClick}
+          disabled={disabled}
+          {...rest}
+        >
+          {disabled ? "Ładowanie..." : "Zablokuj konto"}
+        </Button>
+        <DeletionModal
+          show={showModal}
+          setShow={setShowModal}
+          delConfirmed={onSuccess}
+          question="Czy na pewno chcesz zablokować to konto?"
+          confirmLabel="Zablokuj"
+          cancelLabel="Anuluj"
+        />
+      </>
+    )
   );
 };
 

@@ -1,25 +1,33 @@
 import React from "react";
-import HeaderTemplate from "Views/PageHeader/headerTemplate";
 import { BrowserRouter } from "react-router-dom";
-import { UserProvider, AlertProvider, NotificationsProvider } from "context";
+import {
+  UserProvider,
+  AlertProvider,
+  NotificationsProvider,
+  ChatProvider,
+} from "context";
 import Router from "root/Router";
-import { AlertsContainer } from "components";
+import { AlertsContainer, ScrollToTop } from "components";
+import Header from "Views/Header";
 import Footer from "Views/Footer";
 
 const App = () => {
   return (
     <UserProvider>
       <AlertProvider>
-        <NotificationsProvider>
-          <BrowserRouter>
-            <HeaderTemplate />
-            <div className="center-container">
-              <Router />
-              <AlertsContainer />
-            </div>
-            <Footer />
-          </BrowserRouter>
-        </NotificationsProvider>
+        <ChatProvider>
+          <NotificationsProvider>
+            <BrowserRouter>
+              <Header />
+              <ScrollToTop />
+              <div className="center-container">
+                <Router />
+                <AlertsContainer />
+              </div>
+              <Footer />
+            </BrowserRouter>
+          </NotificationsProvider>
+        </ChatProvider>
       </AlertProvider>
     </UserProvider>
   );

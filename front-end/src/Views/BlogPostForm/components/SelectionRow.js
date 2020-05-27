@@ -1,8 +1,16 @@
 import React from "react";
 import { Col, Form, Row } from "react-bootstrap";
 import ButtonList from "./ButtonList";
+import { VIDEOBLOG_CATEGORY } from "constants/videoBlogInitialValues";
 
-const SelectionRow = ({ name, arrayType, onChange, current, onCut }) => {
+const SelectionRow = ({
+  name,
+  arrayType,
+  onChange,
+  current,
+  onCut,
+  nullCat,
+}) => {
   let source;
   name === "tags"
     ? (source = {
@@ -14,14 +22,16 @@ const SelectionRow = ({ name, arrayType, onChange, current, onCut }) => {
         formPlaceholder: "Wpisz nową kategorię",
       });
 
+  const array = arrayType.filter((name) => name !== VIDEOBLOG_CATEGORY);
+
   return (
     <div>
       <Row className="categories mx-0">
         <Col>
           <Form.Control as="select" name={name} onChange={onChange}>
             <option>{source.selectPlaceholder}</option>
-            {arrayType.length > 0
-              ? arrayType.map((item) => (
+            {array.length > 0
+              ? array.map((item) => (
                   <option key={item} value={item}>
                     {item}
                   </option>
@@ -46,6 +56,7 @@ const SelectionRow = ({ name, arrayType, onChange, current, onCut }) => {
             Kategoria: {current !== "" ? current : "nie wybrano"}
           </p>
         )}
+        {current === VIDEOBLOG_CATEGORY && nullCat()}
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
 import React from "react";
-import { Alert, Button, Card, Container, Form } from "react-bootstrap";
+import { Alert, Button, Card, Form } from "react-bootstrap";
 import { createEditorState } from "medium-draft";
 import {
   getFilters,
@@ -17,6 +17,8 @@ import { convertToRaw } from "draft-js";
 import { Redirect } from "react-router-dom";
 import EditorForm from "./components/EditorForm";
 import { withAlertContext } from "components";
+import { staffTypes } from "constants/staffTypes";
+import { approveFileSize } from "utils/approveFile/approveFile";
 
 class BlogPostForm extends React.Component {
   constructor(props) {
@@ -119,9 +121,16 @@ class BlogPostForm extends React.Component {
   };
 
   onPhotoChange = () => {
-    this.setState({
-      photo: this.fileInput.files[0],
-    });
+    if (approveFileSize(this.fileInput.files[0])) {
+      this.setState({
+        photo: this.fileInput.files[0],
+      });
+    } else {
+      this.props.alertContext.showAlert(
+        "Wybrany plik jest za duży. Maksymalny rozmiar pliku to 15 MB."
+      );
+      this.fileInput = React.createRef();
+    }
   };
 
   onChange = (e) => {
@@ -199,6 +208,15 @@ class BlogPostForm extends React.Component {
     }
   };
 
+  nullifyCategory = () => {
+    this.props.alertContext.showAlert(
+      "Niedozwolona kategoria. Aby stworzyć wideoblog przejdź do zakładki Mój profil."
+    );
+    this.setState({
+      category: "",
+    });
+  };
+
   render() {
     return this.state.isLoading || this.state.error === "reservation" ? (
       <Card.Body>
@@ -215,8 +233,8 @@ class BlogPostForm extends React.Component {
         ) : null}
       </Card.Body>
     ) : (
-      <Container>
-        <Card>
+      <>
+        <>
           <Card.Header>
             <Form.Group controlId="blogpost_photo">
               <Form.File
@@ -251,6 +269,7 @@ class BlogPostForm extends React.Component {
               arrayType={this.state.filters.categories}
               current={this.state.category}
               onChange={this.onChange}
+              nullCat={this.nullifyCategory}
             />
             <EditorForm
               alerts={this.props.alertContext}
@@ -270,15 +289,21 @@ class BlogPostForm extends React.Component {
             />
           </Card.Body>
           <Card.Footer className="">
-            <Button variant="primary" size="lg" onClick={this.submitPost} block>
+            <Button
+              variant="primary"
+              size="lg"
+              onClick={this.submitPost}
+              block
+              disabled={this.context.data.group_type.includes(staffTypes.GUEST)}
+            >
               Opublikuj
             </Button>
           </Card.Footer>
-        </Card>
+        </>
         {this.state.redirect ? (
           <Redirect to={`/blog/blogpost/${this.state.post_id}`} />
         ) : null}
-      </Container>
+      </>
     );
   }
 }
