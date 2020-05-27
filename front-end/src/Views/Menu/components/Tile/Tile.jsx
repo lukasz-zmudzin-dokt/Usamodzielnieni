@@ -3,14 +3,15 @@ import { Link } from "react-router-dom";
 import { matchPath } from "react-router-dom";
 
 import routesInfo from "constants/routesInfo";
+import {Button} from "react-bootstrap";
+import {staffTypes} from "constants/staffTypes";
 
-const Tile = ({ title, showImage, imageUrl, color, destination, user }) => {
+const Tile = ({ title, showImage, imageUrl, color, destination, user, previewOnly }) => {
   const getClassNames = (name, position) =>
     `tile__${name} tile__${name}--${position} ${
       showImage[position] ? "tile__fragment--show" : ""
     }`;
   const positions = ["left", "top", "right"];
-  console.log("Tile", destination);
 
   const matchingRoutes = routesInfo.filter((route) =>
     matchPath(destination, route)
@@ -48,6 +49,14 @@ const Tile = ({ title, showImage, imageUrl, color, destination, user }) => {
           </div>
         </div>
       </div>
+      {
+        !previewOnly && user.data?.group_type.includes(staffTypes.BLOG_MODERATOR) && (
+            <div className="tile__button__container">
+              <Button size="sm" className="tile__button tile__button__edit" variant="primary"><img className="tile__button__edit__icon" src="/editicon.svg" alt="Edytuj"/></Button>
+              <Button size="sm" className="tile__button tile__button__delete" variant="danger"><img className="tile__button__delete__icon" src="/deleteicon.svg" alt="Usuń"/></Button>
+            </div>
+        )
+      }
     </Link>
   );
 };

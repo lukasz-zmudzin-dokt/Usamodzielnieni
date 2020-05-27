@@ -270,6 +270,7 @@ const NewTileForm = ({ show, setShow, user, appendTile, tileData }) => {
                 destination={""}
                 imageUrl={photoB64}
                 showImage={imgOverFlow}
+                previewOnly={true}
               />
             </Col>
           </Row>

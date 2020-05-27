@@ -162,6 +162,21 @@
               line-height: calc(0.8rem + (0.8 * var(--tile-unit)));
             }
           }
+          .tile__button {
+            &__container {
+              grid-area: bg-top;
+              z-index: 10;
+              position: absolute;
+              right: var(--tile-width);
+              height: calc(10% * var(--tile-height));
+            }
+            &__edit {
+              margin-right: 0.25rem;
+            }
+            &__delete {
+              margin-left: 0.25rem;
+            }
+          }
           .tile__border {
             &--left {
               grid-area: border-left;
