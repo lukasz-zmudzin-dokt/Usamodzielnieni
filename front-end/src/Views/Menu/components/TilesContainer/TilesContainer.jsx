@@ -168,13 +168,10 @@ const TilesContainer = () => {
     }
   };
 
-  const cutTile = (oldTile) => {
-    const idx = tiles.findIndex((tile) => tile.id === oldTile.id);
-    let newTileList = [...tiles];
-    if (idx > -1) {
-      newTileList.splice(idx, 1);
-      setTiles(newTileList);
-    }
+  const cutTile = (oldTileId) => {
+    let newTiles = [...tiles];
+    newTiles = newTiles.filter((item) => item.id !== oldTileId);
+    setTiles(newTiles);
   };
 
   return msg || (
@@ -191,7 +188,7 @@ const TilesContainer = () => {
             destination={tile.destination}
             user={user}
             cutTile={cutTile}
-            addTile={appendTile}
+            appendTile={appendTile}
           />
         ))}
         {user?.data?.group_type?.includes(staffTypes.BLOG_MODERATOR) && (

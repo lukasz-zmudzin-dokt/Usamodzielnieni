@@ -35,13 +35,11 @@ const fetchPosts = async () => {
 
 const addTile = async (token, tile, mode, id) => {
   let url = proxy.menu + "tile/";
-  console.log(url);
   url = mode === "PUT" ? url + id + "/" : url;
   const headers = {
     Authorization: "Token " + token,
     "Content-Type": "application/json",
   };
-  console.log(tile);
   const res = await fetch(url, {
     method: mode,
     headers,
@@ -183,7 +181,7 @@ const NewTileForm = ({ show, setShow, user, appendTile, tileData }) => {
         !tileData && await postPhoto(user.token, res.id, fileInput.current.files[0]);
         alertContext.current.showAlert("Kafelek dodany pomyślnie.", "success");
         appendTile({
-          id: res.id,
+          id: res.id || tileId,
           title: title,
           color: background,
           show: imgOverFlow,
