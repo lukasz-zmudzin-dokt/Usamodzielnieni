@@ -17,16 +17,16 @@ describe("map", () => {
           {
             name: "szkoła1",
             additional_info: "klasa1",
-            year_start: "2016",
-            year_end: "2019",
+            date_start: "01-2016",
+            date_end: "06-2019",
           },
         ],
         experiences: [
           {
             title: "praca1",
             description: "stanowisko1",
-            year_start: "2020",
-            year_end: null,
+            date_start: "12-2020",
+            date_end: null,
           },
         ],
         skills: [{ description: "taniec" }, { description: "śpiew" }],

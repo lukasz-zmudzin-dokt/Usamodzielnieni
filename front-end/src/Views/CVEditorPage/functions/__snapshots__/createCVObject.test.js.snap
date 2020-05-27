@@ -11,10 +11,10 @@ Object {
   },
   "experiences": Array [
     Object {
+      "date_end": "06-2003",
+      "date_start": "05-2002",
       "description": "Jakiś opis",
       "title": "Warszawa",
-      "year_end": 2003,
-      "year_start": 2002,
     },
   ],
   "languages": Array [
@@ -26,9 +26,9 @@ Object {
   "schools": Array [
     Object {
       "additional_info": "Jakiś opis",
+      "date_end": "06-2003",
+      "date_start": "05-2002",
       "name": "Warszawa",
-      "year_end": 2003,
-      "year_start": 2002,
     },
   ],
   "skills": Array [
@@ -50,10 +50,10 @@ Object {
   },
   "experiences": Array [
     Object {
+      "date_end": "06-2003",
+      "date_start": "05-2002",
       "description": "Jakiś opis",
       "title": "Warszawa",
-      "year_end": 2003,
-      "year_start": 2002,
     },
   ],
   "languages": Array [
@@ -65,9 +65,9 @@ Object {
   "schools": Array [
     Object {
       "additional_info": "Jakiś opis",
+      "date_end": undefined,
+      "date_start": "05-2002",
       "name": "Warszawa",
-      "year_end": undefined,
-      "year_start": 2002,
     },
   ],
   "skills": Array [
@@ -89,10 +89,10 @@ Object {
   },
   "experiences": Array [
     Object {
+      "date_end": undefined,
+      "date_start": "05-2002",
       "description": "Jakiś opis",
       "title": "Warszawa",
-      "year_end": undefined,
-      "year_start": 2002,
     },
   ],
   "languages": Array [
@@ -104,9 +104,9 @@ Object {
   "schools": Array [
     Object {
       "additional_info": "Jakiś opis",
+      "date_end": "06-2003",
+      "date_start": "05-2002",
       "name": "Warszawa",
-      "year_end": 2003,
-      "year_start": 2002,
     },
   ],
   "skills": Array [
