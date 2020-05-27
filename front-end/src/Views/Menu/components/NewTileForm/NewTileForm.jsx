@@ -62,7 +62,6 @@ const postPhoto = async (token, id, photo) => {
     //"Content-Type": "application/x-www-form-urlencoded"
   };
   const pic = new FormData();
-  console.log(photo);
   pic.append("photo", photo, photo.name);
 
   const res = await fetch(url, { method: "POST", headers, body: pic });
@@ -77,8 +76,7 @@ const postPhoto = async (token, id, photo) => {
 const mapPosts = (posts) => {
   return posts.map((item) => ({
     id: "/blog/blogpost/" + item.id,
-    category: item.category,
-    title: item.title,
+    name: item.title + " (Kategoria: " + item.category + ")"
   }));
 };
 
@@ -126,6 +124,7 @@ const NewTileForm = ({ show, setShow, user, appendTile, tileData }) => {
         setPhotoB64(imageUrl);
         setPath(destination);
         setMethod("PUT");
+        setLabel("Poprzednie zdjęcie");
       }
     };
     loadPostList();
@@ -181,7 +180,7 @@ const NewTileForm = ({ show, setShow, user, appendTile, tileData }) => {
       try {
         const res = await addTile(user.token, data, method, tileId);
         setTileId(res.id);
-        await postPhoto(user.token, res.id, fileInput.current.files[0]);
+        !tileData && await postPhoto(user.token, res.id, fileInput.current.files[0]);
         alertContext.current.showAlert("Kafelek dodany pomyślnie.", "success");
         appendTile({
           id: res.id,
@@ -232,7 +231,7 @@ const NewTileForm = ({ show, setShow, user, appendTile, tileData }) => {
           >
             {pathArray.map((val) => (
               <option key={val.id} value={val.id}>
-                {val.title} (Kategoria: {val.category})
+                {val.name}
               </option>
             ))}
           </Form.Control>
@@ -246,7 +245,7 @@ const NewTileForm = ({ show, setShow, user, appendTile, tileData }) => {
             label={label || "Dodaj zdjęcie..."}
             accept="image/*"
             data-browse="Wybierz plik"
-            required
+            required={!tileData}
           />
           <Form.Control.Feedback type="invalid">
             Podaj zdjęcie kafelka

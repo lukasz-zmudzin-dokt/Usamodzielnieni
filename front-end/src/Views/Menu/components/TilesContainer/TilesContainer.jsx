@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, {useState, useEffect, useContext, useRef} from "react";
 import { Alert, Button } from "react-bootstrap";
 import { Tile } from "../";
 import proxy from "config/api";
 import { UserContext } from "context/UserContext";
 import { staffTypes } from "constants/staffTypes";
 import NewTileForm from "../NewTileForm/NewTileForm";
+import {AlertContext} from "../../../../context/AlertContext";
 
 const tmpTiles = [
   {
@@ -130,15 +131,14 @@ const mapTiles = (tiles) =>
     color: tile.color,
     show: tile.photo_layer,
     imageUrl: tile.photo,
-    destination: proxy.plain + tile.destination,
-    // TODO
+    destination: tile.destination,
   }));
 
 const TilesContainer = () => {
   const [tiles, setTiles] = useState([]);
-  const [error, setError] = useState(false);
   const [showModal, setShow] = useState(false);
   const user = useContext(UserContext);
+  const alertC = useRef(useContext(AlertContext));
 
   useEffect(() => {
     const loadTiles = async () => {
@@ -148,18 +148,14 @@ const TilesContainer = () => {
       } catch (e) {
         console.log(e);
         res = tmpTiles;
-        setError(true);
+        alertC.current.showAlert("Wystąpił błąd podczas pobierania menu.");
       }
       setTiles(res);
     };
     loadTiles();
-  }, []);
+  }, [alertC]);
 
-  const msg = error ? (
-    <Alert variant="danger">Nie udało się pobrać menu.</Alert>
-  ) : (
-    !tiles && <Alert variant="info">Ładowanie menu...</Alert>
-  );
+  const msg = !tiles && <Alert variant="info">Ładowanie menu...</Alert>;
 
   const appendTile = (newTile) => {
     const idx = tiles.findIndex((tile) => tile.id === newTile.id);
@@ -173,17 +169,21 @@ const TilesContainer = () => {
   };
 
   const cutTile = (oldTile) => {
-    const newTileList = [...tiles];
-    newTileList.filter((tile) => tile.id !== oldTile.id);
-    setTiles(newTileList);
+    const idx = tiles.findIndex((tile) => tile.id === oldTile.id);
+    let newTileList = [...tiles];
+    if (idx > -1) {
+      newTileList.splice(idx, 1);
+      setTiles(newTileList);
+    }
   };
 
-  return (
+  return msg || (
     <div className="tilesGrid__container">
       <div className="tilesGrid">
         {tiles.map((tile) => (
           <Tile
             key={tile.id}
+            id={tile.id}
             color={tile.color}
             imageUrl={tile.imageUrl || ""}
             showImage={tile.show}
@@ -191,6 +191,7 @@ const TilesContainer = () => {
             destination={tile.destination}
             user={user}
             cutTile={cutTile}
+            addTile={appendTile}
           />
         ))}
         {user?.data?.group_type?.includes(staffTypes.BLOG_MODERATOR) && (

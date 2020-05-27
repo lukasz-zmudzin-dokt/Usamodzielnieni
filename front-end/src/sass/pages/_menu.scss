@@ -106,7 +106,7 @@
       .tile__button {
         &__container {
           position: absolute;
-          z-index: 1;
+          z-index: 10;
           right: 0;
         }
         &__edit {
