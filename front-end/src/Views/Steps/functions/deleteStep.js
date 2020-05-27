@@ -1,7 +1,7 @@
 import proxy from "config/api";
 
 export const deleteStep = async (steps, stepId, token) => {
-  console.log(stepId);
+  //console.log(stepId);
   let toDelete = steps.find((s) => s.id === stepId);
   let url;
   const headers = {

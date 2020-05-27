@@ -22,10 +22,10 @@ const EditStep = ({
   const user = useContext(UserContext);
   const alertC = useRef(useContext(AlertContext));
   const [validated, setValidated] = useState(false);
-  console.log(step);
+  //console.log(step);
 
   useEffect(() => {
-    console.log(root);
+    //console.log(root);
     if (step?.type === "main") {
       setNewStep({
         title: step?.title,
@@ -43,7 +43,7 @@ const EditStep = ({
   }, [step]);
 
   const isStep = type === stepsTypes[0];
-  console.log(isStep);
+  //console.log(isStep);
   const handleSubmit = async (e) => {
     e.preventDefault();
     const form = e.currentTarget;
