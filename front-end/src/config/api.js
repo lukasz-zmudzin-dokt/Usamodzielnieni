@@ -11,6 +11,7 @@ const proxy = {
   notification: domain + "/notification/",
   wsNotification: wsDomain + "/notification/",
   chat: domain + "/chat/",
+  wsChat: wsDomain + "/chat/",
   steps: domain + "/steps/",
   videos: domain + "/videos/",
   contact: domain + "/helpline/",

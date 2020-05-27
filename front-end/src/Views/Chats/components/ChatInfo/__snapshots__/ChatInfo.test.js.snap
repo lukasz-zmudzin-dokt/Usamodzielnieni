@@ -16,11 +16,18 @@ exports[`ChatInfo should render without crashing 1`] = `
       class="col"
     >
       <h5>
-        Nazwa chatu
+        czesiek
       </h5>
+      <small>
+        Ostatnia wiadomość: 1590436098965_en-US_2_
+      </small>
+    </div>
+    <div
+      class="align-self-center text-center col-md-auto col-12"
+    >
       <a
-        class="btn btn-primary"
-        href="/chats/123"
+        class="mt-2 mt-md-0 btn btn-primary"
+        href="/chats/czesiek"
       >
         Pokaż szczegóły
       </a>

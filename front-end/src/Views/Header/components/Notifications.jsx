@@ -4,6 +4,7 @@ import NotificationItemContainer from "./NotificationItemContainer";
 import NotificationItem from "./NotificationItem";
 import NotificationToggle from "./NotificationToggle";
 import { NotificationsContext } from "context";
+import { paths } from "constants/paths";
 
 const Notifications = ({ location, ...rest }) => {
   const [show, setShow] = useState(false);
@@ -11,13 +12,21 @@ const Notifications = ({ location, ...rest }) => {
   const { notifications, count, error } = notificationsContext;
 
   useEffect(() => {
+    console.log("useEffect");
     if (notifications) {
+      console.log("useEffect if");
       const toRemove = notifications.filter(
-        (notification) => notification.path === location.pathname
+        (notification) =>
+          notification.path === location.pathname ||
+          (notification.path === paths.CHATS &&
+            location.pathname.match(/^\/chats\//))
       );
-      toRemove.forEach((notification) => {
-        notificationsContext.deleteNotification(notification.id);
-      });
+      if (toRemove.length) {
+        console.log("useEffect len");
+        notificationsContext.deleteNotificationsArray(
+          toRemove.map((not) => not.id)
+        );
+      }
     }
   }, [notificationsContext, notifications, location.pathname]);
 

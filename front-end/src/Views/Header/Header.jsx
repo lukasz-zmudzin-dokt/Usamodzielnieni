@@ -16,7 +16,7 @@ const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [logout, setLogout] = useState(false);
   const [error, setError] = useState(false);
-
+  const location = useLocation();
   const handleOpen = () => {
     setIsOpen(true);
   };
@@ -138,7 +138,11 @@ const Header = () => {
       </Nav>
     ) : (
       <Nav>
-        <Notifications location={useLocation} token={context.token} />
+        <Notifications
+          className="desktopNotifications"
+          location={location}
+          token={context.token}
+        />
         <NavDropdown
           id={"myAccDropdown"}
           title={
@@ -174,12 +178,12 @@ const Header = () => {
   );
 
   return (
-    <Navbar
-      collapseOnSelect
-      expand="lg"
-      sticky="top"
-      className="font p-3 justify-content-end"
-    >
+    <Navbar collapseOnSelect expand="lg" sticky="top" className="font p-3">
+      <Notifications
+        className="mobileNotifications"
+        location={location}
+        token={context.token}
+      />
       <Navbar.Toggle
         aria-controls="responsive-navbar-nav"
         bsPrefix="hamburger-toggle"

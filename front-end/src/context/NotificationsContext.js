@@ -5,7 +5,7 @@ import React, {
   useRef,
   createContext,
 } from "react";
-import { UserContext } from "context";
+import { UserContext, ChatContext } from "context";
 import proxy from "config/api";
 import { paths } from "constants/paths";
 import { userTypes } from "constants/userTypes";
@@ -94,19 +94,24 @@ const deleteNotifications = async (token) => {
 };
 
 const mapNotifications = (notifications, type) => ({
-  notifications: notifications.results.map((notification) =>
-    mapNotification(notification, type)
-  ),
+  notifications: notifications.results.map((notification) => {
+    if (notification.event === "Nowa wiadomość") {
+      return null;
+    }
+    return mapNotification(notification, type);
+  }),
   next: notifications.next?.replace(/.*page=/, "") || undefined,
 });
 
-const mapNotification = (notification, type) => ({
-  id: notification.slug,
-  path: getPath(notification.app, notification.object_id, type),
-  title: notification.text,
-  time: new Date(notification.timestamp),
-  unread: notification.unread,
-});
+const mapNotification = (notification, type) => {
+  return {
+    id: notification.slug,
+    path: getPath(notification.app, notification.object_id, type),
+    title: notification.text,
+    time: new Date(notification.timestamp),
+    unread: notification.unread,
+  };
+};
 
 const getPath = (appName, id, type) => {
   const isStandard = type === userTypes.STANDARD;
@@ -114,7 +119,7 @@ const getPath = (appName, id, type) => {
     return isStandard
       ? compile(paths.MY_CVS)({})
       : compile(paths.CV_APPROVAL)({});
-  } else if (appName.match(/^jobs/)) {
+  } else if (appName.match(/^job/)) {
     return isStandard
       ? compile(paths.JOB_OFFERS)({})
       : compile(paths.MY_OFFERS)({});
@@ -122,6 +127,8 @@ const getPath = (appName, id, type) => {
     return compile(paths.USER)({});
   } else if (appName.match(/^blog/)) {
     return compile(paths.BLOG_POST)({ id });
+  } else if (appName.match(/^chat/)) {
+    return compile(paths.CHATS)({});
   } else {
     return compile(paths.DASHBOARD)({});
   }
@@ -137,9 +144,11 @@ export const NotificationsProvider = (props) => {
   const socket = useRef();
 
   const user = useContext(UserContext);
+  const chatC = useContext(ChatContext);
 
   useEffect(() => {
     const loadNotifications = async (token, type) => {
+      setError(false);
       let values;
       try {
         values = await Promise.all([
@@ -173,12 +182,16 @@ export const NotificationsProvider = (props) => {
       const url = proxy.wsNotification + "ws";
       try {
         socket.current = new WebSocket(url, user.token);
-        // socket.current.onopen = (e) => console.log("onopen", e);
         socket.current.onmessage = (e) => {
           const newNotification = mapNotification(
             JSON.parse(e.data),
             user.type
           );
+          const parsedNotification = JSON.parse(e.data);
+
+          if (parsedNotification.app === "chat") {
+            chatC.socket.current.send(JSON.stringify({ message: "threads" }));
+          }
           setCount((prev) => prev + 1);
           setNotifications((prev) => [newNotification, ...prev]);
         };
@@ -190,7 +203,7 @@ export const NotificationsProvider = (props) => {
         console.log(e);
       }
     }
-  }, [user.token, user.type]);
+  }, [chatC.socket, user.token, user.type]);
 
   const data = {
     notifications,
@@ -232,6 +245,40 @@ export const NotificationsProvider = (props) => {
       } catch (e) {
         setError(true);
         return;
+      }
+    },
+    deleteNotificationsArray: async (ids) => {
+      const notificationsToRemove = notifications.filter((notification) =>
+        ids.find((id) => notification.id === id)
+      );
+      if (notificationsToRemove.length > 0) {
+        let unreadCount = 0;
+        notificationsToRemove.forEach((not) => {
+          unreadCount += not.unread ? 1 : 0;
+        });
+        if (unreadCount && count > 0) {
+          setCount((prev) => Math.max(prev - unreadCount, 0));
+        }
+        setNotifications(
+          notifications.filter((notification) => {
+            const check = !ids.find((id) => notification.id === id);
+            console.log(check, notification);
+            return check;
+          })
+        );
+        console.log(ids);
+        try {
+          await Promise.all(
+            ids.map(async (id) => {
+              await deleteNotification(user.token, id);
+            })
+          );
+        } catch (e) {
+          if (e !== 404) {
+            setError(true);
+          }
+          return;
+        }
       }
     },
     loadMoreNotifications: async () => {
