@@ -6,11 +6,16 @@ exports[`WorkExperienceTab should render without crashing 1`] = `
     <h3>
       Doświadczenie zawodowe
     </h3>
-    <img
-      alt=""
-      class="CVEditorTab__img"
-      src="movie_3.png"
-    />
+    <div
+      class="CVEditor__videoContainer"
+    >
+      <div
+        class="fade alert alert-info show"
+        role="alert"
+      >
+        Ładowanie...
+      </div>
+    </div>
     <form
       class=""
       novalidate=""

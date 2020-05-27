@@ -1,8 +1,14 @@
 import React from "react";
 import { render, fireEvent, queries } from "@testing-library/react";
 import CVEditorPage from "./CVEditorPage";
-import { sendData, getFeedback } from "./functions/other.js";
+import {
+  sendData,
+  getFeedback,
+  fetchTemplateList,
+  getVideos,
+} from "./functions/other.js";
 import { MemoryRouter } from "react-router-dom";
+import { VideoField } from "components";
 
 let mock_submitData = {};
 
@@ -73,6 +79,7 @@ jest.mock("./components", () => ({
 }));
 
 jest.mock("./functions/other.js");
+jest.mock("components/VideoField");
 
 describe("CVEditorPage", () => {
   let apiComments = {
@@ -88,6 +95,9 @@ describe("CVEditorPage", () => {
     apiShouldFail = false;
     jest.clearAllMocks();
     mock_submitData = {};
+    VideoField.mockImplementation(() => <div>VideoField</div>);
+    getVideos.mockImplementation(() => ({ videos: [] }));
+    fetchTemplateList.mockImplementation(() => ({ templates: [] }));
     sendData.mockImplementation(() => jest.fn());
     getFeedback.mockImplementation(() => {
       if (apiShouldFail) {
