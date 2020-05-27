@@ -30,23 +30,21 @@ describe("LanguagesTab", () => {
     const { getByLabelText } = render(<LanguagesTab {...props} />);
 
     fireEvent.change(getByLabelText("Poziom", { exact: false }), {
-      target: { value: "podstawowy" },
+      target: { value: "A1" },
     });
-    expect(getByLabelText("Poziom", { exact: false }).value).toBe("podstawowy");
+    expect(getByLabelText("Poziom", { exact: false }).value).toBe("A1");
   });
 
   it("should add action item to list", () => {
     props.data = [
       {
         name: "angielski",
-        level: "podstawowy",
+        level: "A1",
       },
     ];
     const { getByText } = render(<LanguagesTab {...props} />);
 
-    expect(
-      getByText("angielski - podstawowy", { exact: false })
-    ).toBeInTheDocument();
+    expect(getByText("angielski - A1", { exact: false })).toBeInTheDocument();
   });
 
   it("should clear input and set select to default value when add buttons is clicked", async () => {
@@ -56,11 +54,11 @@ describe("LanguagesTab", () => {
       target: { value: "angielski" },
     });
     fireEvent.change(getByLabelText("Poziom", { exact: false }), {
-      target: { value: "komunikatywny" },
+      target: { value: "B1" },
     });
     fireEvent.click(getByText("Dodaj", { exact: false }));
 
     expect(getByLabelText("Język", { exact: false }).value).toBe("");
-    expect(getByLabelText("Poziom", { exact: false }).value).toBe("podstawowy");
+    expect(getByLabelText("Poziom", { exact: false }).value).toBe("A1");
   });
 });

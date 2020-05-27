@@ -63,19 +63,34 @@ exports[`LanguagesTab should render without crashing 1`] = `
             required=""
           >
             <option
-              value="podstawowy"
+              value="A1"
             >
-              podstawowy
+              A1 – początkujący
             </option>
             <option
-              value="komunikatywny"
+              value="A2"
             >
-              komunikatywny
+              A2 – podstawowy
             </option>
             <option
-              value="biegły"
+              value="B1"
             >
-              biegły
+              B1 – niższy średniozaawansowany
+            </option>
+            <option
+              value="B2"
+            >
+              B2 – wyższy średniozaawansowany
+            </option>
+            <option
+              value="C1"
+            >
+              C1 – zaawansowany
+            </option>
+            <option
+              value="C2"
+            >
+              C2 – biegły
             </option>
           </select>
         </div>
