@@ -51,25 +51,6 @@ exports[`NewStep should match snapshot(step) 1`] = `
           >
             <label
               class="form-label"
-              for="stepParent"
-            >
-              Wybierz krok poprzedzający 
-            </label>
-            <select
-              class="form-control"
-              id="stepParent"
-              required=""
-            >
-              <option>
-                abc
-              </option>
-            </select>
-          </div>
-          <div
-            class="form-group"
-          >
-            <label
-              class="form-label"
               for="stepTitle"
             >
               Tytuł kroku
@@ -83,7 +64,7 @@ exports[`NewStep should match snapshot(step) 1`] = `
               placeholder="Tytuł kroku"
               required=""
               type="text"
-              value="Tytuł głównego kroku 1"
+              value="Krok 2"
             />
             <div
               class="invalid-feedback"
@@ -107,6 +88,7 @@ exports[`NewStep should match snapshot(step) 1`] = `
               maxlength="50"
               minlength="1"
               placeholder="Film (link youtube)"
+              required=""
               type="text"
               value=""
             />
@@ -123,12 +105,12 @@ exports[`NewStep should match snapshot(step) 1`] = `
             <textarea
               class="offerForm__textarea form-control"
               id="stepDescription"
-              maxlength="50"
+              maxlength="1000"
               minlength="1"
               placeholder="Wpisz treść... "
               required=""
             >
-              xDD
+              Opis 2
             </textarea>
             <div
               class="invalid-feedback"

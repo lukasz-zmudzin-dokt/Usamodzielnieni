@@ -45,7 +45,7 @@ const StepsForm = ({
           id="stepParent"
           required
           array={parTitles.length > 0 ? parTitles : ["Jako pierwszy krok"]}
-          val={newStep.parent}
+          val={newStep?.parent}
           setVal={(val) =>
             setNewStep({
               ...newStep,
@@ -57,7 +57,7 @@ const StepsForm = ({
       <FormGroup
         header={`Tytuł ${isStep ? "kroku" : "podkroku"}`}
         setVal={(val) => setNewStep({ ...newStep, title: val })}
-        val={newStep.title || ""}
+        val={newStep?.title || ""}
         incorrect={`Podaj tytuł ${isStep ? "kroku." : "podkroku."}`}
         length={{ min: 1, max: 50 }}
         id="stepTitle"
@@ -68,7 +68,8 @@ const StepsForm = ({
         header="Film (link youtube)"
         id="stepVideo"
         required
-        val={newStep.video || ""}
+        val={newStep?.video || ""}
+        length={{min: 1, max: 100}}
         setVal={(val) =>
           setNewStep({
             ...newStep,
@@ -84,7 +85,7 @@ const StepsForm = ({
         required
         incorrect="Podaj opis kroku."
         length={{ min: 1, max: 1000 }}
-        val={newStep.description}
+        val={newStep?.description}
         setVal={(val) =>
           setNewStep({
             ...newStep,
