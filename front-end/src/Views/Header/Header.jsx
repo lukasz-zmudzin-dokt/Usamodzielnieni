@@ -84,28 +84,56 @@ const Header = () => {
       name: "CZAT",
       group_type: staffTypes.CHAT,
     },
+    {
+      id: 5,
+      link: paths.CV_CREATOR,
+      name: "KREATOR CV",
+      group_type: staffTypes.BLOG_MODERATOR,
+    },
+    {
+      id: 6,
+      link: paths.CV_CREATOR,
+      name: "KREATOR CV",
+      group_type: staffTypes.GUEST,
+    },
   ];
 
   const accountDropdownNav =
     context.type === "standard" ? (
-      <IndexLinkContainer to={paths.MY_CVS}>
-        <NavDropdown.Item className="account-dropdown-button white">
-          MOJE CV
-        </NavDropdown.Item>
-      </IndexLinkContainer>
-    ) : context.type === "employer" ? (
-      <IndexLinkContainer to={paths.MY_OFFERS}>
-        <NavDropdown.Item className="account-dropdown-button white">
-          MOJE OFERTY
-        </NavDropdown.Item>
-      </IndexLinkContainer>
-    ) : context.type === "staff" && context.data !== undefined ? (
       <>
-        <IndexLinkContainer to={paths.USER_LIST}>
+        <IndexLinkContainer to={paths.MY_CVS}>
           <NavDropdown.Item className="account-dropdown-button white">
-            LISTA UŻYTKOWNIKÓW
+            MOJE CV
           </NavDropdown.Item>
         </IndexLinkContainer>
+        <IndexLinkContainer to={paths.CHATS}>
+          <NavDropdown.Item className="account-dropdown-button white">
+            CHAT
+          </NavDropdown.Item>
+        </IndexLinkContainer>
+      </>
+    ) : context.type === "employer" ? (
+      <>
+        <IndexLinkContainer to={paths.MY_OFFERS}>
+          <NavDropdown.Item className="account-dropdown-button white">
+            MOJE OFERTY
+          </NavDropdown.Item>
+        </IndexLinkContainer>
+        <IndexLinkContainer to={paths.CHATS}>
+          <NavDropdown.Item className="account-dropdown-button white">
+            CHAT
+          </NavDropdown.Item>
+        </IndexLinkContainer>
+      </>
+    ) : context.type === "staff" && context.data !== undefined ? (
+      <>
+        {!context.data.group_type.includes(staffTypes.GUEST) ? (
+          <IndexLinkContainer to={paths.USER_LIST}>
+            <NavDropdown.Item className="account-dropdown-button white">
+              LISTA UŻYTKOWNIKÓW
+            </NavDropdown.Item>
+          </IndexLinkContainer>
+        ) : null}
         {staffNavs.map((nav) => {
           if (context.data.group_type.includes(nav.group_type)) {
             return (
@@ -160,11 +188,6 @@ const Header = () => {
               MÓJ PROFIL
             </NavDropdown.Item>
           </IndexLinkContainer>
-            <IndexLinkContainer to={paths.CHATS}>
-                <NavDropdown.Item className="account-dropdown-button white">
-                    CHAT
-                </NavDropdown.Item>
-            </IndexLinkContainer>
             <IndexLinkContainer to={paths.STEPS}>
                 <NavDropdown.Item className="account-dropdown-button white">
                     KROKI USAMODZIELNIENIA
