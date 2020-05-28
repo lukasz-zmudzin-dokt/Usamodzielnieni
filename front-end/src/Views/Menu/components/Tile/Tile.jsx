@@ -9,7 +9,7 @@ import { AlertContext } from "context/AlertContext";
 import { DeletionModal } from "components";
 import NewTileForm from "../NewTileForm/NewTileForm";
 import proxy from "config/api";
-import {paths} from "constants/paths";
+import { paths } from "constants/paths";
 
 const deleteTile = async (token, id) => {
   const url = proxy.menu + "tile/" + id + "/";
