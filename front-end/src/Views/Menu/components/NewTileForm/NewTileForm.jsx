@@ -185,9 +185,9 @@ const NewTileForm = ({ show, setShow, user, appendTile, tileData }) => {
       };
       try {
         const res = await addTile(user.token, data, method, tileId);
-        setTileId(res.id);
+        const newId = method === "POST" ? res.id : tileData.id;
         tileData?.imageUrl !== photoB64 &&
-          (await postPhoto(user.token, res.id, fileInput.current.files[0]));
+          (await postPhoto(user.token, newId, fileInput.current.files[0]));
         alertContext.current.showAlert("Kafelek dodany pomyślnie.", "success");
         appendTile({
           id: res.id || tileId,
