@@ -8,7 +8,6 @@ import React, {
 import { UserContext, ChatContext } from "context";
 import proxy from "config/api";
 import { paths } from "constants/paths";
-import { userTypes } from "constants/userTypes";
 import { compile } from "path-to-regexp";
 
 const getNotifications = async (token, next) => {

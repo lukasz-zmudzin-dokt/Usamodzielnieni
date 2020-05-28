@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { ProgressBarFragment } from "../";
 import { Alert, Button } from "react-bootstrap";
-import { deleteStep, findParents } from "../../functions/deleteStep";
+import { deleteStep} from "../../functions/deleteStep";
 import { DeletionModal } from "components";
 import { staffTypes } from "constants/staffTypes";
 import { UserContext } from "context";

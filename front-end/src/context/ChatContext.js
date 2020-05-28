@@ -32,7 +32,7 @@ export const ChatProvider = (props) => {
   const [isChatsLoading, setIsChatsLoading] = useState(false);
   const [error, setError] = useState(false);
   const [count, setCount] = useState(0);
-  const [filters, setFilters] = useState({
+  const [filters] = useState({ //nie wiem jak tu z paginacją, ale nie mam jak sprawdzić bo jest mniej niż 10 osób do których mogę napisać xd
     page: 1,
     pageSize: 10,
   });

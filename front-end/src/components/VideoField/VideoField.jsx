@@ -27,7 +27,7 @@ const VideoField = ({ id, videoItem, errVid, activeTab }) => {
     const getVideos = async () => {
       let res;
       try {
-        res = await getUrl(user, id);
+        res = await getUrl(id);
         setVideo({ ...res, url: sliceUrl(res.url) });
       } catch (e) {
         setErr(true);
@@ -46,7 +46,7 @@ const VideoField = ({ id, videoItem, errVid, activeTab }) => {
     if (activeTab?.active !== activeTab?.your && player.current !== null) {
       player.current.resetPlayer();
     }
-  }, [activeTab, errVid, id, user.token, videoItem]);
+  }, [activeTab, errVid, id, videoItem]);
 
   const opts = {
     height: "100%",
