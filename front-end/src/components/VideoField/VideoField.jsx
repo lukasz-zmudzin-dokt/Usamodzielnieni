@@ -27,7 +27,7 @@ const VideoField = ({ id, videoItem, errVid }) => {
     const getVideos = async () => {
       let res;
       try {
-        res = await getUrl(user, id);
+        res = await getUrl(id);
         setVideo({ ...res, url: sliceUrl(res.url) });
       } catch (e) {
         setErr(true);
@@ -43,7 +43,7 @@ const VideoField = ({ id, videoItem, errVid }) => {
       setLoading(false);
       setErr(true);
     }
-  }, [user, errVid, id, videoItem]);
+  }, [errVid, id, videoItem]);
 
   const opts = {
     height: "100%",

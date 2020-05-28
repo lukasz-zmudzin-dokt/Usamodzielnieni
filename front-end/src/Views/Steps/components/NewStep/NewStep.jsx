@@ -42,7 +42,6 @@ const NewStep = ({
     e.preventDefault();
     const form = e.currentTarget;
     if (form.checkValidity() !== false) {
-      let res;
       const object = steps.find((item) => item.title === newStep.parent);
       let data = {};
       if (object) {
@@ -57,7 +56,7 @@ const NewStep = ({
         };
       }
       try {
-        res = await sendNewStep(user.token, isStep, data);
+        await sendNewStep(user.token, isStep, data);
         alertC.current.showAlert("Pomyślnie dodano krok.", "success");
         handleClose();
         await loadSteps(setSteps, setPath, setRoot, setError);
