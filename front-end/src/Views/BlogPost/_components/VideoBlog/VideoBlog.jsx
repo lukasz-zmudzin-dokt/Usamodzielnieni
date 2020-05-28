@@ -1,12 +1,12 @@
 import React, { useContext, useRef, useState } from "react";
-import {Alert, Button, Card, CardColumns, Form, Modal} from "react-bootstrap";
+import { Alert, Button, Card, CardColumns, Form, Modal } from "react-bootstrap";
 import VideoCard from "../VideoCard/VideoCard";
 import { FormGroup } from "components";
 import { staffTypes } from "constants/staffTypes";
 import proxy from "config/api";
 import { AlertContext } from "context/AlertContext";
-import {deletePost} from "../../functions/apiCalls";
-import {DeletionModal} from "../../../../components";
+import { deletePost } from "../../functions/apiCalls";
+import { DeletionModal } from "../../../../components";
 
 const approveChanges = async (id, token, data) => {
   const url = proxy.blog + "blogpost/" + id + "/";
@@ -88,7 +88,7 @@ const VideoBlog = ({ user, postString }) => {
     try {
       await deletePost(postString.id, user.token);
       setDeleted(true);
-    } catch(e) {
+    } catch (e) {
       alertC.current.showAlert("Wystąpił błąd podczas usuwania wideobloga.");
     }
   };
@@ -106,24 +106,25 @@ const VideoBlog = ({ user, postString }) => {
         {deleted && <Alert variant="info">Ten blog został usunięty</Alert>}
         <Card.Title as="h2" className="mb-4">
           {postString.title}
-          {!deleted && user?.data?.group_type?.includes(staffTypes.BLOG_CREATOR) && (
-            <>
-              <Button
+          {!deleted &&
+            user?.data?.group_type?.includes(staffTypes.BLOG_CREATOR) && (
+              <>
+                <Button
                   variant="primary"
                   className="mx-3"
                   onClick={(e) => setShowModal(true)}
-              >
-                Dodaj kartę
-              </Button>
-              <Button
-                variant="danger"
-                className="mx-3"
-                onClick={() => setShowDelModal(true)}
-              >
-                Usuń wideobloga
-              </Button>
-            </>
-          )}
+                >
+                  Dodaj kartę
+                </Button>
+                <Button
+                  variant="danger"
+                  className="mx-3"
+                  onClick={() => setShowDelModal(true)}
+                >
+                  Usuń wideobloga
+                </Button>
+              </>
+            )}
         </Card.Title>
         <CardColumns>
           {content.map((item) => (
