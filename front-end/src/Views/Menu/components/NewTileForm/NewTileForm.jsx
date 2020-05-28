@@ -83,7 +83,7 @@ const mapPosts = (posts) => {
 const NewTileForm = ({ show, setShow, user, appendTile, tileData }) => {
   const [validated, setValidated] = useState(false);
   const [title, setTitle] = useState("");
-  const [background, setBackground] = useState("#fafafa");
+  const [background, setBackground] = useState("#7469af");
   const [path, setPath] = useState("/cvEditor");
   const [photoB64, setPhotoB64] = useState("");
   const [label, setLabel] = useState("");
