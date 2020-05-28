@@ -15,7 +15,7 @@ import CheckBoxList from "./CheckBoxList";
 import { approveFileSize } from "utils/approveFile/approveFile";
 import proxy from "config/api";
 import menuPositions from "constants/menuPositions";
-import {userTypes} from "constants/userTypes";
+import { userTypes } from "constants/userTypes";
 const ColorPicker = React.lazy(() =>
   import("components/ColorPicker/ColorPicker")
 );
@@ -102,10 +102,12 @@ const NewTileForm = ({ show, setShow, user, appendTile, tileData }) => {
 
   useEffect(() => {
     setLoading(true);
-    let paths = menuPositions.filter((item) => !item.allowed || item.allowed?.includes(userTypes.STANDARD));
+    let paths = menuPositions.filter(
+      (item) => !item.allowed || item.allowed?.includes(userTypes.STANDARD)
+    );
     paths = paths.map((item) => ({
       id: item.path,
-      name: item.name
+      name: item.name,
     }));
     const loadPostList = async () => {
       let res;
