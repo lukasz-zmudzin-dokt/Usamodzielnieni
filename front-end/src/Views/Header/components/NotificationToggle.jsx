@@ -1,5 +1,5 @@
 import React, { forwardRef } from "react";
-import { Button} from "react-bootstrap";
+import { Button } from "react-bootstrap";
 
 const NotificationToggle = forwardRef(({ count, ...rest }, ref) => {
   const badge = count > 0 && (
