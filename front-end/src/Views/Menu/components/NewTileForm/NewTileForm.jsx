@@ -134,7 +134,7 @@ const NewTileForm = ({ show, setShow, user, appendTile, tileData }) => {
     };
     loadPostList();
     setLoading(false);
-  }, [alertContext, tileData]);
+  }, [alertContext, tileData, pathArray]);
 
   const onChange = async () => {
     const file = fileInput.current?.files?.[0];

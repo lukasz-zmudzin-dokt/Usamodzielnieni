@@ -26,7 +26,7 @@ const VideoCard = ({ content, user, cutCard }) => {
               size="sm"
               onClick={(e) => setToDelete(true)}
             >
-              <img src="/deleteicon.svg" alt="Usuń" />
+              <small>Usuń</small>
             </Button>
           </div>
         )}

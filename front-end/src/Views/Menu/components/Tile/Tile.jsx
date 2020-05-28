@@ -100,11 +100,7 @@ const Tile = ({
               variant="primary"
               onClick={() => setShowEdit(true)}
             >
-              <img
-                className="tile__button__edit__icon"
-                src="/editicon.svg"
-                alt="Edytuj"
-              />
+              <small>Edytuj</small>
             </Button>
             <Button
               size="sm"
@@ -112,11 +108,7 @@ const Tile = ({
               variant="danger"
               onClick={() => setShowDelete(true)}
             >
-              <img
-                className="tile__button__delete__icon"
-                src="/deleteicon.svg"
-                alt="Usuń"
-              />
+              <small>Usuń</small>
             </Button>
             <DeletionModal
               show={showDelete}

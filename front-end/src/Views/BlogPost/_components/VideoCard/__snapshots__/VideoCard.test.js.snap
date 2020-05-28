@@ -9,10 +9,12 @@ exports[`VideoCard should match snapshot 1`] = `
       class="text-right"
     >
       <button
-        class="btn btn-light btn-sm"
+        class="btn btn-danger btn-sm"
         type="button"
       >
-        X
+        <sm>
+          Usuń
+        </sm>
       </button>
     </div>
     <div>
