@@ -68,7 +68,11 @@ const CVEditorTab = ({
                 type="submit"
                 id="saveButton"
                 block
-                disabled={group_type?.includes(staffTypes.GUEST) || disabled}
+                disabled={
+                  group_type?.includes(staffTypes.GUEST) ||
+                  group_type?.includes(staffTypes.BLOG_MODERATOR) ||
+                  disabled
+                }
               >
                 {disabled
                   ? "Ładowanie..."
