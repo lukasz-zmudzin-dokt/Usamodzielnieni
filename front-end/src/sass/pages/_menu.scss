@@ -71,7 +71,7 @@
           max-width: 1000px;
           width: 100%; 
           .tvContainer__tv__video__space {
-            padding: 7% 20% 7% 7%;
+            padding: 7% 20% 13% 7%;
             height: 100%;
             display: flex;
             position: relative;
@@ -103,6 +103,19 @@
       max-width: calc((4 * var(--tiles-gap)) + (3 * var(--tile-width)));
       padding: var(--tiles-gap) 0 0 var(--tiles-gap);
       background-color: #fff;
+      .tile__button {
+        &__container {
+          position: absolute;
+          z-index: 10;
+          right: 0;
+        }
+        &__edit {
+          margin-right: 0.25rem;
+        }
+        &__delete {
+          margin-left: 0.25rem;
+        }
+      }
       .tile__container {
         display: flex;
         flex: 1 0 auto;
@@ -159,6 +172,7 @@
             transition: background-color .2s ease;
             span {
               text-align: center;
+              line-height: calc(0.8rem + (0.8 * var(--tile-unit)));
             }
           }
           .tile__border {
@@ -193,7 +207,7 @@
             text-transform: uppercase;
             color: #000;
             letter-spacing: 0.1rem;
-            font-size: calc(0.6rem + (0.8 * var(--tile-unit)));
+            font-size: calc(0.4rem + (0.8 * var(--tile-unit)));
           }
           .tile__fragment {
             &--show {

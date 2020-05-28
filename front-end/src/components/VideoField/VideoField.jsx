@@ -7,7 +7,7 @@ import { Alert } from "react-bootstrap";
 import { staffTypes } from "constants/staffTypes";
 import { userTypes } from "constants/userTypes";
 
-const VideoField = ({ id, videoItem, errVid, activeTab }) => {
+const VideoField = ({ id, videoItem, errVid }) => {
   const [video, setVideo] = useState({ id: 0 });
   const [err, setErr] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -27,7 +27,7 @@ const VideoField = ({ id, videoItem, errVid, activeTab }) => {
     const getVideos = async () => {
       let res;
       try {
-        res = await getUrl(user.token, id);
+        res = await getUrl(id);
         setVideo({ ...res, url: sliceUrl(res.url) });
       } catch (e) {
         setErr(true);
@@ -43,10 +43,7 @@ const VideoField = ({ id, videoItem, errVid, activeTab }) => {
       setLoading(false);
       setErr(true);
     }
-    if (activeTab?.active !== activeTab?.your && player.current !== null) {
-      player.current.resetPlayer();
-    }
-  }, [activeTab, errVid, id, user.token, videoItem]);
+  }, [errVid, id, videoItem]);
 
   const opts = {
     height: "100%",

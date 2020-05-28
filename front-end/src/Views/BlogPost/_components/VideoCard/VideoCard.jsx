@@ -22,11 +22,11 @@ const VideoCard = ({ content, user, cutCard }) => {
         user?.data?.group_type.includes(staffTypes.BLOG_CREATOR) && (
           <div className="text-right">
             <Button
-              variant="light"
+              variant="danger"
               size="sm"
               onClick={(e) => setToDelete(true)}
             >
-              X
+              <small>Usuń</small>
             </Button>
           </div>
         )}

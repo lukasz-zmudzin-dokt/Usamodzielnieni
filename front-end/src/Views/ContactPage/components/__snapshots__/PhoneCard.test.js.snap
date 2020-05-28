@@ -13,10 +13,12 @@ exports[`PhoneCard should match snapshot 1`] = `
       >
         123
         <button
-          class="btn btn-light btn-sm"
+          class="btn btn-danger btn-sm"
           type="button"
         >
-          X
+          <sm>
+            Usuń
+          </sm>
         </button>
       </h2>
       <p

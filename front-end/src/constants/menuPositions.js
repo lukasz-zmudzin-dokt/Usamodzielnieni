@@ -50,12 +50,12 @@ export default [
     verified: true,
   },
   {
-    name: "Telefony",
+    name: "Przydatne telefony",
     path: paths.CONTACT_PAGE,
     allowed: undefined, //wszyscy są upoważnieni - zalogowani i niezalogowani
   },
   {
-    name: "Kroki",
+    name: "Kroki usamodzielnienia",
     path: paths.STEPS,
     allowed: undefined, //wszyscy są upoważnieni - zalogowani i niezalogowani
   },

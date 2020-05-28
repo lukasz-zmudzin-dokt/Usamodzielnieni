@@ -1,12 +1,13 @@
 import React from "react";
-import { render, waitForElement } from "@testing-library/react";
+import { render, wait } from "@testing-library/react";
 import TilesContainer from "./TilesContainer";
 import { Tile } from "../";
+import { AlertContext } from "context/AlertContext";
 
 jest.mock("../");
 
 describe("TilesContainer", () => {
-  let apiShouldFail, tiles;
+  let apiShouldFail, tiles, alertC;
   beforeAll(() => {
     global.fetch = jest.fn().mockImplementation((input, init) => {
       return new Promise((resolve, reject) => {
@@ -47,22 +48,36 @@ describe("TilesContainer", () => {
         destination: "/chats",
       },
     ];
+    alertC = {
+      showAlert: jest.fn(),
+    };
   });
 
   it("should render without crashing", async () => {
-    const { container, getByText } = render(<TilesContainer />);
+    const { container, getByText } = render(
+      <AlertContext.Provider value={alertC}>
+        <TilesContainer />
+      </AlertContext.Provider>
+    );
 
-    expect(getByText("Ładowanie menu...")).toBeInTheDocument();
-    await waitForElement(() => getByText("Telefon zaufania"));
+    //expect(getByText("Ładowanie menu...")).toBeInTheDocument();
+    await wait(() => getByText("Telefon zaufania"));
 
     expect(container).toMatchSnapshot();
   });
 
   it("should render error alert when api fails", async () => {
     apiShouldFail = true;
-    const { getByText } = render(<TilesContainer />);
+    const { getAllByText } = render(
+      <AlertContext.Provider value={alertC}>
+        <TilesContainer />
+      </AlertContext.Provider>
+    );
 
-    await waitForElement(() => getByText("Nie udało się pobrać menu."));
-    expect(getByText("Nie udało się pobrać menu.")).toBeInTheDocument();
+    await wait(() => expect(fetch).toHaveBeenCalled());
+    expect(alertC.showAlert).toHaveBeenCalledWith(
+      "Wystąpił błąd podczas pobierania menu."
+    );
+    //expect(getAllByText("Warsztaty")).toBeInTheDocument();
   });
 });

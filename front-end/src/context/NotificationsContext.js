@@ -8,10 +8,9 @@ import React, {
 import { UserContext, ChatContext } from "context";
 import proxy from "config/api";
 import { paths } from "constants/paths";
-import { userTypes } from "constants/userTypes";
 import { compile } from "path-to-regexp";
 
-const getNotifications = async (token, type, next) => {
+const getNotifications = async (token, next) => {
   let url = proxy.notification + "list/all" + (next ? `?page=${next}` : "");
   const headers = {
     Authorization: "Token " + token,
@@ -26,7 +25,7 @@ const getNotifications = async (token, type, next) => {
 
   return response
     .json()
-    .then((notifications) => mapNotifications(notifications, type));
+    .then((notifications) => mapNotifications(notifications));
 };
 
 const getNotificationsCount = async (token) => {
@@ -93,42 +92,29 @@ const deleteNotifications = async (token) => {
   return;
 };
 
-const mapNotifications = (notifications, type) => ({
+const mapNotifications = (notifications) => ({
   notifications: notifications.results.map((notification) => {
     if (notification.event === "Nowa wiadomość") {
       return null;
     }
-    return mapNotification(notification, type);
+    return mapNotification(notification);
   }),
   next: notifications.next?.replace(/.*page=/, "") || undefined,
 });
 
-const mapNotification = (notification, type) => {
+const mapNotification = (notification) => {
   return {
     id: notification.slug,
-    path: getPath(notification.app, notification.object_id, type),
+    path: getPath(notification.app, notification.object_id),
     title: notification.text,
     time: new Date(notification.timestamp),
     unread: notification.unread,
   };
 };
 
-const getPath = (appName, id, type) => {
-  const isStandard = type === userTypes.STANDARD;
-  if (appName.match(/^cv/)) {
-    return isStandard
-      ? compile(paths.MY_CVS)({})
-      : compile(paths.CV_APPROVAL)({});
-  } else if (appName.match(/^job/)) {
-    return isStandard
-      ? compile(paths.JOB_OFFERS)({})
-      : compile(paths.MY_OFFERS)({});
-  } else if (appName.match(/^account/)) {
-    return compile(paths.USER)({});
-  } else if (appName.match(/^blog/)) {
-    return compile(paths.BLOG_POST)({ id });
-  } else if (appName.match(/^chat/)) {
-    return compile(paths.CHATS)({});
+const getPath = (appName, id) => {
+  if (appName) {
+    return !id ? `/${appName}` : `/${appName}/${id}`;
   } else {
     return compile(paths.DASHBOARD)({});
   }
@@ -147,12 +133,12 @@ export const NotificationsProvider = (props) => {
   const chatC = useContext(ChatContext);
 
   useEffect(() => {
-    const loadNotifications = async (token, type) => {
+    const loadNotifications = async (token) => {
       setError(false);
       let values;
       try {
         values = await Promise.all([
-          getNotifications(token, type),
+          getNotifications(token),
           getNotificationsCount(token),
         ]);
       } catch (e) {
@@ -168,25 +154,22 @@ export const NotificationsProvider = (props) => {
       setNext(loadedNext);
       setNotifications(loadedNotifications);
     };
-    if (user.token && user.type) {
-      loadNotifications(user.token, user.type);
+    if (user.token) {
+      loadNotifications(user.token);
     }
-  }, [user.token, user.type]);
+  }, [user.token]);
 
   useEffect(() => {
     if (socket.current) {
       socket.current.close();
       socket.current = null;
     }
-    if (user.token && user.type) {
+    if (user.token) {
       const url = proxy.wsNotification + "ws";
       try {
         socket.current = new WebSocket(url, user.token);
         socket.current.onmessage = (e) => {
-          const newNotification = mapNotification(
-            JSON.parse(e.data),
-            user.type
-          );
+          const newNotification = mapNotification(JSON.parse(e.data));
           const parsedNotification = JSON.parse(e.data);
 
           if (parsedNotification.app === "chat") {
@@ -203,7 +186,7 @@ export const NotificationsProvider = (props) => {
         console.log(e);
       }
     }
-  }, [chatC.socket, user.token, user.type]);
+  }, [chatC.socket, user.token]);
 
   const data = {
     notifications,
@@ -262,11 +245,9 @@ export const NotificationsProvider = (props) => {
         setNotifications(
           notifications.filter((notification) => {
             const check = !ids.find((id) => notification.id === id);
-            console.log(check, notification);
             return check;
           })
         );
-        console.log(ids);
         try {
           await Promise.all(
             ids.map(async (id) => {
@@ -285,7 +266,7 @@ export const NotificationsProvider = (props) => {
       setNext(null);
       let res;
       try {
-        res = await getNotifications(user.token, user.type, next);
+        res = await getNotifications(user.token, next);
       } catch (e) {
         setError(true);
         return;

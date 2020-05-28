@@ -17,10 +17,9 @@ const changeUrl = async (token, video) => {
   return res.status;
 };
 
-const getUrl = async (token, id) => {
+const getUrl = async (id) => {
   const urlChange = `${proxy.videos}video/${id}`;
-  const headers = {
-    Authorization: token ? "token " + token : undefined,
+  let headers = {
     "Content-Type": "application/json",
   };
   const res = await fetch(urlChange, {

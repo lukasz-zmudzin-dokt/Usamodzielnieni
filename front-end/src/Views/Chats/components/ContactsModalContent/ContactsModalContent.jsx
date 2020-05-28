@@ -56,7 +56,6 @@ const ContactsModalContent = () => {
       let loadedContacts;
       try {
         loadedContacts = await getContacts(token, filters);
-        console.log(loadedContacts);
       } catch (e) {
         loadedContacts = [];
         setError(true);

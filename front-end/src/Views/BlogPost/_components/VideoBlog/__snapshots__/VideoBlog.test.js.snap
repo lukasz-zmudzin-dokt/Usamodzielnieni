@@ -18,6 +18,12 @@ exports[`VideoBlog should match snapshot 1`] = `
         >
           Dodaj kartę
         </button>
+        <button
+          class="mx-3 btn btn-danger"
+          type="button"
+        >
+          Usuń wideobloga
+        </button>
       </h2>
       <div
         class="card-columns"
