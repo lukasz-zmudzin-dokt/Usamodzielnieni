@@ -27,7 +27,7 @@ const VideoField = ({ id, videoItem, errVid, activeTab }) => {
     const getVideos = async () => {
       let res;
       try {
-        res = await getUrl(user.token, id);
+        res = await getUrl(user, id);
         setVideo({ ...res, url: sliceUrl(res.url) });
       } catch (e) {
         setErr(true);
