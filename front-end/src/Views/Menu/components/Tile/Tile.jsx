@@ -92,7 +92,7 @@ const Tile = ({
         </div>
       </Link>
       {!previewOnly &&
-        user.data?.group_type.includes(staffTypes.BLOG_MODERATOR) && (
+        user.data?.group_type?.includes(staffTypes.BLOG_MODERATOR) && (
           <div className="tile__button__container">
             <Button
               size="sm"

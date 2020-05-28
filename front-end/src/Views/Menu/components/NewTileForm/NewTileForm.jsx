@@ -121,7 +121,6 @@ const NewTileForm = ({ show, setShow, user, appendTile, tileData }) => {
         res = [];
       }
       setPathArray([...paths, ...res]);
-      setPath(pathArray[0]);
       if (tileData) {
         const { id, title, color, show, imageUrl, destination } = tileData;
         setTileId(id);
