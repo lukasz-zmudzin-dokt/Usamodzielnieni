@@ -4,11 +4,15 @@ import Tile from "./Tile";
 import { MemoryRouter } from "react-router-dom";
 import { AlertContext } from "context/AlertContext";
 import { staffTypes } from "constants/staffTypes";
+import {NewTileForm} from "../index";
+
+jest.mock("../");
 
 describe("Tile", () => {
   let props, appendTile, cutTile, apiFail, alertC;
 
   beforeAll(() => {
+    NewTileForm.mockImplementation(() => <div>NewTileForm</div>);
     global.fetch = jest.fn().mockImplementation(() => {
       return new Promise((resolve) => {
         if (apiFail) {

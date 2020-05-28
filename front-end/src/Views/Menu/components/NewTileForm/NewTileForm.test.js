@@ -48,7 +48,7 @@ describe("NewTileForm", () => {
         } else {
           switch (input) {
             case proxy.menu + "tile/123/photo":
-              resolve({ status: 200 });
+              resolve({ status: 200, json: () => Promise.resolve("")});
               break;
             case proxy.menu + "tile/":
               if (init.method === "POST") {
