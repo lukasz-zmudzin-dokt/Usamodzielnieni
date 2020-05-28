@@ -1,5 +1,12 @@
+const getMonthString = (month) => (month < 9 ? `0${month + 1}` : month + 1);
 const mapDate = (date) =>
-  date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
+  date.getDate() +
+  "." +
+  getMonthString(date.getMonth()) +
+  "." +
+  date.getFullYear();
+const mapMonthDate = (date) =>
+  date && getMonthString(date.getMonth()) + "." + date.getFullYear();
 
 const mapPersonalData = (personalData) => ({
   first_name: personalData.firstName,
@@ -10,15 +17,15 @@ const mapPersonalData = (personalData) => ({
 });
 const mapEducation = (education) =>
   education.map((edu) => ({
-    year_start: edu.startTime?.getFullYear(),
-    year_end: edu.endTime?.getFullYear(),
+    date_start: mapMonthDate(edu.startTime),
+    date_end: mapMonthDate(edu.endTime),
     name: edu.place,
     additional_info: edu.description,
   }));
 const mapWorkExperience = (workExperience) =>
   workExperience.map((exp) => ({
-    year_start: exp.startTime?.getFullYear(),
-    year_end: exp.endTime?.getFullYear(),
+    date_start: mapMonthDate(exp.startTime),
+    date_end: mapMonthDate(exp.endTime),
     title: exp.place,
     description: exp.description,
   }));
