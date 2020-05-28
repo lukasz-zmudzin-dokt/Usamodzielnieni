@@ -8,7 +8,7 @@ export const logoutUser = async (token) => {
   };
 
   const response = await fetch(url, { method: "POST", headers });
-  if (response.status === 200) {
+  if (response.status !== 500) {
     return true;
   } else {
     throw response.status;
