@@ -7,7 +7,6 @@ import React, {
   useState,
 } from "react";
 import FormGroup from "components/FormGroup";
-import { DEFAULT_INPUT } from "constants/other";
 import Tile from "../Tile/Tile";
 import { AlertContext } from "context/AlertContext";
 import { toBase64 } from "utils/converters/fileToBase64";
