@@ -5,8 +5,8 @@ import { FormGroup } from "components";
 import { staffTypes } from "constants/staffTypes";
 import proxy from "config/api";
 import { AlertContext } from "context/AlertContext";
-import {deletePost} from "../../functions/apiCalls";
-import {DeletionModal} from "../../../../components";
+import {deletePost} from "Views/BlogPost/functions/apiCalls";
+import {DeletionModal} from "components";
 
 const approveChanges = async (id, token, data) => {
   const url = proxy.blog + "blogpost/" + id + "/";
