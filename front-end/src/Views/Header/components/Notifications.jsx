@@ -12,9 +12,7 @@ const Notifications = ({ location, ...rest }) => {
   const { notifications, count, error } = notificationsContext;
 
   useEffect(() => {
-    console.log("useEffect");
     if (notifications) {
-      console.log("useEffect if");
       const toRemove = notifications.filter(
         (notification) =>
           notification.path === location.pathname ||
@@ -22,7 +20,6 @@ const Notifications = ({ location, ...rest }) => {
             location.pathname.match(/^\/chats\//))
       );
       if (toRemove.length) {
-        console.log("useEffect len");
         notificationsContext.deleteNotificationsArray(
           toRemove.map((not) => not.id)
         );

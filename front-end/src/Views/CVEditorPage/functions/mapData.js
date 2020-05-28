@@ -20,16 +20,16 @@ const mapSchools = (data) =>
   data.map((edu) => ({
     place: edu.name,
     description: edu.additional_info,
-    startTime: mapDate(edu.year_start),
-    endTime: mapDate(edu.year_end),
+    startTime: mapDate(edu.date_start),
+    endTime: mapDate(edu.date_end),
   }));
 
 const mapExperiences = (data) =>
   data.map((exp) => ({
     place: exp.title,
     description: exp.description,
-    startTime: mapDate(exp.year_start),
-    endTime: mapDate(exp.year_end),
+    startTime: mapDate(exp.date_start),
+    endTime: mapDate(exp.date_end),
   }));
 
 const mapSkills = (data) =>
@@ -44,12 +44,15 @@ const mapLanguages = (data) =>
   }));
 
 const mapDate = (date) => {
-  if (date !== null) return new Date(date, 0, 0);
+  if (date !== null) {
+    const val = date.split(".");
+    return new Date(val[1], val[0] - 1, 0);
+  }
   return undefined;
 };
 
 const mapBirthDate = (date) => {
-  const dateArray = date.split("-");
+  const dateArray = date.split(".");
   return new Date(dateArray[2], dateArray[1] - 1, dateArray[0]);
 };
 

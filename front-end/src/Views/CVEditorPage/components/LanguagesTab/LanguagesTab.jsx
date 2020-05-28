@@ -10,7 +10,7 @@ class LanguagesTab extends React.Component {
       smallFormValidated: false,
       newLanguage: {
         name: "",
-        level: "podstawowy",
+        level: "A1",
       },
     };
   }
@@ -18,8 +18,7 @@ class LanguagesTab extends React.Component {
   getLanguage = () => this.state.newLanguage;
   getLanguageId = (lang) => `${lang.name}_${lang.level}`;
   getLanguageName = (lang) => `${lang.name} - ${lang.level}`;
-  clear = () =>
-    this.setState({ newLanguage: { name: "", level: "podstawowy" } });
+  clear = () => this.setState({ newLanguage: { name: "", level: "A1" } });
 
   handleNameChange = (e) => {
     const name = e.target.value;
@@ -40,7 +39,14 @@ class LanguagesTab extends React.Component {
     this.setState({ smallFormValidated: value });
 
   render() {
-    const levels = ["podstawowy", "komunikatywny", "biegły"];
+    const levels = [
+      { value: "A1", text: "A1 – początkujący" },
+      { value: "A2", text: "A2 – podstawowy" },
+      { value: "B1", text: "B1 – niższy średniozaawansowany" },
+      { value: "B2", text: "B2 – wyższy średniozaawansowany" },
+      { value: "C1", text: "C1 – zaawansowany" },
+      { value: "C2", text: "C2 – biegły" },
+    ];
     return (
       <CVEditorTab
         title="Języki obce"
@@ -92,8 +98,8 @@ class LanguagesTab extends React.Component {
                 required
               >
                 {levels.map((lev) => (
-                  <option key={lev} value={lev}>
-                    {lev}
+                  <option key={lev.value} value={lev.value}>
+                    {lev.text}
                   </option>
                 ))}
               </Form.Control>

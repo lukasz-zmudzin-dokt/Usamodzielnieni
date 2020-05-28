@@ -5,7 +5,7 @@ Object {
   "education": Array [
     Object {
       "description": "klasa1",
-      "endTime": 2018-12-30T23:00:00.000Z,
+      "endTime": 2019-05-30T22:00:00.000Z,
       "place": "szkoła1",
       "startTime": 2015-12-30T23:00:00.000Z,
     },
@@ -40,7 +40,7 @@ Object {
       "description": "stanowisko1",
       "endTime": undefined,
       "place": "praca1",
-      "startTime": 2019-12-30T23:00:00.000Z,
+      "startTime": 2020-11-29T23:00:00.000Z,
     },
   ],
 }
@@ -51,7 +51,7 @@ Object {
   "education": Array [
     Object {
       "description": "klasa1",
-      "endTime": 2018-12-30T23:00:00.000Z,
+      "endTime": 2019-05-30T22:00:00.000Z,
       "place": "szkoła1",
       "startTime": 2015-12-30T23:00:00.000Z,
     },

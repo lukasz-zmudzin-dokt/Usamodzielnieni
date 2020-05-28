@@ -1,106 +1,36 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { ProgressBarFragment } from "../";
-import proxy from "config/api";
-import { Alert } from "react-bootstrap";
-
-const tmpSteps = [
-  {
-    id: "1",
-    type: "main",
-    title:
-      "Tytuł głównego kroku 1 123 123 123 123 123 123 123 123 123 123 123 123 ",
-    description: "Opis kroku 1 wraz z filmikami.",
-    next: [
-      { id: "2", choiceName: "Tak" },
-      { id: "5", choiceName: "Nie" },
-    ],
-  },
-  {
-    id: "2",
-    type: "main",
-    title:
-      "Tytuł głównego kroku 2 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123",
-    description: "Opis kroku 2 wraz z filmikami.",
-    next: [{ id: "3", choiceName: "Dalej" }],
-  },
-  {
-    id: "3",
-    type: "sub",
-    title:
-      "Tytuł podkroku 2.1 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123 123",
-    description: "Opis kroku 2.1 wraz z filmikami.",
-    next: [{ id: "4", choiceName: "Dalej" }],
-  },
-  {
-    id: "4",
-    type: "sub",
-    title: "Tytuł podkroku 2.2",
-    description: "Opis kroku 2.2 wraz z filmikami.",
-    next: [{ id: "5", choiceName: "Dalej" }],
-  },
-  {
-    id: "5",
-    type: "main",
-    title: "Tytuł głównego kroku 3",
-    description: "Opis kroku 3 wraz z filmikami.",
-    next: [{ id: "6", choiceName: "Dalej" }],
-  },
-  {
-    id: "6",
-    type: "sub",
-    title: "Tytuł podkroku 3.1",
-    description: "Opis kroku 3.1 wraz z filmikami.",
-    next: [{ id: "1", choiceName: "początek" }],
-  },
-];
-
-const getSteps = async () => {
-  let url = `${proxy.steps}/list`; // TODO
-  const headers = {
-    "Content-Type": "application/json",
-  };
-
-  const response = await fetch(url, { method: "GET", headers });
-
-  if (response.status !== 200) {
-    //return tmpSteps;
-
-    // eslint-disable-next-line no-unreachable
-    throw response.status;
-  }
-  return response.json().then((chats) => mapSteps(chats));
-};
-
-const mapSteps = (steps) =>
-  steps.map((step) => ({
-    id: step.id,
-    type: step.type,
-    title: step.title,
-    value: step.value,
-    next: step.next,
-    // TODO
-  }));
+import { Alert, Button } from "react-bootstrap";
+import { deleteStep, findParents } from "../../functions/deleteStep";
+import { DeletionModal } from "components";
+import { staffTypes } from "constants/staffTypes";
+import { UserContext } from "context";
+import { NewStep, EditStep } from "../";
+import { loadSteps } from "../../functions/loadSteps";
 
 const ProgressBar = () => {
-  const [steps, setSteps] = useState();
-  const [path, setPath] = useState(["1"]);
+  const [steps, setSteps] = useState([]);
+  const [root, setRoot] = useState();
+  const [path, setPath] = useState([]);
   const [error, setError] = useState(false);
+  const [wantsDelete, setWantsDelete] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const user = useContext(UserContext);
+  const [showNew, setShowNew] = useState(false);
+  const [showEdit, setShowEdit] = useState(false);
 
   useEffect(() => {
-    const loadSteps = async () => {
-      let res;
-      try {
-        res = await getSteps();
-      } catch (e) {
-        console.log(e);
-        setError(true);
-        return;
-      }
-      setSteps(res);
-    };
+    loadSteps(setSteps, setPath, setRoot, setError);
+  }, [setSteps, setRoot, setPath, setError]);
 
-    loadSteps();
-  }, []);
+  const deletion = async () => {
+    setWantsDelete(false);
+    let stepId = path[path.length - 1];
+    let res = await deleteStep(steps, stepId, user.token);
+    if (res.status === 204) {
+      await loadSteps(setSteps, setPath, setRoot, setError);
+    }
+  };
 
   const setCurrent = (id) => {
     const index = path.indexOf(id);
@@ -120,9 +50,49 @@ const ProgressBar = () => {
     !steps && <Alert variant="info">Ładowanie...</Alert>
   );
 
+  if (wantsDelete) {
+    deletion();
+  }
+
   return (
     msg || (
       <div>
+        <DeletionModal
+          show={showModal}
+          setShow={setShowModal}
+          delConfirmed={setWantsDelete}
+          question="Czy na pewno chcesz usunąć ten krok?"
+        />
+        {user.data.group_type?.includes(staffTypes.BLOG_MODERATOR) ? (
+          <>
+            <div className="mb-3">
+              <Button className="ml-3" onClick={() => setShowNew(true)}>
+                Dodaj nowy krok
+              </Button>
+            </div>
+            <NewStep
+              steps={steps}
+              show={showNew}
+              handleClose={() => setShowNew(false)}
+              root={root}
+              setRoot={setRoot}
+              setSteps={setSteps}
+              setPath={setPath}
+              setError={setError}
+            />
+            <EditStep
+              steps={steps}
+              step={steps.find((item) => item.id === path[path.length - 1])}
+              show={showEdit}
+              handleClose={() => setShowEdit(false)}
+              setRoot={setRoot}
+              setSteps={setSteps}
+              setPath={setPath}
+              setError={setError}
+              root={root}
+            />
+          </>
+        ) : null}
         {path.map((stepId, i) => (
           <ProgressBarFragment
             key={stepId}
@@ -130,6 +100,9 @@ const ProgressBar = () => {
             step={steps.find((step) => step.id === stepId)}
             current={path.length - 1 === i}
             setCurrent={setCurrent}
+            wantsDelete={setShowModal}
+            wantsEdit={setShowEdit}
+            path={path}
           />
         ))}
         {steps.find((step) => step.id === path[path.length - 1])?.next && (

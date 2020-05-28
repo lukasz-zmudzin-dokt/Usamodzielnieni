@@ -6,6 +6,7 @@ const Steps = () => {
   return (
     <Container>
       <h1>Kroki usamodzielnienia</h1>
+
       <ProgressBar />
     </Container>
   );
