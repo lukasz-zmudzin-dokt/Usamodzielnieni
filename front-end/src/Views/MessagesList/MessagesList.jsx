@@ -92,7 +92,7 @@ const MessagesList = () => {
       return {
         content: answer.message,
         side: answer.username === user.data.username ? "right" : "left",
-        send: answer.timestamp,
+        send: new Date(answer.timestamp).toLocaleString(),
         id: answer.timestamp,
       };
     },
