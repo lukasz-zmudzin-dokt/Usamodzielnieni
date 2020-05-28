@@ -18,7 +18,7 @@ const getMessages = async (token, id) => {
     Authorization: "Token " + token,
     "Content-Type": "application/json",
   };
-  const url = `${proxy.chat}${id}`;
+  const url = `${proxy.chat}${id}/`;
   const response = await fetch(url, { method: "GET", headers });
 
   if (response.status === 200) {

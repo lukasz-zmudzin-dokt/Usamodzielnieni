@@ -172,7 +172,7 @@ export const NotificationsProvider = (props) => {
           const newNotification = mapNotification(JSON.parse(e.data));
           const parsedNotification = JSON.parse(e.data);
 
-          if (parsedNotification.app === "chat") {
+          if (parsedNotification.app === "chats") {
             chatC.socket.current.send(JSON.stringify({ message: "threads" }));
           }
           setCount((prev) => prev + 1);
