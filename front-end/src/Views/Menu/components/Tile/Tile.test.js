@@ -1,11 +1,11 @@
 import React from "react";
-import {render, wait, fireEvent, act} from "@testing-library/react";
+import { render, wait, fireEvent, act } from "@testing-library/react";
 import Tile from "./Tile";
 import { MemoryRouter } from "react-router-dom";
 import { AlertContext } from "context/AlertContext";
 import { staffTypes } from "constants/staffTypes";
-import {NewTileForm} from "../";
-import {userTypes} from "constants/userTypes";
+import { NewTileForm } from "../";
+import { userTypes } from "constants/userTypes";
 
 jest.mock("../");
 
@@ -74,8 +74,8 @@ describe("Tile", () => {
     props.user = {
       type: userTypes.STAFF,
       data: {
-        group_type: [staffTypes.BLOG_MODERATOR]
-      }
+        group_type: [staffTypes.BLOG_MODERATOR],
+      },
     };
     const { getByRole, getByText } = render(
       <AlertContext.Provider value={alertC}>
@@ -94,8 +94,8 @@ describe("Tile", () => {
     props.user = {
       type: userTypes.STAFF,
       data: {
-        group_type: [staffTypes.BLOG_MODERATOR]
-      }
+        group_type: [staffTypes.BLOG_MODERATOR],
+      },
     };
     const { getByText } = render(
       <AlertContext.Provider value={alertC}>
