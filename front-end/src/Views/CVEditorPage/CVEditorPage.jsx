@@ -21,6 +21,7 @@ import { withRouter } from "react-router-dom";
 import { fetchTemplateList, getCVdata } from "./functions/other";
 import { mapData, mapFeedback } from "./functions/mapData";
 import { withAlertContext } from "components";
+import { staffTypes } from "constants/staffTypes";
 
 class CVEditorPage extends React.Component {
   constructor(props) {
@@ -284,7 +285,9 @@ class CVEditorPage extends React.Component {
 
   componentDidMount() {
     let cvId = this.props.match.params.id;
-    this.getTemplates(this.context.token);
+    if (!this.context.data?.group_type?.includes(staffTypes.BLOG_MODERATOR)) {
+      this.getTemplates(this.context.token);
+    }
     if (cvId) {
       this.autofillEditor(cvId);
     } else {
