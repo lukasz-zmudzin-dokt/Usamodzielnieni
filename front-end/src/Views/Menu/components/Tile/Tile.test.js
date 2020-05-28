@@ -1,10 +1,11 @@
 import React from "react";
-import { render, wait, fireEvent } from "@testing-library/react";
+import {render, wait, fireEvent, act} from "@testing-library/react";
 import Tile from "./Tile";
 import { MemoryRouter } from "react-router-dom";
 import { AlertContext } from "context/AlertContext";
 import { staffTypes } from "constants/staffTypes";
-import {NewTileForm} from "../index";
+import {NewTileForm} from "../";
+import {userTypes} from "constants/userTypes";
 
 jest.mock("../");
 
@@ -35,9 +36,10 @@ describe("Tile", () => {
       color: "#fff",
       destination: "/blog/abc123",
       user: {
-        data: {
-          group_type: [staffTypes.BLOG_MODERATOR],
-        },
+        type: userTypes.STANDARD,
+        // data: {
+        //   group_type: [staffTypes.BLOG_MODERATOR],
+        // },
       },
     };
     alertC = {
@@ -69,7 +71,13 @@ describe("Tile", () => {
   });
 
   it("should render edition modal", () => {
-    const { getByRole, getByAltText } = render(
+    props.user = {
+      type: userTypes.STAFF,
+      data: {
+        group_type: [staffTypes.BLOG_MODERATOR]
+      }
+    };
+    const { getByRole, getByText } = render(
       <AlertContext.Provider value={alertC}>
         <MemoryRouter>
           <Tile {...props} />
@@ -77,21 +85,26 @@ describe("Tile", () => {
       </AlertContext.Provider>
     );
 
-    fireEvent.click(getByAltText("Edytuj"));
+    fireEvent.click(getByText("Edytuj"));
 
     expect(getByRole("dialog")).toBeInTheDocument();
   });
 
   it("should delete tile", async () => {
-    const { getByAltText, getByText } = render(
+    props.user = {
+      type: userTypes.STAFF,
+      data: {
+        group_type: [staffTypes.BLOG_MODERATOR]
+      }
+    };
+    const { getByText } = render(
       <AlertContext.Provider value={alertC}>
         <MemoryRouter>
           <Tile {...props} cutTile={cutTile} />
         </MemoryRouter>
       </AlertContext.Provider>
     );
-
-    fireEvent.click(getByAltText("Usuń"));
+    fireEvent.click(getByText("Usuń"));
     fireEvent.click(getByText("Usuń ✗"));
 
     await wait(() => expect(fetch).toHaveBeenCalled());

@@ -56,12 +56,14 @@ const Tile = ({
   );
 
   const handleDeletion = async () => {
-    try {
-      await deleteTile(user.token, id);
-      alertC.current.showAlert("Kafelek usunięty pomyślnie.", "success");
-      cutTile(id);
-    } catch (e) {
-      alertC.current.showAlert(Object.values(e)[0]);
+    if (!previewOnly) {
+      try {
+        await deleteTile(user.token, id);
+        alertC.current.showAlert("Kafelek usunięty pomyślnie.", "success");
+        cutTile(id);
+      } catch (e) {
+        alertC.current.showAlert(Object.values(e)[0]);
+      }
     }
   };
 

@@ -109,15 +109,16 @@ const NewTileForm = ({ show, setShow, user, appendTile, tileData }) => {
       name: item.name,
     }));
     const loadPostList = async () => {
-      let res;
+      let res = [];
       try {
-        res = await fetchPosts();
+        if (show) {
+          res = await fetchPosts();
+        }
       } catch (e) {
         console.log(e);
         alertContext.current.showAlert(
           "Wystąpił błąd podczas pobierania danych o postach."
         );
-        res = [];
       }
       setPathArray([...paths, ...res]);
       if (tileData) {
@@ -134,7 +135,7 @@ const NewTileForm = ({ show, setShow, user, appendTile, tileData }) => {
     };
     loadPostList();
     setLoading(false);
-  }, [alertContext, tileData, pathArray]);
+  }, [alertContext, tileData, show]);
 
   const onChange = async () => {
     const file = fileInput.current?.files?.[0];

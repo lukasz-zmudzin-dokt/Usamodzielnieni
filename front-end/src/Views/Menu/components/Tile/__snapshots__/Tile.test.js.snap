@@ -7,7 +7,7 @@ exports[`Tile should render without crashing 1`] = `
     style="background-color: rgb(255, 255, 255);"
   >
     <a
-      href="/blog/abc123"
+      href="/login"
     >
       <div
         class="tile"
@@ -54,30 +54,6 @@ exports[`Tile should render without crashing 1`] = `
         </div>
       </div>
     </a>
-    <div
-      class="tile__button__container"
-    >
-      <button
-        class="tile__button tile__button__edit btn btn-primary btn-sm"
-        type="button"
-      >
-        <img
-          alt="Edytuj"
-          class="tile__button__edit__icon"
-          src="/editicon.svg"
-        />
-      </button>
-      <button
-        class="tile__button tile__button__delete btn btn-danger btn-sm"
-        type="button"
-      >
-        <img
-          alt="Usuń"
-          class="tile__button__delete__icon"
-          src="/deleteicon.svg"
-        />
-      </button>
-    </div>
   </div>
 </div>
 `;
@@ -89,7 +65,7 @@ exports[`Tile should render without crashing when showImage object is empty 1`] 
     style="background-color: rgb(255, 255, 255);"
   >
     <a
-      href="/blog/abc123"
+      href="/login"
     >
       <div
         class="tile"
@@ -136,30 +112,6 @@ exports[`Tile should render without crashing when showImage object is empty 1`] 
         </div>
       </div>
     </a>
-    <div
-      class="tile__button__container"
-    >
-      <button
-        class="tile__button tile__button__edit btn btn-primary btn-sm"
-        type="button"
-      >
-        <img
-          alt="Edytuj"
-          class="tile__button__edit__icon"
-          src="/editicon.svg"
-        />
-      </button>
-      <button
-        class="tile__button tile__button__delete btn btn-danger btn-sm"
-        type="button"
-      >
-        <img
-          alt="Usuń"
-          class="tile__button__delete__icon"
-          src="/deleteicon.svg"
-        />
-      </button>
-    </div>
   </div>
 </div>
 `;
