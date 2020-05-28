@@ -1,10 +1,12 @@
 import React, { useContext, useRef, useState } from "react";
-import { Button, Card, CardColumns, Form, Modal } from "react-bootstrap";
+import {Alert, Button, Card, CardColumns, Form, Modal} from "react-bootstrap";
 import VideoCard from "../VideoCard/VideoCard";
 import { FormGroup } from "components";
 import { staffTypes } from "constants/staffTypes";
 import proxy from "config/api";
 import { AlertContext } from "context/AlertContext";
+import {deletePost} from "../../functions/apiCalls";
+import {DeletionModal} from "../../../../components";
 
 const approveChanges = async (id, token, data) => {
   const url = proxy.blog + "blogpost/" + id + "/";
@@ -28,7 +30,9 @@ const approveChanges = async (id, token, data) => {
 
 const VideoBlog = ({ user, postString }) => {
   const [showModal, setShowModal] = useState(false);
+  const [showDelModal, setShowDelModal] = useState(false);
   const [validated, setValidated] = useState(false);
+  const [deleted, setDeleted] = useState(false);
   const [data, setData] = useState({
     url: "",
     description: "",
@@ -80,6 +84,15 @@ const VideoBlog = ({ user, postString }) => {
     }
   };
 
+  const handleDelete = async () => {
+    try {
+      await deletePost(postString.id, user.token);
+      setDeleted(true);
+    } catch(e) {
+      alertC.current.showAlert("Wystąpił błąd podczas usuwania wideobloga.");
+    }
+  };
+
   return (
     <Card>
       {postString.header !== null && (
@@ -90,16 +103,26 @@ const VideoBlog = ({ user, postString }) => {
         />
       )}
       <Card.Body>
+        {deleted && <Alert variant="info">Ten blog został usunięty</Alert>}
         <Card.Title as="h2" className="mb-4">
           {postString.title}
-          {user?.data?.group_type?.includes(staffTypes.BLOG_CREATOR) && (
-            <Button
-              variant="primary"
-              className="mx-3"
-              onClick={(e) => setShowModal(true)}
-            >
-              Dodaj kartę
-            </Button>
+          {!deleted && user?.data?.group_type?.includes(staffTypes.BLOG_CREATOR) && (
+            <>
+              <Button
+                  variant="primary"
+                  className="mx-3"
+                  onClick={(e) => setShowModal(true)}
+              >
+                Dodaj kartę
+              </Button>
+              <Button
+                variant="danger"
+                className="mx-3"
+                onClick={() => setShowDelModal(true)}
+              >
+                Usuń wideobloga
+              </Button>
+            </>
           )}
         </Card.Title>
         <CardColumns>
@@ -145,6 +168,12 @@ const VideoBlog = ({ user, postString }) => {
           </Modal.Footer>
         </Form>
       </Modal>
+      <DeletionModal
+        show={showDelModal}
+        setShow={setShowDelModal}
+        question="Czy na pewno chcesz usunąć tego wideobloga?"
+        delConfirmed={handleDelete}
+      />
     </Card>
   );
 };
