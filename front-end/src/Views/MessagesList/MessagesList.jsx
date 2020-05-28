@@ -116,7 +116,7 @@ const MessagesList = () => {
       setLoading(true);
       try {
         res = await getMessages(token, id);
-        console.log(res);
+
         setData(mapRes(res.messages));
         checkPhoto(res);
         messagesEl.current.scrollTop = messagesEl.current.scrollHeight;
@@ -143,7 +143,6 @@ const MessagesList = () => {
       try {
         socket.current = new WebSocket(url, user.token);
         socket.current.onopen = (e) => {
-          console.log("udało się");
           messagesEl.current.scrollTop = messagesEl.current.scrollHeight;
         };
         socket.current.onmessage = (object) => {
