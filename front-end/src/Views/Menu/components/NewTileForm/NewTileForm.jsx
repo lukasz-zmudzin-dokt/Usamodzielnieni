@@ -84,7 +84,7 @@ const NewTileForm = ({ show, setShow, user, appendTile, tileData }) => {
   const [validated, setValidated] = useState(false);
   const [title, setTitle] = useState("");
   const [background, setBackground] = useState("#fafafa");
-  const [path, setPath] = useState(DEFAULT_INPUT);
+  const [path, setPath] = useState("/cvEditor");
   const [photoB64, setPhotoB64] = useState("");
   const [label, setLabel] = useState("");
   const [tileId, setTileId] = useState(undefined);
@@ -161,7 +161,7 @@ const NewTileForm = ({ show, setShow, user, appendTile, tileData }) => {
   const clearInput = () => {
     setTitle("");
     setBackground("#fafafa");
-    setPath("");
+    setPath("/cvEditor");
     setValidated(false);
     setLabel("");
     setPhotoB64("");
