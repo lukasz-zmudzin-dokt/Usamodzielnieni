@@ -59,8 +59,8 @@ const PhoneCard = ({ contact, user, cutItem, alertC }) => {
           {contact.phone}
           {user?.type === userTypes.STAFF &&
           user.data.group_type.includes(staffTypes.BLOG_MODERATOR) ? (
-            <Button size="sm" variant="light" onClick={(e) => setShow(true)}>
-              X
+            <Button size="sm" variant="danger" onClick={(e) => setShow(true)}>
+              <sm>Usuń</sm>
             </Button>
           ) : null}
         </Card.Title>

@@ -1,0 +1,274 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NewTileForm should match snapshot 1`] = `
+<div
+  aria-modal="true"
+  class="fade modal show"
+  role="dialog"
+  style="display: block;"
+  tabindex="-1"
+>
+  <div
+    class="modal-dialog modal-lg"
+    role="document"
+  >
+    <div
+      class="modal-content"
+    >
+      <div
+        class="modal-header"
+      >
+        <div
+          class="modal-title h4"
+        >
+          Nowy kafelek
+        </div>
+        <button
+          class="close"
+          type="button"
+        >
+          <span
+            aria-hidden="true"
+          >
+            ×
+          </span>
+          <span
+            class="sr-only"
+          >
+            Close
+          </span>
+        </button>
+      </div>
+      <form
+        class=""
+        novalidate=""
+      >
+        <div
+          class="modal-body"
+        >
+          <div
+            class="form-group"
+          >
+            <label
+              class="form-label"
+              for="title"
+            >
+              Tytuł kafelka
+            </label>
+            <input
+              class="form-control"
+              data-testid="default"
+              id="title"
+              maxlength="50"
+              minlength="1"
+              placeholder="Tytuł kafelka"
+              required=""
+              type="text"
+              value=""
+            />
+            <div
+              class="invalid-feedback"
+            >
+              Tytuł kafelka nie może być pusty
+            </div>
+          </div>
+          <div
+            class="form-group"
+          >
+            <label
+              class="form-label"
+              for="path"
+            >
+              Ścieżka do kafelka
+            </label>
+            <select
+              class="form-control"
+              id="path"
+              required=""
+            />
+          </div>
+          <div
+            class="form-group"
+          >
+            <label
+              class="form-label"
+              for="custom-file"
+            >
+              Zdjęcie kafelka
+            </label>
+            <div
+              class="text-nowrap text-truncate custom custom-file"
+            >
+              <input
+                accept="image/*"
+                class="custom-file-input"
+                id="custom-file"
+                required=""
+                type="file"
+              />
+              <label
+                class="custom-file-label"
+                data-browse="Wybierz plik"
+                for="custom-file"
+              >
+                Dodaj zdjęcie...
+              </label>
+            </div>
+            <div
+              class="invalid-feedback"
+            >
+              Podaj zdjęcie kafelka
+            </div>
+          </div>
+          <label
+            class="form-label"
+          >
+            Wybierz przenikanie zdjęcia
+          </label>
+          <div
+            class="mx-1 mb-2 justify-content-center row"
+          >
+            <div
+              class="form-check form-check-inline"
+            >
+              <input
+                class="form-check-input"
+                id="inline-checkbox-left"
+                type="checkbox"
+              />
+              <label
+                class="form-check-label"
+                for="inline-checkbox-left"
+                title=""
+              >
+                Z lewej
+              </label>
+            </div>
+            <div
+              class="form-check form-check-inline"
+            >
+              <input
+                class="form-check-input"
+                id="inline-checkbox-top"
+                type="checkbox"
+              />
+              <label
+                class="form-check-label"
+                for="inline-checkbox-top"
+                title=""
+              >
+                Z góry
+              </label>
+            </div>
+            <div
+              class="form-check form-check-inline"
+            >
+              <input
+                class="form-check-input"
+                id="inline-checkbox-right"
+                type="checkbox"
+              />
+              <label
+                class="form-check-label"
+                for="inline-checkbox-right"
+                title=""
+              >
+                Z prawej
+              </label>
+            </div>
+          </div>
+          <div
+            class="row"
+          >
+            <div
+              class="col"
+            >
+              <label
+                class="form-label"
+              >
+                Kolor kafelka
+              </label>
+              <div
+                class="fade alert alert-info show"
+                role="alert"
+              >
+                Ładowanie...
+              </div>
+            </div>
+            <div
+              class="col"
+            >
+              <label
+                class="form-label"
+              >
+                Podgląd
+              </label>
+              <div
+                class="tile__container"
+                style="background-color: rgb(116, 105, 175);"
+              >
+                <a
+                  href="/"
+                >
+                  <div
+                    class="tile"
+                  >
+                    <div
+                      class="tile__bg tile__bg--left "
+                      style="background-color: rgb(116, 105, 175);"
+                    />
+                    <div
+                      class="tile__bg tile__bg--top "
+                      style="background-color: rgb(116, 105, 175);"
+                    />
+                    <div
+                      class="tile__bg tile__bg--right "
+                      style="background-color: rgb(116, 105, 175);"
+                    />
+                    <div
+                      class="tile_content"
+                    >
+                      <div
+                        class="tile__border tile__border--left "
+                      />
+                      <div
+                        class="tile__border tile__border--top "
+                      />
+                      <div
+                        class="tile__border tile__border--right "
+                      />
+                      <div
+                        class="tile__image"
+                      >
+                        <img
+                          alt=""
+                          src=""
+                        />
+                      </div>
+                      <div
+                        class="tile_title"
+                      >
+                        <span />
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="modal-footer"
+        >
+          <button
+            class="btn btn-primary"
+            type="submit"
+          >
+            Dodaj kafelek
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+`;

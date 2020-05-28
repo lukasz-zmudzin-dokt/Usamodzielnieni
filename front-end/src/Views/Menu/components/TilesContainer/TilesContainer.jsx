@@ -1,7 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { Alert } from "react-bootstrap";
+import React, { useState, useEffect, useContext, useRef } from "react";
+import { Alert, Button } from "react-bootstrap";
 import { Tile } from "../";
 import proxy from "config/api";
+import { UserContext } from "context/UserContext";
+import { staffTypes } from "constants/staffTypes";
+import NewTileForm from "../NewTileForm/NewTileForm";
+import { AlertContext } from "context/AlertContext";
 
 const tmpTiles = [
   {
@@ -103,7 +107,7 @@ const tmpTiles = [
 ];
 
 const getTiles = async () => {
-  let url = `${proxy.plain}/list`; // TODO
+  let url = `${proxy.menu}`;
   const headers = {
     "Content-Type": "application/json",
   };
@@ -125,17 +129,16 @@ const mapTiles = (tiles) =>
     id: tile.id,
     title: tile.title,
     color: tile.color,
-    show: tile.show,
-    imageUrl: tile.url,
-    destination: mapDestination(tile.destination),
-    // TODO
+    show: tile.photo_layer,
+    imageUrl: tile.photo,
+    destination: tile.destination,
   }));
 
-const mapDestination = (destination) => destination; // TODO
-
 const TilesContainer = () => {
-  const [tiles, setTiles] = useState();
-  const [error, setError] = useState(false);
+  const [tiles, setTiles] = useState([]);
+  const [showModal, setShow] = useState(false);
+  const user = useContext(UserContext);
+  const alertC = useRef(useContext(AlertContext));
 
   useEffect(() => {
     const loadTiles = async () => {
@@ -144,18 +147,32 @@ const TilesContainer = () => {
         res = await getTiles();
       } catch (e) {
         console.log(e);
-        setError(true);
+        res = tmpTiles;
+        alertC.current.showAlert("Wystąpił błąd podczas pobierania menu.");
       }
       setTiles(res);
     };
     loadTiles();
-  }, []);
+  }, [alertC]);
 
-  const msg = error ? (
-    <Alert variant="danger">Nie udało się pobrać menu.</Alert>
-  ) : (
-    !tiles && <Alert variant="info">Ładowanie menu...</Alert>
-  );
+  const msg = !tiles && <Alert variant="info">Ładowanie menu...</Alert>;
+
+  const appendTile = (newTile) => {
+    const idx = tiles.findIndex((tile) => tile.id === newTile.id);
+    if (idx > -1) {
+      let newTileList = [...tiles];
+      newTileList[idx] = newTile;
+      setTiles(newTileList);
+    } else {
+      setTiles((tiles) => [...tiles, newTile]);
+    }
+  };
+
+  const cutTile = (oldTileId) => {
+    let newTiles = [...tiles];
+    newTiles = newTiles.filter((item) => item.id !== oldTileId);
+    setTiles(newTiles);
+  };
 
   return (
     msg || (
@@ -164,13 +181,35 @@ const TilesContainer = () => {
           {tiles.map((tile) => (
             <Tile
               key={tile.id}
+              id={tile.id}
               color={tile.color}
-              imageUrl={tile.imageUrl}
+              imageUrl={tile.imageUrl || ""}
               showImage={tile.show}
               title={tile.title}
               destination={tile.destination}
+              user={user}
+              cutTile={cutTile}
+              appendTile={appendTile}
             />
           ))}
+          {user?.data?.group_type?.includes(staffTypes.BLOG_MODERATOR) && (
+            <>
+              <Button
+                variant="primary"
+                size="lg"
+                block
+                onClick={() => setShow(true)}
+              >
+                Dodaj kafelek
+              </Button>
+              <NewTileForm
+                show={showModal}
+                setShow={setShow}
+                user={user}
+                appendTile={appendTile}
+              />
+            </>
+          )}
         </div>
       </div>
     )
