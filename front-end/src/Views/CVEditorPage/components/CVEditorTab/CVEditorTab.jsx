@@ -23,7 +23,7 @@ const CVEditorTab = ({
     <div>
       <h3>{title}</h3>
       <div className="CVEditor__videoContainer">
-        <VideoField videoItem={video} errVid={errVid} activeTab={formTab} />
+        {formTab && <VideoField videoItem={video} errVid={errVid} />}
       </div>
       {!showComments ? null : loading ? (
         <Alert variant="info">Wczytuję uwagi...</Alert>
@@ -68,7 +68,11 @@ const CVEditorTab = ({
                 type="submit"
                 id="saveButton"
                 block
-                disabled={group_type?.includes(staffTypes.GUEST) || disabled}
+                disabled={
+                  group_type?.includes(staffTypes.GUEST) ||
+                  group_type?.includes(staffTypes.BLOG_MODERATOR) ||
+                  disabled
+                }
               >
                 {disabled
                   ? "Ładowanie..."
