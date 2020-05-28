@@ -1,5 +1,4 @@
 import proxy from "config/api";
-import { userTypes } from "constants/userTypes";
 
 const changeUrl = async (token, video) => {
   const urlChange = `${proxy.videos}video/${video.id}/`;
@@ -18,15 +17,11 @@ const changeUrl = async (token, video) => {
   return res.status;
 };
 
-const getUrl = async (user, id) => {
+const getUrl = async (id) => {
   const urlChange = `${proxy.videos}video/${id}`;
   let headers = {
     "Content-Type": "application/json",
   };
-  headers =
-    user?.type === userTypes.STAFF
-      ? { ...headers, Authorization: "token " + user.token }
-      : headers;
   const res = await fetch(urlChange, {
     method: "GET",
     headers,

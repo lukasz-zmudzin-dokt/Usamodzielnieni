@@ -44,7 +44,7 @@ const EditStep = ({
       });
     }
     setType(step?.type === "main" ? stepsTypes[0] : stepsTypes[1]);
-  }, [step]);
+  }, [step, stepsTypes]);
 
   const isStep = type === stepsTypes[0];
   //console.log(isStep);
@@ -52,12 +52,11 @@ const EditStep = ({
     e.preventDefault();
     const form = e.currentTarget;
     if (form.checkValidity() !== false) {
-      let res;
       const data = {
         ...newStep,
       };
       try {
-        res = await editStep(user.token, isStep, data, step.id);
+        await editStep(user.token, isStep, data, step.id);
         alertC.current.showAlert("Pomyślnie zmieniono krok.", "success");
         handleClose();
         await loadSteps(setSteps, setPath, setRoot, setError);
