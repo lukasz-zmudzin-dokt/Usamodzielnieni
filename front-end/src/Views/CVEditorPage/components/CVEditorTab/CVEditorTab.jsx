@@ -23,7 +23,7 @@ const CVEditorTab = ({
     <div>
       <h3>{title}</h3>
       <div className="CVEditor__videoContainer">
-        <VideoField videoItem={video} errVid={errVid} activeTab={formTab} />
+        {formTab && <VideoField videoItem={video} errVid={errVid} />}
       </div>
       {!showComments ? null : loading ? (
         <Alert variant="info">Wczytuję uwagi...</Alert>

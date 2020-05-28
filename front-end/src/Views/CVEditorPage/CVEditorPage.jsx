@@ -142,7 +142,7 @@ class CVEditorPage extends React.Component {
           isNew: this.state.method === "POST",
           video: videos.videos?.find((item) => item.id === id),
           errVid,
-          formTab: { active: this.state.formTab, your: key },
+          formTab: this.state.formTab === key,
         };
       }
     };
