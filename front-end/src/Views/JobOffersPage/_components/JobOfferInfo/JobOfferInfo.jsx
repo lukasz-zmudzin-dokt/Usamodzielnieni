@@ -5,28 +5,36 @@ import { DetailsItem } from "components";
 import proxy from "config/api";
 
 const JobOfferInfo = ({ context, offer, ...rest }) => {
+  console.log(offer);
   return (
     <Row {...rest}>
       <Col>
-        <h5>{offer.title}</h5>
-        <Row>
+        <Row className="align-items-center m-0 mb-2 flex-nowrap">
           {offer.companyLogo ? (
-            <DetailsItem md="3" xl="3" label="Logo firmy">
+            <div className="JobOffer__logo mb-2 mb-sm-0">
               <img
                 className="JobOffer__logo"
                 src={`${proxy.plain}${offer.companyLogo}`}
                 alt="Logo firmy"
               />
-            </DetailsItem>
+            </div>
           ) : null}
-          <DetailsItem md="3" xl="3" label="Nazwa firmy">
+          <h5 className={offer.companyLogo ? "ml-2 ml-sm-3" : ""}>
+            {offer.title}
+          </h5>
+        </Row>
+        <Row>
+          <DetailsItem md="4" xl="3" label="Nazwa firmy">
             {offer.companyName}
           </DetailsItem>
-          <DetailsItem md="3" xl="3" label="Lokalizacja">
-            {offer.voivodeship}
+          <DetailsItem md="4" xl="3" label="Lokalizacja">
+            {`${offer.voivodeship}, ${offer.companyAddress.city}`}
           </DetailsItem>
-          <DetailsItem md="3" xl="3" label="Ważne do">
+          <DetailsItem md="4" xl="3" label="Ważne do">
             {new Date(offer.expirationDate).toLocaleDateString(undefined, {})}
+          </DetailsItem>
+          <DetailsItem md="4" xl="3" label="Wynagrodzenie:">
+            {`${offer.salaryMin} - ${offer.salaryMax}`}
           </DetailsItem>
         </Row>
         <IndexLinkContainer to={`/jobOffers/${offer.id}`}>
