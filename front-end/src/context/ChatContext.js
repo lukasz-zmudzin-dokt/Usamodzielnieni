@@ -1,10 +1,4 @@
-import React, {
-  createContext,
-  useEffect,
-  useState,
-  useContext,
-  useCallback,
-} from "react";
+import React, { createContext, useEffect, useState, useContext } from "react";
 import proxy from "config/api";
 import { UserContext } from "context";
 
