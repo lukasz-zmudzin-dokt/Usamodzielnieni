@@ -130,7 +130,7 @@ const mapTiles = (tiles) =>
     title: tile.title,
     color: tile.color,
     show: tile.photo_layer,
-    imageUrl: tile.photo,
+    imageUrl: proxy.plain + tile.photo,
     destination: tile.destination,
   }));
 
