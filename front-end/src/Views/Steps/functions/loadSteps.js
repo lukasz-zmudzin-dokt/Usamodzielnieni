@@ -42,7 +42,7 @@ const getNext = (step, list) => {
   let next = [];
   if (step.type === "main") {
     if (step.substeps.length > 0) {
-      next.push({ id: step.substeps[0].id, choiceName: "Dalej" });
+      next.push({ id: step.substeps[0].id, choiceName: "Następny krok" });
     }
     step.children.forEach((child) => {
       next.push({ id: child.id, choiceName: child.title });
@@ -50,7 +50,7 @@ const getNext = (step, list) => {
   } else {
     let parent = list.find((s) => s.id === step.parent);
     if (step.order + 1 < parent.substeps.length) {
-      next = [{ id: parent.substeps[step.order + 1].id, choiceName: "Dalej" }];
+      next = [{ id: parent.substeps[step.order + 1].id, choiceName: "Następny krok" }];
     } else {
       next = getNext(parent, list);
       next.splice(0, 1);
