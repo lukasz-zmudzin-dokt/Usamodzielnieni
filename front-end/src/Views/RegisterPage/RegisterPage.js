@@ -158,8 +158,8 @@ class RegisterPage extends React.Component {
 
   regulationsCheck = (
     <p>
-      Akceptuję <Link to="/regulations">regulamin</Link> aplikacji i politykę
-      prywatności
+      Akceptuję <Link to="/regulations">regulamin aplikacji</Link> i
+      <Link to="/regulations"> politykę prywatności</Link>
     </p>
   );
 
