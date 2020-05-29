@@ -30,16 +30,16 @@ const EditStep = ({
         title: step?.title,
         description: step?.description,
         video: step?.video
-            ? "https://www.youtube.com/watch?v=" + step.video
-            : "",
+          ? "https://www.youtube.com/watch?v=" + step.video
+          : "",
       });
     } else {
       setNewStep({
         title: step?.title,
         description: step?.description,
         video: step?.video
-            ? "https://www.youtube.com/watch?v=" + step.video
-            : "",
+          ? "https://www.youtube.com/watch?v=" + step.video
+          : "",
       });
     }
     step?.type === "main" ? setType("Krok główny") : setType("Podkrok");
@@ -67,27 +67,27 @@ const EditStep = ({
   };
 
   return (
-      <Modal show={show} onHide={handleClose}>
-        <Form validated={validated} noValidate onSubmit={handleSubmit}>
-          <Modal.Header closeButton>
-            <Modal.Title>Edytuj krok</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <StepsForm
-                newStep={newStep}
-                setNewStep={setNewStep}
-                type={type}
-                setType={setType}
-                steps={steps}
-                setValidated={setValidated}
-                isEdit={true}
-            />
-          </Modal.Body>
-          <Modal.Footer>
-            <Button type="submit">Prześlij zmiany</Button>
-          </Modal.Footer>
-        </Form>
-      </Modal>
+    <Modal show={show} onHide={handleClose}>
+      <Form validated={validated} noValidate onSubmit={handleSubmit}>
+        <Modal.Header closeButton>
+          <Modal.Title>Edytuj krok</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <StepsForm
+            newStep={newStep}
+            setNewStep={setNewStep}
+            type={type}
+            setType={setType}
+            steps={steps}
+            setValidated={setValidated}
+            isEdit={true}
+          />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button type="submit">Prześlij zmiany</Button>
+        </Modal.Footer>
+      </Form>
+    </Modal>
   );
 };
 

@@ -15,7 +15,7 @@ import polish from "date-fns/locale/pl";
 import { useHistory, useParams } from "react-router-dom";
 import { addressToString } from "utils/converters";
 import { staffTypes } from "constants/staffTypes";
-import {approveFileSize} from "utils";
+import { approveFileSize } from "utils";
 
 registerLocale("pl", polish);
 
@@ -143,7 +143,9 @@ const OfferForm = () => {
       setPhotoFile(photoNew);
       setLabel(filename);
     } else {
-      alertC.current.showAlert("Wybrany plik jest za duży. Maksymalny rozmiar załącznika to 15 MB.");
+      alertC.current.showAlert(
+        "Wybrany plik jest za duży. Maksymalny rozmiar załącznika to 15 MB."
+      );
       photo.current.fileInput = null;
     }
   };
