@@ -29,11 +29,8 @@ const getMessages = async (token, id) => {
 };
 
 const sendMessage = async (
-  token,
-  id,
   msg,
-  data,
-  setData,
+
   alertC,
   socket,
   user,
@@ -184,17 +181,7 @@ const MessagesList = () => {
         <ChatForm
           loading={loading}
           sendMessage={(msg) =>
-            sendMessage(
-              user.token,
-              data.length,
-              msg,
-              data,
-              setData,
-              alertC,
-              socket,
-              contact,
-              messagesEl
-            )
+            sendMessage(msg, alertC, socket, contact, messagesEl)
           }
         />
       </Card>

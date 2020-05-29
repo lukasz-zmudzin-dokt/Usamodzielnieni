@@ -173,7 +173,8 @@ export const NotificationsProvider = (props) => {
           const parsedNotification = JSON.parse(e.data);
 
           if (parsedNotification.app === "chats") {
-            chatC.socket.current.send(JSON.stringify({ message: "threads" }));
+            // chatC.socket.current.send(JSON.stringify({ message: "threads" }));
+            chatC.loadMessages();
           }
           setCount((prev) => prev + 1);
           setNotifications((prev) => [newNotification, ...prev]);
@@ -186,7 +187,7 @@ export const NotificationsProvider = (props) => {
         console.log(e);
       }
     }
-  }, [chatC.socket, user.token]);
+  }, [chatC, chatC.socket, user.token]);
 
   const data = {
     notifications,

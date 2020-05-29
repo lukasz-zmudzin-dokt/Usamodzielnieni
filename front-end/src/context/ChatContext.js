@@ -32,8 +32,7 @@ export const ChatProvider = (props) => {
   const [isChatsLoading, setIsChatsLoading] = useState(false);
   const [error, setError] = useState(false);
   const [count, setCount] = useState(0);
-  const [filters] = useState({
-    //nie wiem jak tu z paginacją, ale nie mam jak sprawdzić bo jest mniej niż 10 osób do których mogę napisać xd
+  const [filters, setFilters] = useState({
     page: 1,
     pageSize: 10,
   });
@@ -71,7 +70,7 @@ export const ChatProvider = (props) => {
       try {
         socket.current = new WebSocket(url, user.token);
         socket.current.onopen = (e) => {
-          socket.current.send(JSON.stringify({ message: "threads" }));
+          // socket.current.send(JSON.stringify({ message: "threads" }));
         };
 
         socket.current.onmessage = (msg) => {
@@ -95,6 +94,18 @@ export const ChatProvider = (props) => {
     setChats([...chats, ...res.results]);
   };
 
+  const loadMessages = async () => {
+    let res;
+    try {
+      res = await getChats(user.token, filters);
+    } catch (e) {
+      setError(true);
+      return;
+    }
+
+    setChats(res.results);
+  };
+
   const data = {
     chats,
     error,
@@ -102,6 +113,7 @@ export const ChatProvider = (props) => {
     socket,
     loadMoreMessages,
     isChatsLoading,
+    loadMessages,
   };
 
   return <ChatContext.Provider value={data} {...props} />;
