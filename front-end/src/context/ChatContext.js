@@ -1,4 +1,10 @@
-import React, { createContext, useEffect, useState, useContext } from "react";
+import React, {
+  createContext,
+  useEffect,
+  useState,
+  useContext,
+  useCallback,
+} from "react";
 import proxy from "config/api";
 import { UserContext } from "context";
 
@@ -67,11 +73,11 @@ export const ChatProvider = (props) => {
     setChats([...chats, ...res.results]);
   };
 
-  const loadMessages = async () => {
+  const loadMessages = async (token) => {
     setActivePage(1);
     let res;
     try {
-      res = await getChats(user.token, filters);
+      res = await getChats(token, filters);
     } catch (e) {
       setError(true);
       return;
