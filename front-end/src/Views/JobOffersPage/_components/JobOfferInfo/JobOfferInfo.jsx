@@ -5,7 +5,6 @@ import { DetailsItem } from "components";
 import proxy from "config/api";
 
 const JobOfferInfo = ({ context, offer, ...rest }) => {
-  console.log(offer);
   return (
     <Row {...rest}>
       <Col>
