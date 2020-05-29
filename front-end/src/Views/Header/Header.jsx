@@ -212,11 +212,15 @@ const Header = () => {
 
   return (
     <Navbar collapseOnSelect expand="lg" sticky="top" className="font p-3">
-      <Notifications
-        className="mobileNotifications"
-        location={location}
-        token={context.token}
-      />
+      {context.token === undefined ? (
+        <div></div>
+      ) : (
+        <Notifications
+          className="mobileNotifications"
+          location={location}
+          token={context.token}
+        />
+      )}
       <Navbar.Toggle
         aria-controls="responsive-navbar-nav"
         bsPrefix="hamburger-toggle"
