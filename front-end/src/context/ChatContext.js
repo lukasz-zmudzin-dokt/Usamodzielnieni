@@ -26,7 +26,7 @@ export const ChatProvider = (props) => {
   const [isChatsLoading, setIsChatsLoading] = useState(false);
   const [error, setError] = useState(false);
   const [count, setCount] = useState(0);
-  const [filters, setFilters] = useState({
+  const [filters] = useState({
     page: 1,
     pageSize: 10,
   });
@@ -35,6 +35,7 @@ export const ChatProvider = (props) => {
   useEffect(() => {
     if (user.token) {
       const loadChats = async (token) => {
+        setActivePage(1);
         setError(false);
         setIsChatsLoading(true);
         let loadedChats;
@@ -67,6 +68,7 @@ export const ChatProvider = (props) => {
   };
 
   const loadMessages = async () => {
+    setActivePage(1);
     let res;
     try {
       res = await getChats(user.token, filters);
