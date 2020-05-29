@@ -31,6 +31,7 @@ class RegisterPage extends React.Component {
       passwordOK: true,
       redirect: false,
       disabled: false,
+      regulations: false,
       role: null,
     };
   }
@@ -155,6 +156,13 @@ class RegisterPage extends React.Component {
     this.setState({ disabled: false });
   };
 
+  regulationsCheck = (
+    <p>
+      Akceptuję <Link to="/regulations">regulamin</Link> aplikacji i politykę
+      prywatności
+    </p>
+  );
+
   render() {
     const {
       validated,
@@ -198,6 +206,21 @@ class RegisterPage extends React.Component {
                   checked={this.state.checked}
                 />
               </section>
+              <Form.Group controlId="formRegulationsCheck">
+                <Form.Check
+                  type="checkbox"
+                  checked={this.state.regulations}
+                  onClick={() =>
+                    this.setState((prevState) => ({
+                      regulations: !prevState.regulations,
+                    }))
+                  }
+                  label={this.regulationsCheck}
+                  required
+                  feedback="Musisz zaakceptować regulamin"
+                />
+              </Form.Group>
+
               <Button
                 variant="primary"
                 className="loginPage__button"
