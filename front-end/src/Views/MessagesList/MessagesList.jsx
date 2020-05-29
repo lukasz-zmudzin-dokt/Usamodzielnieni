@@ -60,11 +60,9 @@ const MessagesList = () => {
   const [contact, setContact] = useState({});
   const chatC = useContext(ChatContext);
   const [loading, setLoading] = useState(false);
+  const [isSocket, setIsSocket] = useState(false);
 
   const backToChats = () => {
-    if (chatC.socket.current.readyState === WebSocket.CLOSED) {
-      chatC.socket.current.send(JSON.stringify({ message: "threads" }));
-    }
     history.push("/chats");
   };
 
@@ -125,9 +123,11 @@ const MessagesList = () => {
         setLoading(false);
       }
     };
-    loadMessages(user.token, id);
-    messagesEl.current.scrollTop = messagesEl.current.scrollHeight;
-  }, [checkPhoto, id, mapRes, user.data.username, user.token]);
+    if (isSocket) {
+      loadMessages(user.token, id);
+      messagesEl.current.scrollTop = messagesEl.current.scrollHeight;
+    }
+  }, [checkPhoto, id, isSocket, mapRes, user.data.username, user.token]);
 
   useEffect(() => {
     if (socket.current) {
@@ -140,6 +140,7 @@ const MessagesList = () => {
       try {
         socket.current = new WebSocket(url, user.token);
         socket.current.onopen = (e) => {
+          setIsSocket(true);
           messagesEl.current.scrollTop = messagesEl.current.scrollHeight;
         };
         socket.current.onmessage = (object) => {

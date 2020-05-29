@@ -36,7 +36,6 @@ export const ChatProvider = (props) => {
     page: 1,
     pageSize: 10,
   });
-  const socket = useRef(null);
 
   useEffect(() => {
     if (user.token) {
@@ -58,29 +57,6 @@ export const ChatProvider = (props) => {
       loadChats(user.token);
     }
   }, [filters, user.token]);
-
-  useEffect(() => {
-    if (socket.current) {
-      socket.current.close();
-      socket.current = null;
-    }
-    if (user.token && user.type) {
-      const url = proxy.wsChat;
-
-      try {
-        socket.current = new WebSocket(url, user.token);
-        socket.current.onopen = (e) => {
-          // socket.current.send(JSON.stringify({ message: "threads" }));
-        };
-
-        socket.current.onmessage = (msg) => {
-          setChats(JSON.parse(msg.data));
-        };
-      } catch (e) {
-        console.log(e);
-      }
-    }
-  }, [user.token, user.type]);
 
   const loadMoreMessages = async () => {
     let res;
@@ -110,7 +86,6 @@ export const ChatProvider = (props) => {
     chats,
     error,
     count,
-    socket,
     loadMoreMessages,
     isChatsLoading,
     loadMessages,
