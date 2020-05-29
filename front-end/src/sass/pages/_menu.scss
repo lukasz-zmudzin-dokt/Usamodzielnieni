@@ -226,6 +226,9 @@
           }
         }
       }
+      .tilesGrid__newTile {
+        margin: 0 var(--tiles-gap) var(--tiles-gap) 0;
+      }
     }
 
     .tilesGrid {

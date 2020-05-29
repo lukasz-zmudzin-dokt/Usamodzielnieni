@@ -195,6 +195,7 @@ const TilesContainer = () => {
           {user?.data?.group_type?.includes(staffTypes.BLOG_MODERATOR) && (
             <>
               <Button
+                className="tilesGrid__newTile"
                 variant="primary"
                 size="lg"
                 block
