@@ -16,7 +16,6 @@ const EditStep = ({
   setError,
   root,
 }) => {
-  const stepsTypes = ["Krok główny", "Podkrok"];
   const [type, setType] = useState();
   const [newStep, setNewStep] = useState();
   const user = useContext(UserContext);
@@ -43,10 +42,10 @@ const EditStep = ({
           : "",
       });
     }
-    setType(step?.type === "main" ? stepsTypes[0] : stepsTypes[1]);
-  }, [step, stepsTypes]);
+    step?.type === "main" ? setType("Krok główny") : setType("Podkrok");
+  }, [step]);
 
-  const isStep = type === stepsTypes[0];
+  const isStep = type === "Krok główny";
   //console.log(isStep);
   const handleSubmit = async (e) => {
     e.preventDefault();

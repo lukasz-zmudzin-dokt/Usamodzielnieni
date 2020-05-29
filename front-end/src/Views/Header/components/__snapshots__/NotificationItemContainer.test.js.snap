@@ -7,7 +7,7 @@ exports[`NotificationItemContainer should render without crashing 1`] = `
     role="group"
   >
     <button
-      class="btn btn-light"
+      class="notification-color-light border-0 btn btn-light"
       type="button"
     >
       X
