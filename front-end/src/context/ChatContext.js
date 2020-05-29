@@ -30,6 +30,7 @@ export const ChatProvider = (props) => {
     page: 1,
     pageSize: 10,
   });
+  const [activePage, setActivePage] = useState(1);
 
   useEffect(() => {
     if (user.token) {
@@ -55,7 +56,8 @@ export const ChatProvider = (props) => {
   const loadMoreMessages = async () => {
     let res;
     try {
-      res = await getChats(user.token, { ...filters, page: filters.page + 1 });
+      res = await getChats(user.token, { ...filters, page: activePage + 1 });
+      setActivePage(activePage + 1);
     } catch (e) {
       setError(true);
       return;
