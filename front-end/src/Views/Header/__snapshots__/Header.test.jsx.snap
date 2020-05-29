@@ -312,19 +312,20 @@ exports[`Header should match snapshot - logged in standard 1`] = `
 exports[`Header should match snapshot - not logged in 1`] = `
 <div>
   <nav
-    class="font p-3 justify-content-end navbar navbar-expand-lg navbar-light sticky-top"
+    class="font p-3 navbar navbar-expand-lg navbar-light sticky-top"
   >
+    <div />
     <button
       aria-controls="responsive-navbar-nav"
       aria-label="Toggle navigation"
       class="hamburger-toggle collapsed"
       type="button"
     >
-      <a
+      <p
         class="hamburger-menu-text"
       >
         MENU
-      </a>
+      </p>
       <img
         alt="menu"
         class="hamburger-menu-logo"
@@ -377,8 +378,8 @@ exports[`Header should match snapshot - not logged in 1`] = `
       >
         <a
           class="navbar-right-button register-color nav-link"
-          data-rb-event-key="/newAccount"
-          href="/newAccount"
+          data-rb-event-key="/newAccount/"
+          href="/newAccount/"
         >
           REJESTRACJA
         </a>
