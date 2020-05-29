@@ -50,7 +50,9 @@ const getNext = (step, list) => {
   } else {
     let parent = list.find((s) => s.id === step.parent);
     if (step.order + 1 < parent.substeps.length) {
-      next = [{ id: parent.substeps[step.order + 1].id, choiceName: "Następny krok" }];
+      next = [
+        { id: parent.substeps[step.order + 1].id, choiceName: "Następny krok" },
+      ];
     } else {
       next = getNext(parent, list);
       next.splice(0, 1);

@@ -9,13 +9,11 @@ const StepCard = ({ step, setCurrent, wantsDelete, wantsEdit, path }) => {
   return (
     <Card className="stepCard">
       <Card.Body>
-        {
-          step.video && (
-            <div>
-              <Player src={step.video} />
-            </div>
-          )
-        }
+        {step.video && (
+          <div>
+            <Player src={step.video} />
+          </div>
+        )}
         <Card.Text as="h4" text-muted="true">
           Opis kroku:
         </Card.Text>
