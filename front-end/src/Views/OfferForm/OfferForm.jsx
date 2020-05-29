@@ -15,6 +15,7 @@ import polish from "date-fns/locale/pl";
 import { useHistory, useParams } from "react-router-dom";
 import { addressToString } from "utils/converters";
 import { staffTypes } from "constants/staffTypes";
+import {approveFileSize} from "utils";
 
 registerLocale("pl", polish);
 
@@ -110,7 +111,8 @@ const OfferForm = () => {
         );
         if (photoFile) {
           try {
-            await sendPhoto(context.token, res.offer_id, photoFile);
+            let newId = res?.offer_id ? res.offer_id : id;
+            await sendPhoto(context.token, newId, photoFile);
             alertC.current.showAlert("Przesłano ofertę", "success");
             return history.push(`/jobOffers/${id || res.offer_id}`);
           } catch (e) {
@@ -135,10 +137,15 @@ const OfferForm = () => {
   ) : null;
 
   const onChange = () => {
-    const photoNew = photo.current.files[0];
-    const filename = photo.current?.files?.[0]?.name;
-    setPhotoFile(photoNew);
-    setLabel(filename);
+    const photoNew = photo?.current?.files?.[0];
+    if (approveFileSize(photoNew)) {
+      const filename = photo.current?.files?.[0]?.name;
+      setPhotoFile(photoNew);
+      setLabel(filename);
+    } else {
+      alertC.current.showAlert("Wybrany plik jest za duży. Maksymalny rozmiar załącznika to 15 MB.");
+      photo.current.fileInput = null;
+    }
   };
 
   const {
