@@ -2,6 +2,10 @@ import proxy from "config/api";
 
 const sendNewStep = async (token, isStep, data) => {
   const url = `${proxy.steps}${isStep ? "step" : "substep"}/`;
+  if(data.video === "") {
+    data.video = null;
+  }
+  console.log(data);
   const headers = {
     "Content-Type": "application/json",
     Origin: null,
