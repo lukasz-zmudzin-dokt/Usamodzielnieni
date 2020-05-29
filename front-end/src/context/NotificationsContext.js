@@ -130,7 +130,7 @@ export const NotificationsProvider = (props) => {
   const socket = useRef();
 
   const user = useContext(UserContext);
-  const chatC = useContext(ChatContext);
+  const chatC = useRef(useContext(ChatContext));
 
   useEffect(() => {
     const loadNotifications = async (token) => {
@@ -171,13 +171,11 @@ export const NotificationsProvider = (props) => {
         socket.current.onmessage = (e) => {
           const newNotification = mapNotification(JSON.parse(e.data));
           const parsedNotification = JSON.parse(e.data);
-
-          if (parsedNotification.app === "chats") {
-            // chatC.socket.current.send(JSON.stringify({ message: "threads" }));
-            chatC.loadMessages();
-          }
           setCount((prev) => prev + 1);
           setNotifications((prev) => [newNotification, ...prev]);
+          if (parsedNotification.app === "chats") {
+            chatC.current.loadMessages();
+          }
         };
         socket.current.onerror = (e) => {
           console.log(e);
@@ -187,7 +185,7 @@ export const NotificationsProvider = (props) => {
         console.log(e);
       }
     }
-  }, [chatC, chatC.socket, user.token]);
+  }, [user.token]);
 
   const data = {
     notifications,
