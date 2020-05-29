@@ -10,7 +10,7 @@
     {
       "src": "heart256.png",
       "type": "image/png",
-      "sizes": "192x192"
+      "sizes": "128x128 192x192 256x256"
     },
     {
       "src": "heart512.png",
