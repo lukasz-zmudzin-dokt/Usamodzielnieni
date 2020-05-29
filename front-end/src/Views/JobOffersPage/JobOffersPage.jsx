@@ -85,7 +85,6 @@ const JobOffersPage = (props) => {
       let res;
       try {
         res = await getOffers(filters, sort);
-        console.log(res);
       } catch (e) {
         console.log(e);
         res = { offers: [], count: 0 };
