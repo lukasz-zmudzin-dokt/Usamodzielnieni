@@ -17,7 +17,6 @@ const getContacts = async (token, filters) => {
   const response = await fetch(url, { method: "GET", headers });
 
   if (response.status === 200) {
-    //console.log( await response.json());
     return response.json();
   } else if (response.status === 2137) {
     return response.json();

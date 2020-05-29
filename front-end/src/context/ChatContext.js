@@ -1,10 +1,4 @@
-import React, {
-  createContext,
-  useEffect,
-  useState,
-  useContext,
-  useRef,
-} from "react";
+import React, { createContext, useEffect, useState, useContext } from "react";
 import proxy from "config/api";
 import { UserContext } from "context";
 
@@ -33,15 +27,15 @@ export const ChatProvider = (props) => {
   const [error, setError] = useState(false);
   const [count, setCount] = useState(0);
   const [filters] = useState({
-    //nie wiem jak tu z paginacją, ale nie mam jak sprawdzić bo jest mniej niż 10 osób do których mogę napisać xd
     page: 1,
     pageSize: 10,
   });
-  const socket = useRef(null);
+  const [activePage, setActivePage] = useState(1);
 
   useEffect(() => {
     if (user.token) {
       const loadChats = async (token) => {
+        setActivePage(1);
         setError(false);
         setIsChatsLoading(true);
         let loadedChats;
@@ -60,33 +54,11 @@ export const ChatProvider = (props) => {
     }
   }, [filters, user.token]);
 
-  useEffect(() => {
-    if (socket.current) {
-      socket.current.close();
-      socket.current = null;
-    }
-    if (user.token && user.type) {
-      const url = proxy.wsChat;
-
-      try {
-        socket.current = new WebSocket(url, user.token);
-        socket.current.onopen = (e) => {
-          socket.current.send(JSON.stringify({ message: "threads" }));
-        };
-
-        socket.current.onmessage = (msg) => {
-          setChats(JSON.parse(msg.data));
-        };
-      } catch (e) {
-        console.log(e);
-      }
-    }
-  }, [user.token, user.type]);
-
   const loadMoreMessages = async () => {
     let res;
     try {
-      res = await getChats(user.token, { ...filters, page: filters.page + 1 });
+      res = await getChats(user.token, { ...filters, page: activePage + 1 });
+      setActivePage(activePage + 1);
     } catch (e) {
       setError(true);
       return;
@@ -95,13 +67,26 @@ export const ChatProvider = (props) => {
     setChats([...chats, ...res.results]);
   };
 
+  const loadMessages = async () => {
+    setActivePage(1);
+    let res;
+    try {
+      res = await getChats(user.token, filters);
+    } catch (e) {
+      setError(true);
+      return;
+    }
+
+    setChats(res.results);
+  };
+
   const data = {
     chats,
     error,
     count,
-    socket,
     loadMoreMessages,
     isChatsLoading,
+    loadMessages,
   };
 
   return <ChatContext.Provider value={data} {...props} />;
