@@ -26,9 +26,6 @@ const Notifications = ({ location, ...rest }) => {
 
   const onToggle = async (isOpen) => {
     setShow((prev) => (prev !== "prevent" ? isOpen : true));
-    if (isOpen && count) {
-      await notificationsContext.markAsRead();
-    }
   };
 
   const loadMoreNotifications = async () => {
