@@ -3,7 +3,11 @@ import { Alert, Card, Container } from "react-bootstrap";
 import { UserContext } from "context";
 import { getUserData } from "Views/UserProfilePage/functions/getUserData.js";
 import UserBasicInfo from "./components/UserBasicInfo";
-import { UserDetails, ButtonsContainer } from "./components";
+import {
+  UserDetails,
+  ButtonsContainer,
+  NotificationsCheckbox,
+} from "./components";
 import { userTypes } from "constants/userTypes";
 import { userStatuses } from "constants/userStatuses";
 
@@ -36,6 +40,7 @@ class UserProfilePage extends React.Component {
         email: "",
         chat_role: null,
       },
+      is_subscribed: null,
       error: false,
     };
   }
@@ -56,6 +61,7 @@ class UserProfilePage extends React.Component {
           role: res.type,
           chat_role: res.data.role,
         },
+        is_subscribed: res.data.is_subscribed,
       });
     } catch (res) {
       this.setState({ error: true });
@@ -85,6 +91,14 @@ class UserProfilePage extends React.Component {
             />
           </Card.Body>
           <UserDetails user={this.state.user} names={names} />
+          {this.state.is_subscribed !== null ? (
+            <Card.Body>
+              <NotificationsCheckbox
+                token={this.context.token}
+                is_subscribed={this.state.is_subscribed}
+              />
+            </Card.Body>
+          ) : null}
           <Card.Body className="text-center">
             {this.setMessage()}
             {this.context.type !== userTypes.STAFF &&
