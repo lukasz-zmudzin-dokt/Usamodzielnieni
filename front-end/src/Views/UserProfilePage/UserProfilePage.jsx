@@ -3,7 +3,11 @@ import { Alert, Card, Container } from "react-bootstrap";
 import { UserContext } from "context";
 import { getUserData } from "Views/UserProfilePage/functions/getUserData.js";
 import UserBasicInfo from "./components/UserBasicInfo";
-import { UserDetails, ButtonsContainer, NotificationsCheckbox } from "./components";
+import {
+  UserDetails,
+  ButtonsContainer,
+  NotificationsCheckbox,
+} from "./components";
 import { userTypes } from "constants/userTypes";
 import { userStatuses } from "constants/userStatuses";
 
@@ -35,6 +39,7 @@ class UserProfilePage extends React.Component {
         lastName: "",
         email: "",
         chat_role: null,
+        is_subscribed: null,
       },
       error: false,
     };
@@ -47,7 +52,7 @@ class UserProfilePage extends React.Component {
   getData = async () => {
     try {
       const res = await getUserData(this.context.token, this);
-      console.log(res)
+      console.log(res);
       this.setState({
         user: {
           username: res.data.username,
@@ -56,6 +61,7 @@ class UserProfilePage extends React.Component {
           email: res.data.email,
           role: res.type,
           chat_role: res.data.role,
+          is_subscribed: res.data.is_subscribed,
         },
       });
     } catch (res) {
@@ -86,7 +92,14 @@ class UserProfilePage extends React.Component {
             />
           </Card.Body>
           <UserDetails user={this.state.user} names={names} />
-          <NotificationsCheckbox />
+          {this.state.user.is_subscribed !== null ? (
+            <Card.Body>
+              <NotificationsCheckbox
+                token={this.context.token}
+                is_subscribed={this.state.user.is_subscribed}
+              />
+            </Card.Body>
+          ) : null}
           <Card.Body className="text-center">
             {this.setMessage()}
             {this.context.type !== userTypes.STAFF &&
