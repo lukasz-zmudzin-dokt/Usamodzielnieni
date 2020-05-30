@@ -8,6 +8,7 @@ import {
   DeleteAccountButton,
   UserListButton,
   UserPasswordChangeButton,
+  NewOfferButton
 } from "../";
 import { Button } from "react-bootstrap";
 import { IndexLinkContainer } from "react-router-bootstrap";
@@ -21,6 +22,7 @@ const ButtonsContainer = ({ user }) => {
       <DeleteAccountButton user={user} />
       <UserPasswordChangeButton user={user} />
       <CVApprovalButton user={user} />
+      <NewOfferButton user={user} />
       <EmployerMyOffersButton user={user} />
       <AdminRegisterButton user={user} />
       <AdminApproveUserButton user={user} />
