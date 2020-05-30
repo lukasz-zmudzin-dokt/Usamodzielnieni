@@ -51,6 +51,8 @@ const mapGetOffersRes = (res) => ({
     expirationDate: offer.expiration_date,
     description: offer.description,
     companyLogo: offer.company_logo,
+    salaryMin: offer.salary_min,
+    salaryMax: offer.salary_max,
   })),
   count: res.count,
 });

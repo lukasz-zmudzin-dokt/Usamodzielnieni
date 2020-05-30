@@ -8,6 +8,7 @@ import { IndexLinkContainer } from "react-router-bootstrap";
 import { staffTypes } from "constants/staffTypes";
 import { userTypes } from "constants/userTypes";
 import NewVideoBlogModal from "components/NewVideoBlogModal/NewVideoBlogModal";
+import { useHistory, useParams } from "react-router-dom";
 
 const Filter = ({ setFilter, filtersBlog, count }) => {
   const [filters, setFilters] = useState({ categories: [], tags: [] });
@@ -16,6 +17,8 @@ const Filter = ({ setFilter, filtersBlog, count }) => {
   const [err, setErr] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const user = useContext(UserContext);
+  const { cat } = useParams();
+  const history = useHistory();
 
   useEffect(() => {
     const loadOffers = async () => {
@@ -33,7 +36,10 @@ const Filter = ({ setFilter, filtersBlog, count }) => {
       setFilters(res);
     };
     loadOffers();
-  }, []);
+    if (cat) {
+      setCategory(cat);
+    }
+  }, [cat]);
 
   const filter = (event) => {
     event.preventDefault();
@@ -44,6 +50,7 @@ const Filter = ({ setFilter, filtersBlog, count }) => {
       category: categoryV,
       tag: tagV,
     });
+    categoryV && history.push("/blog/" + category);
   };
 
   const clearFilter = () => {
@@ -54,6 +61,7 @@ const Filter = ({ setFilter, filtersBlog, count }) => {
       category: undefined,
       tag: undefined,
     });
+    history.push("/blog");
   };
 
   const msg = err ? (

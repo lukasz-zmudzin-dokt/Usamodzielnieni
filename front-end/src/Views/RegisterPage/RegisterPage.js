@@ -1,6 +1,6 @@
 import React from "react";
 import { Container, Card, Form, Button } from "react-bootstrap";
-import { Link, Redirect, withRouter } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import {
   HomeDataForm,
   PersonalDataForm,
@@ -108,7 +108,7 @@ class RegisterPage extends React.Component {
 
   renderRedirect = () => {
     if (this.state.redirect) {
-      return <Redirect to="/user" />;
+      this.props.history.goBack();
     }
   };
 

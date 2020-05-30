@@ -36,6 +36,7 @@ const NewStep = ({
       video: "",
       parent: steps[0]?.title,
     });
+    setValidated(false);
   }, [steps]);
 
   const handleSubmit = async (e) => {

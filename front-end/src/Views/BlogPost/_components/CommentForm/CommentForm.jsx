@@ -65,7 +65,7 @@ const CommentForm = ({ blogId, afterSubmit, ...rest }) => {
   };
 
   return user.data && user.data.status === userStatuses.VERIFIED ? (
-    <div {...rest}>
+    <div className="mt-3" {...rest}>
       <h5>Dodaj komentarz</h5>
       <Form noValidate validated={validated} onSubmit={onSubmit}>
         <Form.Group controlId="commentContent">

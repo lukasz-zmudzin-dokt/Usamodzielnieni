@@ -9,9 +9,11 @@ const StepCard = ({ step, setCurrent, wantsDelete, wantsEdit, path }) => {
   return (
     <Card className="stepCard">
       <Card.Body>
-        <div>
-          <Player src={step.video} />
-        </div>
+        {step.video && (
+          <div>
+            <Player src={step.video} />
+          </div>
+        )}
         <Card.Text as="h4" text-muted="true">
           Opis kroku:
         </Card.Text>
@@ -41,7 +43,7 @@ const StepCard = ({ step, setCurrent, wantsDelete, wantsEdit, path }) => {
               window.scrollTo(0, 0);
             }}
           >
-            Początek
+            Wróć na początek
           </Button>
         )}
         {path[path.length - 1] === step.id &&

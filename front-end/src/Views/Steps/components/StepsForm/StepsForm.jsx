@@ -9,7 +9,6 @@ const StepsForm = ({
   newStep,
   steps,
   isEdit,
-  root,
 }) => {
   const stepsTypes = ["Krok główny", "Podkrok"];
   const isStep = type === stepsTypes[0];
@@ -67,7 +66,7 @@ const StepsForm = ({
         type="text"
         header="Film (link youtube)"
         id="stepVideo"
-        required
+        //required
         val={newStep?.video || ""}
         length={{ min: 1, max: 100 }}
         setVal={(val) =>

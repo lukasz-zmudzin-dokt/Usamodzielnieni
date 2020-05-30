@@ -4,7 +4,6 @@ import NotificationItemContainer from "./NotificationItemContainer";
 import NotificationItem from "./NotificationItem";
 import NotificationToggle from "./NotificationToggle";
 import { NotificationsContext } from "context";
-import { paths } from "constants/paths";
 
 const Notifications = ({ location, ...rest }) => {
   const [show, setShow] = useState(false);
@@ -12,20 +11,8 @@ const Notifications = ({ location, ...rest }) => {
   const { notifications, count, error } = notificationsContext;
 
   useEffect(() => {
-    if (notifications) {
-      const toRemove = notifications.filter(
-        (notification) =>
-          notification.path === location.pathname ||
-          (notification.path === paths.CHATS &&
-            location.pathname.match(/^\/chats\//))
-      );
-      if (toRemove.length) {
-        notificationsContext.deleteNotificationsArray(
-          toRemove.map((not) => not.id)
-        );
-      }
-    }
-  }, [notificationsContext, notifications, location.pathname]);
+    notificationsContext.setNewPathname(location.pathname);
+  }, [notificationsContext, location.pathname]);
 
   const clearNotifications = async () => {
     setShow("prevent");
@@ -38,9 +25,6 @@ const Notifications = ({ location, ...rest }) => {
 
   const onToggle = async (isOpen) => {
     setShow((prev) => (prev !== "prevent" ? isOpen : true));
-    if (isOpen && count) {
-      await notificationsContext.markAsRead();
-    }
   };
 
   const loadMoreNotifications = async () => {

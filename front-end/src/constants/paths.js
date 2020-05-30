@@ -14,6 +14,7 @@ const paths = {
   CONTACT_PAGE: "/contact",
   BLOG_POST: "/blog/blogpost/:id",
   BLOG_PAGE: "/blog",
+  BLOG_PAGE_FILTERED: "/blog/:cat",
   BLOG_FORM: "/blog/newPost",
   BLOG_EDIT: "/blog/newPost/:id",
   JOB_OFFER_DETAILS: "/jobOffers/:id",
