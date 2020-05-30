@@ -51,7 +51,7 @@ const Header = () => {
     }
     setScrollLocation(window.pageYOffset);
     handleExpand();
-  }
+  };
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
