@@ -8,11 +8,7 @@ import { IndexLinkContainer } from "react-router-bootstrap";
 import { staffTypes } from "constants/staffTypes";
 import { userTypes } from "constants/userTypes";
 import NewVideoBlogModal from "components/NewVideoBlogModal/NewVideoBlogModal";
-<<<<<<< Updated upstream
-import { Redirect, useHistory, useParams } from "react-router-dom";
-=======
-import {useHistory, useParams} from "react-router-dom";
->>>>>>> Stashed changes
+import { useHistory, useParams } from "react-router-dom";
 
 const Filter = ({ setFilter, filtersBlog, count }) => {
   const [filters, setFilters] = useState({ categories: [], tags: [] });
