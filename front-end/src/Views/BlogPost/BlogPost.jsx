@@ -77,7 +77,7 @@ const BlogPost = () => {
   ) : (
     <Container className="blogpost_container">
       {post.category === VIDEOBLOG_CATEGORY ? (
-        <VideoBlog user={user} postString={post} setDel={setDeleted}/>
+        <VideoBlog user={user} postString={post} setDel={setDeleted} />
       ) : (
         <BlogContent post={post} user={user} setDel={setDeleted} />
       )}
@@ -89,7 +89,9 @@ const BlogPost = () => {
             comments={post.comments}
             setComments={setComments}
           />
-          {user.token && user.data.status === userStatuses.VERIFIED && !isDeleted ? (
+          {user.token &&
+          user.data.status === userStatuses.VERIFIED &&
+          !isDeleted ? (
             <CommentForm
               blogId={post.id}
               afterSubmit={(comment) =>

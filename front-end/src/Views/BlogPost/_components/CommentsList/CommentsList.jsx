@@ -32,9 +32,7 @@ const CommentsList = ({ comments, setComments, blogId, user, ...rest }) => {
     }
   };
 
-  const msg = comments.length === 0 && (
-      <i>Brak komentarzy.</i>
-  );
+  const msg = comments.length === 0 && <i>Brak komentarzy.</i>;
 
   return (
     <div {...rest}>
