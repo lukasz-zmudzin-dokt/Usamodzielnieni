@@ -312,7 +312,7 @@ exports[`Header should match snapshot - logged in standard 1`] = `
 exports[`Header should match snapshot - not logged in 1`] = `
 <div>
   <nav
-    class="font p-3 navbar navbar-expand-lg navbar-light sticky-top"
+    class="font p-3 navbar  navbar navbar-expand-lg navbar-light sticky-top"
   >
     <div />
     <button
@@ -391,6 +391,9 @@ exports[`Header should match snapshot - not logged in 1`] = `
           LOGOWANIE
         </a>
       </div>
+      <div
+        class="d-flex height-rest"
+      />
     </div>
   </nav>
 </div>

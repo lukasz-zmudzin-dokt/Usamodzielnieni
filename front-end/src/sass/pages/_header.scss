@@ -17,6 +17,17 @@
 .white {
   color: white !important;
 }
+.navbar {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  transition: top 0.6s;
+}
+
+.navbar--hidden {
+  top: -60px;
+}
+
 .dropdown-menu {
   border-style: none;
   margin: 0;
@@ -167,5 +178,11 @@
   .notifications {
     border-radius: 0;
     text-align: center;
+  }
+  .height-rest {
+    height: 100%;
+    height: -moz-available;          /* WebKit-based browsers will ignore this. */
+    height: -webkit-fill-available;  /* Mozilla-based browsers will ignore this. */
+    height: fill-available;
   }
 }
