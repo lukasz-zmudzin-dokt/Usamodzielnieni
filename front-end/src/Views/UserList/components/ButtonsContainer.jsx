@@ -13,7 +13,7 @@ const ButtonsContainer = ({ user, setUser, deleteUser }) => {
   const userCon = useContext(UserContext);
   return (
     <div className="buttonsContainer">
-      {disableButtons ? (
+      {disableButtons && userCon.data?.group_type?.includes(staffTypes.CHAT) ? (
         <Button disabled={disableButtons}>Wyślij wiadomość</Button>
       ) : (
         userCon.data?.group_type?.includes(staffTypes.CHAT) && user.status === userStatuses.VERIFIED && (
