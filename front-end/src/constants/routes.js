@@ -117,6 +117,6 @@ export default [
     component: NewPasswordPage,
   },
   {
-    component: BlogPage
-  }
+    component: BlogPage,
+  },
 ].map((value, i) => ({ ...value, ...routesInfo[i] }));

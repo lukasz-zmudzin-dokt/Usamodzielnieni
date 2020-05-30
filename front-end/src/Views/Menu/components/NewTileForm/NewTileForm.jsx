@@ -37,10 +37,10 @@ const fetchPosts = async () => {
 const fetchCategories = async () => {
   const url = proxy.blog + "categories/";
   const headers = {
-    "Content-Type": "application/json"
+    "Content-Type": "application/json",
   };
 
-  const res = await fetch(url, {headers, method: "GET"});
+  const res = await fetch(url, { headers, method: "GET" });
 
   if (res.status === 200) {
     return await res.json().then((data) => mapCategories(data));
@@ -90,7 +90,7 @@ const postPhoto = async (token, id, photo) => {
 const mapCategories = (cats) => {
   return cats.map((item) => ({
     id: "/blog/" + item.name,
-    name: "*Blog* " + item.name
+    name: "*Blog* " + item.name,
   }));
 };
 

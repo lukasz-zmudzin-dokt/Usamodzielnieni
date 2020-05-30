@@ -138,8 +138,10 @@ const Filter = ({ setFilter, filtersBlog, count }) => {
         </div>
       </Form>
       <NewVideoBlogModal show={showModal} setShow={setShowModal} user={user} />
-      {redirectF && category !== DEFAULT_INPUT && <Redirect to={"/blog/" + category}/>}
-      {redirectC && <Redirect to="/blog"/>}
+      {redirectF && category !== DEFAULT_INPUT && (
+        <Redirect to={"/blog/" + category} />
+      )}
+      {redirectC && <Redirect to="/blog" />}
     </>
   );
 };

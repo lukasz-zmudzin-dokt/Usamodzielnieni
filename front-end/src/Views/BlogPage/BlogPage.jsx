@@ -27,9 +27,9 @@ const BlogPage = () => {
       setIsLoading(true);
       let res;
       try {
-        let newFilters = {...filters};
+        let newFilters = { ...filters };
         if (cat) {
-          newFilters = {...newFilters, category: cat}
+          newFilters = { ...newFilters, category: cat };
         }
         res = await getPosts(newFilters);
       } catch (e) {

@@ -175,6 +175,6 @@ export default [
   {
     path: paths.BLOG_PAGE_FILTERED,
     type: undefined,
-    exact: true
-  }
+    exact: true,
+  },
 ];
