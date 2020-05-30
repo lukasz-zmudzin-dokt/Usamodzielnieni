@@ -203,8 +203,6 @@ const Header = () => {
             </span>
           }
           className="navbar-right-button register-color"
-          onMouseEnter={handleOpen}
-          onMouseLeave={handleClose}
           onClick={isOpen ? handleClose : handleOpen}
           show={isOpen}
         >
