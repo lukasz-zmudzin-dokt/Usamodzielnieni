@@ -5,7 +5,7 @@ import { Container, Card, Alert, CardColumns } from "react-bootstrap";
 import { getPosts } from "Views/BlogPage/functions/fetchData";
 import BlogPost from "Views/BlogPage/components/SmallBlogPost";
 import Filter from "Views/BlogPage/components/Filter";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import qs from "query-string";
 import { Pagination } from "components";
 
@@ -18,6 +18,7 @@ const BlogPage = () => {
   });
   const alertC = useRef(useContext(AlertContext));
   const [count, setCount] = useState(0);
+  const { cat } = useParams();
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -26,7 +27,11 @@ const BlogPage = () => {
       setIsLoading(true);
       let res;
       try {
-        res = await getPosts(filters);
+        let newFilters = {...filters};
+        if (cat) {
+          newFilters = {...newFilters, category: cat}
+        }
+        res = await getPosts(newFilters);
       } catch (e) {
         console.log(e);
         res = {
@@ -40,7 +45,7 @@ const BlogPage = () => {
     };
 
     loadOffers();
-  }, [filters]);
+  }, [filters, cat]);
 
   const msg = isLoading ? (
     <Alert variant="info">Ładowanie postów...</Alert>

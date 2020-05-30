@@ -8,6 +8,7 @@ import { IndexLinkContainer } from "react-router-bootstrap";
 import { staffTypes } from "constants/staffTypes";
 import { userTypes } from "constants/userTypes";
 import NewVideoBlogModal from "components/NewVideoBlogModal/NewVideoBlogModal";
+import { Redirect, useParams } from "react-router-dom";
 
 const Filter = ({ setFilter, filtersBlog, count }) => {
   const [filters, setFilters] = useState({ categories: [], tags: [] });
@@ -15,9 +16,14 @@ const Filter = ({ setFilter, filtersBlog, count }) => {
   const [tag, setTag] = useState(DEFAULT_INPUT);
   const [err, setErr] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [redirectF, setRedirectF] = useState(false);
+  const [redirectC, setRedirectC] = useState(false);
   const user = useContext(UserContext);
+  const { cat } = useParams();
 
   useEffect(() => {
+    setRedirectF(false);
+    setRedirectC(false);
     const loadOffers = async () => {
       let res;
       try {
@@ -33,7 +39,10 @@ const Filter = ({ setFilter, filtersBlog, count }) => {
       setFilters(res);
     };
     loadOffers();
-  }, []);
+    if (cat) {
+      setCategory(cat);
+    }
+  }, [cat]);
 
   const filter = (event) => {
     event.preventDefault();
@@ -44,6 +53,7 @@ const Filter = ({ setFilter, filtersBlog, count }) => {
       category: categoryV,
       tag: tagV,
     });
+    setRedirectF(true);
   };
 
   const clearFilter = () => {
@@ -54,6 +64,7 @@ const Filter = ({ setFilter, filtersBlog, count }) => {
       category: undefined,
       tag: undefined,
     });
+    setRedirectC(true);
   };
 
   const msg = err ? (
@@ -127,6 +138,8 @@ const Filter = ({ setFilter, filtersBlog, count }) => {
         </div>
       </Form>
       <NewVideoBlogModal show={showModal} setShow={setShowModal} user={user} />
+      {redirectF && category !== DEFAULT_INPUT && <Redirect to={"/blog/" + category}/>}
+      {redirectC && <Redirect to="/blog"/>}
     </>
   );
 };
