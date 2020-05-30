@@ -190,11 +190,7 @@ const Header = () => {
       </Nav>
     ) : (
       <Nav>
-        <Notifications
-          className="desktopNotifications"
-          location={location}
-          token={context.token}
-        />
+        <Notifications className="desktopNotifications" location={location} />
         <NavDropdown
           id={"myAccDropdown"}
           title={<span className="white">MOJE KONTO</span>}
@@ -243,11 +239,7 @@ const Header = () => {
       {context.token === undefined ? (
         <div />
       ) : (
-        <Notifications
-          className="mobileNotifications"
-          location={location}
-          token={context.token}
-        />
+        <Notifications className="mobileNotifications" location={location} />
       )}
       <Navbar.Toggle
         aria-controls="responsive-navbar-nav"
