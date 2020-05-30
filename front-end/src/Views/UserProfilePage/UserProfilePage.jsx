@@ -39,8 +39,8 @@ class UserProfilePage extends React.Component {
         lastName: "",
         email: "",
         chat_role: null,
-        is_subscribed: null,
       },
+      is_subscribed: null,
       error: false,
     };
   }
@@ -61,8 +61,8 @@ class UserProfilePage extends React.Component {
           email: res.data.email,
           role: res.type,
           chat_role: res.data.role,
-          is_subscribed: res.data.is_subscribed,
         },
+        is_subscribed: res.data.is_subscribed,
       });
     } catch (res) {
       this.setState({ error: true });
@@ -92,11 +92,11 @@ class UserProfilePage extends React.Component {
             />
           </Card.Body>
           <UserDetails user={this.state.user} names={names} />
-          {this.state.user.is_subscribed !== null ? (
+          {this.state.is_subscribed !== null ? (
             <Card.Body>
               <NotificationsCheckbox
                 token={this.context.token}
-                is_subscribed={this.state.user.is_subscribed}
+                is_subscribed={this.state.is_subscribed}
               />
             </Card.Body>
           ) : null}
