@@ -16,7 +16,7 @@ const ButtonsContainer = ({ user, setUser, deleteUser }) => {
       {disableButtons ? (
         <Button disabled={disableButtons}>Wyślij wiadomość</Button>
       ) : (
-        userCon.data?.group_type?.includes(staffTypes.CHAT) && (
+        userCon.data?.group_type?.includes(staffTypes.CHAT) && user.status === userStatuses.VERIFIED && (
           <IndexLinkContainer to={`/chats/${user.username}`}>
             <Button>Wyślij wiadomość</Button>
           </IndexLinkContainer>
