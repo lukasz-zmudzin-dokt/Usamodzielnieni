@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Nav, Navbar, NavDropdown } from "react-bootstrap";
 import { IndexLinkContainer } from "react-router-bootstrap";
 import { UserContext } from "context";
@@ -40,22 +40,22 @@ const Header = () => {
 
   const handleExpand = () => {
     setExpanded(false);
-  }
+  };
 
   const handleScroll = () => {
-    if(scrollLocation >= window.pageYOffset) {
+    if (scrollLocation >= window.pageYOffset) {
       setVisible(true);
     } else {
       setVisible(false);
     }
     setScrollLocation(window.pageYOffset);
-  }
+  };
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
-    }
+    };
   });
 
   const leftNav = (
@@ -197,11 +197,7 @@ const Header = () => {
         />
         <NavDropdown
           id={"myAccDropdown"}
-          title={
-            <span className="white">
-              MOJE KONTO
-            </span>
-          }
+          title={<span className="white">MOJE KONTO</span>}
           className="navbar-right-button register-color"
           onClick={isOpen ? handleClose : handleOpen}
           show={isOpen}
@@ -234,9 +230,18 @@ const Header = () => {
   );
 
   return (
-    <Navbar collapseOnSelect expanded={expanded} onToggle={() => { setExpanded(!expanded);}} expand="lg" sticky="top" className={`font p-3 navbar ${visible ? "" : "navbar--hidden"}`}>
+    <Navbar
+      collapseOnSelect
+      expanded={expanded}
+      onToggle={() => {
+        setExpanded(!expanded);
+      }}
+      expand="lg"
+      sticky="top"
+      className={`font p-3 navbar ${visible ? "" : "navbar--hidden"}`}
+    >
       {context.token === undefined ? (
-        <div/>
+        <div />
       ) : (
         <Notifications
           className="mobileNotifications"
@@ -259,9 +264,7 @@ const Header = () => {
       <Navbar.Collapse id="responsive-navbar-nav">
         {leftNav}
         {rightNav}
-        <div onClick={handleExpand} className="d-flex height-rest">
-
-        </div>
+        <div onClick={handleExpand} className="d-flex height-rest"></div>
       </Navbar.Collapse>
       {logout ? <Redirect to={paths.DASHBOARD} /> : null}
       {error ? errMsg : null}
