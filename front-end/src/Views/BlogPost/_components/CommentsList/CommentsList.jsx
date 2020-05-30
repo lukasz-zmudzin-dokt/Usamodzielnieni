@@ -1,5 +1,4 @@
 import React, { useRef, useContext } from "react";
-import { Alert } from "react-bootstrap";
 import { CommentItem } from "../";
 import proxy from "config/api";
 import { AlertContext } from "context";
@@ -33,9 +32,7 @@ const CommentsList = ({ comments, setComments, blogId, user, ...rest }) => {
     }
   };
 
-  const msg = comments.length === 0 && (
-    <Alert variant="info">Brak komentarzy.</Alert>
-  );
+  const msg = comments.length === 0 && <i>Brak komentarzy.</i>;
 
   return (
     <div {...rest}>

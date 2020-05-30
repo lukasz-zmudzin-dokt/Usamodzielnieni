@@ -172,4 +172,9 @@ export default [
     type: undefined,
     exact: true,
   },
+  {
+    path: paths.BLOG_PAGE_FILTERED,
+    type: undefined,
+    exact: true,
+  },
 ];

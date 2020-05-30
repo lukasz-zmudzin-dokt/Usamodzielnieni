@@ -60,6 +60,22 @@ const markAsRead = async (token) => {
   return;
 };
 
+const markNotificationAsRead = async (token, id) => {
+  let url = proxy.notification + `mark-as-read/${id}/`;
+  const headers = {
+    Authorization: "Token " + token,
+    "Content-Type": "application/json",
+  };
+
+  const response = await fetch(url, { method: "POST", headers });
+
+  if (response.status !== 200) {
+    throw response.status;
+  }
+
+  return;
+};
+
 const deleteNotification = async (token, id) => {
   let url = proxy.notification + `delete/${id}/`;
   const headers = {
@@ -127,6 +143,7 @@ export const NotificationsProvider = (props) => {
   const [count, setCount] = useState(null);
   const [next, setNext] = useState();
   const [error, setError] = useState(false);
+  const [pathname, setPathname] = useState(null);
   const socket = useRef();
 
   const user = useContext(UserContext);
@@ -187,6 +204,53 @@ export const NotificationsProvider = (props) => {
     }
   }, [user.token]);
 
+  useEffect(() => {
+    const markNotificationsArray = async (notificationsToMark) => {
+      let unreadCount = 0;
+      notificationsToMark.forEach((not) => {
+        unreadCount += not.unread ? 1 : 0;
+      });
+      if (unreadCount) {
+        setCount((prev) => Math.max(prev - unreadCount, 0));
+      }
+      setNotifications(
+        notifications.map((notification) => {
+          const isNotificationToMark = notificationsToMark.find(
+            (not) => notification.id === not.id
+          );
+          if (isNotificationToMark) {
+            return {
+              ...notification,
+              unread: false,
+            };
+          }
+          return notification;
+        })
+      );
+      try {
+        await Promise.all(
+          notificationsToMark.map(async (not) => {
+            await markNotificationAsRead(user.token, not.id);
+          })
+        );
+      } catch (e) {
+        setError(true);
+        return;
+      }
+    };
+    if (user.token && notifications && pathname) {
+      const toMark = notifications.filter(
+        (notification) =>
+          notification.unread &&
+          (notification.path === pathname ||
+            (notification.path === paths.CHATS && pathname.match(/^\/chats\//)))
+      );
+      if (toMark.length > 0) {
+        markNotificationsArray(toMark);
+      }
+    }
+  }, [notifications, pathname, user.token]);
+
   const data = {
     notifications,
     count,
@@ -229,38 +293,6 @@ export const NotificationsProvider = (props) => {
         return;
       }
     },
-    deleteNotificationsArray: async (ids) => {
-      const notificationsToRemove = notifications.filter((notification) =>
-        ids.find((id) => notification.id === id)
-      );
-      if (notificationsToRemove.length > 0) {
-        let unreadCount = 0;
-        notificationsToRemove.forEach((not) => {
-          unreadCount += not.unread ? 1 : 0;
-        });
-        if (unreadCount && count > 0) {
-          setCount((prev) => Math.max(prev - unreadCount, 0));
-        }
-        setNotifications(
-          notifications.filter((notification) => {
-            const check = !ids.find((id) => notification.id === id);
-            return check;
-          })
-        );
-        try {
-          await Promise.all(
-            ids.map(async (id) => {
-              await deleteNotification(user.token, id);
-            })
-          );
-        } catch (e) {
-          if (e !== 404) {
-            setError(true);
-          }
-          return;
-        }
-      }
-    },
     loadMoreNotifications: async () => {
       setNext(null);
       let res;
@@ -272,6 +304,11 @@ export const NotificationsProvider = (props) => {
       }
       setNext(res.next);
       setNotifications((prev) => [...prev, ...res.notifications]);
+    },
+    setNewPathname: (newPathname) => {
+      if (pathname !== newPathname) {
+        setPathname(newPathname);
+      }
     },
   };
   return <NotificationsContext.Provider value={data} {...props} />;

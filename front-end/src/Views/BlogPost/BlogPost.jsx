@@ -41,6 +41,7 @@ const BlogPost = () => {
   const [isPostLoading, setIsPostLoading] = useState(false);
   const user = useContext(UserContext);
   const [error, setError] = useState(false);
+  const [isDeleted, setDeleted] = useState(false);
   const post_Id = window.location.pathname.replace(/\/blog\/blogpost\//, "");
   const setComments = (comments) => setPost({ ...post, comments });
 
@@ -76,9 +77,9 @@ const BlogPost = () => {
   ) : (
     <Container className="blogpost_container">
       {post.category === VIDEOBLOG_CATEGORY ? (
-        <VideoBlog user={user} postString={post} />
+        <VideoBlog user={user} postString={post} setDel={setDeleted} />
       ) : (
-        <BlogContent post={post} user={user} />
+        <BlogContent post={post} user={user} setDel={setDeleted} />
       )}
       <Card className="blogpost_comment_card">
         <Card.Body>
@@ -88,7 +89,9 @@ const BlogPost = () => {
             comments={post.comments}
             setComments={setComments}
           />
-          {user.token && user.data.status === userStatuses.VERIFIED ? (
+          {user.token &&
+          user.data.status === userStatuses.VERIFIED &&
+          !isDeleted ? (
             <CommentForm
               blogId={post.id}
               afterSubmit={(comment) =>

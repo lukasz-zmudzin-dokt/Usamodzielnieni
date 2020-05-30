@@ -12,12 +12,24 @@
   background-color: #ff884d;
 }
 .notification-color-light {
-  background-color: #ffbb99 !important;
+  background-color: #ffa579 !important;
 }
 .white {
   color: white !important;
 }
+.navbar {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  transition: top 0.3s;
+}
+
+.navbar--hidden {
+  top: -60px;
+}
+
 .dropdown-menu {
+  background: none;
   border-style: none;
   margin: 0;
   padding: 0;

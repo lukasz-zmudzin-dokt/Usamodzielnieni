@@ -15,3 +15,4 @@ export { default as ChangePhotoButton } from "./ChangePhotoButton/ChangePhotoBut
 export { default as ChangePhotoModal } from "./ChangePhotoModal/ChangePhotoModal";
 export { default as UserPasswordChangeButton } from "./UserPasswordChangeButton/UserPasswordChangeButton";
 export { default as NotificationsCheckbox } from "./NotificationsCheckbox/NotificationsCheckbox"
+export { default as NewOfferButton } from "./NewOfferButton/NewOfferButton";
