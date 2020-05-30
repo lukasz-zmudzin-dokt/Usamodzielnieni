@@ -3,7 +3,7 @@ import { Alert, Card, Container } from "react-bootstrap";
 import { UserContext } from "context";
 import { getUserData } from "Views/UserProfilePage/functions/getUserData.js";
 import UserBasicInfo from "./components/UserBasicInfo";
-import { UserDetails, ButtonsContainer } from "./components";
+import { UserDetails, ButtonsContainer, NotificationsCheckbox } from "./components";
 import { userTypes } from "constants/userTypes";
 import { userStatuses } from "constants/userStatuses";
 
@@ -47,6 +47,7 @@ class UserProfilePage extends React.Component {
   getData = async () => {
     try {
       const res = await getUserData(this.context.token, this);
+      console.log(res)
       this.setState({
         user: {
           username: res.data.username,
@@ -85,6 +86,7 @@ class UserProfilePage extends React.Component {
             />
           </Card.Body>
           <UserDetails user={this.state.user} names={names} />
+          <NotificationsCheckbox />
           <Card.Body className="text-center">
             {this.setMessage()}
             {this.context.type !== userTypes.STAFF &&
