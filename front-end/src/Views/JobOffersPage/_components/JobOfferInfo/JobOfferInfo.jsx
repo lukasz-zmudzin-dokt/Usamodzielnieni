@@ -33,7 +33,7 @@ const JobOfferInfo = ({ context, offer, ...rest }) => {
             {new Date(offer.expirationDate).toLocaleDateString(undefined, {})}
           </DetailsItem>
           <DetailsItem md="4" xl="3" label="Wynagrodzenie:">
-            {`${offer.salaryMin} - ${offer.salaryMax}`}
+            {`${offer.salaryMin} zł - ${offer.salaryMax} zł`}
           </DetailsItem>
         </Row>
         <IndexLinkContainer to={`/jobOffers/${offer.id}`}>
