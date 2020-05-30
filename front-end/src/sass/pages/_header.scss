@@ -21,7 +21,7 @@
   width: 100%;
   position: fixed;
   top: 0;
-  transition: top 0.6s;
+  transition: top 0.3s;
 }
 
 .navbar--hidden {
@@ -29,6 +29,7 @@
 }
 
 .dropdown-menu {
+  background: none;
   border-style: none;
   margin: 0;
   padding: 0;
@@ -178,11 +179,5 @@
   .notifications {
     border-radius: 0;
     text-align: center;
-  }
-  .height-rest {
-    height: 100%;
-    height: -moz-available;          /* WebKit-based browsers will ignore this. */
-    height: -webkit-fill-available;  /* Mozilla-based browsers will ignore this. */
-    height: fill-available;
   }
 }

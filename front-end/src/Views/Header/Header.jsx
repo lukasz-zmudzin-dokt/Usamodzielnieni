@@ -47,8 +47,10 @@ const Header = () => {
       setVisible(true);
     } else {
       setVisible(false);
+      handleClose();
     }
     setScrollLocation(window.pageYOffset);
+    handleExpand();
   }
 
   useEffect(() => {
@@ -234,7 +236,7 @@ const Header = () => {
   );
 
   return (
-    <Navbar collapseOnSelect expanded={expanded} onToggle={() => { setExpanded(!expanded);}} expand="lg" sticky="top" className={`font p-3 navbar ${visible ? "" : "navbar--hidden"}`}>
+    <Navbar collapseOnSelect expanded={expanded} onToggle={() => { setExpanded(!expanded);}} expand="lg" sticky="top" className={`font p-3 ${visible ? "" : "navbar--hidden"}`}>
       {context.token === undefined ? (
         <div/>
       ) : (
@@ -259,9 +261,6 @@ const Header = () => {
       <Navbar.Collapse id="responsive-navbar-nav">
         {leftNav}
         {rightNav}
-        <div onClick={handleExpand} className="d-flex height-rest">
-
-        </div>
       </Navbar.Collapse>
       {logout ? <Redirect to={paths.DASHBOARD} /> : null}
       {error ? errMsg : null}
