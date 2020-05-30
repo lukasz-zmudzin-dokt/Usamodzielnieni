@@ -51,7 +51,6 @@ const handleDeletion = async (
     await deletePost(id, token);
     successFlag(true);
     setDel(true);
-
   } catch (e) {
     console.log(e);
     errorFlag(true);
