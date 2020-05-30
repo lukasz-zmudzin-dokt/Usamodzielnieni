@@ -37,7 +37,6 @@ const NotificationsCheckbox = ({ token, is_subscribed }) => {
   };
 
   const handleChange = (e) => {
-    console.log(e.target.checked);
     if (e.target.checked) {
       notificationsOn(token);
     } else {

@@ -52,7 +52,6 @@ class UserProfilePage extends React.Component {
   getData = async () => {
     try {
       const res = await getUserData(this.context.token, this);
-      console.log(res);
       this.setState({
         user: {
           username: res.data.username,
