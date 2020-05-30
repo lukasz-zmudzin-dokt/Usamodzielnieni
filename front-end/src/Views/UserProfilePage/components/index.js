@@ -14,4 +14,4 @@ export { default as DeletePhotoButton } from "./DeletePhotoButton/DeletePhotoBut
 export { default as ChangePhotoButton } from "./ChangePhotoButton/ChangePhotoButton";
 export { default as ChangePhotoModal } from "./ChangePhotoModal/ChangePhotoModal";
 export { default as UserPasswordChangeButton } from "./UserPasswordChangeButton/UserPasswordChangeButton";
-export { default as NewOfferButton } from "./NewOfferButton/NewOfferButton"
+export { default as NewOfferButton } from "./NewOfferButton/NewOfferButton";

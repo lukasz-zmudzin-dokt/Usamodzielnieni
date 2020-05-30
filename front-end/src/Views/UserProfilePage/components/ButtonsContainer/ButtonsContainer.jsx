@@ -8,7 +8,7 @@ import {
   DeleteAccountButton,
   UserListButton,
   UserPasswordChangeButton,
-  NewOfferButton
+  NewOfferButton,
 } from "../";
 import { Button } from "react-bootstrap";
 import { IndexLinkContainer } from "react-router-bootstrap";
