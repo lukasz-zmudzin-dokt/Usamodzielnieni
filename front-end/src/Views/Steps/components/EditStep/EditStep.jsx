@@ -42,6 +42,7 @@ const EditStep = ({
           : "",
       });
     }
+    setValidated(false);
     step?.type === "main" ? setType("Krok główny") : setType("Podkrok");
   }, [step]);
 
