@@ -174,7 +174,7 @@ export const NotificationsProvider = (props) => {
           setCount((prev) => prev + 1);
           setNotifications((prev) => [newNotification, ...prev]);
           if (parsedNotification.app === "chats") {
-            chatC.current.loadMessages();
+            chatC.current.loadMessages(user.token);
           }
         };
         socket.current.onerror = (e) => {
