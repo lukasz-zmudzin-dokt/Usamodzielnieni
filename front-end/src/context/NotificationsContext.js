@@ -127,6 +127,7 @@ export const NotificationsProvider = (props) => {
   const [count, setCount] = useState(null);
   const [next, setNext] = useState();
   const [error, setError] = useState(false);
+  const [pathname, setPathname] = useState(null);
   const socket = useRef();
 
   const user = useContext(UserContext);
@@ -187,6 +188,48 @@ export const NotificationsProvider = (props) => {
     }
   }, [user.token]);
 
+  useEffect(() => {
+    const deleteNotificationsArray = async (notificationsToRemove) => {
+      let unreadCount = 0;
+      notificationsToRemove.forEach((not) => {
+        unreadCount += not.unread ? 1 : 0;
+      });
+      if (unreadCount) {
+        setCount((prev) => Math.max(prev - unreadCount, 0));
+      }
+      setNotifications(
+        notifications.filter((notification) => {
+          const check = !notificationsToRemove.find(
+            (not) => notification.id === not.id
+          );
+          return check;
+        })
+      );
+      try {
+        await Promise.all(
+          notificationsToRemove.map(async (not) => {
+            await deleteNotification(user.token, not.id);
+          })
+        );
+      } catch (e) {
+        if (e !== 404) {
+          setError(true);
+        }
+        return;
+      }
+    };
+    if (user.token && notifications && pathname) {
+      const toRemove = notifications.filter(
+        (notification) =>
+          notification.path === pathname ||
+          (notification.path === paths.CHATS && pathname.match(/^\/chats\//))
+      );
+      if (toRemove.length > 0) {
+        deleteNotificationsArray(toRemove);
+      }
+    }
+  }, [notifications, pathname, user.token]);
+
   const data = {
     notifications,
     count,
@@ -229,38 +272,6 @@ export const NotificationsProvider = (props) => {
         return;
       }
     },
-    deleteNotificationsArray: async (ids) => {
-      const notificationsToRemove = notifications.filter((notification) =>
-        ids.find((id) => notification.id === id)
-      );
-      if (notificationsToRemove.length > 0) {
-        let unreadCount = 0;
-        notificationsToRemove.forEach((not) => {
-          unreadCount += not.unread ? 1 : 0;
-        });
-        if (unreadCount && count > 0) {
-          setCount((prev) => Math.max(prev - unreadCount, 0));
-        }
-        setNotifications(
-          notifications.filter((notification) => {
-            const check = !ids.find((id) => notification.id === id);
-            return check;
-          })
-        );
-        try {
-          await Promise.all(
-            ids.map(async (id) => {
-              await deleteNotification(user.token, id);
-            })
-          );
-        } catch (e) {
-          if (e !== 404) {
-            setError(true);
-          }
-          return;
-        }
-      }
-    },
     loadMoreNotifications: async () => {
       setNext(null);
       let res;
@@ -272,6 +283,11 @@ export const NotificationsProvider = (props) => {
       }
       setNext(res.next);
       setNotifications((prev) => [...prev, ...res.notifications]);
+    },
+    setNewPathname: (newPathname) => {
+      if (pathname !== newPathname) {
+        setPathname(newPathname);
+      }
     },
   };
   return <NotificationsContext.Provider value={data} {...props} />;
