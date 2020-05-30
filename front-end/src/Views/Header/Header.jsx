@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Nav, Navbar, NavDropdown } from "react-bootstrap";
 import { IndexLinkContainer } from "react-router-bootstrap";
 import { UserContext } from "context";
@@ -40,10 +40,10 @@ const Header = () => {
 
   const handleExpand = () => {
     setExpanded(false);
-  }
+  };
 
   const handleScroll = () => {
-    if(scrollLocation >= window.pageYOffset) {
+    if (scrollLocation >= window.pageYOffset) {
       setVisible(true);
     } else {
       setVisible(false);
@@ -57,7 +57,7 @@ const Header = () => {
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
-    }
+    };
   });
 
   const leftNav = (
@@ -192,18 +192,10 @@ const Header = () => {
       </Nav>
     ) : (
       <Nav>
-        <Notifications
-          className="desktopNotifications"
-          location={location}
-          token={context.token}
-        />
+        <Notifications className="desktopNotifications" location={location} />
         <NavDropdown
           id={"myAccDropdown"}
-          title={
-            <span className="white">
-              MOJE KONTO
-            </span>
-          }
+          title={<span className="white">MOJE KONTO</span>}
           className="navbar-right-button register-color"
           onClick={isOpen ? handleClose : handleOpen}
           show={isOpen}
@@ -236,15 +228,20 @@ const Header = () => {
   );
 
   return (
-    <Navbar collapseOnSelect expanded={expanded} onToggle={() => { setExpanded(!expanded);}} expand="lg" sticky="top" className={`font p-3 ${visible ? "" : "navbar--hidden"}`}>
+    <Navbar
+      collapseOnSelect
+      expanded={expanded}
+      onToggle={() => {
+        setExpanded(!expanded);
+      }}
+      expand="lg"
+      sticky="top"
+      className={`font p-3 navbar ${visible ? "" : "navbar--hidden"}`}
+    >
       {context.token === undefined ? (
-        <div/>
+        <div />
       ) : (
-        <Notifications
-          className="mobileNotifications"
-          location={location}
-          token={context.token}
-        />
+        <Notifications className="mobileNotifications" location={location} />
       )}
       <Navbar.Toggle
         aria-controls="responsive-navbar-nav"
