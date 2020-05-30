@@ -1,6 +1,6 @@
 import React from "react";
 import { Container, Button, Card, Form } from "react-bootstrap";
-import { Link, Redirect } from "react-router-dom";
+import {Link, withRouter} from "react-router-dom";
 import LoginForm from "./components/loginForm";
 import { UserContext } from "context";
 import { sendData } from "./functions/sendData";
@@ -23,7 +23,7 @@ class LoginPage extends React.Component {
 
   renderRedirect = () => {
     if (this.state.redirect) {
-      return <Redirect to="/user" />;
+      this.props.history.goBack();
     }
   };
 
@@ -126,4 +126,4 @@ class LoginPage extends React.Component {
 
 LoginPage.contextType = UserContext;
 
-export default withAlertContext(LoginPage);
+export default withRouter(withAlertContext(LoginPage));

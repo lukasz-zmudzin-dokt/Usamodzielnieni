@@ -4,7 +4,6 @@ import NotificationItemContainer from "./NotificationItemContainer";
 import NotificationItem from "./NotificationItem";
 import NotificationToggle from "./NotificationToggle";
 import { NotificationsContext } from "context";
-import { paths } from "constants/paths";
 
 const Notifications = ({ location, ...rest }) => {
   const [show, setShow] = useState(false);
