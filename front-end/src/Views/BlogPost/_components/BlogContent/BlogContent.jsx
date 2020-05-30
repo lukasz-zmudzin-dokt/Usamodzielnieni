@@ -43,12 +43,14 @@ const handleDeletion = async (
   id,
   token,
   errorFlag,
-  successFlag
+  successFlag,
+  setDel
 ) => {
   wantsDelete(false);
   try {
     await deletePost(id, token);
     successFlag(true);
+    setDel(true);
   } catch (e) {
     console.log(e);
     errorFlag(true);
@@ -97,7 +99,7 @@ const handleOnClick = (e, setShow) => {
   if (e.target.id === "delete") setShow(true);
 };
 
-const BlogContent = ({ post, user }) => {
+const BlogContent = ({ post, user, setDel }) => {
   const [delError, setDelError] = useState(false);
   const [success, setSuccess] = useState(false);
   const [wantsEdition, setWantsEdition] = useState(false);
@@ -118,7 +120,8 @@ const BlogContent = ({ post, user }) => {
       post.id,
       user.token,
       setDelError,
-      setSuccess
+      setSuccess,
+      setDel
     );
 
   const { username } = post.author;
