@@ -8,7 +8,7 @@ import { IndexLinkContainer } from "react-router-bootstrap";
 import { staffTypes } from "constants/staffTypes";
 import { userTypes } from "constants/userTypes";
 import NewVideoBlogModal from "components/NewVideoBlogModal/NewVideoBlogModal";
-import {Redirect, useHistory, useParams} from "react-router-dom";
+import { Redirect, useHistory, useParams } from "react-router-dom";
 
 const Filter = ({ setFilter, filtersBlog, count }) => {
   const [filters, setFilters] = useState({ categories: [], tags: [] });
@@ -61,7 +61,7 @@ const Filter = ({ setFilter, filtersBlog, count }) => {
       category: undefined,
       tag: undefined,
     });
-    history.push("/blog")
+    history.push("/blog");
   };
 
   const msg = err ? (
