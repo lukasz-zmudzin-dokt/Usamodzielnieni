@@ -28,7 +28,7 @@ const approveChanges = async (id, token, data) => {
   }
 };
 
-const VideoBlog = ({ user, postString }) => {
+const VideoBlog = ({ user, postString, setDel }) => {
   const [showModal, setShowModal] = useState(false);
   const [showDelModal, setShowDelModal] = useState(false);
   const [validated, setValidated] = useState(false);
@@ -88,6 +88,7 @@ const VideoBlog = ({ user, postString }) => {
     try {
       await deletePost(postString.id, user.token);
       setDeleted(true);
+      setDel(true);
     } catch (e) {
       alertC.current.showAlert("Wystąpił błąd podczas usuwania wideobloga.");
     }
@@ -114,7 +115,7 @@ const VideoBlog = ({ user, postString }) => {
                   className="mx-3"
                   onClick={(e) => setShowModal(true)}
                 >
-                  Dodaj kartę
+                  Dodaj wideo
                 </Button>
                 <Button
                   variant="danger"
