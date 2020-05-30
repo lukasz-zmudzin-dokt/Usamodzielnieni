@@ -34,6 +34,21 @@ const fetchPosts = async () => {
   }
 };
 
+const fetchCategories = async () => {
+  const url = proxy.blog + "categories/";
+  const headers = {
+    "Content-Type": "application/json",
+  };
+
+  const res = await fetch(url, { headers, method: "GET" });
+
+  if (res.status === 200) {
+    return await res.json().then((data) => mapCategories(data));
+  } else {
+    throw res.status;
+  }
+};
+
 const addTile = async (token, tile, mode, id) => {
   let url = proxy.menu + "tile/";
   url = mode === "PUT" ? url + id + "/" : url;
@@ -72,6 +87,13 @@ const postPhoto = async (token, id, photo) => {
   }
 };
 
+const mapCategories = (cats) => {
+  return cats.map((item) => ({
+    id: "/blog/" + item.name,
+    name: "*Blog* " + item.name,
+  }));
+};
+
 const mapPosts = (posts) => {
   return posts.map((item) => ({
     id: "/blog/blogpost/" + item.id,
@@ -108,32 +130,34 @@ const NewTileForm = ({ show, setShow, user, appendTile, tileData }) => {
       id: item.path,
       name: item.name,
     }));
-    const loadPostList = async () => {
-      let res = [];
+    const loadPathList = async () => {
+      let resP = [];
+      let resC = [];
       try {
         if (show) {
-          res = await fetchPosts();
+          resC = await fetchCategories();
+          resP = await fetchPosts();
         }
       } catch (e) {
         console.log(e);
         alertContext.current.showAlert(
-          "Wystąpił błąd podczas pobierania danych o postach."
+          "Wystąpił błąd podczas pobierania dostępnych ścieżek."
         );
       }
-      setPathArray([...paths, ...res]);
-      if (tileData) {
-        const { id, title, color, show, imageUrl, destination } = tileData;
-        setTileId(id);
-        setTitle(title);
-        setBackground(color);
-        setImgOverflow(show);
-        setPhotoB64(imageUrl);
-        setPath(destination);
-        setMethod("PUT");
-        setLabel("Poprzednie zdjęcie");
-      }
+      setPathArray([...paths, ...resC, ...resP]);
     };
-    loadPostList();
+    if (tileData) {
+      const { id, title, color, show, imageUrl, destination } = tileData;
+      setTileId(id);
+      setTitle(title);
+      setBackground(color);
+      setImgOverflow(show);
+      setPhotoB64(imageUrl);
+      setPath(destination);
+      setMethod("PUT");
+      setLabel("Poprzednie zdjęcie");
+    }
+    loadPathList();
     setLoading(false);
   }, [alertContext, tileData, show]);
 
