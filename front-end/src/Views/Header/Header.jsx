@@ -127,8 +127,8 @@ const Header = () => {
       id: 7,
       link: "/offerForm",
       name: "DODAJ OFERTĘ",
-      group_type: staffTypes.GUEST
-    }
+      group_type: staffTypes.GUEST,
+    },
   ];
 
   const accountDropdownNav =
