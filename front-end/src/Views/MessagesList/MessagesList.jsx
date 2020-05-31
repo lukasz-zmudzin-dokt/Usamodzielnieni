@@ -144,7 +144,7 @@ const MessagesList = () => {
           messagesEl.current.scrollTop = messagesEl.current.scrollHeight;
         };
         socket.current.onmessage = (object) => {
-          chatC.loadMessages();
+          chatC.loadMessages(user.token);
           setData((prevState) => [
             ...prevState,
             mapAnswer(JSON.parse(JSON.parse(object.data))),
