@@ -123,6 +123,12 @@ const Header = () => {
       name: "KREATOR CV",
       group_type: staffTypes.GUEST,
     },
+    {
+      id: 7,
+      link: "/offerForm",
+      name: "DODAJ OFERTĘ",
+      group_type: staffTypes.GUEST
+    }
   ];
 
   const accountDropdownNav =
