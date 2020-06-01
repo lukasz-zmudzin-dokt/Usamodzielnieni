@@ -10,6 +10,7 @@ import Alert from "react-bootstrap/Alert";
 import Notifications from "./components/Notifications";
 import { paths } from "constants/paths";
 import { staffTypes } from "constants/staffTypes";
+import { userTypes } from "constants/userTypes";
 
 const Header = () => {
   const context = useContext(UserContext);
@@ -82,7 +83,7 @@ const Header = () => {
   const staffNavs = [
     {
       id: 0,
-      link: paths.REGISTER_ADMIN,
+      link: "/newAccount/staff",
       name: "ZAREJESTRUJ ADMINISTRATORA",
       group_type: staffTypes.VERIFICATION,
     },
@@ -122,10 +123,16 @@ const Header = () => {
       name: "KREATOR CV",
       group_type: staffTypes.GUEST,
     },
+    {
+      id: 7,
+      link: "/offerForm",
+      name: "DODAJ OFERTĘ",
+      group_type: staffTypes.GUEST,
+    },
   ];
 
   const accountDropdownNav =
-    context.type === "standard" ? (
+    context.type === userTypes.STANDARD ? (
       <>
         <IndexLinkContainer to={paths.MY_CVS}>
           <NavDropdown.Item className="account-dropdown-button white">
@@ -138,7 +145,7 @@ const Header = () => {
           </NavDropdown.Item>
         </IndexLinkContainer>
       </>
-    ) : context.type === "employer" ? (
+    ) : context.type === userTypes.EMPLOYER ? (
       <>
         <IndexLinkContainer to={paths.MY_OFFERS}>
           <NavDropdown.Item className="account-dropdown-button white">
@@ -151,7 +158,7 @@ const Header = () => {
           </NavDropdown.Item>
         </IndexLinkContainer>
       </>
-    ) : context.type === "staff" && context.data !== undefined ? (
+    ) : context.type === userTypes.STAFF && context.data !== undefined ? (
       <>
         {!context.data.group_type.includes(staffTypes.GUEST) ? (
           <IndexLinkContainer to={paths.USER_LIST}>
@@ -195,7 +202,7 @@ const Header = () => {
         <Notifications className="desktopNotifications" location={location} />
         <NavDropdown
           id={"myAccDropdown"}
-          title={<span className="white">MOJE KONTO</span>}
+          title={<span className="white">MOJE ZAKŁADKI</span>}
           className="navbar-right-button register-color"
           onClick={isOpen ? handleClose : handleOpen}
           show={isOpen}
