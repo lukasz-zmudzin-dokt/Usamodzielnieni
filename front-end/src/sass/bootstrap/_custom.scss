@@ -32,6 +32,7 @@ code {
     background-image: linear-gradient(#ffffffb2, #ffffffb2), url("/fot.png");
     background-position: center center;
     background-repeat: no-repeat;
-    background-size: contain;
+    background-attachment: fixed;
+    background-size: auto 95vh;
   }
 }
