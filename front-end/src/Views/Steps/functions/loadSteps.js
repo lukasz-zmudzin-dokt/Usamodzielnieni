@@ -4,7 +4,7 @@ const getSteps = async (token) => {
   let url = `${proxy.steps}`;
   const headers = {
     "Content-Type": "application/json",
-    Authorization: "Token " + token
+    Authorization: "Token " + token,
   };
   const response = await fetch(url, { method: "GET", headers });
   if (response.status !== 200) {
@@ -62,7 +62,13 @@ const getNext = (step, list) => {
   return next;
 };
 
-export const loadSteps = async (setSteps, setPath, setRoot, setError, token) => {
+export const loadSteps = async (
+  setSteps,
+  setPath,
+  setRoot,
+  setError,
+  token
+) => {
   let res;
   try {
     res = await getSteps(token);
