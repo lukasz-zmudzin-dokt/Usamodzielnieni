@@ -20,15 +20,15 @@ const ProgressBar = () => {
   const [showEdit, setShowEdit] = useState(false);
 
   useEffect(() => {
-    loadSteps(setSteps, setPath, setRoot, setError);
-  }, [setSteps, setRoot, setPath, setError]);
+    loadSteps(setSteps, setPath, setRoot, setError, user.token);
+  }, [setSteps, setRoot, setPath, setError, user.token]);
 
   const deletion = async () => {
     setWantsDelete(false);
     let stepId = path[path.length - 1];
     let res = await deleteStep(steps, stepId, user.token);
     if (res.status === 204) {
-      await loadSteps(setSteps, setPath, setRoot, setError);
+      await loadSteps(setSteps, setPath, setRoot, setError, user.token);
     }
   };
 
