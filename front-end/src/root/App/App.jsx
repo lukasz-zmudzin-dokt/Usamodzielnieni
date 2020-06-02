@@ -7,7 +7,7 @@ import {
   ChatProvider,
 } from "context";
 import Router from "root/Router";
-import { AlertsContainer, ScrollToTop } from "components";
+import { AlertsContainer, ScrollToTop, CookiesModal } from "components";
 import Header from "Views/Header";
 import Footer from "Views/Footer";
 
@@ -18,6 +18,7 @@ const App = () => {
         <ChatProvider>
           <NotificationsProvider>
             <BrowserRouter>
+              <CookiesModal />
               <Header />
               <ScrollToTop />
               <div className="center-container">
