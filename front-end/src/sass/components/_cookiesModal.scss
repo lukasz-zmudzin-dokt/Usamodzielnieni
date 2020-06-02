@@ -1,0 +1,16 @@
+.cookiesModal{
+    position: fixed;
+    bottom: 0;
+    z-index: 1000;
+}
+
+@media (min-width: 1280px){
+    .cookiesModal{
+    position: fixed;
+    bottom: 0;
+    left:50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    width: 1000px;
+}
+}
