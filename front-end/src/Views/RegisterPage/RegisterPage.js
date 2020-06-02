@@ -130,6 +130,7 @@ class RegisterPage extends React.Component {
       accountData: this.state.accountData,
       account_type: this.state.account_type,
       role: this.state.role,
+      terms_accepted: this.state.regulations
     };
 
     const isOK = this.handleSubmit(data, e);
@@ -158,8 +159,8 @@ class RegisterPage extends React.Component {
 
   regulationsCheck = (
     <p>
-      Akceptuję <Link to="/regulations">regulamin aplikacji</Link> i
-      <Link to="/regulations"> politykę prywatności</Link>
+      Akceptuję <Link to="/regulations/policy">regulamin aplikacji</Link> oraz
+      <Link to="/regulations/privacy_and_cookies"> politykę prywatności i cookies</Link>
     </p>
   );
 
@@ -238,6 +239,9 @@ class RegisterPage extends React.Component {
                 </Link>
               </div>
             ) : null}
+            <small className="text-muted">
+              Administratorem danych osobowych jest Fundacja One Day z siedzibą w Warszawie. Twoje dane będą przetwarzane m.in. w celach świadczenia Ci usług. Możesz skorzystać ze swoich praw takich jak m.in. prawo do dostępu i sprostowania Twoich danych osobowych. Więcej informacji znajdziesz w <Link to="/regulations/privacy_and_cookies">Polityce Prywatności i Cookies</Link>.
+            </small>
           </Card.Body>
         </Card>
         {renderRedirect(redirect)}

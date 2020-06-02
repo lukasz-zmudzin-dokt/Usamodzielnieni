@@ -58,8 +58,8 @@ class PersonalDataForm extends React.Component {
             <Form.Control.Feedback type="invalid">
               Podaj numer telefonu
             </Form.Control.Feedback>
-            <Form.Text>
-              Numer telefonu powinien być w formacie 123123123
+            <Form.Text className="text-muted">
+              Numer telefonu powinien być w formacie 123456789
             </Form.Text>
           </Form.Group>
         </Card.Body>

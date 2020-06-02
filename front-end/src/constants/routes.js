@@ -25,6 +25,7 @@ import {
   ChangeData,
   PasswordResetPrompt,
   NewPasswordPage,
+  PolicyPage
 } from "Views";
 import routesInfo from "./routesInfo";
 
@@ -118,5 +119,8 @@ export default [
   },
   {
     component: BlogPage,
+  },
+  {
+    component: PolicyPage,
   },
 ].map((value, i) => ({ ...value, ...routesInfo[i] }));
