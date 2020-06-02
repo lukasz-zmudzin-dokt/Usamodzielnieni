@@ -177,4 +177,9 @@ export default [
     type: undefined,
     exact: true,
   },
+  {
+    path: paths.POLICIES,
+    type: undefined,
+    exact: true,
+  },
 ];
