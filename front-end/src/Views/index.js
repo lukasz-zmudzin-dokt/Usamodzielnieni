@@ -25,7 +25,7 @@ import ChangeData from "Views/ChangeData";
 import PasswordResetPrompt from "Views/PasswordResetPrompt";
 import NewPasswordPage from "Views/NewPasswordPage";
 import Header from "Views/Header";
-import PolicyPage from "Views//PolicyPage";
+import PolicyPage from "Views/PolicyPage";
 
 export {
   UserProfilePage,
