@@ -1,1 +1,1 @@
-export { default } from "./CookiesModal";
+export { default } from "./CookiesContainer";
