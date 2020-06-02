@@ -25,7 +25,7 @@ import {
   ChangeData,
   PasswordResetPrompt,
   NewPasswordPage,
-  PolicyPage
+  PolicyPage,
 } from "Views";
 import routesInfo from "./routesInfo";
 

@@ -1,7 +1,3 @@
 import React from "react";
 
-export const GeneralPolicy = () => (
-    <div>
-        regulamin
-    </div>
-);
+export const GeneralPolicy = () => <div>regulamin</div>;

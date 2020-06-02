@@ -180,6 +180,6 @@ export default [
   {
     path: paths.POLICIES,
     type: undefined,
-    exact: true
-  }
+    exact: true,
+  },
 ];

@@ -29,6 +29,6 @@ const paths = {
   CHANGE_DATA: "/changeData/:id",
   PASSWORD_RESET: "/newPassword",
   NEW_PASSWORD: "/newPassword/:id",
-  POLICIES: "/regulations/:doc"
+  POLICIES: "/regulations/:doc",
 };
 export { paths };
