@@ -214,7 +214,7 @@ class RegisterPage extends React.Component {
                 <Form.Check
                   type="checkbox"
                   checked={this.state.regulations}
-                  onClick={() =>
+                  onChange={() =>
                     this.setState((prevState) => ({
                       regulations: !prevState.regulations,
                     }))
