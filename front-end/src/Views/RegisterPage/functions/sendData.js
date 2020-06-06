@@ -71,6 +71,7 @@ export const sendData = async (token, source) => {
       source.companyData,
       source.role
     ),
+    terms_accepted: source.terms_accepted,
   };
   const header =
     token !== undefined
