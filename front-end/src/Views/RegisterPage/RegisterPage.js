@@ -130,6 +130,7 @@ class RegisterPage extends React.Component {
       accountData: this.state.accountData,
       account_type: this.state.account_type,
       role: this.state.role,
+      terms_accepted: this.state.regulations
     };
 
     const isOK = this.handleSubmit(data, e);
